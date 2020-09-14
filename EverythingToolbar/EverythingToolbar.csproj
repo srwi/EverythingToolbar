@@ -91,15 +91,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>if "$(ConfigurationName)" == "Debug" (
-  taskkill /f /im explorer.exe 2&gt;nul &amp;set errorlevel=0
-  Exit 0
-)</PreBuildEvent>
+    <PreBuildEvent>taskkill /f /im explorer.exe 2&gt;nul &amp;set errorlevel=0
+Exit 0</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>if "$(ConfigurationName)" == "Debug" (
-  powershell start-process %25windir%25\explorer.exe
-  Exit 0
-)</PostBuildEvent>
+    <PostBuildEvent>powershell start-process %25windir%25\explorer.exe
+Exit 0</PostBuildEvent>
   </PropertyGroup>
 </Project>
