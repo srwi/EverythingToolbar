@@ -16,9 +16,6 @@ using System.Windows.Threading;
 
 namespace EverythingToolbar
 {
-	/// <summary>
-	/// Interaction logic for UserControl1.xaml
-	/// </summary>
 	public partial class ToolbarControl : UserControl
     {
 		#region Everything
@@ -252,6 +249,7 @@ namespace EverythingToolbar
 
 		public void OpenSelectedSearchResult()
 		{
+			keyboardFocusCapture.Focus();
 			if (SearchResultsListView.SelectedIndex != -1)
 			{
 				try
@@ -357,11 +355,6 @@ namespace EverythingToolbar
 		private void SearchBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
 		{
 			searchResultsPopup.StaysOpen = false;
-		}
-
-		private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
-		{
-			Keyboard.ClearFocus();
 		}
 
 		private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)

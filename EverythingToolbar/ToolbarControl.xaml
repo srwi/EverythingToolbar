@@ -115,8 +115,8 @@
 	</UserControl.Resources>
 
 	<Grid>
-		<TextBox Opacity="0" IsHitTestVisible="False" />
-		<TextBox x:Name="searchBox" Style="{DynamicResource SearchBoxStyle}" LostKeyboardFocus="SearchBox_LostKeyboardFocus" TextChanged="SearchBox_TextChanged" LostFocus="SearchBox_LostFocus">
+		<TextBox Name="keyboardFocusCapture" Opacity="0" IsHitTestVisible="False" />
+		<TextBox x:Name="searchBox" Style="{DynamicResource SearchBoxStyle}" LostKeyboardFocus="SearchBox_LostKeyboardFocus" TextChanged="SearchBox_TextChanged">
 			<TextBox.ContextMenu>
 				<ContextMenu>
 					<MenuItem Header="_Regular Expressions" IsCheckable="True" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}" Click="MenuItem_Click" />
