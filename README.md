@@ -1,7 +1,7 @@
 EverythingToolbar
 =================
 
-Everything integration for the Windows taskbar
+[Everything](https://www.voidtools.com/) integration for the Windows taskbar
 
 ![demo](demo.gif)
 
