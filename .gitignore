@@ -11,14 +11,11 @@
 *.userprefs
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
+**/[Dd]ebug/*
+**/[Rr]elease/*
 x64/
 x86/
 bld/
-[Bb]in/
 [Oo]bj/
 [Ll]og/
 
@@ -259,3 +256,7 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+!**/Everything64.dll
+!**/install.cmd
+!**/uninstall.cmd
