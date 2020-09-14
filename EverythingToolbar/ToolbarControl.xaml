@@ -54,15 +54,15 @@
 		<BitmapImage x:Key="DefaultImage" UriSource="EverythingLogoMask.png" />
 		<local:StringToXamlConverter x:Key="StringToXamlConverter" />
 		<DataTemplate x:Key="searchResultsListTemplate">
-			<Grid MaxWidth="750" Height="36" x:Name="ListViewItem">
+			<Grid Height="36" x:Name="ListViewItem">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="40" />
 					<ColumnDefinition Width="*" />
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 				<Image Source="{Binding Icon, IsAsync=True, TargetNullValue={StaticResource DefaultImage}}" Width="16" Height="16" />
-				<TextBlock Grid.Column="2" VerticalAlignment="Center" Padding="10,0" FontSize="12pt" Foreground="#666666" Text="{Binding DateModified}" />
 				<ContentControl Grid.Column="1" VerticalAlignment="Center" FontSize="12pt" Content="{Binding FileName, Converter={StaticResource StringToXamlConverter}, Mode=OneTime}" />
+				<TextBlock Grid.Column="2" VerticalAlignment="Center" Padding="10,0" FontSize="12pt" Foreground="#666666" Text="{Binding DateModified}" />
 			</Grid>
 		</DataTemplate>
 
@@ -250,7 +250,8 @@
 							HorizontalContentAlignment="Stretch"
 							Height="{Binding ElementName=searchResultsPopup, Path=Height}"
 							ItemTemplate="{DynamicResource searchResultsListTemplate}"
-							ScrollViewer.ScrollChanged="ListView_ScrollChanged">
+							ScrollViewer.ScrollChanged="ListView_ScrollChanged"
+							ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 						</ListView>
 					</Grid>
 				</Border>
