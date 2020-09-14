@@ -12,6 +12,7 @@ Install
 - Extract it somewhere safe
 - Run the `install.cmd` as admin
 - Enable EverythingToolbar via the context menu of the taskbar
+  - *Note: You might have to open the context menu twice as it not always shows up instantly.*
 
 Uninstall
 ---------
