@@ -1,0 +1,260 @@
+﻿<UserControl x:Class="EverythingToolbar.ToolbarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EverythingToolbar"
+			 xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+             mc:Ignorable="d"
+			 PreviewKeyDown="CSDeskBandWpf_PreviewKeyDown"
+			 HorizontalAlignment="Stretch">
+	<UserControl.Resources>
+		<Style x:Key="SearchBoxStyle" TargetType="{x:Type TextBox}">
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="Foreground" Value="#2b2b2b"/>
+			<Setter Property="FontSize" Value="15"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="HorizontalContentAlignment" Value="Left"/>
+			<Setter Property="VerticalContentAlignment" Value="Center"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type TextBox}">
+						<Border x:Name="border" BorderThickness="1" BorderBrush="#5c5c5c" Background="#333333">
+							<Grid x:Name="grid" SnapsToDevicePixels="True">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="38" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<TextBlock x:Name="logo" Text="⌕" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Foreground="#dadada" Margin="0,-2,0,0" />
+								<ScrollViewer x:Name="PART_ContentHost" Grid.Column="1" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+								<TextBlock x:Name="watermark" Text="Search with Everything" Grid.Column="1" VerticalAlignment="Center" Foreground="#dadada" IsHitTestVisible="false" TextTrimming="WordEllipsis" />
+							</Grid>
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="Control.IsMouseOver" Value="true">
+								<Setter Property="Background" TargetName="border" Value="#3f3f3f"/>
+								<Setter Property="BorderThickness" TargetName="border" Value="2"/>
+								<Setter Property="BorderBrush" TargetName="border" Value="#777777"/>
+								<Setter Property="Margin" TargetName="grid" Value="-1"/>
+							</Trigger>
+							<Trigger Property="Control.IsKeyboardFocused" Value="true">
+								<Setter Property="Background" TargetName="border" Value="#ffffff"/>
+								<Setter Property="BorderThickness" TargetName="border" Value="2"/>
+								<Setter Property="BorderBrush" TargetName="border" Value="#3f3f3f"/>
+								<Setter Property="Margin" TargetName="grid" Value="-1"/>
+								<Setter Property="Foreground" TargetName="logo" Value="#2b2b2b"/>
+								<Setter Property="Opacity" TargetName="watermark" Value="0"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<BitmapImage x:Key="DefaultImage" UriSource="EverythingLogoMask.png" />
+		<local:StringToXamlConverter x:Key="StringToXamlConverter" />
+		<DataTemplate x:Key="searchResultsListTemplate">
+			<Grid MaxWidth="750" Height="36" x:Name="ListViewItem">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="40" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<Image Source="{Binding Icon, IsAsync=True, TargetNullValue={StaticResource DefaultImage}}" Width="16" Height="16" />
+				<TextBlock Grid.Column="2" VerticalAlignment="Center" Padding="10,0" FontSize="12pt" Foreground="#666666" Text="{Binding DateModified}" />
+				<ContentControl Grid.Column="1" VerticalAlignment="Center" FontSize="12pt" Content="{Binding FileName, Converter={StaticResource StringToXamlConverter}, Mode=OneTime}" />
+			</Grid>
+		</DataTemplate>
+
+		<SolidColorBrush x:Key="Item.MouseOver.Background" Color="#d8d8d8"/>
+		<SolidColorBrush x:Key="Item.SelectedInactive.Background" Color="#c6c6c6"/>
+		<SolidColorBrush x:Key="Item.SelectedActive.Background" Color="#c6c6c6"/>
+		<Style TargetType="{x:Type ListViewItem}">
+			<Setter Property="SnapsToDevicePixels" Value="True"/>
+			<Setter Property="Padding" Value="4,1"/>
+			<Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+			<Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<EventSetter Event="PreviewMouseLeftButtonDown" Handler="SearchResultsListViewItem_PreviewMouseDown" />
+			<EventSetter Event="PreviewMouseLeftButtonUp" Handler="SearchResultsListViewItem_PreviewMouseUp" />
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type ListViewItem}">
+						<Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Background="{TemplateBinding Background}" Padding="0" SnapsToDevicePixels="true">
+							<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+						</Border>
+						<ControlTemplate.Triggers>
+							<MultiTrigger>
+								<MultiTrigger.Conditions>
+									<Condition Property="IsMouseOver" Value="True"/>
+								</MultiTrigger.Conditions>
+								<Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.MouseOver.Background}"/>
+							</MultiTrigger>
+							<MultiTrigger>
+								<MultiTrigger.Conditions>
+									<Condition Property="Selector.IsSelectionActive" Value="False"/>
+									<Condition Property="IsSelected" Value="True"/>
+								</MultiTrigger.Conditions>
+								<Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Background}"/>
+							</MultiTrigger>
+							<MultiTrigger>
+								<MultiTrigger.Conditions>
+									<Condition Property="Selector.IsSelectionActive" Value="True"/>
+									<Condition Property="IsSelected" Value="True"/>
+								</MultiTrigger.Conditions>
+								<Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Background}"/>
+							</MultiTrigger>
+							<Trigger Property="IsEnabled" Value="False">
+								<Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</UserControl.Resources>
+
+	<Grid>
+		<TextBox Opacity="0" IsHitTestVisible="False" />
+		<TextBox x:Name="searchBox" Style="{DynamicResource SearchBoxStyle}" LostKeyboardFocus="SearchBox_LostKeyboardFocus" TextChanged="SearchBox_TextChanged" LostFocus="SearchBox_LostFocus">
+			<TextBox.ContextMenu>
+				<ContextMenu>
+					<MenuItem Header="_Regular Expressions" IsCheckable="True" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}" Click="MenuItem_Click" />
+					<MenuItem Header="Match _Case" IsCheckable="True" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase, Mode=TwoWay}" Click="MenuItem_Click" />
+					<MenuItem Header="Match _Path" IsCheckable="True" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath, Mode=TwoWay}" Click="MenuItem_Click" />
+					<MenuItem Header="Match Whole _Word" IsCheckable="True" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}" Click="MenuItem_Click" />
+					<Separator />
+					<MenuItem Header="Sort By..." Name="SortByMenu">
+						<MenuItem IsCheckable="True" Header="Name ascending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Name descending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Path ascending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Path descending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Size ascending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Size descending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Date created ascending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Date created descending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Date modified ascending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Date modified descending" Click="MenuItem_SortBy_Click"/>
+					</MenuItem>
+				</ContextMenu>
+			</TextBox.ContextMenu>
+		</TextBox>
+
+		<Popup Name="searchResultsPopup" Height="700" Width="700" PlacementTarget="{Binding ElementName=searchBox}" Placement="Top" AllowsTransparency="True" Closed="SearchResultsPopup_Closed">
+			<Border>
+				<Border Name="searchResultsPopupBorder" BorderThickness="1" BorderBrush="#7F5F5F5F" Background="#222222" OpacityMask="Black">
+					<Border.Triggers>
+						<EventTrigger RoutedEvent="Border.Loaded">
+							<BeginStoryboard>
+								<Storyboard>
+									<DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" From="150" To="0" Duration="0:0:0:0.4">
+										<DoubleAnimation.EasingFunction>
+											<QuinticEase EasingMode="EaseOut" />
+										</DoubleAnimation.EasingFunction>
+									</DoubleAnimation>
+									<DoubleAnimation Storyboard.TargetProperty="Height" From="550" To="700" Duration="0:0:0:0.4">
+										<DoubleAnimation.EasingFunction>
+											<QuinticEase EasingMode="EaseOut" />
+										</DoubleAnimation.EasingFunction>
+									</DoubleAnimation>
+									<DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0:0.4">
+										<DoubleAnimation.EasingFunction>
+											<QuinticEase EasingMode="EaseOut" />
+										</DoubleAnimation.EasingFunction>
+									</DoubleAnimation>
+								</Storyboard>
+							</BeginStoryboard>
+						</EventTrigger>
+					</Border.Triggers>
+					<Border.RenderTransform>
+						<TranslateTransform X="0" Y="0" />
+					</Border.RenderTransform>
+					<Border.Effect>
+						<DropShadowEffect BlurRadius="15" Direction="-90" Opacity="0.4"  RenderingBias="Quality" ShadowDepth="-100"/>
+					</Border.Effect>
+					<Grid>
+						<Grid.Triggers>
+							<EventTrigger RoutedEvent="Grid.Loaded">
+								<BeginStoryboard>
+									<Storyboard>
+										<DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" From="50" To="0" Duration="0:0:0:0.8">
+											<DoubleAnimation.EasingFunction>
+												<QuinticEase EasingMode="EaseOut"/>
+											</DoubleAnimation.EasingFunction>
+										</DoubleAnimation>
+									</Storyboard>
+								</BeginStoryboard>
+							</EventTrigger>
+						</Grid.Triggers>
+						<Grid.RenderTransform>
+							<TranslateTransform X="0" Y="0" />
+						</Grid.RenderTransform>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+						<TabControl Name="TabControl" SelectionChanged="TabControl_SelectionChanged">
+							<TabControl.Resources>
+								<Style TargetType="TabItem">
+									<Setter Property="Template">
+										<Setter.Value>
+											<ControlTemplate TargetType="TabItem">
+												<Border Name="Border" Padding="20,17" BorderThickness="0,0,0,4" Background="#222222">
+													<ContentPresenter x:Name="ContentSite"
+												TextBlock.FontSize="10pt"
+												TextBlock.Foreground="#d3d3d3"
+												VerticalAlignment="Center"
+												HorizontalAlignment="Center"
+												ContentSource="Header" />
+												</Border>
+												<ControlTemplate.Triggers>
+													<Trigger Property="IsSelected" Value="True">
+														<Setter TargetName="Border" Property="BorderBrush" Value="#3f3f3f" />
+														<Setter TargetName="ContentSite" Property="TextBlock.FontWeight" Value="Bold" />
+													</Trigger>
+													<Trigger Property="IsSelected" Value="False">
+														<Setter TargetName="Border" Property="BorderBrush" Value="Transparent" />
+														<Setter TargetName="ContentSite" Property="TextBlock.FontWeight" Value="Normal" />
+													</Trigger>
+													<Trigger Property="IsMouseOver" Value="True">
+														<Setter TargetName="ContentSite" Property="TextBlock.Foreground" Value="White" />
+													</Trigger>
+													<Trigger Property="IsMouseOver" Value="False">
+														<Setter TargetName="ContentSite" Property="TextBlock.Foreground" Value="#d3d3d3" />
+													</Trigger>
+												</ControlTemplate.Triggers>
+											</ControlTemplate>
+										</Setter.Value>
+									</Setter>
+								</Style>
+								<Style TargetType="{x:Type TabControl}">
+									<Setter Property="Template">
+										<Setter.Value>
+											<ControlTemplate TargetType="{x:Type TabControl}">
+												<Border BorderBrush="#252525" BorderThickness="0,0,0,1">
+													<TabPanel Panel.ZIndex="1" Margin="13,0,0,0" IsItemsHost="True" Background="Transparent" />
+												</Border>
+											</ControlTemplate>
+										</Setter.Value>
+									</Setter>
+								</Style>
+							</TabControl.Resources>
+							<TabItem Header="All" Name="AllTab" />
+							<TabItem Header="Files" Name="FilesTab" />
+							<TabItem Header="Folders" Name="FoldersTab" />
+						</TabControl>
+						<ListView Name="SearchResultsListView"
+							Grid.Row="1"
+							BorderThickness="0"
+							Background="#f0f0f0"
+							HorizontalContentAlignment="Stretch"
+							Height="{Binding ElementName=searchResultsPopup, Path=Height}"
+							ItemTemplate="{DynamicResource searchResultsListTemplate}"
+							ScrollViewer.ScrollChanged="ListView_ScrollChanged">
+						</ListView>
+					</Grid>
+				</Border>
+			</Border>
+		</Popup>
+	</Grid>
+</UserControl>
