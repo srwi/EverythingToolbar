@@ -23,7 +23,7 @@ Requirements
 ------------
 
 - .NET >= 4.6.1
-- Everything 1.4 must be running
+- Everything >= 1.4.1 must be running
 
 Build
 -----
