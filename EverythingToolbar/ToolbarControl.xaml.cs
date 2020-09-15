@@ -1,4 +1,4 @@
-﻿using CSDeskBand;
+using CSDeskBand;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -354,7 +354,14 @@ namespace EverythingToolbar
 
 		private void SearchBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
 		{
-			searchResultsPopup.StaysOpen = false;
+			if (searchResultsPopup.IsMouseOver && !SearchResultsListView.IsMouseOver)
+			{
+				searchBox.Focus();
+			}
+			else
+			{
+				searchResultsPopup.StaysOpen = false;
+			}
 		}
 
 		private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
