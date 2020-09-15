@@ -1,4 +1,4 @@
-using CSDeskBand;
+﻿using CSDeskBand;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -289,25 +289,9 @@ namespace EverythingToolbar
 			searchBox.Clear();
 		}
 
-		private void SearchResultsListViewItem_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+		private void SearchResultsListViewItem_PreviewMouseUp(object sender, MouseEventArgs e)
 		{
-			SearchResultsListView.SelectedItems.Clear();
-
-			ListViewItem item = sender as ListViewItem;
-			if (item != null)
-			{
-				item.IsSelected = true;
-				SearchResultsListView.SelectedItem = item;
-			}
-		}
-
-		private void SearchResultsListViewItem_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-		{
-			ListViewItem item = sender as ListViewItem;
-			if (item != null && item.IsSelected)
-			{
-				OpenSelectedSearchResult();
-			}
+			OpenSelectedSearchResult();
 		}
 
 		private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

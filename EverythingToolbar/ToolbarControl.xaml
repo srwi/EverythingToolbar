@@ -75,7 +75,6 @@
 			<Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
 			<Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
 			<Setter Property="BorderThickness" Value="0"/>
-			<EventSetter Event="PreviewMouseLeftButtonDown" Handler="SearchResultsListViewItem_PreviewMouseDown" />
 			<EventSetter Event="PreviewMouseLeftButtonUp" Handler="SearchResultsListViewItem_PreviewMouseUp" />
 			<Setter Property="Template">
 				<Setter.Value>
