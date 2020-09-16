@@ -21,16 +21,6 @@ namespace EverythingToolbar
 		#region Everything
 		const int EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME = 0x00000004;
 		const int EVERYTHING_REQUEST_HIGHLIGHTED_FILE_NAME = 0x00002000;
-		const int EVERYTHING_SORT_NAME_ASCENDING = 1;
-		const int EVERYTHING_SORT_NAME_DESCENDING = 2;
-		const int EVERYTHING_SORT_PATH_ASCENDING = 3;
-		const int EVERYTHING_SORT_PATH_DESCENDING = 4;
-		const int EVERYTHING_SORT_SIZE_ASCENDING = 5;
-		const int EVERYTHING_SORT_SIZE_DESCENDING = 6;
-		const int EVERYTHING_SORT_DATE_CREATED_ASCENDING = 11;
-		const int EVERYTHING_SORT_DATE_CREATED_DESCENDING = 12;
-		const int EVERYTHING_SORT_DATE_MODIFIED_ASCENDING = 13;
-		const int EVERYTHING_SORT_DATE_MODIFIED_DESCENDING = 14;
 
 		[DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
 		public static extern UInt32 Everything_SetSearchW(string lpSearchString);
@@ -60,6 +50,8 @@ namespace EverythingToolbar
 		public static extern bool Everything_GetResultDateModified(UInt32 nIndex, out long lpFileTime);
 		[DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
 		public static extern IntPtr Everything_GetResultHighlightedFileName(UInt32 nIndex);
+		[DllImport("Everything64.dll")]
+		public static extern UInt32 Everything_IncRunCountFromFileName(string lpFileName);
 		#endregion
 
 		#region Context Menu
@@ -77,15 +69,13 @@ namespace EverythingToolbar
 			{
 				if (itemParent.Items[i] == itemChecked)
 				{
-					Properties.Settings.Default.sortBy = i;
+					(itemParent.Items[i] as MenuItem).IsChecked = true;
+					Properties.Settings.Default.sortBy = i + 1;
 					continue;
 				}
 
 				(itemParent.Items[i] as MenuItem).IsChecked = false;
 			}
-
-			// Prevent the selected item from being unchecked
-			(itemParent.Items[Properties.Settings.Default.sortBy] as MenuItem).IsChecked = true;
 
 			Properties.Settings.Default.Save();
 		}
@@ -157,41 +147,7 @@ namespace EverythingToolbar
 			{
 				Everything_SetSearchW(currentSearchTerm);
 				Everything_SetRequestFlags(EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME | EVERYTHING_REQUEST_HIGHLIGHTED_FILE_NAME);
-
-				switch (Properties.Settings.Default.sortBy)
-				{
-					case 0:
-						Everything_SetSort(EVERYTHING_SORT_NAME_ASCENDING);
-						break;
-					case 1:
-						Everything_SetSort(EVERYTHING_SORT_NAME_DESCENDING);
-						break;
-					case 2:
-						Everything_SetSort(EVERYTHING_SORT_PATH_ASCENDING);
-						break;
-					case 3:
-						Everything_SetSort(EVERYTHING_SORT_PATH_DESCENDING);
-						break;
-					case 4:
-						Everything_SetSort(EVERYTHING_SORT_SIZE_ASCENDING);
-						break;
-					case 5:
-						Everything_SetSort(EVERYTHING_SORT_SIZE_DESCENDING);
-						break;
-					case 6:
-						Everything_SetSort(EVERYTHING_SORT_DATE_CREATED_ASCENDING);
-						break;
-					case 7:
-						Everything_SetSort(EVERYTHING_SORT_DATE_CREATED_DESCENDING);
-						break;
-					case 8:
-						Everything_SetSort(EVERYTHING_SORT_DATE_MODIFIED_ASCENDING);
-						break;
-					case 9:
-						Everything_SetSort(EVERYTHING_SORT_DATE_MODIFIED_DESCENDING);
-						break;
-				}
-
+				Everything_SetSort((uint)Properties.Settings.Default.sortBy);
 				Everything_SetMatchCase(Properties.Settings.Default.isMatchCase);
 				Everything_SetMatchPath(Properties.Settings.Default.isMatchPath);
 				Everything_SetMatchWholeWord(Properties.Settings.Default.isMatchWholeWord);
@@ -254,7 +210,9 @@ namespace EverythingToolbar
 			{
 				try
 				{
-					Process.Start((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName);
+					string path = (SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
+					Process.Start(path);
+					Everything_IncRunCountFromFileName(path);
 				}
 				catch (Win32Exception)
 				{
@@ -286,6 +244,9 @@ namespace EverythingToolbar
 
 		private void SearchResultsPopup_Closed(object sender, EventArgs e)
 		{
+			if (!searchBox.IsKeyboardFocused)
+				keyboardFocusCapture.Focus();
+
 			searchBox.Clear();
 		}
 

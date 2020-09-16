@@ -130,10 +130,26 @@
 						<MenuItem IsCheckable="True" Header="Path descending" Click="MenuItem_SortBy_Click"/>
 						<MenuItem IsCheckable="True" Header="Size ascending" Click="MenuItem_SortBy_Click"/>
 						<MenuItem IsCheckable="True" Header="Size descending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Extension ascending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Extension descending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Type name ascending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Type name descending" Click="MenuItem_SortBy_Click"/>
 						<MenuItem IsCheckable="True" Header="Date created ascending" Click="MenuItem_SortBy_Click"/>
 						<MenuItem IsCheckable="True" Header="Date created descending" Click="MenuItem_SortBy_Click"/>
 						<MenuItem IsCheckable="True" Header="Date modified ascending" Click="MenuItem_SortBy_Click"/>
 						<MenuItem IsCheckable="True" Header="Date modified descending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Attributes ascending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Attributes descending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="File list filename ascending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="File list filename descending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Run count ascending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Run count descending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Date recently changed ascending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Date recently changed descending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Date accessed ascending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Date accessed descending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Date run ascending" Click="MenuItem_SortBy_Click"/>
+						<MenuItem IsCheckable="True" Header="Date run descending" Click="MenuItem_SortBy_Click"/>
 					</MenuItem>
 				</ContextMenu>
 			</TextBox.ContextMenu>
