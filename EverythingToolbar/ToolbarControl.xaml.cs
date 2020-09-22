@@ -97,7 +97,7 @@ namespace EverythingToolbar
 		{
 			InitializeComponent();
 			taskbarInfo = info;
-			(SortByMenu.Items[Properties.Settings.Default.sortBy] as MenuItem).IsChecked = true;
+			(SortByMenu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
 		}
 
 		private void OpenSearchResultsWindow()
