@@ -21,6 +21,7 @@ namespace EverythingToolbar
 		#region Everything
 		const int EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME = 0x00000004;
 		const int EVERYTHING_REQUEST_HIGHLIGHTED_FILE_NAME = 0x00002000;
+		const int EVERYTHING_REQUEST_HIGHLIGHTED_PATH = 0x00004000;
 
 		[DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
 		public static extern UInt32 Everything_SetSearchW(string lpSearchString);
@@ -52,6 +53,8 @@ namespace EverythingToolbar
 		public static extern IntPtr Everything_GetResultHighlightedFileName(UInt32 nIndex);
 		[DllImport("Everything64.dll")]
 		public static extern UInt32 Everything_IncRunCountFromFileName(string lpFileName);
+		[DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
+		public static extern IntPtr Everything_GetResultHighlightedPath(UInt32 nIndex);
 		#endregion
 
 		#region Context Menu
@@ -145,8 +148,11 @@ namespace EverythingToolbar
 
 			Task.Run(() =>
 			{
+				uint flags = EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME;
+				flags |= EVERYTHING_REQUEST_HIGHLIGHTED_FILE_NAME;
+				flags |= Properties.Settings.Default.isDetailedView ? EVERYTHING_REQUEST_HIGHLIGHTED_PATH : (uint)0;
 				Everything_SetSearchW(currentSearchTerm);
-				Everything_SetRequestFlags(EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME | EVERYTHING_REQUEST_HIGHLIGHTED_FILE_NAME);
+				Everything_SetRequestFlags(flags);
 				Everything_SetSort((uint)Properties.Settings.Default.sortBy);
 				Everything_SetMatchCase(Properties.Settings.Default.isMatchCase);
 				Everything_SetMatchPath(Properties.Settings.Default.isMatchPath);
@@ -160,7 +166,7 @@ namespace EverythingToolbar
 
 				for (uint i = 0; i < resultsCount; i++)
 				{
-					Everything_GetResultDateModified(i, out long date_modified);
+					string path = Properties.Settings.Default.isDetailedView ? Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i)).ToString() : "";
 					string filename = Marshal.PtrToStringUni(Everything_GetResultHighlightedFileName(i)).ToString();
 					StringBuilder full_path = new StringBuilder(4096);
 					Everything_GetResultFullPathNameW(i, full_path, 4096);
@@ -169,6 +175,7 @@ namespace EverythingToolbar
 					{
 						searchResults.Add(new SearchResult()
 						{
+							Path = path.ToString(),
 							FullPathAndFileName = full_path.ToString(),
 							FileName = filename
 						});
