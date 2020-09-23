@@ -8,7 +8,7 @@ using System.Windows;
 namespace CSDeskBand
 {
 	[ComVisible(true)]
-    [Guid("AA01ACB3-6CCC-497C-9CE6-9211F2EDFC10")]
+    [Guid("9d39b79c-e03c-4757-b1b6-ecce843748f3")]
     [CSDeskBandRegistration(Name = "Everything Toolbar")]
     public class Deskband : CSDeskBandWpf
     {
