@@ -1,5 +1,6 @@
 ﻿using CSDeskBand.ContextMenu;
 using EverythingToolbar;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -17,7 +18,13 @@ namespace CSDeskBand
             Options.ContextMenuItems = ContextMenuItems;
             Options.MinHorizontalSize = new Size(36, 0);
             Options.MinVerticalSize = new Size(0, 32);
-        }
+
+            ToolbarLogger.Initialize();
+			ILogger logger = ToolbarLogger.GetLogger("EverythingToolbar");
+            logger.Info("EverythingToolbar started. OS: {os}", Environment.OSVersion);
+
+            AppDomain.CurrentDomain.UnhandledException += (sender, args) => ToolbarLogger.GetLogger("EverythingToolbar").Error((Exception)args.ExceptionObject, "Unhandled Exception");
+		}
 
         protected override UIElement UIElement => new ToolbarControl(TaskbarInfo);
 

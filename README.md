@@ -29,8 +29,10 @@ Requirements
 Build
 -----
 
-- Install Visual Studio 2019 with .NET Framework 4.7 support
-- Building the project will restart Windows Explorer
+- Open solution in Visual Studio 2019 with .NET Framework 4.7 support
+- Install NuGet packages
+- Disable signing in project properties
+- Build the project (Windows Explorer will restart)
 - Install the toolbar by running `EverythingToolbar/bin/Debug/install.cmd` as admin
 
 Todo
