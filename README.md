@@ -3,7 +3,7 @@ EverythingToolbar
 
 [Everything](https://www.voidtools.com/) integration for the Windows taskbar
 
-![demo](demo.gif)
+![demo](https://user-images.githubusercontent.com/17520641/94998321-63675a00-05b1-11eb-9331-ef1fd744329e.gif)
 
 Install
 -------
