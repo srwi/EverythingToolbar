@@ -26,7 +26,7 @@ namespace CSDeskBand
             AppDomain.CurrentDomain.UnhandledException += (sender, args) => ToolbarLogger.GetLogger("EverythingToolbar").Error((Exception)args.ExceptionObject, "Unhandled Exception");
 		}
 
-        protected override UIElement UIElement => new ToolbarControl(TaskbarInfo);
+        protected override UIElement UIElement => new ToolbarControl(TaskbarInfo.Edge);
 
         private List<DeskBandMenuItem> ContextMenuItems
         {

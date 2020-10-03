@@ -15,6 +15,8 @@ namespace EverythingToolbar
 			}
 		}
 
+        public bool IsFile { get; set; }
+
 		public string FileName { get; set; }
 
 		public string Path { get; set; }
@@ -25,8 +27,18 @@ namespace EverythingToolbar
 		{
 			get
 			{
-				FileInfo fi = new FileInfo(FullPathAndFileName);
-				return GetBytesReadable(fi.Length);
+                if (!IsFile)
+                    return GetBytesReadable(0);
+
+                try
+                {
+                    FileInfo fi = new FileInfo(FullPathAndFileName);
+                    return GetBytesReadable(fi.Length);
+                }
+                catch
+				{
+                    return "";
+                }
 			}
 		}
 

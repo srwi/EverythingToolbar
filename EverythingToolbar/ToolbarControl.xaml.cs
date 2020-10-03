@@ -55,6 +55,8 @@ namespace EverythingToolbar
 		public static extern UInt32 Everything_IncRunCountFromFileName(string lpFileName);
 		[DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
 		public static extern IntPtr Everything_GetResultHighlightedPath(UInt32 nIndex);
+		[DllImport("Everything64.dll")]
+		public static extern bool Everything_IsFileResult(UInt32 nIndex);
 		#endregion
 
 		#region Context Menu
@@ -91,18 +93,18 @@ namespace EverythingToolbar
 		private string currentSearchTerm = "";
 		private readonly int searchBlockSize = 100;
 		private double scrollOffsetBeforeSearch = 0;
-		private readonly TaskbarInfo taskbarInfo;
+		private readonly Edge taskbarEdge;
 
-		public ToolbarControl(TaskbarInfo info)
+		public ToolbarControl(Edge edge)
 		{
 			InitializeComponent();
-			taskbarInfo = info;
+			taskbarEdge = edge;
 			(SortByMenu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
 		}
 
 		private void OpenSearchResultsWindow()
 		{
-			switch (taskbarInfo.Edge)
+			switch (taskbarEdge)
 			{
 				case Edge.Top:
 					searchResultsPopup.Placement = PlacementMode.Bottom;
@@ -118,7 +120,7 @@ namespace EverythingToolbar
 					break;
 			}
 
-			AdjustStyle(taskbarInfo.Edge);
+			AdjustStyle(taskbarEdge);
 			Dispatcher.BeginInvoke((Action)(() => TabControl.SelectedIndex = 0));
 			searchResultsPopup.IsOpen = true;
 			searchResultsPopup.StaysOpen = true;
@@ -168,6 +170,7 @@ namespace EverythingToolbar
 				{
 					string path = Properties.Settings.Default.isDetailedView ? Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i)).ToString() : "";
 					string filename = Marshal.PtrToStringUni(Everything_GetResultHighlightedFileName(i)).ToString();
+					bool isFile = Everything_IsFileResult(i);
 					StringBuilder full_path = new StringBuilder(4096);
 					Everything_GetResultFullPathNameW(i, full_path, 4096);
 
@@ -177,7 +180,8 @@ namespace EverythingToolbar
 						{
 							Path = path.ToString(),
 							FullPathAndFileName = full_path.ToString(),
-							FileName = filename
+							FileName = filename,
+							IsFile = isFile
 						});
 					});
 				}
