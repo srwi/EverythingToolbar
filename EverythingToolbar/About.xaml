@@ -1,0 +1,37 @@
+﻿<Window x:Class="EverythingToolbar.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="About EverythingToolbar" Height="330" Width="380" ResizeMode="NoResize">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="88" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="45" />
+		</Grid.RowDefinitions>
+		<Rectangle Fill="Black"></Rectangle>
+		<TextBlock Text="EverythingToolbar" Padding="25, 0, 0, 0" Foreground="White" FontSize="26" VerticalAlignment="Center" />
+		<Border BorderThickness="0, 1" BorderBrush="#a0a0a0" Grid.Row="1">
+			<StackPanel VerticalAlignment="Center">
+				<StackPanel.Resources>
+					<Style TargetType="{x:Type TextBlock}">
+						<Setter Property="Padding" Value="25,5,0,5"/>
+					</Style>
+				</StackPanel.Resources>
+				<TextBlock>EverythingToolbar</TextBlock>
+				<TextBlock Name="VersionTextBlock"></TextBlock>
+				<TextBlock>Copyright © 2020 Stephan Rumswinkel</TextBlock>
+				<TextBlock>License: MIT</TextBlock>
+				<TextBlock>Website:
+				<Hyperlink NavigateUri="https://www.github.com/stnkl/EverythingToolbar" RequestNavigate="Hyperlink_RequestNavigate">
+					https://www.github.com/stnkl/EverythingToolbar
+				</Hyperlink>
+				</TextBlock>
+			</StackPanel>
+		</Border>
+		<Rectangle Fill="#f0f0f0" Grid.Row="2" />
+		<Button Grid.Row="2" Margin="250, 10, 10, 10" Click="Button_Click">OK</Button>
+	</Grid>
+</Window>

@@ -358,5 +358,11 @@ namespace EverythingToolbar
 				Keyboard.ClearFocus();
 			}
 		}
+
+		private void OpenAboutWindow(object sender, RoutedEventArgs e)
+		{
+			Window about = new About();
+			about.Show();
+		}
 	}
 }
