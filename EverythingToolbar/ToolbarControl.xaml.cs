@@ -99,6 +99,14 @@ namespace EverythingToolbar
 		{
 			InitializeComponent();
 			taskbarEdge = edge;
+
+			// Fixes #3
+			if (Properties.Settings.Default.sortBy < 1)
+			{
+				Properties.Settings.Default.sortBy = 1;
+				Properties.Settings.Default.Save();
+			}
+
 			(SortByMenu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
 		}
 
