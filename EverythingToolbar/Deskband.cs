@@ -3,6 +3,7 @@ using EverythingToolbar;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -21,7 +22,7 @@ namespace CSDeskBand
 
             ToolbarLogger.Initialize();
 			ILogger logger = ToolbarLogger.GetLogger("EverythingToolbar");
-            logger.Info("EverythingToolbar started. OS: {os}", Environment.OSVersion);
+            logger.Info("EverythingToolbar started. Version: {version}, OS: {os}", Assembly.GetExecutingAssembly().GetName().Version, Environment.OSVersion);
 
             AppDomain.CurrentDomain.UnhandledException += (sender, args) => ToolbarLogger.GetLogger("EverythingToolbar").Error((Exception)args.ExceptionObject, "Unhandled Exception");
 		}
