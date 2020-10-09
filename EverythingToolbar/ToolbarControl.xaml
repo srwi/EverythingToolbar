@@ -78,18 +78,24 @@
 					</ContentControl.Style>
 				</ContentControl>
 				<TextBlock Grid.Column="2" VerticalAlignment="Bottom" Margin="10, 5, 10, 6" FontSize="10pt" Foreground="#666666" Text="{Binding DateModified}" />
-				<TextBlock Grid.Column="2" Grid.Row="1" VerticalAlignment="Top" Margin="10, 0, 10, 4" HorizontalAlignment="Right" FontSize="10pt" Foreground="#565656" Text="{Binding FileSize}">
-					<TextBlock.Style>
-						<Style TargetType="TextBlock">
-							<Style.Triggers>
-								<DataTrigger Binding="{Binding Path}" Value="">
-									<Setter Property="Visibility" Value="Collapsed" />
-								</DataTrigger>
-							</Style.Triggers>
-						</Style>
-					</TextBlock.Style>
-				</TextBlock>
-			</Grid>
+                <TextBlock Grid.Column="2" Grid.Row="1" VerticalAlignment="Top" Margin="10, 0, 10, 4" HorizontalAlignment="Right" FontSize="10pt" Foreground="#565656" Text="{Binding FileSize}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path}" Value="">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <Grid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Open Path" Click="OpenFilePath"></MenuItem>
+                        <MenuItem Header="Copy path to clipboard" Click="CopyPathToClipBoard"></MenuItem>
+                    </ContextMenu>
+                </Grid.ContextMenu>
+            </Grid>
 		</DataTemplate>
 
 		<SolidColorBrush x:Key="Item.MouseOver.Background" Color="#d8d8d8"/>
