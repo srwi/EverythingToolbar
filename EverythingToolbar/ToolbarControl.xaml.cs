@@ -1,5 +1,6 @@
 ﻿using CSDeskBand;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -18,47 +19,6 @@ namespace EverythingToolbar
 {
 	public partial class ToolbarControl : UserControl
     {
-		#region Everything
-		const int EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME = 0x00000004;
-		const int EVERYTHING_REQUEST_HIGHLIGHTED_FILE_NAME = 0x00002000;
-		const int EVERYTHING_REQUEST_HIGHLIGHTED_PATH = 0x00004000;
-
-		[DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
-		public static extern UInt32 Everything_SetSearchW(string lpSearchString);
-		[DllImport("Everything64.dll")]
-		public static extern void Everything_SetMatchPath(bool bEnable);
-		[DllImport("Everything64.dll")]
-		public static extern void Everything_SetMatchCase(bool bEnable);
-		[DllImport("Everything64.dll")]
-		public static extern void Everything_SetMatchWholeWord(bool bEnable);
-		[DllImport("Everything64.dll")]
-		public static extern void Everything_SetRegex(bool bEnable);
-		[DllImport("Everything64.dll")]
-		public static extern void Everything_SetMax(UInt32 dwMax);
-		[DllImport("Everything64.dll")]
-		public static extern void Everything_SetOffset(UInt32 dwOffset);
-		[DllImport("Everything64.dll")]
-		public static extern bool Everything_QueryW(bool bWait);
-		[DllImport("Everything64.dll")]
-		public static extern UInt32 Everything_GetNumResults();
-		[DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
-		public static extern void Everything_GetResultFullPathNameW(UInt32 nIndex, StringBuilder lpString, UInt32 nMaxCount);
-		[DllImport("Everything64.dll")]
-		public static extern void Everything_SetSort(UInt32 dwSortType);
-		[DllImport("Everything64.dll")]
-		public static extern void Everything_SetRequestFlags(UInt32 dwRequestFlags);
-		[DllImport("Everything64.dll")]
-		public static extern bool Everything_GetResultDateModified(UInt32 nIndex, out long lpFileTime);
-		[DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
-		public static extern IntPtr Everything_GetResultHighlightedFileName(UInt32 nIndex);
-		[DllImport("Everything64.dll")]
-		public static extern UInt32 Everything_IncRunCountFromFileName(string lpFileName);
-		[DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
-		public static extern IntPtr Everything_GetResultHighlightedPath(UInt32 nIndex);
-		[DllImport("Everything64.dll")]
-		public static extern bool Everything_IsFileResult(UInt32 nIndex);
-		#endregion
-
 		#region Context Menu
 		private void MenuItem_Click(object sender, RoutedEventArgs e)
 		{
@@ -90,7 +50,6 @@ namespace EverythingToolbar
 		private CancellationTokenSource updateSource;
 		private CancellationToken updateToken;
 		private bool preventScrollChangedEvent = false;
-		private string currentSearchTerm = "";
 		private readonly int searchBlockSize = 100;
 		private double scrollOffsetBeforeSearch = 0;
 		private readonly Edge taskbarEdge;
@@ -144,7 +103,7 @@ namespace EverythingToolbar
 		{
 			scrollOffsetBeforeSearch = 0;
 			searchResults.Clear();
-			currentSearchTerm = searchTerm;
+			EverythingSearch.Instance.SearchTerm = searchTerm;
 			RequestSearchResults(0, searchBlockSize);
 		}
 
@@ -158,39 +117,11 @@ namespace EverythingToolbar
 
 			Task.Run(() =>
 			{
-				uint flags = EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME;
-				flags |= EVERYTHING_REQUEST_HIGHLIGHTED_FILE_NAME;
-				flags |= Properties.Settings.Default.isDetailedView ? EVERYTHING_REQUEST_HIGHLIGHTED_PATH : (uint)0;
-				Everything_SetSearchW(currentSearchTerm);
-				Everything_SetRequestFlags(flags);
-				Everything_SetSort((uint)Properties.Settings.Default.sortBy);
-				Everything_SetMatchCase(Properties.Settings.Default.isMatchCase);
-				Everything_SetMatchPath(Properties.Settings.Default.isMatchPath);
-				Everything_SetMatchWholeWord(Properties.Settings.Default.isMatchWholeWord);
-				Everything_SetRegex(Properties.Settings.Default.isRegExEnabled);
-				Everything_SetMax((uint)count);
-				Everything_SetOffset((uint)offset);
-				Everything_QueryW(true);
-
-				uint resultsCount = Everything_GetNumResults();
-
-				for (uint i = 0; i < resultsCount; i++)
+				foreach(SearchResult result in EverythingSearch.Instance.Query(offset, count))
 				{
-					string path = Properties.Settings.Default.isDetailedView ? Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i)).ToString() : "";
-					string filename = Marshal.PtrToStringUni(Everything_GetResultHighlightedFileName(i)).ToString();
-					bool isFile = Everything_IsFileResult(i);
-					StringBuilder full_path = new StringBuilder(4096);
-					Everything_GetResultFullPathNameW(i, full_path, 4096);
-
 					Dispatcher.Invoke(() =>
 					{
-						searchResults.Add(new SearchResult()
-						{
-							Path = path.ToString(),
-							FullPathAndFileName = full_path.ToString(),
-							FileName = filename,
-							IsFile = isFile
-						});
+						searchResults.Add(result);
 					});
 				}
 
@@ -231,7 +162,7 @@ namespace EverythingToolbar
 				{
 					string path = (SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
 					Process.Start(path);
-					Everything_IncRunCountFromFileName(path);
+					EverythingSearch.Instance.IncrementRunCount(path);
 				}
 				catch (Win32Exception)
 				{
@@ -281,21 +212,20 @@ namespace EverythingToolbar
 				return;
 			}
 
-			if (currentSearchTerm.StartsWith("folder:") || currentSearchTerm.StartsWith("folders:") || currentSearchTerm.StartsWith("file:") || currentSearchTerm.StartsWith("files:"))
+			if (AllTab.IsSelected)
 			{
-				currentSearchTerm = currentSearchTerm.Split(new[] { ':' }, 2)[1];
+				EverythingSearch.Instance.SearchMacro = "";
 			}
-
-			if (FilesTab.IsSelected)
+			else if (FilesTab.IsSelected)
 			{
-				currentSearchTerm = "file:" + currentSearchTerm;
+				EverythingSearch.Instance.SearchMacro = "file:";
 			}
 			else if (FoldersTab.IsSelected)
 			{
-				currentSearchTerm = "folder:" + currentSearchTerm;
+				EverythingSearch.Instance.SearchMacro = "folder:";
 			}
 
-			StartSearch(currentSearchTerm);
+			StartSearch(EverythingSearch.Instance.SearchTerm);
 		}
 
 		private void ListView_ScrollChanged(object sender, ScrollChangedEventArgs e)
