@@ -1,11 +1,11 @@
 ﻿<UserControl x:Class="EverythingToolbar.ToolbarControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:EverythingToolbar"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:local="clr-namespace:EverythingToolbar"
 			 xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-             mc:Ignorable="d"
+			 mc:Ignorable="d"
 			 PreviewKeyDown="CSDeskBandWpf_PreviewKeyDown"
 			 HorizontalAlignment="Stretch">
 	<UserControl.Resources>
@@ -89,6 +89,12 @@
 						</Style>
 					</TextBlock.Style>
 				</TextBlock>
+				<Grid.ContextMenu>
+					<ContextMenu>
+						<MenuItem Header="Open Path" Click="OpenFilePath" />
+						<MenuItem Header="Copy Full Name to Clipboard" Click="CopyPathToClipBoard" />
+					</ContextMenu>
+				</Grid.ContextMenu>
 			</Grid>
 		</DataTemplate>
 

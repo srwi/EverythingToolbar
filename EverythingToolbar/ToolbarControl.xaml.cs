@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,7 +19,7 @@ using System.Windows.Threading;
 namespace EverythingToolbar
 {
 	public partial class ToolbarControl : UserControl
-    {
+	{
 		#region Context Menu
 		private void MenuItem_Click(object sender, RoutedEventArgs e)
 		{
@@ -153,14 +154,14 @@ namespace EverythingToolbar
 			}
 		}
 
-		public void OpenSelectedSearchResult()
+		public void OpenSelectedSearchResult(string path = "")
 		{
 			keyboardFocusCapture.Focus();
 			if (SearchResultsListView.SelectedIndex != -1)
 			{
 				try
 				{
-					string path = (SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
+					path = path == "" ? (SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName : path;
 					Process.Start(path);
 					EverythingSearch.Instance.IncrementRunCount(path);
 				}
@@ -301,6 +302,16 @@ namespace EverythingToolbar
 		{
 			Window about = new About();
 			about.Show();
+		}
+
+		private void OpenFilePath(object sender, RoutedEventArgs e)
+		{
+			OpenSelectedSearchResult(Path.GetDirectoryName((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName.ToString()));
+		}
+
+		private void CopyPathToClipBoard(object sender, RoutedEventArgs e)
+		{
+			Clipboard.SetText((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName.ToString());
 		}
 	}
 }
