@@ -91,6 +91,8 @@
 				</TextBlock>
 				<Grid.ContextMenu>
 					<ContextMenu>
+						<MenuItem Header="Open with..." Click="OpenWith" />
+						<Separator/>
 						<MenuItem Header="Open Path" Click="OpenFilePath" />
 						<MenuItem Header="Copy Full Name to Clipboard" Click="CopyPathToClipBoard" />
 					</ContextMenu>

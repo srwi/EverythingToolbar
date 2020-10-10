@@ -306,12 +306,20 @@ namespace EverythingToolbar
 
 		private void OpenFilePath(object sender, RoutedEventArgs e)
 		{
-			OpenSelectedSearchResult(Path.GetDirectoryName((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName.ToString()));
+			OpenSelectedSearchResult(Path.GetDirectoryName((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName));
 		}
 
 		private void CopyPathToClipBoard(object sender, RoutedEventArgs e)
 		{
-			Clipboard.SetText((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName.ToString());
+			Clipboard.SetText((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName);
+		}
+
+		public void OpenWith(object sender, RoutedEventArgs e)
+		{
+			string path = (SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
+			var args = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "shell32.dll");
+			args += ",OpenAs_RunDLL " + path;
+			Process.Start("rundll32.exe", args);
 		}
 	}
 }
