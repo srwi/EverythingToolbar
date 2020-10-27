@@ -94,5 +94,17 @@ namespace EverythingToolbar.Properties {
                 this["isDetailedView"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("700,700")]
+        public global::System.Windows.Size popupSize {
+            get {
+                return ((global::System.Windows.Size)(this["popupSize"]));
+            }
+            set {
+                this["popupSize"] = value;
+            }
+        }
     }
 }

@@ -1,0 +1,264 @@
+﻿<UserControl x:Class="EverythingToolbar.SearchResultsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:EverythingToolbar"
+             mc:Ignorable="d"
+             d:DesignWidth="300"
+             d:DesignHeight="300">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="Item.MouseOver.Background"
+                         Color="#d8d8d8" />
+        <SolidColorBrush x:Key="Item.SelectedInactive.Background"
+                         Color="#c6c6c6" />
+        <SolidColorBrush x:Key="Item.SelectedActive.Background"
+                         Color="#c6c6c6" />
+        <Style TargetType="{x:Type ListViewItem}">
+            <Setter Property="SnapsToDevicePixels"
+                    Value="True" />
+            <Setter Property="Padding"
+                    Value="4, 1" />
+            <Setter Property="HorizontalContentAlignment"
+                    Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+            <EventSetter Event="PreviewMouseLeftButtonUp"
+                         Handler="SearchResultsListViewItem_PreviewMouseUp" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                        <Border x:Name="Bd"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="0"
+                                Background="{TemplateBinding Background}"
+                                Padding="0"
+                                SnapsToDevicePixels="true">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver"
+                                               Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background"
+                                        TargetName="Bd"
+                                        Value="{StaticResource Item.MouseOver.Background}" />
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive"
+                                               Value="False" />
+                                    <Condition Property="IsSelected"
+                                               Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background"
+                                        TargetName="Bd"
+                                        Value="{StaticResource Item.SelectedInactive.Background}" />
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive"
+                                               Value="True" />
+                                    <Condition Property="IsSelected"
+                                               Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background"
+                                        TargetName="Bd"
+                                        Value="{StaticResource Item.SelectedActive.Background}" />
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter Property="TextElement.Foreground"
+                                        TargetName="Bd"
+                                        Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <BitmapImage x:Key="DefaultImage" UriSource="EverythingLogoMask.png" />
+        <local:StringToXamlConverter x:Key="StringToXamlConverter" />
+        <DataTemplate x:Key="searchResultsListTemplate">
+            <Grid x:Name="ListViewItem"
+                  Margin="0, 0, 0, 4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Image Source="{Binding Icon, IsAsync=True, TargetNullValue={StaticResource DefaultImage}}"
+                       Width="16"
+                       Height="16"
+                       Margin="0, 5, 0, 0" />
+                <ContentControl Content="{Binding FileName, Converter={StaticResource StringToXamlConverter}, Mode=OneTime}"
+                                Grid.Column="1"
+                                VerticalAlignment="Bottom"
+                                Margin="0, 7, 0, 4"
+                                FontSize="12pt" />
+                <ContentControl Content="{Binding Path, Converter={StaticResource StringToXamlConverter}, Mode=OneTime}"
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                VerticalAlignment="Top"
+                                Margin="0, 0, 0, 4"
+                                FontSize="10pt"
+                                Foreground="#565656">
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path}"
+                                             Value="">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                </ContentControl>
+                <TextBlock Grid.Column="2"
+                           VerticalAlignment="Bottom"
+                           Margin="10, 5, 10, 6"
+                           FontSize="10pt"
+                           Foreground="#666666"
+                           Text="{Binding DateModified}" />
+                <TextBlock Grid.Column="2"
+                           Grid.Row="1"
+                           VerticalAlignment="Top"
+                           Margin="10, 0, 10, 4"
+                           HorizontalAlignment="Right"
+                           FontSize="10pt"
+                           Foreground="#565656"
+                           Text="{Binding FileSize}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path}"
+                                             Value="">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <Grid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Open with..."
+                                  Click="OpenWith" />
+                        <Separator />
+                        <MenuItem Header="Open Path"
+                                  Click="OpenFilePath" />
+                        <MenuItem Header="Copy Full Name to Clipboard"
+                                  Click="CopyPathToClipBoard" />
+                    </ContextMenu>
+                </Grid.ContextMenu>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Border>
+        <Grid Name="searchResultsViewGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TabControl Name="TabControl"
+                        SelectionChanged="TabControl_SelectionChanged">
+                <TabControl.Resources>
+                    <Style TargetType="TabItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TabItem">
+                                    <Border Name="Border"
+                                            Padding="20,17"
+                                            BorderThickness="0,0,0,4"
+                                            Background="Transparent">
+                                        <ContentPresenter x:Name="ContentSite"
+                                                          TextBlock.FontSize="10pt"
+                                                          TextBlock.Foreground="#d3d3d3"
+                                                          VerticalAlignment="Center"
+                                                          HorizontalAlignment="Center"
+                                                          ContentSource="Header" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected"
+                                                 Value="True">
+                                            <Setter TargetName="Border"
+                                                    Property="BorderBrush"
+                                                    Value="#3f3f3f" />
+                                            <Setter TargetName="ContentSite"
+                                                    Property="TextBlock.FontWeight"
+                                                    Value="Bold" />
+                                        </Trigger>
+                                        <Trigger Property="IsSelected"
+                                                 Value="False">
+                                            <Setter TargetName="Border"
+                                                    Property="BorderBrush"
+                                                    Value="Transparent" />
+                                            <Setter TargetName="ContentSite"
+                                                    Property="TextBlock.FontWeight"
+                                                    Value="Normal" />
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver"
+                                                 Value="True">
+                                            <Setter TargetName="ContentSite"
+                                                    Property="TextBlock.Foreground"
+                                                    Value="White" />
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver"
+                                                 Value="False">
+                                            <Setter TargetName="ContentSite"
+                                                    Property="TextBlock.Foreground"
+                                                    Value="#d3d3d3" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    <Style TargetType="{x:Type TabControl}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type TabControl}">
+                                    <Border BorderBrush="#252525"
+                                            BorderThickness="0,0,0,1">
+                                        <TabPanel Panel.ZIndex="1"
+                                                  Margin="13, 0, 0, 0"
+                                                  IsItemsHost="True"
+                                                  Background="Transparent" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.Resources>
+                <TabItem Header="All"
+                         Name="AllTab"
+                         IsSelected="True" />
+                <TabItem Header="Files"
+                         Name="FilesTab" />
+                <TabItem Header="Folders"
+                         Name="FoldersTab" />
+            </TabControl>
+            <ListView Name="SearchResultsListView"
+                      Grid.Row="1"
+                      BorderThickness="0"
+                      Background="#f0f0f0"
+                      HorizontalContentAlignment="Stretch"
+                      Height="{Binding ElementName=searchResultsPopup, Path=Height}"
+                      ItemTemplate="{DynamicResource searchResultsListTemplate}"
+                      ScrollViewer.ScrollChanged="ListView_ScrollChanged"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            </ListView>
+        </Grid>
+    </Border>
+</UserControl>

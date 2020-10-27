@@ -20,5 +20,8 @@
     <Setting Name="isDetailedView" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="popupSize" Type="System.Windows.Size" Scope="User">
+      <Value Profile="(Default)">700,700</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

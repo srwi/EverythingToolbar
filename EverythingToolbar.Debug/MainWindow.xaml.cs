@@ -8,8 +8,6 @@ namespace EverythingToolbar.Debug
 		public MainWindow()
 		{
 			InitializeComponent();
-
-			grid.Children.Add(new ToolbarControl(Edge.Bottom));
 		}
 	}
 }

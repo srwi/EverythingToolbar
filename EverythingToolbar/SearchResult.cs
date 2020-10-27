@@ -28,7 +28,7 @@ namespace EverythingToolbar
 			get
 			{
                 if (!IsFile)
-                    return GetBytesReadable(0);
+                    return "";
 
                 try
                 {

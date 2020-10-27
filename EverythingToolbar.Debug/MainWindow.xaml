@@ -1,11 +1,12 @@
 ﻿<Window x:Class="EverythingToolbar.Debug.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EverythingToolbar.Debug"
-		xmlns:other="clr-namespace:EverythingToolbar;assembly=EverythingToolbar"
-        mc:Ignorable="d"
-        Title="EverythingToolbar.Debug" Height="80" Width="300">
-	<Grid Name="grid"></Grid>
+		xmlns:local="clr-namespace:EverythingToolbar;assembly=EverythingToolbar"
+        Title="EverythingToolbar.Debug"
+        Height="50"
+        Width="300"
+        ResizeMode="CanResizeWithGrip"
+        WindowStyle="None"
+        AllowsTransparency="True">
+    <local:ToolbarControl />
 </Window>
