@@ -106,5 +106,17 @@ namespace EverythingToolbar.Properties {
                 this["popupSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\\\Program Files\\\\Everything\\\\Everything.exe")]
+        public string everythingPath {
+            get {
+                return ((string)(this["everythingPath"]));
+            }
+            set {
+                this["everythingPath"] = value;
+            }
+        }
     }
 }

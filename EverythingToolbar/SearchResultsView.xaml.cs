@@ -143,5 +143,10 @@ namespace EverythingToolbar
 			args += ",OpenAs_RunDLL " + path;
 			Process.Start("rundll32.exe", args);
 		}
+
+		private void ShowInEverything(object sender, RoutedEventArgs e)
+		{
+			EverythingSearch.Instance.OpenLastSearchInEverything((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName);
+		}
 	}
 }

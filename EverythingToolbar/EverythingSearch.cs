@@ -1,11 +1,12 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Threading;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace EverythingToolbar
 {
@@ -157,6 +158,54 @@ namespace EverythingToolbar
 			}
 
             return results;
+		}
+
+		public void OpenLastSearchInEverything(string highlighted_file = "")
+		{
+			if(!File.Exists(Properties.Settings.Default.everythingPath))
+			{
+				MessageBox.Show("Please select Everything.exe...");
+				using (OpenFileDialog openFileDialog = new OpenFileDialog())
+				{
+					openFileDialog.InitialDirectory = "c:\\";
+					openFileDialog.Filter = "Everything.exe|Everything.exe|All files (*.*)|*.*";
+					openFileDialog.FilterIndex = 1;
+
+					if (openFileDialog.ShowDialog() == DialogResult.OK)
+					{
+						Properties.Settings.Default.everythingPath = openFileDialog.FileName;
+						Properties.Settings.Default.Save();
+					}
+					else
+					{
+						return;
+					}
+				}
+			}
+
+			string args = " -s" + " \"" + Regex.Replace(SearchMacro + SearchTerm, @"(\\+)$", @"$1$1") + "\"";
+			if (Properties.Settings.Default.sortBy <= 2) args += " -sort \"Name\"";
+			else if (Properties.Settings.Default.sortBy <= 4) args += " -sort \"Path\"";
+			else if (Properties.Settings.Default.sortBy <= 6) args += " -sort \"Size\"";
+			else if (Properties.Settings.Default.sortBy <= 8) args += " -sort \"Extension\"";
+			else if (Properties.Settings.Default.sortBy <= 10) args += " -sort \"Type name\"";
+			else if (Properties.Settings.Default.sortBy <= 12) args += " -sort \"Date created\"";
+			else if (Properties.Settings.Default.sortBy <= 14) args += " -sort \"Date modified\"";
+			else if (Properties.Settings.Default.sortBy <= 16) args += " -sort \"Attributes\"";
+			else if (Properties.Settings.Default.sortBy <= 18) args += " -sort \"File list filename\"";
+			else if (Properties.Settings.Default.sortBy <= 20) args += " -sort \"Run count\"";
+			else if (Properties.Settings.Default.sortBy <= 22) args += " -sort \"Date recently changed\"";
+			else if (Properties.Settings.Default.sortBy <= 24) args += " -sort \"Date accessed\"";
+			else if (Properties.Settings.Default.sortBy <= 26) args += " -sort \"Date run\"";
+			if (Properties.Settings.Default.sortBy % 2 > 0) args += " -sort-ascending";
+			else args += " -sort-descending";
+			if (highlighted_file != "") args += " -select \"" + highlighted_file + "\"";
+			args += Properties.Settings.Default.isMatchCase ? " -case" : " -nocase";
+			args += Properties.Settings.Default.isMatchPath ? " -matchpath" : " -nomatchpath";
+			args += Properties.Settings.Default.isMatchWholeWord ? " -ww" : " -noww";
+			args += Properties.Settings.Default.isRegExEnabled ? " -regex" : " -noregex";
+
+			Process.Start(Properties.Settings.Default.everythingPath, args);
 		}
 
 		public void IncrementRunCount(string path)

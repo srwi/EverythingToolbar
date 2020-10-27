@@ -119,6 +119,14 @@ namespace EverythingToolbar
 			}
 			else if (e.Key == Key.Enter)
 			{
+				if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
+				{
+					string path = "";
+					if (searchResultsPopup.searchResultsView.SearchResultsListView.SelectedIndex >= 0)
+						path = (searchResultsPopup.searchResultsView.SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
+					EverythingSearch.Instance.OpenLastSearchInEverything(path);
+					return;
+				}
 				searchResultsPopup.searchResultsView.OpenSelectedSearchResult();
 			}
 			else if (e.Key == Key.Escape)

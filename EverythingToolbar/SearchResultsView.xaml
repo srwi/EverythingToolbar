@@ -154,6 +154,8 @@
                     <ContextMenu>
                         <MenuItem Header="Open with..."
                                   Click="OpenWith" />
+                        <MenuItem Header="Show in Everything..."
+                                  Click="ShowInEverything" />
                         <Separator />
                         <MenuItem Header="Open Path"
                                   Click="OpenFilePath" />
