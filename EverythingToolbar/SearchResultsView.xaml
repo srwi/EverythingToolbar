@@ -152,15 +152,23 @@
                 </TextBlock>
                 <Grid.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Open with..."
-                                  Click="OpenWith" />
-                        <MenuItem Header="Show in Everything..."
-                                  Click="ShowInEverything" />
-                        <Separator />
+                        <MenuItem Header="Open"
+                                  Click="Open"
+                                  FontWeight="Bold" />
                         <MenuItem Header="Open Path"
                                   Click="OpenFilePath" />
+                        <MenuItem Header="Open with"
+                                  Click="OpenWith" />
+                        <MenuItem Header="Show in Everything"
+                                  Click="ShowInEverything" />
+                        <Separator />
                         <MenuItem Header="Copy Full Name to Clipboard"
                                   Click="CopyPathToClipBoard" />
+                        <MenuItem Header="Copy"
+                                  Click="CopyFile" />
+                        <Separator />
+                        <MenuItem Header="Properties"
+                                  Click="ShowFileProperties" />
                     </ContextMenu>
                 </Grid.ContextMenu>
             </Grid>
