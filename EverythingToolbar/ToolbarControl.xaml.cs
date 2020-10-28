@@ -34,9 +34,9 @@ namespace EverythingToolbar
 		}
 
 		public static void SetTaskbarEdge(Edge edge)
-        {
-            taskbarEdge = edge;
-        }
+		{
+			taskbarEdge = edge;
+		}
 
 		private void OnFilterChanged(object sender, FilterChangedEventArgs e)
 		{
@@ -97,6 +97,7 @@ namespace EverythingToolbar
 			if (searchBox.Text.Length == 0)
 			{
 				searchResultsPopup.Close();
+				searchResultsPopup.searchResultsView.AllTab.IsSelected = true;
 				return;
 			}
 
@@ -133,6 +134,7 @@ namespace EverythingToolbar
 			{
 				searchResultsPopup.Close();
 				keyboardFocusCapture.Focus();
+				Keyboard.ClearFocus();
 			}
 		}
 
