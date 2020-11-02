@@ -183,7 +183,7 @@ namespace EverythingToolbar
 				}
 			}
 
-			string args = " -s" + " \"" + Regex.Replace(SearchMacro + SearchTerm, @"(\\+)$", @"$1$1") + "\"";
+			string args = "";
 			if (Properties.Settings.Default.sortBy <= 2) args += " -sort \"Name\"";
 			else if (Properties.Settings.Default.sortBy <= 4) args += " -sort \"Path\"";
 			else if (Properties.Settings.Default.sortBy <= 6) args += " -sort \"Size\"";
@@ -204,6 +204,7 @@ namespace EverythingToolbar
 			args += Properties.Settings.Default.isMatchPath ? " -matchpath" : " -nomatchpath";
 			args += Properties.Settings.Default.isMatchWholeWord ? " -ww" : " -noww";
 			args += Properties.Settings.Default.isRegExEnabled ? " -regex" : " -noregex";
+			args += " -s" + " \"" + (SearchMacro + SearchTerm).Replace("\"", "\"\"") + "\"";
 
 			Process.Start(Properties.Settings.Default.everythingPath, args);
 		}
