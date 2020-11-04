@@ -151,6 +151,7 @@ namespace EverythingToolbar
 		private void MenuItem_Click(object sender, RoutedEventArgs e)
 		{
 			Properties.Settings.Default.Save();
+			StartSearch(EverythingSearch.Instance.SearchTerm);
 		}
 
 		private void MenuItem_SortBy_Click(object sender, RoutedEventArgs e)
@@ -171,6 +172,7 @@ namespace EverythingToolbar
 			}
 
 			Properties.Settings.Default.Save();
+			StartSearch(EverythingSearch.Instance.SearchTerm);
 		}
 
 		public void LoadThemes()
