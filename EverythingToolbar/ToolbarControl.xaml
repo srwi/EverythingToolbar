@@ -9,87 +9,98 @@
              PreviewKeyDown="CSDeskBandWpf_PreviewKeyDown"
              HorizontalAlignment="Stretch">
     <UserControl.Resources>
-        <Style x:Key="SearchBoxStyle" TargetType="{x:Type TextBox}">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Foreground" Value="#2b2b2b"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Border x:Name="border"
+        <ResourceDictionary>
+            <Style x:Key="SearchBoxStyle" TargetType="{x:Type TextBox}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="Transparent"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TextBox}">
+                            <Border x:Name="border"
                                 BorderThickness="1"
-                                BorderBrush="#5c5c5c"
-                                Background="#333333">
-                            <Grid x:Name="grid" SnapsToDevicePixels="True">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="38"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock x:Name="logo"
+                                BorderBrush="{DynamicResource SearchBoxBorder}"
+                                Background="{DynamicResource SearchBoxBackground}">
+                                <Grid x:Name="grid" SnapsToDevicePixels="True">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="38"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock x:Name="logo"
                                            Text="⌕"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
                                            FontSize="26"
-                                           Foreground="#dadada"
-                                           Margin="0,-2,0,0"/>
-                                <ScrollViewer x:Name="PART_ContentHost"
+                                           Foreground="{DynamicResource SearchBoxLogo}"
+                                           Margin="0, -2, 0, 0"/>
+                                    <ScrollViewer x:Name="PART_ContentHost"
                                               Grid.Column="1"
                                               Focusable="false"
                                               HorizontalScrollBarVisibility="Hidden"
                                               VerticalScrollBarVisibility="Hidden"/>
-                                <TextBlock x:Name="watermark"
+                                    <TextBlock x:Name="watermark"
                                            Text="Search with Everything"
                                            Grid.Column="1"
                                            Margin="0, 0, 10, 0"
                                            VerticalAlignment="Center"
-                                           Foreground="#dadada"
+                                           Foreground="{DynamicResource SearchBoxForeground}"
                                            IsHitTestVisible="false"
                                            TextTrimming="WordEllipsis"/>
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="Control.IsMouseOver" Value="true">
-                                <Setter Property="Background"
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Control.IsMouseOver" Value="true">
+                                    <Setter Property="Background"
                                         TargetName="border"
-                                        Value="#3f3f3f"/>
-                                <Setter Property="BorderThickness"
-                                        TargetName="border"
-                                        Value="2"/>
-                                <Setter Property="BorderBrush"
-                                        TargetName="border"
-                                        Value="#777777"/>
-                                <Setter Property="Margin"
-                                        TargetName="grid"
-                                        Value="-1"/>
-                            </Trigger>
-                            <Trigger Property="Control.IsKeyboardFocused" Value="true">
-                                <Setter Property="Background"
-                                        TargetName="border"
-                                        Value="#ffffff"/>
-                                <Setter Property="BorderThickness"
+                                        Value="{DynamicResource SearchBoxBackgroundHover}"/>
+                                    <Setter Property="BorderThickness"
                                         TargetName="border"
                                         Value="2"/>
-                                <Setter Property="BorderBrush"
+                                    <Setter Property="BorderBrush"
                                         TargetName="border"
-                                        Value="#3f3f3f"/>
-                                <Setter Property="Margin"
+                                        Value="{DynamicResource SearchBoxBorderHover}"/>
+                                    <Setter Property="Margin"
                                         TargetName="grid"
                                         Value="-1"/>
-                                <Setter Property="Foreground"
+                                    <Setter Property="Foreground"
                                         TargetName="logo"
-                                        Value="#2b2b2b"/>
-                                <Setter Property="Opacity"
+                                        Value="{DynamicResource SearchBoxLogoHover}"/>
+                                    <Setter Property="Foreground"
+                                        TargetName="watermark"
+                                        Value="{DynamicResource SearchBoxForegroundHover}"/>
+                                </Trigger>
+                                <Trigger Property="Control.IsKeyboardFocused" Value="true">
+                                    <Setter Property="Background"
+                                        TargetName="border"
+                                        Value="{DynamicResource SearchBoxBackgroundActive}"/>
+                                    <Setter Property="BorderThickness"
+                                        TargetName="border"
+                                        Value="2"/>
+                                    <Setter Property="BorderBrush"
+                                        TargetName="border"
+                                        Value="{DynamicResource SearchBoxBorderActive}"/>
+                                    <Setter Property="Margin"
+                                        TargetName="grid"
+                                        Value="-1"/>
+                                    <Setter Property="Foreground"
+                                        TargetName="logo"
+                                        Value="{DynamicResource SearchBoxLogoActive}"/>
+                                    <Setter Property="Opacity"
                                         TargetName="watermark"
                                         Value="0"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+                                    <Setter Property="Foreground"
+                                        Value="{DynamicResource SearchBoxForegroundActive}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+        
     </UserControl.Resources>
 
     <Grid>
@@ -99,7 +110,8 @@
         <TextBox x:Name="searchBox"
                  Style="{DynamicResource SearchBoxStyle}"
                  LostKeyboardFocus="SearchBox_LostKeyboardFocus"
-                 TextChanged="SearchBox_TextChanged">
+                 TextChanged="SearchBox_TextChanged"
+                 CaretBrush="{DynamicResource SearchBoxForegroundActive}">
             <TextBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="About EverythingToolbar..."
@@ -109,6 +121,7 @@
                               IsCheckable="True"
                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isDetailedView, Mode=TwoWay}"
                               Click="MenuItem_Click"/>
+                    <MenuItem Header="Theme" Name="ThemeMenu"/>
                     <Separator/>
                     <MenuItem Header="_Regular Expressions"
                               IsCheckable="True"

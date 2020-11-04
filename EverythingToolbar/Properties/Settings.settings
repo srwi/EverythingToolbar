@@ -26,5 +26,8 @@
     <Setting Name="everythingPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\\Program Files\\Everything\\Everything.exe</Value>
     </Setting>
+    <Setting Name="theme" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

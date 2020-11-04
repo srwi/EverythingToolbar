@@ -14,15 +14,15 @@
     <Border>
         <Border x:Name="border"
                 BorderThickness="1"
-                BorderBrush="#7F5F5F5F"
-                Background="#222222">
+                BorderBrush="{DynamicResource SearchResultsViewBorder}"
+                Background="{DynamicResource SearchResultsViewHeader}">
             <Border.RenderTransform>
                 <TranslateTransform x:Name="translateTransform" />
             </Border.RenderTransform>
             <Grid>
                 <local:SearchResultsView x:Name="searchResultsView" />
-                <Thumb Width="16"
-                       Height="16"
+                <Thumb Width="8"
+                       Height="8"
                        DragStarted="OnDragStarted"
                        DragDelta="OnDragDelta"
                        DragCompleted="OnDragCompleted"
@@ -30,8 +30,8 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
                        Cursor="SizeNWSE" />
-                <Thumb Width="16"
-                       Height="16"
+                <Thumb Width="8"
+                       Height="8"
                        DragStarted="OnDragStarted"
                        DragDelta="OnDragDelta"
                        DragCompleted="OnDragCompleted"
@@ -39,8 +39,8 @@
                        HorizontalAlignment="Right"
                        VerticalAlignment="Top"
                        Cursor="SizeNESW" />
-                <Thumb Width="16"
-                       Height="16"
+                <Thumb Width="8"
+                       Height="8"
                        DragStarted="OnDragStarted"
                        DragDelta="OnDragDelta"
                        DragCompleted="OnDragCompleted"
@@ -48,8 +48,8 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Bottom"
                        Cursor="SizeNESW" />
-                <Thumb Width="16"
-                       Height="16"
+                <Thumb Width="6"
+                       Height="6"
                        DragStarted="OnDragStarted"
                        DragDelta="OnDragDelta"
                        DragCompleted="OnDragCompleted"

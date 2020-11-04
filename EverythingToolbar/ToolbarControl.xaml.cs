@@ -1,5 +1,7 @@
 ﻿using CSDeskBand;
 using System;
+using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,6 +20,8 @@ namespace EverythingToolbar
 		public ToolbarControl()
 		{
 			InitializeComponent();
+			LoadThemes();
+			ApplyTheme(Properties.Settings.Default.theme);
 
 			// Fixes #3
 			if (Properties.Settings.Default.sortBy < 1)
@@ -167,6 +171,69 @@ namespace EverythingToolbar
 			}
 
 			Properties.Settings.Default.Save();
+		}
+
+		public void LoadThemes()
+		{
+			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string themesFolder = Path.Combine(assemblyFolder, "Themes");
+
+			foreach (var themePath in Directory.EnumerateFiles(themesFolder, "*.xaml"))
+			{
+				string themeName = Path.GetFileNameWithoutExtension(themePath);
+				MenuItem mi = new MenuItem() { IsCheckable = true, Header = themeName };
+				if (themeName == Properties.Settings.Default.theme)
+				{
+					mi.IsChecked = true;
+				}
+				mi.Click += MenuItem_Theme_Click;
+				ThemeMenu.Items.Add(mi);
+			}
+		}
+
+		private void MenuItem_Theme_Click(object sender, RoutedEventArgs e)
+		{
+			MenuItem itemChecked = (MenuItem)sender;
+			MenuItem itemParent = (MenuItem)itemChecked.Parent;
+
+			for (int i = 0; i < itemParent.Items.Count; i++)
+			{
+				if (itemParent.Items[i] == itemChecked)
+				{
+					(itemParent.Items[i] as MenuItem).IsChecked = true;
+					Properties.Settings.Default.theme = itemChecked.Header.ToString();
+					continue;
+				}
+
+				(itemParent.Items[i] as MenuItem).IsChecked = false;
+			}
+
+			if (ApplyTheme(itemChecked.Header.ToString()))
+				Properties.Settings.Default.Save();
+		}
+
+		bool ApplyTheme(string themeName)
+		{
+			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string themePath = Path.Combine(assemblyFolder, "Themes", themeName + ".xaml");
+
+			if (!File.Exists(themePath))
+			{
+				ToolbarLogger.GetLogger("EverythingToolbar").Error("Theme file not found. Defaulting to 'Medium' theme.");
+				themePath = Path.Combine(assemblyFolder, "Themes", "Medium.xaml");
+			}
+
+			try
+			{
+				Resources.MergedDictionaries.Clear();
+				Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri(themePath) });
+				return true;
+			}
+			catch (Exception e)
+			{
+				ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Applying theme failed.");
+				return false;
+			}
 		}
 	}
 }
