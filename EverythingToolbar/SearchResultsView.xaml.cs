@@ -28,6 +28,7 @@ namespace EverythingToolbar
 	{
 		public event EventHandler<EndOfListReachedEventArgs> EndOfListReached;
 		public event EventHandler<FilterChangedEventArgs> FilterChanged;
+		public event EventHandler<EventArgs> PopupCloseRequested;
 
 		private ObservableCollection<SearchResult> searchResults = new ObservableCollection<SearchResult>();
 
@@ -136,6 +137,7 @@ namespace EverythingToolbar
 		private void CopyPathToClipBoard(object sender, RoutedEventArgs e)
 		{
 			Clipboard.SetText((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName);
+			PopupCloseRequested?.Invoke(this, new EventArgs());
 		}
 
 		private void OpenWith(object sender, RoutedEventArgs e)
@@ -156,6 +158,7 @@ namespace EverythingToolbar
 			StringCollection file = new StringCollection();
 			file.Add((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName);
 			Clipboard.SetFileDropList(file);
+			PopupCloseRequested?.Invoke(this, new EventArgs());
 		}
 
 		private void Open(object sender, RoutedEventArgs e)

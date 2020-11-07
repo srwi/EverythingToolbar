@@ -17,9 +17,11 @@ namespace EverythingToolbar
         public SearchResultsPopup()
         {
             InitializeComponent();
+
+			searchResultsView.PopupCloseRequested += PopupCloseRequested;
         }
 
-        private void OnDragStarted(object sender, DragStartedEventArgs e)
+		private void OnDragStarted(object sender, DragStartedEventArgs e)
         {
             dragStartSize.Height = Height;
             dragStartSize.Width = Width;
@@ -122,5 +124,10 @@ namespace EverythingToolbar
                 inner.From = new Thickness(-50, 0, 50, 0);
             searchResultsView.searchResultsViewGrid.BeginAnimation(MarginProperty, inner);
         }
-	}
+
+        private void PopupCloseRequested(object sender, EventArgs e)
+        {
+            Close();
+        }
+    }
 }
