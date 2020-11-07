@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Windows;
 using System.Windows.Media;
 
 namespace EverythingToolbar
@@ -17,9 +18,19 @@ namespace EverythingToolbar
 
         public bool IsFile { get; set; }
 
-		public string FileName { get; set; }
+		public string FileName => System.IO.Path.GetFileName(FullPathAndFileName);
 
-		public string Path { get; set; }
+		public string HighlightedFileName { get; set; }
+
+        public string Path
+		{
+            get
+			{
+                return System.IO.Path.GetDirectoryName(FullPathAndFileName);
+			}
+		}
+
+		public string HighlightedPath { get; set; }
 
 		public string FullPathAndFileName { get; set; }
 
@@ -46,7 +57,7 @@ namespace EverythingToolbar
 		{
 			get
 			{
-				return File.GetLastWriteTime(FullPathAndFileName).ToString();
+				return File.GetLastWriteTime(FullPathAndFileName).ToString("g");
 			}
 		}
 

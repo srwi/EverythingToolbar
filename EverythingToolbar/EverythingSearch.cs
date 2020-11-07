@@ -119,7 +119,7 @@ namespace EverythingToolbar
 		{
 			uint flags = EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME;
 			flags |= EVERYTHING_REQUEST_HIGHLIGHTED_FILE_NAME;
-			flags |= Properties.Settings.Default.isDetailedView ? EVERYTHING_REQUEST_HIGHLIGHTED_PATH : (uint)0;
+			flags |= EVERYTHING_REQUEST_HIGHLIGHTED_PATH;
 
 			Everything_SetSearchW(SearchMacro + SearchTerm);
 			Everything_SetRequestFlags(flags);
@@ -142,7 +142,7 @@ namespace EverythingToolbar
 
 			for (uint i = 0; i < resultsCount; i++)
 			{
-				string path = Properties.Settings.Default.isDetailedView ? Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i)).ToString() : "";
+				string path = Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i)).ToString();
 				string filename = Marshal.PtrToStringUni(Everything_GetResultHighlightedFileName(i)).ToString();
 				bool isFile = Everything_IsFileResult(i);
 				StringBuilder full_path = new StringBuilder(4096);
@@ -150,9 +150,9 @@ namespace EverythingToolbar
 
 				results.Add(new SearchResult()
 				{
-					Path = path.ToString(),
+					HighlightedPath = path.ToString(),
 					FullPathAndFileName = full_path.ToString(),
-					FileName = filename,
+					HighlightedFileName = filename,
 					IsFile = isFile
 				});
 			}

@@ -117,11 +117,8 @@
                     <MenuItem Header="About EverythingToolbar..."
                               Click="OpenAboutWindow"/>
                     <Separator/>
-                    <MenuItem Header="Detailed View"
-                              IsCheckable="True"
-                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isDetailedView, Mode=TwoWay}"
-                              Click="MenuItem_Click"/>
                     <MenuItem Header="Theme" Name="ThemeMenu"/>
+                    <MenuItem Header="View" Name="ItemTemplateMenu"/>
                     <Separator/>
                     <MenuItem Header="_Regular Expressions"
                               IsCheckable="True"

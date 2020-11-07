@@ -21,6 +21,8 @@ namespace EverythingToolbar
 		{
 			InitializeComponent();
 			LoadThemes();
+			LoadItemTemplates();
+			ApplyItemTemplate(Properties.Settings.Default.itemTemplate);
 			ApplyTheme(Properties.Settings.Default.theme);
 
 			// Fixes #3
@@ -210,6 +212,8 @@ namespace EverythingToolbar
 				(itemParent.Items[i] as MenuItem).IsChecked = false;
 			}
 
+			Resources.MergedDictionaries.Clear();
+			ApplyItemTemplate(Properties.Settings.Default.itemTemplate);
 			if (ApplyTheme(itemChecked.Header.ToString()))
 				Properties.Settings.Default.Save();
 		}
@@ -227,13 +231,76 @@ namespace EverythingToolbar
 
 			try
 			{
-				Resources.MergedDictionaries.Clear();
 				Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri(themePath) });
 				return true;
 			}
 			catch (Exception e)
 			{
 				ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Applying theme failed.");
+				return false;
+			}
+		}
+
+		public void LoadItemTemplates()
+		{
+			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string templateFolder = Path.Combine(assemblyFolder, "ItemTemplates");
+
+			foreach (var templatePath in Directory.EnumerateFiles(templateFolder, "*.xaml"))
+			{
+				string templateName = Path.GetFileNameWithoutExtension(templatePath);
+				MenuItem mi = new MenuItem() { IsCheckable = true, Header = templateName };
+				if (templateName == Properties.Settings.Default.itemTemplate)
+				{
+					mi.IsChecked = true;
+				}
+				mi.Click += MenuItem_ItemTemplate_Click;
+				ItemTemplateMenu.Items.Add(mi);
+			}
+		}
+
+		private void MenuItem_ItemTemplate_Click(object sender, RoutedEventArgs e)
+		{
+			MenuItem itemChecked = (MenuItem)sender;
+			MenuItem itemParent = (MenuItem)itemChecked.Parent;
+
+			for (int i = 0; i < itemParent.Items.Count; i++)
+			{
+				if (itemParent.Items[i] == itemChecked)
+				{
+					(itemParent.Items[i] as MenuItem).IsChecked = true;
+					Properties.Settings.Default.itemTemplate = itemChecked.Header.ToString();
+					continue;
+				}
+
+				(itemParent.Items[i] as MenuItem).IsChecked = false;
+			}
+
+			Resources.MergedDictionaries.Clear();
+			ApplyTheme(Properties.Settings.Default.theme);
+			if (ApplyItemTemplate(itemChecked.Header.ToString()))
+				Properties.Settings.Default.Save();
+		}
+
+		bool ApplyItemTemplate(string templateName)
+		{
+			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string templatePath = Path.Combine(assemblyFolder, "ItemTemplates", templateName + ".xaml");
+
+			if (!File.Exists(templatePath))
+			{
+				ToolbarLogger.GetLogger("EverythingToolbar").Error("Item template file not found. Defaulting to 'Normal' template.");
+				templatePath = Path.Combine(assemblyFolder, "ItemTemplates", "Normal.xaml");
+			}
+
+			try
+			{
+				Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri(templatePath) });
+				return true;
+			}
+			catch (Exception e)
+			{
+				ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Applying item template failed.");
 				return false;
 			}
 		}

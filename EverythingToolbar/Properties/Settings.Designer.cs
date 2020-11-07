@@ -85,18 +85,6 @@ namespace EverythingToolbar.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool isDetailedView {
-            get {
-                return ((bool)(this["isDetailedView"]));
-            }
-            set {
-                this["isDetailedView"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("700,700")]
         public global::System.Windows.Size popupSize {
             get {
@@ -128,6 +116,18 @@ namespace EverythingToolbar.Properties {
             }
             set {
                 this["theme"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string itemTemplate {
+            get {
+                return ((string)(this["itemTemplate"]));
+            }
+            set {
+                this["itemTemplate"] = value;
             }
         }
     }
