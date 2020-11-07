@@ -112,6 +112,7 @@ namespace EverythingToolbar
 				return;
 			}
 
+			FocusSearchBox(null, null);
 			searchResultsPopup.Open(taskbarEdge);
 			StartSearch(searchBox.Text);
 		}
