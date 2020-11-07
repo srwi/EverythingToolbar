@@ -1,7 +1,10 @@
 ﻿using CSDeskBand;
+using NHotkey;
+using NHotkey.Wpf;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -37,6 +40,8 @@ namespace EverythingToolbar
 			searchResultsPopup.searchResultsView.EndOfListReached += OnEndOfListReached;
 			searchResultsPopup.searchResultsView.FilterChanged += OnFilterChanged;
 			searchResultsPopup.Closed += SearchResultsPopup_Closed;
+
+			HotkeyManager.Current.AddOrReplace("FocusSearchBox", Key.S, ModifierKeys.Windows | ModifierKeys.Alt, FocusSearchBox);
 		}
 
 		public static void SetTaskbarEdge(Edge edge)
@@ -303,6 +308,20 @@ namespace EverythingToolbar
 				ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Applying item template failed.");
 				return false;
 			}
+		}
+
+		[DllImport("user32.dll")]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		private static extern bool SetForegroundWindow(IntPtr hWnd);
+
+		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
+		private static extern IntPtr FindWindow(String lpClassName, String lpWindowName);
+
+		private void FocusSearchBox(object sender, HotkeyEventArgs e)
+		{
+			IntPtr taskbar = FindWindow("Shell_traywnd", "");
+			SetForegroundWindow(taskbar);
+			Keyboard.Focus(searchBox);
 		}
 	}
 }
