@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -89,28 +90,6 @@ namespace EverythingToolbar
 			}
 		}
 
-		public void OpenSelectedSearchResult(string path = "")
-		{
-			if (SearchResultsListView.SelectedIndex != -1)
-			{
-				try
-				{
-					path = path == "" ? (SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName : path;
-					Process.Start(path);
-					EverythingSearch.Instance.IncrementRunCount(path);
-				}
-				catch (Win32Exception)
-				{
-					MessageBox.Show("Failed to open this file/folder.");
-				}
-			}
-		}
-
-		private void SearchResultsListViewItem_PreviewMouseUp(object sender, MouseEventArgs e)
-		{
-			OpenSelectedSearchResult();
-		}
-
 		public void SelectNextSearchResult()
 		{
 			if (SearchResultsListView.SelectedIndex + 1 < SearchResultsListView.Items.Count)
@@ -129,9 +108,41 @@ namespace EverythingToolbar
 			}
 		}
 
+		public void OpenSelectedSearchResult()
+		{
+			if (SearchResultsListView.SelectedIndex != -1)
+			{
+				if (Rules.HandleRule(SearchResultsListView.SelectedItem as SearchResult))
+					return;
+
+				try
+				{
+					string path = (SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
+					Process.Start(path);
+					EverythingSearch.Instance.IncrementRunCount(path);
+				}
+				catch (Win32Exception)
+				{
+					MessageBox.Show("Failed to open file/folder.");
+				}
+			}
+		}
+
 		private void OpenFilePath(object sender, RoutedEventArgs e)
 		{
-			OpenSelectedSearchResult(Path.GetDirectoryName((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName));
+			if (SearchResultsListView.SelectedIndex != -1)
+			{
+				try
+				{
+					string path = Path.GetDirectoryName((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName);
+					Process.Start(path);
+					EverythingSearch.Instance.IncrementRunCount(path);
+				}
+				catch (Win32Exception)
+				{
+					MessageBox.Show("Failed to open folder.");
+				}
+			}
 		}
 
 		private void CopyPathToClipBoard(object sender, RoutedEventArgs e)
@@ -163,7 +174,12 @@ namespace EverythingToolbar
 
 		private void Open(object sender, RoutedEventArgs e)
 		{
-			OpenSelectedSearchResult((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName);
+			OpenSelectedSearchResult();
+		}
+
+		private void Open(object sender, MouseEventArgs e)
+		{
+			OpenSelectedSearchResult();
 		}
 
 		[DllImport("shell32.dll", CharSet = CharSet.Auto)]
@@ -203,6 +219,35 @@ namespace EverythingToolbar
 			info.nShow = 5;
 			info.fMask = 12;
 			ShellExecuteEx(ref info);
+		}
+
+		private void OnOpenWithMenuLoaded(object sender, RoutedEventArgs e)
+		{
+			MenuItem mi = sender as MenuItem;
+
+			while (mi.Items.Count > 3)
+				mi.Items.RemoveAt(0);
+
+			List<Rule> rules = Rules.LoadRules();
+
+			if (rules.Count > 0)
+				(mi.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
+			else
+				(mi.Items[0] as MenuItem).Visibility = Visibility.Visible;
+
+			foreach (Rule rule in rules)
+			{
+				MenuItem ruleMenuItem = new MenuItem() { Header = rule.Name, Tag = rule.Command };
+				ruleMenuItem.Click += OpenWithRule;
+				mi.Items.Insert(0, ruleMenuItem);
+			}
+		}
+
+		private void OpenWithRule(object sender, RoutedEventArgs e)
+		{
+			SearchResult searchResult = SearchResultsListView.SelectedItem as SearchResult;
+			string command = (sender as MenuItem).Tag?.ToString() ?? "";
+			Rules.HandleRule(searchResult, command);
 		}
 	}
 }

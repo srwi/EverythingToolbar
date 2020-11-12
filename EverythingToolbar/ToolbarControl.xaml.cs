@@ -41,7 +41,9 @@ namespace EverythingToolbar
 			searchResultsPopup.searchResultsView.FilterChanged += OnFilterChanged;
 			searchResultsPopup.Closed += SearchResultsPopup_Closed;
 
+#if !DEBUG
 			HotkeyManager.Current.AddOrReplace("FocusSearchBox", Key.S, ModifierKeys.Windows | ModifierKeys.Alt, FocusSearchBox);
+#endif
 		}
 
 		public static void SetTaskbarEdge(Edge edge)
@@ -320,9 +322,17 @@ namespace EverythingToolbar
 
 		private void FocusSearchBox(object sender, HotkeyEventArgs e)
 		{
+#if !DEBUG
 			IntPtr taskbar = FindWindow("Shell_traywnd", "");
 			SetForegroundWindow(taskbar);
 			Keyboard.Focus(searchBox);
+#endif
+		}
+
+		private void OpenRulesWindow(object sender, RoutedEventArgs e)
+		{
+			Window rules = new Rules();
+			rules.Show();
 		}
 	}
 }

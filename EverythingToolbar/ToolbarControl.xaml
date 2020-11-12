@@ -119,6 +119,8 @@
                     <Separator/>
                     <MenuItem Header="Theme" Name="ThemeMenu"/>
                     <MenuItem Header="View" Name="ItemTemplateMenu"/>
+                    <MenuItem Header="Rules..."
+                              Click="OpenRulesWindow"/>
                     <Separator/>
                     <MenuItem Header="_Regular Expressions"
                               IsCheckable="True"

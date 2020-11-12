@@ -16,7 +16,13 @@
             <MenuItem Header="Open Path"
                       Click="OpenFilePath" />
             <MenuItem Header="Open with..."
-                      Click="OpenWith" />
+                      Loaded="OnOpenWithMenuLoaded">
+                <MenuItem Header="No rules defined"
+                          IsEnabled="False" />
+                <Separator />
+                <MenuItem Header="Choose app"
+                          Click="OpenWith" />
+            </MenuItem>
             <MenuItem Header="Show in Everything"
                       Click="ShowInEverything" />
             <Separator />
@@ -39,7 +45,7 @@
             <Setter Property="VerticalContentAlignment"
                     Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
             <EventSetter Event="PreviewMouseLeftButtonUp"
-                         Handler="SearchResultsListViewItem_PreviewMouseUp" />
+                         Handler="Open" />
             <Setter Property="ContextMenu" Value="{StaticResource ListViewItemContextMenu}" />
             <Setter Property="Template">
                 <Setter.Value>

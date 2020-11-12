@@ -72,6 +72,10 @@
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="EverythingSearch.cs" />
+    <Compile Include="Rule.cs" />
+    <Compile Include="Rules.xaml.cs">
+      <DependentUpon>Rules.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchResultsPopup.xaml.cs">
       <DependentUpon>SearchResultsPopup.xaml</DependentUpon>
     </Compile>
@@ -104,6 +108,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Page Include="Rules.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SearchResultsPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

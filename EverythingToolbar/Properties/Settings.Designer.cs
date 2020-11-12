@@ -130,5 +130,17 @@ namespace EverythingToolbar.Properties {
                 this["itemTemplate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isAutoApplyRules {
+            get {
+                return ((bool)(this["isAutoApplyRules"]));
+            }
+            set {
+                this["isAutoApplyRules"] = value;
+            }
+        }
     }
 }
