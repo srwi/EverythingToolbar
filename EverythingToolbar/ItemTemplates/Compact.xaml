@@ -16,7 +16,7 @@
                    Width="16"
                    Height="16"
                    Margin="0, 0, 2, 0" />
-            <ContentControl Content="{Binding HighlightedFileName, Converter={local:StringToXamlConverter}, Mode=OneTime}"
+            <ContentControl Content="{Binding HighlightedFileName, Converter={local:HighlightedTextConverter}, Mode=OneTime}"
                             Grid.Column="1"
                             FontSize="9pt"
                             Margin="2, 0"

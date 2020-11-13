@@ -66,9 +66,6 @@ namespace EverythingToolbar
 		{
 			get
 			{
-				if (string.IsNullOrEmpty(Expression))
-					return false;
-
 				try
 				{
 					Regex.IsMatch("", Expression);

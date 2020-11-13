@@ -8,7 +8,7 @@ using System.Windows.Markup;
 
 namespace EverythingToolbar
 {
-	public class StringToXamlConverter : MarkupExtension, IValueConverter
+	public class HighlightedTextConverter : MarkupExtension, IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{

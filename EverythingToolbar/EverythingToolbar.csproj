@@ -72,7 +72,7 @@
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="EverythingSearch.cs" />
-    <Compile Include="Rule.cs" />
+    <Compile Include="Data\Rule.cs" />
     <Compile Include="Rules.xaml.cs">
       <DependentUpon>Rules.xaml</DependentUpon>
     </Compile>
@@ -82,8 +82,8 @@
     <Compile Include="SearchResultsView.xaml.cs">
       <DependentUpon>SearchResultsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ToolbarLogger.cs" />
-    <Compile Include="WindowsThumbnailProvider.cs" />
+    <Compile Include="Helpers\ToolbarLogger.cs" />
+    <Compile Include="Helpers\WindowsThumbnailProvider.cs" />
     <Page Include="About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -141,8 +141,8 @@
     </Page>
     <Compile Include="Deskband.cs" />
     <Compile Include="CSDeskBand.cs" />
-    <Compile Include="SearchResult.cs" />
-    <Compile Include="StringToXamlConverter.cs" />
+    <Compile Include="Data\SearchResult.cs" />
+    <Compile Include="Converters\HighlightedTextConverter.cs" />
     <Compile Include="ToolbarControl.xaml.cs">
       <DependentUpon>ToolbarControl.xaml</DependentUpon>
       <SubType>Code</SubType>

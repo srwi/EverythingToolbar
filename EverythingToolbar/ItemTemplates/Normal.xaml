@@ -13,21 +13,21 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Image Source="{Binding Icon, IsAsync=True}"
-                       Width="16"
-                       Height="16"
-                       Margin="0, 5, 0, 0" />
-            <ContentControl Content="{Binding HighlightedFileName, Converter={local:StringToXamlConverter}, Mode=OneTime}"
-                                Grid.Column="1"
-                                VerticalAlignment="Bottom"
-                                Margin="0, 7, 0, 4"
-                                FontSize="12pt"
-                                Foreground="{DynamicResource SearchResultFileName}" />
+                   Width="16"
+                   Height="16"
+                   Margin="0, 5, 0, 0" />
+            <ContentControl Content="{Binding HighlightedFileName, Converter={local:HighlightedTextConverter}, Mode=OneTime}"
+                            Grid.Column="1"
+                            VerticalAlignment="Bottom"
+                            Margin="0, 7, 0, 4"
+                            FontSize="12pt"
+                            Foreground="{DynamicResource SearchResultFileName}" />
             <TextBlock Grid.Column="2"
-                           VerticalAlignment="Bottom"
-                           Margin="10, 5, 10, 6"
-                           FontSize="10pt"
-                           Foreground="{DynamicResource SearchResultDateModified}"
-                           Text="{Binding DateModified}" />
+                       VerticalAlignment="Bottom"
+                       Margin="10, 5, 10, 6"
+                       FontSize="10pt"
+                       Foreground="{DynamicResource SearchResultDateModified}"
+                       Text="{Binding DateModified}" />
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

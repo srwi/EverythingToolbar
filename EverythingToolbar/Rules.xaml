@@ -43,7 +43,7 @@
                 Use %file%, %filename% and %path% as placeholders for commands.
             </TextBlock>
 
-            <CheckBox IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isAutoApplyRules, Mode=TwoWay}"
+            <CheckBox Name="autoApplyRulesCheckbox"
                       Click="CheckBox_Click">
                 Automatically apply rules based on condition
             </CheckBox>

@@ -16,13 +16,13 @@
                    Width="16"
                    Height="16"
                    Margin="0, 5, 0, 0" />
-            <ContentControl Content="{Binding HighlightedFileName, Converter={local:StringToXamlConverter}, Mode=OneTime}"
+            <ContentControl Content="{Binding HighlightedFileName, Converter={local:HighlightedTextConverter}, Mode=OneTime}"
                             Grid.Column="1"
                             VerticalAlignment="Bottom"
                             Margin="0, 7, 0, 4"
                             FontSize="12pt"
                             Foreground="{DynamicResource SearchResultFileName}" />
-            <ContentControl Content="{Binding HighlightedPath, Converter={local:StringToXamlConverter}, Mode=OneTime}"
+            <ContentControl Content="{Binding HighlightedPath, Converter={local:HighlightedTextConverter}, Mode=OneTime}"
                             ToolTip="{Binding Path}"
                             Grid.Column="1"
                             Grid.Row="1"

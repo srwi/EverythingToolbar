@@ -20,6 +20,7 @@ namespace EverythingToolbar
 
 			rules = LoadRules();
 			dataGrid.ItemsSource = rules;
+			autoApplyRulesCheckbox.IsChecked = Properties.Settings.Default.isAutoApplyRules;
 			UpdateUI();
 		}
 
@@ -30,8 +31,12 @@ namespace EverythingToolbar
 
 		private void Save(object sender, RoutedEventArgs e)
 		{
-			if(SaveRules(rules))
+			if(SaveRules(rules, (bool)autoApplyRulesCheckbox.IsChecked))
+			{
+				Properties.Settings.Default.isAutoApplyRules = (bool)autoApplyRulesCheckbox.IsChecked;
+				Properties.Settings.Default.Save();
 				Close();
+			}
 		}
 
 		public static List<Rule> LoadRules()
@@ -48,14 +53,14 @@ namespace EverythingToolbar
 			return new List<Rule>();
 		}
 
-		public static bool SaveRules(List<Rule> newRules)
+		public static bool SaveRules(List<Rule> newRules, bool isAutoApplyRules)
 		{
 			if (newRules.Any(r => string.IsNullOrEmpty(r.Name)))
 			{
 				MessageBox.Show("Rule names cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 				return false;
 			}
-			if (newRules.Any(r => !r.ExpressionValid))
+			if (isAutoApplyRules && newRules.Any(r => !r.ExpressionValid))
 			{
 				MessageBox.Show("At least one regular expression is invalid.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 				return false;
@@ -129,7 +134,7 @@ namespace EverythingToolbar
 			MoveDownButton.IsEnabled = dataGrid.SelectedIndex + 1 < rules.Count && dataGrid.SelectedIndex >= 0;
 			MoveUpButton.IsEnabled = dataGrid.SelectedIndex > 0;
 
-			if (Properties.Settings.Default.isAutoApplyRules)
+			if ((bool)autoApplyRulesCheckbox.IsChecked)
 			{
 				TypeColumn.Visibility = Visibility.Visible;
 				ExpressionColumn.Visibility = Visibility.Visible;
