@@ -5,12 +5,12 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar
 {
@@ -154,9 +154,7 @@ namespace EverythingToolbar
 		private void OpenWith(object sender, RoutedEventArgs e)
 		{
 			string path = (SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
-			var args = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "shell32.dll");
-			args += ",OpenAs_RunDLL " + path;
-			Process.Start("rundll32.exe", args);
+			ShellUtils.OpenWithDialog(path);
 		}
 
 		private void ShowInEverything(object sender, RoutedEventArgs e)
@@ -182,43 +180,9 @@ namespace EverythingToolbar
 			OpenSelectedSearchResult();
 		}
 
-		[DllImport("shell32.dll", CharSet = CharSet.Auto)]
-		static extern bool ShellExecuteEx(ref SHELLEXECUTEINFO lpExecInfo);
-
-		[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-		public struct SHELLEXECUTEINFO
-		{
-			public int cbSize;
-			public uint fMask;
-			public IntPtr hwnd;
-			[MarshalAs(UnmanagedType.LPTStr)]
-			public string lpVerb;
-			[MarshalAs(UnmanagedType.LPTStr)]
-			public string lpFile;
-			[MarshalAs(UnmanagedType.LPTStr)]
-			public string lpParameters;
-			[MarshalAs(UnmanagedType.LPTStr)]
-			public string lpDirectory;
-			public int nShow;
-			public IntPtr hInstApp;
-			public IntPtr lpIDList;
-			[MarshalAs(UnmanagedType.LPTStr)]
-			public string lpClass;
-			public IntPtr hkeyClass;
-			public uint dwHotKey;
-			public IntPtr hIcon;
-			public IntPtr hProcess;
-		}
-
 		public void ShowFileProperties(object sender, RoutedEventArgs e)
 		{
-			SHELLEXECUTEINFO info = new SHELLEXECUTEINFO();
-			info.cbSize = Marshal.SizeOf(info);
-			info.lpVerb = "properties";
-			info.lpFile = (SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
-			info.nShow = 5;
-			info.fMask = 12;
-			ShellExecuteEx(ref info);
+			ShellUtils.ShowFileProperties((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName);
 		}
 
 		private void OnOpenWithMenuLoaded(object sender, RoutedEventArgs e)

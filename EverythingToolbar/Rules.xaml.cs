@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using EverythingToolbar.Helpers;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -178,7 +179,7 @@ namespace EverythingToolbar
 				command = command.Replace("%path%", "\"" + searchResult.Path + "\"");
 				try
 				{
-					Process.Start("cmd.exe", "/S /C \"" + command + "\"");
+					ShellUtils.CreateProcessFromCommandLine(command);
 					return true;
 				}
 				catch(Win32Exception)
