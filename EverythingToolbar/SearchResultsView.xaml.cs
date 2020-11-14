@@ -199,8 +199,9 @@ namespace EverythingToolbar
 			else
 				(mi.Items[0] as MenuItem).Visibility = Visibility.Visible;
 
-			foreach (Rule rule in rules)
+			for (int i = rules.Count - 1; i >= 0; i--)
 			{
+				Rule rule = rules[i];
 				MenuItem ruleMenuItem = new MenuItem() { Header = rule.Name, Tag = rule.Command };
 				ruleMenuItem.Click += OpenWithRule;
 				mi.Items.Insert(0, ruleMenuItem);
