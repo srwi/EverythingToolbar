@@ -34,14 +34,26 @@ Build
 - Build the project (Windows Explorer will restart)
 - Install the toolbar by running `EverythingToolbar/bin/<Configuration>/install.cmd` as admin
 
-Theming
--------
-
-- Edit an existing theme or create a new one in the `Themes` folder
-- Restart Windows Explorer via the task manager
-- Select theme via the context menu of the search box
-
-Compatibility
+Customization
 -------------
 
-- Tested on Windows 10 x64.
+- Edit an existing theme/item template or create a new one in the `Themes` / `ItemTemplates` folder
+- Restart Windows Explorer via the task manager
+- Select theme/item template via the context menu of the search box
+
+Rules
+-----
+
+Create custom "open with" commands by selecting `Rules...` from the search box context menu. By checking `Automatically apply rules based on condition` matching files/folders based on the `Type` and `Regular Expression` field will execute the corresponding command when opened.
+
+Examples:
+
+| Name                     | Type | Regular Expression           | Command                 |
+|--------------------------|------|------------------------------|-------------------------|
+| Open terminal here...    | Any  |                              | `cmd /K "cd %path%"`    |
+| Total Commander (Left)   | Any  |                              | `totalcmd /O /L=%path%` |
+| Total Commander (Right)  | Any  |                              | `totalcmd /O /R=%path%` |
+| MSPaint                  | File | `.*\\PixelArt\\.*(bmp\|BMP)` | `mspaint %file%`        |
+|                          |      |                              |                         |
+
+Leaving the regular expression field empty will never match.
