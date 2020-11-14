@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Xml;
@@ -13,10 +14,14 @@ namespace EverythingToolbar
 	public partial class Rules : Window
 	{
 		static List<Rule> rules = new List<Rule>();
+		static string rulesPath = "";
 
 		public Rules()
 		{
 			InitializeComponent();
+
+			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			rulesPath = Path.Combine(assemblyFolder, "rules.xml");
 
 			rules = LoadRules();
 			dataGrid.ItemsSource = rules;
@@ -41,10 +46,10 @@ namespace EverythingToolbar
 
 		public static List<Rule> LoadRules()
 		{
-			if (File.Exists("rules.xml"))
+			if (File.Exists(rulesPath))
 			{
 				var serializer = new XmlSerializer(rules.GetType());
-				using (var reader = XmlReader.Create("rules.xml"))
+				using (var reader = XmlReader.Create(rulesPath))
 				{
 					return (List<Rule>)serializer.Deserialize(reader);
 				}
@@ -67,7 +72,7 @@ namespace EverythingToolbar
 			}
 
 			var serializer = new XmlSerializer(newRules.GetType());
-			using (var writer = XmlWriter.Create("rules.xml"))
+			using (var writer = XmlWriter.Create(rulesPath))
 			{
 				serializer.Serialize(writer, newRules);
 			}
