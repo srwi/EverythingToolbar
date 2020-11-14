@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar
 {
@@ -31,7 +26,8 @@ namespace EverythingToolbar
 		public event EventHandler<FilterChangedEventArgs> FilterChanged;
 		public event EventHandler<EventArgs> PopupCloseRequested;
 
-		private ObservableCollection<SearchResult> searchResults = new ObservableCollection<SearchResult>();
+		private readonly ObservableCollection<SearchResult> searchResults = new ObservableCollection<SearchResult>();
+		private SearchResult SelectedItem => SearchResultsListView.SelectedItem as SearchResult;
 
 		public SearchResultsView()
 		{
@@ -104,7 +100,7 @@ namespace EverythingToolbar
 			if (SearchResultsListView.SelectedIndex > 0)
 			{
 				SearchResultsListView.SelectedIndex--;
-				SearchResultsListView.ScrollIntoView(SearchResultsListView.SelectedItem);
+				SearchResultsListView.ScrollIntoView(SelectedItem);
 			}
 		}
 
@@ -112,61 +108,37 @@ namespace EverythingToolbar
 		{
 			if (SearchResultsListView.SelectedIndex != -1)
 			{
-				if (Rules.HandleRule(SearchResultsListView.SelectedItem as SearchResult))
+				if (Rules.HandleRule(SelectedItem))
 					return;
 
-				try
-				{
-					string path = (SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
-					Process.Start(path);
-					EverythingSearch.Instance.IncrementRunCount(path);
-				}
-				catch (Win32Exception)
-				{
-					MessageBox.Show("Failed to open file/folder.");
-				}
+				SelectedItem?.Open();
 			}
 		}
 
 		private void OpenFilePath(object sender, RoutedEventArgs e)
 		{
-			if (SearchResultsListView.SelectedIndex != -1)
-			{
-				try
-				{
-					string path = Path.GetDirectoryName((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName);
-					Process.Start(path);
-					EverythingSearch.Instance.IncrementRunCount(path);
-				}
-				catch (Win32Exception)
-				{
-					MessageBox.Show("Failed to open folder.");
-				}
-			}
+			SelectedItem?.OpenPath();
 		}
 
 		private void CopyPathToClipBoard(object sender, RoutedEventArgs e)
 		{
-			Clipboard.SetText((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName);
+			SelectedItem?.CopyPathToClipboard();
 			PopupCloseRequested?.Invoke(this, new EventArgs());
 		}
 
 		private void OpenWith(object sender, RoutedEventArgs e)
 		{
-			string path = (SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
-			ShellUtils.OpenWithDialog(path);
+			SelectedItem?.OpenWith();
 		}
 
 		private void ShowInEverything(object sender, RoutedEventArgs e)
 		{
-			EverythingSearch.Instance.OpenLastSearchInEverything((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName);
+			SelectedItem?.ShowInEverything();
 		}
 
 		private void CopyFile(object sender, RoutedEventArgs e)
 		{
-			StringCollection file = new StringCollection();
-			file.Add((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName);
-			Clipboard.SetFileDropList(file);
+			SelectedItem?.CopyToClipboard();
 			PopupCloseRequested?.Invoke(this, new EventArgs());
 		}
 
@@ -182,7 +154,7 @@ namespace EverythingToolbar
 
 		public void ShowFileProperties(object sender, RoutedEventArgs e)
 		{
-			ShellUtils.ShowFileProperties((SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName);
+			SelectedItem?.ShowProperties();
 		}
 
 		private void OnOpenWithMenuLoaded(object sender, RoutedEventArgs e)

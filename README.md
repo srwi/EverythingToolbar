@@ -54,6 +54,5 @@ Examples:
 | Total Commander (Left)   | Any  |                              | `totalcmd /O /L=%path%` |
 | Total Commander (Right)  | Any  |                              | `totalcmd /O /R=%path%` |
 | MSPaint                  | File | `.*\\PixelArt\\.*(bmp\|BMP)` | `mspaint %file%`        |
-|                          |      |                              |                         |
 
 Leaving the regular expression field empty will never match.

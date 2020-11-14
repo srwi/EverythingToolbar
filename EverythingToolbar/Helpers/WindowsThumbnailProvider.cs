@@ -5,6 +5,7 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using System.Windows;
 using System.Linq;
+using System.Windows.Media;
 
 namespace EverythingToolbar
 {
@@ -131,7 +132,13 @@ namespace EverythingToolbar
 
 			try
 			{
-				return Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+				ImageSource image = Imaging.CreateBitmapSourceFromHBitmap(
+					hBitmap,
+					IntPtr.Zero,
+					Int32Rect.Empty,
+					BitmapSizeOptions.FromEmptyOptions());
+				image.Freeze();
+				return (BitmapSource)image;
 			}
 			finally
 			{

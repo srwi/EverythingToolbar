@@ -71,7 +71,7 @@ namespace EverythingToolbar
 					Regex.IsMatch("", Expression);
 					return true;
 				}
-				catch(ArgumentException)
+				catch (ArgumentException)
 				{
 					return false;
 				}

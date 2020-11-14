@@ -1,4 +1,8 @@
-﻿using System.IO;
+﻿using EverythingToolbar.Helpers;
+using System;
+using System.Collections.Specialized;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Media;
 
@@ -6,110 +10,99 @@ namespace EverythingToolbar
 {
 	public class SearchResult
 	{
-		public ImageSource Icon
-		{
-			get
-			{
-				ImageSource image = WindowsThumbnailProvider.GetThumbnail(FullPathAndFileName, 16, 16);
-				image.Freeze();
-				return image;
-			}
-		}
+		public bool IsFile { get; set; }
 
-        public bool IsFile { get; set; }
+		public string FullPathAndFileName { get; set; }
+
+		public string Path => System.IO.Path.GetDirectoryName(FullPathAndFileName);
+
+		public string HighlightedPath { get; set; }
 
 		public string FileName => System.IO.Path.GetFileName(FullPathAndFileName);
 
 		public string HighlightedFileName { get; set; }
 
-        public string Path
+		public string FileSize => IsFile ? Utils.GetBytesReadable(FullPathAndFileName) : "";
+
+		public string DateModified => File.GetLastWriteTime(FullPathAndFileName).ToString("g");
+
+		public ImageSource Icon => WindowsThumbnailProvider.GetThumbnail(FullPathAndFileName, 16, 16);
+
+		public void Open()
 		{
-            get
+			try
 			{
-                return System.IO.Path.GetDirectoryName(FullPathAndFileName);
+				Process.Start(FullPathAndFileName);
+				EverythingSearch.Instance.IncrementRunCount(FullPathAndFileName);
+			}
+			catch (Exception e)
+			{
+				ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open search result.");
+				MessageBox.Show("Failed to open search result.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 		}
 
-		public string HighlightedPath { get; set; }
-
-		public string FullPathAndFileName { get; set; }
-
-		public string FileSize
+		public void OpenPath()
 		{
-			get
+			try
 			{
-                if (!IsFile)
-                    return "";
-
-                try
-                {
-                    FileInfo fi = new FileInfo(FullPathAndFileName);
-                    return GetBytesReadable(fi.Length);
-                }
-                catch
-				{
-                    return "";
-                }
+				Process.Start(Path);
+				EverythingSearch.Instance.IncrementRunCount(FullPathAndFileName);
+			}
+			catch (Exception e)
+			{
+				ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open path.");
+				MessageBox.Show("Failed to open path.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 		}
 
-		public string DateModified
+		public void OpenWith()
 		{
-			get
+			try
 			{
-				return File.GetLastWriteTime(FullPathAndFileName).ToString("g");
+				ShellUtils.OpenWithDialog(FullPathAndFileName);
+			}
+			catch (Exception e)
+			{
+				ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open dialog.");
+				MessageBox.Show("Failed to open dialog.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 		}
 
-        // Taken from: https://stackoverflow.com/a/11124118/1477251
-        static string GetBytesReadable(long i)
+		public void CopyToClipboard()
+		{
+			try
+			{
+				Clipboard.SetFileDropList(new StringCollection { FullPathAndFileName });
+			}
+			catch (Exception e)
+			{
+				ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to copy file.");
+				MessageBox.Show("Failed to copy file.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
+		}
+
+        public void CopyPathToClipboard()
+		{
+			try
+			{
+				Clipboard.SetText(FullPathAndFileName);
+			}
+			catch (Exception e)
+			{
+				ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to copy path.");
+				MessageBox.Show("Failed to copy path.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
+		}
+
+        public void ShowProperties()
         {
-            // Get absolute value
-            long absolute_i = (i < 0 ? -i : i);
+			ShellUtils.ShowFileProperties(FullPathAndFileName);
+		}
 
-            // Determine the suffix and readable value
-            string suffix;
-            double readable;
-            if (absolute_i >= 0x1000000000000000) // Exabyte
-            {
-                suffix = "EB";
-                readable = (i >> 50);
-            }
-            else if (absolute_i >= 0x4000000000000) // Petabyte
-            {
-                suffix = "PB";
-                readable = (i >> 40);
-            }
-            else if (absolute_i >= 0x10000000000) // Terabyte
-            {
-                suffix = "TB";
-                readable = (i >> 30);
-            }
-            else if (absolute_i >= 0x40000000) // Gigabyte
-            {
-                suffix = "GB";
-                readable = (i >> 20);
-            }
-            else if (absolute_i >= 0x100000) // Megabyte
-            {
-                suffix = "MB";
-                readable = (i >> 10);
-            }
-            else if (absolute_i >= 0x400) // Kilobyte
-            {
-                suffix = "KB";
-                readable = i;
-            }
-            else
-            {
-                return i.ToString("0 B"); // Byte
-            }
-
-            // Divide by 1024 to get fractional value
-            readable = (readable / 1024);
-
-            // Return formatted number with suffix
-            return readable.ToString("0.### ") + suffix;
-        }
+        public void ShowInEverything()
+		{
+			EverythingSearch.Instance.OpenLastSearchInEverything(FullPathAndFileName);
+		}
     }
 }

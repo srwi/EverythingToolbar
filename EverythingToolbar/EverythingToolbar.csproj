@@ -74,6 +74,7 @@
     <Compile Include="EverythingSearch.cs" />
     <Compile Include="Data\Rule.cs" />
     <Compile Include="Helpers\ShellUtils.cs" />
+    <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Rules.xaml.cs">
       <DependentUpon>Rules.xaml</DependentUpon>
     </Compile>
