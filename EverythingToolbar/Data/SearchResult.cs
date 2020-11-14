@@ -46,7 +46,7 @@ namespace EverythingToolbar
 		{
 			try
 			{
-				Process.Start(Path);
+				ShellUtils.CreateProcessFromCommandLine("explorer.exe /select,\"" + FullPathAndFileName + "\"");
 				EverythingSearch.Instance.IncrementRunCount(FullPathAndFileName);
 			}
 			catch (Exception e)
