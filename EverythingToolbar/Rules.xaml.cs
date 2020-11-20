@@ -15,14 +15,11 @@ namespace EverythingToolbar
 	public partial class Rules : Window
 	{
 		static List<Rule> rules = new List<Rule>();
-		static string rulesPath = "";
+		static string RulesPath => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "rules.xml");
 
 		public Rules()
 		{
 			InitializeComponent();
-
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			rulesPath = Path.Combine(assemblyFolder, "rules.xml");
 
 			rules = LoadRules();
 			dataGrid.ItemsSource = rules;
@@ -47,10 +44,10 @@ namespace EverythingToolbar
 
 		public static List<Rule> LoadRules()
 		{
-			if (File.Exists(rulesPath))
+			if (File.Exists(RulesPath))
 			{
 				var serializer = new XmlSerializer(rules.GetType());
-				using (var reader = XmlReader.Create(rulesPath))
+				using (var reader = XmlReader.Create(RulesPath))
 				{
 					return (List<Rule>)serializer.Deserialize(reader);
 				}
@@ -73,7 +70,7 @@ namespace EverythingToolbar
 			}
 
 			var serializer = new XmlSerializer(newRules.GetType());
-			using (var writer = XmlWriter.Create(rulesPath))
+			using (var writer = XmlWriter.Create(RulesPath))
 			{
 				serializer.Serialize(writer, newRules);
 			}
