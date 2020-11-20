@@ -23,16 +23,17 @@ namespace EverythingToolbar
 		public ToolbarControl()
 		{
 			InitializeComponent();
-			LoadThemes();
-			LoadItemTemplates();
-			ApplyItemTemplate(Properties.Settings.Default.itemTemplate);
-			ApplyTheme(Properties.Settings.Default.theme);
-
-			// Fixes #3
-			if (Properties.Settings.Default.sortBy < 1)
+			
+			try
 			{
-				Properties.Settings.Default.sortBy = 1;
-				Properties.Settings.Default.Save();
+				LoadThemes();
+				LoadItemTemplates();
+				ApplyItemTemplate(Properties.Settings.Default.itemTemplate);
+				ApplyTheme(Properties.Settings.Default.theme);
+			}
+			catch (Exception e)
+			{
+				ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to load resources.");
 			}
 
 			(SortByMenu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
@@ -41,9 +42,14 @@ namespace EverythingToolbar
 			searchResultsPopup.searchResultsView.FilterChanged += OnFilterChanged;
 			searchResultsPopup.Closed += SearchResultsPopup_Closed;
 
-#if !DEBUG
-			HotkeyManager.Current.AddOrReplace("FocusSearchBox", Key.S, ModifierKeys.Windows | ModifierKeys.Alt, FocusSearchBox);
-#endif
+			try
+			{
+				HotkeyManager.Current.AddOrReplace("FocusSearchBox", Key.S, ModifierKeys.Windows | ModifierKeys.Alt, FocusSearchBox);
+			}
+			catch (Exception e)
+			{
+				ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Hotkey could not be registered.");
+			}
 		}
 
 		public static void SetTaskbarEdge(Edge edge)
