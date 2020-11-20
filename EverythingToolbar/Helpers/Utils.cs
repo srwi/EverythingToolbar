@@ -20,7 +20,6 @@ namespace EverythingToolbar.Helpers
             }
 			catch (Exception e)
 			{
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to get file size.");
                 return "";
             }
 
