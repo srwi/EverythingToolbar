@@ -220,88 +220,14 @@
         </Style>
     </UserControl.Resources>
 
-    <Border>
-        <Grid Name="searchResultsViewGrid">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <TabControl Name="TabControl"
-                        SelectionChanged="TabControl_SelectionChanged">
-                <TabControl.Resources>
-                    <Style TargetType="TabItem">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="TabItem">
-                                    <Border Name="Border"
-                                            Padding="20, 17"
-                                            BorderThickness="0, 0, 0, 4"
-                                            Background="Transparent">
-                                        <ContentPresenter x:Name="ContentSite"
-                                                          TextBlock.FontSize="10pt"
-                                                          TextBlock.Foreground="{DynamicResource TabForeground}"
-                                                          VerticalAlignment="Center"
-                                                          HorizontalAlignment="Center"
-                                                          ContentSource="Header" />
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver"
-                                                 Value="True">
-                                            <Setter TargetName="ContentSite"
-                                                    Property="TextBlock.Foreground"
-                                                    Value="{DynamicResource TabForegroundHover}" />
-                                        </Trigger>
-                                        <Trigger Property="IsSelected"
-                                                 Value="True">
-                                            <Setter TargetName="Border"
-                                                    Property="BorderBrush"
-                                                    Value="{DynamicResource TabBorderActive}" />
-                                            <Setter TargetName="ContentSite"
-                                                    Property="TextBlock.FontWeight"
-                                                    Value="Medium" />
-                                            <Setter TargetName="ContentSite"
-                                                    Property="TextBlock.Foreground"
-                                                    Value="{DynamicResource TabForegroundActive}" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                    <Style TargetType="{x:Type TabControl}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type TabControl}">
-                                    <Border BorderBrush="{DynamicResource TabBarBorder}"
-                                            BorderThickness="0, 0,  0, 1">
-                                        <TabPanel Panel.ZIndex="1"
-                                                  Margin="13, 0, 0, 0"
-                                                  IsItemsHost="True"
-                                                  Background="Transparent" />
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </TabControl.Resources>
-                <TabItem Header="All"
-                         Name="AllTab"
-                         IsSelected="True" />
-                <TabItem Header="Files"
-                         Name="FilesTab" />
-                <TabItem Header="Folders"
-                         Name="FoldersTab" />
-            </TabControl>
-            <ListView Name="SearchResultsListView"
-                      Grid.Row="1"
-                      BorderThickness="0"
-                      Background="{DynamicResource SearchResultsViewBackground}"
-                      HorizontalContentAlignment="Stretch"
-                      Height="{Binding ElementName=searchResultsPopup, Path=Height}"
-                      ItemTemplate="{DynamicResource searchResultsListTemplate}"
-                      ScrollViewer.ScrollChanged="ListView_ScrollChanged"
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            </ListView>
-        </Grid>
-    </Border>
+    <ListView Name="SearchResultsListView"
+              BorderThickness="0"
+              Background="{DynamicResource SearchResultsViewBackground}"
+              HorizontalContentAlignment="Stretch"
+              Height="{Binding ElementName=SearchResultsPopup, Path=Height}"
+              ItemTemplate="{DynamicResource searchResultsListTemplate}"
+              ScrollViewer.ScrollChanged="ListView_ScrollChanged"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+    </ListView>
+
 </UserControl>

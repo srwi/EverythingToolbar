@@ -22,7 +22,7 @@ namespace EverythingToolbar
 
 		public string HighlightedFileName { get; set; }
 
-		public string FileSize => IsFile ? Utils.GetBytesReadable(FullPathAndFileName) : "";
+		public string FileSize => IsFile ? Utils.GetHumanReadableFileSize(FullPathAndFileName) : "";
 
 		public string DateModified => File.GetLastWriteTime(FullPathAndFileName).ToString("g");
 

@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace EverythingToolbar.Helpers
 {
 	class Utils
     {
         // Taken from: https://stackoverflow.com/a/11124118/1477251
-        public static string GetBytesReadable(string path)
+        public static string GetHumanReadableFileSize(string path)
         {
             // Get file length
             long length;
@@ -18,7 +13,7 @@ namespace EverythingToolbar.Helpers
             {
 				length = new FileInfo(path).Length;
             }
-			catch (Exception e)
+			catch
 			{
                 return "";
             }

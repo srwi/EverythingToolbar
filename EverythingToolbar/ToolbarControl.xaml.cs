@@ -15,10 +15,7 @@ namespace EverythingToolbar
 {
 	public partial class ToolbarControl : UserControl
 	{
-		private CancellationTokenSource cancellationTokenSource;
-		private CancellationToken cancellationToken;
 		private static Edge taskbarEdge;
-		private readonly int searchBlockSize = 100;
 
 		public ToolbarControl()
 		{
@@ -38,9 +35,8 @@ namespace EverythingToolbar
 
 			(SortByMenu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
 
-			searchResultsPopup.searchResultsView.EndOfListReached += OnEndOfListReached;
-			searchResultsPopup.searchResultsView.FilterChanged += OnFilterChanged;
-			searchResultsPopup.Closed += SearchResultsPopup_Closed;
+			SearchResultsPopup.SearchResultsView.EndOfListReached += OnEndOfListReached;
+			SearchResultsPopup.Closed += SearchResultsPopup_Closed;
 
 			try
 			{
@@ -57,38 +53,16 @@ namespace EverythingToolbar
 			taskbarEdge = edge;
 		}
 
-		private void OnFilterChanged(object sender, FilterChangedEventArgs e)
-		{
-			EverythingSearch.Instance.SearchMacro = e.Filter;
-			StartSearch(EverythingSearch.Instance.SearchTerm);
-		}
-
 		private void OnEndOfListReached(object sender, EndOfListReachedEventArgs e)
 		{
-			RequestSearchResults(e.ItemCount, searchBlockSize);
-			searchResultsPopup.searchResultsView.ScrollToVerticalOffset(e.VerticalOffset);
+			EverythingSearch.Instance.QueryBatch();
+			SearchResultsPopup.SearchResultsView.ScrollToVerticalOffset(e.VerticalOffset);
 		}
 
 		public void StartSearch(string searchTerm)
 		{
-			searchResultsPopup.searchResultsView.Clear();
+			SearchResultsPopup.SearchResultsView.Clear();
 			EverythingSearch.Instance.SearchTerm = searchTerm;
-			RequestSearchResults(0, searchBlockSize);
-		}
-
-		private void RequestSearchResults(int offset, int count)
-		{
-			cancellationTokenSource?.Cancel();
-			cancellationTokenSource = new CancellationTokenSource();
-			cancellationToken = cancellationTokenSource.Token;
-
-			Task.Run(() =>
-			{
-				foreach(SearchResult searchResult in EverythingSearch.Instance.Query(offset, count))
-				{
-					searchResultsPopup.searchResultsView.AddSearchResult(searchResult);
-				}
-			}, cancellationToken);
 		}
 
 		private void SearchResultsPopup_Closed(object sender, EventArgs e)
@@ -101,13 +75,13 @@ namespace EverythingToolbar
 
 		private void SearchBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
 		{
-			if (searchResultsPopup.IsMouseOver && !searchResultsPopup.searchResultsView.SearchResultsListView.IsMouseOver)
+			if (SearchResultsPopup.IsMouseOver && !SearchResultsPopup.SearchResultsView.SearchResultsListView.IsMouseOver)
 			{
-				searchBox.Focus();
+				//searchBox.Focus();
 			}
 			else
 			{
-				searchResultsPopup.StaysOpen = false;
+				SearchResultsPopup.StaysOpen = false;
 			}
 		}
 
@@ -115,43 +89,42 @@ namespace EverythingToolbar
 		{
 			if (searchBox.Text.Length == 0)
 			{
-				searchResultsPopup.Close();
-				searchResultsPopup.searchResultsView.AllTab.IsSelected = true;
+				SearchResultsPopup.Close();
 				return;
 			}
 
-			searchResultsPopup.Open(taskbarEdge);
+			SearchResultsPopup.Open(taskbarEdge);
 			StartSearch(searchBox.Text);
 		}
 
 		private void CSDeskBandWpf_PreviewKeyDown(object sender, KeyEventArgs e)
 		{
-			if (!searchResultsPopup.IsOpen)
+			if (!SearchResultsPopup.IsOpen)
 				return;
 
 			if (e.Key == Key.Up)
 			{
-				searchResultsPopup.searchResultsView.SelectPreviousSearchResult();
+				SearchResultsPopup.SearchResultsView.SelectPreviousSearchResult();
 			}
 			else if (e.Key == Key.Down)
 			{
-				searchResultsPopup.searchResultsView.SelectNextSearchResult();
+				SearchResultsPopup.SearchResultsView.SelectNextSearchResult();
 			}
 			else if (e.Key == Key.Enter)
 			{
 				if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
 				{
 					string path = "";
-					if (searchResultsPopup.searchResultsView.SearchResultsListView.SelectedIndex >= 0)
-						path = (searchResultsPopup.searchResultsView.SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
+					if (SearchResultsPopup.SearchResultsView.SearchResultsListView.SelectedIndex >= 0)
+						path = (SearchResultsPopup.SearchResultsView.SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
 					EverythingSearch.Instance.OpenLastSearchInEverything(path);
 					return;
 				}
-				searchResultsPopup.searchResultsView.OpenSelectedSearchResult();
+				SearchResultsPopup.SearchResultsView.OpenSelectedSearchResult();
 			}
 			else if (e.Key == Key.Escape)
 			{
-				searchResultsPopup.Close();
+				SearchResultsPopup.Close();
 				keyboardFocusCapture.Focus();
 				Keyboard.ClearFocus();
 			}

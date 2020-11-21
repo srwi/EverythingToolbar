@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -9,44 +8,28 @@ using System.Windows.Threading;
 
 namespace EverythingToolbar
 {
-	public class FilterChangedEventArgs : EventArgs
-	{
-		public string Filter { get; set; }
-	}
 
 	public class EndOfListReachedEventArgs : EventArgs
 	{
-		public int ItemCount { get; set; }
 		public double VerticalOffset { get; set; }
 	}
 
 	public partial class SearchResultsView : UserControl
 	{
 		public event EventHandler<EndOfListReachedEventArgs> EndOfListReached;
-		public event EventHandler<FilterChangedEventArgs> FilterChanged;
 		public event EventHandler<EventArgs> PopupCloseRequested;
 
-		private readonly ObservableCollection<SearchResult> searchResults = new ObservableCollection<SearchResult>();
 		private SearchResult SelectedItem => SearchResultsListView.SelectedItem as SearchResult;
 
 		public SearchResultsView()
 		{
 			InitializeComponent();
 
-			SearchResultsListView.ItemsSource = searchResults;
+			SearchResultsListView.ItemsSource = EverythingSearch.Instance.SearchResults;
 		}
 
 		public void Clear()
 		{
-			searchResults.Clear();
-		}
-
-		public void AddSearchResult(SearchResult searchResult)
-		{
-			Dispatcher.Invoke(() =>
-			{
-				searchResults.Add(searchResult);
-			});
 		}
 
 		public void ScrollToVerticalOffset(double verticalOffset)
@@ -59,29 +42,15 @@ namespace EverythingToolbar
 			}), DispatcherPriority.ContextIdle);
 		}
 
-		private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if (AllTab.IsSelected)
-			{
-				FilterChanged?.Invoke(this, new FilterChangedEventArgs() { Filter = "" });
-			}
-			else if (FilesTab.IsSelected)
-			{
-				FilterChanged?.Invoke(this, new FilterChangedEventArgs() { Filter = "file:" });
-			}
-			else if (FoldersTab.IsSelected)
-			{
-				FilterChanged?.Invoke(this, new FilterChangedEventArgs() { Filter = "folder:" });
-			}
-		}
-
 		private void ListView_ScrollChanged(object sender, ScrollChangedEventArgs e)
 		{
 			if (e.VerticalChange > 0)
 			{
 				if (e.VerticalOffset > e.ExtentHeight - 2 * e.ViewportHeight)
 				{
-					EndOfListReached?.Invoke(this, new EndOfListReachedEventArgs() { ItemCount = searchResults.Count, VerticalOffset = e.VerticalOffset });
+					EndOfListReached?.Invoke(this, new EndOfListReachedEventArgs() {
+						VerticalOffset = e.VerticalOffset
+					});
 				}
 			}
 		}

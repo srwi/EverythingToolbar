@@ -4,7 +4,6 @@
        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
        xmlns:local="clr-namespace:EverythingToolbar"
-       Name="searchResultsPopup"
        PlacementTarget="{Binding ElementName=searchBox}"
        AllowsTransparency="True"
        mc:Ignorable="d"
@@ -15,15 +14,25 @@
         <Border.Effect>
             <DropShadowEffect BlurRadius="15" Direction="-90" Opacity="0.25"  RenderingBias="Quality" ShadowDepth="-100" />
         </Border.Effect>
-        <Border x:Name="border"
+        <Border x:Name="PopupBorder"
                 BorderThickness="1"
                 BorderBrush="{DynamicResource SearchResultsViewBorder}"
                 Background="{DynamicResource SearchResultsViewHeader}">
             <Border.RenderTransform>
                 <TranslateTransform x:Name="translateTransform" />
             </Border.RenderTransform>
-            <Grid>
-                <local:SearchResultsView x:Name="searchResultsView" />
+
+            <Grid Name="ContentGrid">
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                
+                <local:FilterSelector />
+                
+                <local:SearchResultsView x:Name="SearchResultsView" Grid.Row="1" />
+
                 <Thumb Width="8"
                        Height="8"
                        DragStarted="OnDragStarted"

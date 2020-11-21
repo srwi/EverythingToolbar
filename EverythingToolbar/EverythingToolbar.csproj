@@ -73,6 +73,9 @@
     </Compile>
     <Compile Include="EverythingSearch.cs" />
     <Compile Include="Data\Rule.cs" />
+    <Compile Include="FilterSelector.xaml.cs">
+      <DependentUpon>FilterSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ShellUtils.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Rules.xaml.cs">
@@ -110,6 +113,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Page Include="FilterSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Rules.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -145,6 +152,7 @@
     <Compile Include="CSDeskBand.cs" />
     <Compile Include="Data\SearchResult.cs" />
     <Compile Include="Converters\HighlightedTextConverter.cs" />
+    <Compile Include="Properties\Settings.cs" />
     <Compile Include="ToolbarControl.xaml.cs">
       <DependentUpon>ToolbarControl.xaml</DependentUpon>
       <SubType>Code</SubType>

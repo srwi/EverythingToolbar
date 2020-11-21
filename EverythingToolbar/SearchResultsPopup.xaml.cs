@@ -18,7 +18,7 @@ namespace EverythingToolbar
         {
             InitializeComponent();
 
-			searchResultsView.PopupCloseRequested += PopupCloseRequested;
+			SearchResultsView.PopupCloseRequested += PopupCloseRequested;
         }
 
 		private void OnDragStarted(object sender, DragStartedEventArgs e)
@@ -65,20 +65,20 @@ namespace EverythingToolbar
 			switch (taskbarEdge)
 			{
 				case Edge.Top:
-					searchResultsPopup.Placement = PlacementMode.Bottom;
-					border.BorderThickness = new Thickness(1, 0, 1, 1);
+					Placement = PlacementMode.Bottom;
+					PopupBorder.BorderThickness = new Thickness(1, 0, 1, 1);
 					break;
 				case Edge.Left:
-					searchResultsPopup.Placement = PlacementMode.Right;
-					border.BorderThickness = new Thickness(0, 1, 1, 1);
+					Placement = PlacementMode.Right;
+					PopupBorder.BorderThickness = new Thickness(0, 1, 1, 1);
                     break;
 				case Edge.Right:
-					searchResultsPopup.Placement = PlacementMode.Left;
-					border.BorderThickness = new Thickness(1, 1, 0, 1);
+					Placement = PlacementMode.Left;
+					PopupBorder.BorderThickness = new Thickness(1, 1, 0, 1);
                     break;
 				case Edge.Bottom:
-					searchResultsPopup.Placement = PlacementMode.Top;
-					border.BorderThickness = new Thickness(1, 1, 1, 0);
+					Placement = PlacementMode.Top;
+					PopupBorder.BorderThickness = new Thickness(1, 1, 1, 0);
                     break;
 			}
 
@@ -108,7 +108,7 @@ namespace EverythingToolbar
 			{
 				EasingFunction = ease
 			};
-			border.BeginAnimation(OpacityProperty, opacity);
+			PopupBorder.BeginAnimation(OpacityProperty, opacity);
 
 			ThicknessAnimation inner = new ThicknessAnimation(new Thickness(0), TimeSpan.FromSeconds(0.8))
 			{
@@ -122,7 +122,7 @@ namespace EverythingToolbar
                 inner.From = new Thickness(0, 50, 0, -50);
             else if (taskbarEdge == Edge.Left)
                 inner.From = new Thickness(-50, 0, 50, 0);
-            searchResultsView.searchResultsViewGrid.BeginAnimation(MarginProperty, inner);
+            ContentGrid.BeginAnimation(MarginProperty, inner);
         }
 
         private void PopupCloseRequested(object sender, EventArgs e)

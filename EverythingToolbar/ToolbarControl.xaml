@@ -223,6 +223,6 @@
             </TextBox.ContextMenu>
         </TextBox>
 
-        <local:SearchResultsPopup x:Name="searchResultsPopup" PlacementTarget="{Binding ElementName=searchBox}"/>
+        <local:SearchResultsPopup x:Name="SearchResultsPopup" PlacementTarget="{Binding ElementName=searchBox}"/>
     </Grid>
 </UserControl>
