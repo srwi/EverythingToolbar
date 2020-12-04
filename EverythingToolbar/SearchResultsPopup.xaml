@@ -4,12 +4,22 @@
        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
        xmlns:local="clr-namespace:EverythingToolbar"
-       PlacementTarget="{Binding ElementName=searchBox}"
+       xmlns:properties="clr-namespace:EverythingToolbar.Properties"
        AllowsTransparency="True"
        mc:Ignorable="d"
        d:DesignWidth="300"
        d:DesignHeight="300"
-       Opened="OnOpened">
+       Opened="OnOpened"
+       Closed="OnClosed"
+       StaysOpen="False"
+       IsOpen="{Binding SearchTerm,
+                        Converter={local:SearchTermToIsOpenedConverter},
+                        UpdateSourceTrigger=PropertyChanged,
+                        Mode=OneWay}"
+       Placement="{Binding TaskbarEdge,
+                           Converter={local:EdgeToPlacementModeConverter},
+                           UpdateSourceTrigger=PropertyChanged,
+                           Mode=OneWay}">
     <Border Margin="10, 10, 10, 0">
         <Border.Effect>
             <DropShadowEffect BlurRadius="15" Direction="-90" Opacity="0.25"  RenderingBias="Quality" ShadowDepth="-100" />
@@ -23,15 +33,23 @@
             </Border.RenderTransform>
 
             <Grid Name="ContentGrid">
-                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 
-                <local:FilterSelector />
+                <local:FilterSelector Focusable="False" />
                 
                 <local:SearchResultsView x:Name="SearchResultsView" Grid.Row="1" />
+
+                <local:SearchBox x:Name="SearchBox"
+                                 Grid.Row="2"
+                                 Height="40"
+                                 Visibility="{Binding Source={x:Static properties:Settings.Default},
+                                                      Path=isIconOnly,
+                                                      Converter={local:BoolToVisibilityConverter},
+                                                      ConverterParameter=false}" />
 
                 <Thumb Width="8"
                        Height="8"

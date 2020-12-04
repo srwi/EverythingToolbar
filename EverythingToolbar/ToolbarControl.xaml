@@ -3,226 +3,134 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:EverythingToolbar"
              xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+             xmlns:local="clr-namespace:EverythingToolbar"
              mc:Ignorable="d"
              PreviewKeyDown="CSDeskBandWpf_PreviewKeyDown"
-             HorizontalAlignment="Stretch">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <Style x:Key="SearchBoxStyle" TargetType="{x:Type TextBox}">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="Foreground" Value="Transparent"/>
-                <Setter Property="FontSize" Value="15"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type TextBox}">
-                            <Border x:Name="border"
-                                BorderThickness="1"
-                                BorderBrush="{DynamicResource SearchBoxBorder}"
-                                Background="{DynamicResource SearchBoxBackground}">
-                                <Grid x:Name="grid" SnapsToDevicePixels="True">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="38"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock x:Name="logo"
-                                           Text="⌕"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           FontSize="26"
-                                           Foreground="{DynamicResource SearchBoxLogo}"
-                                           Margin="0, -2, 0, 0"/>
-                                    <ScrollViewer x:Name="PART_ContentHost"
-                                              Grid.Column="1"
-                                              Focusable="false"
-                                              HorizontalScrollBarVisibility="Hidden"
-                                              VerticalScrollBarVisibility="Hidden"/>
-                                    <TextBlock x:Name="watermark"
-                                           Text="Search with Everything"
-                                           Grid.Column="1"
-                                           Margin="0, 0, 10, 0"
-                                           VerticalAlignment="Center"
-                                           Foreground="{DynamicResource SearchBoxForeground}"
-                                           IsHitTestVisible="false"
-                                           TextTrimming="WordEllipsis"/>
-                                </Grid>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="Control.IsMouseOver" Value="true">
-                                    <Setter Property="Background"
-                                        TargetName="border"
-                                        Value="{DynamicResource SearchBoxBackgroundHover}"/>
-                                    <Setter Property="BorderThickness"
-                                        TargetName="border"
-                                        Value="2"/>
-                                    <Setter Property="BorderBrush"
-                                        TargetName="border"
-                                        Value="{DynamicResource SearchBoxBorderHover}"/>
-                                    <Setter Property="Margin"
-                                        TargetName="grid"
-                                        Value="-1"/>
-                                    <Setter Property="Foreground"
-                                        TargetName="logo"
-                                        Value="{DynamicResource SearchBoxLogoHover}"/>
-                                    <Setter Property="Foreground"
-                                        TargetName="watermark"
-                                        Value="{DynamicResource SearchBoxForegroundHover}"/>
-                                </Trigger>
-                                <Trigger Property="Control.IsKeyboardFocused" Value="true">
-                                    <Setter Property="Background"
-                                        TargetName="border"
-                                        Value="{DynamicResource SearchBoxBackgroundActive}"/>
-                                    <Setter Property="BorderThickness"
-                                        TargetName="border"
-                                        Value="2"/>
-                                    <Setter Property="BorderBrush"
-                                        TargetName="border"
-                                        Value="{DynamicResource SearchBoxBorderActive}"/>
-                                    <Setter Property="Margin"
-                                        TargetName="grid"
-                                        Value="-1"/>
-                                    <Setter Property="Foreground"
-                                        TargetName="logo"
-                                        Value="{DynamicResource SearchBoxLogoActive}"/>
-                                    <Setter Property="Opacity"
-                                        TargetName="watermark"
-                                        Value="0"/>
-                                    <Setter Property="Foreground"
-                                        Value="{DynamicResource SearchBoxForegroundActive}"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </ResourceDictionary>
-        
-    </UserControl.Resources>
-
+             HorizontalAlignment="Stretch"
+             IsTabStop="True">
     <Grid>
-        <TextBox Name="keyboardFocusCapture"
-                 Opacity="0"
-                 IsHitTestVisible="False"/>
-        <TextBox x:Name="searchBox"
-                 Style="{DynamicResource SearchBoxStyle}"
-                 LostKeyboardFocus="SearchBox_LostKeyboardFocus"
-                 TextChanged="SearchBox_TextChanged"
-                 CaretBrush="{DynamicResource SearchBoxForegroundActive}">
-            <TextBox.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="About EverythingToolbar..."
-                              Click="OpenAboutWindow"/>
-                    <Separator/>
-                    <MenuItem Header="Theme" Name="ThemeMenu"/>
-                    <MenuItem Header="View" Name="ItemTemplateMenu"/>
-                    <MenuItem Header="Rules..."
-                              Click="OpenRulesWindow"/>
-                    <Separator/>
-                    <MenuItem Header="_Regular Expressions"
-                              IsCheckable="True"
-                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}"
-                              Click="MenuItem_Click"/>
-                    <MenuItem Header="Match _Case"
-                              IsCheckable="True"
-                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase, Mode=TwoWay}"
-                              Click="MenuItem_Click"/>
-                    <MenuItem Header="Match _Path"
-                              IsCheckable="True"
-                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath, Mode=TwoWay}"
-                              Click="MenuItem_Click"/>
-                    <MenuItem Header="Match Whole _Word"
-                              IsCheckable="True"
-                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}"
-                              Click="MenuItem_Click"/>
-                    <Separator/>
-                    <MenuItem Header="Sort By..." Name="SortByMenu">
-                        <MenuItem IsCheckable="True"
-                                  Header="Name ascending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Name descending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Path ascending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Path descending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Size ascending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Size descending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Extension ascending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Extension descending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Type name ascending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Type name descending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Date created ascending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Date created descending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Date modified ascending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Date modified descending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Attributes ascending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Attributes descending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="File list filename ascending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="File list filename descending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Run count ascending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Run count descending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Date recently changed ascending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Date recently changed descending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Date accessed ascending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Date accessed descending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Date run ascending"
-                                  Click="MenuItem_SortBy_Click"/>
-                        <MenuItem IsCheckable="True"
-                                  Header="Date run descending"
-                                  Click="MenuItem_SortBy_Click"/>
-                    </MenuItem>
-                </ContextMenu>
-            </TextBox.ContextMenu>
-        </TextBox>
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="About EverythingToolbar..."
+                          Click="OpenAboutWindow"/>
+                <Separator/>
+                <MenuItem Header="Theme" Name="ThemeMenu"/>
+                <MenuItem Header="View" Name="ItemTemplateMenu"/>
+                <MenuItem Header="Rules..."
+                          Click="OpenRulesWindow"/>
+                <Separator/>
+                <MenuItem Header="_Regular Expressions"
+                          IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}"
+                          Click="MenuItem_Click"/>
+                <MenuItem Header="Match _Case"
+                          IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase, Mode=TwoWay}"
+                          Click="MenuItem_Click"/>
+                <MenuItem Header="Match _Path"
+                          IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath, Mode=TwoWay}"
+                          Click="MenuItem_Click"/>
+                <MenuItem Header="Match Whole _Word"
+                          IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}"
+                          Click="MenuItem_Click"/>
+                <Separator/>
+                <MenuItem Header="Sort By..." Name="SortByMenu">
+                    <MenuItem IsCheckable="True"
+                              Header="Name ascending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Name descending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Path ascending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Path descending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Size ascending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Size descending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Extension ascending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Extension descending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Type name ascending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Type name descending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Date created ascending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Date created descending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Date modified ascending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Date modified descending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Attributes ascending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Attributes descending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="File list filename ascending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="File list filename descending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Run count ascending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Run count descending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Date recently changed ascending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Date recently changed descending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Date accessed ascending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Date accessed descending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Date run ascending"
+                              Click="MenuItem_SortBy_Click"/>
+                    <MenuItem IsCheckable="True"
+                              Header="Date run descending"
+                              Click="MenuItem_SortBy_Click"/>
+                </MenuItem>
+            </ContextMenu>
+        </Grid.ContextMenu>
 
-        <local:SearchResultsPopup x:Name="SearchResultsPopup" PlacementTarget="{Binding ElementName=searchBox}"/>
+        <local:SearchBox x:Name="SearchBox"
+                         Visibility="{Binding Path=ActualWidth,
+                                              RelativeSource={RelativeSource Self},
+                                              Converter={local:DoubleToVisibilityConverter},
+                                              ConverterParameter=70}" />
+
+        <local:SearchButton Visibility="{Binding Path=ActualWidth,
+                                                 RelativeSource={RelativeSource Self},  
+                                                 Converter={local:DoubleToVisibilityConverter},
+                                                 ConverterParameter=-70}" />
+
+        <local:SearchResultsPopup x:Name="SearchResultsPopup" />
     </Grid>
 </UserControl>

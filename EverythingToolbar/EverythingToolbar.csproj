@@ -71,6 +71,10 @@
     <Compile Include="About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\EdgeToPlacementModeConverter.cs" />
+    <Compile Include="Converters\SearchTermToIsOpenedConverter.cs" />
+    <Compile Include="Converters\DoubleToVisibilityConverter.cs" />
     <Compile Include="EverythingSearch.cs" />
     <Compile Include="Data\Rule.cs" />
     <Compile Include="FilterSelector.xaml.cs">
@@ -80,6 +84,12 @@
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Rules.xaml.cs">
       <DependentUpon>Rules.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchBox.xaml.cs">
+      <DependentUpon>SearchBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchButton.xaml.cs">
+      <DependentUpon>SearchButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="SearchResultsPopup.xaml.cs">
       <DependentUpon>SearchResultsPopup.xaml</DependentUpon>
@@ -118,6 +128,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Rules.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SearchBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SearchButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

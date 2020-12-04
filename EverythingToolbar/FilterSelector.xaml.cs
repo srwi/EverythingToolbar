@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace EverythingToolbar
 {
@@ -56,5 +57,5 @@ namespace EverythingToolbar
 			TabControl.SelectedIndex = -1;
 			EverythingSearch.Instance.CurrentFilter = EverythingSearch.Instance.Filters[tabItemNumber + ComboBox.SelectedIndex];
 		}
-	}
+    }
 }

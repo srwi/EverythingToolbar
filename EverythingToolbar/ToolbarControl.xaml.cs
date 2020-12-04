@@ -5,8 +5,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -36,7 +34,6 @@ namespace EverythingToolbar
 			(SortByMenu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
 
 			SearchResultsPopup.SearchResultsView.EndOfListReached += OnEndOfListReached;
-			SearchResultsPopup.Closed += SearchResultsPopup_Closed;
 
 			try
 			{
@@ -57,44 +54,6 @@ namespace EverythingToolbar
 		{
 			EverythingSearch.Instance.QueryBatch();
 			SearchResultsPopup.SearchResultsView.ScrollToVerticalOffset(e.VerticalOffset);
-		}
-
-		public void StartSearch(string searchTerm)
-		{
-			SearchResultsPopup.SearchResultsView.Clear();
-			EverythingSearch.Instance.SearchTerm = searchTerm;
-		}
-
-		private void SearchResultsPopup_Closed(object sender, EventArgs e)
-		{
-			if (!searchBox.IsKeyboardFocused)
-				keyboardFocusCapture.Focus();
-
-			searchBox.Clear();
-		}
-
-		private void SearchBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-		{
-			if (SearchResultsPopup.IsMouseOver && !SearchResultsPopup.SearchResultsView.SearchResultsListView.IsMouseOver)
-			{
-				//searchBox.Focus();
-			}
-			else
-			{
-				SearchResultsPopup.StaysOpen = false;
-			}
-		}
-
-		private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			if (searchBox.Text.Length == 0)
-			{
-				SearchResultsPopup.Close();
-				return;
-			}
-
-			SearchResultsPopup.Open(taskbarEdge);
-			StartSearch(searchBox.Text);
 		}
 
 		private void CSDeskBandWpf_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -124,8 +83,7 @@ namespace EverythingToolbar
 			}
 			else if (e.Key == Key.Escape)
 			{
-				SearchResultsPopup.Close();
-				keyboardFocusCapture.Focus();
+				EverythingSearch.Instance.SearchTerm = null;
 				Keyboard.ClearFocus();
 			}
 		}
@@ -139,7 +97,6 @@ namespace EverythingToolbar
 		private void MenuItem_Click(object sender, RoutedEventArgs e)
 		{
 			Properties.Settings.Default.Save();
-			StartSearch(EverythingSearch.Instance.SearchTerm);
 		}
 
 		private void MenuItem_SortBy_Click(object sender, RoutedEventArgs e)
@@ -160,7 +117,6 @@ namespace EverythingToolbar
 			}
 
 			Properties.Settings.Default.Save();
-			StartSearch(EverythingSearch.Instance.SearchTerm);
 		}
 
 		public void LoadThemes()
@@ -300,11 +256,19 @@ namespace EverythingToolbar
 
 		private void FocusSearchBox(object sender, HotkeyEventArgs e)
 		{
+			if (Properties.Settings.Default.isIconOnly)
+			{
+				// TODO: set popup as foreground window
+				EverythingSearch.Instance.SearchTerm = "";
+			}
+			else
+			{
 #if !DEBUG
-			IntPtr taskbar = FindWindow("Shell_traywnd", "");
-			SetForegroundWindow(taskbar);
-			Keyboard.Focus(searchBox);
+				IntPtr taskbar = FindWindow("Shell_traywnd", "");
+				SetForegroundWindow(taskbar);
 #endif
+				Keyboard.Focus(SearchBox);
+			}
 		}
 
 		private void OpenRulesWindow(object sender, RoutedEventArgs e)

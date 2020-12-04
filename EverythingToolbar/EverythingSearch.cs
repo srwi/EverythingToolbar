@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -13,7 +14,7 @@ using System.Windows.Forms;
 
 namespace EverythingToolbar
 {
-	class EverythingSearch
+	class EverythingSearch : INotifyPropertyChanged
 	{
 		public class Filter
 		{
@@ -110,9 +111,10 @@ namespace EverythingToolbar
 			}
 			set
 			{
-				_searchTerm = value;
+				_searchTerm = value; 
 				SearchResults.Clear();
 				QueryBatch();
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SearchTerm"));
 			}
 		}
 
@@ -121,7 +123,7 @@ namespace EverythingToolbar
 		{
 			get
 			{
-				return _currentFilter;
+				return _currentFilter ?? Filters[0];
 			}
 			set
 			{
@@ -138,6 +140,8 @@ namespace EverythingToolbar
 		private readonly ILogger logger;
 		private CancellationTokenSource cancellationTokenSource;
 		private CancellationToken cancellationToken;
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		private EverythingSearch()
 		{
@@ -183,6 +187,10 @@ namespace EverythingToolbar
 		public void QueryBatch()
 		{
 			cancellationTokenSource?.Cancel();
+
+			if (SearchTerm == null)
+				return;
+
 			cancellationTokenSource = new CancellationTokenSource();
 			cancellationToken = cancellationTokenSource.Token;
 
@@ -235,6 +243,12 @@ namespace EverythingToolbar
 				}
 				catch (OperationCanceledException) { }
 			}, cancellationToken);
+		}
+
+		public void Reset()
+		{
+			SearchTerm = null;
+			CurrentFilter = Filters[0];
 		}
 
 		public void OpenLastSearchInEverything(string highlighted_file = "")

@@ -142,5 +142,17 @@ namespace EverythingToolbar.Properties {
                 this["isAutoApplyRules"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isIconOnly {
+            get {
+                return ((bool)(this["isIconOnly"]));
+            }
+            set {
+                this["isIconOnly"] = value;
+            }
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using CSDeskBand;
-using System.Windows;
+﻿using System.Windows;
 
 namespace EverythingToolbar.Debug
 {

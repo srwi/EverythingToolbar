@@ -9,16 +9,15 @@ using System.Windows.Media.Animation;
 namespace EverythingToolbar
 {
     public partial class SearchResultsPopup : Popup
-	{
-        static Edge taskbarEdge;
+    {
+        static Edge taskbarEdge = Edge.Bottom;
         Size dragStartSize = new Size();
         Point dragStartPosition = new Point();
 
         public SearchResultsPopup()
         {
             InitializeComponent();
-
-			SearchResultsView.PopupCloseRequested += PopupCloseRequested;
+            DataContext = EverythingSearch.Instance;
         }
 
 		private void OnDragStarted(object sender, DragStartedEventArgs e)
@@ -52,45 +51,34 @@ namespace EverythingToolbar
             Properties.Settings.Default.Save();
         }
 
-        public void Close()
-		{
-            IsOpen = false;
-			StaysOpen = false;
-		}
-
-		public void Open(Edge edge = Edge.Top)
-		{
-            taskbarEdge = edge;
+		private void OnOpened(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.isIconOnly)
+                Keyboard.Focus(SearchBox);
 
 			switch (taskbarEdge)
-			{
-				case Edge.Top:
-					Placement = PlacementMode.Bottom;
-					PopupBorder.BorderThickness = new Thickness(1, 0, 1, 1);
-					break;
-				case Edge.Left:
-					Placement = PlacementMode.Right;
-					PopupBorder.BorderThickness = new Thickness(0, 1, 1, 1);
+            {
+                case Edge.Top:
+                    Placement = PlacementMode.Bottom;
+                    PopupBorder.BorderThickness = new Thickness(1, 0, 1, 1);
                     break;
-				case Edge.Right:
-					Placement = PlacementMode.Left;
-					PopupBorder.BorderThickness = new Thickness(1, 1, 0, 1);
+                case Edge.Left:
+                    Placement = PlacementMode.Right;
+                    PopupBorder.BorderThickness = new Thickness(0, 1, 1, 1);
                     break;
-				case Edge.Bottom:
-					Placement = PlacementMode.Top;
-					PopupBorder.BorderThickness = new Thickness(1, 1, 1, 0);
+                case Edge.Right:
+                    Placement = PlacementMode.Left;
+                    PopupBorder.BorderThickness = new Thickness(1, 1, 0, 1);
                     break;
-			}
+                case Edge.Bottom:
+                    Placement = PlacementMode.Top;
+                    PopupBorder.BorderThickness = new Thickness(1, 1, 1, 0);
+                    break;
+            }
 
             Height = Properties.Settings.Default.popupSize.Height;
             Width = Properties.Settings.Default.popupSize.Width;
 
-            IsOpen = true;
-			StaysOpen = true;
-		}
-
-		private void OnOpened(object sender, EventArgs e)
-		{
 			QuinticEase ease = new QuinticEase
             {
                 EasingMode = EasingMode.EaseOut
@@ -102,13 +90,13 @@ namespace EverythingToolbar
 				EasingFunction = ease
 			};
 			DependencyProperty outerProp = taskbarEdge == Edge.Bottom || taskbarEdge == Edge.Top ? TranslateTransform.YProperty : TranslateTransform.XProperty;
-            translateTransform.BeginAnimation(outerProp, outer);
+            translateTransform?.BeginAnimation(outerProp, outer);
 
 			DoubleAnimation opacity = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.4))
 			{
 				EasingFunction = ease
 			};
-			PopupBorder.BeginAnimation(OpacityProperty, opacity);
+			PopupBorder?.BeginAnimation(OpacityProperty, opacity);
 
 			ThicknessAnimation inner = new ThicknessAnimation(new Thickness(0), TimeSpan.FromSeconds(0.8))
 			{
@@ -122,12 +110,12 @@ namespace EverythingToolbar
                 inner.From = new Thickness(0, 50, 0, -50);
             else if (taskbarEdge == Edge.Left)
                 inner.From = new Thickness(-50, 0, 50, 0);
-            ContentGrid.BeginAnimation(MarginProperty, inner);
+            ContentGrid?.BeginAnimation(MarginProperty, inner);
         }
 
-        private void PopupCloseRequested(object sender, EventArgs e)
+        private void OnClosed(object sender, EventArgs e)
         {
-            Close();
+            EverythingSearch.Instance.Reset();
         }
-    }
+	}
 }

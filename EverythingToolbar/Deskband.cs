@@ -18,9 +18,8 @@ namespace CSDeskBand
 
         public Deskband()
         {
-            Options.ContextMenuItems = ContextMenuItems;
-            Options.MinHorizontalSize = new Size(36, 0);
-            Options.MinVerticalSize = new Size(0, 32);
+            Options.MinHorizontalSize = new Size(18, 0);
+            Options.MinVerticalSize = new Size(0, 40);
             TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
 
             ToolbarLogger.Initialize();
@@ -35,15 +34,6 @@ namespace CSDeskBand
         private void OnTaskbarEdgeChanged(object sender, TaskbarEdgeChangedEventArgs e)
         {
             ToolbarControl.SetTaskbarEdge(e.Edge);
-        }
-
-        private List<DeskBandMenuItem> ContextMenuItems
-        {
-            get
-            {
-                var action = new DeskBandMenuAction("Action");
-                return new List<DeskBandMenuItem>() { action };
-            }
         }
     }
 }

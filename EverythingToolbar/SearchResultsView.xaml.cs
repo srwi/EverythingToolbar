@@ -17,7 +17,6 @@ namespace EverythingToolbar
 	public partial class SearchResultsView : UserControl
 	{
 		public event EventHandler<EndOfListReachedEventArgs> EndOfListReached;
-		public event EventHandler<EventArgs> PopupCloseRequested;
 
 		private SearchResult SelectedItem => SearchResultsListView.SelectedItem as SearchResult;
 
@@ -26,10 +25,6 @@ namespace EverythingToolbar
 			InitializeComponent();
 
 			SearchResultsListView.ItemsSource = EverythingSearch.Instance.SearchResults;
-		}
-
-		public void Clear()
-		{
 		}
 
 		public void ScrollToVerticalOffset(double verticalOffset)
@@ -92,7 +87,7 @@ namespace EverythingToolbar
 		private void CopyPathToClipBoard(object sender, RoutedEventArgs e)
 		{
 			SelectedItem?.CopyPathToClipboard();
-			PopupCloseRequested?.Invoke(this, new EventArgs());
+			EverythingSearch.Instance.Reset();
 		}
 
 		private void OpenWith(object sender, RoutedEventArgs e)
@@ -108,7 +103,7 @@ namespace EverythingToolbar
 		private void CopyFile(object sender, RoutedEventArgs e)
 		{
 			SelectedItem?.CopyToClipboard();
-			PopupCloseRequested?.Invoke(this, new EventArgs());
+			EverythingSearch.Instance.Reset();
 		}
 
 		private void Open(object sender, RoutedEventArgs e)

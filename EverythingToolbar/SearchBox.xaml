@@ -1,0 +1,102 @@
+﻿<TextBox x:Class="EverythingToolbar.SearchBox"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         LostKeyboardFocus="OnLostKeyboardFocus"
+         IsTabStop="False"
+         CaretBrush="{DynamicResource SearchBoxForegroundActive}"
+         Style="{DynamicResource SearchBoxStyle}"
+         Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+    <TextBox.Resources>
+        <Style x:Key="SearchBoxStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="SearchBoxBorder"
+                                BorderThickness="1"
+                                BorderBrush="{DynamicResource SearchBoxBorder}"
+                                Background="{DynamicResource SearchBoxBackground}">
+                            <Grid x:Name="SearchBoxGrid" SnapsToDevicePixels="True">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="38"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Path x:Name="SearchBoxLogo"
+                                      Stroke="{DynamicResource SearchBoxLogo}"
+                                      StrokeThickness="1"
+                                      Width="16"
+                                      Height="18">
+                                    <Path.Data>
+                                        <GeometryGroup>
+                                            <LineGeometry StartPoint="0, 17" EndPoint="6, 11" />
+                                            <EllipseGeometry Center="10, 7" RadiusX="5.3" RadiusY="5.3" />
+                                        </GeometryGroup>
+                                    </Path.Data>
+                                </Path>
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              Grid.Column="1"
+                                              Focusable="false"
+                                              HorizontalScrollBarVisibility="Hidden"
+                                              VerticalScrollBarVisibility="Hidden"/>
+                                <TextBlock x:Name="SearchBoxWatermark"
+                                           Text="Search with Everything"
+                                           Grid.Column="1"
+                                           Margin="0, 0, 10, 0"
+                                           VerticalAlignment="Center"
+                                           Foreground="{DynamicResource SearchBoxForeground}"
+                                           IsHitTestVisible="false"
+                                           TextTrimming="WordEllipsis"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Control.IsMouseOver" Value="true">
+                                <Setter Property="Background"
+                                        TargetName="SearchBoxBorder"
+                                        Value="{DynamicResource SearchBoxBackgroundHover}"/>
+                                <Setter Property="BorderThickness"
+                                        TargetName="SearchBoxBorder"
+                                        Value="2"/>
+                                <Setter Property="BorderBrush"
+                                        TargetName="SearchBoxBorder"
+                                        Value="{DynamicResource SearchBoxBorderHover}"/>
+                                <Setter Property="Margin"
+                                        TargetName="SearchBoxGrid"
+                                        Value="-1"/>
+                                <Setter Property="Stroke"
+                                        TargetName="SearchBoxLogo"
+                                        Value="{DynamicResource SearchBoxLogoHover}"/>
+                                <Setter Property="Foreground"
+                                        TargetName="SearchBoxWatermark"
+                                        Value="{DynamicResource SearchBoxForegroundHover}"/>
+                            </Trigger>
+                            <Trigger Property="Control.IsKeyboardFocused" Value="true">
+                                <Setter Property="Background"
+                                        TargetName="SearchBoxBorder"
+                                        Value="{DynamicResource SearchBoxBackgroundActive}"/>
+                                <Setter Property="BorderThickness"
+                                        TargetName="SearchBoxBorder"
+                                        Value="2"/>
+                                <Setter Property="BorderBrush"
+                                        TargetName="SearchBoxBorder"
+                                        Value="{DynamicResource SearchBoxBorderActive}"/>
+                                <Setter Property="Margin"
+                                        TargetName="SearchBoxGrid"
+                                        Value="-1"/>
+                                <Setter Property="Stroke"
+                                        TargetName="SearchBoxLogo"
+                                        Value="{DynamicResource SearchBoxLogoActive}"/>
+                                <Setter Property="Opacity"
+                                        TargetName="SearchBoxWatermark"
+                                        Value="0"/>
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource SearchBoxForegroundActive}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </TextBox.Resources>
+</TextBox>
