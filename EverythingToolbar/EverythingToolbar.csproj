@@ -45,6 +45,7 @@
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -75,11 +76,13 @@
     <Compile Include="Converters\EdgeToPlacementModeConverter.cs" />
     <Compile Include="Converters\SearchTermToIsOpenedConverter.cs" />
     <Compile Include="Converters\DoubleToVisibilityConverter.cs" />
+    <Compile Include="Data\Filter.cs" />
     <Compile Include="EverythingSearch.cs" />
     <Compile Include="Data\Rule.cs" />
     <Compile Include="FilterSelector.xaml.cs">
       <DependentUpon>FilterSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FilterLoader.cs" />
     <Compile Include="Helpers\ShellUtils.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Rules.xaml.cs">

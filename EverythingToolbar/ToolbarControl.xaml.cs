@@ -47,7 +47,7 @@ namespace EverythingToolbar
 
 		public static void SetTaskbarEdge(Edge edge)
 		{
-			taskbarEdge = edge;
+			SearchResultsPopup.taskbarEdge = edge;
 		}
 
 		private void OnEndOfListReached(object sender, EndOfListReachedEventArgs e)

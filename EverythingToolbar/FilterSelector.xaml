@@ -4,7 +4,7 @@
     <Border BorderBrush="{DynamicResource TabBarBorder}"
             BorderThickness="0, 0, 0, 1">
         <StackPanel Orientation="Horizontal">
-            <TabControl x:Name="TabControl" SelectionChanged="OnTabItemSelected">
+            <TabControl x:Name="TabControl" SelectionChanged="OnTabItemSelected" ItemsSource="{Binding DefaultFilters}">
                 <TabControl.Resources>
                     <Style TargetType="{x:Type TabItem}">
                         <Setter Property="Template">
@@ -14,18 +14,18 @@
                                             Padding="16, 14"
                                             BorderThickness="0, 0, 0, 4"
                                             Background="Transparent">
-                                        <ContentPresenter x:Name="ContentSite"
-                                                          TextBlock.FontSize="10pt"
-                                                          TextBlock.Foreground="{DynamicResource TabForeground}"
-                                                          VerticalAlignment="Center"
-                                                          HorizontalAlignment="Center"
-                                                          ContentSource="Header" />
+                                        <TextBlock x:Name="ContentSite"
+                                                   Text="{Binding Name}"
+                                                   FontSize="10pt"
+                                                   Foreground="{DynamicResource TabForeground}"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center" />
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver"
                                                  Value="True">
                                             <Setter TargetName="ContentSite"
-                                                    Property="TextBlock.Foreground"
+                                                    Property="Foreground"
                                                     Value="{DynamicResource TabForegroundHover}" />
                                         </Trigger>
                                         <Trigger Property="IsSelected" Value="True">
@@ -33,10 +33,10 @@
                                                     Property="BorderBrush"
                                                     Value="{DynamicResource TabBorderActive}" />
                                             <Setter TargetName="ContentSite"
-                                                    Property="TextBlock.FontWeight"
+                                                    Property="FontWeight"
                                                     Value="Medium" />
                                             <Setter TargetName="ContentSite"
-                                                    Property="TextBlock.Foreground"
+                                                    Property="Foreground"
                                                     Value="{DynamicResource TabForegroundActive}" />
                                         </Trigger>
                                     </ControlTemplate.Triggers>
@@ -59,7 +59,7 @@
                 </TabControl.Resources>
             </TabControl>
 
-            <ComboBox Name="ComboBox" SelectionChanged="OnComboBoxItemSelected">
+            <ComboBox Name="ComboBox" SelectionChanged="OnComboBoxItemSelected" ItemsSource="{Binding UserFilters}" DisplayMemberPath="Name">
                 <ComboBox.Resources>
                     <Style TargetType="{x:Type ComboBox}">
                         <Setter Property="Background" Value="Transparent" />
@@ -78,13 +78,13 @@
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <ContentPresenter Name="ContentSite"
+                                            <TextBlock Name="ContentSite"
                                                               IsHitTestVisible="False"
-                                                              Content="{TemplateBinding SelectionBoxItem}"
+                                                              Text="{TemplateBinding Text}"
                                                               Margin="16, 14, 7, 14"
-                                                              TextBlock.Foreground="{DynamicResource TabForegroundActive}"
-                                                              TextBlock.FontWeight="Medium"
-                                                              TextBlock.FontSize="10pt" />
+                                                              Foreground="{DynamicResource TabForegroundActive}"
+                                                              FontWeight="Medium"
+                                                              FontSize="10pt" />
                                             <ToggleButton Name="ToggleButton"
                                                           Grid.ColumnSpan="2"
                                                           VerticalAlignment="Stretch"
@@ -128,7 +128,7 @@
                                         <DataTrigger Binding="{Binding ElementName=ComboBox, Path=SelectedItem}"
                                                      Value="{x:Null}">
                                             <Setter TargetName="ContentSite"
-                                                    Property="Content"
+                                                    Property="Text"
                                                     Value="More" />
                                             <Setter TargetName="ContentSite"
                                                     Property="TextBlock.Foreground"

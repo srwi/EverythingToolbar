@@ -154,5 +154,29 @@ namespace EverythingToolbar.Properties {
                 this["isIconOnly"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string filtersPath {
+            get {
+                return ((string)(this["filtersPath"]));
+            }
+            set {
+                this["filtersPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isImportFilters {
+            get {
+                return ((bool)(this["isImportFilters"]));
+            }
+            set {
+                this["isImportFilters"] = value;
+            }
+        }
     }
 }

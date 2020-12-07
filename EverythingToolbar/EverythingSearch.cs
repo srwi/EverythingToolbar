@@ -1,4 +1,6 @@
-﻿using NLog;
+﻿using EverythingToolbar.Data;
+using EverythingToolbar.Helpers;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,33 +18,6 @@ namespace EverythingToolbar
 {
 	class EverythingSearch : INotifyPropertyChanged
 	{
-		public class Filter
-		{
-			public string Name { get; set; }
-			public string Macro { get; set; }
-		}
-
-		public List<Filter> Filters
-		{
-			get
-			{
-				var filters = new List<Filter>
-				{
-					new Filter { Name = "All", Macro = "" },
-					new Filter { Name = "File", Macro = "file:" },
-					new Filter { Name = "Folder", Macro = "folder:" },
-					new Filter { Name = "Audio", Macro = "ext:aac;ac3;aif;aifc;aiff;au;cda;dts;fla;flac;it;m1a;m2a;m3u;m4a;mid;midi;mka;mod;mp2;mp3;mpa;ogg;ra;rmi;spc;rmi;snd;umx;voc;wav;wma;xm " },
-					new Filter { Name = "Compressed", Macro = "ext:7z;ace;arj;bz2;cab;gz;gzip;jar;r00;r01;r02;r03;r04;r05;r06;r07;r08;r09;r10;r11;r12;r13;r14;r15;r16;r17;r18;r19;r20;r21;r22;r23;r24;r25;r26;r27;r28;r29;rar;tar;tgz;z;zip " },
-					new Filter { Name = "Document", Macro = "ext:c;chm;cpp;csv;cxx;doc;docm;docx;dot;dotm;dotx;h;hpp;htm;html;hxx;ini;java;lua;mht;mhtml;odt;pdf;potx;potm;ppam;ppsm;ppsx;pps;ppt;pptm;pptx;rtf;sldm;sldx;thmx;txt;vsd;wpd;wps;wri;xlam;xls;xlsb;xlsm;xlsx;xltm;xltx;xml " },
-					new Filter { Name = "Executable", Macro = "ext:bat;cmd;exe;msi;msp;scr " },
-					new Filter { Name = "Picture", Macro = "ext:ani;bmp;gif;ico;jpe;jpeg;jpg;pcx;png;psd;tga;tif;tiff;webp;wmf " },
-					new Filter { Name = "Video", Macro = "ext:3g2;3gp;3gp2;3gpp;amr;amv;asf;avi;bdmv;bik;d2v;divx;drc;dsa;dsm;dss;dsv;evo;f4v;flc;fli;flic;flv;hdmov;ifo;ivf;m1v;m2p;m2t;m2ts;m2v;m4b;m4p;m4v;mkv;mp2v;mp4;mp4v;mpe;mpeg;mpg;mpls;mpv2;mpv4;mov;mts;ogm;ogv;pss;pva;qt;ram;ratdvd;rm;rmm;rmvb;roq;rpm;smil;smk;swf;tp;tpr;ts;vob;vp6;webm;wm;wmp;wmv " }
-				};
-
-				return (Properties.Settings.Default.isRegExEnabled ? filters.GetRange(0, 1) : filters);
-			}
-		}
-
 		private enum ErrorCode
 		{
 			EVERYTHING_OK,
@@ -123,20 +98,21 @@ namespace EverythingToolbar
 		{
 			get
 			{
-				return _currentFilter ?? Filters[0];
+				return _currentFilter ?? FilterLoader.Instance.DefaultFilters[0];
 			}
 			set
 			{
 				_currentFilter = value;
 				SearchResults.Clear();
 				QueryBatch();
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentFilter"));
 			}
 		}
 
-		private readonly object _searchResultsLock = new object();
 		public ObservableCollection<SearchResult> SearchResults = new ObservableCollection<SearchResult>();
 		public int BatchSize = 100;
 		public static readonly EverythingSearch Instance = new EverythingSearch();
+		private readonly object _searchResultsLock = new object();
 		private readonly ILogger logger;
 		private CancellationTokenSource cancellationTokenSource;
 		private CancellationToken cancellationToken;
@@ -202,7 +178,7 @@ namespace EverythingToolbar
 					flags |= EVERYTHING_REQUEST_HIGHLIGHTED_FILE_NAME;
 					flags |= EVERYTHING_REQUEST_HIGHLIGHTED_PATH;
 
-					Everything_SetSearchW(CurrentFilter.Macro + SearchTerm);
+					Everything_SetSearchW(CurrentFilter.Search + " " + SearchTerm);
 					Everything_SetRequestFlags(flags);
 					Everything_SetSort((uint)Properties.Settings.Default.sortBy);
 					Everything_SetMatchCase(Properties.Settings.Default.isMatchCase);
@@ -248,7 +224,6 @@ namespace EverythingToolbar
 		public void Reset()
 		{
 			SearchTerm = null;
-			CurrentFilter = Filters[0];
 		}
 
 		public void OpenLastSearchInEverything(string highlighted_file = "")
@@ -295,7 +270,7 @@ namespace EverythingToolbar
 			args += Properties.Settings.Default.isMatchPath ? " -matchpath" : " -nomatchpath";
 			args += Properties.Settings.Default.isMatchWholeWord ? " -ww" : " -noww";
 			args += Properties.Settings.Default.isRegExEnabled ? " -regex" : " -noregex";
-			args += " -s \"" + (CurrentFilter.Macro + SearchTerm).Replace("\"", "\"\"") + "\"";
+			args += " -s \"" + (CurrentFilter.Search + " " + SearchTerm).Replace("\"", "\"\"") + "\"";
 
 			Process.Start(Properties.Settings.Default.everythingPath, args);
 		}

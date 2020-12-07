@@ -10,7 +10,7 @@ namespace EverythingToolbar
 {
     public partial class SearchResultsPopup : Popup
     {
-        static Edge taskbarEdge = Edge.Bottom;
+        public static Edge taskbarEdge;
         Size dragStartSize = new Size();
         Point dragStartPosition = new Point();
 
@@ -18,7 +18,17 @@ namespace EverythingToolbar
         {
             InitializeComponent();
             DataContext = EverythingSearch.Instance;
+
+			EverythingSearch.Instance.PropertyChanged += OnCurrentFilterChanged;
         }
+
+		private void OnCurrentFilterChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+            if (e.PropertyName == "CurrentFilter")
+            {
+                Keyboard.Focus(SearchBox);
+			}
+		}
 
 		private void OnDragStarted(object sender, DragStartedEventArgs e)
         {
@@ -61,18 +71,22 @@ namespace EverythingToolbar
                 case Edge.Top:
                     Placement = PlacementMode.Bottom;
                     PopupBorder.BorderThickness = new Thickness(1, 0, 1, 1);
+                    PopupMarginBorder.Margin = new Thickness(10, 0, 10, 10);
                     break;
                 case Edge.Left:
                     Placement = PlacementMode.Right;
                     PopupBorder.BorderThickness = new Thickness(0, 1, 1, 1);
+                    PopupMarginBorder.Margin = new Thickness(0, 10, 10, 10);
                     break;
                 case Edge.Right:
                     Placement = PlacementMode.Left;
                     PopupBorder.BorderThickness = new Thickness(1, 1, 0, 1);
+                    PopupMarginBorder.Margin = new Thickness(10, 10, 0, 10);
                     break;
                 case Edge.Bottom:
                     Placement = PlacementMode.Top;
                     PopupBorder.BorderThickness = new Thickness(1, 1, 1, 0);
+                    PopupMarginBorder.Margin = new Thickness(10, 10, 10, 0);
                     break;
             }
 

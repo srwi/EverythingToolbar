@@ -1,8 +1,6 @@
-﻿using CSDeskBand.ContextMenu;
-using EverythingToolbar;
+﻿using EverythingToolbar;
 using NLog;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;

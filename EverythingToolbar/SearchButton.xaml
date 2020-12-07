@@ -15,21 +15,33 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="SearchButtonBorder"
+                        <Border x:Name="OuterBorder"
                                 Background="Transparent"
-                                SnapsToDevicePixels="true">
-                            <Path Stroke="White" StrokeThickness="1" Width="16" Height="18">
-                                <Path.Data>
-                                    <GeometryGroup>
-                                        <LineGeometry StartPoint="0, 17" EndPoint="6, 11" />
-                                        <EllipseGeometry Center="10, 7" RadiusX="5.3" RadiusY="5.3" />
-                                    </GeometryGroup>
-                                </Path.Data>
-                            </Path>
+                                SnapsToDevicePixels="True">
+                            <Border x:Name="InnerBorder"
+                                    Background="Transparent"
+                                    SnapsToDevicePixels="True">
+                                <Path Stroke="White" StrokeThickness="1" Width="16" Height="18">
+                                    <Path.Data>
+                                        <GeometryGroup>
+                                            <LineGeometry StartPoint="0, 17" EndPoint="6, 11" />
+                                            <EllipseGeometry Center="10, 7" RadiusX="5.3" RadiusY="5.3" />
+                                        </GeometryGroup>
+                                    </Path.Data>
+                                </Path>
+                            </Border>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Background" TargetName="SearchButtonBorder" Value="#23ffffff"/>
+                            <DataTrigger Binding="{Binding ElementName=SearchResultsPopup,
+                                                           Path=IsOpen,
+                                                           Mode=OneWay}"
+                                         Value="True">
+                                <Setter Property="Background"
+                                        TargetName="OuterBorder"
+                                        Value="#0bffffff"/>
+                            </DataTrigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="OuterBorder" Value="#0bffffff"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Trigger.EnterActions>
@@ -37,7 +49,7 @@
                                         <Storyboard>
                                             <ColorAnimation Duration="0"
                                                             Storyboard.TargetProperty="Background.Color"
-                                                            Storyboard.TargetName="SearchButtonBorder"
+                                                            Storyboard.TargetName="InnerBorder"
                                                             To="#16ffffff" />
                                         </Storyboard>
                                     </BeginStoryboard>
@@ -47,7 +59,7 @@
                                         <Storyboard>
                                             <ColorAnimation Duration="0:0:0.1"
                                                             Storyboard.TargetProperty="Background.Color"
-                                                            Storyboard.TargetName="SearchButtonBorder"
+                                                            Storyboard.TargetName="InnerBorder"
                                                             To="Transparent" />
                                         </Storyboard>
                                     </BeginStoryboard>
