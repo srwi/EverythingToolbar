@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 
 namespace EverythingToolbar
 {
@@ -34,10 +35,14 @@ namespace EverythingToolbar
 			(SortByMenu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
 
 			SearchResultsPopup.SearchResultsView.EndOfListReached += OnEndOfListReached;
+			SearchResultsPopup.Closed += (object sender, EventArgs e) => { Keyboard.Focus(KeyboardFocusCapture); };
 
 			try
 			{
-				HotkeyManager.Current.AddOrReplace("FocusSearchBox", Key.S, ModifierKeys.Windows | ModifierKeys.Alt, FocusSearchBox);
+				HotkeyManager.Current.AddOrReplace("FocusSearchBox",
+					(Key)Properties.Settings.Default.shortcutKey,
+					(ModifierKeys)Properties.Settings.Default.shortcutModifiers,
+					FocusSearchBox);
 			}
 			catch (Exception e)
 			{
@@ -251,30 +256,47 @@ namespace EverythingToolbar
 		[return: MarshalAs(UnmanagedType.Bool)]
 		private static extern bool SetForegroundWindow(IntPtr hWnd);
 
-		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
-		private static extern IntPtr FindWindow(String lpClassName, String lpWindowName);
-
 		private void FocusSearchBox(object sender, HotkeyEventArgs e)
 		{
+			SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
+			Keyboard.Focus(SearchBox);
+
 			if (Properties.Settings.Default.isIconOnly)
-			{
-				// TODO: set popup as foreground window
 				EverythingSearch.Instance.SearchTerm = "";
-			}
-			else
-			{
-#if !DEBUG
-				IntPtr taskbar = FindWindow("Shell_traywnd", "");
-				SetForegroundWindow(taskbar);
-#endif
-				Keyboard.Focus(SearchBox);
-			}
 		}
 
 		private void OpenRulesWindow(object sender, RoutedEventArgs e)
 		{
 			Window rules = new Rules();
 			rules.Show();
+		}
+
+		private void OpenShortcutWindow(object sender, RoutedEventArgs e)
+		{
+			Keyboard.ClearFocus();
+
+			ShortcutSelector shortcutSelector = new ShortcutSelector();
+			if (shortcutSelector.ShowDialog().Value)
+			{
+				try
+				{
+					HotkeyManager.Current.AddOrReplace("FocusSearchBox",
+						shortcutSelector.Key,
+						shortcutSelector.Modifiers,
+						FocusSearchBox);
+					Properties.Settings.Default.shortcutKey = (int)shortcutSelector.Key;
+					Properties.Settings.Default.shortcutModifiers = (int)shortcutSelector.Modifiers;
+					Properties.Settings.Default.Save();
+				}
+				catch (Exception ex)
+				{
+					ToolbarLogger.GetLogger("EverythingToolbar").Error(ex, "Hotkey could not be registered.");
+					MessageBox.Show("Failed to register hotkey. It might be in use by another application.",
+						"Error",
+						MessageBoxButton.OK,
+						MessageBoxImage.Error);
+				}
+			}
 		}
 	}
 }

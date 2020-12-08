@@ -165,6 +165,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Page Include="ShortcutSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ToolbarControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -174,6 +178,9 @@
     <Compile Include="Data\SearchResult.cs" />
     <Compile Include="Converters\HighlightedTextConverter.cs" />
     <Compile Include="Properties\Settings.cs" />
+    <Compile Include="ShortcutSelector.xaml.cs">
+      <DependentUpon>ShortcutSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ToolbarControl.xaml.cs">
       <DependentUpon>ToolbarControl.xaml</DependentUpon>
       <SubType>Code</SubType>

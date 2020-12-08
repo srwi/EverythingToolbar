@@ -42,7 +42,7 @@
                 
                 <local:SearchResultsView x:Name="SearchResultsView" Grid.Row="1" />
 
-                <local:SearchBox x:Name="SearchBox"
+                <local:SearchBox x:Name="SearchBox" TabIndex="999"
                                  Grid.Row="2"
                                  Height="40"
                                  Visibility="{Binding Source={x:Static properties:Settings.Default},

@@ -41,5 +41,11 @@
     <Setting Name="isImportFilters" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="shortcutModifiers" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">9</Value>
+    </Setting>
+    <Setting Name="shortcutKey" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">62</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

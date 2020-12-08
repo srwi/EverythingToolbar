@@ -178,5 +178,29 @@ namespace EverythingToolbar.Properties {
                 this["isImportFilters"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("9")]
+        public int shortcutModifiers {
+            get {
+                return ((int)(this["shortcutModifiers"]));
+            }
+            set {
+                this["shortcutModifiers"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("62")]
+        public int shortcutKey {
+            get {
+                return ((int)(this["shortcutKey"]));
+            }
+            set {
+                this["shortcutKey"] = value;
+            }
+        }
     }
 }

@@ -15,14 +15,20 @@
                 <MenuItem Header="About EverythingToolbar..."
                           Click="OpenAboutWindow"/>
                 <Separator/>
-                <MenuItem Header="Theme" Name="ThemeMenu"/>
-                <MenuItem Header="View" Name="ItemTemplateMenu"/>
-                <MenuItem Header="Rules..."
-                          Click="OpenRulesWindow"/>
-                <MenuItem Header="Use Everything _filters"
-                          IsCheckable="True"
-                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isImportFilters, Mode=TwoWay}"
-                          Click="MenuItem_Click"/>
+                <MenuItem Header="Preferences">
+                    <MenuItem Header="Theme"
+                              Name="ThemeMenu"/>
+                    <MenuItem Header="View"
+                              Name="ItemTemplateMenu"/>
+                    <MenuItem Header="Rules..."
+                              Click="OpenRulesWindow"/>
+                    <MenuItem Header="Change shortcut..."
+                              Click="OpenShortcutWindow"/>
+                    <MenuItem Header="Use Everything _filters"
+                              IsCheckable="True"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isImportFilters, Mode=TwoWay}"
+                              Click="MenuItem_Click"/>
+                </MenuItem>
                 <Separator/>
                 <MenuItem Header="_Regular Expressions"
                           IsCheckable="True"
@@ -123,6 +129,8 @@
                 </MenuItem>
             </ContextMenu>
         </Grid.ContextMenu>
+
+        <TextBox Opacity="0" IsHitTestVisible="False" Name="KeyboardFocusCapture" />
 
         <local:SearchBox x:Name="SearchBox"
                          Visibility="{Binding Path=ActualWidth,
