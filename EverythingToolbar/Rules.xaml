@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EverythingToolbar"
         xmlns:core="clr-namespace:System;assembly=mscorlib"
-        xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         mc:Ignorable="d"
         Title="Rules"
         MinHeight="350"
@@ -40,7 +39,7 @@
                        TextWrapping="Wrap"
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch">
-                Use %file%, %filename% and %path% as placeholders for commands.
+                Use %file%, %filename% and %path% as placeholders in commands.
             </TextBlock>
 
             <CheckBox Name="autoApplyRulesCheckbox"

@@ -4,13 +4,14 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace EverythingToolbar.Helpers
 {
 	class FilterLoader : INotifyPropertyChanged
 	{
-		public ObservableCollection<Filter> DefaultFilters { get; } = new ObservableCollection<Filter>()
+		private readonly ObservableCollection<Filter> defaultFilters = new ObservableCollection<Filter>
 		{
 			new Filter {
 				Name = "All",
@@ -40,6 +41,21 @@ namespace EverythingToolbar.Helpers
 				Search = "folder:"
 			}
 		};
+		public ObservableCollection<Filter> DefaultFilters
+		{ 
+			get
+			{
+				if (Properties.Settings.Default.isRegExEnabled)
+				{
+					return new ObservableCollection<Filter>(defaultFilters.Skip(0).Take(1));
+				}
+				else
+				{
+					return defaultFilters;
+				}
+			}
+		}
+		
 
 		private readonly ObservableCollection<Filter> defaultUserFilters = new ObservableCollection<Filter>()
 		{
@@ -98,7 +114,27 @@ namespace EverythingToolbar.Helpers
 				Search = "ext:3g2;3gp;3gp2;3gpp;amr;amv;asf;avi;bdmv;bik;d2v;divx;drc;dsa;dsm;dss;dsv;evo;f4v;flc;fli;flic;flv;hdmov;ifo;ivf;m1v;m2p;m2t;m2ts;m2v;m4b;m4p;m4v;mkv;mp2v;mp4;mp4v;mpe;mpeg;mpg;mpls;mpv2;mpv4;mov;mts;ogm;ogv;pss;pva;qt;ram;ratdvd;rm;rmm;rmvb;roq;rpm;smil;smk;swf;tp;tpr;ts;vob;vp6;webm;wm;wmp;wmv"
 			}
 		};
-		public ObservableCollection<Filter> UserFilters { get; set; }
+		public ObservableCollection<Filter> UserFilters
+		{ 
+			get
+			{
+				if (Properties.Settings.Default.isRegExEnabled)
+				{
+					return new ObservableCollection<Filter>();
+				}
+				else
+				{
+					if (Properties.Settings.Default.isImportFilters)
+					{
+						return LoadFilters();
+					}
+					else
+					{
+						return defaultUserFilters;
+					}
+				}
+			}
+		}
 
 		public static readonly FilterLoader Instance = new FilterLoader();
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -118,24 +154,13 @@ namespace EverythingToolbar.Helpers
 
 		private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-			if (e.PropertyName == "isRegExEnabled")
-			{
-				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DefaultFilters"));
-				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UserFilters"));
-			}
-			else if (e.PropertyName == "isImportFilters")
-			{
+			if (e.PropertyName == "isRegExEnabled" || e.PropertyName == "isImportFilters")
 				RefreshFilters();
-			}
 		}
 
 		void RefreshFilters()
 		{
-			if (Properties.Settings.Default.isImportFilters)
-				UserFilters = LoadFilters();
-			else
-				UserFilters = defaultUserFilters;
-
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DefaultFilters"));
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UserFilters"));
 		}
 

@@ -74,6 +74,7 @@
     </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\EdgeToPlacementModeConverter.cs" />
+    <Compile Include="Converters\ResourceLoaderToMenuItemsConverter.cs" />
     <Compile Include="Converters\SearchTermToIsOpenedConverter.cs" />
     <Compile Include="Converters\DoubleToVisibilityConverter.cs" />
     <Compile Include="Data\Filter.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="FilterSelector.xaml.cs">
       <DependentUpon>FilterSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ApplicationResources.cs" />
     <Compile Include="Helpers\FilterLoader.cs" />
     <Compile Include="Helpers\ShellUtils.cs" />
     <Compile Include="Helpers\Utils.cs" />
@@ -165,6 +167,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Page Include="SettingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ShortcutSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -178,6 +184,9 @@
     <Compile Include="Data\SearchResult.cs" />
     <Compile Include="Converters\HighlightedTextConverter.cs" />
     <Compile Include="Properties\Settings.cs" />
+    <Compile Include="SettingsControl.xaml.cs">
+      <DependentUpon>SettingsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShortcutSelector.xaml.cs">
       <DependentUpon>ShortcutSelector.xaml</DependentUpon>
     </Compile>

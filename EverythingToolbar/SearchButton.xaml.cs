@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace EverythingToolbar
 {
@@ -12,6 +13,9 @@ namespace EverythingToolbar
 
 		private void OnMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
+			if (e.ChangedButton != MouseButton.Left)
+				return;
+
 			if (EverythingSearch.Instance.SearchTerm == null)
 				EverythingSearch.Instance.SearchTerm = "";
 			else

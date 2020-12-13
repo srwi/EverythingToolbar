@@ -100,7 +100,7 @@
                                                        Foreground="{DynamicResource TabForeground}"
                                                        Grid.Column="1"
                                                        VerticalAlignment="Center"
-                                                       Padding="0, 0, 7, 5" />
+                                                       Padding="0, 0, 7, 3" />
                                             <Popup Name="Popup"
                                                    Placement="Bottom"
                                                    IsOpen="{TemplateBinding IsDropDownOpen}"

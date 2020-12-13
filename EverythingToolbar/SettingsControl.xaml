@@ -1,0 +1,167 @@
+﻿<Grid x:Class="EverythingToolbar.SettingsControl"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+      Background="Transparent" Margin="10, 0">
+
+    <Grid.Style>
+        <Style TargetType="{x:Type Grid}">
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="PreviewMouseDown">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
+                                    <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                                </BooleanAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Grid.Style>
+
+    <Grid.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="About EverythingToolbar..."
+                      Click="OpenAboutWindow"/>
+            <Separator/>
+            <MenuItem Header="Preferences">
+                <MenuItem Header="Theme"
+                          Name="ThemeMenu"
+                          Click="MenuItem_Theme_Click" />
+                <MenuItem Header="View"
+                          Name="ItemTemplateMenu"
+                          Click="MenuItem_ItemTemplate_Click" />
+                <MenuItem Header="Rules..."
+                          Click="OpenRulesWindow"/>
+                <MenuItem Header="Change shortcut..."
+                          Click="OpenShortcutWindow"/>
+                <MenuItem Header="Use Everything _filters"
+                          IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isImportFilters, Mode=TwoWay}"
+                          Click="MenuItem_Click"/>
+            </MenuItem>
+            <Separator/>
+            <MenuItem Header="_Regular Expressions"
+                      IsCheckable="True"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}"
+                      Click="MenuItem_Click"/>
+            <MenuItem Header="Match _Case"
+                      IsCheckable="True"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase, Mode=TwoWay}"
+                      Click="MenuItem_Click"/>
+            <MenuItem Header="Match _Path"
+                      IsCheckable="True"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath, Mode=TwoWay}"
+                      Click="MenuItem_Click"/>
+            <MenuItem Header="Match Whole _Word"
+                      IsCheckable="True"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}"
+                      Click="MenuItem_Click"/>
+            <Separator/>
+            <MenuItem Header="Sort By..." Name="SortByMenu">
+                <MenuItem IsCheckable="True"
+                          Header="Name ascending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Name descending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Path ascending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Path descending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Size ascending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                           Header="Size descending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Extension ascending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Extension descending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Type name ascending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Type name descending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Date created ascending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Date created descending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Date modified ascending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Date modified descending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Attributes ascending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Attributes descending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="File list filename ascending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="File list filename descending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Run count ascending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Run count descending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Date recently changed ascending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Date recently changed descending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Date accessed ascending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Date accessed descending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Date run ascending"
+                          Click="MenuItem_SortBy_Click"/>
+                <MenuItem IsCheckable="True"
+                          Header="Date run descending"
+                          Click="MenuItem_SortBy_Click"/>
+            </MenuItem>
+        </ContextMenu>
+    </Grid.ContextMenu>
+
+    <Border Background="Transparent">
+        <Border.Style>
+            <Style TargetType="Border">
+                <Setter Property= "TextBlock.Foreground" Value="{DynamicResource TabForeground}" />
+                <Style.Triggers>
+                    <Trigger Property ="IsMouseOver" Value="True">
+                        <Setter Property= "TextBlock.Foreground" Value="{DynamicResource TabForegroundHover}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+        <TextBlock x:Name="ThreeDotTextBlock"
+               Text="⋯"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               FontSize="14pt"
+               Padding="7, 0, 7, 6">
+        </TextBlock>
+    </Border>
+    
+</Grid>

@@ -37,9 +37,18 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                
-                <local:FilterSelector Focusable="False" />
-                
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <local:FilterSelector Focusable="False" />
+                    
+                    <local:SettingsControl Grid.Column="1" />
+                </Grid>
+
                 <local:SearchResultsView x:Name="SearchResultsView" Grid.Row="1" />
 
                 <local:SearchBox x:Name="SearchBox" TabIndex="999"

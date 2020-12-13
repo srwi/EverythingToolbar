@@ -224,7 +224,7 @@
               HorizontalContentAlignment="Stretch"
               Background="{DynamicResource SearchResultsViewBackground}"
               ItemTemplate="{DynamicResource searchResultsListTemplate}"
-              ScrollViewer.ScrollChanged="ListView_ScrollChanged"
+              ScrollViewer.ScrollChanged="OnScrollChanged"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled">
     </ListView>
 

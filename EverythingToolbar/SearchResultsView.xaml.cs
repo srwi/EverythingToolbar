@@ -8,16 +8,8 @@ using System.Windows.Threading;
 
 namespace EverythingToolbar
 {
-
-	public class EndOfListReachedEventArgs : EventArgs
-	{
-		public double VerticalOffset { get; set; }
-	}
-
 	public partial class SearchResultsView : UserControl
 	{
-		public event EventHandler<EndOfListReachedEventArgs> EndOfListReached;
-
 		private SearchResult SelectedItem => SearchResultsListView.SelectedItem as SearchResult;
 
 		public SearchResultsView()
@@ -25,6 +17,18 @@ namespace EverythingToolbar
 			InitializeComponent();
 
 			SearchResultsListView.ItemsSource = EverythingSearch.Instance.SearchResults;
+		}
+
+		private void OnScrollChanged(object sender, ScrollChangedEventArgs e)
+		{
+			if (e.VerticalChange > 0)
+			{
+				if (e.VerticalOffset > e.ExtentHeight - 2 * e.ViewportHeight)
+				{
+					EverythingSearch.Instance.QueryBatch();
+					ScrollToVerticalOffset(e.VerticalOffset);
+				}
+			}
 		}
 
 		public void ScrollToVerticalOffset(double verticalOffset)
@@ -35,19 +39,6 @@ namespace EverythingToolbar
 				ScrollViewer listViewScrollViewer = listViewBorder.Child as ScrollViewer;
 				listViewScrollViewer.ScrollToVerticalOffset(verticalOffset);
 			}), DispatcherPriority.ContextIdle);
-		}
-
-		private void ListView_ScrollChanged(object sender, ScrollChangedEventArgs e)
-		{
-			if (e.VerticalChange > 0)
-			{
-				if (e.VerticalOffset > e.ExtentHeight - 2 * e.ViewportHeight)
-				{
-					EndOfListReached?.Invoke(this, new EndOfListReachedEventArgs() {
-						VerticalOffset = e.VerticalOffset
-					});
-				}
-			}
 		}
 
 		public void SelectNextSearchResult()
