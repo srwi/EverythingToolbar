@@ -202,5 +202,17 @@ namespace EverythingToolbar.Properties {
                 this["shortcutKey"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isAnimationsDisabled {
+            get {
+                return ((bool)(this["isAnimationsDisabled"]));
+            }
+            set {
+                this["isAnimationsDisabled"] = value;
+            }
+        }
     }
 }

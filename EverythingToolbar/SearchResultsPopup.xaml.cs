@@ -99,20 +99,22 @@ namespace EverythingToolbar
             };
 
 			int modifier = taskbarEdge == Edge.Right || taskbarEdge == Edge.Bottom ? 1 : -1;
-			DoubleAnimation outer = new DoubleAnimation(modifier * 150, 0, TimeSpan.FromSeconds(0.4))
+            Duration duration = TimeSpan.FromSeconds(Properties.Settings.Default.isAnimationsDisabled ? 0 : 0.4);
+			DoubleAnimation outer = new DoubleAnimation(modifier * 150, 0, duration)
 			{
 				EasingFunction = ease
 			};
 			DependencyProperty outerProp = taskbarEdge == Edge.Bottom || taskbarEdge == Edge.Top ? TranslateTransform.YProperty : TranslateTransform.XProperty;
             translateTransform?.BeginAnimation(outerProp, outer);
 
-			DoubleAnimation opacity = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.4))
+            DoubleAnimation opacity = new DoubleAnimation(0, 1, duration)
 			{
 				EasingFunction = ease
 			};
 			PopupBorder?.BeginAnimation(OpacityProperty, opacity);
 
-			ThicknessAnimation inner = new ThicknessAnimation(new Thickness(0), TimeSpan.FromSeconds(0.8))
+            duration = TimeSpan.FromSeconds(Properties.Settings.Default.isAnimationsDisabled ? 0 : 0.8);
+            ThicknessAnimation inner = new ThicknessAnimation(new Thickness(0), duration)
 			{
 				EasingFunction = ease
 			};

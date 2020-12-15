@@ -121,6 +121,10 @@
                           IsCheckable="True"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isImportFilters, Mode=TwoWay}"
                           Click="MenuItem_Click"/>
+                <MenuItem Header="Disable animations"
+                          IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isAnimationsDisabled, Mode=TwoWay}"
+                          Click="MenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="About EverythingToolbar..."
                       Click="OpenAboutWindow"/>
