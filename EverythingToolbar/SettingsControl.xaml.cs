@@ -1,12 +1,9 @@
 ﻿using EverythingToolbar.Helpers;
 using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace EverythingToolbar
 {
@@ -39,16 +36,20 @@ namespace EverythingToolbar
 
 		private void OpenAboutWindow(object sender, RoutedEventArgs e)
 		{
+			EverythingSearch.Instance.Reset();
+
 			Window about = new About();
 			about.Show();
 		}
 
 		private void OpenRulesWindow(object sender, RoutedEventArgs e)
 		{
+			EverythingSearch.Instance.Reset();
+
 			Window rules = new Rules();
 			rules.Show();
 		}
-
+		
 		private void OpenShortcutWindow(object sender, RoutedEventArgs e)
 		{
 			EverythingSearch.Instance.Reset();
@@ -56,19 +57,16 @@ namespace EverythingToolbar
 			ShortcutSelector shortcutSelector = new ShortcutSelector();
 			if (shortcutSelector.ShowDialog().Value)
 			{
-				try
+				if (ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
+					shortcutSelector.Key,
+					shortcutSelector.Modifiers))
 				{
-					//HotkeyManager.Current.AddOrReplace("FocusSearchBox",
-					//	shortcutSelector.Key,
-					//	shortcutSelector.Modifiers,
-					//	FocusSearchBox);
-					//Properties.Settings.Default.shortcutKey = (int)shortcutSelector.Key;
-					//Properties.Settings.Default.shortcutModifiers = (int)shortcutSelector.Modifiers;
-					//Properties.Settings.Default.Save();
+					Properties.Settings.Default.shortcutKey = (int)shortcutSelector.Key;
+					Properties.Settings.Default.shortcutModifiers = (int)shortcutSelector.Modifiers;
+					Properties.Settings.Default.Save();
 				}
-				catch (Exception ex)
+				else
 				{
-					ToolbarLogger.GetLogger("EverythingToolbar").Error(ex, "Hotkey could not be registered.");
 					MessageBox.Show("Failed to register hotkey. It might be in use by another application.",
 						"Error",
 						MessageBoxButton.OK,
@@ -140,6 +138,22 @@ namespace EverythingToolbar
 			}
 
 			ApplicationResources.Instance.ApplyItemTemplate(itemChecked.Header.ToString());
+		}
+
+		private void OnMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			e.Handled = true;
+
+			var mouseDownEvent =
+				new MouseButtonEventArgs(Mouse.PrimaryDevice,
+					Environment.TickCount,
+					MouseButton.Right)
+				{
+					RoutedEvent = Mouse.MouseUpEvent,
+					Source = this,
+				};
+
+			InputManager.Current.ProcessInput(mouseDownEvent);
 		}
 	}
 }

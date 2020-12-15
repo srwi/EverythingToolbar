@@ -86,6 +86,7 @@
     <Compile Include="Helpers\ApplicationResources.cs" />
     <Compile Include="Helpers\FilterLoader.cs" />
     <Compile Include="Helpers\ShellUtils.cs" />
+    <Compile Include="Helpers\ShortcutManager.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Rules.xaml.cs">
       <DependentUpon>Rules.xaml</DependentUpon>

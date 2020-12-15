@@ -2,48 +2,12 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-      Background="Transparent" Margin="10, 0">
-
-    <Grid.Style>
-        <Style TargetType="{x:Type Grid}">
-            <Style.Triggers>
-                <EventTrigger RoutedEvent="PreviewMouseDown">
-                    <EventTrigger.Actions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
-                                    <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
-                                </BooleanAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.Actions>
-                </EventTrigger>
-            </Style.Triggers>
-        </Style>
-    </Grid.Style>
+      Background="Transparent"
+      Margin="10, 0"
+      MouseLeftButtonUp="OnMouseLeftButtonUp">
 
     <Grid.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="About EverythingToolbar..."
-                      Click="OpenAboutWindow"/>
-            <Separator/>
-            <MenuItem Header="Preferences">
-                <MenuItem Header="Theme"
-                          Name="ThemeMenu"
-                          Click="MenuItem_Theme_Click" />
-                <MenuItem Header="View"
-                          Name="ItemTemplateMenu"
-                          Click="MenuItem_ItemTemplate_Click" />
-                <MenuItem Header="Rules..."
-                          Click="OpenRulesWindow"/>
-                <MenuItem Header="Change shortcut..."
-                          Click="OpenShortcutWindow"/>
-                <MenuItem Header="Use Everything _filters"
-                          IsCheckable="True"
-                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isImportFilters, Mode=TwoWay}"
-                          Click="MenuItem_Click"/>
-            </MenuItem>
-            <Separator/>
             <MenuItem Header="_Regular Expressions"
                       IsCheckable="True"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}"
@@ -141,6 +105,25 @@
                           Header="Date run descending"
                           Click="MenuItem_SortBy_Click"/>
             </MenuItem>
+            <Separator/>
+            <MenuItem Header="Preferences">
+                <MenuItem Header="Theme"
+                          Name="ThemeMenu"
+                          Click="MenuItem_Theme_Click" />
+                <MenuItem Header="View"
+                          Name="ItemTemplateMenu"
+                          Click="MenuItem_ItemTemplate_Click" />
+                <MenuItem Header="Rules..."
+                          Click="OpenRulesWindow"/>
+                <MenuItem Header="Change shortcut..."
+                          Click="OpenShortcutWindow"/>
+                <MenuItem Header="Use Everything _filters"
+                          IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isImportFilters, Mode=TwoWay}"
+                          Click="MenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="About EverythingToolbar..."
+                      Click="OpenAboutWindow"/>
         </ContextMenu>
     </Grid.ContextMenu>
 

@@ -38,17 +38,10 @@ namespace EverythingToolbar
 				Keyboard.Focus(KeyboardFocusCapture);
 			};
 
-			try
-			{
-				HotkeyManager.Current.AddOrReplace("FocusSearchBox",
-					(Key)Properties.Settings.Default.shortcutKey,
-					(ModifierKeys)Properties.Settings.Default.shortcutModifiers,
-					FocusSearchBox);
-			}
-			catch (Exception e)
-			{
-				ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Hotkey could not be registered.");
-			}
+			ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
+				(Key)Properties.Settings.Default.shortcutKey,
+				(ModifierKeys)Properties.Settings.Default.shortcutModifiers,
+				FocusSearchBox);
 		}
 
 		public static void SetTaskbarEdge(Edge edge)
