@@ -183,7 +183,7 @@ namespace EverythingToolbar
 					flags |= EVERYTHING_REQUEST_HIGHLIGHTED_FILE_NAME;
 					flags |= EVERYTHING_REQUEST_HIGHLIGHTED_PATH;
 
-					Everything_SetSearchW(CurrentFilter.Search + " " + SearchTerm);
+					Everything_SetSearchW(CurrentFilter.Search + (CurrentFilter.Search.Length > 0 ? " " : "") + SearchTerm);
 					Everything_SetRequestFlags(flags);
 					Everything_SetSort((uint)Properties.Settings.Default.sortBy);
 					Everything_SetMatchCase(Properties.Settings.Default.isMatchCase);
