@@ -39,10 +39,6 @@
                     Value="True" />
             <Setter Property="Padding"
                     Value="4, 1" />
-            <Setter Property="HorizontalContentAlignment"
-                    Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-            <Setter Property="VerticalContentAlignment"
-                    Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
             <EventSetter Event="PreviewMouseLeftButtonUp"
                          Handler="Open" />
             <Setter Property="ContextMenu" Value="{StaticResource ListViewItemContextMenu}" />
@@ -179,7 +175,7 @@
                 </Grid.RowDefinitions>
                 <Border Grid.RowSpan="3"
                     CornerRadius="2"
-                    Background="#F0F0F0" />
+                    Background="{DynamicResource ScrollbarBackground}" />
                 <RepeatButton Grid.Row="0"
                           Style="{StaticResource ScrollBarLineButton}"
                           Height="18"
@@ -225,6 +221,7 @@
               Background="{DynamicResource SearchResultsViewBackground}"
               ItemTemplate="{DynamicResource searchResultsListTemplate}"
               ScrollViewer.ScrollChanged="OnScrollChanged"
+              ScrollViewer.VerticalScrollBarVisibility="Visible"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled">
     </ListView>
 

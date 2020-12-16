@@ -1,9 +1,12 @@
 ﻿using EverythingToolbar;
+using NHotkey;
 using NLog;
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Input;
+using System.Windows.Interop;
 
 namespace CSDeskBand
 {
@@ -26,12 +29,12 @@ namespace CSDeskBand
 
             AppDomain.CurrentDomain.UnhandledException += (sender, args) => ToolbarLogger.GetLogger("EverythingToolbar").Error((Exception)args.ExceptionObject, "Unhandled Exception");
 
-            ToolbarControl.SetTaskbarEdge(TaskbarInfo.Edge);
+            SearchResultsPopup.taskbarEdge = TaskbarInfo.Edge;
         }
 
         private void OnTaskbarEdgeChanged(object sender, TaskbarEdgeChangedEventArgs e)
         {
-            ToolbarControl.SetTaskbarEdge(e.Edge);
+            SearchResultsPopup.taskbarEdge = e.Edge;
         }
     }
 }

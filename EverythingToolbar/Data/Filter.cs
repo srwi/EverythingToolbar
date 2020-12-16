@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace EverythingToolbar.Data
+﻿namespace EverythingToolbar.Data
 {
 	class Filter
 	{
@@ -11,5 +9,22 @@ namespace EverythingToolbar.Data
 		public bool IsRegExEnabled { get; set; }
 		public string Search { get; set; }
 		public string Macro { get; set; }
+
+		public override bool Equals(object obj)
+		{
+			Filter item = obj as Filter;
+
+			if (item == null)
+			{
+				return false;
+			}
+
+			return Name.Equals(item.Name);
+		}
+
+		public override int GetHashCode()
+		{
+			return this.Name.GetHashCode();
+		}
 	}
 }

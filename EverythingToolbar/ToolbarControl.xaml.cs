@@ -1,7 +1,5 @@
-﻿using CSDeskBand;
-using EverythingToolbar.Helpers;
+﻿using EverythingToolbar.Helpers;
 using NHotkey;
-using NHotkey.Wpf;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -13,8 +11,6 @@ namespace EverythingToolbar
 {
 	public partial class ToolbarControl : UserControl
 	{
-		private static Edge taskbarEdge;
-
 		public ToolbarControl()
 		{
 			InitializeComponent();
@@ -42,11 +38,6 @@ namespace EverythingToolbar
 				(Key)Properties.Settings.Default.shortcutKey,
 				(ModifierKeys)Properties.Settings.Default.shortcutModifiers,
 				FocusSearchBox);
-		}
-
-		public static void SetTaskbarEdge(Edge edge)
-		{
-			SearchResultsPopup.taskbarEdge = edge;
 		}
 
 		private void OnKeyPressed(object sender, KeyEventArgs e)
@@ -78,6 +69,20 @@ namespace EverythingToolbar
 			{
 				EverythingSearch.Instance.SearchTerm = null;
 				Keyboard.ClearFocus();
+			}
+		}
+
+		private void OnKeyReleased(object sender, KeyEventArgs e)
+		{
+			if (!SearchResultsPopup.IsOpen)
+				return;
+
+			if (e.Key == Key.Tab)
+			{
+				if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
+					EverythingSearch.Instance.CycleFilters(-1);
+				else
+					EverythingSearch.Instance.CycleFilters(1);
 			}
 		}
 

@@ -15,10 +15,7 @@
        IsOpen="{Binding SearchTerm,
                         Converter={local:SearchTermToIsOpenedConverter},
                         UpdateSourceTrigger=PropertyChanged,
-                        Mode=OneWay}"
-       Placement="{Binding taskbarEdge,
-                           Converter={local:EdgeToPlacementModeConverter},
-                           Mode=OneWay}">
+                        Mode=OneWay}">
     <Border x:Name="PopupMarginBorder">
         <Border.Effect>
             <DropShadowEffect BlurRadius="15" Direction="-90" Opacity="0.25"  RenderingBias="Quality" ShadowDepth="-100" />

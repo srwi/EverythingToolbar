@@ -42,7 +42,7 @@
                           Header="Size ascending"
                           Click="MenuItem_SortBy_Click"/>
                 <MenuItem IsCheckable="True"
-                           Header="Size descending"
+                          Header="Size descending"
                           Click="MenuItem_SortBy_Click"/>
                 <MenuItem IsCheckable="True"
                           Header="Extension ascending"
@@ -107,16 +107,11 @@
             </MenuItem>
             <Separator/>
             <MenuItem Header="Preferences">
-                <MenuItem Header="Theme"
-                          Name="ThemeMenu"
-                          Click="MenuItem_Theme_Click" />
-                <MenuItem Header="View"
-                          Name="ItemTemplateMenu"
-                          Click="MenuItem_ItemTemplate_Click" />
                 <MenuItem Header="Rules..."
                           Click="OpenRulesWindow"/>
                 <MenuItem Header="Change shortcut..."
                           Click="OpenShortcutWindow"/>
+                <Separator />
                 <MenuItem Header="Use Everything _filters"
                           IsCheckable="True"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isImportFilters, Mode=TwoWay}"
@@ -125,6 +120,13 @@
                           IsCheckable="True"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isAnimationsDisabled, Mode=TwoWay}"
                           Click="MenuItem_Click"/>
+                <Separator />
+                <MenuItem Header="View"
+                          Name="ItemTemplateMenu"
+                          Click="MenuItem_ItemTemplate_Click" />
+                <MenuItem Header="Theme"
+                          Name="ThemeMenu"
+                          Click="MenuItem_Theme_Click" />
             </MenuItem>
             <MenuItem Header="About EverythingToolbar..."
                       Click="OpenAboutWindow"/>

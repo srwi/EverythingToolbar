@@ -24,9 +24,9 @@ namespace EverythingToolbar
 
 		private void OnCurrentFilterChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-            if (e.PropertyName == "CurrentFilter")
-            {
-                Keyboard.Focus(SearchBox);
+			if (e.PropertyName == "CurrentFilter")
+			{
+				Keyboard.Focus(SearchBox);
 			}
 		}
 
@@ -70,17 +70,17 @@ namespace EverythingToolbar
             {
                 case Edge.Top:
                     Placement = PlacementMode.Bottom;
-                    PopupBorder.BorderThickness = new Thickness(1, 0, 1, 1);
+                    PopupBorder.BorderThickness = new Thickness(1);
                     PopupMarginBorder.Margin = new Thickness(10, 0, 10, 10);
                     break;
                 case Edge.Left:
                     Placement = PlacementMode.Right;
-                    PopupBorder.BorderThickness = new Thickness(0, 1, 1, 1);
+                    PopupBorder.BorderThickness = new Thickness(1);
                     PopupMarginBorder.Margin = new Thickness(0, 10, 10, 10);
                     break;
                 case Edge.Right:
                     Placement = PlacementMode.Left;
-                    PopupBorder.BorderThickness = new Thickness(1, 1, 0, 1);
+                    PopupBorder.BorderThickness = new Thickness(1);
                     PopupMarginBorder.Margin = new Thickness(10, 10, 0, 10);
                     break;
                 case Edge.Bottom:

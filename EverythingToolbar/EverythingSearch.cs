@@ -85,6 +85,9 @@ namespace EverythingToolbar
 			}
 			set
 			{
+				if (_searchTerm == value)
+					return;
+
 				_searchTerm = value; 
 				SearchResults.Clear();
 				QueryBatch();
@@ -101,6 +104,9 @@ namespace EverythingToolbar
 			}
 			set
 			{
+				if (_currentFilter == value)
+					return;
+
 				_currentFilter = value;
 				SearchResults.Clear();
 				QueryBatch();
@@ -223,6 +229,24 @@ namespace EverythingToolbar
 		public void Reset()
 		{
 			SearchTerm = null;
+			CurrentFilter = FilterLoader.Instance.DefaultFilters[0];
+		}
+
+		public void CycleFilters(int offset = 1)
+		{
+			int defaultSize = FilterLoader.Instance.DefaultFilters.Count;
+			int userSize = FilterLoader.Instance.UserFilters.Count;
+			int defaultIndex = FilterLoader.Instance.DefaultFilters.IndexOf(CurrentFilter);
+			int userIndex = FilterLoader.Instance.UserFilters.IndexOf(CurrentFilter);
+
+			int d = defaultIndex >= 0 ? defaultIndex : defaultSize;
+			int u = userIndex >= 0 ? userIndex : 0;
+			int i = (d + u + offset + defaultSize + userSize) % (defaultSize + userSize);
+
+			if (i < defaultSize)
+				CurrentFilter = FilterLoader.Instance.DefaultFilters[i];
+			else
+				CurrentFilter = FilterLoader.Instance.UserFilters[i - defaultSize];
 		}
 
 		public void OpenLastSearchInEverything(string highlighted_file = "")

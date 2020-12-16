@@ -21,7 +21,7 @@ namespace EverythingToolbar
             UpdateTextBox();
         }
 
-        private void OnKeyPressed(object sender, System.Windows.Input.KeyEventArgs e)
+        private void OnKeyPressed(object sender, KeyEventArgs e)
         {
             e.Handled = true;
 

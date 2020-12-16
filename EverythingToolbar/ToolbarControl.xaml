@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:EverythingToolbar"
              mc:Ignorable="d"
              PreviewKeyDown="OnKeyPressed"
-             HorizontalAlignment="Stretch"
-             IsTabStop="True">
+             PreviewKeyUp="OnKeyReleased"
+             HorizontalAlignment="Stretch">
     <Grid>
         <TextBox Opacity="0" IsHitTestVisible="False" Name="KeyboardFocusCapture" />
 
