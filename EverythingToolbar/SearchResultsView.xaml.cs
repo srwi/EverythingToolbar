@@ -61,6 +61,9 @@ namespace EverythingToolbar
 
 		public void OpenSelectedSearchResult()
 		{
+			if (SearchResultsListView.SelectedIndex == -1)
+				SelectNextSearchResult();
+
 			if (SearchResultsListView.SelectedIndex != -1)
 			{
 				if (Rules.HandleRule(SelectedItem))
