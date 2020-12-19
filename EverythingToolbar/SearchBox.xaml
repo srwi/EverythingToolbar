@@ -35,19 +35,20 @@
                                         </GeometryGroup>
                                     </Path.Data>
                                 </Path>
-                                <ScrollViewer x:Name="PART_ContentHost"
-                                              Grid.Column="1"
-                                              Focusable="false"
-                                              HorizontalScrollBarVisibility="Hidden"
-                                              VerticalScrollBarVisibility="Hidden"/>
                                 <TextBlock x:Name="SearchBoxWatermark"
                                            Text="Search with Everything"
                                            Grid.Column="1"
                                            Margin="0, 0, 10, 0"
                                            VerticalAlignment="Center"
+                                           Opacity="0"
                                            Foreground="{DynamicResource SearchBoxForeground}"
                                            IsHitTestVisible="false"
                                            TextTrimming="WordEllipsis"/>
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              Grid.Column="1"
+                                              Focusable="false"
+                                              HorizontalScrollBarVisibility="Hidden"
+                                              VerticalScrollBarVisibility="Hidden"/>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -87,11 +88,16 @@
                                 <Setter Property="Stroke"
                                         TargetName="SearchBoxLogo"
                                         Value="{DynamicResource SearchBoxLogoActive}"/>
-                                <Setter Property="Opacity"
+                                <Setter Property="Foreground"
                                         TargetName="SearchBoxWatermark"
-                                        Value="0"/>
+                                        Value="{DynamicResource SearchBoxForegroundActive}"/>
                                 <Setter Property="Foreground"
                                         Value="{DynamicResource SearchBoxForegroundActive}"/>
+                            </Trigger>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Opacity"
+                                        TargetName="SearchBoxWatermark"
+                                        Value="1"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
