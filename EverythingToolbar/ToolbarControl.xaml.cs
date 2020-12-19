@@ -38,6 +38,13 @@ namespace EverythingToolbar
 				(Key)Properties.Settings.Default.shortcutKey,
 				(ModifierKeys)Properties.Settings.Default.shortcutModifiers,
 				FocusSearchBox);
+
+		}
+
+		public void Destroy()
+		{
+			ToolbarLogger.GetLogger("EverythingToolbar").Error("ToolbarControl killing popup: " + SearchResultsPopup.GetHashCode().ToString());
+			Content = null;
 		}
 
 		private void OnKeyPressed(object sender, KeyEventArgs e)

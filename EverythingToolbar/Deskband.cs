@@ -1,12 +1,9 @@
 ﻿using EverythingToolbar;
-using NHotkey;
 using NLog;
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Interop;
 
 namespace CSDeskBand
 {
@@ -15,10 +12,13 @@ namespace CSDeskBand
     [CSDeskBandRegistration(Name = "Everything Toolbar")]
     public class Deskband : CSDeskBandWpf
     {
-        protected override UIElement UIElement => new ToolbarControl();
+        private static ToolbarControl toolbarControl;
+        protected override UIElement UIElement => toolbarControl;
 
         public Deskband()
         {
+            toolbarControl = new ToolbarControl();
+
             Options.MinHorizontalSize = new Size(18, 30);
             Options.MinVerticalSize = new Size(30, 40);
             TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
@@ -35,6 +35,13 @@ namespace CSDeskBand
         private void OnTaskbarEdgeChanged(object sender, TaskbarEdgeChangedEventArgs e)
         {
             SearchResultsPopup.taskbarEdge = e.Edge;
+        }
+
+        protected override void DeskbandOnClosed()
+        {
+            base.DeskbandOnClosed();
+            toolbarControl.Destroy();
+            toolbarControl = null;
         }
     }
 }
