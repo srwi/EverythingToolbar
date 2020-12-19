@@ -120,7 +120,6 @@ namespace EverythingToolbar
 		private readonly object _searchResultsLock = new object();
 		private readonly ILogger logger;
 		private CancellationTokenSource cancellationTokenSource;
-		private CancellationToken cancellationToken;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -176,7 +175,7 @@ namespace EverythingToolbar
 				return;
 
 			cancellationTokenSource = new CancellationTokenSource();
-			cancellationToken = cancellationTokenSource.Token;
+			CancellationToken cancellationToken = cancellationTokenSource.Token;
 
 			Task.Run(() =>
 			{
