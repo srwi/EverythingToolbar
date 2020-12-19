@@ -53,6 +53,14 @@ namespace EverythingToolbar
 			{
 				SearchResultsPopup.SearchResultsView.SelectNextSearchResult();
 			}
+			else if (e.Key == Key.Left)
+			{
+				EverythingSearch.Instance.CycleFilters(-1);
+			}
+			else if (e.Key == Key.Right)
+			{
+				EverythingSearch.Instance.CycleFilters(1);
+			}
 			else if (e.Key == Key.Enter)
 			{
 				if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
@@ -69,20 +77,6 @@ namespace EverythingToolbar
 			{
 				EverythingSearch.Instance.SearchTerm = null;
 				Keyboard.ClearFocus();
-			}
-		}
-
-		private void OnKeyReleased(object sender, KeyEventArgs e)
-		{
-			if (!SearchResultsPopup.IsOpen)
-				return;
-
-			if (e.Key == Key.Tab)
-			{
-				if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
-					EverythingSearch.Instance.CycleFilters(-1);
-				else
-					EverythingSearch.Instance.CycleFilters(1);
 			}
 		}
 
