@@ -19,8 +19,8 @@ namespace CSDeskBand
 
         public Deskband()
         {
-            Options.MinHorizontalSize = new Size(18, 0);
-            Options.MinVerticalSize = new Size(0, 40);
+            Options.MinHorizontalSize = new Size(18, 30);
+            Options.MinVerticalSize = new Size(30, 40);
             TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
 
             ToolbarLogger.Initialize();
