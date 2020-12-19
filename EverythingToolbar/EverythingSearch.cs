@@ -75,6 +75,8 @@ namespace EverythingToolbar
 		public static extern uint Everything_GetMinorVersion();
 		[DllImport("Everything64.dll")]
 		public static extern uint Everything_GetRevision();
+		[DllImport("Everything64.dll")]
+		public static extern bool Everything_IsFastSort(uint sortType);
 
 		private string _searchTerm;
 		public string SearchTerm
@@ -303,6 +305,11 @@ namespace EverythingToolbar
 		public void IncrementRunCount(string path)
 		{
 			Everything_IncRunCountFromFileName(path);
+		}
+
+		public bool GetIsFastSort(uint sortBy)
+		{
+			return Everything_IsFastSort(sortBy);
 		}
 
 		private void HandleError(ErrorCode code)

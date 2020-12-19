@@ -82,21 +82,26 @@ namespace EverythingToolbar
 
 		private void MenuItem_SortBy_Click(object sender, RoutedEventArgs e)
 		{
-			MenuItem itemChecked = (MenuItem)sender;
-			MenuItem itemParent = (MenuItem)itemChecked.Parent;
+			MenuItem selectedItem = (MenuItem)sender;
+			MenuItem menu = (MenuItem)selectedItem.Parent;
+			int selectedIndex = menu.Items.IndexOf(selectedItem);
 
-			for (int i = 0; i < itemParent.Items.Count; i++)
+			(menu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = false;
+			(menu.Items[selectedIndex] as MenuItem).IsChecked = false;
+
+			if (EverythingSearch.Instance.GetIsFastSort((uint)selectedIndex + 1))
 			{
-				if (itemParent.Items[i] == itemChecked)
-				{
-					(itemParent.Items[i] as MenuItem).IsChecked = true;
-					Properties.Settings.Default.sortBy = i + 1;
-					continue;
-				}
-
-				(itemParent.Items[i] as MenuItem).IsChecked = false;
+				Properties.Settings.Default.sortBy = selectedIndex + 1;
+			}
+			else
+			{
+				MessageBox.Show("To utilize this sorting method it has to have fast sorting enabled. It can be enabled in your Everything settings.",
+								"Fast sorting not enabled",
+								MessageBoxButton.OK,
+								MessageBoxImage.Asterisk);
 			}
 
+			(menu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
 			Properties.Settings.Default.Save();
 		}
 
