@@ -99,4 +99,12 @@
             </Setter>
         </Style>
     </TextBox.Resources>
+    
+    <TextBox.ContextMenu>
+        <ContextMenu Focusable="False">
+            <MenuItem Focusable="False" Header="Cut" Click="OnCutClicked" />
+            <MenuItem Focusable="False" Header="Copy" Click="OnCopyClicked" />
+            <MenuItem Focusable="False" Header="Paste" Click="OnPasteClicked" />
+        </ContextMenu>
+    </TextBox.ContextMenu>
 </TextBox>

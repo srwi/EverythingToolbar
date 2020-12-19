@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace EverythingToolbar
@@ -16,5 +18,9 @@ namespace EverythingToolbar
 		{
 			EverythingSearch.Instance.Reset();
 		}
+
+		private void OnPasteClicked(object sender, RoutedEventArgs args) { Paste(); }
+		private void OnCopyClicked(object sender, RoutedEventArgs args) { Copy(); }
+		private void OnCutClicked(object sender, RoutedEventArgs args) { Cut(); }
 	}
 }
