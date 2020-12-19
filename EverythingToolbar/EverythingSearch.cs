@@ -154,6 +154,9 @@ namespace EverythingToolbar
 
 		private void OnSettingChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
+			if (e.PropertyName == "isRegExEnabled")
+				CurrentFilter = FilterLoader.Instance.DefaultFilters[0];
+
 			if (e.PropertyName == "isMatchCase" ||
 				e.PropertyName == "isRegExEnabled" ||
 				e.PropertyName == "isMatchPath" ||
