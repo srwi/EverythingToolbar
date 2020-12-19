@@ -7,6 +7,7 @@
         d:DesignHeight="40"
         d:DesignWidth="50"
         PreviewMouseUp="OnMouseUp"
+        PreviewMouseDown="OnMouseDown"
         IsVisibleChanged="OnIsVisibleChanged"
         Style="{DynamicResource SearchButtonStyle}"
         ToolTip="Search with Everything">

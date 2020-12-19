@@ -18,17 +18,7 @@ namespace EverythingToolbar
         {
             InitializeComponent();
             DataContext = EverythingSearch.Instance;
-
-			EverythingSearch.Instance.PropertyChanged += OnCurrentFilterChanged;
         }
-
-		private void OnCurrentFilterChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-		{
-			if (e.PropertyName == "CurrentFilter")
-			{
-				Keyboard.Focus(SearchBox);
-			}
-		}
 
 		private void OnDragStarted(object sender, DragStartedEventArgs e)
         {
@@ -63,8 +53,7 @@ namespace EverythingToolbar
 
 		private void OnOpened(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.isIconOnly)
-                Keyboard.Focus(SearchBox);
+            Keyboard.Focus(SearchBox);
 
 			switch (taskbarEdge)
             {

@@ -11,7 +11,10 @@
        d:DesignHeight="300"
        Opened="OnOpened"
        Closed="OnClosed"
-       StaysOpen="False"
+       StaysOpen="{Binding SearchTerm,
+                        Converter={local:SearchTermToIsOpenedConverter},
+                        UpdateSourceTrigger=PropertyChanged,
+                        Mode=OneWay}"
        IsOpen="{Binding SearchTerm,
                         Converter={local:SearchTermToIsOpenedConverter},
                         UpdateSourceTrigger=PropertyChanged,

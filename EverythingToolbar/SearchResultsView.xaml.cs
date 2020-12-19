@@ -144,5 +144,11 @@ namespace EverythingToolbar
 			string command = (sender as MenuItem).Tag?.ToString() ?? "";
 			Rules.HandleRule(searchResult, command);
 		}
+
+		private void OnListViewItemClicked(object sender, MouseButtonEventArgs e)
+		{
+			var item = (sender as Border).DataContext;
+			SearchResultsListView.SelectedIndex = SearchResultsListView.Items.IndexOf(item);
+		}
 	}
 }

@@ -6,9 +6,16 @@ namespace EverythingToolbar
 {
 	public partial class SearchButton : Button
 	{
+		private bool popupWasOpen = false;
+
 		public SearchButton()
 		{
 			InitializeComponent();
+		}
+
+		private void OnMouseDown(object sender, MouseButtonEventArgs e)
+		{
+			popupWasOpen = EverythingSearch.Instance.SearchTerm != null;
 		}
 
 		private void OnMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -16,10 +23,8 @@ namespace EverythingToolbar
 			if (e.ChangedButton != MouseButton.Left)
 				return;
 
-			if (EverythingSearch.Instance.SearchTerm == null)
-				EverythingSearch.Instance.SearchTerm = "";
-			else
-				EverythingSearch.Instance.SearchTerm = null;
+			EverythingSearch.Instance.SearchTerm = popupWasOpen ? null : "";
+			popupWasOpen = false;
 		}
 
 		private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
