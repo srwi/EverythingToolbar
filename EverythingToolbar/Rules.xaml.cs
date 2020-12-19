@@ -155,6 +155,9 @@ namespace EverythingToolbar
 
 		public static bool HandleRule(SearchResult searchResult, string command="")
 		{
+			if (searchResult == null)
+				return false;
+
 			if (Properties.Settings.Default.isAutoApplyRules && string.IsNullOrEmpty(command))
 			{
 				foreach (Rule r in LoadRules())

@@ -34,6 +34,12 @@ namespace EverythingToolbar.Helpers
 
 		public void AddResource(string path)
 		{
+			if (!File.Exists(path))
+			{
+				ToolbarLogger.GetLogger("EverythingToolbar").Error("Could not find resource file " + path);
+				return;
+			}
+
 			ResourceChanged?.Invoke(this, new ResourcesChangedEventArgs()
 			{
 				NewResource = new ResourceDictionary() { Source = new Uri(path) }
@@ -44,13 +50,6 @@ namespace EverythingToolbar.Helpers
 		{
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string themePath = Path.Combine(assemblyFolder, "Themes", themeName + ".xaml");
-
-			if (!File.Exists(themePath))
-			{
-				ToolbarLogger.GetLogger("EverythingToolbar").Error("Theme file not found. Defaulting to 'Medium' theme.");
-				themePath = Path.Combine(assemblyFolder, "Themes", "Medium.xaml");
-			}
-
 			AddResource(themePath);
 		}
 
@@ -58,13 +57,6 @@ namespace EverythingToolbar.Helpers
 		{
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string templatePath = Path.Combine(assemblyFolder, "ItemTemplates", templateName + ".xaml");
-
-			if (!File.Exists(templatePath))
-			{
-				ToolbarLogger.GetLogger("EverythingToolbar").Error("Item template file not found. Defaulting to 'Normal' template.");
-				templatePath = Path.Combine(assemblyFolder, "ItemTemplates", "Normal.xaml");
-			}
-
 			AddResource(templatePath);
 		}
 	}

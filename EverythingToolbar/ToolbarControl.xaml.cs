@@ -24,7 +24,7 @@ namespace EverythingToolbar
 				}
 				catch (Exception ex)
 				{
-					ToolbarLogger.GetLogger("EverythingToolbar").Error(ex, "Failed to apply resources.");
+					ToolbarLogger.GetLogger("EverythingToolbar").Error(ex, "Failed to apply resource.");
 				}
 			};
 			ApplicationResources.Instance.LoadDefaults();

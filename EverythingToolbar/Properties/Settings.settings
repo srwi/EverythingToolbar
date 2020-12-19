@@ -24,10 +24,10 @@
       <Value Profile="(Default)">C:\\Program Files\\Everything\\Everything.exe</Value>
     </Setting>
     <Setting Name="theme" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Medium</Value>
     </Setting>
     <Setting Name="itemTemplate" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Normal</Value>
     </Setting>
     <Setting Name="isAutoApplyRules" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
