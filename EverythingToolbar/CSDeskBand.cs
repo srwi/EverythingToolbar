@@ -994,29 +994,44 @@ namespace CSDeskBand
 #if DESKBAND_WPF
 namespace CSDeskBand
 {
+    using CSDeskBand.Interop;
+    using EverythingToolbar;
+    using NLog;
     using System;
     using System.Runtime.InteropServices;
-    using System.Windows.Interop;   
-    using CSDeskBand.Interop;
+    using System.Windows.Interop;  
+    using System.Reflection;
     using System.Windows.Documents;
     using System.Windows.Media;
     using System.Windows;
 
-    /// <summary>
-    /// Wpf implementation of <see cref="ICSDeskBand"/>
-    /// The deskband should also have these attributes <see cref="ComVisibleAttribute"/>, <see cref="GuidAttribute"/>, <see cref="CSDeskBandRegistrationAttribute"/>.
-    /// </summary>
-    public abstract class CSDeskBandWpf : ICSDeskBand, IDeskBandProvider
+	/// <summary>
+	/// Wpf implementation of <see cref="ICSDeskBand"/>
+	/// The deskband should also have these attributes <see cref="ComVisibleAttribute"/>, <see cref="GuidAttribute"/>, <see cref="CSDeskBandRegistrationAttribute"/>.
+	/// </summary>
+	public abstract class CSDeskBandWpf : ICSDeskBand, IDeskBandProvider
     {
         private readonly CSDeskBandImpl _impl;
         private readonly AdornerDecorator _rootVisual;
+
+        private readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CSDeskBandWpf"/> class.
         /// </summary>
         public CSDeskBandWpf()
         {
-            Options.Title = RegistrationHelper.GetToolbarName(GetType());
+            ToolbarLogger.Initialize();
+            _logger = ToolbarLogger.GetLogger("EverythingToolbar");
+            _logger.Info("EverythingToolbar started. Version: {version}, OS: {os}",
+                Assembly.GetExecutingAssembly().GetName().Version,
+                Environment.OSVersion);
+			//AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
+			//{
+			//	_logger.Error(e.Exception, "Unhandled first chance exception");
+			//};
+
+			Options.Title = RegistrationHelper.GetToolbarName(GetType());
 
             var hwndSourceParameters = new HwndSourceParameters("Deskband host for wpf")
             {

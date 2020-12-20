@@ -17,19 +17,28 @@ namespace CSDeskBand
 
         public Deskband()
         {
-            toolbarControl = new ToolbarControl();
+            try
+            {
+                toolbarControl = new ToolbarControl();
 
-            Options.MinHorizontalSize = new Size(18, 30);
-            Options.MinVerticalSize = new Size(30, 40);
-            TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
+                Options.MinHorizontalSize = new Size(18, 30);
+                Options.MinVerticalSize = new Size(30, 40);
+                TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
 
-            ToolbarLogger.Initialize();
-			ILogger logger = ToolbarLogger.GetLogger("EverythingToolbar");
-            logger.Info("EverythingToolbar started. Version: {version}, OS: {os}", Assembly.GetExecutingAssembly().GetName().Version, Environment.OSVersion);
-
-            AppDomain.CurrentDomain.UnhandledException += (sender, args) => ToolbarLogger.GetLogger("EverythingToolbar").Error((Exception)args.ExceptionObject, "Unhandled Exception");
-
-            SearchResultsPopup.taskbarEdge = TaskbarInfo.Edge;
+                SearchResultsPopup.taskbarEdge = TaskbarInfo.Edge;
+            }
+            catch (Exception e)
+			{
+                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Unhandled exception");
+                string exceptionContent = e.Message + "\n\n" + e.StackTrace;
+                if (MessageBox.Show(exceptionContent + "\n\nDo you want to copy the exception content to clipboard?",
+                    "Unhandled exception occured",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Error) == MessageBoxResult.Yes)
+				{
+                    Clipboard.SetText(exceptionContent);
+				}
+			}
         }
 
         private void OnTaskbarEdgeChanged(object sender, TaskbarEdgeChangedEventArgs e)
