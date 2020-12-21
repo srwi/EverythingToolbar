@@ -1005,11 +1005,11 @@ namespace CSDeskBand
     using System.Windows.Media;
     using System.Windows;
 
-	/// <summary>
-	/// Wpf implementation of <see cref="ICSDeskBand"/>
-	/// The deskband should also have these attributes <see cref="ComVisibleAttribute"/>, <see cref="GuidAttribute"/>, <see cref="CSDeskBandRegistrationAttribute"/>.
-	/// </summary>
-	public abstract class CSDeskBandWpf : ICSDeskBand, IDeskBandProvider
+    /// <summary>
+    /// Wpf implementation of <see cref="ICSDeskBand"/>
+    /// The deskband should also have these attributes <see cref="ComVisibleAttribute"/>, <see cref="GuidAttribute"/>, <see cref="CSDeskBandRegistrationAttribute"/>.
+    /// </summary>
+    public abstract class CSDeskBandWpf : ICSDeskBand, IDeskBandProvider
     {
         private readonly CSDeskBandImpl _impl;
         private readonly AdornerDecorator _rootVisual;
@@ -1026,12 +1026,12 @@ namespace CSDeskBand
             _logger.Info("EverythingToolbar started. Version: {version}, OS: {os}",
                 Assembly.GetExecutingAssembly().GetName().Version,
                 Environment.OSVersion);
-			//AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
-			//{
-			//	_logger.Error(e.Exception, "Unhandled first chance exception");
-			//};
+            //AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
+            //{
+            //	_logger.Error(e.Exception, "Unhandled first chance exception");
+            //};
 
-			Options.Title = RegistrationHelper.GetToolbarName(GetType());
+            Options.Title = RegistrationHelper.GetToolbarName(GetType());
 
             var hwndSourceParameters = new HwndSourceParameters("Deskband host for wpf")
             {

@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace CSDeskBand
 {
-	[ComVisible(true)]
+    [ComVisible(true)]
     [Guid("9d39b79c-e03c-4757-b1b6-ecce843748f3")]
     [CSDeskBandRegistration(Name = "Everything Toolbar")]
     public class Deskband : CSDeskBandWpf
@@ -28,17 +28,16 @@ namespace CSDeskBand
                 SearchResultsPopup.taskbarEdge = TaskbarInfo.Edge;
             }
             catch (Exception e)
-			{
+            {
                 ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Unhandled exception");
-                string exceptionContent = e.Message + "\n\n" + e.StackTrace;
-                if (MessageBox.Show(exceptionContent + "\n\nDo you want to copy the exception content to clipboard?",
+                if (MessageBox.Show(e.ToString() + "\n\nDo you want to copy the exception content to clipboard?",
                     "Unhandled exception occured",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Error) == MessageBoxResult.Yes)
-				{
-                    Clipboard.SetText(exceptionContent);
-				}
-			}
+                {
+                    Clipboard.SetText(e.ToString());
+                }
+            }
         }
 
         private void OnTaskbarEdgeChanged(object sender, TaskbarEdgeChangedEventArgs e)

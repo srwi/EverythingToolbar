@@ -2,7 +2,7 @@
 
 namespace EverythingToolbar.Helpers
 {
-	class Utils
+    class Utils
     {
         // Taken from: https://stackoverflow.com/a/11124118/1477251
         public static string GetHumanReadableFileSize(string path)
@@ -11,15 +11,15 @@ namespace EverythingToolbar.Helpers
             long length;
             try
             {
-				length = new FileInfo(path).Length;
+                length = new FileInfo(path).Length;
             }
-			catch
-			{
+            catch
+            {
                 return "";
             }
 
-			// Get absolute value
-			long absolute_i = length < 0 ? -length : length;
+            // Get absolute value
+            long absolute_i = length < 0 ? -length : length;
 
             // Determine the suffix and readable value
             string suffix;

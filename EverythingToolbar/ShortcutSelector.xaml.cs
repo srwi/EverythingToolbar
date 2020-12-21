@@ -5,14 +5,14 @@ using System.Windows.Input;
 
 namespace EverythingToolbar
 {
-	public partial class ShortcutSelector : Window
-	{
+    public partial class ShortcutSelector : Window
+    {
         public ModifierKeys Modifiers { get; private set; }
         public Key Key { get; private set; }
 
-		public ShortcutSelector()
-		{
-			InitializeComponent();
+        public ShortcutSelector()
+        {
+            InitializeComponent();
 
             HotkeyManager.Current.IsEnabled = false;
 
@@ -68,15 +68,15 @@ namespace EverythingToolbar
             ShortcutTextBox.Text = shortcutText.ToString();
         }
 
-		private void OnOkClicked(object sender, RoutedEventArgs e)
+        private void OnOkClicked(object sender, RoutedEventArgs e)
         {
             DialogResult = true;
             Close();
         }
 
-		private void OnClosed(object sender, System.EventArgs e)
-		{
+        private void OnClosed(object sender, System.EventArgs e)
+        {
             HotkeyManager.Current.IsEnabled = true;
         }
-	}
+    }
 }

@@ -20,7 +20,7 @@ namespace EverythingToolbar
             DataContext = EverythingSearch.Instance;
         }
 
-		private void OnDragStarted(object sender, DragStartedEventArgs e)
+        private void OnDragStarted(object sender, DragStartedEventArgs e)
         {
             dragStartSize.Height = Height;
             dragStartSize.Width = Width;
@@ -40,9 +40,9 @@ namespace EverythingToolbar
                 Width = widthAdjust;
             }
             if (heightAdjust >= 300)
-			{
+            {
                 Height = heightAdjust;
-			}
+            }
         }
 
         private void OnDragCompleted(object sender, DragCompletedEventArgs e)
@@ -51,11 +51,11 @@ namespace EverythingToolbar
             Properties.Settings.Default.Save();
         }
 
-		private void OnOpened(object sender, EventArgs e)
+        private void OnOpened(object sender, EventArgs e)
         {
             Keyboard.Focus(SearchBox);
 
-			switch (taskbarEdge)
+            switch (taskbarEdge)
             {
                 case Edge.Top:
                     Placement = PlacementMode.Bottom;
@@ -82,32 +82,32 @@ namespace EverythingToolbar
             Height = Properties.Settings.Default.popupSize.Height;
             Width = Properties.Settings.Default.popupSize.Width;
 
-			QuinticEase ease = new QuinticEase
+            QuinticEase ease = new QuinticEase
             {
                 EasingMode = EasingMode.EaseOut
             };
 
-			int modifier = taskbarEdge == Edge.Right || taskbarEdge == Edge.Bottom ? 1 : -1;
+            int modifier = taskbarEdge == Edge.Right || taskbarEdge == Edge.Bottom ? 1 : -1;
             Duration duration = TimeSpan.FromSeconds(Properties.Settings.Default.isAnimationsDisabled ? 0 : 0.4);
-			DoubleAnimation outer = new DoubleAnimation(modifier * 150, 0, duration)
-			{
-				EasingFunction = ease
-			};
-			DependencyProperty outerProp = taskbarEdge == Edge.Bottom || taskbarEdge == Edge.Top ? TranslateTransform.YProperty : TranslateTransform.XProperty;
+            DoubleAnimation outer = new DoubleAnimation(modifier * 150, 0, duration)
+            {
+                EasingFunction = ease
+            };
+            DependencyProperty outerProp = taskbarEdge == Edge.Bottom || taskbarEdge == Edge.Top ? TranslateTransform.YProperty : TranslateTransform.XProperty;
             translateTransform?.BeginAnimation(outerProp, outer);
 
             DoubleAnimation opacity = new DoubleAnimation(0, 1, duration)
-			{
-				EasingFunction = ease
-			};
-			PopupBorder?.BeginAnimation(OpacityProperty, opacity);
+            {
+                EasingFunction = ease
+            };
+            PopupBorder?.BeginAnimation(OpacityProperty, opacity);
 
             duration = TimeSpan.FromSeconds(Properties.Settings.Default.isAnimationsDisabled ? 0 : 0.8);
             ThicknessAnimation inner = new ThicknessAnimation(new Thickness(0), duration)
-			{
-				EasingFunction = ease
-			};
-			if (taskbarEdge == Edge.Top)
+            {
+                EasingFunction = ease
+            };
+            if (taskbarEdge == Edge.Top)
                 inner.From = new Thickness(0, -50, 0, 50);
             else if (taskbarEdge == Edge.Right)
                 inner.From = new Thickness(50, 0, -50, 0);
@@ -122,5 +122,5 @@ namespace EverythingToolbar
         {
             EverythingSearch.Instance.Reset();
         }
-	}
+    }
 }

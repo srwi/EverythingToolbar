@@ -6,28 +6,28 @@ using System.Windows.Markup;
 
 namespace EverythingToolbar
 {
-	public class BoolToVisibilityConverter : MarkupExtension, IValueConverter
-	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			bool invert = System.Convert.ToBoolean(parameter);
+    public class BoolToVisibilityConverter : MarkupExtension, IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            bool invert = System.Convert.ToBoolean(parameter);
 
-			if ((bool)value)
-			{
-				return invert ? Visibility.Collapsed : Visibility.Visible;
-			}
+            if ((bool)value)
+            {
+                return invert ? Visibility.Collapsed : Visibility.Visible;
+            }
 
-			return invert ? Visibility.Visible : Visibility.Collapsed;
-		}
+            return invert ? Visibility.Visible : Visibility.Collapsed;
+        }
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			throw new NotImplementedException("This converter cannot be used in two-way binding.");
-		}
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException("This converter cannot be used in two-way binding.");
+        }
 
-		public override object ProvideValue(IServiceProvider serviceProvider)
-		{
-			return this;
-		}
-	}
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return this;
+        }
+    }
 }

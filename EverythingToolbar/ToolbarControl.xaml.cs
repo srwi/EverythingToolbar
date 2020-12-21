@@ -9,93 +9,93 @@ using System.Windows.Interop;
 
 namespace EverythingToolbar
 {
-	public partial class ToolbarControl : UserControl
-	{
-		public ToolbarControl()
-		{
-			InitializeComponent();
+    public partial class ToolbarControl : UserControl
+    {
+        public ToolbarControl()
+        {
+            InitializeComponent();
 
-			ApplicationResources.Instance.ResourceChanged += (object sender, ResourcesChangedEventArgs e) =>
-			{
-				try
-				{
-					Resources.MergedDictionaries.Add(e.NewResource);
-					Properties.Settings.Default.Save();
-				}
-				catch (Exception ex)
-				{
-					ToolbarLogger.GetLogger("EverythingToolbar").Error(ex, "Failed to apply resource.");
-				}
-			};
-			ApplicationResources.Instance.LoadDefaults();
+            ApplicationResources.Instance.ResourceChanged += (object sender, ResourcesChangedEventArgs e) =>
+            {
+                try
+                {
+                    Resources.MergedDictionaries.Add(e.NewResource);
+                    Properties.Settings.Default.Save();
+                }
+                catch (Exception ex)
+                {
+                    ToolbarLogger.GetLogger("EverythingToolbar").Error(ex, "Failed to apply resource.");
+                }
+            };
+            ApplicationResources.Instance.LoadDefaults();
 
-			SearchResultsPopup.Closed += (object sender, EventArgs e) =>
-			{
-				Keyboard.Focus(KeyboardFocusCapture);
-			};
+            SearchResultsPopup.Closed += (object sender, EventArgs e) =>
+            {
+                Keyboard.Focus(KeyboardFocusCapture);
+            };
 
-			ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
-				(Key)Properties.Settings.Default.shortcutKey,
-				(ModifierKeys)Properties.Settings.Default.shortcutModifiers,
-				FocusSearchBox);
-		}
+            ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
+                (Key)Properties.Settings.Default.shortcutKey,
+                (ModifierKeys)Properties.Settings.Default.shortcutModifiers,
+                FocusSearchBox);
+        }
 
-		public void Destroy()
-		{
-			Content = null;
-		}
+        public void Destroy()
+        {
+            Content = null;
+        }
 
-		private void OnKeyPressed(object sender, KeyEventArgs e)
-		{
-			if (!SearchResultsPopup.IsOpen)
-				return;
+        private void OnKeyPressed(object sender, KeyEventArgs e)
+        {
+            if (!SearchResultsPopup.IsOpen)
+                return;
 
-			if (e.Key == Key.Up)
-			{
-				SearchResultsPopup.SearchResultsView.SelectPreviousSearchResult();
-			}
-			else if (e.Key == Key.Down)
-			{
-				SearchResultsPopup.SearchResultsView.SelectNextSearchResult();
-			}
-			else if (e.Key == Key.Left)
-			{
-				EverythingSearch.Instance.CycleFilters(-1);
-			}
-			else if (e.Key == Key.Right)
-			{
-				EverythingSearch.Instance.CycleFilters(1);
-			}
-			else if (e.Key == Key.Enter)
-			{
-				if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
-				{
-					string path = "";
-					if (SearchResultsPopup.SearchResultsView.SearchResultsListView.SelectedIndex >= 0)
-						path = (SearchResultsPopup.SearchResultsView.SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
-					EverythingSearch.Instance.OpenLastSearchInEverything(path);
-					return;
-				}
-				SearchResultsPopup.SearchResultsView.OpenSelectedSearchResult();
-			}
-			else if (e.Key == Key.Escape)
-			{
-				EverythingSearch.Instance.SearchTerm = null;
-				Keyboard.ClearFocus();
-			}
-		}
+            if (e.Key == Key.Up)
+            {
+                SearchResultsPopup.SearchResultsView.SelectPreviousSearchResult();
+            }
+            else if (e.Key == Key.Down)
+            {
+                SearchResultsPopup.SearchResultsView.SelectNextSearchResult();
+            }
+            else if (e.Key == Key.Left)
+            {
+                EverythingSearch.Instance.CycleFilters(-1);
+            }
+            else if (e.Key == Key.Right)
+            {
+                EverythingSearch.Instance.CycleFilters(1);
+            }
+            else if (e.Key == Key.Enter)
+            {
+                if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
+                {
+                    string path = "";
+                    if (SearchResultsPopup.SearchResultsView.SearchResultsListView.SelectedIndex >= 0)
+                        path = (SearchResultsPopup.SearchResultsView.SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
+                    EverythingSearch.Instance.OpenLastSearchInEverything(path);
+                    return;
+                }
+                SearchResultsPopup.SearchResultsView.OpenSelectedSearchResult();
+            }
+            else if (e.Key == Key.Escape)
+            {
+                EverythingSearch.Instance.SearchTerm = null;
+                Keyboard.ClearFocus();
+            }
+        }
 
-		[DllImport("user32.dll")]
-		[return: MarshalAs(UnmanagedType.Bool)]
-		private static extern bool SetForegroundWindow(IntPtr hWnd);
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
 
-		private void FocusSearchBox(object sender, HotkeyEventArgs e)
-		{
-			SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
-			Keyboard.Focus(SearchBox);
+        private void FocusSearchBox(object sender, HotkeyEventArgs e)
+        {
+            SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
+            Keyboard.Focus(SearchBox);
 
-			if (Properties.Settings.Default.isIconOnly)
-				EverythingSearch.Instance.SearchTerm = "";
-		}
-	}
+            if (Properties.Settings.Default.isIconOnly)
+                EverythingSearch.Instance.SearchTerm = "";
+        }
+    }
 }

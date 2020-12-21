@@ -5,46 +5,46 @@ using System.Runtime.InteropServices;
 
 namespace EverythingToolbar.Helpers
 {
-	class ShellUtils
-	{
-		[DllImport("shell32.dll", CharSet = CharSet.Auto)]
-		static extern bool ShellExecuteEx(ref SHELLEXECUTEINFO lpExecInfo);
+    class ShellUtils
+    {
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        static extern bool ShellExecuteEx(ref SHELLEXECUTEINFO lpExecInfo);
 
-		[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-		public struct SHELLEXECUTEINFO
-		{
-			public int cbSize;
-			public uint fMask;
-			public IntPtr hwnd;
-			[MarshalAs(UnmanagedType.LPTStr)]
-			public string lpVerb;
-			[MarshalAs(UnmanagedType.LPTStr)]
-			public string lpFile;
-			[MarshalAs(UnmanagedType.LPTStr)]
-			public string lpParameters;
-			[MarshalAs(UnmanagedType.LPTStr)]
-			public string lpDirectory;
-			public int nShow;
-			public IntPtr hInstApp;
-			public IntPtr lpIDList;
-			[MarshalAs(UnmanagedType.LPTStr)]
-			public string lpClass;
-			public IntPtr hkeyClass;
-			public uint dwHotKey;
-			public IntPtr hIcon;
-			public IntPtr hProcess;
-		}
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        public struct SHELLEXECUTEINFO
+        {
+            public int cbSize;
+            public uint fMask;
+            public IntPtr hwnd;
+            [MarshalAs(UnmanagedType.LPTStr)]
+            public string lpVerb;
+            [MarshalAs(UnmanagedType.LPTStr)]
+            public string lpFile;
+            [MarshalAs(UnmanagedType.LPTStr)]
+            public string lpParameters;
+            [MarshalAs(UnmanagedType.LPTStr)]
+            public string lpDirectory;
+            public int nShow;
+            public IntPtr hInstApp;
+            public IntPtr lpIDList;
+            [MarshalAs(UnmanagedType.LPTStr)]
+            public string lpClass;
+            public IntPtr hkeyClass;
+            public uint dwHotKey;
+            public IntPtr hIcon;
+            public IntPtr hProcess;
+        }
 
-		public static void ShowFileProperties(string path)
-		{
-			SHELLEXECUTEINFO info = new SHELLEXECUTEINFO();
-			info.cbSize = Marshal.SizeOf(info);
-			info.lpVerb = "properties";
-			info.lpFile = path;
-			info.nShow = 5;
-			info.fMask = 12;
-			ShellExecuteEx(ref info);
-		}
+        public static void ShowFileProperties(string path)
+        {
+            SHELLEXECUTEINFO info = new SHELLEXECUTEINFO();
+            info.cbSize = Marshal.SizeOf(info);
+            info.lpVerb = "properties";
+            info.lpFile = path;
+            info.nShow = 5;
+            info.fMask = 12;
+            ShellExecuteEx(ref info);
+        }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         private struct STARTUPINFO
@@ -110,7 +110,7 @@ namespace EverythingToolbar.Helpers
         }
 
         public static void OpenWithDialog(string path)
-		{
+        {
             var args = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "shell32.dll");
             args += ",OpenAs_RunDLL " + path;
             Process.Start("rundll32.exe", args);
