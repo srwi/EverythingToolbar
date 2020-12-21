@@ -1,7 +1,5 @@
 ﻿using EverythingToolbar;
-using NLog;
 using System;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -23,6 +21,8 @@ namespace CSDeskBand
 
                 Options.MinHorizontalSize = new Size(18, 30);
                 Options.MinVerticalSize = new Size(30, 40);
+
+                toolbarControl.FocusRequested += OnFocusRequested;
                 TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
 
                 SearchResultsPopup.taskbarEdge = TaskbarInfo.Edge;
@@ -40,7 +40,12 @@ namespace CSDeskBand
             }
         }
 
-        private void OnTaskbarEdgeChanged(object sender, TaskbarEdgeChangedEventArgs e)
+		private void OnFocusRequested(object sender, EventArgs e)
+		{
+            UpdateFocus(true);
+		}
+
+		private void OnTaskbarEdgeChanged(object sender, TaskbarEdgeChangedEventArgs e)
         {
             SearchResultsPopup.taskbarEdge = e.Edge;
         }

@@ -344,8 +344,8 @@ namespace CSDeskBand
         /// <inheritdoc/>
         public int UIActivateIO(int fActivate, ref MSG msg)
         {
-            // Fix for tabbing out of control unintentionally and hotkey not working after tabbing:
-            UpdateFocus(fActivate != 0);
+            _provider.HasFocus = fActivate != 0;
+            UpdateFocus(_provider.HasFocus);
             return HRESULT.S_OK;
         }
 

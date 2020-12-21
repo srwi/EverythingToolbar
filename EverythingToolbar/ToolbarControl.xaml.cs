@@ -11,6 +11,8 @@ namespace EverythingToolbar
 {
     public partial class ToolbarControl : UserControl
     {
+        public event EventHandler<EventArgs> FocusRequested;
+
         public ToolbarControl()
         {
             InitializeComponent();
@@ -58,14 +60,6 @@ namespace EverythingToolbar
             {
                 SearchResultsPopup.SearchResultsView.SelectNextSearchResult();
             }
-            else if (e.Key == Key.Left)
-            {
-                EverythingSearch.Instance.CycleFilters(-1);
-            }
-            else if (e.Key == Key.Right)
-            {
-                EverythingSearch.Instance.CycleFilters(1);
-            }
             else if (e.Key == Key.Enter)
             {
                 if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
@@ -85,6 +79,25 @@ namespace EverythingToolbar
             }
         }
 
+        private void OnKeyReleased(object sender, KeyEventArgs e)
+        {
+            if (!SearchResultsPopup.IsOpen)
+                return;
+
+            if (e.Key == Key.Tab)
+            {
+                if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
+                    EverythingSearch.Instance.CycleFilters(-1);
+                else
+                    EverythingSearch.Instance.CycleFilters(1);
+            }
+        }
+
+        private void OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            FocusRequested?.Invoke(this, new EventArgs());
+        }
+
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
@@ -92,6 +105,7 @@ namespace EverythingToolbar
         private void FocusSearchBox(object sender, HotkeyEventArgs e)
         {
             SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
+            FocusRequested?.Invoke(this, new EventArgs());
             Keyboard.Focus(SearchBox);
 
             if (Properties.Settings.Default.isIconOnly)
