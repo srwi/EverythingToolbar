@@ -12,6 +12,7 @@ namespace EverythingToolbar
     public partial class ToolbarControl : UserControl
     {
         public event EventHandler<EventArgs> FocusRequested;
+        public event EventHandler<EventArgs> UnfocusRequested;
 
         public ToolbarControl()
         {
@@ -34,6 +35,7 @@ namespace EverythingToolbar
             SearchResultsPopup.Closed += (object sender, EventArgs e) =>
             {
                 Keyboard.Focus(KeyboardFocusCapture);
+                UnfocusRequested?.Invoke(this, new EventArgs());
             };
 
             ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
@@ -104,12 +106,19 @@ namespace EverythingToolbar
 
         private void FocusSearchBox(object sender, HotkeyEventArgs e)
         {
-            SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
-            FocusRequested?.Invoke(this, new EventArgs());
-            Keyboard.Focus(SearchBox);
+            if (SearchResultsPopup.IsOpen)
+            {
+                EverythingSearch.Instance.SearchTerm = null;
+            }
+            else
+            {
+                SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
+                FocusRequested?.Invoke(this, new EventArgs());
+                Keyboard.Focus(SearchBox);
 
-            if (Properties.Settings.Default.isIconOnly)
-                EverythingSearch.Instance.SearchTerm = "";
+                if (Properties.Settings.Default.isIconOnly)
+                    EverythingSearch.Instance.SearchTerm = "";
+            }
         }
     }
 }

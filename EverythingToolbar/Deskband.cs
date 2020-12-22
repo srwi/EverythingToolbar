@@ -23,6 +23,7 @@ namespace CSDeskBand
                 Options.MinVerticalSize = new Size(30, 40);
 
                 toolbarControl.FocusRequested += OnFocusRequested;
+                toolbarControl.UnfocusRequested += OnUnfocusRequested;
                 TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
 
                 SearchResultsPopup.taskbarEdge = TaskbarInfo.Edge;
@@ -40,7 +41,12 @@ namespace CSDeskBand
             }
         }
 
-		private void OnFocusRequested(object sender, EventArgs e)
+        private void OnUnfocusRequested(object sender, EventArgs e)
+        {
+            UpdateFocus(false);
+        }
+
+        private void OnFocusRequested(object sender, EventArgs e)
 		{
             UpdateFocus(true);
 		}
