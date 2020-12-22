@@ -172,32 +172,28 @@ namespace EverythingToolbar.Helpers
             {
                 ToolbarLogger.GetLogger("EverythingToolbar").Info("Filters.csv could not be found at " + Properties.Settings.Default.filtersPath);
 
-                string everythingIniPath = Path.Combine(Properties.Settings.Default.filtersPath, "..", "Everything.ini");
-                if (!File.Exists(everythingIniPath))
+                MessageBox.Show("Please select the Filters.csv file. By default it can be found in %APPDATA%\\Everything. " +
+                    "Its location might be different depending on your installation. If the file does not exist for you " +
+                    "that means you didn't perform any changes to Everything's default filters.",
+                    "Filters.csv not found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
-                    ToolbarLogger.GetLogger("EverythingToolbar").Info("Everything.ini could not be found.");
-                    MessageBox.Show("Pleae select Filters.csv. It gets created after editing filters in Everything for the first time.");
-                    using (OpenFileDialog openFileDialog = new OpenFileDialog())
-                    {
-                        openFileDialog.InitialDirectory = "c:\\";
-                        openFileDialog.Filter = "Filters.csv|Filters.csv|All files (*.*)|*.*";
-                        openFileDialog.FilterIndex = 1;
+                    openFileDialog.InitialDirectory = Path.Combine(Properties.Settings.Default.filtersPath, "..");
+                    openFileDialog.Filter = "Filters.csv|Filters.csv|All files (*.*)|*.*";
+                    openFileDialog.FilterIndex = 1;
 
-                        if (openFileDialog.ShowDialog() == DialogResult.OK)
-                        {
-                            Properties.Settings.Default.filtersPath = openFileDialog.FileName;
-                            Properties.Settings.Default.Save();
-                        }
-                        else
-                        {
-                            return defaultUserFilters;
-                        }
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        Properties.Settings.Default.filtersPath = openFileDialog.FileName;
+                        CreateFileWatcher();
+                        Properties.Settings.Default.Save();
                     }
-                }
-                else
-                {
-                    ToolbarLogger.GetLogger("EverythingToolbar").Info("Filters.csv does not exist. Using default filters.");
-                    return defaultUserFilters;
+                    else
+                    {
+                        Properties.Settings.Default.isImportFilters = false;
+                        Properties.Settings.Default.Save();
+                        return defaultUserFilters;
+                    }
                 }
             }
 
@@ -255,6 +251,9 @@ namespace EverythingToolbar.Helpers
 
         public void CreateFileWatcher()
         {
+            if (!File.Exists(Properties.Settings.Default.filtersPath))
+                return;
+
             watcher = new FileSystemWatcher
             {
                 Path = Path.GetDirectoryName(Properties.Settings.Default.filtersPath),
