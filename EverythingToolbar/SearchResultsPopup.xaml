@@ -19,7 +19,7 @@
                         Converter={local:SearchTermToIsOpenedConverter},
                         UpdateSourceTrigger=PropertyChanged,
                         Mode=OneWay}">
-    <Border x:Name="PopupMarginBorder">
+    <Border x:Name="PopupMarginBorder" UseLayoutRounding="True">
         <Border.Effect>
             <DropShadowEffect BlurRadius="15" Direction="-90" Opacity="0.25"  RenderingBias="Quality" ShadowDepth="-100" />
         </Border.Effect>
