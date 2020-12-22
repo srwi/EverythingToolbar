@@ -41,7 +41,7 @@
                                            Margin="0, 0, 10, 0"
                                            VerticalAlignment="Center"
                                            Opacity="0"
-                                           Foreground="{DynamicResource SearchBoxForeground}"
+                                           Foreground="{DynamicResource SearchBoxWatermarkForeground}"
                                            IsHitTestVisible="false"
                                            TextTrimming="WordEllipsis"/>
                                 <ScrollViewer x:Name="PART_ContentHost"
@@ -70,7 +70,7 @@
                                         Value="{DynamicResource SearchBoxLogoHover}"/>
                                 <Setter Property="Foreground"
                                         TargetName="SearchBoxWatermark"
-                                        Value="{DynamicResource SearchBoxForegroundHover}"/>
+                                        Value="{DynamicResource SearchBoxWatermarkForegroundHover}"/>
                             </Trigger>
                             <Trigger Property="Control.IsKeyboardFocused" Value="true">
                                 <Setter Property="Background"
@@ -90,7 +90,7 @@
                                         Value="{DynamicResource SearchBoxLogoActive}"/>
                                 <Setter Property="Foreground"
                                         TargetName="SearchBoxWatermark"
-                                        Value="{DynamicResource SearchBoxForegroundActive}"/>
+                                        Value="{DynamicResource SearchBoxWatermarkForegroundActive}"/>
                                 <Setter Property="Foreground"
                                         Value="{DynamicResource SearchBoxForegroundActive}"/>
                             </Trigger>

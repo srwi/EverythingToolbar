@@ -6,6 +6,9 @@
     <SolidColorBrush x:Key="SearchBoxForeground" Color="#ff32302d" />
     <SolidColorBrush x:Key="SearchBoxForegroundHover" Color="#ff32302d" />
     <SolidColorBrush x:Key="SearchBoxForegroundActive" Color="#ff000000" />
+    <SolidColorBrush x:Key="SearchBoxWatermarkForeground" Color="#ff32302d" />
+    <SolidColorBrush x:Key="SearchBoxWatermarkForegroundHover" Color="#ff32302d" />
+    <SolidColorBrush x:Key="SearchBoxWatermarkForegroundActive" Color="#ff000000" />
     <SolidColorBrush x:Key="SearchBoxBorder" Color="#ffcccccc" />
     <SolidColorBrush x:Key="SearchBoxBorderHover" Color="#ffb4b4b4" />
     <SolidColorBrush x:Key="SearchBoxBorderActive" Color="#ff3f3f3f" />
