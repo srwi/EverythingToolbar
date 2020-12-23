@@ -214,5 +214,17 @@ namespace EverythingToolbar.Properties {
                 this["isAnimationsDisabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isHideEmptySearchResults {
+            get {
+                return ((bool)(this["isHideEmptySearchResults"]));
+            }
+            set {
+                this["isHideEmptySearchResults"] = value;
+            }
+        }
     }
 }

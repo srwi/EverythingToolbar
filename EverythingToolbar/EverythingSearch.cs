@@ -162,6 +162,7 @@ namespace EverythingToolbar
                 e.PropertyName == "isRegExEnabled" ||
                 e.PropertyName == "isMatchPath" ||
                 e.PropertyName == "isMatchWholeWord" ||
+                e.PropertyName == "isHideEmptySearchResults" ||
                 e.PropertyName == "sortBy")
             {
                 SearchResults.Clear();
@@ -174,6 +175,9 @@ namespace EverythingToolbar
             cancellationTokenSource?.Cancel();
 
             if (SearchTerm == null)
+                return;
+
+            if (SearchTerm == "" && Properties.Settings.Default.isHideEmptySearchResults)
                 return;
 
             cancellationTokenSource = new CancellationTokenSource();
