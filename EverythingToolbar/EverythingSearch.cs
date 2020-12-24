@@ -90,8 +90,9 @@ namespace EverythingToolbar
                 if (_searchTerm == value)
                     return;
 
-                _searchTerm = value; 
-                SearchResults.Clear();
+                _searchTerm = value;
+                lock (_searchResultsLock)
+                    SearchResults.Clear();
                 QueryBatch();
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SearchTerm"));
             }
@@ -110,7 +111,8 @@ namespace EverythingToolbar
                     return;
 
                 _currentFilter = value;
-                SearchResults.Clear();
+                lock (_searchResultsLock)
+                    SearchResults.Clear();
                 QueryBatch();
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentFilter"));
             }
@@ -153,7 +155,7 @@ namespace EverythingToolbar
             BindingOperations.EnableCollectionSynchronization(SearchResults, _searchResultsLock);
         }
 
-        private void OnSettingChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnSettingChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "isRegExEnabled")
                 CurrentFilter = FilterLoader.Instance.DefaultFilters[0];
@@ -165,7 +167,8 @@ namespace EverythingToolbar
                 e.PropertyName == "isHideEmptySearchResults" ||
                 e.PropertyName == "sortBy")
             {
-                SearchResults.Clear();
+                lock (_searchResultsLock)
+                    SearchResults.Clear();
                 QueryBatch();
             }
         }
@@ -199,7 +202,8 @@ namespace EverythingToolbar
                     Everything_SetMatchWholeWord(Properties.Settings.Default.isMatchWholeWord);
                     Everything_SetRegex(Properties.Settings.Default.isRegExEnabled);
                     Everything_SetMax((uint)BatchSize);
-                    Everything_SetOffset((uint)SearchResults.Count);
+                    lock (_searchResultsLock)
+                        Everything_SetOffset((uint)SearchResults.Count);
 
                     if (!Everything_QueryW(true))
                     {
