@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,6 +18,13 @@ namespace EverythingToolbar
             InitializeComponent();
 
             SearchResultsListView.ItemsSource = EverythingSearch.Instance.SearchResults;
+            ((INotifyCollectionChanged)SearchResultsListView.Items).CollectionChanged += OnCollectionChanged;
+        }
+
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (SearchResultsListView.SelectedIndex == -1 && SearchResultsListView.Items.Count > 0)
+                SearchResultsListView.SelectedIndex = 0;
         }
 
         private void OnScrollChanged(object sender, ScrollChangedEventArgs e)
