@@ -2,13 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <SolidColorBrush x:Key="SearchBoxBackground" Color="#ff333333" />
     <SolidColorBrush x:Key="SearchBoxBackgroundHover" Color="#ff3f3f3f" />
-    <SolidColorBrush x:Key="SearchBoxBackgroundActive" Color="#ff333333" />
+    <SolidColorBrush x:Key="SearchBoxBackgroundActive" Color="#ff171717" />
     <SolidColorBrush x:Key="SearchBoxForeground" Color="#ffdadada" />
     <SolidColorBrush x:Key="SearchBoxForegroundHover" Color="#ffdadada" />
     <SolidColorBrush x:Key="SearchBoxForegroundActive" Color="#ffdadada" />
     <SolidColorBrush x:Key="SearchBoxWatermarkForeground" Color="#ffdadada" />
     <SolidColorBrush x:Key="SearchBoxWatermarkForegroundHover" Color="#ffdadada" />
-    <SolidColorBrush x:Key="SearchBoxWatermarkForegroundActive" Color="#ffdadada" />
+    <SolidColorBrush x:Key="SearchBoxWatermarkForegroundActive" Color="#ff818181" />
     <SolidColorBrush x:Key="SearchBoxBorder" Color="#ff5c5c5c" />
     <SolidColorBrush x:Key="SearchBoxBorderHover" Color="#ff777777" />
     <SolidColorBrush x:Key="SearchBoxBorderActive" Color="#ff5c5c5c" />
