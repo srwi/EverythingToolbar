@@ -11,8 +11,38 @@ namespace EverythingToolbar
     public partial class SearchResultsPopup : Popup
     {
         public static Edge taskbarEdge;
+        public static double taskbarHeight = 0;
+        public static double taskbarWidth = 0;
         Size dragStartSize = new Size();
         Point dragStartPosition = new Point();
+        
+        public new double Height
+        {
+            get
+            {
+                return (double)GetValue(HeightProperty);
+            }
+            set
+            {
+                double screenHeight = SystemParameters.PrimaryScreenHeight;
+                double newHeight = Math.Max(Math.Min(screenHeight - taskbarHeight, value), 300);
+                SetValue(HeightProperty, newHeight);
+            }
+        }
+        
+        public new double Width
+        {
+            get
+            {
+                return (double)GetValue(WidthProperty);
+            }
+            set
+            {
+                double screenWidth = SystemParameters.PrimaryScreenWidth;
+                double newWidth = Math.Max(Math.Min(screenWidth - taskbarWidth, value), 300);
+                SetValue(WidthProperty, newWidth);
+            }
+        }
 
         public SearchResultsPopup()
         {
@@ -32,17 +62,8 @@ namespace EverythingToolbar
             Point mousePos = PointToScreen(Mouse.GetPosition(this));
             int widthModifier = (sender as Thumb).HorizontalAlignment == HorizontalAlignment.Left ? -1 : 1;
             int heightModifier = (sender as Thumb).VerticalAlignment == VerticalAlignment.Top ? -1 : 1;
-            double widthAdjust = dragStartSize.Width + widthModifier * (mousePos.X - dragStartPosition.X);
-            double heightAdjust = dragStartSize.Height + heightModifier * (mousePos.Y - dragStartPosition.Y);
-
-            if (widthAdjust >= 300)
-            {
-                Width = widthAdjust;
-            }
-            if (heightAdjust >= 300)
-            {
-                Height = heightAdjust;
-            }
+            Width = dragStartSize.Width + widthModifier * (mousePos.X - dragStartPosition.X);
+            Height = dragStartSize.Height + heightModifier * (mousePos.Y - dragStartPosition.Y);
         }
 
         private void OnDragCompleted(object sender, DragCompletedEventArgs e)

@@ -141,6 +141,12 @@ namespace EverythingToolbar
                 {
                     logger.Info("Everything version: {major}.{minor}.{revision}", major, minor, revision);
                 }
+                else if (major == 0 && minor == 0 && revision == 0 && (ErrorCode)Everything_GetLastError() == ErrorCode.EVERYTHING_ERROR_IPC)
+                {
+                    ErrorCode errorCode = (ErrorCode)Everything_GetLastError();
+                    HandleError(errorCode);
+                    logger.Error("Failed to get Everything version number. Is Everything running?");
+                }
                 else
                 {
                     logger.Error("Everything version {major}.{minor}.{revision} is not supported.", major, minor, revision);
