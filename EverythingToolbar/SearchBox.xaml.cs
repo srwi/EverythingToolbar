@@ -18,6 +18,11 @@ namespace EverythingToolbar
             EverythingSearch.Instance.Reset();
         }
 
+        private void OnMenuItemClicked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.Save();
+        }
+
         private void OnPasteClicked(object sender, RoutedEventArgs args) { Paste(); }
         private void OnCopyClicked(object sender, RoutedEventArgs args) { Copy(); }
         private void OnCutClicked(object sender, RoutedEventArgs args) { Cut(); }
