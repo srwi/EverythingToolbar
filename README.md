@@ -90,3 +90,10 @@ Customization
 - Edit an existing theme/item template or create a new one in the `Themes` / `ItemTemplates` folder
 - Restart Windows Explorer via the task manager
 - Select theme/item template from settings
+
+Contribute
+----------
+
+Helping out with open issues, especially those marked as "help wanted", is appreciated!
+
+You can also help by translating EverythingToolbar. To do so download and translate the [resources](https://github.com/stnkl/EverythingToolbar/blob/master/EverythingToolbar/Properties/Resources.resx) file and either attach it to a new issue or open a pull request.
