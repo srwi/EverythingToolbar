@@ -10,7 +10,7 @@ namespace EverythingToolbar
         {
             InitializeComponent();
 
-            VersionTextBlock.Text = "Version " + Assembly.GetExecutingAssembly().GetName().Version;
+            VersionTextBlock.Text = Properties.Resources.AboutVersion + " " + Assembly.GetExecutingAssembly().GetName().Version;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

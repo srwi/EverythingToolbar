@@ -37,7 +37,7 @@
                                     </Path.Data>
                                 </Path>
                                 <TextBlock x:Name="SearchBoxWatermark"
-                                           Text="Search with Everything"
+                                           Text="{x:Static properties:Resources.SearchBoxWatermark}"
                                            Grid.Column="1"
                                            Margin="0, 0, 10, 0"
                                            VerticalAlignment="Center"
@@ -115,19 +115,19 @@
                 </Style>
             </ContextMenu.Resources>
 
-            <MenuItem Header="_Regular Expressions"
+            <MenuItem Header="{x:Static properties:Resources.SettingsRegularExpressions}"
                       IsCheckable="True"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}"
                       Click="OnMenuItemClicked"/>
-            <MenuItem Header="Match _Case"
+            <MenuItem Header="{x:Static properties:Resources.SettingsMatchCase}"
                       IsCheckable="True"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase, Mode=TwoWay}"
                       Click="OnMenuItemClicked"/>
-            <MenuItem Header="Match _Path"
+            <MenuItem Header="{x:Static properties:Resources.SettingsMatchPath}"
                       IsCheckable="True"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath, Mode=TwoWay}"
                       Click="OnMenuItemClicked"/>
-            <MenuItem Header="Match Whole _Word"
+            <MenuItem Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
                       IsCheckable="True"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}"
                       Click="OnMenuItemClicked">
@@ -143,9 +143,9 @@
                 </MenuItem.Style>
             </MenuItem>
             <Separator />
-            <MenuItem Header="Cut" Click="OnCutClicked" />
-            <MenuItem Header="Copy" Click="OnCopyClicked" />
-            <MenuItem Header="Paste" Click="OnPasteClicked" />
+            <MenuItem Header="{x:Static properties:Resources.ContextMenuCut}" Click="OnCutClicked" />
+            <MenuItem Header="{x:Static properties:Resources.ContextMenuCopy}" Click="OnCopyClicked" />
+            <MenuItem Header="{x:Static properties:Resources.ContextMenuPaste}" Click="OnPasteClicked" />
         </ContextMenu>
     </TextBox.ContextMenu>
 </TextBox>

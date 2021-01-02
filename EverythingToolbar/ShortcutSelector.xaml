@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         mc:Ignorable="d"
-        Title="Enter shortcut..."
+        Title="{x:Static properties:Resources.ShortcutWindowTitle}"
         Closed="OnClosed"
         Height="80"
         Width="300"
@@ -15,6 +16,6 @@
             <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
         <TextBox Name="ShortcutTextBox" PreviewKeyDown="OnKeyPressed" />
-        <Button Margin="10, 0, 0, 0" Content="OK" Grid.Column="1" Click="OnOkClicked" />
+        <Button Margin="10, 0, 0, 0" Content="{x:Static properties:Resources.ShortcutOK}" Grid.Column="1" Click="OnOkClicked" />
     </Grid>
 </Window>

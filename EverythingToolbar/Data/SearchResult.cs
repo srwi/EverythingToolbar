@@ -38,7 +38,7 @@ namespace EverythingToolbar
             catch (Exception e)
             {
                 ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open search result.");
-                MessageBox.Show("Failed to open search result.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.MessageBoxFailedToOpen, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -52,7 +52,7 @@ namespace EverythingToolbar
             catch (Exception e)
             {
                 ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open path.");
-                MessageBox.Show("Failed to open path.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.MessageBoxFailedToOpenPath, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -65,7 +65,7 @@ namespace EverythingToolbar
             catch (Exception e)
             {
                 ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open dialog.");
-                MessageBox.Show("Failed to open dialog.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.MessageBoxFailedToOpenDialog, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -78,7 +78,7 @@ namespace EverythingToolbar
             catch (Exception e)
             {
                 ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to copy file.");
-                MessageBox.Show("Failed to copy file.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.MessageBoxFailedToCopyFile, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -91,7 +91,7 @@ namespace EverythingToolbar
             catch (Exception e)
             {
                 ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to copy path.");
-                MessageBox.Show("Failed to copy path.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.MessageBoxFailedToCopyPath, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

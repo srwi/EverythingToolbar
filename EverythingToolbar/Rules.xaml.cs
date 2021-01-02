@@ -59,12 +59,18 @@ namespace EverythingToolbar
         {
             if (newRules.Any(r => string.IsNullOrEmpty(r.Name)))
             {
-                MessageBox.Show("Rule names cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.MessageBoxRuleNameEmpty,
+                                Properties.Resources.MessageBoxErrorTitle,
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
                 return false;
             }
             if (isAutoApplyRules && newRules.Any(r => !r.ExpressionValid))
             {
-                MessageBox.Show("At least one regular expression is invalid.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.MessageBoxRegExInvalid,
+                                Properties.Resources.MessageBoxErrorTitle,
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
                 return false;
             }
 
@@ -183,7 +189,7 @@ namespace EverythingToolbar
                 }
                 catch(Win32Exception)
                 {
-                    MessageBox.Show("Failed to run command " + command);
+                    MessageBox.Show(Properties.Resources.MessageBoxFailedToRunCommand + " " + command);
                 }
             }
 

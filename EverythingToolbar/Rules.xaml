@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EverythingToolbar"
         xmlns:core="clr-namespace:System;assembly=mscorlib"
+        xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         mc:Ignorable="d"
-        Title="Rules"
+        Title="{x:Static properties:Resources.RulesWindowTitle}"
         MinHeight="350"
         MinWidth="400"
         Height="350"
@@ -38,14 +39,12 @@
                        Margin="0, 0, 0, 10"
                        TextWrapping="Wrap"
                        HorizontalAlignment="Stretch"
-                       VerticalAlignment="Stretch">
-                Use %file%, %filename% and %path% as placeholders in commands.
-            </TextBlock>
+                       VerticalAlignment="Stretch"
+                       Text="{x:Static properties:Resources.RulesWindowText}" />
 
             <CheckBox Name="autoApplyRulesCheckbox"
-                      Click="CheckBox_Click">
-                Automatically apply rules based on condition
-            </CheckBox>
+                      Click="CheckBox_Click"
+                      Content="{x:Static properties:Resources.RulesAutoApply}"/>
         </StackPanel>
 
         <DataGrid x:Name="dataGrid"
@@ -62,7 +61,7 @@
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="1.5*"
-                                    Header="Name"
+                                    Header="{x:Static properties:Resources.RulesName}"
                                     Binding="{Binding Name}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
@@ -80,12 +79,12 @@
                 </DataGridTextColumn>
                 <DataGridComboBoxColumn x:Name="TypeColumn"
                                         Width="1*"
-                                        Header="Type"
+                                        Header="{x:Static properties:Resources.RulesType}"
                                         SelectedItemBinding="{Binding Type}"
                                         ItemsSource="{Binding Source={StaticResource FileTypeEnum}}" />
                 <DataGridTextColumn x:Name="ExpressionColumn"
                                     Width="2.5*"
-                                    Header="Regular Expression"
+                                    Header="{x:Static properties:Resources.RulesRegularExpression}"
                                     Binding="{Binding Expression}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
@@ -102,7 +101,7 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn Width="2*"
-                                    Header="Command"
+                                    Header="{x:Static properties:Resources.RulesCommand}"
                                     Binding="{Binding Command}" />
             </DataGrid.Columns>
         </DataGrid>
@@ -135,16 +134,14 @@
                 HorizontalAlignment="Right"
                 Width="80"
                 Margin="10, 10, 100, 10"
-                Click="Save">
-            Save
-        </Button>
+                Click="Save"
+                Content="{x:Static properties:Resources.RulesSave}" />
         <Button Margin="10"
                 Grid.Row="2"
                 Grid.ColumnSpan="2"
                 Width="80"
                 HorizontalAlignment="Right"
-                Click="Cancel">
-            Cancel
-        </Button>
+                Click="Cancel"
+                Content="{x:Static properties:Resources.RulesCancel}" />
     </Grid>
 </Window>

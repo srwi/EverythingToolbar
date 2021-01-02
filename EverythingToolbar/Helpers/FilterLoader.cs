@@ -14,7 +14,7 @@ namespace EverythingToolbar.Helpers
         private readonly ObservableCollection<Filter> defaultFilters = new ObservableCollection<Filter>
         {
             new Filter {
-                Name = "All",
+                Name = Properties.Resources.DefaultFilterAll,
                 IsMatchCase = false,
                 IsMatchWholeWord = false,
                 IsMatchPath = false,
@@ -23,7 +23,7 @@ namespace EverythingToolbar.Helpers
                 Search = ""
             },
             new Filter {
-                Name = "File",
+                Name = Properties.Resources.DefaultFilterFile,
                 IsMatchCase = false,
                 IsMatchWholeWord = false,
                 IsMatchPath = false,
@@ -32,7 +32,7 @@ namespace EverythingToolbar.Helpers
                 Search = "file:"
             },
             new Filter {
-                Name = "Folder",
+                Name = Properties.Resources.DefaultFilterFolder,
                 IsMatchCase = false,
                 IsMatchWholeWord = false,
                 IsMatchPath = false,
@@ -60,7 +60,7 @@ namespace EverythingToolbar.Helpers
         private readonly ObservableCollection<Filter> defaultUserFilters = new ObservableCollection<Filter>()
         {
             new Filter {
-                Name = "Audio",
+                Name = Properties.Resources.UserFilterAudio,
                 IsMatchCase = false,
                 IsMatchWholeWord = false,
                 IsMatchPath = false,
@@ -69,7 +69,7 @@ namespace EverythingToolbar.Helpers
                 Search = "ext:aac;ac3;aif;aifc;aiff;au;cda;dts;fla;flac;it;m1a;m2a;m3u;m4a;mid;midi;mka;mod;mp2;mp3;mpa;ogg;ra;rmi;spc;rmi;snd;umx;voc;wav;wma;xm"
             },
             new Filter {
-                Name = "Compressed",
+                Name = Properties.Resources.UserFilterCompressed,
                 IsMatchCase = false,
                 IsMatchWholeWord = false,
                 IsMatchPath = false,
@@ -78,7 +78,7 @@ namespace EverythingToolbar.Helpers
                 Search = "ext:7z;ace;arj;bz2;cab;gz;gzip;jar;r00;r01;r02;r03;r04;r05;r06;r07;r08;r09;r10;r11;r12;r13;r14;r15;r16;r17;r18;r19;r20;r21;r22;r23;r24;r25;r26;r27;r28;r29;rar;tar;tgz;z;zip"
             },
             new Filter {
-                Name = "Document",
+                Name = Properties.Resources.UserFilterDocument,
                 IsMatchCase = false,
                 IsMatchWholeWord = false,
                 IsMatchPath = false,
@@ -87,7 +87,7 @@ namespace EverythingToolbar.Helpers
                 Search = "ext:c;chm;cpp;csv;cxx;doc;docm;docx;dot;dotm;dotx;h;hpp;htm;html;hxx;ini;java;lua;mht;mhtml;odt;pdf;potx;potm;ppam;ppsm;ppsx;pps;ppt;pptm;pptx;rtf;sldm;sldx;thmx;txt;vsd;wpd;wps;wri;xlam;xls;xlsb;xlsm;xlsx;xltm;xltx;xml"
             },
             new Filter {
-                Name = "Executable",
+                Name = Properties.Resources.UserFilterExecutable,
                 IsMatchCase = false,
                 IsMatchWholeWord = false,
                 IsMatchPath = false,
@@ -96,7 +96,7 @@ namespace EverythingToolbar.Helpers
                 Search = "ext:bat;cmd;exe;msi;msp;scr"
             },
             new Filter {
-                Name = "Picture",
+                Name = Properties.Resources.UserFilterPicture,
                 IsMatchCase = false,
                 IsMatchWholeWord = false,
                 IsMatchPath = false,
@@ -105,7 +105,7 @@ namespace EverythingToolbar.Helpers
                 Search = "ext:ani;bmp;gif;ico;jpe;jpeg;jpg;pcx;png;psd;tga;tif;tiff;webp;wmf"
             },
             new Filter {
-                Name = "Video",
+                Name = Properties.Resources.UserFilterVideo,
                 IsMatchCase = false,
                 IsMatchWholeWord = false,
                 IsMatchPath = false,
@@ -172,10 +172,10 @@ namespace EverythingToolbar.Helpers
             {
                 ToolbarLogger.GetLogger("EverythingToolbar").Info("Filters.csv could not be found at " + Properties.Settings.Default.filtersPath);
 
-                MessageBox.Show("Please select the Filters.csv file. By default it can be found in %APPDATA%\\Everything. " +
-                    "Its location might be different depending on your installation. If the file does not exist for you " +
-                    "that means you didn't perform any changes to Everything's default filters.",
-                    "Filters.csv not found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Properties.Resources.MessageBoxSelectFiltersCsv,
+                                Properties.Resources.MessageBoxSelectFiltersCsvTitle,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
                 using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
                     openFileDialog.InitialDirectory = Path.Combine(Properties.Settings.Default.filtersPath, "..");
@@ -220,12 +220,12 @@ namespace EverythingToolbar.Helpers
                             continue;
 
                         // Everything's default filters are uppercase
-                        fields[0] = fields[0].Replace("AUDIO", "Audio");
-                        fields[0] = fields[0].Replace("COMPRESSED", "Compressed");
-                        fields[0] = fields[0].Replace("DOCUMENT", "Document");
-                        fields[0] = fields[0].Replace("EXECUTABLE", "Executable");
-                        fields[0] = fields[0].Replace("PICTURE", "Picture");
-                        fields[0] = fields[0].Replace("VIDEO", "Video");
+                        fields[0] = fields[0].Replace("AUDIO", Properties.Resources.UserFilterAudio);
+                        fields[0] = fields[0].Replace("COMPRESSED", Properties.Resources.UserFilterCompressed);
+                        fields[0] = fields[0].Replace("DOCUMENT", Properties.Resources.UserFilterDocument);
+                        fields[0] = fields[0].Replace("EXECUTABLE", Properties.Resources.UserFilterExecutable);
+                        fields[0] = fields[0].Replace("PICTURE", Properties.Resources.UserFilterPicture);
+                        fields[0] = fields[0].Replace("VIDEO", Properties.Resources.UserFilterVideo);
 
                         filters.Add(new Filter()
                         {

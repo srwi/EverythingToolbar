@@ -9,8 +9,8 @@ namespace EverythingToolbar
 {
     public partial class SettingsControl : Grid
     {
-        private readonly ResourceLoader themes = new ResourceLoader("Themes", "Theme");
-        private readonly ResourceLoader itemTemplates = new ResourceLoader("ItemTemplates", "View");
+        private readonly ResourceLoader themes = new ResourceLoader("Themes", Properties.Resources.SettingsTheme);
+        private readonly ResourceLoader itemTemplates = new ResourceLoader("ItemTemplates", Properties.Resources.SettingsView);
 
         public SettingsControl()
         {
@@ -67,8 +67,8 @@ namespace EverythingToolbar
                 }
                 else
                 {
-                    MessageBox.Show("Failed to register hotkey. It might be in use by another application.",
-                        "Error",
+                    MessageBox.Show(Properties.Resources.MessageBoxFailedToRegisterHotkey,
+                        Properties.Resources.MessageBoxErrorTitle,
                         MessageBoxButton.OK,
                         MessageBoxImage.Error);
                 }
@@ -95,8 +95,8 @@ namespace EverythingToolbar
             }
             else
             {
-                MessageBox.Show("To utilize this sorting method it has to have fast sorting enabled. It can be enabled in your Everything settings.",
-                                "Fast sorting not enabled",
+                MessageBox.Show(Properties.Resources.MessageBoxFastSortUnavailable,
+                                Properties.Resources.MessageBoxFastSortUnavailableTitle,
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Asterisk);
             }

@@ -271,7 +271,7 @@ namespace EverythingToolbar
         {
             if(!File.Exists(Properties.Settings.Default.everythingPath))
             {
-                MessageBox.Show("Please select Everything.exe...");
+                MessageBox.Show(Properties.Resources.MessageBoxSelectEverythingExe);
                 using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
                     openFileDialog.InitialDirectory = "c:\\";

@@ -22,7 +22,7 @@ namespace EverythingToolbar.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace EverythingToolbar.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EverythingToolbar.Properties.Resources", typeof(Resources).Assembly);
@@ -51,12 +51,912 @@ namespace EverythingToolbar.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License.
+        /// </summary>
+        public static string AboutLicense {
+            get {
+                return ResourceManager.GetString("AboutLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string AboutOK {
+            get {
+                return ResourceManager.GetString("AboutOK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string AboutVersion {
+            get {
+                return ResourceManager.GetString("AboutVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website.
+        /// </summary>
+        public static string AboutWebsite {
+            get {
+                return ResourceManager.GetString("AboutWebsite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About EverythingToolbar.
+        /// </summary>
+        public static string AboutWindowTitle {
+            get {
+                return ResourceManager.GetString("AboutWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string ContextMenuCopy {
+            get {
+                return ResourceManager.GetString("ContextMenuCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string ContextMenuCopyFile {
+            get {
+                return ResourceManager.GetString("ContextMenuCopyFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Full Name to Clipboard.
+        /// </summary>
+        public static string ContextMenuCopyFullName {
+            get {
+                return ResourceManager.GetString("ContextMenuCopyFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cut.
+        /// </summary>
+        public static string ContextMenuCut {
+            get {
+                return ResourceManager.GetString("ContextMenuCut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string ContextMenuOpen {
+            get {
+                return ResourceManager.GetString("ContextMenuOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Path.
+        /// </summary>
+        public static string ContextMenuOpenPath {
+            get {
+                return ResourceManager.GetString("ContextMenuOpenPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open with....
+        /// </summary>
+        public static string ContextMenuOpenWith {
+            get {
+                return ResourceManager.GetString("ContextMenuOpenWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose app.
+        /// </summary>
+        public static string ContextMenuOpenWithChooseApp {
+            get {
+                return ResourceManager.GetString("ContextMenuOpenWithChooseApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No rules defined.
+        /// </summary>
+        public static string ContextMenuOpenWithNoRules {
+            get {
+                return ResourceManager.GetString("ContextMenuOpenWithNoRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste.
+        /// </summary>
+        public static string ContextMenuPaste {
+            get {
+                return ResourceManager.GetString("ContextMenuPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Properties.
+        /// </summary>
+        public static string ContextMenuProperties {
+            get {
+                return ResourceManager.GetString("ContextMenuProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show in Everything.
+        /// </summary>
+        public static string ContextMenuShowInEverything {
+            get {
+                return ResourceManager.GetString("ContextMenuShowInEverything", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string DefaultFilterAll {
+            get {
+                return ResourceManager.GetString("DefaultFilterAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        public static string DefaultFilterFile {
+            get {
+                return ResourceManager.GetString("DefaultFilterFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Folder.
+        /// </summary>
+        public static string DefaultFilterFolder {
+            get {
+                return ResourceManager.GetString("DefaultFilterFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alt.
+        /// </summary>
+        public static string KeyAlt {
+            get {
+                return ResourceManager.GetString("KeyAlt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl.
+        /// </summary>
+        public static string KeyCtrl {
+            get {
+                return ResourceManager.GetString("KeyCtrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shift.
+        /// </summary>
+        public static string KeyShift {
+            get {
+                return ResourceManager.GetString("KeyShift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Win.
+        /// </summary>
+        public static string KeyWin {
+            get {
+                return ResourceManager.GetString("KeyWin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to copy the exception content to clipboard?.
+        /// </summary>
+        public static string MessageBoxCopyException {
+            get {
+                return ResourceManager.GetString("MessageBoxCopyException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string MessageBoxErrorTitle {
+            get {
+                return ResourceManager.GetString("MessageBoxErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to copy file..
+        /// </summary>
+        public static string MessageBoxFailedToCopyFile {
+            get {
+                return ResourceManager.GetString("MessageBoxFailedToCopyFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to copy path..
+        /// </summary>
+        public static string MessageBoxFailedToCopyPath {
+            get {
+                return ResourceManager.GetString("MessageBoxFailedToCopyPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open search result..
+        /// </summary>
+        public static string MessageBoxFailedToOpen {
+            get {
+                return ResourceManager.GetString("MessageBoxFailedToOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open dialog..
+        /// </summary>
+        public static string MessageBoxFailedToOpenDialog {
+            get {
+                return ResourceManager.GetString("MessageBoxFailedToOpenDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open path..
+        /// </summary>
+        public static string MessageBoxFailedToOpenPath {
+            get {
+                return ResourceManager.GetString("MessageBoxFailedToOpenPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to register hotkey. It might be in use by another application..
+        /// </summary>
+        public static string MessageBoxFailedToRegisterHotkey {
+            get {
+                return ResourceManager.GetString("MessageBoxFailedToRegisterHotkey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to run command.
+        /// </summary>
+        public static string MessageBoxFailedToRunCommand {
+            get {
+                return ResourceManager.GetString("MessageBoxFailedToRunCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To utilize this sorting method it has to have fast sorting enabled. It can be enabled in your Everything settings..
+        /// </summary>
+        public static string MessageBoxFastSortUnavailable {
+            get {
+                return ResourceManager.GetString("MessageBoxFastSortUnavailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fast sorting not enabled.
+        /// </summary>
+        public static string MessageBoxFastSortUnavailableTitle {
+            get {
+                return ResourceManager.GetString("MessageBoxFastSortUnavailableTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to At least one regular expression is invalid..
+        /// </summary>
+        public static string MessageBoxRegExInvalid {
+            get {
+                return ResourceManager.GetString("MessageBoxRegExInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rule names cannot be empty..
+        /// </summary>
+        public static string MessageBoxRuleNameEmpty {
+            get {
+                return ResourceManager.GetString("MessageBoxRuleNameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select Everything.exe....
+        /// </summary>
+        public static string MessageBoxSelectEverythingExe {
+            get {
+                return ResourceManager.GetString("MessageBoxSelectEverythingExe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select the Filters.csv file. By default it can be found in %APPDATA%\Everything. Its location might be different depending on your installation. If the file does not exist for you that means you didn&apos;t perform any changes to Everything&apos;s default filters..
+        /// </summary>
+        public static string MessageBoxSelectFiltersCsv {
+            get {
+                return ResourceManager.GetString("MessageBoxSelectFiltersCsv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filters.csv not found.
+        /// </summary>
+        public static string MessageBoxSelectFiltersCsvTitle {
+            get {
+                return ResourceManager.GetString("MessageBoxSelectFiltersCsvTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unhandled exception occured.
+        /// </summary>
+        public static string MessageBoxUnhandledExceptionTitle {
+            get {
+                return ResourceManager.GetString("MessageBoxUnhandledExceptionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically apply rules based on condition.
+        /// </summary>
+        public static string RulesAutoApply {
+            get {
+                return ResourceManager.GetString("RulesAutoApply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string RulesCancel {
+            get {
+                return ResourceManager.GetString("RulesCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command.
+        /// </summary>
+        public static string RulesCommand {
+            get {
+                return ResourceManager.GetString("RulesCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string RulesName {
+            get {
+                return ResourceManager.GetString("RulesName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regular Expression.
+        /// </summary>
+        public static string RulesRegularExpression {
+            get {
+                return ResourceManager.GetString("RulesRegularExpression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string RulesSave {
+            get {
+                return ResourceManager.GetString("RulesSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string RulesType {
+            get {
+                return ResourceManager.GetString("RulesType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use %file%, %filename% and %path% as placeholders in commands..
+        /// </summary>
+        public static string RulesWindowText {
+            get {
+                return ResourceManager.GetString("RulesWindowText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rules.
+        /// </summary>
+        public static string RulesWindowTitle {
+            get {
+                return ResourceManager.GetString("RulesWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search with Everything.
+        /// </summary>
+        public static string SearchBoxWatermark {
+            get {
+                return ResourceManager.GetString("SearchBoxWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About EverythingToolbar....
+        /// </summary>
+        public static string SettingsAbout {
+            get {
+                return ResourceManager.GetString("SettingsAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Shortcut....
+        /// </summary>
+        public static string SettingsChangeShortcut {
+            get {
+                return ResourceManager.GetString("SettingsChangeShortcut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable animations.
+        /// </summary>
+        public static string SettingsDisableAnimations {
+            get {
+                return ResourceManager.GetString("SettingsDisableAnimations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide empty search.
+        /// </summary>
+        public static string SettingsHideEmptyResults {
+            get {
+                return ResourceManager.GetString("SettingsHideEmptyResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match Case.
+        /// </summary>
+        public static string SettingsMatchCase {
+            get {
+                return ResourceManager.GetString("SettingsMatchCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match Path.
+        /// </summary>
+        public static string SettingsMatchPath {
+            get {
+                return ResourceManager.GetString("SettingsMatchPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match Whole Word.
+        /// </summary>
+        public static string SettingsMatchWholeWord {
+            get {
+                return ResourceManager.GetString("SettingsMatchWholeWord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preferences.
+        /// </summary>
+        public static string SettingsPreferences {
+            get {
+                return ResourceManager.GetString("SettingsPreferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regular Expressions.
+        /// </summary>
+        public static string SettingsRegularExpressions {
+            get {
+                return ResourceManager.GetString("SettingsRegularExpressions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rules....
+        /// </summary>
+        public static string SettingsRules {
+            get {
+                return ResourceManager.GetString("SettingsRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort By.
+        /// </summary>
+        public static string SettingsSortBy {
+            get {
+                return ResourceManager.GetString("SettingsSortBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme.
+        /// </summary>
+        public static string SettingsTheme {
+            get {
+                return ResourceManager.GetString("SettingsTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Everything filters.
+        /// </summary>
+        public static string SettingsUseEverythingFilters {
+            get {
+                return ResourceManager.GetString("SettingsUseEverythingFilters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View.
+        /// </summary>
+        public static string SettingsView {
+            get {
+                return ResourceManager.GetString("SettingsView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string ShortcutOK {
+            get {
+                return ResourceManager.GetString("ShortcutOK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter shortcut....
+        /// </summary>
+        public static string ShortcutWindowTitle {
+            get {
+                return ResourceManager.GetString("ShortcutWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attributes ascending.
+        /// </summary>
+        public static string SortByAttributesAscending {
+            get {
+                return ResourceManager.GetString("SortByAttributesAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attributes descending.
+        /// </summary>
+        public static string SortByAttributesDescending {
+            get {
+                return ResourceManager.GetString("SortByAttributesDescending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date accessed ascending.
+        /// </summary>
+        public static string SortByDateAccessedAscending {
+            get {
+                return ResourceManager.GetString("SortByDateAccessedAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date accessed descending.
+        /// </summary>
+        public static string SortByDateAccessedDescending {
+            get {
+                return ResourceManager.GetString("SortByDateAccessedDescending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date created ascending.
+        /// </summary>
+        public static string SortByDateCreatedAscending {
+            get {
+                return ResourceManager.GetString("SortByDateCreatedAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date created descending.
+        /// </summary>
+        public static string SortByDateCreatedDescending {
+            get {
+                return ResourceManager.GetString("SortByDateCreatedDescending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date modified ascending.
+        /// </summary>
+        public static string SortByDateModifiedAscending {
+            get {
+                return ResourceManager.GetString("SortByDateModifiedAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date modified descending.
+        /// </summary>
+        public static string SortByDateModifiedDescending {
+            get {
+                return ResourceManager.GetString("SortByDateModifiedDescending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date recently changed ascending.
+        /// </summary>
+        public static string SortByDateRecentlyChangedAscending {
+            get {
+                return ResourceManager.GetString("SortByDateRecentlyChangedAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date recently changed descending.
+        /// </summary>
+        public static string SortByDateRecentlyChangedDescending {
+            get {
+                return ResourceManager.GetString("SortByDateRecentlyChangedDescending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date run ascending.
+        /// </summary>
+        public static string SortByDateRunAscending {
+            get {
+                return ResourceManager.GetString("SortByDateRunAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date run descending.
+        /// </summary>
+        public static string SortByDateRunDescending {
+            get {
+                return ResourceManager.GetString("SortByDateRunDescending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extension ascending.
+        /// </summary>
+        public static string SortByExtensionAscending {
+            get {
+                return ResourceManager.GetString("SortByExtensionAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extension descending.
+        /// </summary>
+        public static string SortByExtensionDescending {
+            get {
+                return ResourceManager.GetString("SortByExtensionDescending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File list filename ascending.
+        /// </summary>
+        public static string SortByFileListFilenameAscending {
+            get {
+                return ResourceManager.GetString("SortByFileListFilenameAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File list filename descending.
+        /// </summary>
+        public static string SortByFileListFilenameDescending {
+            get {
+                return ResourceManager.GetString("SortByFileListFilenameDescending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name ascending.
+        /// </summary>
+        public static string SortByNameAscending {
+            get {
+                return ResourceManager.GetString("SortByNameAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name descending.
+        /// </summary>
+        public static string SortByNameDescending {
+            get {
+                return ResourceManager.GetString("SortByNameDescending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path ascending.
+        /// </summary>
+        public static string SortByPathAscending {
+            get {
+                return ResourceManager.GetString("SortByPathAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path descending.
+        /// </summary>
+        public static string SortByPathDescending {
+            get {
+                return ResourceManager.GetString("SortByPathDescending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run count ascending.
+        /// </summary>
+        public static string SortByRunCountAscending {
+            get {
+                return ResourceManager.GetString("SortByRunCountAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run count descending.
+        /// </summary>
+        public static string SortByRunCountDescending {
+            get {
+                return ResourceManager.GetString("SortByRunCountDescending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size ascending.
+        /// </summary>
+        public static string SortBySizeAscending {
+            get {
+                return ResourceManager.GetString("SortBySizeAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size descending.
+        /// </summary>
+        public static string SortBySizeDescending {
+            get {
+                return ResourceManager.GetString("SortBySizeDescending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type name ascending.
+        /// </summary>
+        public static string SortByTypeNameAscending {
+            get {
+                return ResourceManager.GetString("SortByTypeNameAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type name descending.
+        /// </summary>
+        public static string SortByTypeNameDescending {
+            get {
+                return ResourceManager.GetString("SortByTypeNameDescending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Audio.
+        /// </summary>
+        public static string UserFilterAudio {
+            get {
+                return ResourceManager.GetString("UserFilterAudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compressed.
+        /// </summary>
+        public static string UserFilterCompressed {
+            get {
+                return ResourceManager.GetString("UserFilterCompressed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document.
+        /// </summary>
+        public static string UserFilterDocument {
+            get {
+                return ResourceManager.GetString("UserFilterDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Executable.
+        /// </summary>
+        public static string UserFilterExecutable {
+            get {
+                return ResourceManager.GetString("UserFilterExecutable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picture.
+        /// </summary>
+        public static string UserFilterPicture {
+            get {
+                return ResourceManager.GetString("UserFilterPicture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More.
+        /// </summary>
+        public static string UserFilterPlaceholder {
+            get {
+                return ResourceManager.GetString("UserFilterPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video.
+        /// </summary>
+        public static string UserFilterVideo {
+            get {
+                return ResourceManager.GetString("UserFilterVideo", resourceCulture);
             }
         }
     }

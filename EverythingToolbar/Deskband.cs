@@ -1,6 +1,7 @@
 ﻿using EverythingToolbar;
 using System;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 
 namespace CSDeskBand
@@ -32,8 +33,8 @@ namespace CSDeskBand
             catch (Exception e)
             {
                 ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Unhandled exception");
-                if (MessageBox.Show(e.ToString() + "\n\nDo you want to copy the exception content to clipboard?",
-                    "Unhandled exception occured",
+                if (MessageBox.Show(e.ToString() + "\n\n" + EverythingToolbar.Properties.Resources.MessageBoxCopyException,
+                    EverythingToolbar.Properties.Resources.MessageBoxUnhandledExceptionTitle,
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Error) == MessageBoxResult.Yes)
                 {
