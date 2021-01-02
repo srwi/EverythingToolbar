@@ -21,7 +21,7 @@
                                 Background="{DynamicResource SearchBoxBackground}">
                             <Grid x:Name="SearchBoxGrid" SnapsToDevicePixels="True">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="38"/>
+                                    <ColumnDefinition Width="36"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Path x:Name="SearchBoxLogo"
@@ -39,7 +39,7 @@
                                 <TextBlock x:Name="SearchBoxWatermark"
                                            Text="{x:Static properties:Resources.SearchBoxWatermark}"
                                            Grid.Column="1"
-                                           Margin="0, 0, 10, 0"
+                                           Margin="2, 0, 10, 0"
                                            VerticalAlignment="Center"
                                            Opacity="0"
                                            Foreground="{DynamicResource SearchBoxWatermarkForeground}"

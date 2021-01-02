@@ -121,7 +121,7 @@ namespace EverythingToolbar
             {
                 EasingFunction = ease
             };
-            PopupBorder?.BeginAnimation(OpacityProperty, opacity);
+            PopupMarginBorder?.BeginAnimation(OpacityProperty, opacity);
 
             duration = TimeSpan.FromSeconds(Properties.Settings.Default.isAnimationsDisabled ? 0 : 0.8);
             ThicknessAnimation inner = new ThicknessAnimation(new Thickness(0), duration)
