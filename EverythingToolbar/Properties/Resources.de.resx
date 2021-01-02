@@ -172,7 +172,7 @@
     <value>Alle</value>
   </data>
   <data name="DefaultFilterFile" xml:space="preserve">
-    <value>Datei</value>
+    <value>Dateien</value>
   </data>
   <data name="DefaultFilterFolder" xml:space="preserve">
     <value>Ordner</value>
@@ -306,82 +306,82 @@
   <data name="ShortcutWindowTitle" xml:space="preserve">
     <value>Tastenkürzel eingeben...</value>
   </data>
-  <data name="SortByAttributesaufsteigend" xml:space="preserve">
+  <data name="SortByAttributesAscending" xml:space="preserve">
     <value>Attribute aufsteigend</value>
   </data>
-  <data name="SortByAttributesabsteigend" xml:space="preserve">
+  <data name="SortByAttributesDescending" xml:space="preserve">
     <value>Attribute absteigend</value>
   </data>
-  <data name="SortByDateAccessedaufsteigend" xml:space="preserve">
+  <data name="SortByDateAccessedAscending" xml:space="preserve">
     <value>Letzter Zugriff am aufsteigend</value>
   </data>
-  <data name="SortByDateAccessedabsteigend" xml:space="preserve">
+  <data name="SortByDateAccessedDescending" xml:space="preserve">
     <value>Letzter Zugriff am absteigend</value>
   </data>
-  <data name="SortByDateCreatedaufsteigend" xml:space="preserve">
+  <data name="SortByDateCreatedAscending" xml:space="preserve">
     <value>Erstellt am aufsteigend</value>
   </data>
-  <data name="SortByDateCreatedabsteigend" xml:space="preserve">
+  <data name="SortByDateCreatedDescending" xml:space="preserve">
     <value>Erstellt am absteigend</value>
   </data>
-  <data name="SortByDateModifiedaufsteigend" xml:space="preserve">
+  <data name="SortByDateModifiedAscending" xml:space="preserve">
     <value>Geändert am aufsteigend</value>
   </data>
-  <data name="SortByDateModifiedabsteigend" xml:space="preserve">
+  <data name="SortByDateModifiedDescending" xml:space="preserve">
     <value>Geändert am absteigend</value>
   </data>
-  <data name="SortByDateRecentlyChangedaufsteigend" xml:space="preserve">
+  <data name="SortByDateRecentlyChangedAscending" xml:space="preserve">
     <value>Kürzlich geändert aufsteigend</value>
   </data>
-  <data name="SortByDateRecentlyChangedabsteigend" xml:space="preserve">
+  <data name="SortByDateRecentlyChangedDescending" xml:space="preserve">
     <value>Kürzlich geändert absteigend</value>
   </data>
-  <data name="SortByDateRunaufsteigend" xml:space="preserve">
+  <data name="SortByDateRunAscending" xml:space="preserve">
     <value>Ausführungsdatum aufsteigend</value>
   </data>
-  <data name="SortByDateRunabsteigend" xml:space="preserve">
+  <data name="SortByDateRunDescending" xml:space="preserve">
     <value>Ausführungsdatum absteigend</value>
   </data>
-  <data name="SortByExtensionaufsteigend" xml:space="preserve">
+  <data name="SortByExtensionAscending" xml:space="preserve">
     <value>Erweiterung aufsteigend</value>
   </data>
-  <data name="SortByExtensionabsteigend" xml:space="preserve">
+  <data name="SortByExtensionDescending" xml:space="preserve">
     <value>Erweiterung absteigend</value>
   </data>
-  <data name="SortByFileListFilenameaufsteigend" xml:space="preserve">
+  <data name="SortByFileListFilenameAscending" xml:space="preserve">
     <value>Name der Dateiliste aufsteigend</value>
   </data>
-  <data name="SortByFileListFilenameabsteigend" xml:space="preserve">
+  <data name="SortByFileListFilenameDescending" xml:space="preserve">
     <value>Name der Dateiliste absteigend</value>
   </data>
-  <data name="SortByNameaufsteigend" xml:space="preserve">
+  <data name="SortByNameAscending" xml:space="preserve">
     <value>Name aufsteigend</value>
   </data>
-  <data name="SortByNameabsteigend" xml:space="preserve">
+  <data name="SortByNameDescending" xml:space="preserve">
     <value>Name absteigend</value>
   </data>
-  <data name="SortByPathaufsteigend" xml:space="preserve">
+  <data name="SortByPathAscending" xml:space="preserve">
     <value>Pfad aufsteigend</value>
   </data>
-  <data name="SortByPathabsteigend" xml:space="preserve">
+  <data name="SortByPathDescending" xml:space="preserve">
     <value>Pfad absteigend</value>
   </data>
-  <data name="SortByRunCountaufsteigend" xml:space="preserve">
+  <data name="SortByRunCountAscending" xml:space="preserve">
     <value>Anzahl der Ausführungen aufsteigend</value>
   </data>
-  <data name="SortByRunCountabsteigend" xml:space="preserve">
+  <data name="SortByRunCountDescending" xml:space="preserve">
     <value>Anzahl der Ausführungen absteigend</value>
   </data>
-  <data name="SortBySizeaufsteigend" xml:space="preserve">
+  <data name="SortBySizeAscending" xml:space="preserve">
     <value>Größe aufsteigend</value>
   </data>
-  <data name="SortBySizeabsteigend" xml:space="preserve">
+  <data name="SortBySizeDescending" xml:space="preserve">
     <value>Größe absteigend</value>
   </data>
-  <data name="SortByTypeNameaufsteigend" xml:space="preserve">
+  <data name="SortByTypeNameAscending" xml:space="preserve">
     <value>Typ aufsteigend</value>
   </data>
-  <data name="SortByTypeNameabsteigend" xml:space="preserve">
+  <data name="SortByTypeNameDescending" xml:space="preserve">
     <value>Typ absteigend</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
