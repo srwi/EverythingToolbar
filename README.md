@@ -96,4 +96,4 @@ Contribute
 
 Helping out with open issues, especially those marked as "help wanted", is appreciated!
 
-You can also help by translating EverythingToolbar. To do so download and translate the [resources](https://github.com/stnkl/EverythingToolbar/blob/master/EverythingToolbar/Properties/Resources.resx) file and either attach it to a new issue or open a pull request.
+You can also help by translating EverythingToolbar. To do so download and translate the [resources](https://github.com/stnkl/EverythingToolbar/blob/master/EverythingToolbar/Properties/Resources.resx) file and either attach it to [this issue](https://github.com/stnkl/EverythingToolbar/issues/64) or open a pull request.
