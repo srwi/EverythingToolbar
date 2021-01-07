@@ -1,0 +1,24 @@
+name: build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-2019
+    steps:
+      - name: checkout
+        uses: actions/checkout@v1
+      - name: Disable assembly signing
+        run: ((Get-Content -path EverythingToolbar/EverythingToolbar.csproj -Raw) -replace '<SignAssembly>true</SignAssembly>','<SignAssembly>false</SignAssembly>') | Set-Content -Path EverythingToolbar/EverythingToolbar.csproj
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+      - name: Install NuGet
+        uses: nuget/setup-nuget@v1
+      - name: NuGet dependencies
+        run: nuget restore
+      - name: Build
+        run: MSBuild $Env:GITHUB_WORKSPACE /p:Configuration=Release
+      - name: Install
+        run: |
+          cd EverythingToolbar/bin/Release
+          ./install.cmd

@@ -1,7 +1,9 @@
 EverythingToolbar
 =================
 
-[![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/stnkl/EverythingToolbar/blob/master/LICENSE) [![Downloads](https://img.shields.io/github/downloads/stnkl/EverythingToolbar/total?color=blue)](https://github.com/stnkl/EverythingToolbar/releases/latest)
+[![build](https://github.com/stnkl/EverythingToolbar/workflows/build/badge.svg)](https://github.com/stnkl/EverythingToolbar/actions)
+[![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/stnkl/EverythingToolbar/blob/master/LICENSE)
+[![Downloads](https://img.shields.io/github/downloads/stnkl/EverythingToolbar/total?color=blue)](https://github.com/stnkl/EverythingToolbar/releases/latest)
 
 [Everything](https://www.voidtools.com/) integration for the Windows taskbar.
 
