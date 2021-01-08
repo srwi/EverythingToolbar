@@ -277,6 +277,7 @@ Exit 0</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>powershell start-process %25windir%25\explorer.exe
+xcopy $(ProjectDir)..\EverythingToolbar\Inst\*.* $(ProjectDir)$(OutDir) /c /i /r /y
 Exit 0</PostBuildEvent>
   </PropertyGroup>
 </Project>
