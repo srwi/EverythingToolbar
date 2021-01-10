@@ -232,7 +232,7 @@
     <value>Выберите файл Everything.exe...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>Выберите файл Filters.csv. По умолчанию он находится в папке %APPDATA%\Everything. Его расположение может отличаться в зависимости от пути установки. Если файл отсутствует, это означает, что вы не вносили никаких изменений в стандартные фильтры Everything.ильтрах Everything.thing's default filters.</value>
+    <value>Выберите файл Filters.csv. По умолчанию он находится в папке %APPDATA%\Everything. Его расположение может отличаться в зависимости от пути установки. Если файл отсутствует, это означает, что вы не вносили никаких изменений в стандартные фильтры Everything.</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
     <value>Filters.csv не найден</value>
