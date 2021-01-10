@@ -22,7 +22,7 @@
                             <Border x:Name="InnerBorder"
                                     Background="Transparent"
                                     SnapsToDevicePixels="True">
-                                <Path Stroke="White" StrokeThickness="1" Width="16" Height="18">
+                                <Path Stroke="{TemplateBinding Foreground}" StrokeThickness="1" Width="16" Height="18">
                                     <Path.Data>
                                         <GeometryGroup>
                                             <LineGeometry StartPoint="0, 17" EndPoint="6, 11" />

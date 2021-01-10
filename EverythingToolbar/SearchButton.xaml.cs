@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using Microsoft.Win32;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace EverythingToolbar
 {
@@ -11,6 +13,26 @@ namespace EverythingToolbar
         public SearchButton()
         {
             InitializeComponent();
+
+            if (AppsUsLightTheme())
+                Foreground = new SolidColorBrush(Colors.Black);
+            else
+                Foreground = new SolidColorBrush(Colors.White);
+        }
+
+        private static bool AppsUsLightTheme()
+        {
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"))
+            {
+                object registryValueObject = key?.GetValue("AppsUseLightTheme");
+
+                if (registryValueObject == null)
+                {
+                    return true;
+                }
+
+                return (int)registryValueObject > 0;
+            }
         }
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
