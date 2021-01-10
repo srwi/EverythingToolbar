@@ -9,9 +9,10 @@ using System.Windows.Threading;
 
 namespace EverythingToolbar
 {
-    public partial class SearchResultsView : UserControl
+    public partial class SearchResultsView
     {
         private SearchResult SelectedItem => SearchResultsListView.SelectedItem as SearchResult;
+        private Point dragStart;
 
         public SearchResultsView()
         {
@@ -157,6 +158,27 @@ namespace EverythingToolbar
         {
             var item = (sender as Border).DataContext;
             SearchResultsListView.SelectedIndex = SearchResultsListView.Items.IndexOf(item);
+        }
+
+        private void OnListViewItemMouseMove(object sender, MouseEventArgs e)
+        {
+            Point mpos = e.GetPosition(null);
+            Vector diff = dragStart - mpos;
+
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance &&
+                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+            {
+                if (SearchResultsListView.SelectedItems.Count == 0)
+                {
+                    return;
+                }
+
+                string[] files = { SelectedItem?.FullPathAndFileName };
+                var data = new DataObject(DataFormats.FileDrop, files);
+                data.SetData(DataFormats.Text, files[0]);
+                DragDrop.DoDragDrop(SearchResultsListView, data, DragDropEffects.All);
+            }
         }
     }
 }

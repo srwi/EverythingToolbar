@@ -59,7 +59,8 @@
                                 Background="{TemplateBinding Background}"
                                 Padding="0"
                                 SnapsToDevicePixels="true"
-                                PreviewMouseDown="OnListViewItemClicked">
+                                PreviewMouseDown="OnListViewItemClicked"
+                                MouseMove="OnListViewItemMouseMove">
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
