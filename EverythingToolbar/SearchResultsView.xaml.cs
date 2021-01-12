@@ -161,23 +161,22 @@ namespace EverythingToolbar
 
         private void OnListViewItemClicked(object sender, MouseButtonEventArgs e)
         {
+            dragStart = PointToScreen(Mouse.GetPosition(this));
+
             var item = (sender as Border).DataContext;
             SearchResultsListView.SelectedIndex = SearchResultsListView.Items.IndexOf(item);
         }
 
         private void OnListViewItemMouseMove(object sender, MouseEventArgs e)
         {
-            Point mpos = e.GetPosition(null);
-            Vector diff = dragStart - mpos;
+            Vector diff = dragStart - PointToScreen(Mouse.GetPosition(this));
 
             if (e.LeftButton == MouseButtonState.Pressed &&
-                Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance &&
-                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+                (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
             {
                 if (SearchResultsListView.SelectedItems.Count == 0)
-                {
                     return;
-                }
 
                 string[] files = { SelectedItem?.FullPathAndFileName };
                 var data = new DataObject(DataFormats.FileDrop, files);
