@@ -142,17 +142,20 @@ namespace EverythingToolbar
             {
                 SearchResultsPopup.SearchResultsView.SelectNextSearchResult();
             }
+            else if (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == Key.Enter)
+            {
+                string path = "";
+                if (SearchResultsPopup.SearchResultsView.SearchResultsListView.SelectedIndex >= 0)
+                    path = (SearchResultsPopup.SearchResultsView.SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
+                EverythingSearch.Instance.OpenLastSearchInEverything(path);
+            }
             else if (e.Key == Key.Enter)
             {
-                if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
-                {
-                    string path = "";
-                    if (SearchResultsPopup.SearchResultsView.SearchResultsListView.SelectedIndex >= 0)
-                        path = (SearchResultsPopup.SearchResultsView.SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
-                    EverythingSearch.Instance.OpenLastSearchInEverything(path);
-                    return;
-                }
                 SearchResultsPopup.SearchResultsView.OpenSelectedSearchResult();
+            }
+            else if (e.SystemKey == Key.Space && Keyboard.Modifiers == ModifierKeys.Alt)
+            {
+                SearchResultsPopup.SearchResultsView.PreviewSelectedFile();
             }
             else if (e.Key == Key.Escape)
             {

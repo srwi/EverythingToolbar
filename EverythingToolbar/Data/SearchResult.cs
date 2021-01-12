@@ -3,6 +3,9 @@ using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Pipes;
+using System.Security.Principal;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
@@ -103,6 +106,34 @@ namespace EverythingToolbar
         public void ShowInEverything()
         {
             EverythingSearch.Instance.OpenLastSearchInEverything(FullPathAndFileName);
+        }
+
+        public void PreviewInQuickLook()
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    using (var client = new NamedPipeClientStream(".", "QuickLook.App.Pipe." + WindowsIdentity.GetCurrent().User?.Value, PipeDirection.Out))
+                    {
+                        client.Connect(1000);
+
+                        using (var writer = new StreamWriter(client))
+                        {
+                            writer.WriteLine($"{"QuickLook.App.PipeMessages.Toggle"}|{FullPathAndFileName}");
+                            writer.Flush();
+                        }
+                    }
+                }
+                catch (TimeoutException e)
+                {
+                    ToolbarLogger.GetLogger("EverythingToolbar").Info("Opening QuickLook preview timed out. Is QuickLook running?");
+                }
+                catch (Exception e)
+                {
+                    ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open preview.");
+                }
+            });
         }
     }
 }

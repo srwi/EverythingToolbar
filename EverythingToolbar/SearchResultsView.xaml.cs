@@ -87,6 +87,11 @@ namespace EverythingToolbar
             SelectedItem?.OpenPath();
         }
 
+        public void PreviewSelectedFile()
+        {
+            SelectedItem?.PreviewInQuickLook();
+        }
+
         private void CopyPathToClipBoard(object sender, RoutedEventArgs e)
         {
             SelectedItem?.CopyPathToClipboard();
