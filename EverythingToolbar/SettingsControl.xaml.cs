@@ -1,5 +1,6 @@
 ﻿using EverythingToolbar.Helpers;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -89,7 +90,9 @@ namespace EverythingToolbar
             (menu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = false;
             (menu.Items[selectedIndex] as MenuItem).IsChecked = false;
 
-            if (EverythingSearch.Instance.GetIsFastSort((uint)selectedIndex + 1))
+            int[] fastSortExceptions = { 9, 10, 17, 18 };
+            if (EverythingSearch.Instance.GetIsFastSort((uint)selectedIndex + 1) ||
+                fastSortExceptions.Contains(selectedIndex + 1))
             {
                 Properties.Settings.Default.sortBy = selectedIndex + 1;
             }
