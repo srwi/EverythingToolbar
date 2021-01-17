@@ -3,35 +3,41 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         mc:Ignorable="d"
         d:DesignHeight="40"
         d:DesignWidth="50"
         PreviewMouseUp="OnMouseUp"
         PreviewMouseDown="OnMouseDown"
+        Loaded="OnLoaded"
         IsVisibleChanged="OnIsVisibleChanged"
         Style="{DynamicResource SearchButtonStyle}"
-        ToolTip="Search with Everything">
+        ToolTip="{x:Static properties:Resources.SearchBoxWatermark}"
+        Foreground="Black">
     <Button.Resources>
         <Style x:Key="SearchButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="OuterBorder"
-                                Background="Transparent"
-                                SnapsToDevicePixels="True">
-                            <Border x:Name="InnerBorder"
+                        <Grid>
+                            <Border x:Name="OuterBorder"
+                                    Opacity="0.55"
                                     Background="Transparent"
                                     SnapsToDevicePixels="True">
-                                <Path Stroke="{TemplateBinding Foreground}" StrokeThickness="1" Width="16" Height="18">
-                                    <Path.Data>
-                                        <GeometryGroup>
-                                            <LineGeometry StartPoint="0, 17" EndPoint="6, 11" />
-                                            <EllipseGeometry Center="10, 7" RadiusX="5.3" RadiusY="5.3" />
-                                        </GeometryGroup>
-                                    </Path.Data>
-                                </Path>
+                                <Border x:Name="InnerBorder"
+                                        Background="Transparent"
+                                        SnapsToDevicePixels="True">
+                                </Border>
                             </Border>
-                        </Border>
+                            <Path Stroke="{TemplateBinding Foreground}" StrokeThickness="1" Width="16" Height="18">
+                                <Path.Data>
+                                    <GeometryGroup>
+                                        <LineGeometry StartPoint="0, 17" EndPoint="6, 11" />
+                                        <EllipseGeometry Center="10, 7" RadiusX="5.3" RadiusY="5.3" />
+                                    </GeometryGroup>
+                                </Path.Data>
+                            </Path>
+                        </Grid>
                         <ControlTemplate.Triggers>
                             <DataTrigger Binding="{Binding ElementName=SearchResultsPopup,
                                                            Path=IsOpen,
@@ -39,10 +45,10 @@
                                          Value="True">
                                 <Setter Property="Background"
                                         TargetName="OuterBorder"
-                                        Value="#0bffffff"/>
+                                        Value="#40ffffff"/>
                             </DataTrigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" TargetName="OuterBorder" Value="#0bffffff"/>
+                                <Setter Property="Background" TargetName="OuterBorder" Value="#40ffffff"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Trigger.EnterActions>
@@ -51,7 +57,7 @@
                                             <ColorAnimation Duration="0"
                                                             Storyboard.TargetProperty="Background.Color"
                                                             Storyboard.TargetName="InnerBorder"
-                                                            To="#16ffffff" />
+                                                            To="#99ffffff" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.EnterActions>

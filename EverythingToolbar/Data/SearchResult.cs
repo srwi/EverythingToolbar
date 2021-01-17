@@ -125,7 +125,7 @@ namespace EverythingToolbar
                         }
                     }
                 }
-                catch (TimeoutException e)
+                catch (TimeoutException)
                 {
                     ToolbarLogger.GetLogger("EverythingToolbar").Info("Opening QuickLook preview timed out. Is QuickLook running?");
                 }
