@@ -18,7 +18,3 @@ jobs:
         run: nuget restore
       - name: Build
         run: MSBuild $Env:GITHUB_WORKSPACE /p:Configuration=Release
-      - name: Install
-        run: |
-          cd EverythingToolbar/bin/Release
-          ./install.cmd

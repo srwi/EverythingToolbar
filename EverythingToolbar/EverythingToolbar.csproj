@@ -303,11 +303,25 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>taskkill /f /im explorer.exe 2&gt;nul &amp;set errorlevel=0
+xcopy $(ProjectDir)Everything64.dll $(ProjectDir)$(OutDir) /c /i /r /y
+xcopy $(ProjectDir)..\README.md $(ProjectDir)$(OutDir) /c /i /r /y
+xcopy $(ProjectDir)..\LICENSE $(ProjectDir)$(OutDir) /c /i /r /y
 Exit 0</PreBuildEvent>
   </PropertyGroup>
+  <Target Name="PostBuildMacros">
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="Targets" />
+    </GetAssemblyIdentity>
+    <ItemGroup>
+      <VersionNumber Include="@(Targets->'%(Version)')" />
+    </ItemGroup>
+  </Target>
   <PropertyGroup>
+    <PostBuildEventDependsOn>
+      $(PostBuildEventDependsOn);
+      PostBuildMacros;
+    </PostBuildEventDependsOn>
     <PostBuildEvent>powershell start-process %25windir%25\explorer.exe
-xcopy $(ProjectDir)..\EverythingToolbar\Inst\*.* $(ProjectDir)$(OutDir) /c /i /r /y
 Exit 0</PostBuildEvent>
   </PropertyGroup>
 </Project>
