@@ -267,6 +267,17 @@ namespace EverythingToolbar
                 CurrentFilter = FilterLoader.Instance.UserFilters[i - defaultSize];
         }
 
+        public void SelectFilterFromIndex(int index)
+        {
+            int dc = FilterLoader.Instance.DefaultFilters.Count;
+            int uc = FilterLoader.Instance.UserFilters.Count;
+
+            if (index < dc)
+                CurrentFilter = FilterLoader.Instance.DefaultFilters[index];
+            else if (index - dc < uc)
+                CurrentFilter = FilterLoader.Instance.UserFilters[index - dc];
+        }
+
         public void OpenLastSearchInEverything(string highlighted_file = "")
         {
             if(!File.Exists(Properties.Settings.Default.everythingPath))

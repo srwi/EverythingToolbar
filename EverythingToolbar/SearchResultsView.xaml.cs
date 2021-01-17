@@ -82,7 +82,7 @@ namespace EverythingToolbar
             }
         }
 
-        private void OpenFilePath(object sender, RoutedEventArgs e)
+        public void OpenFilePath(object sender, RoutedEventArgs e)
         {
             SelectedItem?.OpenPath();
         }
@@ -121,7 +121,21 @@ namespace EverythingToolbar
 
         private void Open(object sender, MouseEventArgs e)
         {
-            OpenSelectedSearchResult();
+            switch (Keyboard.Modifiers)
+            {
+                case ModifierKeys.Alt:
+                    SelectedItem?.ShowProperties();
+                    break;
+                case ModifierKeys.Control:
+                    SelectedItem?.OpenPath();
+                    break;
+                case ModifierKeys.Shift:
+                    SelectedItem?.ShowInEverything();
+                    break;
+                default:
+                    OpenSelectedSearchResult();
+                    break;
+            }
         }
 
         public void ShowFileProperties(object sender, RoutedEventArgs e)

@@ -149,6 +149,10 @@ namespace EverythingToolbar
                     path = (SearchResultsPopup.SearchResultsView.SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
                 EverythingSearch.Instance.OpenLastSearchInEverything(path);
             }
+            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Enter)
+            {
+                SearchResultsPopup.SearchResultsView.OpenFilePath(null, null);
+            }
             else if (e.Key == Key.Enter)
             {
                 SearchResultsPopup.SearchResultsView.OpenSelectedSearchResult();
@@ -156,6 +160,11 @@ namespace EverythingToolbar
             else if (e.SystemKey == Key.Space && Keyboard.Modifiers == ModifierKeys.Alt)
             {
                 SearchResultsPopup.SearchResultsView.PreviewSelectedFile();
+            }
+            else if (e.Key >= Key.D0 && e.Key <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                int index = e.Key == Key.D0 ? 9 : e.Key - Key.D1;
+                EverythingSearch.Instance.SelectFilterFromIndex(index);
             }
             else if (e.Key == Key.Escape)
             {
