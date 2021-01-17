@@ -18,4 +18,7 @@
 	<!-- Exclude EverythingToolbar.dll from Heat generated file so we can extract the AssemblyVersion from it specifically -->
 	<xsl:key name="everythingToolbarDll" match="wix:Component[wix:File[@Source = '$(var.HarvestPath)\EverythingToolbar.dll']]" use="@Id"/>
 	<xsl:template match="*[self::wix:Component or self::wix:ComponentRef][key('everythingToolbarDll', @Id)]" />
+
+	<xsl:key name="DllConfigFile" match="wix:Component[wix:File[@Source = '$(var.HarvestPath)\EverythingToolbar.dll.config']]" use="@Id"/>
+	<xsl:template match="*[self::wix:Component or self::wix:ComponentRef][key('DllConfigFile', @Id)]" />
 </xsl:stylesheet>
