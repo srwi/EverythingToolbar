@@ -15,28 +15,28 @@ namespace EverythingToolbar.Helpers
         {
             new Filter {
                 Name = Properties.Resources.DefaultFilterAll,
-                IsMatchCase = false,
-                IsMatchWholeWord = false,
-                IsMatchPath = false,
-                IsRegExEnabled = false,
+                IsMatchCase = null,
+                IsMatchWholeWord = null,
+                IsMatchPath = null,
+                IsRegExEnabled = null,
                 Macro = "",
                 Search = ""
             },
             new Filter {
                 Name = Properties.Resources.DefaultFilterFile,
-                IsMatchCase = false,
-                IsMatchWholeWord = false,
-                IsMatchPath = false,
-                IsRegExEnabled = false,
+                IsMatchCase = null,
+                IsMatchWholeWord = null,
+                IsMatchPath = null,
+                IsRegExEnabled = null,
                 Macro = "",
                 Search = "file:"
             },
             new Filter {
                 Name = Properties.Resources.DefaultFilterFolder,
-                IsMatchCase = false,
-                IsMatchWholeWord = false,
-                IsMatchPath = false,
-                IsRegExEnabled = false,
+                IsMatchCase = null,
+                IsMatchWholeWord = null,
+                IsMatchPath = null,
+                IsRegExEnabled = null,
                 Macro = "",
                 Search = "folder:"
             }
@@ -61,55 +61,55 @@ namespace EverythingToolbar.Helpers
         {
             new Filter {
                 Name = Properties.Resources.UserFilterAudio,
-                IsMatchCase = false,
-                IsMatchWholeWord = false,
-                IsMatchPath = false,
-                IsRegExEnabled = false,
+                IsMatchCase = null,
+                IsMatchWholeWord = null,
+                IsMatchPath = null,
+                IsRegExEnabled = null,
                 Macro = "audio",
                 Search = "ext:aac;ac3;aif;aifc;aiff;au;cda;dts;fla;flac;it;m1a;m2a;m3u;m4a;mid;midi;mka;mod;mp2;mp3;mpa;ogg;ra;rmi;spc;rmi;snd;umx;voc;wav;wma;xm"
             },
             new Filter {
                 Name = Properties.Resources.UserFilterCompressed,
-                IsMatchCase = false,
-                IsMatchWholeWord = false,
-                IsMatchPath = false,
-                IsRegExEnabled = false,
+                IsMatchCase = null,
+                IsMatchWholeWord = null,
+                IsMatchPath = null,
+                IsRegExEnabled = null,
                 Macro = "zip",
                 Search = "ext:7z;ace;arj;bz2;cab;gz;gzip;jar;r00;r01;r02;r03;r04;r05;r06;r07;r08;r09;r10;r11;r12;r13;r14;r15;r16;r17;r18;r19;r20;r21;r22;r23;r24;r25;r26;r27;r28;r29;rar;tar;tgz;z;zip"
             },
             new Filter {
                 Name = Properties.Resources.UserFilterDocument,
-                IsMatchCase = false,
-                IsMatchWholeWord = false,
-                IsMatchPath = false,
-                IsRegExEnabled = false,
+                IsMatchCase = null,
+                IsMatchWholeWord = null,
+                IsMatchPath = null,
+                IsRegExEnabled = null,
                 Macro = "doc",
                 Search = "ext:c;chm;cpp;csv;cxx;doc;docm;docx;dot;dotm;dotx;h;hpp;htm;html;hxx;ini;java;lua;mht;mhtml;odt;pdf;potx;potm;ppam;ppsm;ppsx;pps;ppt;pptm;pptx;rtf;sldm;sldx;thmx;txt;vsd;wpd;wps;wri;xlam;xls;xlsb;xlsm;xlsx;xltm;xltx;xml"
             },
             new Filter {
                 Name = Properties.Resources.UserFilterExecutable,
-                IsMatchCase = false,
-                IsMatchWholeWord = false,
-                IsMatchPath = false,
-                IsRegExEnabled = false,
+                IsMatchCase = null,
+                IsMatchWholeWord = null,
+                IsMatchPath = null,
+                IsRegExEnabled = null,
                 Macro = "exe",
                 Search = "ext:bat;cmd;exe;msi;msp;scr"
             },
             new Filter {
                 Name = Properties.Resources.UserFilterPicture,
-                IsMatchCase = false,
-                IsMatchWholeWord = false,
-                IsMatchPath = false,
-                IsRegExEnabled = false,
+                IsMatchCase = null,
+                IsMatchWholeWord = null,
+                IsMatchPath = null,
+                IsRegExEnabled = null,
                 Macro = "pic",
                 Search = "ext:ani;bmp;gif;ico;jpe;jpeg;jpg;pcx;png;psd;tga;tif;tiff;webp;wmf"
             },
             new Filter {
                 Name = Properties.Resources.UserFilterVideo,
-                IsMatchCase = false,
-                IsMatchWholeWord = false,
-                IsMatchPath = false,
-                IsRegExEnabled = false,
+                IsMatchCase = null,
+                IsMatchWholeWord = null,
+                IsMatchPath = null,
+                IsRegExEnabled = null,
                 Macro = "video",
                 Search = "ext:3g2;3gp;3gp2;3gpp;amr;amv;asf;avi;bdmv;bik;d2v;divx;drc;dsa;dsm;dss;dsv;evo;f4v;flc;fli;flic;flv;hdmov;ifo;ivf;m1v;m2p;m2t;m2ts;m2v;m4b;m4p;m4v;mkv;mp2v;mp4;mp4v;mpe;mpeg;mpg;mpls;mpv2;mpv4;mov;mts;ogm;ogv;pss;pva;qt;ram;ratdvd;rm;rmm;rmvb;roq;rpm;smil;smk;swf;tp;tpr;ts;vob;vp6;webm;wm;wmp;wmv"
             }

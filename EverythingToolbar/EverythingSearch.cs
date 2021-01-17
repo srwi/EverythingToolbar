@@ -199,14 +199,15 @@ namespace EverythingToolbar
                     uint flags = EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME;
                     flags |= EVERYTHING_REQUEST_HIGHLIGHTED_FILE_NAME;
                     flags |= EVERYTHING_REQUEST_HIGHLIGHTED_PATH;
+                    bool regEx = CurrentFilter.IsRegExEnabled ?? Properties.Settings.Default.isRegExEnabled;
 
-                    Everything_SetSearchW(CurrentFilter.Search + (CurrentFilter.Search.Length > 0 ? " " : "") + SearchTerm);
+                    Everything_SetSearchW(CurrentFilter.Search + (CurrentFilter.Search.Length > 0 && !regEx ? " " : "") + SearchTerm);
                     Everything_SetRequestFlags(flags);
                     Everything_SetSort((uint)Properties.Settings.Default.sortBy);
-                    Everything_SetMatchCase(Properties.Settings.Default.isMatchCase);
-                    Everything_SetMatchPath(Properties.Settings.Default.isMatchPath);
-                    Everything_SetMatchWholeWord(Properties.Settings.Default.isMatchWholeWord);
-                    Everything_SetRegex(Properties.Settings.Default.isRegExEnabled);
+                    Everything_SetMatchCase(CurrentFilter.IsMatchCase ?? Properties.Settings.Default.isMatchCase);
+                    Everything_SetMatchPath(CurrentFilter.IsMatchPath ?? Properties.Settings.Default.isMatchPath);
+                    Everything_SetMatchWholeWord(CurrentFilter.IsMatchWholeWord ?? Properties.Settings.Default.isMatchWholeWord);
+                    Everything_SetRegex(regEx);
                     Everything_SetMax((uint)BatchSize);
                     lock (_searchResultsLock)
                         Everything_SetOffset((uint)SearchResults.Count);
