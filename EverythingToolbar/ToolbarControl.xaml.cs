@@ -157,8 +157,9 @@ namespace EverythingToolbar
             {
                 SearchResultsPopup.SearchResultsView.OpenSelectedSearchResult();
             }
-            else if (e.SystemKey == Key.Space && Keyboard.Modifiers == ModifierKeys.Alt)
+            else if (e.Key == Key.Space && Keyboard.Modifiers == ModifierKeys.Control)
             {
+                e.Handled = true;
                 SearchResultsPopup.SearchResultsView.PreviewSelectedFile();
             }
             else if (e.Key >= Key.D0 && e.Key <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control)
