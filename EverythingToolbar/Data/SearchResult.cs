@@ -49,7 +49,7 @@ namespace EverythingToolbar
         {
             try
             {
-                ShellUtils.CreateProcessFromCommandLine("explorer.exe /select,\"" + FullPathAndFileName + "\"");
+                ShellUtils.OpenPathWithDefaultApp(FullPathAndFileName);
                 EverythingSearch.Instance.IncrementRunCount(FullPathAndFileName);
             }
             catch (Exception e)

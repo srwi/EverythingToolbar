@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -114,6 +115,20 @@ namespace EverythingToolbar.Helpers
             var args = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "shell32.dll");
             args += ",OpenAs_RunDLL " + path;
             Process.Start("rundll32.exe", args);
+        }
+
+        public static void OpenPathWithDefaultApp(string path)
+        {
+            string shell = (string)Registry.ClassesRoot.OpenSubKey(@"Directory\shell")?.GetValue("");
+            var command = (Registry.ClassesRoot.OpenSubKey(@"Directory\shell\" + shell + @"\command")?.GetValue(""));
+            if (command != null)
+            {
+                string parent = Path.GetDirectoryName(path);
+                CreateProcessFromCommandLine(command.ToString().Replace("%1", parent));
+                return;
+            }
+
+            CreateProcessFromCommandLine("explorer.exe /select,\"" + path + "\"");
         }
     }
 }
