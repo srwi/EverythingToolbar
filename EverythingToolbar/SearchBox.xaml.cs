@@ -11,6 +11,7 @@ namespace EverythingToolbar
             InitializeComponent();
 
             DataContext = EverythingSearch.Instance;
+            InputMethod.SetPreferredImeState(this, InputMethodState.On);
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
