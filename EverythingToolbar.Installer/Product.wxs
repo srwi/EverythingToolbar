@@ -7,9 +7,8 @@
 		<MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
 
 		<Property Id="ARPNOREPAIR" Value="yes" Secure="yes" />
-		<Property Id="ARPNOMODIFY" Value="yes" Secure="yes" />
-		
-		<util:RestartResource ProcessName="explorer.exe" />
+
+		<Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable"/>
 
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="LocalAppDataFolder">
@@ -46,11 +45,25 @@
 			<ComponentRef Id="RegistryEntries" />
 			<ComponentRef Id="EverythingToolbarAssembly" />
 		</Feature>
- 
-		<CustomAction Id="StartExplorer" Directory="APPLICATIONROOTDIRECTORY" Execute="deferred" Impersonate="yes" ExeCommand="powershell Stop-Process -ProcessName explorer" Return="ignore" />
-		
+
 		<InstallExecuteSequence>
-			<Custom Action="StartExplorer" Before="InstallFinalize" />
+			<ScheduleReboot After="InstallFinalize">REMOVE="ALL"</ScheduleReboot>
 		</InstallExecuteSequence>
+
+		<Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONROOTDIRECTORY" />
+		<UI>
+			<UIRef Id="WixUI_InstallDir" />
+			<UIRef Id="WixUI_ErrorProgressText" />
+			<Publish Dialog="WelcomeDlg"
+						Control="Next"
+						Event="NewDialog"
+						Value="InstallDirDlg"
+						Order="2">1</Publish>
+			<Publish Dialog="InstallDirDlg"
+						Control="Back"
+						Event="NewDialog"
+						Value="WelcomeDlg"
+						Order="2">1</Publish>
+		</UI>
 	</Product>
 </Wix>
