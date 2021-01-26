@@ -4,7 +4,6 @@
          xmlns:properties="clr-namespace:EverythingToolbar.Properties"
          xmlns:local="clr-namespace:EverythingToolbar"
          LostKeyboardFocus="OnLostKeyboardFocus"
-         IsTabStop="False"
          CaretBrush="{DynamicResource SearchBoxForegroundActive}"
          Style="{DynamicResource SearchBoxStyle}"
          Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">

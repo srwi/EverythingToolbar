@@ -1,7 +1,6 @@
 ﻿using EverythingToolbar;
 using System;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows;
 
 namespace CSDeskBand

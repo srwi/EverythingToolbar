@@ -43,7 +43,7 @@ namespace EverythingToolbar
             };
             ApplicationResources.Instance.LoadDefaults();
 
-            SearchResultsPopup.Closed += (object sender, EventArgs e) =>
+            SearchBox.LostKeyboardFocus += (object sender, KeyboardFocusChangedEventArgs e) =>
             {
                 Keyboard.Focus(KeyboardFocusCapture);
                 UnfocusRequested?.Invoke(this, new EventArgs());
@@ -171,6 +171,14 @@ namespace EverythingToolbar
             {
                 EverythingSearch.Instance.SearchTerm = null;
                 Keyboard.ClearFocus();
+            }
+        }
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.System && e.SystemKey == Key.F4)
+            {
+                e.Handled = true;
             }
         }
 
