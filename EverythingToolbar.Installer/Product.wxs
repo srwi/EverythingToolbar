@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
-		 xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+		 xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
+		 xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
 	<Product Id="*" UpgradeCode="744f23c4-7adb-42fa-a781-ac940dc4b454" Version="!(bind.fileVersion.EverythingToolbarDll)" Language="1033" Name="EverythingToolbar" Manufacturer="Stephan Rumswinkel">
 		<Package InstallerVersion="300" Compressed="yes" InstallScope="perUser" />
 		<Media Id="1" Cabinet="myapplication.cab" EmbedCab="yes" />
 		<MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
 
+		<PropertyRef Id="NETFRAMEWORK45"/>
+		<Condition Message="This application requires at least .NET Framework 4.7. Please install the .NET Framework then run this installer again."><![CDATA[Installed OR (NETFRAMEWORK45 AND NETFRAMEWORK45 >= "#460798")]]></Condition>
+		
 		<Property Id="ARPNOREPAIR" Value="yes" Secure="yes" />
 
 		<Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable"/>

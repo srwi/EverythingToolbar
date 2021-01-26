@@ -119,8 +119,8 @@ namespace EverythingToolbar.Helpers
 
         public static void OpenPathWithDefaultApp(string path)
         {
-            string shell = (string)Registry.ClassesRoot.OpenSubKey(@"Directory\shell")?.GetValue("");
-            var command = (Registry.ClassesRoot.OpenSubKey(@"Directory\shell\" + shell + @"\command")?.GetValue(""));
+            var shell = (string)Registry.ClassesRoot.OpenSubKey(@"Directory\shell")?.GetValue("");
+            var command = Registry.ClassesRoot.OpenSubKey(@"Directory\shell\" + shell + @"\command")?.GetValue("");
             if (command != null)
             {
                 string parent = Path.GetDirectoryName(path);
