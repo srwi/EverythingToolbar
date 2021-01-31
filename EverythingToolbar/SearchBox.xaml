@@ -3,6 +3,7 @@
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:properties="clr-namespace:EverythingToolbar.Properties"
          xmlns:local="clr-namespace:EverythingToolbar"
+         GotKeyboardFocus="OnGainedKeyboardFocus"
          LostKeyboardFocus="OnLostKeyboardFocus"
          CaretBrush="{DynamicResource SearchBoxForegroundActive}"
          Style="{DynamicResource SearchBoxStyle}"
