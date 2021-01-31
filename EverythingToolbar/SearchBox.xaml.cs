@@ -2,6 +2,8 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
+using EverythingToolbar.Helpers;
+
 namespace EverythingToolbar
 {
     public partial class SearchBox : TextBox
@@ -17,8 +19,14 @@ namespace EverythingToolbar
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             EverythingSearch.Instance.Reset();
+            WindowsTaskBar.SetState(AppBarStates.AutoHide);
         }
 
+        private void OnGainedKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            WindowsTaskBar.SetState(AppBarStates.AlwaysOnTop);
+        }
+        
         private void OnMenuItemClicked(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.Save();
