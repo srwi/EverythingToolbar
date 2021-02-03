@@ -4,12 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:EverythingToolbar"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:h="clr-namespace:EverythingToolbar.Helpers"
              mc:Ignorable="d"
              KeyDown="OnKeyDown"
              PreviewKeyUp="OnKeyReleased"
              PreviewKeyDown="OnKeyPressed"
              PreviewMouseDown="OnMouseDown"
              HorizontalAlignment="Stretch">
+    <i:Interaction.Behaviors>
+        <h:DpiScaling x:Name="dpiScaling" />
+    </i:Interaction.Behaviors>
+    
     <Grid>
         <TextBox Opacity="0" IsHitTestVisible="False" Name="KeyboardFocusCapture" />
 

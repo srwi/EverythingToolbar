@@ -2,6 +2,8 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:h="clr-namespace:EverythingToolbar.Helpers"
       xmlns:local="clr-namespace:EverythingToolbar"
       Background="Transparent"
       Margin="10, 0"
@@ -9,6 +11,10 @@
 
     <Grid.ContextMenu>
         <ContextMenu Focusable="False">
+            <i:Interaction.Behaviors>
+                <h:DpiScaling x:Name="dpiScaling" />
+            </i:Interaction.Behaviors>
+            
             <ContextMenu.Resources>
                 <Style TargetType="{x:Type MenuItem}">
                     <Setter Property="Focusable" Value="False" />

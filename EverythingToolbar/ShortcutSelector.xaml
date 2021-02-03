@@ -4,12 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:h="clr-namespace:EverythingToolbar.Helpers"
         mc:Ignorable="d"
         Title="{x:Static properties:Resources.ShortcutWindowTitle}"
         Closed="OnClosed"
         Height="80"
         Width="300"
         ResizeMode="NoResize">
+    <i:Interaction.Behaviors>
+        <h:DpiScaling x:Name="dpiScaling" />
+    </i:Interaction.Behaviors>
+    
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />

@@ -20,7 +20,7 @@ namespace EverythingToolbar
         InCacheOnly = 0x10,
     }
 
-    // Based on: https://github.com/Wox-launcher/Wox/blob/master/Wox.Infrastructure/Image/ThumbnailReader.cs
+    // Based on: https://stackoverflow.com/questions/21751747/extract-thumbnail-for-any-file-in-windows
     public class WindowsThumbnailProvider
     {
         private const string IShellItem2Guid = "7E9FB0D3-919F-4307-AB2E-9B1860310C93";

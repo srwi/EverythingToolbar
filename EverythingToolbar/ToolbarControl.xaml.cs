@@ -6,28 +6,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 
 namespace EverythingToolbar
 {
     public partial class ToolbarControl : UserControl
     {
-        // Requires Windows 10 Anniversary Update
-        [DllImport("user32")]
-        static extern uint GetDpiForWindow(IntPtr hWnd);
-
         public event EventHandler<EventArgs> FocusRequested;
         public event EventHandler<EventArgs> UnfocusRequested;
-
-        double CurrentDpi { get; set; }
-        double InitialDpi { get; set; }
 
         public ToolbarControl()
         {
             InitializeComponent();
-
-            Loaded += OnLoaded;
-            Unloaded += OnUnloaded;
 
             ApplicationResources.Instance.ResourceChanged += (object sender, ResourcesChangedEventArgs e) =>
             {
@@ -53,75 +42,6 @@ namespace EverythingToolbar
                 (Key)Properties.Settings.Default.shortcutKey,
                 (ModifierKeys)Properties.Settings.Default.shortcutModifiers,
                 FocusSearchBox);
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            var hwndSource = PresentationSource.FromVisual(this) as HwndSource;
-            hwndSource.AddHook(HwndSourceHook);
-
-            InitialDpi = VisualTreeHelper.GetDpi(this).PixelsPerInchY;
-            CurrentDpi = InitialDpi;
-
-            UpdateDpi(GetParentWindowDpi(this));
-        }
-
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            Loaded -= OnLoaded;
-            var hwndSource = PresentationSource.FromVisual(this) as HwndSource;
-            hwndSource.RemoveHook(HwndSourceHook);
-        }
-
-        private static double GetParentWindowDpi(Visual visual)
-        {
-            // Check for Windows 10 Anniversary version
-            if (Environment.OSVersion.Version.CompareTo(new Version(10, 0, 14393)) < 0)
-            {
-                return 96.0;
-            }
-
-            if (!(PresentationSource.FromVisual(visual) is HwndSource hwnd))
-            {
-                return 96.0;
-            }
-
-            return GetDpiForWindow(hwnd.Handle);
-        }
-
-        private IntPtr HwndSourceHook(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam, ref bool handled)
-        {
-            const int WM_DPICHANGED_AFTERPARENT = 0x02E3;
-            if (msg == WM_DPICHANGED_AFTERPARENT)
-            {
-                    UpdateDpi(GetParentWindowDpi(this));
-                    handled = true;
-            }
-
-            return IntPtr.Zero;
-        }
-
-        private void UpdateDpi(double newDpi, bool updateSize = true)
-        {
-            if (updateSize)
-            {
-                var dpiScale = newDpi / CurrentDpi;
-                Width *= dpiScale;
-                Height *= dpiScale;
-            }
-
-            CurrentDpi = newDpi;
-
-            if (VisualTreeHelper.GetChildrenCount(this) == 0)
-                return;
-
-            var child = VisualTreeHelper.GetChild(this, 0);
-            double renderScale = newDpi / InitialDpi;
-
-            var scaleTransform = Math.Abs(renderScale - 1) < 0.0001
-                ? Transform.Identity
-                : new ScaleTransform(renderScale, renderScale);
-            child.SetValue(FrameworkElement.LayoutTransformProperty, scaleTransform);
         }
 
         public void Destroy()

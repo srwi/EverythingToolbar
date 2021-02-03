@@ -84,6 +84,7 @@
       <DependentUpon>FilterSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ApplicationResources.cs" />
+    <Compile Include="Helpers\DpiScaling.cs" />
     <Compile Include="Helpers\FilterLoader.cs" />
     <Compile Include="Helpers\ShellUtils.cs" />
     <Compile Include="Helpers\ShortcutManager.cs" />
@@ -313,6 +314,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
+      <Version>1.1.31</Version>
+    </PackageReference>
     <PackageReference Include="NHotkey.Wpf">
       <Version>2.1.0</Version>
     </PackageReference>

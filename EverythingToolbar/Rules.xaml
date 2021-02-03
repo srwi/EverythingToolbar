@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EverythingToolbar"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:h="clr-namespace:EverythingToolbar.Helpers"
         xmlns:core="clr-namespace:System;assembly=mscorlib"
         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         mc:Ignorable="d"
@@ -12,6 +14,9 @@
         MinWidth="400"
         Height="350"
         Width="400">
+    <i:Interaction.Behaviors>
+        <h:DpiScaling x:Name="dpiScaling" />
+    </i:Interaction.Behaviors>
 
     <Window.Resources>        
         <ObjectDataProvider x:Key="FileTypeEnum"
