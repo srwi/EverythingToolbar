@@ -10,11 +10,13 @@
              d:DesignWidth="300"
              d:DesignHeight="300">
     <UserControl.Resources>
-        <ContextMenu x:Key="ListViewItemContextMenu" Focusable="False">
+        <ContextMenu x:Key="ListViewItemContextMenu"
+                     Focusable="False"
+                     Opened="OnContextMenuOpened">
             <i:Interaction.Behaviors>
                 <h:DpiScaling x:Name="dpiScaling" />
             </i:Interaction.Behaviors>
-            
+
             <ContextMenu.Resources>
                 <Style TargetType="{x:Type MenuItem}">
                     <Setter Property="Focusable" Value="false" />
@@ -26,6 +28,9 @@
                       FontWeight="Bold" />
             <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenPath}"
                       Click="OpenFilePath" />
+            <MenuItem x:Name="OpenAsAdminMenuItem"
+                      Header="{x:Static properties:Resources.ContextMenuRunAsAdmin}"
+                      Click="RunAsAdmin" />
             <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWith}"
                       Loaded="OnOpenWithMenuLoaded">
                 <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWithNoRules}"
@@ -45,7 +50,7 @@
             <MenuItem Header="{x:Static properties:Resources.ContextMenuProperties}"
                       Click="ShowFileProperties" />
         </ContextMenu>
-        
+
         <Style TargetType="{x:Type ListViewItem}">
             <Setter Property="SnapsToDevicePixels"
                     Value="True" />

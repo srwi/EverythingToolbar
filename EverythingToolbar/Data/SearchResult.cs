@@ -45,6 +45,24 @@ namespace EverythingToolbar
             }
         }
 
+        public void RunAsAdmin()
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo(FullPathAndFileName)
+                {
+                    Verb = "runas",
+                    UseShellExecute = true
+                });
+                EverythingSearch.Instance.IncrementRunCount(FullPathAndFileName);
+            }
+            catch (Exception e)
+            {
+                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open search result.");
+                MessageBox.Show(Properties.Resources.MessageBoxFailedToOpen, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         public void OpenPath()
         {
             try

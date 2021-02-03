@@ -165,6 +165,9 @@
   <data name="ContextMenuProperties" xml:space="preserve">
     <value>Свойства</value>
   </data>
+  <data name="ContextMenuRunAsAdmin" xml:space="preserve">
+    <value>Запуск от имени администратора</value>
+  </data>
   <data name="ContextMenuShowInEverything" xml:space="preserve">
     <value>Показать в Everything</value>
   </data>

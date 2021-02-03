@@ -205,6 +205,15 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Run as admin.
+        /// </summary>
+        public static string ContextMenuRunAsAdmin {
+            get {
+                return ResourceManager.GetString("ContextMenuRunAsAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show in Everything.
         /// </summary>
         public static string ContextMenuShowInEverything {

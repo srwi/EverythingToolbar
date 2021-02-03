@@ -1,4 +1,4 @@
-﻿using EverythingToolbar.Helpers;
+using EverythingToolbar.Helpers;
 using NHotkey;
 using System;
 using System.Runtime.InteropServices;
@@ -72,6 +72,10 @@ namespace EverythingToolbar
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Enter)
             {
                 SearchResultsPopup.SearchResultsView.OpenFilePath(null, null);
+            }
+            else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.Enter)
+            {
+                SearchResultsPopup.SearchResultsView.RunAsAdmin(null, null);
             }
             else if (e.Key == Key.Enter)
             {

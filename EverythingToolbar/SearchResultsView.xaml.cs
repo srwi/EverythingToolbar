@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -138,6 +139,11 @@ namespace EverythingToolbar
             }
         }
 
+        public void RunAsAdmin(object sender, RoutedEventArgs e)
+        {
+            SelectedItem?.RunAsAdmin();
+        }
+
         public void ShowFileProperties(object sender, RoutedEventArgs e)
         {
             SelectedItem?.ShowProperties();
@@ -197,6 +203,20 @@ namespace EverythingToolbar
                 data.SetData(DataFormats.Text, files[0]);
                 DragDrop.DoDragDrop(SearchResultsListView, data, DragDropEffects.All);
             }
+        }
+
+        private void OnContextMenuOpened(object sender, RoutedEventArgs e)
+        {
+            ContextMenu cm = sender as ContextMenu;
+            MenuItem mi = cm.Items[2] as MenuItem;
+
+            string[] extensions = { ".exe", ".bat", ".cmd" };
+            bool isExecutable = (bool)SelectedItem?.IsFile && extensions.Any(ext => SelectedItem.FullPathAndFileName.EndsWith(ext));
+
+            if (isExecutable)
+                mi.Visibility = Visibility.Visible;
+            else
+                mi.Visibility = Visibility.Collapsed;
         }
     }
 }
