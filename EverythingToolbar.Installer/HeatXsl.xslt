@@ -21,4 +21,8 @@
 
 	<xsl:key name="DllConfigFile" match="wix:Component[wix:File[@Source = '$(var.HarvestPath)\EverythingToolbar.dll.config']]" use="@Id"/>
 	<xsl:template match="*[self::wix:Component or self::wix:ComponentRef][key('DllConfigFile', @Id)]" />
+	<xsl:key name="InstallScript" match="wix:Component[wix:File[@Source = '$(var.HarvestPath)\install.cmd']]" use="@Id"/>
+	<xsl:template match="*[self::wix:Component or self::wix:ComponentRef][key('InstallScript', @Id)]" />
+	<xsl:key name="UninstallScript" match="wix:Component[wix:File[@Source = '$(var.HarvestPath)\uninstall.cmd']]" use="@Id"/>
+	<xsl:template match="*[self::wix:Component or self::wix:ComponentRef][key('UninstallScript', @Id)]" />
 </xsl:stylesheet>
