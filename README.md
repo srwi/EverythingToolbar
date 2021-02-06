@@ -31,25 +31,10 @@ Requirements
 
 Install
 -------
-- Download from [releases](https://github.com/stnkl/EverythingToolbar/releases)
-- Extract to a safe place
-- Run `install.cmd` as admin
+- Download from [releases](https://github.com/stnkl/EverythingToolbar/releases) and install
 - Enable EverythingToolbar via the context menu of the taskbar
   - *Note: You might have to open the context menu twice as it not always shows up instantly.*
-- Adjust size and position after unlocking the taskbar
-
-<details>
-
-<summary>Installation video</summary>
-
-![video](https://user-images.githubusercontent.com/17520641/102831521-4ee67100-43ec-11eb-8804-42dda8affba1.gif)
-
-</details>
-
-Uninstall
----------
-
-- Run `uninstall.cmd` as admin
+- Adjust size and position after unlocking the taskbar ([demonstration video](https://user-images.githubusercontent.com/17520641/107118574-19a1bf80-6882-11eb-843a-7e854e5d0684.gif))
 
 Build
 -----
@@ -62,13 +47,18 @@ Build
 Keyboard shortcuts
 ------------------
 
-| Shortcut                                       | Function                         |
-|------------------------------------------------|----------------------------------|
-| <kbd>&#8593;</kbd> <kbd>&#8595;</kbd>          | Navigate search results          |
-| <kbd>Return</kbd>                              | Open                             |
-| <kbd>Shift</kbd>+<kbd>Return</kbd>             | Open in Everything               |
-| <kbd>Tab</kbd>/<kbd>Shift</kbd>+<kbd>Tab</kbd> | Select filter                    |
-| <kbd>Win</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd>     | Focus search box (customizable)  |
+| Shortcut                                            | Function                         |
+|-----------------------------------------------------|----------------------------------|
+| <kbd>&#8593;</kbd> <kbd>&#8595;</kbd>               | Navigate search results          |
+| <kbd>Return</kbd>                                   | Open                             |
+| <kbd>Ctrl</kbd>+<kbd>Return</kbd>/<kbd>Click</kbd>  | Open path                        |
+| <kbd>Shift</kbd>+<kbd>Return</kbd>/<kbd>Click</kbd> | Open in Everything               |
+| <kbd>Alt</kbd>+<kbd>Return</kbd>/<kbd>Click</kbd>   | File properties                  |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>   | Run as admin                     |
+| (<kbd>Shift</kbd>+)<kbd>Tab</kbd>                   | Cycle through filters            |
+| <kbd>Ctrl</kbd>+<kbd>0-9</kbd>                      | Select filter                    |
+| <kbd>Ctrl</kbd>+<kbd>Space</kbd>                    | Preview file in [QuickLook](https://github.com/QL-Win/QuickLook) |
+| <kbd>Win</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd>          | Focus search box (customizable)  |
 
 Rules
 -----
