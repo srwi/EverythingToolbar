@@ -92,7 +92,7 @@ namespace EverythingToolbar.Helpers
             [In] ref STARTUPINFO lpStartupInfo,
             out PROCESS_INFORMATION lpProcessInformation);
 
-        public static void CreateProcessFromCommandLine(string commandLine)
+        public static void CreateProcessFromCommandLine(string commandLine, string workingDirectory = null)
         {
             var si = new STARTUPINFO();
             var pi = new PROCESS_INFORMATION();
@@ -105,7 +105,7 @@ namespace EverythingToolbar.Helpers
                 false,
                 0,
                 IntPtr.Zero,
-                null,
+                workingDirectory,
                 ref si,
                 out pi);
         }

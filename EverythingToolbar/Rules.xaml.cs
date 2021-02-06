@@ -185,7 +185,7 @@ namespace EverythingToolbar
                 command = command.Replace("%path%", "\"" + searchResult.Path + "\"");
                 try
                 {
-                    ShellUtils.CreateProcessFromCommandLine(command);
+                    ShellUtils.CreateProcessFromCommandLine(command, searchResult.Path);
                     return true;
                 }
                 catch(Win32Exception)

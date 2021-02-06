@@ -35,7 +35,11 @@ namespace EverythingToolbar
         {
             try
             {
-                Process.Start(FullPathAndFileName);
+                Process.Start(new ProcessStartInfo(FullPathAndFileName)
+                {
+                    UseShellExecute = true,
+                    WorkingDirectory = IsFile ? Path : FullPathAndFileName
+                });
                 EverythingSearch.Instance.IncrementRunCount(FullPathAndFileName);
             }
             catch (Exception e)
