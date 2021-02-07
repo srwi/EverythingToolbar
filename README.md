@@ -42,7 +42,7 @@ Build
 - Open solution in Visual Studio with .NET Framework 4.7 support
 - Disable signing in project properties
 - Build the project (Windows Explorer will restart)
-- Install the toolbar by running `EverythingToolbar/bin/<Configuration>/install.cmd` as admin
+- Install the toolbar by running `EverythingToolbar/tools/install.cmd` as admin
 
 Keyboard shortcuts
 ------------------
