@@ -31,9 +31,10 @@ Requirements
 
 Install
 -------
-- Download from [releases](https://github.com/stnkl/EverythingToolbar/releases) and install
+- Make sure [Everything](https://www.voidtools.com) is installed and running
+- Download [EverythingToolbar](https://github.com/stnkl/EverythingToolbar/releases) and install it
 - Enable EverythingToolbar via the context menu of the taskbar
-  - *Note: You might have to open the context menu twice as it not always shows up instantly.*
+  - *Note: You will have to open the context menu twice as it doesn't show up the first time you open it.*
 - Adjust size and position after unlocking the taskbar ([demonstration video](https://user-images.githubusercontent.com/17520641/107118574-19a1bf80-6882-11eb-843a-7e854e5d0684.gif))
 
 Build
