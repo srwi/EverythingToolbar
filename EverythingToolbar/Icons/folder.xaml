@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This file is NOT compatible with Silverlight-->
+<Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+  <Canvas Name="svg8" Width="8.598958" Height="10.583333">
+    <Canvas.RenderTransform>
+      <TranslateTransform X="0" Y="0"/>
+    </Canvas.RenderTransform>
+    <Canvas.Resources/>
+    <!--Unknown tag: sodipodi:namedview-->
+    <!--Unknown tag: metadata-->
+    <Canvas Name="layer1">
+      <Canvas.RenderTransform>
+        <TranslateTransform X="-25.607887" Y="-112.54762"/>
+      </Canvas.RenderTransform>
+      <Canvas Name="text817" Opacity="1">
+        <Canvas.RenderTransform>
+          <TranslateTransform X="-14.967093" Y="-9.8889725"/>
+        </Canvas.RenderTransform>
+        <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path836" Fill="#FF000000" StrokeThickness="0.26458332">
+          <Path.Data>
+            <PathGeometry Figures="m 47.260411 123.41735 q 0.111621 0 0.206706 0.0413 0.09508 0.0413 0.165364 0.11576 0.07441 0.0703 0.115755 0.16536 0.04134 0.0951 0.04134 0.20671 v 4.10104 q 0 0.12816 0.03721 0.22738 0.04134 0.0951 0.09922 0.1819 0.05788 0.0827 0.128158 0.16536 0.07028 0.0827 0.128157 0.19017 0.05788 0.10335 0.09508 0.23978 0.04134 0.13229 0.04134 0.31833 v 1.98437 q 0 0.11162 -0.04134 0.20671 -0.04134 0.0951 -0.115755 0.1695 -0.07028 0.0703 -0.165365 0.11162 -0.09508 0.0413 -0.206705 0.0413 h -6.35 v -8.46667 z m -5.291666 7.9375 h 4.762499 v -1.98437 q 0 -0.18604 0.03721 -0.31833 0.04134 -0.13643 0.09922 -0.23978 0.05788 -0.10749 0.128158 -0.19017 0.07028 -0.0827 0.128157 -0.16536 0.05788 -0.0868 0.09509 -0.1819 0.04134 -0.0992 0.04134 -0.22738 v -4.10104 h -5.291666 z m 5.820833 -1.98437 q 0 -0.0992 -0.02067 -0.17364 -0.01654 -0.0744 -0.05374 -0.13642 -0.03307 -0.062 -0.08268 -0.11989 -0.04547 -0.062 -0.107487 -0.13229 -0.06201 0.0703 -0.111621 0.13229 -0.04548 0.0579 -0.08268 0.11989 -0.03307 0.062 -0.05374 0.13642 -0.01654 0.0744 -0.01654 0.17364 v 1.98437 h 0.529167 z" FillRule="NonZero"/>
+          </Path.Data>
+        </Path>
+      </Canvas>
+    </Canvas>
+  </Canvas>
+</Viewbox>
