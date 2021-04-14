@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--This file is NOT compatible with Silverlight-->
-<Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
-  <Canvas Name="svg8" Width="8.598958" Height="10.583333">
-    <Canvas.RenderTransform>
-      <TranslateTransform X="0" Y="0"/>
-    </Canvas.RenderTransform>
-    <Canvas.Resources/>
-    <!--Unknown tag: sodipodi:namedview-->
-    <!--Unknown tag: metadata-->
-    <Canvas Name="layer1">
-      <Canvas.RenderTransform>
-        <TranslateTransform X="-25.607887" Y="-112.54762"/>
-      </Canvas.RenderTransform>
-      <Canvas Name="text824" Opacity="1">
-        <Canvas.RenderTransform>
-          <TranslateTransform X="-14.866867" Y="-0.3674956"/>
-        </Canvas.RenderTransform>
-        <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path833" Fill="#FF000000" StrokeThickness="0.26458332">
-          <Path.Data>
-            <PathGeometry Figures="m 48.190483 116.23232 v 6.19704 h -6.879166 v -8.46667 h 4.609537 z m -2.116666 -0.15296 h 1.211295 l -1.211295 -1.2113 z m 1.5875 5.82083 v -5.29166 H 45.54465 v -2.11667 h -3.704166 v 7.40833 z" FillRule="NonZero"/>
-          </Path.Data>
-        </Path>
-      </Canvas>
-    </Canvas>
-  </Canvas>
-</Viewbox>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:Key="FileFilterIcon">
+        <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+            <Canvas Name="svg8" Width="8.598958" Height="10.583333">
+                <Canvas.RenderTransform>
+                    <TranslateTransform X="0" Y="0"/>
+                </Canvas.RenderTransform>
+                <Canvas.Resources/>
+                <!--Unknown tag: sodipodi:namedview-->
+                <!--Unknown tag: metadata-->
+                <Canvas Name="layer1">
+                    <Canvas.RenderTransform>
+                        <TranslateTransform X="-25.607887" Y="-112.54762"/>
+                    </Canvas.RenderTransform>
+                    <Canvas Name="text824" Opacity="1">
+                        <Canvas.RenderTransform>
+                            <TranslateTransform X="-14.866867" Y="-0.3674956"/>
+                        </Canvas.RenderTransform>
+                        <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path833" Fill="#FF000000" StrokeThickness="0.26458332">
+                            <Path.Data>
+                                <PathGeometry Figures="m 48.190483 116.23232 v 6.19704 h -6.879166 v -8.46667 h 4.609537 z m -2.116666 -0.15296 h 1.211295 l -1.211295 -1.2113 z m 1.5875 5.82083 v -5.29166 H 45.54465 v -2.11667 h -3.704166 v 7.40833 z" FillRule="NonZero"/>
+                            </Path.Data>
+                        </Path>
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+        </Viewbox>
+    </DataTemplate>
+</ResourceDictionary>
