@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader> 
+  <data name="AboutLicense" xml:space="preserve">
+    <value>Licens</value>
+  </data>
+  <data name="AboutOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AboutVersion" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="AboutWebsite" xml:space="preserve">
+    <value>Webbplats</value>
+  </data>
+  <data name="AboutWindowTitle" xml:space="preserve">
+    <value>Om EverythingToolbar</value>
+  </data>
+  <data name="ContextMenuCopy" xml:space="preserve">
+    <value>Kopiera</value>
+  </data>
+  <data name="ContextMenuCopyFile" xml:space="preserve">
+    <value>Kopiera</value>
+  </data>
+  <data name="ContextMenuCopyFullName" xml:space="preserve">
+    <value>Kopiera fullständigt namn till urklipp</value>
+  </data>
+  <data name="ContextMenuCut" xml:space="preserve">
+    <value>Klipp ut</value>
+  </data>
+  <data name="ContextMenuOpen" xml:space="preserve">
+    <value>Öppna</value>
+  </data>
+  <data name="ContextMenuOpenPath" xml:space="preserve">
+    <value>Öppna sökväg</value>
+  </data>
+  <data name="ContextMenuOpenWith" xml:space="preserve">
+    <value>Öppna med...</value>
+  </data>
+  <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
+    <value>Välj program</value>
+  </data>
+  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
+    <value>Inga definierade regler</value>
+  </data>
+  <data name="ContextMenuPaste" xml:space="preserve">
+    <value>Klistra in</value>
+  </data>
+  <data name="ContextMenuProperties" xml:space="preserve">
+    <value>Egenskaper</value>
+  </data>
+  <data name="ContextMenuRunAsAdmin" xml:space="preserve">
+    <value>Kör som administratör</value>
+  </data>
+  <data name="ContextMenuShowInEverything" xml:space="preserve">
+    <value>Visa i Everything</value>
+  </data>
+  <data name="DefaultFilterAll" xml:space="preserve">
+    <value>Alla</value>
+  </data>
+  <data name="DefaultFilterFile" xml:space="preserve">
+    <value>Fil</value>
+  </data>
+  <data name="DefaultFilterFolder" xml:space="preserve">
+    <value>Mapp</value>
+  </data>
+  <data name="KeyAlt" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="KeyCtrl" xml:space="preserve">
+    <value>Ctrl</value>
+  </data>
+  <data name="KeyShift" xml:space="preserve">
+    <value>Skift</value>
+  </data>
+  <data name="KeyWin" xml:space="preserve">
+    <value>Win</value>
+  </data>
+  <data name="MessageBoxCopyException" xml:space="preserve">
+    <value>Vill du kopiera undantagets innehåll till urklipp?</value>
+  </data>
+  <data name="MessageBoxErrorTitle" xml:space="preserve">
+    <value>Fel</value>
+  </data>
+  <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
+    <value>Kunde inte kopiera fil.</value>
+  </data>
+  <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
+    <value>Kunde inte kopiera sökväg.</value>
+  </data>
+  <data name="MessageBoxFailedToOpen" xml:space="preserve">
+    <value>Kunde inte öppna sökresultat.</value>
+  </data>
+  <data name="MessageBoxFailedToOpenDialog" xml:space="preserve">
+    <value>Kunde inte öppna dialogruta.</value>
+  </data>
+  <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
+    <value>Kunde inte öppna sökväg.</value>
+  </data>
+  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
+    <value>Kunde inte registrera kortkommando. Används möjligen av ett annat program.</value>
+  </data>
+  <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
+    <value>Kunde inte köra kommando</value>
+  </data>
+  <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
+    <value>För att använda denna sorteringsmetod måste snabbsortering vara aktiverat. Detta kan aktiveras i inställningarna för Everything.</value>
+  </data>
+  <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
+    <value>Snabbsortering inte aktiverat</value>
+  </data>
+  <data name="MessageBoxRegExInvalid" xml:space="preserve">
+    <value>Minst ett reguljärt uttryck är ogiltigt.</value>
+  </data>
+  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
+    <value>Regelnamn får inte vara tomt.</value>
+  </data>
+  <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
+    <value>Vänligen välj Everything.exe...</value>
+  </data>
+  <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
+    <value>Vänligen välj filen Filters.csv. Som standard finns den i %APPDATA%\Everything. Platsen kan variera beroende på din installation. Om filen inte existerar i ditt system betyder det att du inte utfört några ändringar i Everythings standardfilter.</value>
+  </data>
+  <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
+    <value>Filters.csv hittades inte</value>
+  </data>
+  <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
+    <value>Ohanterat undantag påträffades</value>
+  </data>
+  <data name="RulesAutoApply" xml:space="preserve">
+    <value>Automatically apply rules based on condition</value>
+  </data>
+  <data name="RulesCancel" xml:space="preserve">
+    <value>Avbryt</value>
+  </data>
+  <data name="RulesCommand" xml:space="preserve">
+    <value>Kommando</value>
+  </data>
+  <data name="RulesName" xml:space="preserve">
+    <value>Namn</value>
+  </data>
+  <data name="RulesRegularExpression" xml:space="preserve">
+    <value>Reguljära uttryck</value>
+  </data>
+  <data name="RulesSave" xml:space="preserve">
+    <value>Spara</value>
+  </data>
+  <data name="RulesType" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+  <data name="RulesWindowText" xml:space="preserve">
+    <value>Använd %file%, %filename% och %path% som variabler i kommandon.</value>
+  </data>
+  <data name="RulesWindowTitle" xml:space="preserve">
+    <value>Regler</value>
+  </data>
+  <data name="SearchBoxWatermark" xml:space="preserve">
+    <value>Sök med Everything</value>
+  </data>
+  <data name="SettingsAbout" xml:space="preserve">
+    <value>Om EverythingToolbar...</value>
+  </data>
+  <data name="SettingsChangeShortcut" xml:space="preserve">
+    <value>Ändra genväg...</value>
+  </data>
+  <data name="SettingsDisableAnimations" xml:space="preserve">
+    <value>Inaktivera animationer</value>
+  </data>
+  <data name="SettingsHideEmptyResults" xml:space="preserve">
+    <value>Dölj tom sökning</value>
+  </data>
+  <data name="SettingsMatchCase" xml:space="preserve">
+    <value>Matcha versaler/gemener</value>
+  </data>
+  <data name="SettingsMatchPath" xml:space="preserve">
+    <value>Matcha sökväg</value>
+  </data>
+  <data name="SettingsMatchWholeWord" xml:space="preserve">
+    <value>Matcha hela ord</value>
+  </data>
+  <data name="SettingsPreferences" xml:space="preserve">
+    <value>Preferenser</value>
+  </data>
+  <data name="SettingsRegularExpressions" xml:space="preserve">
+    <value>Reguljära uttryck</value>
+  </data>
+  <data name="SettingsRules" xml:space="preserve">
+    <value>Regler...</value>
+  </data>
+  <data name="SettingsSortBy" xml:space="preserve">
+    <value>Sortera efter</value>
+  </data>
+  <data name="SettingsTheme" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="SettingsUseEverythingFilters" xml:space="preserve">
+    <value>Använd Everythings filter</value>
+  </data>
+  <data name="SettingsView" xml:space="preserve">
+    <value>Visa</value>
+  </data>
+  <data name="ShortcutOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ShortcutWindowTitle" xml:space="preserve">
+    <value>Ange genväg...</value>
+  </data>
+  <data name="SortByAttributesAscending" xml:space="preserve">
+    <value>Attribut stigande</value>
+  </data>
+  <data name="SortByAttributesDescending" xml:space="preserve">
+    <value>Attribut fallande</value>
+  </data>
+  <data name="SortByDateAccessedAscending" xml:space="preserve">
+    <value>Senast använd stigande</value>
+  </data>
+  <data name="SortByDateAccessedDescending" xml:space="preserve">
+    <value>Senast använd fallande</value>
+  </data>
+  <data name="SortByDateCreatedAscending" xml:space="preserve">
+    <value>Skapad stigande</value>
+  </data>
+  <data name="SortByDateCreatedDescending" xml:space="preserve">
+    <value>Skapad fallande</value>
+  </data>
+  <data name="SortByDateModifiedAscending" xml:space="preserve">
+    <value>Senast ändrad stigande</value>
+  </data>
+  <data name="SortByDateModifiedDescending" xml:space="preserve">
+    <value>Senast ändrad fallande</value>
+  </data>
+  <data name="SortByDateRecentlyChangedAscending" xml:space="preserve">
+    <value>Nyligen ändrat datum stigande</value>
+  </data>
+  <data name="SortByDateRecentlyChangedDescending" xml:space="preserve">
+    <value>Nyligen ändrat datum descending</value>
+  </data>
+  <data name="SortByDateRunAscending" xml:space="preserve">
+    <value>Kördes stigande</value>
+  </data>
+  <data name="SortByDateRunDescending" xml:space="preserve">
+    <value>Kördes fallande</value>
+  </data>
+  <data name="SortByExtensionAscending" xml:space="preserve">
+    <value>Filändelse stigande</value>
+  </data>
+  <data name="SortByExtensionDescending" xml:space="preserve">
+    <value>Filändelse fallande</value>
+  </data>
+  <data name="SortByFileListFilenameAscending" xml:space="preserve">
+    <value>Filnamn stigande</value>
+  </data>
+  <data name="SortByFileListFilenameDescending" xml:space="preserve">
+    <value>Filnamn fallande</value>
+  </data>
+  <data name="SortByNameAscending" xml:space="preserve">
+    <value>Namn stigande</value>
+  </data>
+  <data name="SortByNameDescending" xml:space="preserve">
+    <value>Namn fallande</value>
+  </data>
+  <data name="SortByPathAscending" xml:space="preserve">
+    <value>Sökväg stigande</value>
+  </data>
+  <data name="SortByPathDescending" xml:space="preserve">
+    <value>Sökväg fallande</value>
+  </data>
+  <data name="SortByRunCountAscending" xml:space="preserve">
+    <value>Antal gånger körd stigande</value>
+  </data>
+  <data name="SortByRunCountDescending" xml:space="preserve">
+    <value>Antal gånger körd fallande</value>
+  </data>
+  <data name="SortBySizeAscending" xml:space="preserve">
+    <value>Storlek stigande</value>
+  </data>
+  <data name="SortBySizeDescending" xml:space="preserve">
+    <value>Storlek fallande</value>
+  </data>
+  <data name="SortByTypeNameAscending" xml:space="preserve">
+    <value>Filtyp stigande</value>
+  </data>
+  <data name="SortByTypeNameDescending" xml:space="preserve">
+    <value>Filtyp fallande</value>
+  </data>
+  <data name="UserFilterAudio" xml:space="preserve">
+    <value>Ljud</value>
+  </data>
+  <data name="UserFilterCompressed" xml:space="preserve">
+    <value>Komprimerad fil</value>
+  </data>
+  <data name="UserFilterDocument" xml:space="preserve">
+    <value>Dokument</value>
+  </data>
+  <data name="UserFilterExecutable" xml:space="preserve">
+    <value>Körbar fil</value>
+  </data>
+  <data name="UserFilterPicture" xml:space="preserve">
+    <value>Bild</value>
+  </data>
+  <data name="UserFilterPlaceholder" xml:space="preserve">
+    <value>Mer</value>
+  </data>
+  <data name="UserFilterVideo" xml:space="preserve">
+    <value>Video</value>
+  </data>
+</root>
