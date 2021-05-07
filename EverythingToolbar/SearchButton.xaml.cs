@@ -9,7 +9,6 @@ namespace EverythingToolbar
     public partial class SearchButton : Button
     {
         private bool popupWasOpen = false;
-        private bool systemUsesLightTheme = true;
 
         public SearchButton()
         {
@@ -31,15 +30,11 @@ namespace EverythingToolbar
 
         private void UpdateTheme()
         {
+            bool systemUsesLightTheme;
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"))
             {
                 object registryValueObject = key?.GetValue("SystemUsesLightTheme");
-                bool value = registryValueObject == null || (int)registryValueObject > 0;
-
-                if (value == systemUsesLightTheme)
-                    return;
-                else
-                    systemUsesLightTheme = value;
+                systemUsesLightTheme = registryValueObject != null && (int)registryValueObject > 0;
             }
 
             if (systemUsesLightTheme)
@@ -52,7 +47,6 @@ namespace EverythingToolbar
                 Foreground = new SolidColorBrush(Colors.White);
                 (Template.FindName("OuterBorder", this) as Border).Opacity = 0.2;
             }
-
         }
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
