@@ -14,6 +14,7 @@
     <WarningLevel>4</WarningLevel>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <ResolveComReferenceSilent>True</ResolveComReferenceSilent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +22,7 @@
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;DESKBAND_WPF</DefineConstants>
+    <DefineConstants Condition="Exists('C:\Windows\System32\SynCOM.dll')">$(DefineConstants);SYNAPTICS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -29,6 +31,7 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;DESKBAND_WPF</DefineConstants>
+    <DefineConstants Condition="Exists('C:\Windows\System32\SynCOM.dll')">$(DefineConstants);SYNAPTICS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -353,7 +356,35 @@
       <Version>4.7.5</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup Condition="Exists('C:\Windows\System32\SynCOM.dll')">
+    <COMReference Include="SYNCOMLib">
+      <Guid>{E2489565-2CE5-4690-9111-76E79A9F6CCD}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SYNCTRLLib">
+      <Guid>{82D70786-7968-46EA-836D-203AEBCA4481}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SynTPEnhLib">
+      <Guid>{9D8D1D89-5F94-4F5E-80F2-A94B11734433}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>taskkill /f /im explorer.exe 2&gt;nul &amp;set errorlevel=0
