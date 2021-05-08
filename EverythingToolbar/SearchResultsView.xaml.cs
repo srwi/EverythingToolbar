@@ -63,24 +63,13 @@ namespace EverythingToolbar
                 cumulativeYDelta += synPacket.YDelta;
                 if (Math.Abs(cumulativeYDelta) > 100)
                 {
-                    if (cumulativeYDelta < 0)
+                    Dispatcher.Invoke(new Action(() =>
                     {
-                        Dispatcher.Invoke(new Action(() =>
-                        {
-                            Decorator listViewBorder = VisualTreeHelper.GetChild(SearchResultsListView, 0) as Decorator;
-                            ScrollViewer listViewScrollViewer = listViewBorder.Child as ScrollViewer;
-                            listViewScrollViewer.ScrollToVerticalOffset(listViewScrollViewer.VerticalOffset - 3);
-                        }), DispatcherPriority.ContextIdle);
-                    }
-                    else
-                    {
-                        Dispatcher.Invoke(new Action(() =>
-                        {
-                            Decorator listViewBorder = VisualTreeHelper.GetChild(SearchResultsListView, 0) as Decorator;
-                            ScrollViewer listViewScrollViewer = listViewBorder.Child as ScrollViewer;
-                            listViewScrollViewer.ScrollToVerticalOffset(listViewScrollViewer.VerticalOffset + 3);
-                        }), DispatcherPriority.ContextIdle);
-                    }
+                        Decorator listViewBorder = VisualTreeHelper.GetChild(SearchResultsListView, 0) as Decorator;
+                        ScrollViewer listViewScrollViewer = listViewBorder.Child as ScrollViewer;
+                        double vOffset = cumulativeYDelta < 0 ? -3 : 3;
+                        listViewScrollViewer.ScrollToVerticalOffset(listViewScrollViewer.VerticalOffset + vOffset);
+                    }), DispatcherPriority.ContextIdle);
                     cumulativeYDelta = 0;
                 }
             }
