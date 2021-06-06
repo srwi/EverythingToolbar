@@ -7,10 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-#if SYNAPTICS
-using System.Runtime.InteropServices;
-using SYNCTRLLib;
-#endif
 
 namespace EverythingToolbar
 {
@@ -18,13 +14,6 @@ namespace EverythingToolbar
     {
         private SearchResult SelectedItem => SearchResultsListView.SelectedItem as SearchResult;
         private Point dragStart;
-#if SYNAPTICS
-        static SynAPICtrl api;
-        static SynDeviceCtrl synTouchPad;
-        static SynPacketCtrl synPacket;
-        static int deviceHandle;
-        private int cumulativeYDelta = 0;
-#endif
 
         public SearchResultsView()
         {
@@ -32,53 +21,7 @@ namespace EverythingToolbar
 
             SearchResultsListView.ItemsSource = EverythingSearch.Instance.SearchResults;
             ((INotifyCollectionChanged)SearchResultsListView.Items).CollectionChanged += OnCollectionChanged;
-
-#if SYNAPTICS
-            try
-            {
-                api = new SynAPICtrl();
-                synTouchPad = new SynDeviceCtrl();
-                synPacket = new SynPacketCtrl();
-
-                api.Initialize();
-                api.Activate();
-                deviceHandle = api.FindDevice(SynConnectionType.SE_ConnectionAny, SynDeviceType.SE_DeviceTouchPad, -1);
-                synTouchPad.Select(deviceHandle);
-                synTouchPad.Activate();
-                synTouchPad.OnPacket += OnSynapticsPacket;
-            }
-            catch (COMException) { }
-#endif
         }
-
-#if SYNAPTICS
-        private void OnSynapticsPacket()
-        {
-            synTouchPad.LoadPacket(synPacket);
-            var numberOfFingers = synPacket.GetLongProperty(SynPacketProperty.SP_ExtraFingerState);
-            numberOfFingers &= 0b11;
-
-            if (numberOfFingers == 2)
-            {
-                cumulativeYDelta += synPacket.YDelta;
-                if (Math.Abs(cumulativeYDelta) > 100)
-                {
-                    Dispatcher.Invoke(new Action(() =>
-                    {
-                        Decorator listViewBorder = VisualTreeHelper.GetChild(SearchResultsListView, 0) as Decorator;
-                        ScrollViewer listViewScrollViewer = listViewBorder.Child as ScrollViewer;
-                        double vOffset = cumulativeYDelta < 0 ? -3 : 3;
-                        listViewScrollViewer.ScrollToVerticalOffset(listViewScrollViewer.VerticalOffset + vOffset);
-                    }), DispatcherPriority.ContextIdle);
-                    cumulativeYDelta = 0;
-                }
-            }
-            else
-            {
-                cumulativeYDelta = 0;
-            }
-        }
-#endif
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
