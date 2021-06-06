@@ -126,6 +126,26 @@ namespace EverythingToolbar
             }
         }
 
+        public void PageUp()
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                Decorator listViewBorder = VisualTreeHelper.GetChild(SearchResultsListView, 0) as Decorator;
+                ScrollViewer listViewScrollViewer = listViewBorder.Child as ScrollViewer;
+                listViewScrollViewer.PageUp();
+            }), DispatcherPriority.ContextIdle);
+        }
+
+        public void PageDown()
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                Decorator listViewBorder = VisualTreeHelper.GetChild(SearchResultsListView, 0) as Decorator;
+                ScrollViewer listViewScrollViewer = listViewBorder.Child as ScrollViewer;
+                listViewScrollViewer.PageDown();
+            }), DispatcherPriority.ContextIdle);
+        }
+
         public void OpenSelectedSearchResult()
         {
             if (SearchResultsListView.SelectedIndex == -1)

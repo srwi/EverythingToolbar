@@ -96,6 +96,14 @@ namespace EverythingToolbar
                 EverythingSearch.Instance.SearchTerm = null;
                 Keyboard.ClearFocus();
             }
+            else if (e.Key == Key.PageUp)
+            {
+                SearchResultsPopup.SearchResultsView.PageUp();
+            }
+            else if (e.Key == Key.PageDown)
+            {
+                SearchResultsPopup.SearchResultsView.PageDown();
+            }
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
