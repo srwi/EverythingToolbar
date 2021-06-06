@@ -104,6 +104,14 @@ namespace EverythingToolbar
             {
                 SearchResultsPopup.SearchResultsView.PageDown();
             }
+            else if (e.Key == Key.Home)
+            {
+                SearchResultsPopup.SearchResultsView.ScrollToHome();
+            }
+            else if (e.Key == Key.End)
+            {
+                SearchResultsPopup.SearchResultsView.ScrollToEnd();
+            }
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)

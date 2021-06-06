@@ -102,9 +102,7 @@ namespace EverythingToolbar
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                Decorator listViewBorder = VisualTreeHelper.GetChild(SearchResultsListView, 0) as Decorator;
-                ScrollViewer listViewScrollViewer = listViewBorder.Child as ScrollViewer;
-                listViewScrollViewer.ScrollToVerticalOffset(verticalOffset);
+                GetScrollViewer().ScrollToVerticalOffset(verticalOffset);
             }), DispatcherPriority.ContextIdle);
         }
 
@@ -130,9 +128,7 @@ namespace EverythingToolbar
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                Decorator listViewBorder = VisualTreeHelper.GetChild(SearchResultsListView, 0) as Decorator;
-                ScrollViewer listViewScrollViewer = listViewBorder.Child as ScrollViewer;
-                listViewScrollViewer.PageUp();
+                GetScrollViewer().PageUp();
             }), DispatcherPriority.ContextIdle);
         }
 
@@ -140,9 +136,23 @@ namespace EverythingToolbar
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                Decorator listViewBorder = VisualTreeHelper.GetChild(SearchResultsListView, 0) as Decorator;
-                ScrollViewer listViewScrollViewer = listViewBorder.Child as ScrollViewer;
-                listViewScrollViewer.PageDown();
+                GetScrollViewer().PageDown();
+            }), DispatcherPriority.ContextIdle);
+        }
+
+        public void ScrollToHome()
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                GetScrollViewer().ScrollToHome();
+            }), DispatcherPriority.ContextIdle);
+        }
+
+        public void ScrollToEnd()
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                GetScrollViewer().ScrollToEnd();
             }), DispatcherPriority.ContextIdle);
         }
 
@@ -168,6 +178,12 @@ namespace EverythingToolbar
         public void PreviewSelectedFile()
         {
             SelectedItem?.PreviewInQuickLook();
+        }
+
+        private ScrollViewer GetScrollViewer()
+        {
+            Decorator listViewBorder = VisualTreeHelper.GetChild(SearchResultsListView, 0) as Decorator;
+            return listViewBorder.Child as ScrollViewer;
         }
 
         private void CopyPathToClipBoard(object sender, RoutedEventArgs e)
