@@ -3,6 +3,7 @@
     class Filter
     {
         public string Name { get; set; }
+        public string Icon { get; set; }
         public bool? IsMatchCase { get; set; }
         public bool? IsMatchWholeWord { get; set; }
         public bool? IsMatchPath { get; set; }

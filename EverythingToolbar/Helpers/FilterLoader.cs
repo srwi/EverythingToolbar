@@ -3,6 +3,7 @@ using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -15,6 +16,7 @@ namespace EverythingToolbar.Helpers
         {
             new Filter {
                 Name = Properties.Resources.DefaultFilterAll,
+                Icon = "\xE71D  ",
                 IsMatchCase = null,
                 IsMatchWholeWord = null,
                 IsMatchPath = null,
@@ -24,6 +26,7 @@ namespace EverythingToolbar.Helpers
             },
             new Filter {
                 Name = Properties.Resources.DefaultFilterFile,
+                Icon = "\xE7C3  ",
                 IsMatchCase = null,
                 IsMatchWholeWord = null,
                 IsMatchPath = null,
@@ -33,6 +36,7 @@ namespace EverythingToolbar.Helpers
             },
             new Filter {
                 Name = Properties.Resources.DefaultFilterFolder,
+                Icon = "\xE8B7  ",
                 IsMatchCase = null,
                 IsMatchWholeWord = null,
                 IsMatchPath = null,
@@ -61,6 +65,7 @@ namespace EverythingToolbar.Helpers
         {
             new Filter {
                 Name = Properties.Resources.UserFilterAudio,
+                Icon = "",
                 IsMatchCase = null,
                 IsMatchWholeWord = null,
                 IsMatchPath = null,
@@ -70,6 +75,7 @@ namespace EverythingToolbar.Helpers
             },
             new Filter {
                 Name = Properties.Resources.UserFilterCompressed,
+                Icon = "",
                 IsMatchCase = null,
                 IsMatchWholeWord = null,
                 IsMatchPath = null,
@@ -79,6 +85,7 @@ namespace EverythingToolbar.Helpers
             },
             new Filter {
                 Name = Properties.Resources.UserFilterDocument,
+                Icon = "",
                 IsMatchCase = null,
                 IsMatchWholeWord = null,
                 IsMatchPath = null,
@@ -88,6 +95,7 @@ namespace EverythingToolbar.Helpers
             },
             new Filter {
                 Name = Properties.Resources.UserFilterExecutable,
+                Icon = "",
                 IsMatchCase = null,
                 IsMatchWholeWord = null,
                 IsMatchPath = null,
@@ -97,6 +105,7 @@ namespace EverythingToolbar.Helpers
             },
             new Filter {
                 Name = Properties.Resources.UserFilterPicture,
+                Icon = "",
                 IsMatchCase = null,
                 IsMatchWholeWord = null,
                 IsMatchPath = null,
@@ -106,6 +115,7 @@ namespace EverythingToolbar.Helpers
             },
             new Filter {
                 Name = Properties.Resources.UserFilterVideo,
+                Icon = "",
                 IsMatchCase = null,
                 IsMatchWholeWord = null,
                 IsMatchPath = null,
@@ -147,6 +157,15 @@ namespace EverythingToolbar.Helpers
                                                                        "Everything",
                                                                        "Filters.csv");
             Properties.Settings.Default.PropertyChanged += OnPropertyChanged;
+
+            using (var ifc = new InstalledFontCollection())
+            {
+                if (!ifc.Families.Any(f => f.Name == "Segoe MDL2 Assets"))
+                {
+                    foreach (Filter defaultFilter in defaultFilters)
+                        defaultFilter.Icon = "";
+                }
+            }
 
             RefreshFilters();
             CreateFileWatcher();
