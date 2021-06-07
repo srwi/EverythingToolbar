@@ -46,11 +46,45 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
                         <local:FilterSelector Focusable="False" />
 
-                        <local:SettingsControl Grid.Column="1" />
+                        <Button Content="{Binding TotalResultsNumber, Converter={local:SearchResultsCountConverter}}"
+                                Visibility="{Binding Source={x:Static properties:Settings.Default},
+                                                     Path=isShowResultsCount,
+                                                     Converter={local:BoolToVisibilityConverter}}"
+                                Grid.Column="1"
+                                Focusable="False"
+                                Click="OpenSearchInEverything">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource TabForeground}"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Border Background="{TemplateBinding Background}">
+                                                    <ContentPresenter TextBlock.Foreground="{TemplateBinding Foreground}"
+                                                                      TextBlock.FontSize="10pt"
+                                                                      HorizontalAlignment="Center"
+                                                                      VerticalAlignment="Center"
+                                                                      Margin="10, 0, 7, 4"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground" Value="{DynamicResource TabForegroundHover}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+
+                        <local:SettingsControl Grid.Column="2" />
                     </Grid>
 
                     <local:SearchResultsView x:Name="SearchResultsView" Grid.Row="1" />

@@ -143,5 +143,10 @@ namespace EverythingToolbar
         {
             EverythingSearch.Instance.Reset();
         }
+
+        private void OpenSearchInEverything(object sender, RoutedEventArgs e)
+        {
+            EverythingSearch.Instance.OpenLastSearchInEverything();
+        }
     }
 }

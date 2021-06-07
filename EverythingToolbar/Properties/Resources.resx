@@ -273,6 +273,12 @@
   <data name="SearchBoxWatermark" xml:space="preserve">
     <value>Search with Everything</value>
   </data>
+  <data name="SearchResult" xml:space="preserve">
+    <value>object</value>
+  </data>
+  <data name="SearchResults" xml:space="preserve">
+    <value>objects</value>
+  </data>
   <data name="SettingsAbout" xml:space="preserve">
     <value>About EverythingToolbar...</value>
   </data>
@@ -302,6 +308,9 @@
   </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>Rules...</value>
+  </data>
+  <data name="SettingsShowResultsCount" xml:space="preserve">
+    <value>Show results count</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Sort By</value>

@@ -116,7 +116,7 @@
   </resheader>
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader> 
+  </resheader>
   <data name="AboutLicense" xml:space="preserve">
     <value>Licens</value>
   </data>
@@ -272,6 +272,12 @@
   </data>
   <data name="SearchBoxWatermark" xml:space="preserve">
     <value>Sök med Everything</value>
+  </data>
+  <data name="SearchResult" xml:space="preserve">
+    <value>objekt</value>
+  </data>
+  <data name="SearchResults" xml:space="preserve">
+    <value>objekt</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
     <value>Om EverythingToolbar...</value>

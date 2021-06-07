@@ -51,6 +51,8 @@ namespace EverythingToolbar
         private static extern bool Everything_QueryW(bool bWait);
         [DllImport("Everything64.dll")]
         private static extern uint Everything_GetNumResults();
+        [DllImport("Everything64.dll")]
+        private static extern uint Everything_GetTotResults();
         [DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
         private static extern void Everything_GetResultFullPathNameW(uint nIndex, StringBuilder lpString, uint nMaxCount);
         [DllImport("Everything64.dll")]
@@ -115,6 +117,20 @@ namespace EverythingToolbar
                     SearchResults.Clear();
                 QueryBatch();
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentFilter"));
+            }
+        }
+
+        private uint _totalResultsNumber = 0;
+        public uint TotalResultsNumber
+        {
+            get
+            {
+                return _totalResultsNumber;
+            }
+            set
+            {
+                _totalResultsNumber = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("TotalResultsNumber"));
             }
         }
 
@@ -187,7 +203,10 @@ namespace EverythingToolbar
                 return;
 
             if (SearchTerm == "" && Properties.Settings.Default.isHideEmptySearchResults)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("TotalResultsNumber"));
                 return;
+            }
 
             cancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = cancellationTokenSource.Token;
@@ -219,6 +238,7 @@ namespace EverythingToolbar
                     }
 
                     uint resultsCount = Everything_GetNumResults();
+                    TotalResultsNumber = Everything_GetTotResults();
 
                     for (uint i = 0; i < resultsCount; i++)
                     {

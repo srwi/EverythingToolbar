@@ -273,6 +273,12 @@
   <data name="SearchBoxWatermark" xml:space="preserve">
     <value>Zoeken met Everything...</value>
   </data>
+  <data name="SearchResult" xml:space="preserve">
+    <value>object</value>
+  </data>
+  <data name="SearchResults" xml:space="preserve">
+    <value>objecten</value>
+  </data>
   <data name="SettingsAbout" xml:space="preserve">
     <value>Over EverythingToolbar...</value>
   </data>

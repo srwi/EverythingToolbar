@@ -529,6 +529,24 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to object.
+        /// </summary>
+        public static string SearchResult {
+            get {
+                return ResourceManager.GetString("SearchResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to objects.
+        /// </summary>
+        public static string SearchResults {
+            get {
+                return ResourceManager.GetString("SearchResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About EverythingToolbar....
         /// </summary>
         public static string SettingsAbout {
@@ -615,6 +633,15 @@ namespace EverythingToolbar.Properties {
         public static string SettingsRules {
             get {
                 return ResourceManager.GetString("SettingsRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show results count.
+        /// </summary>
+        public static string SettingsShowResultsCount {
+            get {
+                return ResourceManager.GetString("SettingsShowResultsCount", resourceCulture);
             }
         }
         

@@ -25,21 +25,21 @@
                       IsCheckable="True"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}"
                       IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, Mode=OneWay}"
-                      Click="MenuItem_Click"/>
+                      Click="OnMenuItemClicked"/>
             <MenuItem Header="{x:Static properties:Resources.SettingsMatchCase}"
                       IsCheckable="True"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase, Mode=TwoWay}"
                       IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, Mode=OneWay}"
-                      Click="MenuItem_Click"/>
+                      Click="OnMenuItemClicked"/>
             <MenuItem Header="{x:Static properties:Resources.SettingsMatchPath}"
                       IsCheckable="True"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath, Mode=TwoWay}"
                       IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, Mode=OneWay}"
-                      Click="MenuItem_Click"/>
+                      Click="OnMenuItemClicked"/>
             <MenuItem Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
                       IsCheckable="True"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}"
-                      Click="MenuItem_Click">
+                      Click="OnMenuItemClicked">
                 <MenuItem.Style>
                     <Style TargetType="{x:Type MenuItem}">
                         <Setter Property="Focusable" Value="False" />
@@ -61,82 +61,82 @@
             <MenuItem Header="{x:Static properties:Resources.SettingsSortBy}" Name="SortByMenu">
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByNameAscending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByNameDescending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByPathAscending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByPathDescending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortBySizeAscending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortBySizeDescending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByExtensionAscending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByExtensionDescending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByTypeNameAscending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByTypeNameDescending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByDateCreatedAscending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByDateCreatedDescending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByDateModifiedAscending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByDateModifiedDescending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByAttributesAscending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByAttributesDescending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByFileListFilenameAscending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByFileListFilenameDescending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByRunCountAscending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByRunCountDescending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByDateRecentlyChangedAscending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByDateRecentlyChangedDescending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByDateAccessedAscending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByDateAccessedDescending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByDateRunAscending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SortByDateRunDescending}"
-                          Click="MenuItem_SortBy_Click"/>
+                          Click="OnSortByClicked"/>
             </MenuItem>
             <Separator/>
             <MenuItem Header="{x:Static properties:Resources.SettingsPreferences}">
@@ -148,22 +148,26 @@
                 <MenuItem Header="{x:Static properties:Resources.SettingsUseEverythingFilters}"
                           IsCheckable="True"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isImportFilters, Mode=TwoWay}"
-                          Click="MenuItem_Click"/>
+                          Click="OnMenuItemClicked"/>
                 <MenuItem Header="{x:Static properties:Resources.SettingsHideEmptyResults}"
                           IsCheckable="True"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isHideEmptySearchResults, Mode=TwoWay}"
-                          Click="MenuItem_Click"/>
+                          Click="OnMenuItemClicked"/>
+                <MenuItem Header="{x:Static properties:Resources.SettingsShowResultsCount}"
+                          IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isShowResultsCount, Mode=TwoWay}"
+                          Click="OnMenuItemClicked"/>
                 <MenuItem Header="{x:Static properties:Resources.SettingsDisableAnimations}"
                           IsCheckable="True"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isAnimationsDisabled, Mode=TwoWay}"
-                          Click="MenuItem_Click"/>
+                          Click="OnMenuItemClicked"/>
                 <Separator />
                 <MenuItem Header="{x:Static properties:Resources.SettingsView}"
                           Name="ItemTemplateMenu"
-                          Click="MenuItem_ItemTemplate_Click" />
+                          Click="OnItemTemplateClicked" />
                 <MenuItem Header="{x:Static properties:Resources.SettingsTheme}"
                           Name="ThemeMenu"
-                          Click="MenuItem_Theme_Click" />
+                          Click="OnThemeClicked" />
             </MenuItem>
             <MenuItem Header="{x:Static properties:Resources.SettingsAbout}"
                       Click="OpenAboutWindow"/>

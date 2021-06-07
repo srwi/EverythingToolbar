@@ -76,12 +76,12 @@ namespace EverythingToolbar
             }
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void OnMenuItemClicked(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.Save();
         }
 
-        private void MenuItem_SortBy_Click(object sender, RoutedEventArgs e)
+        private void OnSortByClicked(object sender, RoutedEventArgs e)
         {
             MenuItem selectedItem = (MenuItem)sender;
             MenuItem menu = (MenuItem)selectedItem.Parent;
@@ -108,7 +108,7 @@ namespace EverythingToolbar
             Properties.Settings.Default.Save();
         }
 
-        private void MenuItem_Theme_Click(object sender, RoutedEventArgs e)
+        private void OnThemeClicked(object sender, RoutedEventArgs e)
         {
             MenuItem itemChecked = (MenuItem)e.OriginalSource;
             MenuItem itemParent = (MenuItem)sender;
@@ -128,7 +128,7 @@ namespace EverythingToolbar
             ApplicationResources.Instance.ApplyTheme(itemChecked.Header.ToString());
         }
 
-        private void MenuItem_ItemTemplate_Click(object sender, RoutedEventArgs e)
+        private void OnItemTemplateClicked(object sender, RoutedEventArgs e)
         {
             MenuItem itemChecked = (MenuItem)e.OriginalSource;
             MenuItem itemParent = (MenuItem)sender;
