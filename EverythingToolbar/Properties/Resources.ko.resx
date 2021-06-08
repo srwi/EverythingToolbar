@@ -118,67 +118,67 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutLicense" xml:space="preserve">
-    <value>License</value>
+    <value>라이선스</value>
   </data>
   <data name="AboutOK" xml:space="preserve">
-    <value>OK</value>
+    <value>확인</value>
   </data>
   <data name="AboutVersion" xml:space="preserve">
-    <value>Version</value>
+    <value>버전</value>
   </data>
   <data name="AboutWebsite" xml:space="preserve">
-    <value>Website</value>
+    <value>웹사이트</value>
   </data>
   <data name="AboutWindowTitle" xml:space="preserve">
-    <value>About EverythingToolbar</value>
+    <value>EverythingToolbar 정보</value>
   </data>
   <data name="ContextMenuCopy" xml:space="preserve">
-    <value>Copy</value>
+    <value>복사</value>
   </data>
   <data name="ContextMenuCopyFile" xml:space="preserve">
-    <value>Copy</value>
+    <value>복사</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
-    <value>Copy Full Name to Clipboard</value>
+    <value>전체 이름을 클립보드에 복사</value>
   </data>
   <data name="ContextMenuCut" xml:space="preserve">
-    <value>Cut</value>
+    <value>잘라내기</value>
   </data>
   <data name="ContextMenuOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>열기</value>
   </data>
   <data name="ContextMenuOpenPath" xml:space="preserve">
-    <value>Open Path</value>
+    <value>경로 열기</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
-    <value>Open with...</value>
+    <value>다른 프로그램으로 열기</value>
   </data>
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
-    <value>Choose app</value>
+    <value>앱 선택</value>
   </data>
   <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>No rules defined</value>
+    <value>규칙이 정의되지 않았습니다</value>
   </data>
   <data name="ContextMenuPaste" xml:space="preserve">
-    <value>Paste</value>
+    <value>붙여넣기</value>
   </data>
   <data name="ContextMenuProperties" xml:space="preserve">
-    <value>Properties</value>
+    <value>속성</value>
   </data>
   <data name="ContextMenuRunAsAdmin" xml:space="preserve">
-    <value>Run as admin</value>
+    <value>관리자로 실행</value>
   </data>
   <data name="ContextMenuShowInEverything" xml:space="preserve">
-    <value>Show in Everything</value>
+    <value>Everything에서 보기</value>
   </data>
   <data name="DefaultFilterAll" xml:space="preserve">
-    <value>All</value>
+    <value>전체</value>
   </data>
   <data name="DefaultFilterFile" xml:space="preserve">
-    <value>File</value>
+    <value>파일</value>
   </data>
   <data name="DefaultFilterFolder" xml:space="preserve">
-    <value>Folder</value>
+    <value>폴더</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -193,85 +193,85 @@
     <value>Win</value>
   </data>
   <data name="MessageBoxCopyException" xml:space="preserve">
-    <value>Do you want to copy the exception content to clipboard?</value>
+    <value>예외 항목을 클립보드에 복사하시겠습니까?</value>
   </data>
   <data name="MessageBoxErrorTitle" xml:space="preserve">
-    <value>Error</value>
+    <value>에러</value>
   </data>
   <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
-    <value>Failed to copy file.</value>
+    <value>파일 복사에 실패했습니다.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
-    <value>Failed to copy path.</value>
+    <value>경로 복사에 실패했습니다.</value>
   </data>
   <data name="MessageBoxFailedToOpen" xml:space="preserve">
-    <value>Failed to open search result.</value>
+    <value>검색 결과를 여는 데 실패했습니다.</value>
   </data>
   <data name="MessageBoxFailedToOpenDialog" xml:space="preserve">
-    <value>Failed to open dialog.</value>
+    <value>대화창을 여는 데 실패했습니다.</value>
   </data>
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
-    <value>Failed to open path.</value>
+    <value>경로 열기에 실패했습니다.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Failed to register hotkey. It might be in use by another application.</value>
+    <value>단축키 등록에 실패했습니다. 다른 프로그램에서 사용 중일 수 있습니다.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
-    <value>Failed to run command</value>
+    <value>명령 실행에 실패했습니다.</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
-    <value>To utilize this sorting method it has to have fast sorting enabled. It can be enabled in your Everything settings.</value>
+    <value>이 정렬 방법을 사용하기 위해서는 빠른 정렬이 활성화되어야 합니다. 이는 Everything 설정에서 활성화 할 수 있습니다.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
-    <value>Fast sorting not enabled</value>
+    <value>빠른 정렬이 활성화되지 않음</value>
   </data>
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
-    <value>At least one regular expression is invalid.</value>
+    <value>적어도 하나의 정규식이 유효하지 않습니다.</value>
   </data>
   <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Rule names cannot be empty.</value>
+    <value>규칙의 이름은 비워질 수 없습니다.</value>
   </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
-    <value>Please select Everything.exe...</value>
+    <value>Everything.exe를 선택해주세요...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>Please select the Filters.csv file. By default it can be found in %APPDATA%\Everything. Its location might be different depending on your installation. If the file does not exist for you that means you didn't perform any changes to Everything's default filters.</value>
+    <value>Filters.csv 파일을 선택해주세요. %APPDATA%\Everything 에서 찾을 수 있습니다. 설치 방법에 따라 다른 경로에 위치할 수 있습니다. 파일이 존재하지 않는다면 Everything의 기본 필터를 변경하지 않은 것입니다.</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
-    <value>Filters.csv not found</value>
+    <value>Filters.csv를 찾을 수 없습니다</value>
   </data>
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
-    <value>Unhandled exception occured</value>
+    <value>처리되지 않은 예외 발생</value>
   </data>
   <data name="RulesAutoApply" xml:space="preserve">
-    <value>Automatically apply rules based on condition</value>
+    <value>조건에 따른 규칙 자동 적용</value>
   </data>
   <data name="RulesCancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>취소</value>
   </data>
   <data name="RulesCommand" xml:space="preserve">
-    <value>Command</value>
+    <value>명령</value>
   </data>
   <data name="RulesName" xml:space="preserve">
-    <value>Name</value>
+    <value>이름</value>
   </data>
   <data name="RulesRegularExpression" xml:space="preserve">
-    <value>Regular Expression</value>
+    <value>정규식</value>
   </data>
   <data name="RulesSave" xml:space="preserve">
-    <value>Save</value>
+    <value>저장</value>
   </data>
   <data name="RulesType" xml:space="preserve">
-    <value>Type</value>
+    <value>종류</value>
   </data>
   <data name="RulesWindowText" xml:space="preserve">
-    <value>Use %file%, %filename% and %path% as placeholders in commands.</value>
+    <value>명령에서 %파일%, %파일명%, %경로% 를 자리 지시자로 사용해주세요.</value>
   </data>
   <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Rules</value>
+    <value>규칙들</value>
   </data>
   <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>Search with Everything</value>
+    <value>Everything으로 검색</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
     <value>object</value>
@@ -280,37 +280,37 @@
     <value>objects</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
-    <value>About EverythingToolbar...</value>
+    <value>EverythingToolbar 정보...</value>
   </data>
   <data name="SettingsChangeShortcut" xml:space="preserve">
-    <value>Change Shortcut...</value>
+    <value>단축키 변경...</value>
   </data>
   <data name="SettingsDisableAnimations" xml:space="preserve">
-    <value>Disable animations</value>
+    <value>애니메이션 비활성화</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>Enable search history</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
-    <value>Hide empty search</value>
+    <value>빈 검색 숨기기</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>Match Case</value>
+    <value>대/소문자 일치</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
-    <value>Match Path</value>
+    <value>경로 일치</value>
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
-    <value>Match Whole Word</value>
+    <value>전체 단어 일치</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>속성</value>
   </data>
   <data name="SettingsRegularExpressions" xml:space="preserve">
-    <value>Regular Expressions</value>
+    <value>정규식</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
-    <value>Rules...</value>
+    <value>규칙...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>Show quick toggles</value>
@@ -319,120 +319,120 @@
     <value>Show results count</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
-    <value>Sort By</value>
+    <value>정렬 기준</value>
   </data>
   <data name="SettingsTheme" xml:space="preserve">
-    <value>Theme</value>
+    <value>테마</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
-    <value>Use Everything filters</value>
+    <value>Everything 필터 사용</value>
   </data>
   <data name="SettingsView" xml:space="preserve">
-    <value>View</value>
+    <value>보기</value>
   </data>
   <data name="ShortcutOK" xml:space="preserve">
-    <value>OK</value>
+    <value>확인</value>
   </data>
   <data name="ShortcutWindowTitle" xml:space="preserve">
-    <value>Enter shortcut...</value>
+    <value>단축키 입력...</value>
   </data>
   <data name="SortByAttributesAscending" xml:space="preserve">
-    <value>Attributes ascending</value>
+    <value>속성 오름차순</value>
   </data>
   <data name="SortByAttributesDescending" xml:space="preserve">
-    <value>Attributes descending</value>
+    <value>속성 내림차순</value>
   </data>
   <data name="SortByDateAccessedAscending" xml:space="preserve">
-    <value>Date accessed ascending</value>
+    <value>마지막 접근 날짜 오름차순</value>
   </data>
   <data name="SortByDateAccessedDescending" xml:space="preserve">
-    <value>Date accessed descending</value>
+    <value>마지막 접근 날짜 내림차순</value>
   </data>
   <data name="SortByDateCreatedAscending" xml:space="preserve">
-    <value>Date created ascending</value>
+    <value>만든 날짜 오름차순</value>
   </data>
   <data name="SortByDateCreatedDescending" xml:space="preserve">
-    <value>Date created descending</value>
+    <value>만든 날짜 내림차순</value>
   </data>
   <data name="SortByDateModifiedAscending" xml:space="preserve">
-    <value>Date modified ascending</value>
+    <value>수정한 날짜 오름차순</value>
   </data>
   <data name="SortByDateModifiedDescending" xml:space="preserve">
-    <value>Date modified descending</value>
+    <value>수정한 날짜 내림차순</value>
   </data>
   <data name="SortByDateRecentlyChangedAscending" xml:space="preserve">
-    <value>Date recently changed ascending</value>
+    <value>최근 변경 날짜 오름차순</value>
   </data>
   <data name="SortByDateRecentlyChangedDescending" xml:space="preserve">
-    <value>Date recently changed descending</value>
+    <value>최근 변경 날짜 내림차순</value>
   </data>
   <data name="SortByDateRunAscending" xml:space="preserve">
-    <value>Date run ascending</value>
+    <value>실행 날짜 오름차순</value>
   </data>
   <data name="SortByDateRunDescending" xml:space="preserve">
-    <value>Date run descending</value>
+    <value>실행 날짜 내림차순</value>
   </data>
   <data name="SortByExtensionAscending" xml:space="preserve">
-    <value>Extension ascending</value>
+    <value>확장자 오름차순</value>
   </data>
   <data name="SortByExtensionDescending" xml:space="preserve">
-    <value>Extension descending</value>
+    <value>확장자 내림차순</value>
   </data>
   <data name="SortByFileListFilenameAscending" xml:space="preserve">
-    <value>File list filename ascending</value>
+    <value>파일 목록 파일 이름 오름차순</value>
   </data>
   <data name="SortByFileListFilenameDescending" xml:space="preserve">
-    <value>File list filename descending</value>
+    <value>파일 목록 파일 이름 내림차순</value>
   </data>
   <data name="SortByNameAscending" xml:space="preserve">
-    <value>Name ascending</value>
+    <value>이름 오름차순</value>
   </data>
   <data name="SortByNameDescending" xml:space="preserve">
-    <value>Name descending</value>
+    <value>이름 내림차순</value>
   </data>
   <data name="SortByPathAscending" xml:space="preserve">
-    <value>Path ascending</value>
+    <value>경로 오름차순</value>
   </data>
   <data name="SortByPathDescending" xml:space="preserve">
-    <value>Path descending</value>
+    <value>경로 내림차순</value>
   </data>
   <data name="SortByRunCountAscending" xml:space="preserve">
-    <value>Run count ascending</value>
+    <value>실행 횟수 오름차순</value>
   </data>
   <data name="SortByRunCountDescending" xml:space="preserve">
-    <value>Run count descending</value>
+    <value>실행 횟수 내림차순</value>
   </data>
   <data name="SortBySizeAscending" xml:space="preserve">
-    <value>Size ascending</value>
+    <value>크기 오름차순</value>
   </data>
   <data name="SortBySizeDescending" xml:space="preserve">
-    <value>Size descending</value>
+    <value>크기 내림차순</value>
   </data>
   <data name="SortByTypeNameAscending" xml:space="preserve">
-    <value>Type name ascending</value>
+    <value>종류 이름 오름차순</value>
   </data>
   <data name="SortByTypeNameDescending" xml:space="preserve">
-    <value>Type name descending</value>
+    <value>종류 이름 내림차순</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
-    <value>Audio</value>
+    <value>오디오</value>
   </data>
   <data name="UserFilterCompressed" xml:space="preserve">
-    <value>Compressed</value>
+    <value>압축 파일</value>
   </data>
   <data name="UserFilterDocument" xml:space="preserve">
-    <value>Document</value>
+    <value>문서</value>
   </data>
   <data name="UserFilterExecutable" xml:space="preserve">
-    <value>Executable</value>
+    <value>실행 파일</value>
   </data>
   <data name="UserFilterPicture" xml:space="preserve">
-    <value>Picture</value>
+    <value>사진</value>
   </data>
   <data name="UserFilterPlaceholder" xml:space="preserve">
-    <value>More</value>
+    <value>더 보기</value>
   </data>
   <data name="UserFilterVideo" xml:space="preserve">
-    <value>Video</value>
+    <value>비디오</value>
   </data>
 </root>
