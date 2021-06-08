@@ -1,4 +1,3 @@
 files:
-  - source: /EverythingToolbar/EverythingToolbar/Properties/Resources.resx
-    translation: >-
-      /EverythingToolbar/EverythingToolbar/Properties/Resources.%two_letters_code%.resx
+  - source: /EverythingToolbar/Properties/Resources.resx
+    translation: /EverythingToolbar/Properties/Resources.%two_letters_code%.resx
