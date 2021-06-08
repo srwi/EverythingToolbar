@@ -289,7 +289,7 @@
     <value>Animationen deaktivieren</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Enable search history</value>
+    <value>Suchverlauf aktivieren</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>Leere Suche ausblenden</value>
