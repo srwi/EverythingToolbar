@@ -121,7 +121,7 @@
     <value>Licentie</value>
   </data>
   <data name="AboutOK" xml:space="preserve">
-    <value>OK</value>
+    <value>Ok</value>
   </data>
   <data name="AboutVersion" xml:space="preserve">
     <value>Versie</value>
@@ -145,7 +145,7 @@
     <value>Knippen</value>
   </data>
   <data name="ContextMenuOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>Openen</value>
   </data>
   <data name="ContextMenuOpenPath" xml:space="preserve">
     <value>Open pad</value>
@@ -178,7 +178,7 @@
     <value>File</value>
   </data>
   <data name="DefaultFilterFolder" xml:space="preserve">
-    <value>Folder</value>
+    <value>Map</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -331,7 +331,7 @@
     <value>Bekijk</value>
   </data>
   <data name="ShortcutOK" xml:space="preserve">
-    <value>OK</value>
+    <value>Ok</value>
   </data>
   <data name="ShortcutWindowTitle" xml:space="preserve">
     <value>Voer snelkoppeling in...</value>
