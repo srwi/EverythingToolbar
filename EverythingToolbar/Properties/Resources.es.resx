@@ -181,97 +181,97 @@
     <value>Carpeta</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
-    <value>Ejecutable</value>
-  </data>
-  <data name="KeyCtrl" xml:space="preserve">
-    <value>Foto</value>
-  </data>
-  <data name="KeyShift" xml:space="preserve">
-    <value>Más</value>
-  </data>
-  <data name="KeyWin" xml:space="preserve">
-    <value>Vídeo</value>
-  </data>
-  <data name="MessageBoxCopyException" xml:space="preserve">
     <value>Alt</value>
   </data>
-  <data name="MessageBoxErrorTitle" xml:space="preserve">
+  <data name="KeyCtrl" xml:space="preserve">
     <value>Ctrl</value>
   </data>
-  <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
-    <value>Mayús</value>
+  <data name="KeyShift" xml:space="preserve">
+    <value>Shift</value>
   </data>
-  <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
+  <data name="KeyWin" xml:space="preserve">
     <value>Win</value>
   </data>
-  <data name="MessageBoxFailedToOpen" xml:space="preserve">
+  <data name="MessageBoxCopyException" xml:space="preserve">
     <value>¿Desea copiar el contenido de la excepción al portapapeles?</value>
   </data>
-  <data name="MessageBoxFailedToOpenDialog" xml:space="preserve">
+  <data name="MessageBoxErrorTitle" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
+  <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
     <value>Error al copiar archivo.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
+  <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>Error al copiar ubicación.</value>
   </data>
-  <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
+  <data name="MessageBoxFailedToOpen" xml:space="preserve">
     <value>Error al abrir resultado de búsqueda.</value>
   </data>
-  <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
+  <data name="MessageBoxFailedToOpenDialog" xml:space="preserve">
     <value>Error al abrir diálogo.</value>
   </data>
-  <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
+  <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>Error al abrir ubicación.</value>
   </data>
-  <data name="MessageBoxRegExInvalid" xml:space="preserve">
+  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
     <value>Error al registrar atajo de teclado. Puede estar utilizado por otra aplicación.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
+  <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Error al ejecutar el comando</value>
   </data>
-  <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
+  <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
     <value>Para utilizar este método de ordenar tiene que tener ordenar rápido activado. Puede activarlo en los ajustes de Everything.</value>
   </data>
-  <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
+  <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
     <value>Ordenar rápido no activado</value>
   </data>
-  <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
+  <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>Al menos una expresión regular es inválida.</value>
   </data>
-  <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
+  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
     <value>Los nombres de reglas no pueden estar vacíos.</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
+  <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Por favor seleccione Everything.exe...</value>
   </data>
-  <data name="RulesCancel" xml:space="preserve">
+  <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
     <value>Por favor seleccione el archivo Filters.csv. Por defecto puede encontrarse en %APPDATA%\Everything. Su ubicación puede ser diferente dependiendo de la instalación. Si el archivo no existe para usted eso significa que no realizó ningún cambio a los filtros predeterminados de Everything.</value>
   </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
     <value>Filters.csv no encontrado</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Ha ocurrido una excepción inesperada</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="RulesAutoApply" xml:space="preserve">
     <value>Aplicar reglas automáticamente en base a la condición</value>
   </data>
-  <data name="RulesSave" xml:space="preserve">
+  <data name="RulesCancel" xml:space="preserve">
     <value>Cancelar</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="RulesCommand" xml:space="preserve">
     <value>Comando</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="RulesName" xml:space="preserve">
     <value>Nombre</value>
   </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
+  <data name="RulesRegularExpression" xml:space="preserve">
     <value>Expresión regular</value>
   </data>
-  <data name="SearchBoxWatermark" xml:space="preserve">
+  <data name="RulesSave" xml:space="preserve">
     <value>Guardar</value>
+  </data>
+  <data name="RulesType" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="RulesWindowText" xml:space="preserve">
+    <value>Use %file%, %filename% y %path% como sustitutos en los comandos.</value>
+  </data>
+  <data name="RulesWindowTitle" xml:space="preserve">
+    <value>Reglas</value>
+  </data>
+  <data name="SearchBoxWatermark" xml:space="preserve">
+    <value>Buscar con Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
     <value>objeto</value>
@@ -280,37 +280,37 @@
     <value>objetos</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
-    <value>Tipo</value>
+    <value>Acerca de EverythingToolbar...</value>
   </data>
   <data name="SettingsChangeShortcut" xml:space="preserve">
-    <value>Use %file%, %filename% y %path% como sustitutos en los comandos.</value>
+    <value>Cambiar acceso directo...</value>
   </data>
   <data name="SettingsDisableAnimations" xml:space="preserve">
-    <value>Reglas</value>
+    <value>Desactivar animaciones</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>Enable search history</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
-    <value>Buscar con Everything</value>
-  </data>
-  <data name="SettingsMatchCase" xml:space="preserve">
-    <value>Acerca de EverythingToolbar...</value>
-  </data>
-  <data name="SettingsMatchPath" xml:space="preserve">
-    <value>Cambiar acceso directo...</value>
-  </data>
-  <data name="SettingsMatchWholeWord" xml:space="preserve">
-    <value>Desactivar animaciones</value>
-  </data>
-  <data name="SettingsPreferences" xml:space="preserve">
     <value>Ocultar búsqueda vacía</value>
   </data>
-  <data name="SettingsRegularExpressions" xml:space="preserve">
+  <data name="SettingsMatchCase" xml:space="preserve">
     <value>Coincidir mayúsculas</value>
   </data>
-  <data name="SettingsRules" xml:space="preserve">
+  <data name="SettingsMatchPath" xml:space="preserve">
     <value>Coincidir ubicación</value>
+  </data>
+  <data name="SettingsMatchWholeWord" xml:space="preserve">
+    <value>Coincidir palabra completa</value>
+  </data>
+  <data name="SettingsPreferences" xml:space="preserve">
+    <value>Preferencias</value>
+  </data>
+  <data name="SettingsRegularExpressions" xml:space="preserve">
+    <value>Expresiones regulares</value>
+  </data>
+  <data name="SettingsRules" xml:space="preserve">
+    <value>Reglas...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>Show quick toggles</value>
@@ -319,120 +319,120 @@
     <value>Show results count</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
-    <value>Coincidir palabra completa</value>
+    <value>Ordenar por</value>
   </data>
   <data name="SettingsTheme" xml:space="preserve">
-    <value>Preferencias</value>
+    <value>Tema</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
-    <value>Expresiones regulares</value>
+    <value>Usar filtros de Everything</value>
   </data>
   <data name="SettingsView" xml:space="preserve">
-    <value>Reglas...</value>
+    <value>Ver</value>
   </data>
   <data name="ShortcutOK" xml:space="preserve">
     <value>Aceptar</value>
   </data>
   <data name="ShortcutWindowTitle" xml:space="preserve">
-    <value>Tema</value>
-  </data>
-  <data name="SortByAttributesAscending" xml:space="preserve">
-    <value>Usar filtros de Everything</value>
-  </data>
-  <data name="SortByAttributesDescending" xml:space="preserve">
-    <value>Ver</value>
-  </data>
-  <data name="SortByDateAccessedAscending" xml:space="preserve">
-    <value>Date accessed ascending</value>
-  </data>
-  <data name="SortByDateAccessedDescending" xml:space="preserve">
     <value>Introducir atajo de teclado...</value>
   </data>
-  <data name="SortByDateCreatedAscending" xml:space="preserve">
+  <data name="SortByAttributesAscending" xml:space="preserve">
     <value>Atributos ascendiente</value>
   </data>
-  <data name="SortByDateCreatedDescending" xml:space="preserve">
+  <data name="SortByAttributesDescending" xml:space="preserve">
     <value>Atributos descendiente</value>
   </data>
-  <data name="SortByDateModifiedAscending" xml:space="preserve">
+  <data name="SortByDateAccessedAscending" xml:space="preserve">
     <value>Fecha de acceso ascendiente</value>
   </data>
-  <data name="SortByDateModifiedDescending" xml:space="preserve">
+  <data name="SortByDateAccessedDescending" xml:space="preserve">
     <value>Fecha de acceso descendiente</value>
   </data>
-  <data name="SortByDateRecentlyChangedAscending" xml:space="preserve">
+  <data name="SortByDateCreatedAscending" xml:space="preserve">
     <value>Fecha de creación ascendiente</value>
   </data>
-  <data name="SortByDateRecentlyChangedDescending" xml:space="preserve">
+  <data name="SortByDateCreatedDescending" xml:space="preserve">
     <value>Fecha de creación descendiente</value>
   </data>
-  <data name="SortByDateRunAscending" xml:space="preserve">
+  <data name="SortByDateModifiedAscending" xml:space="preserve">
     <value>Fecha de modificación ascendiente</value>
   </data>
-  <data name="SortByDateRunDescending" xml:space="preserve">
+  <data name="SortByDateModifiedDescending" xml:space="preserve">
     <value>Fecha de modificación descendiente</value>
   </data>
-  <data name="SortByExtensionAscending" xml:space="preserve">
+  <data name="SortByDateRecentlyChangedAscending" xml:space="preserve">
     <value>Fecha de cambio reciente ascendiente</value>
   </data>
-  <data name="SortByExtensionDescending" xml:space="preserve">
+  <data name="SortByDateRecentlyChangedDescending" xml:space="preserve">
     <value>Fecha de cambio reciente descendiente</value>
   </data>
-  <data name="SortByFileListFilenameAscending" xml:space="preserve">
+  <data name="SortByDateRunAscending" xml:space="preserve">
     <value>Fecha de ejecución ascendiente</value>
   </data>
-  <data name="SortByFileListFilenameDescending" xml:space="preserve">
+  <data name="SortByDateRunDescending" xml:space="preserve">
     <value>Fecha de ejecución descendiente</value>
   </data>
-  <data name="SortByNameAscending" xml:space="preserve">
+  <data name="SortByExtensionAscending" xml:space="preserve">
     <value>Extensión ascendiente</value>
   </data>
-  <data name="SortByNameDescending" xml:space="preserve">
+  <data name="SortByExtensionDescending" xml:space="preserve">
     <value>Extensión descendiente</value>
   </data>
-  <data name="SortByPathAscending" xml:space="preserve">
+  <data name="SortByFileListFilenameAscending" xml:space="preserve">
     <value>Lista de archivos por nombre ascendiente</value>
   </data>
-  <data name="SortByPathDescending" xml:space="preserve">
+  <data name="SortByFileListFilenameDescending" xml:space="preserve">
     <value>Lista de archivos por nombre descendiente</value>
   </data>
-  <data name="SortByRunCountAscending" xml:space="preserve">
+  <data name="SortByNameAscending" xml:space="preserve">
     <value>Nombre ascendiente</value>
   </data>
-  <data name="SortByRunCountDescending" xml:space="preserve">
+  <data name="SortByNameDescending" xml:space="preserve">
     <value>Nombre descendiente</value>
   </data>
-  <data name="SortBySizeAscending" xml:space="preserve">
+  <data name="SortByPathAscending" xml:space="preserve">
     <value>Ubicación ascendiente</value>
   </data>
-  <data name="SortBySizeDescending" xml:space="preserve">
+  <data name="SortByPathDescending" xml:space="preserve">
     <value>Ubicación descendiente</value>
   </data>
-  <data name="SortByTypeNameAscending" xml:space="preserve">
+  <data name="SortByRunCountAscending" xml:space="preserve">
     <value>Número de ejecuciones ascendiente</value>
   </data>
-  <data name="SortByTypeNameDescending" xml:space="preserve">
+  <data name="SortByRunCountDescending" xml:space="preserve">
     <value>Número de ejecuciones descendiente</value>
   </data>
-  <data name="UserFilterAudio" xml:space="preserve">
+  <data name="SortBySizeAscending" xml:space="preserve">
     <value>Tamaño ascendiente</value>
   </data>
-  <data name="UserFilterCompressed" xml:space="preserve">
+  <data name="SortBySizeDescending" xml:space="preserve">
     <value>Tamaño descendiente</value>
   </data>
-  <data name="UserFilterDocument" xml:space="preserve">
+  <data name="SortByTypeNameAscending" xml:space="preserve">
     <value>Nombre de tipo ascendiente</value>
   </data>
-  <data name="UserFilterExecutable" xml:space="preserve">
+  <data name="SortByTypeNameDescending" xml:space="preserve">
     <value>Nombre de tipo descendiente</value>
   </data>
-  <data name="UserFilterPicture" xml:space="preserve">
+  <data name="UserFilterAudio" xml:space="preserve">
     <value>Audio</value>
   </data>
-  <data name="UserFilterPlaceholder" xml:space="preserve">
+  <data name="UserFilterCompressed" xml:space="preserve">
     <value>Comprimido</value>
   </data>
-  <data name="UserFilterVideo" xml:space="preserve">
+  <data name="UserFilterDocument" xml:space="preserve">
     <value>Documento</value>
+  </data>
+  <data name="UserFilterExecutable" xml:space="preserve">
+    <value>Ejecutable</value>
+  </data>
+  <data name="UserFilterPicture" xml:space="preserve">
+    <value>Foto</value>
+  </data>
+  <data name="UserFilterPlaceholder" xml:space="preserve">
+    <value>Más</value>
+  </data>
+  <data name="UserFilterVideo" xml:space="preserve">
+    <value>Vídeo</value>
   </data>
 </root>
