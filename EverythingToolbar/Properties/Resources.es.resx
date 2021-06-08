@@ -121,7 +121,7 @@
     <value>Licencia</value>
   </data>
   <data name="AboutOK" xml:space="preserve">
-    <value>OK</value>
+    <value>Aceptar</value>
   </data>
   <data name="AboutVersion" xml:space="preserve">
     <value>Versión</value>
@@ -331,7 +331,7 @@
     <value>Reglas...</value>
   </data>
   <data name="ShortcutOK" xml:space="preserve">
-    <value>Ordenar por</value>
+    <value>Aceptar</value>
   </data>
   <data name="ShortcutWindowTitle" xml:space="preserve">
     <value>Tema</value>
@@ -343,7 +343,7 @@
     <value>Ver</value>
   </data>
   <data name="SortByDateAccessedAscending" xml:space="preserve">
-    <value>OK</value>
+    <value>Date accessed ascending</value>
   </data>
   <data name="SortByDateAccessedDescending" xml:space="preserve">
     <value>Introducir atajo de teclado...</value>
