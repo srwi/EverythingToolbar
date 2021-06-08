@@ -238,5 +238,17 @@ namespace EverythingToolbar.Properties {
                 this["isShowResultsCount"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isShowQuickToggles {
+            get {
+                return ((bool)(this["isShowQuickToggles"]));
+            }
+            set {
+                this["isShowQuickToggles"] = value;
+            }
+        }
     }
 }

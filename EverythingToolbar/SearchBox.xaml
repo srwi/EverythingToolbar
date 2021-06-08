@@ -6,10 +6,39 @@
          xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
          xmlns:h="clr-namespace:EverythingToolbar.Helpers"
          LostKeyboardFocus="OnLostKeyboardFocus"
+         Name="_this"
          CaretBrush="{DynamicResource SearchBoxForegroundActive}"
          Style="{DynamicResource SearchBoxStyle}"
          Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
     <TextBox.Resources>
+        <Style x:Key="QuickSettingsToggleButton" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource SearchBoxForegroundActive}"/>
+            <Setter Property="Opacity" Value="0.5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter TextBlock.Foreground="{TemplateBinding Foreground}"
+                                              TextBlock.FontSize="12pt"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              TextBlock.TextAlignment="Center"
+                                              Margin="2, 0"
+                                              MinWidth="19" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="0.7"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Opacity" Value="1"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="SearchBoxStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="FontSize" Value="15"/>
@@ -24,7 +53,8 @@
                             <Grid x:Name="SearchBoxGrid" SnapsToDevicePixels="True">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="36"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*" MinWidth="15"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Path x:Name="SearchBoxLogo"
                                       Stroke="{DynamicResource SearchBoxLogo}"
@@ -52,6 +82,37 @@
                                               Focusable="false"
                                               HorizontalScrollBarVisibility="Hidden"
                                               VerticalScrollBarVisibility="Hidden"/>
+                                <Border Grid.Column="2" Visibility="{Binding Source={x:Static properties:Settings.Default}, Path=isShowQuickToggles, Converter={local:BoolToVisibilityConverter}}">
+                                    <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=_this, Path=IsKeyboardFocused, Converter={local:BoolToVisibilityConverter}, Mode=OneWay}">
+                                        <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
+                                                      Click="OnMenuItemClicked"
+                                                      Focusable="False"
+                                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase}"
+                                                      Content="Aa" />
+                                        <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
+                                                      Click="OnMenuItemClicked"
+                                                      Focusable="False"
+                                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord}">
+                                            <TextBlock TextDecorations="Underline,OverLine"
+                                                       FontSize="11"
+                                                       HorizontalAlignment="Center"
+                                                       Padding="0, 2, 0, 0">Abl</TextBlock>
+                                        </ToggleButton>
+                                        <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
+                                                      Click="OnMenuItemClicked"
+                                                      Focusable="False"
+                                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath}"
+                                                      Content="..\"
+                                                      Margin="0, -2, 0, 1" />
+                                        <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
+                                                      Click="OnMenuItemClicked"
+                                                      Focusable="False"
+                                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled}"
+                                                      Content=".*"
+                                                      TextBlock.FontWeight="Bold"
+                                                      Margin="-2, 0, 4, 2" />
+                                    </StackPanel>
+                                </Border>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -102,6 +163,13 @@
                                         TargetName="SearchBoxWatermark"
                                         Value="1"/>
                             </Trigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=IsKeyboardFocused}" Value="true" />
+                                    <Condition Binding="{Binding Source={x:Static properties:Settings.Default}, Path=isShowQuickToggles}" Value="true" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter TargetName="SearchBoxWatermark" Property="Opacity" Value="0" />
+                            </MultiDataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>

@@ -309,6 +309,9 @@
   <data name="SettingsRules" xml:space="preserve">
     <value>Rules...</value>
   </data>
+  <data name="SettingsShowQuickToggles" xml:space="preserve">
+    <value>Show quick toggles</value>
+  </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
     <value>Show results count</value>
   </data>

@@ -637,6 +637,15 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show quick toggles.
+        /// </summary>
+        public static string SettingsShowQuickToggles {
+            get {
+                return ResourceManager.GetString("SettingsShowQuickToggles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show results count.
         /// </summary>
         public static string SettingsShowResultsCount {

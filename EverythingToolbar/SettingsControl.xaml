@@ -157,6 +157,10 @@
                           IsCheckable="True"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isShowResultsCount, Mode=TwoWay}"
                           Click="OnMenuItemClicked"/>
+                <MenuItem Header="{x:Static properties:Resources.SettingsShowQuickToggles}"
+                          IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isShowQuickToggles, Mode=TwoWay}"
+                          Click="OnMenuItemClicked"/>
                 <MenuItem Header="{x:Static properties:Resources.SettingsDisableAnimations}"
                           IsCheckable="True"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isAnimationsDisabled, Mode=TwoWay}"
