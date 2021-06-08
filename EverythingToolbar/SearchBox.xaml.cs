@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using EverythingToolbar.Helpers;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -16,6 +17,7 @@ namespace EverythingToolbar
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
+            HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
             EverythingSearch.Instance.Reset();
         }
 

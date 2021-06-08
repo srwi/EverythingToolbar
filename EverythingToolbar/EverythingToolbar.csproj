@@ -87,6 +87,7 @@
     <Compile Include="Helpers\ApplicationResources.cs" />
     <Compile Include="Helpers\DpiScaling.cs" />
     <Compile Include="Helpers\FilterLoader.cs" />
+    <Compile Include="Helpers\HistoryManager.cs" />
     <Compile Include="Helpers\ShellUtils.cs" />
     <Compile Include="Helpers\ShortcutManager.cs" />
     <Compile Include="Helpers\Utils.cs" />

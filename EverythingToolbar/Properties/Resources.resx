@@ -288,6 +288,9 @@
   <data name="SettingsDisableAnimations" xml:space="preserve">
     <value>Disable animations</value>
   </data>
+  <data name="SettingsEnableHistory" xml:space="preserve">
+    <value>Enable search history</value>
+  </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>Hide empty search</value>
   </data>

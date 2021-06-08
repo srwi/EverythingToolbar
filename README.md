@@ -2,6 +2,7 @@ EverythingToolbar
 =================
 
 [![build](https://github.com/stnkl/EverythingToolbar/workflows/build/badge.svg)](https://github.com/stnkl/EverythingToolbar/actions)
+[![Crowdin](https://badges.crowdin.net/everythingtoolbar/localized.svg)](https://crowdin.com/project/everythingtoolbar)
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/stnkl/EverythingToolbar/blob/master/LICENSE)
 [![Downloads](https://img.shields.io/github/downloads/stnkl/EverythingToolbar/total?color=blue)](https://github.com/stnkl/EverythingToolbar/releases/latest)
 
@@ -48,18 +49,19 @@ Build
 Keyboard shortcuts
 ------------------
 
-| Shortcut                                            | Function                         |
-|-----------------------------------------------------|----------------------------------|
-| <kbd>&#8593;</kbd> <kbd>&#8595;</kbd>               | Navigate search results          |
-| <kbd>Return</kbd>                                   | Open                             |
-| <kbd>Ctrl</kbd>+<kbd>Return</kbd>/<kbd>Click</kbd>  | Open path                        |
-| <kbd>Shift</kbd>+<kbd>Return</kbd>/<kbd>Click</kbd> | Open in Everything               |
-| <kbd>Alt</kbd>+<kbd>Return</kbd>/<kbd>Click</kbd>   | File properties                  |
-| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>   | Run as admin                     |
-| (<kbd>Shift</kbd>+)<kbd>Tab</kbd>                   | Cycle through filters            |
-| <kbd>Ctrl</kbd>+<kbd>0-9</kbd>                      | Select filter                    |
-| <kbd>Ctrl</kbd>+<kbd>Space</kbd>                    | Preview file in [QuickLook](https://github.com/QL-Win/QuickLook) |
-| <kbd>Win</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd>          | Focus search box (customizable)  |
+| Shortcut                                              | Function                             |
+|-------------------------------------------------------|--------------------------------------|
+| <kbd>&#8593;</kbd>/<kbd>&#8595;</kbd>                 | Navigate search results              |
+| <kbd>Ctrl</kbd>+<kbd>&#8593;</kbd>/<kbd>&#8595;</kbd> | Navigate search history (if enabled) |
+| <kbd>Return</kbd>                                     | Open                                 |
+| <kbd>Ctrl</kbd>+<kbd>Return</kbd>/<kbd>Click</kbd>    | Open path                            |
+| <kbd>Shift</kbd>+<kbd>Return</kbd>/<kbd>Click</kbd>   | Open in Everything                   |
+| <kbd>Alt</kbd>+<kbd>Return</kbd>/<kbd>Click</kbd>     | File properties                      |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>     | Run as admin                         |
+| (<kbd>Shift</kbd>+)<kbd>Tab</kbd>                     | Cycle through filters                |
+| <kbd>Ctrl</kbd>+<kbd>0-9</kbd>                        | Select filter                        |
+| <kbd>Ctrl</kbd>+<kbd>Space</kbd>                      | Preview file in [QuickLook](https://github.com/QL-Win/QuickLook) |
+| <kbd>Win</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd>            | Focus search box (customizable)      |
 
 Rules
 -----

@@ -51,10 +51,17 @@ namespace EverythingToolbar
 
         private void OnKeyPressed(object sender, KeyEventArgs e)
         {
-            if (!SearchResultsPopup.IsOpen)
-                return;
-
-            if (e.Key == Key.Up)
+            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Up)
+            {
+                Keyboard.Focus(SearchBox);
+                EverythingSearch.Instance.SearchTerm = HistoryManager.Instance.GetPreviousItem();
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Down)
+            {
+                Keyboard.Focus(SearchBox);
+                EverythingSearch.Instance.SearchTerm = HistoryManager.Instance.GetNextItem();
+            }
+            else if (e.Key == Key.Up)
             {
                 SearchResultsPopup.SearchResultsView.SelectPreviousSearchResult();
             }
@@ -93,6 +100,7 @@ namespace EverythingToolbar
             }
             else if (e.Key == Key.Escape)
             {
+                HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
                 EverythingSearch.Instance.SearchTerm = null;
                 Keyboard.ClearFocus();
             }

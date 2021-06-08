@@ -250,5 +250,17 @@ namespace EverythingToolbar.Properties {
                 this["isShowQuickToggles"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isEnableHistory {
+            get {
+                return ((bool)(this["isEnableHistory"]));
+            }
+            set {
+                this["isEnableHistory"] = value;
+            }
+        }
     }
 }

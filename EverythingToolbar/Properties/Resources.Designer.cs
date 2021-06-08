@@ -574,6 +574,15 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable search history.
+        /// </summary>
+        public static string SettingsEnableHistory {
+            get {
+                return ResourceManager.GetString("SettingsEnableHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hide empty search.
         /// </summary>
         public static string SettingsHideEmptyResults {
