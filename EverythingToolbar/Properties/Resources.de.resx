@@ -313,7 +313,7 @@
     <value>Regeln...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Show quick toggles</value>
+    <value>Suchoptionen anzeigen</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
     <value>Ergebnisanzahl anzeigen</value>
