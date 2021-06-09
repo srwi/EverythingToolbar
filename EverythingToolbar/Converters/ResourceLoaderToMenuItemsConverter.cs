@@ -17,12 +17,38 @@ namespace EverythingToolbar
 
             foreach (var itemPath in (ObservableCollection<string>)value)
             {
-                string theme = Path.GetFileNameWithoutExtension(itemPath);
+                string fileIdentifier = Path.GetFileNameWithoutExtension(itemPath);
+                string name = fileIdentifier;
+                switch (fileIdentifier)
+                {
+                    case "COMPACT":
+                        name = Properties.Resources.ItemTemplateCompact;
+                        break;
+                    case "COMPACT_DETAILED":
+                        name = Properties.Resources.ItemTemplateCompactDetailed;
+                        break;
+                    case "NORMAL":
+                        name = Properties.Resources.ItemTemplateNormal;
+                        break;
+                    case "NORMAL_DETAILED":
+                        name = Properties.Resources.ItemTemplateNormalDetailed;
+                        break;
+                    case "DARK":
+                        name = Properties.Resources.ThemeDark;
+                        break;
+                    case "MEDIUM":
+                        name = Properties.Resources.ThemeMedium;
+                        break;
+                    case "LIGHT":
+                        name = Properties.Resources.ThemeLight;
+                        break;
+                }
                 menuItems.Add(new MenuItem()
                 {
-                    Header = theme,
+                    Header = name,
+                    Tag = fileIdentifier,
                     IsCheckable = true,
-                    IsChecked = Properties.Settings.Default[category].ToString() == theme,
+                    IsChecked = Properties.Settings.Default[category].ToString() == fileIdentifier,
                 });
             }
 

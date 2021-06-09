@@ -118,14 +118,14 @@ namespace EverythingToolbar
                 if (itemParent.Items[i] == itemChecked)
                 {
                     (itemParent.Items[i] as MenuItem).IsChecked = true;
-                    Properties.Settings.Default.theme = itemChecked.Header.ToString();
+                    Properties.Settings.Default.theme = itemChecked.Tag.ToString();
                     continue;
                 }
 
                 (itemParent.Items[i] as MenuItem).IsChecked = false;
             }
 
-            ApplicationResources.Instance.ApplyTheme(itemChecked.Header.ToString());
+            ApplicationResources.Instance.ApplyTheme(itemChecked.Tag.ToString());
         }
 
         private void OnItemTemplateClicked(object sender, RoutedEventArgs e)
@@ -138,14 +138,14 @@ namespace EverythingToolbar
                 if (itemParent.Items[i] == itemChecked)
                 {
                     (itemParent.Items[i] as MenuItem).IsChecked = true;
-                    Properties.Settings.Default.itemTemplate = itemChecked.Header.ToString();
+                    Properties.Settings.Default.itemTemplate = itemChecked.Tag.ToString();
                     continue;
                 }
 
                 (itemParent.Items[i] as MenuItem).IsChecked = false;
             }
 
-            ApplicationResources.Instance.ApplyItemTemplate(itemChecked.Header.ToString());
+            ApplicationResources.Instance.ApplyItemTemplate(itemChecked.Tag.ToString());
         }
 
         private void OnMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)

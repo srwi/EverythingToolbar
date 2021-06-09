@@ -250,6 +250,42 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compact.
+        /// </summary>
+        public static string ItemTemplateCompact {
+            get {
+                return ResourceManager.GetString("ItemTemplateCompact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compact (detailed).
+        /// </summary>
+        public static string ItemTemplateCompactDetailed {
+            get {
+                return ResourceManager.GetString("ItemTemplateCompactDetailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normal.
+        /// </summary>
+        public static string ItemTemplateNormal {
+            get {
+                return ResourceManager.GetString("ItemTemplateNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normal (detailed).
+        /// </summary>
+        public static string ItemTemplateNormalDetailed {
+            get {
+                return ResourceManager.GetString("ItemTemplateNormalDetailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alt.
         /// </summary>
         public static string KeyAlt {
@@ -948,6 +984,33 @@ namespace EverythingToolbar.Properties {
         public static string SortByTypeNameDescending {
             get {
                 return ResourceManager.GetString("SortByTypeNameDescending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark.
+        /// </summary>
+        public static string ThemeDark {
+            get {
+                return ResourceManager.GetString("ThemeDark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light.
+        /// </summary>
+        public static string ThemeLight {
+            get {
+                return ResourceManager.GetString("ThemeLight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medium.
+        /// </summary>
+        public static string ThemeMedium {
+            get {
+                return ResourceManager.GetString("ThemeMedium", resourceCulture);
             }
         }
         
