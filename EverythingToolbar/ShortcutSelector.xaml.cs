@@ -1,4 +1,5 @@
-﻿using NHotkey.Wpf;
+﻿using EverythingToolbar.Helpers;
+using NHotkey.Wpf;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -9,6 +10,7 @@ namespace EverythingToolbar
     {
         public ModifierKeys Modifiers { get; private set; }
         public Key Key { get; private set; }
+        private bool isWinKeyDown = false;
 
         public ShortcutSelector()
         {
@@ -19,27 +21,43 @@ namespace EverythingToolbar
             Modifiers = (ModifierKeys)Properties.Settings.Default.shortcutModifiers;
             Key = (Key)Properties.Settings.Default.shortcutKey;
             UpdateTextBox();
+
+            ShortcutManager.Instance.LockWindowsKey(OnWinKeyPressedReleased);
+        }
+
+        private void OnWinKeyPressedReleased(object sender, ShortcutManager.WinKeyEventArgs e)
+        {
+            isWinKeyDown = e.IsDown;
+
+            if (isWinKeyDown)
+            {
+                if (Keyboard.Modifiers != ModifierKeys.None)
+                    Modifiers |= ModifierKeys.Windows;
+                else
+                    Modifiers = ModifierKeys.Windows;
+                Key = Key.None;
+            }
+            else
+            {
+                UpdateTextBox();
+            }
         }
 
         private void OnKeyPressed(object sender, KeyEventArgs e)
         {
             e.Handled = true;
 
-            Key key = (e.Key == Key.System ? e.SystemKey : e.Key);
+            Key key = e.Key == Key.System ? e.SystemKey : e.Key;
 
             if (key == Key.LeftShift || key == Key.RightShift ||
                 key == Key.LeftCtrl || key == Key.RightCtrl ||
-                key == Key.LeftAlt || key == Key.RightAlt ||
-                key == Key.LWin || key == Key.RWin)
+                key == Key.LeftAlt || key == Key.RightAlt)
             {
                 return;
             }
 
-            Modifiers = Keyboard.Modifiers;
+            Modifiers = Keyboard.Modifiers | (isWinKeyDown ? ModifierKeys.Windows : ModifierKeys.None);
             Key = key;
-
-            if (Keyboard.IsKeyDown(Key.LWin) || Keyboard.IsKeyDown(Key.RWin))
-                Modifiers |= ModifierKeys.Windows;
 
             UpdateTextBox();
         }
@@ -49,21 +67,28 @@ namespace EverythingToolbar
             StringBuilder shortcutText = new StringBuilder();
             if ((Modifiers & ModifierKeys.Control) != 0)
             {
-                shortcutText.Append(Properties.Resources.KeyCtrl + "+");
+                shortcutText.Append(Properties.Resources.KeyCtrl);
             }
             if ((Modifiers & ModifierKeys.Windows) != 0)
             {
-                shortcutText.Append(Properties.Resources.KeyWin + "+");
+                shortcutText.Append(shortcutText.Length > 0 ? "+" : "");
+                shortcutText.Append(Properties.Resources.KeyWin);
             }
             if ((Modifiers & ModifierKeys.Alt) != 0)
             {
-                shortcutText.Append(Properties.Resources.KeyAlt + "+");
+                shortcutText.Append(shortcutText.Length > 0 ? "+" : "");
+                shortcutText.Append(Properties.Resources.KeyAlt);
             }
             if ((Modifiers & ModifierKeys.Shift) != 0)
             {
-                shortcutText.Append(Properties.Resources.KeyShift + "+");
+                shortcutText.Append(shortcutText.Length > 0 ? "+" : "");
+                shortcutText.Append(Properties.Resources.KeyShift);
             }
-            shortcutText.Append(Key.ToString());
+            if (Key != Key.None)
+            {
+                shortcutText.Append(shortcutText.Length > 0 ? "+" : "");
+                shortcutText.Append(Key.ToString());
+            }
 
             ShortcutTextBox.Text = shortcutText.ToString();
         }
@@ -77,6 +102,7 @@ namespace EverythingToolbar
         private void OnClosed(object sender, System.EventArgs e)
         {
             HotkeyManager.Current.IsEnabled = true;
+            ShortcutManager.Instance.ReleaseWindowsKey();
         }
     }
 }
