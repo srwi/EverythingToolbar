@@ -1,5 +1,6 @@
 ﻿using EverythingToolbar.Helpers;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -58,6 +59,18 @@ namespace EverythingToolbar
             ShortcutSelector shortcutSelector = new ShortcutSelector();
             if (shortcutSelector.ShowDialog().Value)
             {
+                if (shortcutSelector.Modifiers == ModifierKeys.Windows)
+                {
+                    Properties.Settings.Default.shortcutKey = (int)shortcutSelector.Key;
+                    Properties.Settings.Default.shortcutModifiers = (int)shortcutSelector.Modifiers;
+                    Properties.Settings.Default.Save();
+                    foreach (Process exe in Process.GetProcesses())
+                    {
+                        if (exe.ProcessName == "explorer")
+                            exe.Kill();
+                    }
+                }
+
                 if (ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
                     shortcutSelector.Key,
                     shortcutSelector.Modifiers))

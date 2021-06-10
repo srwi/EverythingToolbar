@@ -38,10 +38,16 @@ namespace EverythingToolbar
                 UnfocusRequested?.Invoke(this, new EventArgs());
             };
 
-            ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
-                (Key)Properties.Settings.Default.shortcutKey,
-                (ModifierKeys)Properties.Settings.Default.shortcutModifiers,
-                FocusSearchBox);
+            if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
+                   (Key)Properties.Settings.Default.shortcutKey,
+                   (ModifierKeys)Properties.Settings.Default.shortcutModifiers,
+                   FocusSearchBox))
+            {
+                MessageBox.Show(Properties.Resources.MessageBoxFailedToRegisterHotkey,
+                    Properties.Resources.MessageBoxErrorTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
 
         public void Destroy()
