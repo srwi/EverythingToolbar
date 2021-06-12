@@ -43,6 +43,7 @@ namespace EverythingToolbar
                    (ModifierKeys)Properties.Settings.Default.shortcutModifiers,
                    FocusSearchBox))
             {
+                ShortcutManager.Instance.SetShortcut(Key.None, ModifierKeys.None);
                 MessageBox.Show(Properties.Resources.MessageBoxFailedToRegisterHotkey,
                     Properties.Resources.MessageBoxErrorTitle,
                     MessageBoxButton.OK,

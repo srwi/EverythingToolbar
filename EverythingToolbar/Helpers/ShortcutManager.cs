@@ -53,6 +53,13 @@ namespace EverythingToolbar.Helpers
             return AddOrReplace(name, key, modifiers, shortcuts[name]);
         }
 
+        public void SetShortcut(Key key, ModifierKeys mods)
+        {
+            Properties.Settings.Default.shortcutKey = (int)key;
+            Properties.Settings.Default.shortcutModifiers = (int)mods;
+            Properties.Settings.Default.Save();
+        }
+
         public bool LockWindowsKey(EventHandler<WinKeyEventArgs> callback)
         {
             ReleaseWindowsKey();

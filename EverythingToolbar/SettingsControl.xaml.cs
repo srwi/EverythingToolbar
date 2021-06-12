@@ -61,9 +61,7 @@ namespace EverythingToolbar
             {
                 if (shortcutSelector.Modifiers == ModifierKeys.Windows)
                 {
-                    Properties.Settings.Default.shortcutKey = (int)shortcutSelector.Key;
-                    Properties.Settings.Default.shortcutModifiers = (int)shortcutSelector.Modifiers;
-                    Properties.Settings.Default.Save();
+                    ShortcutManager.Instance.SetShortcut(shortcutSelector.Key, shortcutSelector.Modifiers);
                     foreach (Process exe in Process.GetProcesses())
                     {
                         if (exe.ProcessName == "explorer")
@@ -75,9 +73,7 @@ namespace EverythingToolbar
                     shortcutSelector.Key,
                     shortcutSelector.Modifiers))
                 {
-                    Properties.Settings.Default.shortcutKey = (int)shortcutSelector.Key;
-                    Properties.Settings.Default.shortcutModifiers = (int)shortcutSelector.Modifiers;
-                    Properties.Settings.Default.Save();
+                    ShortcutManager.Instance.SetShortcut(shortcutSelector.Key, shortcutSelector.Modifiers);
                 }
                 else
                 {
