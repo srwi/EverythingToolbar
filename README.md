@@ -89,6 +89,6 @@ Customization
 Contribute
 ----------
 
-Helping out with open issues, especially those marked as "help wanted", is appreciated!
+All kinds of contributions (questions, bug reports, pull requests) are welcome! Helping out with open issues is very much appreciated. As a basic rule, before filing issues, feature requests or anything else, take a look at the issues and check if it has already been reported by another user. If so, engage in the already existing discussion.
 
-You can also help by translating EverythingToolbar. To do so download and translate the [resources](https://github.com/stnkl/EverythingToolbar/blob/master/EverythingToolbar/Properties/Resources.resx) file and either attach it to [this issue](https://github.com/stnkl/EverythingToolbar/issues/64) or open a pull request.
+You can also help by [translating EverythingToolbar](https://crowdin.com/project/everythingtoolbar).
