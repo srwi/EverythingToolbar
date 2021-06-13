@@ -21,7 +21,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
-        <TextBox Name="ShortcutTextBox" PreviewKeyDown="OnKeyPressed" />
+        <TextBox Name="ShortcutTextBox" GotKeyboardFocus="OnGotKeyboardFocus" LostKeyboardFocus="OnLostKeyboardFocus" />
         <Button Margin="10, 0, 0, 0" Content="{x:Static properties:Resources.ShortcutOK}" Grid.Column="1" Click="OnOkClicked" />
     </Grid>
 </Window>

@@ -8,9 +8,9 @@ namespace EverythingToolbar
 {
     public partial class ShortcutSelector : Window
     {
-        public ModifierKeys Modifiers { get; private set; }
         public Key Key { get; private set; }
-        private bool isWinKeyDown = false;
+        public ModifierKeys Modifiers { get; private set; }
+        private ModifierKeys TempMods { get; set; }
 
         public ShortcutSelector()
         {
@@ -21,45 +21,44 @@ namespace EverythingToolbar
             Modifiers = (ModifierKeys)Properties.Settings.Default.shortcutModifiers;
             Key = (Key)Properties.Settings.Default.shortcutKey;
             UpdateTextBox();
-
-            ShortcutManager.Instance.LockWindowsKey(OnWinKeyPressedReleased);
         }
 
-        private void OnWinKeyPressedReleased(object sender, ShortcutManager.WinKeyEventArgs e)
+        private void OnKeyPressedReleased(object sender, ShortcutManager.WinKeyEventArgs e)
         {
-            isWinKeyDown = e.IsDown;
-
-            if (isWinKeyDown)
+            switch (e.Key)
             {
-                if (Keyboard.Modifiers != ModifierKeys.None)
-                    Modifiers |= ModifierKeys.Windows;
-                else
-                    Modifiers = ModifierKeys.Windows;
-                Key = Key.None;
+                case Key.LeftCtrl:
+                    TempMods = e.IsDown ? TempMods | ModifierKeys.Control : TempMods & ~ModifierKeys.Control;
+                    break;
+                case Key.LWin:
+                    TempMods = e.IsDown ? TempMods | ModifierKeys.Windows : TempMods & ~ModifierKeys.Windows;
+                    break;
+                case Key.LeftAlt:
+                    TempMods = e.IsDown ? TempMods | ModifierKeys.Alt : TempMods & ~ModifierKeys.Alt;
+                    break;
+                case Key.LeftShift:
+                    TempMods = e.IsDown ? TempMods | ModifierKeys.Shift : TempMods & ~ModifierKeys.Shift;
+                    break;
+                default:
+                    if (e.IsDown)
+                    {
+                        Key = e.Key;
+                        Modifiers = TempMods;
+                    }
+                    break;
             }
-            else
-            {
-                UpdateTextBox();
-            }
-        }
-
-        private void OnKeyPressed(object sender, KeyEventArgs e)
-        {
-            e.Handled = true;
-
-            Key key = e.Key == Key.System ? e.SystemKey : e.Key;
-
-            if (key == Key.LeftShift || key == Key.RightShift ||
-                key == Key.LeftCtrl || key == Key.RightCtrl ||
-                key == Key.LeftAlt || key == Key.RightAlt)
-            {
-                return;
-            }
-
-            Modifiers = Keyboard.Modifiers | (isWinKeyDown ? ModifierKeys.Windows : ModifierKeys.None);
-            Key = key;
 
             UpdateTextBox();
+        }
+
+        private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            ShortcutManager.Instance.CaptureKeyboard(OnKeyPressedReleased);
+        }
+
+        private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            ShortcutManager.Instance.ReleaseKeyboard();
         }
 
         private void UpdateTextBox()
@@ -102,7 +101,7 @@ namespace EverythingToolbar
         private void OnClosed(object sender, System.EventArgs e)
         {
             HotkeyManager.Current.IsEnabled = true;
-            ShortcutManager.Instance.ReleaseWindowsKey();
+            ShortcutManager.Instance.ReleaseKeyboard();
         }
     }
 }

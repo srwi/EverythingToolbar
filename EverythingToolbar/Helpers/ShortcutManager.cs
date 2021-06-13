@@ -3,6 +3,7 @@ using NHotkey.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace EverythingToolbar.Helpers
@@ -11,12 +12,14 @@ namespace EverythingToolbar.Helpers
     {
         public class WinKeyEventArgs : EventArgs
         {
-            public WinKeyEventArgs(bool isDown)
+            public WinKeyEventArgs(bool isDown, Key key)
             {
+                Key = key;
                 IsDown = isDown;
             }
 
             public bool IsDown { get; set; }
+            public Key Key { get; set; }
         }
 
         public static readonly ShortcutManager Instance = new ShortcutManager();
@@ -26,10 +29,8 @@ namespace EverythingToolbar.Helpers
         private static readonly LowLevelKeyboardProc proc = HookCallback;
         private static IntPtr hookId = IntPtr.Zero;
         private const int WH_KEYBOARD_LL = 13;
-        private const int VK_LWIN = 0x5B;
-        private const int VK_RWIN = 0x5C;
-        private const int WM_KEYUP = 0x0101;
         private const int WM_KEYDOWN = 0x0100;
+        private const int WM_SYSKEYDOWN = 0x0104;
 
         private ShortcutManager() { }
 
@@ -60,15 +61,15 @@ namespace EverythingToolbar.Helpers
             Properties.Settings.Default.Save();
         }
 
-        public bool LockWindowsKey(EventHandler<WinKeyEventArgs> callback)
+        public bool CaptureKeyboard(EventHandler<WinKeyEventArgs> callback)
         {
-            ReleaseWindowsKey();
+            ReleaseKeyboard();
             winKeyEventHandler += callback;
             hookId = SetWindowsHookEx(WH_KEYBOARD_LL, proc, (IntPtr)0, 0);
             return hookId != IntPtr.Zero;
         }
 
-        public bool ReleaseWindowsKey()
+        public bool ReleaseKeyboard()
         {
             winKeyEventHandler = null;
             return UnhookWindowsHookEx(hookId);
@@ -78,15 +79,35 @@ namespace EverythingToolbar.Helpers
         {
             if (nCode >= 0)
             {
-                int vkCode = Marshal.ReadInt32(lParam);
-                if (vkCode == VK_LWIN || vkCode == VK_RWIN)
+                Keys vkCode = (Keys)Marshal.ReadInt32(lParam);
+                bool isDown = (int)wParam == WM_KEYDOWN || (int)wParam == WM_SYSKEYDOWN;
+                switch (vkCode)
                 {
-                    if (wParam == (IntPtr)WM_KEYDOWN)
-                        winKeyEventHandler?.Invoke(null, new WinKeyEventArgs(true));
-                    else if (wParam == (IntPtr)WM_KEYUP)
-                        winKeyEventHandler?.Invoke(null, new WinKeyEventArgs(false));
-                    return (IntPtr)1;
+                    case Keys.Control:
+                    case Keys.ControlKey:
+                    case Keys.LControlKey:
+                    case Keys.RControlKey:
+                        winKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LeftCtrl));
+                        break;
+                    case Keys.Shift:
+                    case Keys.ShiftKey:
+                    case Keys.LShiftKey:
+                    case Keys.RShiftKey:
+                        winKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LeftShift));
+                        break;
+                    case Keys.Alt:
+                        winKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LeftAlt));
+                        break;
+                    case Keys.LWin:
+                    case Keys.RWin:
+                        winKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LWin));
+                        break;
+                    default:
+                        winKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, KeyInterop.KeyFromVirtualKey((int)vkCode)));
+                        break;
                 }
+
+                return (IntPtr)1;
             }
 
             return CallNextHookEx(hookId, nCode, wParam, lParam);
