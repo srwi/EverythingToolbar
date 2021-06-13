@@ -33,7 +33,10 @@ Requirements
 Install
 -------
 - Make sure [Everything](https://www.voidtools.com) is installed and running
-- Download [EverythingToolbar](https://github.com/stnkl/EverythingToolbar/releases) and install it
+- Install EverythingToolbar using one of the following methods
+  - Download the [EverythingToolbar](https://github.com/stnkl/EverythingToolbar/releases) installer
+  - [Chocolatey](https://chocolatey.org/): `choco install everythingtoolbar`
+  - [winget](https://github.com/microsoft/winget-cli/): `winget install everythingtoolbar`
 - Enable EverythingToolbar via the context menu of the taskbar
   - *Note: You will have to open the context menu twice as it doesn't show up the first time you open it.*
 - Adjust size and position after unlocking the taskbar ([demonstration video](https://user-images.githubusercontent.com/17520641/107118574-19a1bf80-6882-11eb-843a-7e854e5d0684.gif))
