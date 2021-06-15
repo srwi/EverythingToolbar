@@ -181,16 +181,16 @@
     <value>Pasta</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>Compact</value>
+    <value>Compacto</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compact (detailed)</value>
+    <value>Compacto (com detalhes)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
     <value>Normal</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detailed)</value>
+    <value>Normal (com detalhes)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -427,13 +427,13 @@
     <value>Tipo em ordem decrescente</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Escuro</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>Light</value>
+    <value>Claro</value>
   </data>
   <data name="ThemeMedium" xml:space="preserve">
-    <value>Medium</value>
+    <value>Médio</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>Áudio</value>
