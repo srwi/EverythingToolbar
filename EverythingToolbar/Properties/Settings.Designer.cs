@@ -109,7 +109,7 @@ namespace EverythingToolbar.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Medium")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MEDIUM")]
         public string theme {
             get {
                 return ((string)(this["theme"]));
@@ -121,7 +121,7 @@ namespace EverythingToolbar.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Normal")]
+        [global::System.Configuration.DefaultSettingValueAttribute("NORMAL")]
         public string itemTemplate {
             get {
                 return ((string)(this["itemTemplate"]));
