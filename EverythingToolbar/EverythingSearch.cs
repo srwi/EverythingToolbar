@@ -220,7 +220,13 @@ namespace EverythingToolbar
                     flags |= EVERYTHING_REQUEST_HIGHLIGHTED_PATH;
                     bool regEx = CurrentFilter.IsRegExEnabled ?? Properties.Settings.Default.isRegExEnabled;
 
-                    Everything_SetSearchW(CurrentFilter.Search + (CurrentFilter.Search.Length > 0 && !regEx ? " " : "") + SearchTerm);
+                    string search = CurrentFilter.Search + (CurrentFilter.Search.Length > 0 && !regEx ? " " : "") + SearchTerm;
+                    foreach (Filter filter in FilterLoader.Instance.UserFilters)
+                    {
+                        search = search.Replace(filter.Macro + ":", filter.Search + " ");
+                    }
+
+                    Everything_SetSearchW(search);
                     Everything_SetRequestFlags(flags);
                     Everything_SetSort((uint)Properties.Settings.Default.sortBy);
                     Everything_SetMatchCase(CurrentFilter.IsMatchCase ?? Properties.Settings.Default.isMatchCase);
