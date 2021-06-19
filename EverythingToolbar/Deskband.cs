@@ -1,4 +1,5 @@
 ﻿using EverythingToolbar;
+using EverythingToolbar.Properties;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -17,6 +18,13 @@ namespace CSDeskBand
         {
             try
             {
+                if (Settings.Default.isUpgradeRequired)
+                {
+                    Settings.Default.Upgrade();
+                    Settings.Default.isUpgradeRequired = false;
+                    Settings.Default.Save();
+                }
+
                 toolbarControl = new ToolbarControl();
 
                 Options.MinHorizontalSize = new Size(18, 30);

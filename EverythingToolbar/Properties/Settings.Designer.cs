@@ -262,5 +262,17 @@ namespace EverythingToolbar.Properties {
                 this["isEnableHistory"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool isUpgradeRequired {
+            get {
+                return ((bool)(this["isUpgradeRequired"]));
+            }
+            set {
+                this["isUpgradeRequired"] = value;
+            }
+        }
     }
 }
