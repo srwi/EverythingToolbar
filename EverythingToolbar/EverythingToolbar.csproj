@@ -78,6 +78,7 @@
     <Compile Include="Converters\ResourceLoaderToMenuItemsConverter.cs" />
     <Compile Include="Converters\SearchTermToIsOpenedConverter.cs" />
     <Compile Include="Converters\DoubleToVisibilityConverter.cs" />
+    <Compile Include="CSDeskBand.cs" />
     <Compile Include="Data\Filter.cs" />
     <Compile Include="EverythingSearch.cs" />
     <Compile Include="Data\Rule.cs" />
@@ -319,7 +320,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Deskband.cs" />
-    <Compile Include="CSDeskBand.cs" />
     <Compile Include="Data\SearchResult.cs" />
     <Compile Include="Converters\HighlightedTextConverter.cs" />
     <Compile Include="Properties\Settings.cs" />
