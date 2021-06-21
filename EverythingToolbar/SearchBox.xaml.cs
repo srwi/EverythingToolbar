@@ -7,6 +7,8 @@ namespace EverythingToolbar
 {
     public partial class SearchBox : TextBox
     {
+        private string LastText = "";
+
         public SearchBox()
         {
             InitializeComponent();
@@ -24,6 +26,14 @@ namespace EverythingToolbar
         private void OnMenuItemClicked(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.Save();
+        }
+
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (LastText == "")
+                CaretIndex = Text.Length;
+
+            LastText = Text;
         }
 
         private void OnPasteClicked(object sender, RoutedEventArgs args) { Paste(); }

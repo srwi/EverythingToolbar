@@ -274,5 +274,17 @@ namespace EverythingToolbar.Properties {
                 this["isUpgradeRequired"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isReplaceStartMenuSearch {
+            get {
+                return ((bool)(this["isReplaceStartMenuSearch"]));
+            }
+            set {
+                this["isReplaceStartMenuSearch"] = value;
+            }
+        }
     }
 }

@@ -165,6 +165,10 @@
                           IsCheckable="True"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isEnableHistory, Mode=TwoWay}"
                           Click="OnMenuItemClicked"/>
+                <MenuItem Header="{x:Static properties:Resources.SettingsReplaceStartMenuSearch}"
+                          IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isReplaceStartMenuSearch, Mode=TwoWay}"
+                          Click="OnMenuItemClicked"/>
                 <MenuItem Header="{x:Static properties:Resources.SettingsDisableAnimations}"
                           IsCheckable="True"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isAnimationsDisabled, Mode=TwoWay}"
