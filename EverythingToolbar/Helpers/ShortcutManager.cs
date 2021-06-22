@@ -35,6 +35,7 @@ namespace EverythingToolbar.Helpers
         private static event EventHandler<WinKeyEventArgs> winKeyEventHandler;
         private static bool isShiftDown = false;
         private static bool isException = false;
+        private static bool isNativeSearchActive = false;
         private static string searchTermQueue = "";
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
@@ -176,35 +177,35 @@ namespace EverythingToolbar.Helpers
                     searchAppHwnd = IntPtr.Zero;
                     searchTermQueue = "";
                 }
+                isException = false;
+                isNativeSearchActive = false;
                 UnhookStartMenuInput();
             }
         }
 
         public static IntPtr StartMenuKeyboardHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0)
+            if (nCode >= 0 && !isNativeSearchActive)
             {
                 uint virtualKeyCode = (uint)Marshal.ReadInt32(lParam);
+                bool isKeyDown = wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN;
 
+                // Check for VK_LSHIFT and VK_RSHIFT
                 if (virtualKeyCode == 0xA0 || virtualKeyCode == 0xA1)
                 {
-                    isShiftDown = wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN;
+                    isShiftDown = isKeyDown;
                     return CallNextHookEx(llKeyboardHookId, nCode, wParam, lParam);
                 }
+                // Check for exception keys (VK_LCONTROL, VK_RCONTROL, VK_LMENU)
                 else if (virtualKeyCode == 0xA2 || virtualKeyCode == 0xA3 || virtualKeyCode == 0xA4)
                 {
-                    isException = wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN;
+                    isException = isKeyDown;
                     return (IntPtr)1;
                 }
 
-                if (isException)
-                {
-                    return CallNextHookEx(llKeyboardHookId, nCode, wParam, lParam);
-                }
-
+                // Determine key string
                 byte[] keyboardState = new byte[255];
                 string keyString = "";
-
                 if (GetKeyboardState(keyboardState))
                 {
                     uint scanCode = MapVirtualKey(virtualKeyCode, 0);
@@ -220,9 +221,19 @@ namespace EverythingToolbar.Helpers
                                              char.IsPunctuation(keyString, 0) ||
                                              char.IsSymbol(keyString, 0)))
                 {
-                    searchTermQueue += keyString.ToString();
-                    CloseStartMenu();
-                    return (IntPtr)1;
+                    // Send input to native search app
+                    if (isException)
+                    {
+                        isNativeSearchActive = true;
+                        return CallNextHookEx(llKeyboardHookId, nCode, wParam, lParam);
+                    }
+                    // Send input to EverythingToolbar
+                    else
+                    {
+                        searchTermQueue += keyString.ToString();
+                        CloseStartMenu();
+                        return (IntPtr)1;
+                    }
                 }
             }
 
