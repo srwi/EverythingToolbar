@@ -322,7 +322,7 @@
     <value>RegEx aktivieren</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>Startmenüsuche ersetzen (experimentell)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>Regeln...</value>
