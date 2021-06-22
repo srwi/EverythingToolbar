@@ -180,6 +180,18 @@
   <data name="DefaultFilterFolder" xml:space="preserve">
     <value>폴더</value>
   </data>
+  <data name="ItemTemplateCompact" xml:space="preserve">
+    <value>컴팩트</value>
+  </data>
+  <data name="ItemTemplateCompactDetailed" xml:space="preserve">
+    <value>컴팩트 (자세히)</value>
+  </data>
+  <data name="ItemTemplateNormal" xml:space="preserve">
+    <value>기본</value>
+  </data>
+  <data name="ItemTemplateNormalDetailed" xml:space="preserve">
+    <value>기본 (자세히)</value>
+  </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
   </data>
@@ -274,10 +286,10 @@
     <value>Everything으로 검색</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
-    <value>object</value>
+    <value>항목</value>
   </data>
   <data name="SearchResults" xml:space="preserve">
-    <value>objects</value>
+    <value>항목</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
     <value>EverythingToolbar 정보...</value>
@@ -289,7 +301,7 @@
     <value>애니메이션 비활성화</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Enable search history</value>
+    <value>검색 기록 활성화</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>빈 검색 숨기기</value>
@@ -309,14 +321,17 @@
   <data name="SettingsRegularExpressions" xml:space="preserve">
     <value>정규식</value>
   </data>
+  <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
+    <value>Replace start menu search (experimental)</value>
+  </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>규칙...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Show quick toggles</value>
+    <value>빠른 토글 표시</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>Show results count</value>
+    <value>검색 결과 수 표시</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>정렬 기준</value>
@@ -413,6 +428,15 @@
   </data>
   <data name="SortByTypeNameDescending" xml:space="preserve">
     <value>종류 이름 내림차순</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>어두운 테마</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>밝은 테마</value>
+  </data>
+  <data name="ThemeMedium" xml:space="preserve">
+    <value>중간 테마</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>오디오</value>

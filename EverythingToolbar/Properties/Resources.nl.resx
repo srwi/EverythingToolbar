@@ -180,6 +180,18 @@
   <data name="DefaultFilterFolder" xml:space="preserve">
     <value>Map</value>
   </data>
+  <data name="ItemTemplateCompact" xml:space="preserve">
+    <value>Compact</value>
+  </data>
+  <data name="ItemTemplateCompactDetailed" xml:space="preserve">
+    <value>Compact (detailed)</value>
+  </data>
+  <data name="ItemTemplateNormal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="ItemTemplateNormalDetailed" xml:space="preserve">
+    <value>Normal (detailed)</value>
+  </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
   </data>
@@ -309,6 +321,9 @@
   <data name="SettingsRegularExpressions" xml:space="preserve">
     <value>Reguliere Expressies</value>
   </data>
+  <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
+    <value>Replace start menu search (experimental)</value>
+  </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>Regels...</value>
   </data>
@@ -413,6 +428,15 @@
   </data>
   <data name="SortByTypeNameDescending" xml:space="preserve">
     <value>Naam aflopend</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="ThemeMedium" xml:space="preserve">
+    <value>Medium</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>Audio</value>
