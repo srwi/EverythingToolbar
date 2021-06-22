@@ -61,7 +61,7 @@ namespace EverythingToolbar.Helpers
         }
         
 
-        private readonly ObservableCollection<Filter> defaultUserFilters = new ObservableCollection<Filter>()
+        public readonly ObservableCollection<Filter> DefaultUserFilters = new ObservableCollection<Filter>()
         {
             new Filter {
                 Name = Properties.Resources.UserFilterAudio,
@@ -140,7 +140,7 @@ namespace EverythingToolbar.Helpers
                     }
                     else
                     {
-                        return defaultUserFilters;
+                        return DefaultUserFilters;
                     }
                 }
             }
@@ -211,7 +211,7 @@ namespace EverythingToolbar.Helpers
                     {
                         Properties.Settings.Default.isImportFilters = false;
                         Properties.Settings.Default.Save();
-                        return defaultUserFilters;
+                        return DefaultUserFilters;
                     }
                 }
             }
@@ -262,7 +262,7 @@ namespace EverythingToolbar.Helpers
             catch (Exception e)
             {
                 ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Parsing Filters.csv failed.");
-                return defaultUserFilters;
+                return DefaultUserFilters;
             }
 
             return filters;

@@ -221,7 +221,7 @@ namespace EverythingToolbar
                     bool regEx = CurrentFilter.IsRegExEnabled ?? Properties.Settings.Default.isRegExEnabled;
 
                     string search = CurrentFilter.Search + (CurrentFilter.Search.Length > 0 && !regEx ? " " : "") + SearchTerm;
-                    foreach (Filter filter in FilterLoader.Instance.UserFilters)
+                    foreach (Filter filter in FilterLoader.Instance.DefaultUserFilters)
                     {
                         search = search.Replace(filter.Macro + ":", filter.Search + " ");
                     }
