@@ -321,6 +321,9 @@
   <data name="SettingsRegularExpressions" xml:space="preserve">
     <value>Wyrażenie Regularne</value>
   </data>
+  <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
+    <value>Replace start menu search (experimental)</value>
+  </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>Reguły...</value>
   </data>
