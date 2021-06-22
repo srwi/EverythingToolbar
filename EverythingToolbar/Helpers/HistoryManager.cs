@@ -83,7 +83,7 @@ namespace EverythingToolbar.Helpers
         public string GetPreviousItem()
         {
             if (history.Count == 0)
-                return null;
+                return "";
 
             currentIndex = Math.Max(0, currentIndex - 1);
             return history.ElementAt(currentIndex);
@@ -92,12 +92,12 @@ namespace EverythingToolbar.Helpers
         public string GetNextItem()
         {
             if (history.Count == 0)
-                return null;
+                return "";
 
             if (currentIndex >= history.Count - 1)
             {
                 currentIndex = history.Count;
-                return null;
+                return "";
             }
 
             currentIndex = Math.Min(currentIndex + 1, history.Count - 1);
