@@ -19,45 +19,46 @@ namespace EverythingToolbar.Helpers
 
         public void LoadDefaults()
         {
+            ApplyTheme(Properties.Settings.Default.theme);
+            ApplyItemTemplate(Properties.Settings.Default.itemTemplate);
+        }
+
+        public bool AddResource(string type, string name)
+        {
             string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            AddResource(Path.Combine(assemblyFolder, "Themes", Properties.Settings.Default.theme + ".xaml"));
-            AddResource(Path.Combine(assemblyFolder, "ItemTemplates", Properties.Settings.Default.itemTemplate + ".xaml"));
-        }
+            string path = Path.Combine(assemblyFolder, type, name + ".xaml");
 
-        public void AddResource(ResourceDictionary resource)
-        {
-            ResourceChanged?.Invoke(this, new ResourcesChangedEventArgs()
-            {
-                NewResource = resource
-            });
-        }
-
-        public void AddResource(string path)
-        {
             if (!File.Exists(path))
             {
                 ToolbarLogger.GetLogger("EverythingToolbar").Error("Could not find resource file " + path);
-                return;
+                return false;
             }
 
             ResourceChanged?.Invoke(this, new ResourcesChangedEventArgs()
             {
                 NewResource = new ResourceDictionary() { Source = new Uri(path) }
             });
+            return true;
         }
 
         public void ApplyTheme(string themeName)
         {
-            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string themePath = Path.Combine(assemblyFolder, "Themes", themeName + ".xaml");
-            AddResource(themePath);
+            if (!AddResource("Themes", themeName))
+            {
+                Properties.Settings.Default.theme = (string)Properties.Settings.Default.Properties["theme"].DefaultValue;
+                Properties.Settings.Default.Save();
+                AddResource("Themes", Properties.Settings.Default.theme);
+            }
         }
 
         public void ApplyItemTemplate(string templateName)
         {
-            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string templatePath = Path.Combine(assemblyFolder, "ItemTemplates", templateName + ".xaml");
-            AddResource(templatePath);
+            if (!AddResource("ItemTemplates", templateName))
+            {
+                Properties.Settings.Default.itemTemplate = (string)Properties.Settings.Default.Properties["itemTemplate"].DefaultValue;
+                Properties.Settings.Default.Save();
+                AddResource("ItemTemplates", Properties.Settings.Default.itemTemplate);
+            }
         }
     }
 
