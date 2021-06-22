@@ -1,4 +1,4 @@
-﻿using NHotkey;
+using NHotkey;
 using NHotkey.Wpf;
 using System;
 using System.Collections.Generic;
@@ -170,11 +170,11 @@ namespace EverythingToolbar.Helpers
             }
             else
             {
-                if (searchAppHwnd != IntPtr.Zero && searchTermQueue != "")
+                if (searchAppHwnd != IntPtr.Zero && !string.IsNullOrEmpty(searchTermQueue))
                 {
+                    searchAppHwnd = IntPtr.Zero;
                     focusToolbarCallback?.Invoke(null, null);
                     EverythingSearch.Instance.SearchTerm = searchTermQueue;
-                    searchAppHwnd = IntPtr.Zero;
                     searchTermQueue = "";
                 }
                 isException = false;
