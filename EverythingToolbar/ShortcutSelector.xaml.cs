@@ -16,6 +16,7 @@ namespace EverythingToolbar
         {
             InitializeComponent();
 
+            ShortcutManager.Instance.UnhookStartMenu();
             HotkeyManager.Current.IsEnabled = false;
 
             Modifiers = (ModifierKeys)Properties.Settings.Default.shortcutModifiers;
@@ -102,6 +103,10 @@ namespace EverythingToolbar
         {
             HotkeyManager.Current.IsEnabled = true;
             ShortcutManager.Instance.ReleaseKeyboard();
+            if (Properties.Settings.Default.isReplaceStartMenuSearch)
+            {
+                ShortcutManager.Instance.HookStartMenu();
+            }
         }
     }
 }
