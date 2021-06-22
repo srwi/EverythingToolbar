@@ -6,7 +6,8 @@
          xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
          xmlns:h="clr-namespace:EverythingToolbar.Helpers"
          LostKeyboardFocus="OnLostKeyboardFocus"
-         Name="_this"
+         TextChanged="OnTextChanged"
+         Name="SearchBoxControl"
          CaretBrush="{DynamicResource SearchBoxForegroundActive}"
          Style="{DynamicResource SearchBoxStyle}"
          Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
@@ -83,7 +84,7 @@
                                               HorizontalScrollBarVisibility="Hidden"
                                               VerticalScrollBarVisibility="Hidden"/>
                                 <Border Grid.Column="2" Visibility="{Binding Source={x:Static properties:Settings.Default}, Path=isShowQuickToggles, Converter={local:BoolToVisibilityConverter}}">
-                                    <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=_this, Path=IsKeyboardFocused, Converter={local:BoolToVisibilityConverter}, Mode=OneWay}">
+                                    <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=SearchBoxControl, Path=IsKeyboardFocused, Converter={local:BoolToVisibilityConverter}, Mode=OneWay}">
                                         <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
                                                       ToolTip="{x:Static properties:Resources.SettingsMatchCase}"
                                                       Click="OnMenuItemClicked"
