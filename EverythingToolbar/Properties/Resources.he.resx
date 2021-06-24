@@ -118,79 +118,79 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutLicense" xml:space="preserve">
-    <value>License</value>
+    <value>רשיון</value>
   </data>
   <data name="AboutOK" xml:space="preserve">
-    <value>OK</value>
+    <value>אישור</value>
   </data>
   <data name="AboutVersion" xml:space="preserve">
-    <value>Version</value>
+    <value>גירסה</value>
   </data>
   <data name="AboutWebsite" xml:space="preserve">
-    <value>Website</value>
+    <value>אתר רשמי</value>
   </data>
   <data name="AboutWindowTitle" xml:space="preserve">
-    <value>About EverythingToolbar</value>
+    <value>אודות התוכנה</value>
   </data>
   <data name="ContextMenuCopy" xml:space="preserve">
-    <value>Copy</value>
+    <value>העתק</value>
   </data>
   <data name="ContextMenuCopyFile" xml:space="preserve">
-    <value>Copy</value>
+    <value>העתק</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
-    <value>Copy Full Name to Clipboard</value>
+    <value>העתק שם מלא ללוח</value>
   </data>
   <data name="ContextMenuCut" xml:space="preserve">
-    <value>Cut</value>
+    <value>גזור</value>
   </data>
   <data name="ContextMenuOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>פתח</value>
   </data>
   <data name="ContextMenuOpenPath" xml:space="preserve">
-    <value>Open Path</value>
+    <value>פתח את נתיב התיקיה</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
-    <value>Open with...</value>
+    <value>פתח באמצעות...</value>
   </data>
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
-    <value>Choose app</value>
+    <value>בחר/י יישום</value>
   </data>
   <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>No rules defined</value>
+    <value>כללים לא הוגדרו</value>
   </data>
   <data name="ContextMenuPaste" xml:space="preserve">
-    <value>Paste</value>
+    <value>הדבק</value>
   </data>
   <data name="ContextMenuProperties" xml:space="preserve">
-    <value>Properties</value>
+    <value>מאפיינים</value>
   </data>
   <data name="ContextMenuRunAsAdmin" xml:space="preserve">
-    <value>Run as admin</value>
+    <value>הפעל כמנהל</value>
   </data>
   <data name="ContextMenuShowInEverything" xml:space="preserve">
-    <value>Show in Everything</value>
+    <value>הצג ב-Everything</value>
   </data>
   <data name="DefaultFilterAll" xml:space="preserve">
-    <value>All</value>
+    <value>הכל</value>
   </data>
   <data name="DefaultFilterFile" xml:space="preserve">
-    <value>File</value>
+    <value>קובץ</value>
   </data>
   <data name="DefaultFilterFolder" xml:space="preserve">
-    <value>Folder</value>
+    <value>תיקייה</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>Compact</value>
+    <value>ממוקד</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compact (detailed)</value>
+    <value>ממוקד (פרטים)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
-    <value>Normal</value>
+    <value>רגיל</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detailed)</value>
+    <value>רגיל (פרטים)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -205,258 +205,258 @@
     <value>Win</value>
   </data>
   <data name="MessageBoxCopyException" xml:space="preserve">
-    <value>Do you want to copy the exception content to clipboard?</value>
+    <value>האם אתה מעוניין להעתיק את התוכן החריג ללוח?</value>
   </data>
   <data name="MessageBoxErrorTitle" xml:space="preserve">
-    <value>Error</value>
+    <value>שגיאה</value>
   </data>
   <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
-    <value>Failed to copy file.</value>
+    <value>העתקת קובץ נכשלה.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
-    <value>Failed to copy path.</value>
+    <value>העתקת נתיב הקובץ נכשלה.</value>
   </data>
   <data name="MessageBoxFailedToOpen" xml:space="preserve">
-    <value>Failed to open search result.</value>
+    <value>שגיאה בפתיחת תוצאות החיפוש.</value>
   </data>
   <data name="MessageBoxFailedToOpenDialog" xml:space="preserve">
-    <value>Failed to open dialog.</value>
+    <value>פתיחת החלון נכשלה.</value>
   </data>
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
-    <value>Failed to open path.</value>
+    <value>פתיחת נתיב הקובץ נכשלה.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Failed to register hotkey. It might be in use by another application.</value>
+    <value>שגיאה בהגדרת צירוף המקשים, יתכן ונמצא כבר בשימוש ביישום אחר.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
-    <value>Failed to run command</value>
+    <value>שגיאה בהרצת הפקודה</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
-    <value>To utilize this sorting method it has to have fast sorting enabled. It can be enabled in your Everything settings.</value>
+    <value>כדי להשתמש בשיטת מיון זאת נדרש הפעלת המיון המהיר, ניתן להפעילו דרך הגדרות Everything.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
-    <value>Fast sorting not enabled</value>
+    <value>המיון המהיר לא הופעל</value>
   </data>
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
-    <value>At least one regular expression is invalid.</value>
+    <value>לפחות אחד מהביטויים הרגולריים אינו תקף.</value>
   </data>
   <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Rule names cannot be empty.</value>
+    <value>לא ניתן להשאיר את שם הכלל ריק.</value>
   </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
-    <value>Please select Everything.exe...</value>
+    <value>נא לבחור את Everything.exe...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>Please select the Filters.csv file. By default it can be found in %APPDATA%\Everything. Its location might be different depending on your installation. If the file does not exist for you that means you didn't perform any changes to Everything's default filters.</value>
+    <value>בבקשה בחר את הקובץ Filters.csv. הנתיב ברירת מחדל ניתן למצוא אותו ב- %APPDATA%\Everything. המיקום יכול להשתנות לפי מצב ההתקנה. אם הקובץ לא נמצא זה אומר שהכללים של Everything לא שונו מהברירת מחדל.</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
-    <value>Filters.csv not found</value>
+    <value>Filters.csv לא נמצא</value>
   </data>
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
-    <value>Unhandled exception occured</value>
+    <value>אירעה שגיאה לא צפויה</value>
   </data>
   <data name="RulesAutoApply" xml:space="preserve">
-    <value>Automatically apply rules based on condition</value>
+    <value>החל באופן אוטומטי כללים בהתאם למצב</value>
   </data>
   <data name="RulesCancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>ביטול</value>
   </data>
   <data name="RulesCommand" xml:space="preserve">
-    <value>Command</value>
+    <value>פקודה</value>
   </data>
   <data name="RulesName" xml:space="preserve">
-    <value>Name</value>
+    <value>שם</value>
   </data>
   <data name="RulesRegularExpression" xml:space="preserve">
-    <value>Regular Expression</value>
+    <value>ביטוי רגיל</value>
   </data>
   <data name="RulesSave" xml:space="preserve">
-    <value>Save</value>
+    <value>שמור</value>
   </data>
   <data name="RulesType" xml:space="preserve">
-    <value>Type</value>
+    <value>סוּג</value>
   </data>
   <data name="RulesWindowText" xml:space="preserve">
-    <value>Use %file%, %filename% and %path% as placeholders in commands.</value>
+    <value>השתמש ב- %file%, %filename% ו-%path% כתחליף מיקום הנוכחי בפקודות.</value>
   </data>
   <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Rules</value>
+    <value>כללים</value>
   </data>
   <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>Search with Everything</value>
+    <value>חפש באמצעות Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
-    <value>object</value>
+    <value>אובייקט</value>
   </data>
   <data name="SearchResults" xml:space="preserve">
-    <value>objects</value>
+    <value>אובייקטים</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
-    <value>About EverythingToolbar...</value>
+    <value>אודות EverythingToolbar...</value>
   </data>
   <data name="SettingsChangeShortcut" xml:space="preserve">
-    <value>Change Shortcut...</value>
+    <value>החלף קיצור דרך...</value>
   </data>
   <data name="SettingsDisableAnimations" xml:space="preserve">
-    <value>Disable animations</value>
+    <value>השבת הנפשות</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Enable search history</value>
+    <value>הפעל היסטוריית חיפוש</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
-    <value>Hide empty search</value>
+    <value>הסתר תוצאות כאשר החיפוש ריק</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>Match Case</value>
+    <value>רגישות לאות גדולה</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
-    <value>Match Path</value>
+    <value>התאם נתיב</value>
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
-    <value>Match Whole Word</value>
+    <value>התאם מילים שלמות</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>העדפות</value>
   </data>
   <data name="SettingsRegularExpressions" xml:space="preserve">
-    <value>Regular Expressions</value>
+    <value>ביטויים רגילים</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>החלף את החיפוש בלחצן ההפעל (נסיוני)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
-    <value>Rules...</value>
+    <value>כללים...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Show quick toggles</value>
+    <value>הצג הגדרות מהירות</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>Show results count</value>
+    <value>הצג את מספר תוצאות החיפוש</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
-    <value>Sort By</value>
+    <value>מיין לפי</value>
   </data>
   <data name="SettingsTheme" xml:space="preserve">
-    <value>Theme</value>
+    <value>ערכת נושא</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
-    <value>Use Everything filters</value>
+    <value>השתמש במסנני Everything</value>
   </data>
   <data name="SettingsView" xml:space="preserve">
-    <value>View</value>
+    <value>תצוגה</value>
   </data>
   <data name="ShortcutOK" xml:space="preserve">
-    <value>OK</value>
+    <value>אישור</value>
   </data>
   <data name="ShortcutWindowTitle" xml:space="preserve">
-    <value>Enter shortcut...</value>
+    <value>הגדר צירוף מקשים...</value>
   </data>
   <data name="SortByAttributesAscending" xml:space="preserve">
-    <value>Attributes ascending</value>
+    <value>תכונות בסדר עולה</value>
   </data>
   <data name="SortByAttributesDescending" xml:space="preserve">
-    <value>Attributes descending</value>
+    <value>תכונות בסדר יורד</value>
   </data>
   <data name="SortByDateAccessedAscending" xml:space="preserve">
-    <value>Date accessed ascending</value>
+    <value>תאריך גישה עולה</value>
   </data>
   <data name="SortByDateAccessedDescending" xml:space="preserve">
-    <value>Date accessed descending</value>
+    <value>תאריך גישה יורד</value>
   </data>
   <data name="SortByDateCreatedAscending" xml:space="preserve">
-    <value>Date created ascending</value>
+    <value>תאריך יצירה עולה</value>
   </data>
   <data name="SortByDateCreatedDescending" xml:space="preserve">
-    <value>Date created descending</value>
+    <value>תאריך יצירה יורד</value>
   </data>
   <data name="SortByDateModifiedAscending" xml:space="preserve">
-    <value>Date modified ascending</value>
+    <value>תאריך שינוי עולה</value>
   </data>
   <data name="SortByDateModifiedDescending" xml:space="preserve">
-    <value>Date modified descending</value>
+    <value>תאריך שינוי יורד</value>
   </data>
   <data name="SortByDateRecentlyChangedAscending" xml:space="preserve">
-    <value>Date recently changed ascending</value>
+    <value>תאריך שינוי אחרון עולה</value>
   </data>
   <data name="SortByDateRecentlyChangedDescending" xml:space="preserve">
-    <value>Date recently changed descending</value>
+    <value>תאריך שינוי אחרון יורד</value>
   </data>
   <data name="SortByDateRunAscending" xml:space="preserve">
-    <value>Date run ascending</value>
+    <value>תאריך הפעלה עולה</value>
   </data>
   <data name="SortByDateRunDescending" xml:space="preserve">
-    <value>Date run descending</value>
+    <value>תאריך הפעלה יורד</value>
   </data>
   <data name="SortByExtensionAscending" xml:space="preserve">
-    <value>Extension ascending</value>
+    <value>סיומת קובץ עולה</value>
   </data>
   <data name="SortByExtensionDescending" xml:space="preserve">
-    <value>Extension descending</value>
+    <value>סיומת יורד</value>
   </data>
   <data name="SortByFileListFilenameAscending" xml:space="preserve">
-    <value>File list filename ascending</value>
+    <value>רשימת קבצים עולה</value>
   </data>
   <data name="SortByFileListFilenameDescending" xml:space="preserve">
-    <value>File list filename descending</value>
+    <value>רשימת קבצים יורד</value>
   </data>
   <data name="SortByNameAscending" xml:space="preserve">
-    <value>Name ascending</value>
+    <value>שם עולה</value>
   </data>
   <data name="SortByNameDescending" xml:space="preserve">
-    <value>Name descending</value>
+    <value>שם יורד</value>
   </data>
   <data name="SortByPathAscending" xml:space="preserve">
-    <value>Path ascending</value>
+    <value>מיקום עולה</value>
   </data>
   <data name="SortByPathDescending" xml:space="preserve">
-    <value>Path descending</value>
+    <value>מיקום יורד</value>
   </data>
   <data name="SortByRunCountAscending" xml:space="preserve">
-    <value>Run count ascending</value>
+    <value>מספר הפעלות בסדר עולה</value>
   </data>
   <data name="SortByRunCountDescending" xml:space="preserve">
-    <value>Run count descending</value>
+    <value>מספר הפעלות בסדר יורד</value>
   </data>
   <data name="SortBySizeAscending" xml:space="preserve">
-    <value>Size ascending</value>
+    <value>גודל בסדר עולה</value>
   </data>
   <data name="SortBySizeDescending" xml:space="preserve">
-    <value>Size descending</value>
+    <value>גודל בסדר יורד</value>
   </data>
   <data name="SortByTypeNameAscending" xml:space="preserve">
-    <value>Type name ascending</value>
+    <value>סוג בסדר עולה</value>
   </data>
   <data name="SortByTypeNameDescending" xml:space="preserve">
-    <value>Type name descending</value>
+    <value>סוג בסדר יורד</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>כהה</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>Light</value>
+    <value>בהיר</value>
   </data>
   <data name="ThemeMedium" xml:space="preserve">
-    <value>Medium</value>
+    <value>בינוני</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
-    <value>Audio</value>
+    <value>אודיו</value>
   </data>
   <data name="UserFilterCompressed" xml:space="preserve">
-    <value>Compressed</value>
+    <value>קבצים דחוסים</value>
   </data>
   <data name="UserFilterDocument" xml:space="preserve">
-    <value>Document</value>
+    <value>מסמך</value>
   </data>
   <data name="UserFilterExecutable" xml:space="preserve">
-    <value>Executable</value>
+    <value>קבצי הרצה</value>
   </data>
   <data name="UserFilterPicture" xml:space="preserve">
-    <value>Picture</value>
+    <value>תמונה</value>
   </data>
   <data name="UserFilterPlaceholder" xml:space="preserve">
-    <value>More</value>
+    <value>עוד</value>
   </data>
   <data name="UserFilterVideo" xml:space="preserve">
-    <value>Video</value>
+    <value>וידאו</value>
   </data>
 </root>
