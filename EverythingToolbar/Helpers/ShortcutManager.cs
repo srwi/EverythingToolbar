@@ -162,7 +162,7 @@ namespace EverythingToolbar.Helpers
             GetModuleFileNameEx(hProcess, IntPtr.Zero, text, text.Capacity);
             CloseHandle(hProcess);
 
-            if (text.ToString().EndsWith("SearchApp.exe"))
+            if (text.ToString().EndsWith("SearchApp.exe") || text.ToString().EndsWith("SearchUI.exe"))
             {
                 searchAppHwnd = hWnd;
                 searchTermQueue = "";
@@ -217,9 +217,10 @@ namespace EverythingToolbar.Helpers
                         keyString = keyString.ToUpper();
                 }
 
-                if (keyString.Length > 0 && (char.IsLetterOrDigit(keyString, 0) ||
-                                             char.IsPunctuation(keyString, 0) ||
-                                             char.IsSymbol(keyString, 0)))
+                if (keyString.Length > 0 && isKeyDown &&
+                    (char.IsLetterOrDigit(keyString, 0) ||
+                     char.IsPunctuation(keyString, 0) ||
+                     char.IsSymbol(keyString, 0)))
                 {
                     // Send input to native search app
                     if (isException)
