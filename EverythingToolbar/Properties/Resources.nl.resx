@@ -175,7 +175,7 @@
     <value>Alle</value>
   </data>
   <data name="DefaultFilterFile" xml:space="preserve">
-    <value>File</value>
+    <value>Bestand</value>
   </data>
   <data name="DefaultFilterFolder" xml:space="preserve">
     <value>Map</value>
@@ -184,13 +184,13 @@
     <value>Compact</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compact (detailed)</value>
+    <value>Compact (gedetailleerd)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
-    <value>Normal</value>
+    <value>Normaal</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detailed)</value>
+    <value>Normaal (gedetailleerd)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -223,10 +223,10 @@
     <value>Kan dialoogvenster niet openen.</value>
   </data>
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
-    <value>Failed to open path.</value>
+    <value>Kan pad niet openen.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Failed to register hotkey. It might be in use by another application.</value>
+    <value>Registreren van sneltoets is mislukt. Mogelijk is het in gebruik door een ander programma.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Commando uitvoeren mislukt</value>
@@ -316,7 +316,7 @@
     <value>Volledig woord</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
-    <value>Voorkeurens</value>
+    <value>Voorkeuren</value>
   </data>
   <data name="SettingsRegularExpressions" xml:space="preserve">
     <value>Reguliere Expressies</value>
