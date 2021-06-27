@@ -181,16 +181,16 @@
     <value>フォルダー</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>Compact</value>
+    <value>コンパクト</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compact (detailed)</value>
+    <value>コンパクト (詳細)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
-    <value>Normal</value>
+    <value>標準</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detailed)</value>
+    <value>標準 (詳細)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -286,10 +286,10 @@
     <value>Everything で検索</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
-    <value>object</value>
+    <value>項目</value>
   </data>
   <data name="SearchResults" xml:space="preserve">
-    <value>objects</value>
+    <value>項目</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
     <value>EverythingToolbar について</value>
@@ -301,7 +301,7 @@
     <value>アニメーションを無効化</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Enable search history</value>
+    <value>検索履歴を有効</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>空の検索結果を非表示</value>
@@ -322,16 +322,16 @@
     <value>正規表現</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>スタートメニューの検索を置き換える (実験的)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>ルール...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Show quick toggles</value>
+    <value>検索時にクイックトグルを表示</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>Show results count</value>
+    <value>検索結果の数を表示</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>ソート</value>
@@ -430,13 +430,13 @@
     <value>タイプ名 降順</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>ダーク</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>Light</value>
+    <value>ライト</value>
   </data>
   <data name="ThemeMedium" xml:space="preserve">
-    <value>Medium</value>
+    <value>ダーク/ライト</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>オーディオ</value>
