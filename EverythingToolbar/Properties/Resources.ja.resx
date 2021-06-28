@@ -178,7 +178,7 @@
     <value>ファイル</value>
   </data>
   <data name="DefaultFilterFolder" xml:space="preserve">
-    <value>フォルダー</value>
+    <value>フォルダ</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
     <value>コンパクト</value>
