@@ -130,7 +130,7 @@
     <value>אתר רשמי</value>
   </data>
   <data name="AboutWindowTitle" xml:space="preserve">
-    <value>אודות התוכנה</value>
+    <value>אודות EverythingToolbar</value>
   </data>
   <data name="ContextMenuCopy" xml:space="preserve">
     <value>העתק</value>
@@ -320,6 +320,9 @@
   </data>
   <data name="SettingsRegularExpressions" xml:space="preserve">
     <value>ביטויים רגילים</value>
+  </data>
+  <data name="SettingsRememberFilter" xml:space="preserve">
+    <value>Remember filter</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
     <value>החלף את החיפוש בלחצן ההפעל (נסיוני)</value>
