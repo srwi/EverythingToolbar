@@ -301,5 +301,25 @@ namespace EverythingToolbar.Helpers
             LoadFilters();
             RefreshFilters();
         }
+
+        public Filter GetLastFilter()
+        {
+            if (Properties.Settings.Default.isRememberFilter)
+            {
+                foreach (Filter filter in DefaultFilters)
+                {
+                    if (filter.Name == Properties.Settings.Default.lastFilter)
+                        return filter;
+                }
+
+                foreach (Filter filter in UserFilters)
+                {
+                    if (filter.Name == Properties.Settings.Default.lastFilter)
+                        return filter;
+                }
+            }
+
+            return DefaultFilters[0];
+        }
     }
 }

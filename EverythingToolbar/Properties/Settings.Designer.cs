@@ -286,5 +286,29 @@ namespace EverythingToolbar.Properties {
                 this["isReplaceStartMenuSearch"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isRememberFilter {
+            get {
+                return ((bool)(this["isRememberFilter"]));
+            }
+            set {
+                this["isRememberFilter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string lastFilter {
+            get {
+                return ((string)(this["lastFilter"]));
+            }
+            set {
+                this["lastFilter"] = value;
+            }
+        }
     }
 }

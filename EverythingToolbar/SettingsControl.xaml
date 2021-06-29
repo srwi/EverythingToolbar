@@ -79,12 +79,16 @@
                 <MenuItem IsCheckable="True" Header="{x:Static properties:Resources.SortByDateRunDescending}" Click="OnSortByClicked" />
             </MenuItem>
             <Separator />
+            <MenuItem Header="{x:Static properties:Resources.SettingsView}" Name="ItemTemplateMenu" Click="OnItemTemplateClicked" />
+            <MenuItem Header="{x:Static properties:Resources.SettingsTheme}" Name="ThemeMenu" Click="OnThemeClicked" />
             <MenuItem Header="{x:Static properties:Resources.SettingsPreferences}" Icon="&#xF8B0;">
                 <MenuItem Header="{x:Static properties:Resources.SettingsRules}" Click="OpenRulesWindow" Icon="&#xE7AC;" />
                 <MenuItem Header="{x:Static properties:Resources.SettingsChangeShortcut}" Click="OpenShortcutWindow" Icon="&#xE765;" />
                 <Separator />
                 <MenuItem IsCheckable="True" Header="{x:Static properties:Resources.SettingsUseEverythingFilters}" Click="OnMenuItemClicked"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isImportFilters, Mode=TwoWay}" />
+                <MenuItem IsCheckable="True" Header="{x:Static properties:Resources.SettingsRememberFilter}" Click="OnMenuItemClicked"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRememberFilter, Mode=TwoWay}" />
                 <MenuItem IsCheckable="True" Header="{x:Static properties:Resources.SettingsHideEmptyResults}" Click="OnMenuItemClicked"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isHideEmptySearchResults, Mode=TwoWay}" />
                 <MenuItem IsCheckable="True" Header="{x:Static properties:Resources.SettingsShowResultsCount}" Click="OnMenuItemClicked"
@@ -97,9 +101,6 @@
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isReplaceStartMenuSearch, Mode=TwoWay}" />
                 <MenuItem IsCheckable="True" Header="{x:Static properties:Resources.SettingsDisableAnimations}" Click="OnMenuItemClicked"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isAnimationsDisabled, Mode=TwoWay}" />
-                <Separator />
-                <MenuItem Header="{x:Static properties:Resources.SettingsView}" Name="ItemTemplateMenu" Click="OnItemTemplateClicked" Icon="&#xE8BC;" />
-                <MenuItem Header="{x:Static properties:Resources.SettingsTheme}" Name="ThemeMenu" Click="OnThemeClicked" Icon="&#xF08C;" />
             </MenuItem>
             <MenuItem Header="{x:Static properties:Resources.SettingsAbout}" Click="OpenAboutWindow" Icon="&#xE946;" />
         </ContextMenu>
