@@ -181,16 +181,16 @@
     <value>Cartella</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>Compact</value>
+    <value>Compatta</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compact (detailed)</value>
+    <value>Compatto (dettagliato)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
-    <value>Normal</value>
+    <value>Normale</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detailed)</value>
+    <value>Normale (dettagliata)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -301,7 +301,7 @@
     <value>Disabilita animazioni</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Enable search history</value>
+    <value>Abilita la cronologia delle ricerche</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>Nascondi la ricerca vuota</value>
@@ -322,16 +322,16 @@
     <value>Espressioni regolari</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>Sostituisci la ricerca nel menu start (sperimentale)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>Regole...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Show quick toggles</value>
+    <value>Mostra impostazioni rapide</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>Show results count</value>
+    <value>Mostra conteggio risultati</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Ordina</value>
@@ -343,7 +343,7 @@
     <value>Usa i filtri di Everything</value>
   </data>
   <data name="SettingsView" xml:space="preserve">
-    <value>Visualizza</value>
+    <value>Visualizzazione</value>
   </data>
   <data name="ShortcutOK" xml:space="preserve">
     <value>OK</value>
@@ -430,13 +430,13 @@
     <value>Nome del tipo di file decrescente</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Scuro</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>Light</value>
+    <value>Chiaro</value>
   </data>
   <data name="ThemeMedium" xml:space="preserve">
-    <value>Medium</value>
+    <value>Medio</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>Audio</value>
