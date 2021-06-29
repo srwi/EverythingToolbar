@@ -321,6 +321,9 @@
   <data name="SettingsRegularExpressions" xml:space="preserve">
     <value>RegEx aktivieren</value>
   </data>
+  <data name="SettingsRememberFilter" xml:space="preserve">
+    <value>Filtereinstellung merken</value>
+  </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
     <value>Startmenüsuche ersetzen (experimentell)</value>
   </data>
