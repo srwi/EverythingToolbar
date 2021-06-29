@@ -21,12 +21,12 @@
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
                         <Border Background="{TemplateBinding Background}">
                             <ContentPresenter TextBlock.Foreground="{TemplateBinding Foreground}"
-                                              TextBlock.FontSize="12pt"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"
-                                              TextBlock.TextAlignment="Center"
-                                              Margin="2, 0"
-                                              MinWidth="19" />
+                                                TextBlock.FontSize="12pt"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                TextBlock.TextAlignment="Center"
+                                                Margin="2, 0"
+                                                MinWidth="19" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -40,6 +40,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
         <Style x:Key="SearchBoxStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="FontSize" Value="15"/>
@@ -58,10 +59,10 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Path x:Name="SearchBoxLogo"
-                                      Stroke="{DynamicResource SearchBoxLogo}"
-                                      StrokeThickness="1"
-                                      Width="16"
-                                      Height="18">
+                                        Stroke="{DynamicResource SearchBoxLogo}"
+                                        StrokeThickness="1"
+                                        Width="16"
+                                        Height="18">
                                     <Path.Data>
                                         <GeometryGroup>
                                             <LineGeometry StartPoint="0, 17" EndPoint="6, 11" />
@@ -70,52 +71,52 @@
                                     </Path.Data>
                                 </Path>
                                 <TextBlock x:Name="SearchBoxWatermark"
-                                           Text="{x:Static properties:Resources.SearchBoxWatermark}"
-                                           Grid.Column="1"
-                                           Margin="2, 0, 10, 0"
-                                           VerticalAlignment="Center"
-                                           Opacity="0"
-                                           Foreground="{DynamicResource SearchBoxWatermarkForeground}"
-                                           IsHitTestVisible="false"
-                                           TextTrimming="WordEllipsis"/>
+                                            Text="{x:Static properties:Resources.SearchBoxWatermark}"
+                                            Grid.Column="1"
+                                            Margin="2, 0, 10, 0"
+                                            VerticalAlignment="Center"
+                                            Opacity="0"
+                                            Foreground="{DynamicResource SearchBoxWatermarkForeground}"
+                                            IsHitTestVisible="false"
+                                            TextTrimming="WordEllipsis"/>
                                 <ScrollViewer x:Name="PART_ContentHost"
-                                              Grid.Column="1"
-                                              Focusable="false"
-                                              HorizontalScrollBarVisibility="Hidden"
-                                              VerticalScrollBarVisibility="Hidden"/>
+                                                Grid.Column="1"
+                                                Focusable="false"
+                                                HorizontalScrollBarVisibility="Hidden"
+                                                VerticalScrollBarVisibility="Hidden"/>
                                 <Border Grid.Column="2" Visibility="{Binding Source={x:Static properties:Settings.Default}, Path=isShowQuickToggles, Converter={local:BoolToVisibilityConverter}}">
                                     <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=SearchBoxControl, Path=IsKeyboardFocused, Converter={local:BoolToVisibilityConverter}, Mode=OneWay}">
                                         <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
-                                                      ToolTip="{x:Static properties:Resources.SettingsMatchCase}"
-                                                      Click="OnMenuItemClicked"
-                                                      Focusable="False"
-                                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase}"
-                                                      Content="Aa" />
+                                                        ToolTip="{x:Static properties:Resources.SettingsMatchCase}"
+                                                        Click="OnMenuItemClicked"
+                                                        Focusable="False"
+                                                        IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase}"
+                                                        Content="Aa" />
                                         <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
-                                                      ToolTip="{x:Static properties:Resources.SettingsMatchWholeWord}"
-                                                      Click="OnMenuItemClicked"
-                                                      Focusable="False"
-                                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord}">
+                                                        ToolTip="{x:Static properties:Resources.SettingsMatchWholeWord}"
+                                                        Click="OnMenuItemClicked"
+                                                        Focusable="False"
+                                                        IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord}">
                                             <TextBlock TextDecorations="Underline,OverLine"
-                                                       FontSize="11"
-                                                       HorizontalAlignment="Center"
-                                                       Padding="0, 2, 0, 0">Abl</TextBlock>
+                                                        FontSize="11"
+                                                        HorizontalAlignment="Center"
+                                                        Padding="0, 2, 0, 0">Abl</TextBlock>
                                         </ToggleButton>
                                         <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
-                                                      ToolTip="{x:Static properties:Resources.SettingsMatchPath}"
-                                                      Click="OnMenuItemClicked"
-                                                      Focusable="False"
-                                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath}"
-                                                      Content="..\"
-                                                      Margin="0, -2, 0, 1" />
+                                                        ToolTip="{x:Static properties:Resources.SettingsMatchPath}"
+                                                        Click="OnMenuItemClicked"
+                                                        Focusable="False"
+                                                        IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath}"
+                                                        Content="..\"
+                                                        Margin="0, -2, 0, 1" />
                                         <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
-                                                      ToolTip="{x:Static properties:Resources.SettingsRegularExpressions}"
-                                                      Click="OnMenuItemClicked"
-                                                      Focusable="False"
-                                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled}"
-                                                      Content=".*"
-                                                      TextBlock.FontWeight="Bold"
-                                                      Margin="-2, 0, 4, 2" />
+                                                        ToolTip="{x:Static properties:Resources.SettingsRegularExpressions}"
+                                                        Click="OnMenuItemClicked"
+                                                        Focusable="False"
+                                                        IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled}"
+                                                        Content=".*"
+                                                        TextBlock.FontWeight="Bold"
+                                                        Margin="-2, 0, 4, 2" />
                                     </StackPanel>
                                 </Border>
                             </Grid>
@@ -187,10 +188,9 @@
             <i:Interaction.Behaviors>
                 <h:DpiScaling x:Name="dpiScaling" />
             </i:Interaction.Behaviors>
+
             <ContextMenu.Resources>
-                <Style TargetType="{x:Type MenuItem}">
-                    <Setter Property="Focusable" Value="False" />
-                </Style>
+                <ResourceDictionary Source="Styles/ContextMenu.xaml" />
             </ContextMenu.Resources>
 
             <MenuItem Header="{x:Static properties:Resources.SettingsRegularExpressions}"
@@ -213,7 +213,7 @@
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}"
                       Click="OnMenuItemClicked">
                 <MenuItem.Style>
-                    <Style TargetType="{x:Type MenuItem}">
+                    <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
                         <Setter Property="Focusable" Value="False" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchWholeWord, Mode=OneWay}" Value="True">
@@ -230,9 +230,9 @@
                 </MenuItem.Style>
             </MenuItem>
             <Separator />
-            <MenuItem Header="{x:Static properties:Resources.ContextMenuCut}" Click="OnCutClicked" />
-            <MenuItem Header="{x:Static properties:Resources.ContextMenuCopy}" Click="OnCopyClicked" />
-            <MenuItem Header="{x:Static properties:Resources.ContextMenuPaste}" Click="OnPasteClicked" />
+            <MenuItem Header="{x:Static properties:Resources.ContextMenuCut}" Click="OnCutClicked" Icon="&#xE8C6;" />
+            <MenuItem Header="{x:Static properties:Resources.ContextMenuCopy}" Click="OnCopyClicked" Icon="&#xE8C8;" />
+            <MenuItem Header="{x:Static properties:Resources.ContextMenuPaste}" Click="OnPasteClicked" Icon="&#xE77F;" />
         </ContextMenu>
     </TextBox.ContextMenu>
 </TextBox>

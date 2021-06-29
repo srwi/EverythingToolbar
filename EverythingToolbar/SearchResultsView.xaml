@@ -18,21 +18,22 @@
             </i:Interaction.Behaviors>
 
             <ContextMenu.Resources>
-                <Style TargetType="{x:Type MenuItem}">
-                    <Setter Property="Focusable" Value="false" />
-                </Style>
+                <ResourceDictionary Source="Styles/ContextMenu.xaml" />
             </ContextMenu.Resources>
 
             <MenuItem Header="{x:Static properties:Resources.ContextMenuOpen}"
                       Click="Open"
                       FontWeight="Bold" />
             <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenPath}"
-                      Click="OpenFilePath" />
+                      Click="OpenFilePath"
+                      Icon="&#xE838;" />
             <MenuItem x:Name="OpenAsAdminMenuItem"
                       Header="{x:Static properties:Resources.ContextMenuRunAsAdmin}"
-                      Click="RunAsAdmin" />
+                      Click="RunAsAdmin"
+                      Icon="&#xE7EF;" />
             <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWith}"
-                      Loaded="OnOpenWithMenuLoaded">
+                      Loaded="OnOpenWithMenuLoaded"
+                      Icon="&#xE7AC;">
                 <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWithNoRules}"
                           IsEnabled="False" />
                 <Separator />
@@ -40,12 +41,14 @@
                           Click="OpenWith" />
             </MenuItem>
             <MenuItem Header="{x:Static properties:Resources.ContextMenuShowInEverything}"
-                      Click="ShowInEverything" />
+                      Click="ShowInEverything"
+                      Icon="&#xF78B;" />
             <Separator />
             <MenuItem Header="{x:Static properties:Resources.ContextMenuCopyFullName}"
                       Click="CopyPathToClipBoard" />
             <MenuItem Header="{x:Static properties:Resources.ContextMenuCopyFile}"
-                      Click="CopyFile" />
+                      Click="CopyFile"
+                      Icon="&#xE8C8;" />
             <Separator />
             <MenuItem Header="{x:Static properties:Resources.ContextMenuProperties}"
                       Click="ShowFileProperties" />

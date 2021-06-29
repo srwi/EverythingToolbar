@@ -124,8 +124,8 @@
                                                       MinWidth="{TemplateBinding ActualWidth}"
                                                       MaxHeight="{TemplateBinding MaxDropDownHeight}">
                                                     <Border x:Name="DropDownBorder"
-                                                            Background="{DynamicResource SearchResultsViewBackground}"
-                                                            BorderBrush="{DynamicResource TabBarBorder}"
+                                                            Background="{DynamicResource ContextMenuBackground}"
+                                                            BorderBrush="{DynamicResource ContextMenuBorder}"
                                                             BorderThickness="1"
                                                             SnapsToDevicePixels="True" />
                                                     <ScrollViewer>
@@ -182,20 +182,27 @@
                                             Background="Transparent"
                                             Margin="1"
                                             Padding="11, 5, 35, 5">
-                                        <ContentPresenter TextBlock.Foreground="{DynamicResource SearchResultFileName}" />
+                                        <ContentPresenter x:Name="Cp"
+                                                          TextBlock.Foreground="{DynamicResource ContextMenuItemForeground}" />
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver"
                                                  Value="True">
                                             <Setter Property="Background"
                                                     TargetName="Bd"
-                                                    Value="{DynamicResource SearchResultBackgroundHover}" />
+                                                    Value="{DynamicResource ContextMenuItemBackgroundHover}" />
+                                            <Setter Property="TextBlock.Foreground"
+                                                    TargetName="Cp"
+                                                    Value="{DynamicResource ContextMenuItemForegroundHover}" />
                                         </Trigger>
                                         <Trigger Property="IsSelected"
                                                  Value="True">
                                             <Setter Property="Background"
                                                     TargetName="Bd"
-                                                    Value="{DynamicResource SearchResultBackgroundActive}" />
+                                                    Value="{DynamicResource ContextMenuItemBackgroundActive}" />
+                                            <Setter Property="TextBlock.Foreground"
+                                                    TargetName="Cp"
+                                                    Value="{DynamicResource ContextMenuItemForegroundActive}" />
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>

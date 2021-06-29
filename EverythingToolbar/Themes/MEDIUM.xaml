@@ -1,5 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="ContextMenuBorder" Color="#ffC2C2C2" />
+    <SolidColorBrush x:Key="ContextMenuSeparator" Color="#ffC2C2C2" />
+    <SolidColorBrush x:Key="ContextMenuItemBackgroundHover" Color="#ffDBDBDB" />
+    <SolidColorBrush x:Key="ContextMenuItemBackgroundActive" Color="#ffc6c6c6" />
+    <SolidColorBrush x:Key="ContextMenuItemForeground" Color="#ff000000" />
+    <SolidColorBrush x:Key="ContextMenuItemForegroundHover" Color="#ff000000" />
+    <SolidColorBrush x:Key="ContextMenuItemForegroundActive" Color="#ff000000" />
+    <SolidColorBrush x:Key="ContextMenuBackground" Color="#ffF3F3F3" />
     <SolidColorBrush x:Key="SearchBoxBackground" Color="#ff333333" />
     <SolidColorBrush x:Key="SearchBoxBackgroundHover" Color="#ff3f3f3f" />
     <SolidColorBrush x:Key="SearchBoxBackgroundActive" Color="#ffffffff" />
