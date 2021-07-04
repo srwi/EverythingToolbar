@@ -301,7 +301,7 @@
     <value>Отключить анимации</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Enable search history</value>
+    <value>Включить историю поиска</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>Не показывать результаты пустого запроса</value>
@@ -322,7 +322,7 @@
     <value>Регулярные выражения</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>Remember filter</value>
+    <value>Запомнить фильтр</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
     <value>Replace start menu search (experimental)</value>
