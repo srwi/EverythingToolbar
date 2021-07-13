@@ -118,25 +118,25 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutLicense" xml:space="preserve">
-    <value>License</value>
+    <value>الترخيص</value>
   </data>
   <data name="AboutOK" xml:space="preserve">
-    <value>OK</value>
+    <value>موافق</value>
   </data>
   <data name="AboutVersion" xml:space="preserve">
-    <value>Version</value>
+    <value>الإصدار</value>
   </data>
   <data name="AboutWebsite" xml:space="preserve">
-    <value>Website</value>
+    <value>الموقع</value>
   </data>
   <data name="AboutWindowTitle" xml:space="preserve">
-    <value>About EverythingToolbar</value>
+    <value>حول شريط أدوات Everything،</value>
   </data>
   <data name="ContextMenuCopy" xml:space="preserve">
-    <value>Copy</value>
+    <value>نسخة</value>
   </data>
   <data name="ContextMenuCopyFile" xml:space="preserve">
-    <value>Copy</value>
+    <value>نسخة</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
     <value>Copy Full Name to Clipboard</value>
@@ -265,7 +265,7 @@
     <value>Command</value>
   </data>
   <data name="RulesName" xml:space="preserve">
-    <value>Name</value>
+    <value>الإسم</value>
   </data>
   <data name="RulesRegularExpression" xml:space="preserve">
     <value>Regular Expression</value>
@@ -321,6 +321,9 @@
   <data name="SettingsRegularExpressions" xml:space="preserve">
     <value>Regular Expressions</value>
   </data>
+  <data name="SettingsRememberFilter" xml:space="preserve">
+    <value>Remember filter</value>
+  </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
     <value>Replace start menu search (experimental)</value>
   </data>
@@ -343,10 +346,10 @@
     <value>Use Everything filters</value>
   </data>
   <data name="SettingsView" xml:space="preserve">
-    <value>View</value>
+    <value>عرض</value>
   </data>
   <data name="ShortcutOK" xml:space="preserve">
-    <value>OK</value>
+    <value>موافق</value>
   </data>
   <data name="ShortcutWindowTitle" xml:space="preserve">
     <value>Enter shortcut...</value>
@@ -430,13 +433,13 @@
     <value>Type name descending</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>مظلم</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>Light</value>
+    <value>فاتح</value>
   </data>
   <data name="ThemeMedium" xml:space="preserve">
-    <value>Medium</value>
+    <value>متوسط</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>Audio</value>
@@ -454,9 +457,9 @@
     <value>Picture</value>
   </data>
   <data name="UserFilterPlaceholder" xml:space="preserve">
-    <value>More</value>
+    <value>أكثر</value>
   </data>
   <data name="UserFilterVideo" xml:space="preserve">
-    <value>Video</value>
+    <value>فيديو</value>
   </data>
 </root>

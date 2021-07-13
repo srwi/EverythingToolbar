@@ -121,7 +121,7 @@
     <value>Лицензия</value>
   </data>
   <data name="AboutOK" xml:space="preserve">
-    <value>OK</value>
+    <value>ОК</value>
   </data>
   <data name="AboutVersion" xml:space="preserve">
     <value>Версия</value>
@@ -181,16 +181,16 @@
     <value>Папки</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>Compact</value>
+    <value>Компактный</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compact (detailed)</value>
+    <value>Компактный (детально)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
-    <value>Normal</value>
+    <value>Обычный</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detailed)</value>
+    <value>Обычный (детально)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -286,10 +286,10 @@
     <value>Найти с помощью Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
-    <value>object</value>
+    <value>объект</value>
   </data>
   <data name="SearchResults" xml:space="preserve">
-    <value>objects</value>
+    <value>объектов</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
     <value>Об EverythingToolbar...</value>
@@ -301,7 +301,7 @@
     <value>Отключить анимации</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Enable search history</value>
+    <value>Включить историю поиска</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>Не показывать результаты пустого запроса</value>
@@ -321,17 +321,20 @@
   <data name="SettingsRegularExpressions" xml:space="preserve">
     <value>Регулярные выражения</value>
   </data>
+  <data name="SettingsRememberFilter" xml:space="preserve">
+    <value>Запомнить фильтр</value>
+  </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>Замена поиска меню "Пуск" (экспериментально)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>Правила...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Show quick toggles</value>
+    <value>Показывать переключатели</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>Show results count</value>
+    <value>Показывать количество результатов</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Сортировка</value>
@@ -346,7 +349,7 @@
     <value>Вид</value>
   </data>
   <data name="ShortcutOK" xml:space="preserve">
-    <value>OK</value>
+    <value>ОК</value>
   </data>
   <data name="ShortcutWindowTitle" xml:space="preserve">
     <value>Введите сочетание клавиш...</value>
@@ -430,13 +433,13 @@
     <value>Тип (по убыванию)</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Темная</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>Light</value>
+    <value>Светлая</value>
   </data>
   <data name="ThemeMedium" xml:space="preserve">
-    <value>Medium</value>
+    <value>По умолчанию</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>Аудио</value>

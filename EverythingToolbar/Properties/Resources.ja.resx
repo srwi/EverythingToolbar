@@ -321,6 +321,9 @@
   <data name="SettingsRegularExpressions" xml:space="preserve">
     <value>正規表現</value>
   </data>
+  <data name="SettingsRememberFilter" xml:space="preserve">
+    <value>フィルタを保存</value>
+  </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
     <value>スタートメニューの検索を置き換える (実験的)</value>
   </data>

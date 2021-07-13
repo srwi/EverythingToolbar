@@ -130,7 +130,7 @@
     <value>Ιστοσελίδα</value>
   </data>
   <data name="AboutWindowTitle" xml:space="preserve">
-    <value>Σχετικά Με Το EverythingToolbar</value>
+    <value>Σχετικά με το EverythingToolbar</value>
   </data>
   <data name="ContextMenuCopy" xml:space="preserve">
     <value>Αντιγραφή</value>
@@ -321,8 +321,11 @@
   <data name="SettingsRegularExpressions" xml:space="preserve">
     <value>Κανονικές Εκφράσεις</value>
   </data>
+  <data name="SettingsRememberFilter" xml:space="preserve">
+    <value>Αποθηκευση φιλτρου</value>
+  </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>Αντικατάσταση αναζήτησης μενού έναρξης (πειραματικό)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>Κανόνες...</value>

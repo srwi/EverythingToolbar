@@ -321,8 +321,11 @@
   <data name="SettingsRegularExpressions" xml:space="preserve">
     <value>정규식</value>
   </data>
+  <data name="SettingsRememberFilter" xml:space="preserve">
+    <value>필터 기억</value>
+  </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>시작 메뉴 검색 기능 대체 (실험적 기능)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>규칙...</value>

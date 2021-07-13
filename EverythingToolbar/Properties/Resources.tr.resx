@@ -321,6 +321,9 @@
   <data name="SettingsRegularExpressions" xml:space="preserve">
     <value>Düzenli ifadeler</value>
   </data>
+  <data name="SettingsRememberFilter" xml:space="preserve">
+    <value>Filtreyi hatırla</value>
+  </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
     <value>Başlat menüsü aramasında kullan (deneme aşamasında)</value>
   </data>

@@ -321,6 +321,9 @@
   <data name="SettingsRegularExpressions" xml:space="preserve">
     <value>正则表达式</value>
   </data>
+  <data name="SettingsRememberFilter" xml:space="preserve">
+    <value>记住过滤规则</value>
+  </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
     <value>替换开始菜单搜索（实验性）</value>
   </data>
