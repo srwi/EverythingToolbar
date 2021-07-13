@@ -322,7 +322,7 @@
     <value>ביטויים רגילים</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>Remember filter</value>
+    <value>זכור מסנן</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
     <value>החלף את החיפוש בלחצן ההפעל (נסיוני)</value>
