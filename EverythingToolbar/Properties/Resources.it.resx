@@ -295,7 +295,7 @@
     <value>Informazioni su EveythingToolbar...</value>
   </data>
   <data name="SettingsChangeShortcut" xml:space="preserve">
-    <value>Cambia collegamento...</value>
+    <value>Cambia scorciatoia da tastiera...</value>
   </data>
   <data name="SettingsDisableAnimations" xml:space="preserve">
     <value>Disabilita animazioni</value>
