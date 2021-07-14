@@ -322,7 +322,7 @@
     <value>Espressioni regolari</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>Remember filter</value>
+    <value>Ricorda il filtro</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
     <value>Sostituisci la ricerca nel menu start (sperimentale)</value>
