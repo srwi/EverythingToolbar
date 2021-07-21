@@ -181,16 +181,16 @@
     <value>Carpeta</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>Compact</value>
+    <value>Compacta</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compact (detailed)</value>
+    <value>Compacta (detallado)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
     <value>Normal</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detailed)</value>
+    <value>Normal (detallado)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -301,7 +301,7 @@
     <value>Desactivar animaciones</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Enable search history</value>
+    <value>Activar el historial de búsqueda</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>Ocultar búsqueda vacía</value>
@@ -322,10 +322,10 @@
     <value>Expresiones regulares</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>Remember filter</value>
+    <value>Recordar filtro</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>Reemplazar la búsqueda de menú de inicio (experimental)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>Reglas...</value>
@@ -334,7 +334,7 @@
     <value>Show quick toggles</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>Show results count</value>
+    <value>Mostrar recuento de resultados</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Ordenar por</value>
@@ -439,7 +439,7 @@
     <value>Claro</value>
   </data>
   <data name="ThemeMedium" xml:space="preserve">
-    <value>Medium</value>
+    <value>Mediano</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>Audio</value>
