@@ -295,7 +295,7 @@
     <value>Informazioni su EveythingToolbar...</value>
   </data>
   <data name="SettingsChangeShortcut" xml:space="preserve">
-    <value>Cambia collegamento...</value>
+    <value>Cambia scorciatoia da tastiera...</value>
   </data>
   <data name="SettingsDisableAnimations" xml:space="preserve">
     <value>Disabilita animazioni</value>
@@ -322,7 +322,7 @@
     <value>Espressioni regolari</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>Remember filter</value>
+    <value>Ricorda il filtro</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
     <value>Sostituisci la ricerca nel menu start (sperimentale)</value>
