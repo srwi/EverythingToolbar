@@ -130,31 +130,31 @@
     <value>Website</value>
   </data>
   <data name="AboutWindowTitle" xml:space="preserve">
-    <value>About EverythingToolbar</value>
+    <value>關於  EverythingToolbar</value>
   </data>
   <data name="ContextMenuCopy" xml:space="preserve">
-    <value>Copy</value>
+    <value>複製</value>
   </data>
   <data name="ContextMenuCopyFile" xml:space="preserve">
-    <value>Copy</value>
+    <value>複製</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
     <value>Copy Full Name to Clipboard</value>
   </data>
   <data name="ContextMenuCut" xml:space="preserve">
-    <value>Cut</value>
+    <value>剪下</value>
   </data>
   <data name="ContextMenuOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>開啟</value>
   </data>
   <data name="ContextMenuOpenPath" xml:space="preserve">
-    <value>Open Path</value>
+    <value>開啟路徑</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
-    <value>Open with...</value>
+    <value>開啟方式...</value>
   </data>
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
-    <value>Choose app</value>
+    <value>選擇應用程式</value>
   </data>
   <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
     <value>No rules defined</value>
@@ -172,13 +172,13 @@
     <value>Show in Everything</value>
   </data>
   <data name="DefaultFilterAll" xml:space="preserve">
-    <value>All</value>
+    <value>全部</value>
   </data>
   <data name="DefaultFilterFile" xml:space="preserve">
-    <value>File</value>
+    <value>檔案</value>
   </data>
   <data name="DefaultFilterFolder" xml:space="preserve">
-    <value>Folder</value>
+    <value>資料夾</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
     <value>Compact</value>
