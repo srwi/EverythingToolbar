@@ -205,7 +205,7 @@
     <value>Win</value>
   </data>
   <data name="MessageBoxCopyException" xml:space="preserve">
-    <value>Você deseja copiar o conteúdo da exceção para área de transferência?</value>
+    <value>Você deseja copiar o conteúdo do erro para área de transferência?</value>
   </data>
   <data name="MessageBoxErrorTitle" xml:space="preserve">
     <value>Erro</value>
