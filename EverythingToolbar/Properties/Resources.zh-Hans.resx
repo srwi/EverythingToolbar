@@ -181,7 +181,7 @@
     <value>文件夹</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>紧凑11</value>
+    <value>紧凑</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
     <value>紧凑（详细）</value>
