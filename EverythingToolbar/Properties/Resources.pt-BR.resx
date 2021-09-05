@@ -205,7 +205,7 @@
     <value>Win</value>
   </data>
   <data name="MessageBoxCopyException" xml:space="preserve">
-    <value>Você deseja copiar o conteúdo da exceção para área de transferência?</value>
+    <value>Você deseja copiar o conteúdo do erro para área de transferência?</value>
   </data>
   <data name="MessageBoxErrorTitle" xml:space="preserve">
     <value>Erro</value>
@@ -301,7 +301,7 @@
     <value>Desabilitar animações</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Enable search history</value>
+    <value>Habilitar histórico de buscas</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>Ocultar buscas sem resultados</value>

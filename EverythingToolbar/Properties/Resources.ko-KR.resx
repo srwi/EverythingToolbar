@@ -181,10 +181,10 @@
     <value>폴더</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>컴팩트</value>
+    <value>간단</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>컴팩트 (자세히)</value>
+    <value>간단 (자세히)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
     <value>기본</value>
