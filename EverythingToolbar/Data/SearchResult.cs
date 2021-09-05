@@ -41,6 +41,7 @@ namespace EverythingToolbar
                     WorkingDirectory = IsFile ? Path : FullPathAndFileName
                 });
                 EverythingSearch.Instance.IncrementRunCount(FullPathAndFileName);
+                EverythingSearch.Instance.SearchTerm = null;
             }
             catch (Exception e)
             {
