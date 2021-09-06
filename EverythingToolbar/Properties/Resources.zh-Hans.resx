@@ -187,7 +187,7 @@
     <value>紧凑（详细）</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
-    <value>普通</value>
+    <value>正常</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
     <value>普通（详细）</value>
