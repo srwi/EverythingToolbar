@@ -151,7 +151,7 @@
     <value>打开路径</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
-    <value>用...打开</value>
+    <value>打开使用...</value>
   </data>
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>选择应用</value>
