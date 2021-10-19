@@ -301,19 +301,19 @@
     <value>Desabilitar animações</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Habilitar histórico de buscas</value>
+    <value>Ativar histórico de buscas</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>Ocultar buscas sem resultados</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>Match Case</value>
+    <value>Coincidir Caso</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
-    <value>Match Path</value>
+    <value>Coincidir Caminho</value>
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
-    <value>Match Whole Word</value>
+    <value>Coincidir Palavra Inteira</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
     <value>Preferências</value>
@@ -322,19 +322,19 @@
     <value>Expressões Regulares</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>Remember filter</value>
+    <value>Lembrar o filtro</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>Substituir a pesquisa do menu iniciar (experimental)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>Regras...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Show quick toggles</value>
+    <value>Mostrar alternadores rápidos</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>Show results count</value>
+    <value>Mostrar contagem de resultados</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Ordenar por</value>
