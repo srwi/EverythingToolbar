@@ -277,7 +277,7 @@
     <value>Tipo</value>
   </data>
   <data name="RulesWindowText" xml:space="preserve">
-    <value>Usar %file%, %filename% e %path% como espaços reservados no comando.</value>
+    <value>Use %file%, %filename% e %path% como espaços reservados no comando.</value>
   </data>
   <data name="RulesWindowTitle" xml:space="preserve">
     <value>Regras</value>
@@ -292,7 +292,7 @@
     <value>objetos</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
-    <value>Sobre EverythingToolbar...</value>
+    <value>Sobre o EverythingToolbar...</value>
   </data>
   <data name="SettingsChangeShortcut" xml:space="preserve">
     <value>Alterar atalho...</value>
@@ -415,10 +415,10 @@
     <value>Caminho em ordem decrescente</value>
   </data>
   <data name="SortByRunCountAscending" xml:space="preserve">
-    <value>Executar contagem em ordem crescente</value>
+    <value>Contagem de execuções em ordem crescente</value>
   </data>
   <data name="SortByRunCountDescending" xml:space="preserve">
-    <value>Executar contagem em ordem decrescente</value>
+    <value>Contagem de execuções em ordem decrescente</value>
   </data>
   <data name="SortBySizeAscending" xml:space="preserve">
     <value>Tamanho em ordem crescente</value>
