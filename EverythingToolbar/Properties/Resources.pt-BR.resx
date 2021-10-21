@@ -232,10 +232,10 @@
     <value>Falha ao executar comando</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
-    <value>Para utilizar este método de classificação, primeiro habilite a classificação rápida. Ela pode ser habilitada nas configurações de Everything.</value>
+    <value>Para utilizar este método de classificação, a classificação rápida deve estar ativada. Ele pode ser ativado nas suas configurações do Everything.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
-    <value>Classificação rápida não está habilitada.</value>
+    <value>A classificação rápida não está ativada</value>
   </data>
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>Pelo menos uma expressão regular está inválida.</value>
@@ -247,7 +247,7 @@
     <value>Por favor, Selecione Everything.exe...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>Por favor, selecione o arquivo Filters.csv. Por padrão esse arquivo pode ser encontrado em %APPDATA%\Everything. Sua localização pode estar em um local diferente dependendo da sua instalação. Se o arquivo não existe para você, significada que você não fez nenhuma alteração nos filtros do Everything.</value>
+    <value>Selecione o arquivo Filters.csv. Por padrão, ele pode ser encontrado em %APPDATA%\Everything. Seu local pode ser diferente dependendo de sua instalação. Se o arquivo não existe para você, isso significa que você não realizou nenhuma alteração nos filtros padrão do Everything.</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
     <value>Filters.csv não encontrado</value>
@@ -283,7 +283,7 @@
     <value>Regras</value>
   </data>
   <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>Buscar com Everything</value>
+    <value>Buscar com o Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
     <value>objeto</value>
