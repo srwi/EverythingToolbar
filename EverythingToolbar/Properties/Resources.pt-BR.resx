@@ -169,7 +169,7 @@
     <value>Executar como administrador</value>
   </data>
   <data name="ContextMenuShowInEverything" xml:space="preserve">
-    <value>Mostrar com Everything</value>
+    <value>Mostrar no Everything</value>
   </data>
   <data name="DefaultFilterAll" xml:space="preserve">
     <value>Tudo</value>
@@ -343,7 +343,7 @@
     <value>Tema</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
-    <value>Usar Filtros Everything</value>
+    <value>Usar Filtros do Everything</value>
   </data>
   <data name="SettingsView" xml:space="preserve">
     <value>Visualizar</value>
@@ -385,10 +385,10 @@
     <value>Data alterada recentemente em ordem decrescente</value>
   </data>
   <data name="SortByDateRunAscending" xml:space="preserve">
-    <value>Data da execução em ordem crescente</value>
+    <value>Data de execução em ordem crescente</value>
   </data>
   <data name="SortByDateRunDescending" xml:space="preserve">
-    <value>Data da execução em ordem decrescente</value>
+    <value>Data de execução em ordem decrescente</value>
   </data>
   <data name="SortByExtensionAscending" xml:space="preserve">
     <value>Extensão em ordem crescente</value>
