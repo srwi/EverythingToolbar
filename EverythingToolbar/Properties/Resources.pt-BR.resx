@@ -139,7 +139,7 @@
     <value>Copiar</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
-    <value>Copiar nome completo para área de transferência</value>
+    <value>Copiar Nome Completo para Área de Transferência</value>
   </data>
   <data name="ContextMenuCut" xml:space="preserve">
     <value>Recortar</value>
@@ -226,7 +226,7 @@
     <value>Falha ao abrir caminho.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Falha ao registrar atalho do teclado. Pode estar sendo usado por outra aplicação.</value>
+    <value>Falha ao registrar a tecla de atalho. Ela pode estar sendo usada por outro aplicativo.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Falha ao executar comando</value>
@@ -295,7 +295,7 @@
     <value>Sobre o EverythingToolbar...</value>
   </data>
   <data name="SettingsChangeShortcut" xml:space="preserve">
-    <value>Alterar atalho...</value>
+    <value>Alterar Atalho...</value>
   </data>
   <data name="SettingsDisableAnimations" xml:space="preserve">
     <value>Desabilitar animações</value>
