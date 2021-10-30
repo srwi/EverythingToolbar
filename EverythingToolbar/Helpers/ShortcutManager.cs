@@ -33,7 +33,6 @@ namespace EverythingToolbar.Helpers
         private static IntPtr winEventHookId = IntPtr.Zero;
         private static IntPtr searchAppHwnd = IntPtr.Zero;
         private static event EventHandler<WinKeyEventArgs> winKeyEventHandler;
-        private static bool isShiftDown = false;
         private static bool isException = false;
         private static bool isNativeSearchActive = false;
         private static string searchTermQueue = "";
@@ -179,7 +178,7 @@ namespace EverythingToolbar.Helpers
                 }
                 isException = false;
                 isNativeSearchActive = false;
-                UnhookStartMenuInput();
+                UnhookWindowsHookEx(llKeyboardHookId);
             }
         }
 
@@ -190,14 +189,12 @@ namespace EverythingToolbar.Helpers
                 uint virtualKeyCode = (uint)Marshal.ReadInt32(lParam);
                 bool isKeyDown = wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN;
 
-                // Check for VK_LSHIFT and VK_RSHIFT
-                if (virtualKeyCode == 0xA0 || virtualKeyCode == 0xA1)
+                if(Keyboard.IsKeyDown(Key.LWin) || Keyboard.IsKeyDown(Key.RWin))
                 {
-                    isShiftDown = isKeyDown;
                     return CallNextHookEx(llKeyboardHookId, nCode, wParam, lParam);
                 }
                 // Check for exception keys (VK_LCONTROL, VK_RCONTROL, VK_LMENU)
-                else if (virtualKeyCode == 0xA2 || virtualKeyCode == 0xA3 || virtualKeyCode == 0xA4)
+                if (virtualKeyCode == 0xA2 || virtualKeyCode == 0xA3 || virtualKeyCode == 0xA4)
                 {
                     isException = isKeyDown;
                     return (IntPtr)1;
@@ -213,7 +210,7 @@ namespace EverythingToolbar.Helpers
                     StringBuilder keyStringbuilder = new StringBuilder();
                     ToUnicodeEx(virtualKeyCode, scanCode, keyboardState, keyStringbuilder, 5, 0, inputLocaleIdentifier);
                     keyString = keyStringbuilder.ToString();
-                    if (isShiftDown)
+                    if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
                         keyString = keyString.ToUpper();
                 }
 
@@ -251,15 +248,9 @@ namespace EverythingToolbar.Helpers
 
         public void HookStartMenuInput()
         {
-            UnhookStartMenuInput();
+            UnhookWindowsHookEx(llKeyboardHookId);
             llKeyboardHookProc = StartMenuKeyboardHookCallback;
             llKeyboardHookId = SetWindowsHookEx(WH_KEYBOARD_LL, llKeyboardHookProc, (IntPtr)0, 0);
-        }
-
-        public void UnhookStartMenuInput()
-        {
-            isShiftDown = false;
-            UnhookWindowsHookEx(llKeyboardHookId);
         }
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
