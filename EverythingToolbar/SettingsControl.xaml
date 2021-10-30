@@ -89,6 +89,8 @@
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isImportFilters, Mode=TwoWay}" />
                 <MenuItem IsCheckable="True" Header="{x:Static properties:Resources.SettingsRememberFilter}" Click="OnMenuItemClicked"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRememberFilter, Mode=TwoWay}" />
+                <MenuItem IsCheckable="True" Header="{x:Static properties:Resources.SettingsThumbnailsEnabled}" Click="OnMenuItemClicked"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isThumbnailsEnabled, Mode=TwoWay}" />
                 <MenuItem IsCheckable="True" Header="{x:Static properties:Resources.SettingsHideEmptyResults}" Click="OnMenuItemClicked"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isHideEmptySearchResults, Mode=TwoWay}" />
                 <MenuItem IsCheckable="True" Header="{x:Static properties:Resources.SettingsShowResultsCount}" Click="OnMenuItemClicked"

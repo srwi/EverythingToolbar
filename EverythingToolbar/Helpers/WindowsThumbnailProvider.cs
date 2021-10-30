@@ -121,7 +121,7 @@ namespace EverythingToolbar
             var extension = Path.GetExtension(fileName).ToLower();
 
             ThumbnailOptions to;
-            if (Directory.Exists(fileName))
+            if (Directory.Exists(fileName) || !Properties.Settings.Default.isThumbnailsEnabled)
                 to = ThumbnailOptions.IconOnly;
             else if (ImageExtensions.Contains(extension) && File.Exists(fileName))
                 to = ThumbnailOptions.ThumbnailOnly;

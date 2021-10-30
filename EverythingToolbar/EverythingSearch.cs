@@ -187,7 +187,8 @@ namespace EverythingToolbar
                 e.PropertyName == "isMatchPath" ||
                 e.PropertyName == "isMatchWholeWord" ||
                 e.PropertyName == "isHideEmptySearchResults" ||
-                e.PropertyName == "sortBy")
+                e.PropertyName == "sortBy" ||
+                e.PropertyName == "isThumbnailsEnabled")
             {
                 lock (_searchResultsLock)
                     SearchResults.Clear();

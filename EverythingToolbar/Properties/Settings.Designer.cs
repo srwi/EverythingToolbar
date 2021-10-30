@@ -310,5 +310,17 @@ namespace EverythingToolbar.Properties {
                 this["lastFilter"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isThumbnailsEnabled {
+            get {
+                return ((bool)(this["isThumbnailsEnabled"]));
+            }
+            set {
+                this["isThumbnailsEnabled"] = value;
+            }
+        }
     }
 }

@@ -736,6 +736,15 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable thumbnails.
+        /// </summary>
+        public static string SettingsThumbnailsEnabled {
+            get {
+                return ResourceManager.GetString("SettingsThumbnailsEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use Everything filters.
         /// </summary>
         public static string SettingsUseEverythingFilters {
