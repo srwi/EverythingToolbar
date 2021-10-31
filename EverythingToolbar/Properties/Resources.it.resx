@@ -181,7 +181,7 @@
     <value>Cartella</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>Compatta</value>
+    <value>Compatto</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
     <value>Compatto (dettagliato)</value>
@@ -190,7 +190,7 @@
     <value>Normale</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normale (dettagliata)</value>
+    <value>Normale (dettagliato)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -341,6 +341,9 @@
   </data>
   <data name="SettingsTheme" xml:space="preserve">
     <value>Tema</value>
+  </data>
+  <data name="SettingsThumbnailsEnabled" xml:space="preserve">
+    <value>Enable thumbnails</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Usa i filtri di Everything</value>

@@ -342,6 +342,9 @@
   <data name="SettingsTheme" xml:space="preserve">
     <value>Thème</value>
   </data>
+  <data name="SettingsThumbnailsEnabled" xml:space="preserve">
+    <value>Enable thumbnails</value>
+  </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Utiliser les filtres de Everything</value>
   </data>

@@ -181,16 +181,16 @@
     <value>Mapp</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>Compact</value>
+    <value>Kompakt</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compact (detailed)</value>
+    <value>Kompakt (detaljerad)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
     <value>Normal</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detailed)</value>
+    <value>Normal (detaljerad)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -256,7 +256,7 @@
     <value>Ohanterat undantag påträffades</value>
   </data>
   <data name="RulesAutoApply" xml:space="preserve">
-    <value>Automatically apply rules based on condition</value>
+    <value>Tillämpa regler automatiskt baserat på villkor</value>
   </data>
   <data name="RulesCancel" xml:space="preserve">
     <value>Avbryt</value>
@@ -301,7 +301,7 @@
     <value>Inaktivera animationer</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Enable search history</value>
+    <value>Aktivera sökhistorik</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>Dölj tom sökning</value>
@@ -322,25 +322,28 @@
     <value>Reguljära uttryck</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>Remember filter</value>
+    <value>Kom ihåg filter</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>Ersätt sökning i startmenyn (experimentell)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>Regler...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Show quick toggles</value>
+    <value>Visa snabbskiftning</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>Show results count</value>
+    <value>Visa resultatantal</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Sortera efter</value>
   </data>
   <data name="SettingsTheme" xml:space="preserve">
     <value>Tema</value>
+  </data>
+  <data name="SettingsThumbnailsEnabled" xml:space="preserve">
+    <value>Enable thumbnails</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Använd Everythings filter</value>
@@ -433,10 +436,10 @@
     <value>Filtyp fallande</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Mörk</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>Light</value>
+    <value>Ljus</value>
   </data>
   <data name="ThemeMedium" xml:space="preserve">
     <value>Medium</value>

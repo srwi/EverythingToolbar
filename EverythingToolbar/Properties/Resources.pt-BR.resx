@@ -139,7 +139,7 @@
     <value>Copiar</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
-    <value>Copiar nome completo para área de transferência</value>
+    <value>Copiar Nome Completo para Área de Transferência</value>
   </data>
   <data name="ContextMenuCut" xml:space="preserve">
     <value>Recortar</value>
@@ -169,7 +169,7 @@
     <value>Executar como administrador</value>
   </data>
   <data name="ContextMenuShowInEverything" xml:space="preserve">
-    <value>Mostrar com Everything</value>
+    <value>Mostrar no Everything</value>
   </data>
   <data name="DefaultFilterAll" xml:space="preserve">
     <value>Tudo</value>
@@ -226,16 +226,16 @@
     <value>Falha ao abrir caminho.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Falha ao registrar atalho do teclado. Pode estar sendo usado por outra aplicação.</value>
+    <value>Falha ao registrar a tecla de atalho. Ela pode estar sendo usada por outro aplicativo.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Falha ao executar comando</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
-    <value>Para utilizar este método de classificação, primeiro habilite a classificação rápida. Ela pode ser habilitada nas configurações de Everything.</value>
+    <value>Para utilizar este método de classificação, a classificação rápida deve estar ativada. Ele pode ser ativado nas suas configurações do Everything.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
-    <value>Classificação rápida não está habilitada.</value>
+    <value>A classificação rápida não está ativada</value>
   </data>
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>Pelo menos uma expressão regular está inválida.</value>
@@ -247,7 +247,7 @@
     <value>Por favor, Selecione Everything.exe...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>Por favor, selecione o arquivo Filters.csv. Por padrão esse arquivo pode ser encontrado em %APPDATA%\Everything. Sua localização pode estar em um local diferente dependendo da sua instalação. Se o arquivo não existe para você, significada que você não fez nenhuma alteração nos filtros do Everything.</value>
+    <value>Selecione o arquivo Filters.csv. Por padrão, ele pode ser encontrado em %APPDATA%\Everything. Seu local pode ser diferente dependendo de sua instalação. Se o arquivo não existe para você, isso significa que você não realizou nenhuma alteração nos filtros padrão do Everything.</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
     <value>Filters.csv não encontrado</value>
@@ -277,13 +277,13 @@
     <value>Tipo</value>
   </data>
   <data name="RulesWindowText" xml:space="preserve">
-    <value>Usar %file%, %filename% e %path% como espaços reservados no comando.</value>
+    <value>Use %file%, %filename% e %path% como espaços reservados no comando.</value>
   </data>
   <data name="RulesWindowTitle" xml:space="preserve">
     <value>Regras</value>
   </data>
   <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>Buscar com Everything</value>
+    <value>Buscar com o Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
     <value>objeto</value>
@@ -292,28 +292,28 @@
     <value>objetos</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
-    <value>Sobre EverythingToolbar...</value>
+    <value>Sobre o EverythingToolbar...</value>
   </data>
   <data name="SettingsChangeShortcut" xml:space="preserve">
-    <value>Alterar atalho...</value>
+    <value>Alterar Atalho...</value>
   </data>
   <data name="SettingsDisableAnimations" xml:space="preserve">
     <value>Desabilitar animações</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Habilitar histórico de buscas</value>
+    <value>Ativar histórico de buscas</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>Ocultar buscas sem resultados</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>Match Case</value>
+    <value>Coincidir Caso</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
-    <value>Match Path</value>
+    <value>Coincidir Caminho</value>
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
-    <value>Match Whole Word</value>
+    <value>Coincidir Palavra Inteira</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
     <value>Preferências</value>
@@ -322,19 +322,19 @@
     <value>Expressões Regulares</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>Remember filter</value>
+    <value>Lembrar o filtro</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>Substituir a pesquisa do menu iniciar (experimental)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>Regras...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Show quick toggles</value>
+    <value>Mostrar alternadores rápidos</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>Show results count</value>
+    <value>Mostrar contagem de resultados</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Ordenar por</value>
@@ -342,8 +342,11 @@
   <data name="SettingsTheme" xml:space="preserve">
     <value>Tema</value>
   </data>
+  <data name="SettingsThumbnailsEnabled" xml:space="preserve">
+    <value>Enable thumbnails</value>
+  </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
-    <value>Usar Filtros Everything</value>
+    <value>Usar Filtros do Everything</value>
   </data>
   <data name="SettingsView" xml:space="preserve">
     <value>Visualizar</value>
@@ -385,10 +388,10 @@
     <value>Data alterada recentemente em ordem decrescente</value>
   </data>
   <data name="SortByDateRunAscending" xml:space="preserve">
-    <value>Data da execução em ordem crescente</value>
+    <value>Data de execução em ordem crescente</value>
   </data>
   <data name="SortByDateRunDescending" xml:space="preserve">
-    <value>Data da execução em ordem decrescente</value>
+    <value>Data de execução em ordem decrescente</value>
   </data>
   <data name="SortByExtensionAscending" xml:space="preserve">
     <value>Extensão em ordem crescente</value>
@@ -415,10 +418,10 @@
     <value>Caminho em ordem decrescente</value>
   </data>
   <data name="SortByRunCountAscending" xml:space="preserve">
-    <value>Executar contagem em ordem crescente</value>
+    <value>Contagem de execuções em ordem crescente</value>
   </data>
   <data name="SortByRunCountDescending" xml:space="preserve">
-    <value>Executar contagem em ordem decrescente</value>
+    <value>Contagem de execuções em ordem decrescente</value>
   </data>
   <data name="SortBySizeAscending" xml:space="preserve">
     <value>Tamanho em ordem crescente</value>

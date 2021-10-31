@@ -118,79 +118,79 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutLicense" xml:space="preserve">
-    <value>軟體授權</value>
+    <value>ئىجازەتنامە</value>
   </data>
   <data name="AboutOK" xml:space="preserve">
-    <value>確認</value>
+    <value>ماقۇل</value>
   </data>
   <data name="AboutVersion" xml:space="preserve">
-    <value>版本</value>
+    <value>نەشرى</value>
   </data>
   <data name="AboutWebsite" xml:space="preserve">
-    <value>網站</value>
+    <value>تور بېكىتى</value>
   </data>
   <data name="AboutWindowTitle" xml:space="preserve">
-    <value>關於  EverythingToolbar</value>
+    <value>EverythingToolbar ھەققىدە</value>
   </data>
   <data name="ContextMenuCopy" xml:space="preserve">
-    <value>複製</value>
+    <value>كۆچۈرۈش</value>
   </data>
   <data name="ContextMenuCopyFile" xml:space="preserve">
-    <value>複製</value>
+    <value>كۆچۈرۈش</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
-    <value>將檔案名稱複製到剪貼簿</value>
+    <value>تولۇق نامىنى كېسىش تاختىسىغا كۆچۈرۈش</value>
   </data>
   <data name="ContextMenuCut" xml:space="preserve">
-    <value>剪下</value>
+    <value>كېسىش</value>
   </data>
   <data name="ContextMenuOpen" xml:space="preserve">
-    <value>開啟</value>
+    <value>ئېچىش</value>
   </data>
   <data name="ContextMenuOpenPath" xml:space="preserve">
-    <value>開啟路徑</value>
+    <value>يولىنى ئېچىش</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
-    <value>開啟方式...</value>
+    <value>بىلەن ئېچىش...</value>
   </data>
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
-    <value>選擇應用程式</value>
+    <value>ئەپ تاللاش</value>
   </data>
   <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>沒有任何規則</value>
+    <value>ھېچقانداق قائىدە بېكىتىلمىگەن</value>
   </data>
   <data name="ContextMenuPaste" xml:space="preserve">
-    <value>貼上</value>
+    <value>چاپلاش</value>
   </data>
   <data name="ContextMenuProperties" xml:space="preserve">
-    <value>檔案資訊</value>
+    <value>خاسلىقلار</value>
   </data>
   <data name="ContextMenuRunAsAdmin" xml:space="preserve">
-    <value>以管理員身份執行</value>
+    <value>باشقۇرغۇچى سالاھىيىتىدە ئىجرا قىلىش</value>
   </data>
   <data name="ContextMenuShowInEverything" xml:space="preserve">
-    <value>在Everything中顯示</value>
+    <value>Everything دە كۆرسىتىش</value>
   </data>
   <data name="DefaultFilterAll" xml:space="preserve">
-    <value>全部</value>
+    <value>ھەممە</value>
   </data>
   <data name="DefaultFilterFile" xml:space="preserve">
-    <value>檔案</value>
+    <value>ھۆججەت</value>
   </data>
   <data name="DefaultFilterFolder" xml:space="preserve">
-    <value>資料夾</value>
+    <value>قىسقۇچ</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>緊湊</value>
+    <value>ئىخچام</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>緊湊（詳細）</value>
+    <value>ئىخچام (تەپسىلىي)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
-    <value>一般</value>
+    <value>نورمال</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>一般（詳細）</value>
+    <value>نورمال (تەپسىلىي)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -205,264 +205,264 @@
     <value>Win</value>
   </data>
   <data name="MessageBoxCopyException" xml:space="preserve">
-    <value>是否要將異常內容復制到剪貼簿？</value>
+    <value>نورمالسىزلىق مەزمۇنىنى كېسىش تاختىسىغا كۆچۈرەمسىز؟</value>
   </data>
   <data name="MessageBoxErrorTitle" xml:space="preserve">
-    <value>錯誤</value>
+    <value>خاتالىق</value>
   </data>
   <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
-    <value>複製檔案失敗</value>
+    <value>ھۆججەتنى كۆچۈرەلمىدى.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
-    <value>複製路徑失敗</value>
+    <value>يولىنى كۆچۈرەلمىدى.</value>
   </data>
   <data name="MessageBoxFailedToOpen" xml:space="preserve">
-    <value>打開搜索結果失敗</value>
+    <value>ئىزدەش نەتىجىسىنى ئاچالمىدى.</value>
   </data>
   <data name="MessageBoxFailedToOpenDialog" xml:space="preserve">
-    <value>打開對話框失敗。</value>
+    <value>دىيالوگنى ئاچالمىدى.</value>
   </data>
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
-    <value>打開路徑失敗。</value>
+    <value>يولىنى ئاچالمىدى.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>設置快速鍵失敗。它可能正在被另一個應用程序使用。</value>
+    <value>تېزلەتمە كۇنۇپكىنى تىزىملىتالمىدى. بەلكىم باشقا دېتال ئىشلىتىۋاتقان بولۇشى مۇمكىن.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
-    <value>命令執行失敗</value>
+    <value>بۇيرۇقنى ئىجرا قىلالمىدى</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
-    <value>要使用此排序方法，必須啟用快速排序。可以在Everything設置中啟用它。</value>
+    <value>بۇ تىزىش ئۇسۇلىنى ئىشلىتىش ئۈچۈن، تېز تىزىشنى قوزغىتىش كېرەك. بۇنى Everything نىڭ تەڭشىكىدىن قوزغاتقىلى بولىدۇ.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
-    <value>未啟用快速排序</value>
+    <value>تېز تىزىش قوزغىتىلمىدى</value>
   </data>
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
-    <value>至少有一個規則表達式無效。</value>
+    <value>كەم دېگەندە بىر مۇنتىزىم ئىپادە ئۈنۈمسىز.</value>
   </data>
   <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>規則名稱不能為空。</value>
+    <value>قائىدە نامى قۇرۇق بولسا بولمايدۇ.</value>
   </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
-    <value>請選擇 Everything.exe...</value>
+    <value>Everything.exe تاللاڭ...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>請選擇Filters.csv文件。默認情況下，它可以在%APPDATA%\Everything中找到。根據您的安裝設置，它的位置可能不同。</value>
+    <value>Filters.csv ھۆججىتىنى تاللاڭ. ئادەتتە %APPDATA%\Everything دىن تاپقىلى بولىدۇ. قاچىلىغىنىڭىزغا ئاساسەن ئورنى پەرقلىق بولۇشى مۇمكىن. ئەگەر بۇ ھۆججەت بولمىسا، Everything نىڭ سۈكۈتتىكى سۈزگۈچىگە ھېچقانداق ئۆزگەرتىش قىلمىغانلىقىڭىزنى بىلدۈرىدۇ.</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
-    <value>未找到Filters.csv</value>
+    <value>Filters.csv تېپىلمىدى</value>
   </data>
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
-    <value>發生未處理的異常</value>
+    <value>بىرتەرەپ قىلىنمىغان نورمالسىزلىق كۆرۈلدى</value>
   </data>
   <data name="RulesAutoApply" xml:space="preserve">
-    <value>根據條件自動應用規則</value>
+    <value>شەرت ئاساسىدا قائىدىلەرنى ئاپتوماتىك قوللىنىش</value>
   </data>
   <data name="RulesCancel" xml:space="preserve">
-    <value>取消</value>
+    <value>ئىناۋەتسىز</value>
   </data>
   <data name="RulesCommand" xml:space="preserve">
-    <value>命令</value>
+    <value>بۇيرۇق</value>
   </data>
   <data name="RulesName" xml:space="preserve">
-    <value>名稱</value>
+    <value>نامى</value>
   </data>
   <data name="RulesRegularExpression" xml:space="preserve">
-    <value>正規表示式</value>
+    <value>مۇنتىزىم ئىپادە</value>
   </data>
   <data name="RulesSave" xml:space="preserve">
-    <value>儲存</value>
+    <value>ساقلاش</value>
   </data>
   <data name="RulesType" xml:space="preserve">
-    <value>類型</value>
+    <value>تىپى</value>
   </data>
   <data name="RulesWindowText" xml:space="preserve">
-    <value>在命令中使用%file%、%filename%和%path%作為佔位符。</value>
+    <value>بۇيرۇقلاردا %file%، %filename% ۋە %path% لەرنى تولدۇرۇلما قىلىپ ئىشلىتىش.</value>
   </data>
   <data name="RulesWindowTitle" xml:space="preserve">
-    <value>規則</value>
+    <value>قائىدىلەر</value>
   </data>
   <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>用Everything 搜索</value>
+    <value>Everything بىلەن ئىزدەش</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
-    <value>目標</value>
+    <value>ئەزا</value>
   </data>
   <data name="SearchResults" xml:space="preserve">
-    <value>目標</value>
+    <value>ئەزا</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
-    <value>關於  EverythingToolbar...</value>
+    <value>EverythingToolbar ھەققىدە...</value>
   </data>
   <data name="SettingsChangeShortcut" xml:space="preserve">
-    <value>修改快捷鍵...</value>
+    <value>تېزلەتمە كۇنۇپكىسىنى ئۆزگەرتىش...</value>
   </data>
   <data name="SettingsDisableAnimations" xml:space="preserve">
-    <value>停用動畫</value>
+    <value>ھەرىكەت ئۈنۈملىرىنى چەكلەش</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>開啟搜索記錄</value>
+    <value>ئىزدەش تارىخىنى قوزغىتىش</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
-    <value>隱藏空的搜索</value>
+    <value>قۇرۇق ئىزدەشنى يوشۇرۇش</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>符合大小寫</value>
+    <value>چوڭلۇقى ماس كېلىش</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
-    <value>符合路徑</value>
+    <value>يولى ماس كېلىش</value>
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
-    <value>符合整句</value>
+    <value>پۈتۈن سۆز ماس كېلىش</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
-    <value>設定</value>
+    <value>تاللانمىلار</value>
   </data>
   <data name="SettingsRegularExpressions" xml:space="preserve">
-    <value>正規表達式</value>
+    <value>مۇنتىزىم ئىپادىلەر</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>記得我的篩選器</value>
+    <value>سۈزگۈچنى ئەستە ساقلاش</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>替換開始選單搜索（實驗性）</value>
+    <value>باشلاش تىزىملىكىدىكى ئىزدەشنى ئالماشتۇرۇش (سىناق)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
-    <value>規則...</value>
+    <value>قائىدىلەر...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>顯示快速開關</value>
+    <value>تېز ئالماشتۇرغۇچنى كۆرسىتىش</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>顯示結果計數</value>
+    <value>نەتىجىلەر سانىنى كۆرسىتىش</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
-    <value>排序方式</value>
+    <value>تىزىش شەكلى</value>
   </data>
   <data name="SettingsTheme" xml:space="preserve">
-    <value>佈景主題</value>
+    <value>ئۇسلۇب</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>Enable thumbnails</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
-    <value>使用Everything篩選器</value>
+    <value>Everything نىڭ سۈزگۈچلىرىنى ئىشلىتىش</value>
   </data>
   <data name="SettingsView" xml:space="preserve">
-    <value>檢視</value>
+    <value>كۆرۈنۈش</value>
   </data>
   <data name="ShortcutOK" xml:space="preserve">
-    <value>確認</value>
+    <value>ماقۇل</value>
   </data>
   <data name="ShortcutWindowTitle" xml:space="preserve">
-    <value>設置快捷鍵...</value>
+    <value>تېزلەتمە كۇنۇپكىنى كىرگۈزۈش...</value>
   </data>
   <data name="SortByAttributesAscending" xml:space="preserve">
-    <value>屬性 遞增</value>
+    <value>خاسلىقلىرىنىڭ ئېشىش تەرتىپى</value>
   </data>
   <data name="SortByAttributesDescending" xml:space="preserve">
-    <value>屬性 遞減</value>
+    <value>خاسلىقلىرىنىڭ كېمىيىش تەرتىپى</value>
   </data>
   <data name="SortByDateAccessedAscending" xml:space="preserve">
-    <value>訪問日期 遞增</value>
+    <value>زىيارەت قىلىنغان ۋاقتىنىڭ ئېشىش تەرتىپى</value>
   </data>
   <data name="SortByDateAccessedDescending" xml:space="preserve">
-    <value>訪問日期 遞減</value>
+    <value>زىيارەت قىلىنغان ۋاقتىنىڭ كېمىيىش تەرتىپى</value>
   </data>
   <data name="SortByDateCreatedAscending" xml:space="preserve">
-    <value>建立日期 遞增</value>
+    <value>قۇرۇلغان ۋاقتىنىڭ ئېشىش تەرتىپى</value>
   </data>
   <data name="SortByDateCreatedDescending" xml:space="preserve">
-    <value>建立日期 遞減</value>
+    <value>قۇرۇلغان ۋاقتىنىڭ كېمىيىش تەرتىپى</value>
   </data>
   <data name="SortByDateModifiedAscending" xml:space="preserve">
-    <value>修改日期 遞增</value>
+    <value>ئۆزگەرتىلگەن ۋاقتىنىڭ ئېشىش تەرتىپى</value>
   </data>
   <data name="SortByDateModifiedDescending" xml:space="preserve">
-    <value>修改日期 遞減</value>
+    <value>ئۆزگەرتىلگەن ۋاقتىنىڭ كېمىيىش تەرتىپى</value>
   </data>
   <data name="SortByDateRecentlyChangedAscending" xml:space="preserve">
-    <value>最近修改日期 遞增</value>
+    <value>يېقىندا ئۆزگەرتىلگەن ۋاقتىنىڭ ئېشىش تەرتىپى</value>
   </data>
   <data name="SortByDateRecentlyChangedDescending" xml:space="preserve">
-    <value>最近修改日期 遞減</value>
+    <value>يېقىندا ئۆزگەرتىلگەن ۋاقتىنىڭ كېمىيىش تەرتىپى</value>
   </data>
   <data name="SortByDateRunAscending" xml:space="preserve">
-    <value>執行日期 遞增</value>
+    <value>ئىجرا ۋاقتىنىڭ ئېشىش تەرتىپى</value>
   </data>
   <data name="SortByDateRunDescending" xml:space="preserve">
-    <value>執行日期 遞減</value>
+    <value>ئىجرا ۋاقتىنىڭ كېمىيىش تەرتىپى</value>
   </data>
   <data name="SortByExtensionAscending" xml:space="preserve">
-    <value>副檔名 遞增</value>
+    <value>كېڭەيتمە نامىنىڭ ئېشىش تەرتىپى</value>
   </data>
   <data name="SortByExtensionDescending" xml:space="preserve">
-    <value>副檔名 遞減</value>
+    <value>كېڭەيتمە نامىنىڭ كېمىيىش تەرتىپى</value>
   </data>
   <data name="SortByFileListFilenameAscending" xml:space="preserve">
-    <value>檔案列表檔案名稱 遞增</value>
+    <value>ھۆججەت تىزىملىكى نامىنىڭ ئېشىش تەرتىپى</value>
   </data>
   <data name="SortByFileListFilenameDescending" xml:space="preserve">
-    <value>檔案列表檔案名稱 遞減</value>
+    <value>ھۆججەت تىزىملىكى نامىنىڭ كېمىيىش تەرتىپى</value>
   </data>
   <data name="SortByNameAscending" xml:space="preserve">
-    <value>名稱 遞增</value>
+    <value>نامىنىڭ ئېشىش تەرتىپى</value>
   </data>
   <data name="SortByNameDescending" xml:space="preserve">
-    <value>名稱 遞減</value>
+    <value>نامىنىڭ كېمىيىش تەرتىپى</value>
   </data>
   <data name="SortByPathAscending" xml:space="preserve">
-    <value>路徑 遞增</value>
+    <value>يولىنىڭ ئېشىش تەرتىپى</value>
   </data>
   <data name="SortByPathDescending" xml:space="preserve">
-    <value>路徑 遞減</value>
+    <value>يولىنىڭ كېمىيىش تەرتىپى</value>
   </data>
   <data name="SortByRunCountAscending" xml:space="preserve">
-    <value>執行次數 遞增</value>
+    <value>ئىجرا سانىنىڭ ئېشىش تەرتىپى</value>
   </data>
   <data name="SortByRunCountDescending" xml:space="preserve">
-    <value>執行次數 遞減</value>
+    <value>ئىجرا سانىنىڭ كېمىيىش تەرتىپى</value>
   </data>
   <data name="SortBySizeAscending" xml:space="preserve">
-    <value>大小 遞升</value>
+    <value>چوڭلۇقىنىڭ ئېشىش تەرتىپى</value>
   </data>
   <data name="SortBySizeDescending" xml:space="preserve">
-    <value>大小 遞降</value>
+    <value>چوڭلۇقىنىڭ كېمىيىش تەرتىپى</value>
   </data>
   <data name="SortByTypeNameAscending" xml:space="preserve">
-    <value>類型名稱 遞增</value>
+    <value>تىپ نامىنىڭ ئېشىش تەرتىپى</value>
   </data>
   <data name="SortByTypeNameDescending" xml:space="preserve">
-    <value>類型名稱 遞減</value>
+    <value>تىپ نامىنىڭ كېمىيىش تەرتىپى</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>深色</value>
+    <value>قاراڭغۇ</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>明亮</value>
+    <value>يورۇق</value>
   </data>
   <data name="ThemeMedium" xml:space="preserve">
-    <value>中等</value>
+    <value>ئوتتۇرھال</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
-    <value>音訊</value>
+    <value>ئۈن</value>
   </data>
   <data name="UserFilterCompressed" xml:space="preserve">
-    <value>壓縮檔</value>
+    <value>پىرېسلانغان</value>
   </data>
   <data name="UserFilterDocument" xml:space="preserve">
-    <value>文件</value>
+    <value>ھۆججەت</value>
   </data>
   <data name="UserFilterExecutable" xml:space="preserve">
-    <value>執行檔</value>
+    <value>ئىجرا بولىدىغان</value>
   </data>
   <data name="UserFilterPicture" xml:space="preserve">
-    <value>圖片</value>
+    <value>رەسىم</value>
   </data>
   <data name="UserFilterPlaceholder" xml:space="preserve">
-    <value>更多</value>
+    <value>تېخىمۇ كۆپ</value>
   </data>
   <data name="UserFilterVideo" xml:space="preserve">
-    <value>影片</value>
+    <value>سىن</value>
   </data>
 </root>
