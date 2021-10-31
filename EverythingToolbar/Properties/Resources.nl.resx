@@ -343,7 +343,7 @@
     <value>Thema</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>Enable thumbnails</value>
+    <value>Miniaturen inschakelen</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Gebruik Everything filters</value>
