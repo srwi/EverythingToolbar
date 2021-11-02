@@ -1,6 +1,6 @@
 ﻿namespace EverythingToolbar.Data
 {
-    class Filter
+    public class Filter
     {
         public string Name { get; set; }
         public string Icon { get; set; }

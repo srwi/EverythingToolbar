@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingToolbar.Debug", "
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "EverythingToolbar.Installer", "EverythingToolbar.Installer\EverythingToolbar.Installer.wixproj", "{3A32975A-714F-408F-828A-04F5119EC1AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingToolbar.Launcher", "EverythingToolbar.Launcher\EverythingToolbar.Launcher.csproj", "{FC46FED2-0B98-497F-8F88-037A0780ACF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,18 @@ Global
 		{3A32975A-714F-408F-828A-04F5119EC1AB}.Release|x64.ActiveCfg = Release|x86
 		{3A32975A-714F-408F-828A-04F5119EC1AB}.Release|x86.ActiveCfg = Release|x86
 		{3A32975A-714F-408F-828A-04F5119EC1AB}.Release|x86.Build.0 = Release|x86
+		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Debug|x64.Build.0 = Debug|Any CPU
+		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Debug|x86.Build.0 = Debug|Any CPU
+		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Release|x64.ActiveCfg = Release|Any CPU
+		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Release|x64.Build.0 = Release|Any CPU
+		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Release|x86.ActiveCfg = Release|Any CPU
+		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

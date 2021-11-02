@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace EverythingToolbar
 {
-    class EverythingSearch : INotifyPropertyChanged
+    public class EverythingSearch : INotifyPropertyChanged
     {
         private enum ErrorCode
         {
