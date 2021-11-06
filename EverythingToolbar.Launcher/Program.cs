@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Interop;
 
 namespace EverythingToolbar.Launcher
 {
@@ -11,20 +15,66 @@ namespace EverythingToolbar.Launcher
     {
         public partial class LauncherWindow : Window
         {
+            static IntPtr handle;
+
+            [DllImport("user32.dll")]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            private static extern bool SetForegroundWindow(IntPtr hWnd);
+
             public LauncherWindow()
             {
-                Rectangle taskbar = FindDockedTaskBars()[0];
-                Left = taskbar.Width / 2;
-                Top = taskbar.Y;
                 Width = 0;
                 Height = 0;
                 ShowInTaskbar = false;
                 Visibility = Visibility.Hidden;
                 ResizeMode = ResizeMode.NoResize;
                 WindowStyle = WindowStyle.None;
-                SearchResultsPopup.taskbarEdge = CSDeskBand.Edge.Bottom;
                 Content = new ToolbarControl();
+                Loaded += OnLoaded;
+
+                SetPosition();
                 StartToggleListener();
+            }
+
+            private void OnLoaded(object sender, RoutedEventArgs e)
+            {
+                handle = ((HwndSource)PresentationSource.FromVisual(this)).Handle;
+            }
+
+            private void SetPosition()
+            {
+                Rectangle taskbar = FindDockedTaskBars()[0];
+
+                if (taskbar.Y + taskbar.Height == System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height)
+                {
+                    Top = taskbar.Y;
+                    SearchResultsPopup.taskbarEdge = CSDeskBand.Edge.Bottom;
+                }
+                else
+                {
+                    Top = taskbar.Height;
+                    SearchResultsPopup.taskbarEdge = CSDeskBand.Edge.Top;
+                }
+
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"))
+                {
+                    object registryValueObject = key?.GetValue("TaskbarAl");
+                    if (registryValueObject != null && (int)registryValueObject == 1)
+                    {
+                        Left = taskbar.Width / 2 - Properties.Settings.Default.popupSize.Width / 2;
+                    }
+                    else
+                    {
+                        if (CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
+                        {
+                            Left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Width - 1;
+                        }
+                        else
+                        {
+                            Left = 0;
+                        }
+                    }
+                }
             }
 
             private void StartToggleListener()
@@ -36,14 +86,19 @@ namespace EverythingToolbar.Launcher
                     {
                         wh.WaitOne();
                         if (EverythingSearch.Instance.SearchTerm != null)
+                        {
                             EverythingSearch.Instance.SearchTerm = null;
+                        }
                         else
+                        {
+                            SetForegroundWindow(handle);
                             EverythingSearch.Instance.SearchTerm = "";
+                        }
                     }
                 });
             }
 
-            public static List<Rectangle> FindDockedTaskBars()
+            private static List<Rectangle> FindDockedTaskBars()
             {
                 List<Rectangle> dockedRects = new List<Rectangle>();
                 foreach (var tmpScrn in System.Windows.Forms.Screen.AllScreens)

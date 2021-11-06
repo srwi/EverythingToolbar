@@ -164,7 +164,7 @@ namespace EverythingToolbar
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
 
-        private void FocusSearchBox(object sender, HotkeyEventArgs e)
+        public void FocusSearchBox(object sender, HotkeyEventArgs e)
         {
             if (SearchResultsPopup.IsOpen)
             {
