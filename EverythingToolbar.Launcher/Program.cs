@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
 
 namespace EverythingToolbar.Launcher
 {
@@ -12,35 +13,40 @@ namespace EverythingToolbar.Launcher
         {
             public LauncherWindow()
             {
-                List<Rectangle> taskbars = FindDockedTaskBars();
-                Rectangle taskbar = taskbars[0];
-                Title = "EverythingToolbar";
-                Width = 0;
-                Height = 0;
+                Rectangle taskbar = FindDockedTaskBars()[0];
                 Left = taskbar.Width / 2;
                 Top = taskbar.Y;
-                
-                Opacity = 0;
+                Width = 0;
+                Height = 0;
+                ShowInTaskbar = false;
+                Visibility = Visibility.Hidden;
                 ResizeMode = ResizeMode.NoResize;
                 WindowStyle = WindowStyle.None;
-                Topmost = true;
                 SearchResultsPopup.taskbarEdge = CSDeskBand.Edge.Bottom;
-                ToolbarControl tc = new ToolbarControl();
-                Content = tc;
-                SearchResultsPopup searchResultsPopup = (SearchResultsPopup)tc.FindName("SearchResultsPopup");
-                searchResultsPopup.Closed += OnPopupClosed;
-                EverythingSearch.Instance.SearchTerm = "";
+                Content = new ToolbarControl();
+                StartToggleListener();
             }
 
-            private void OnPopupClosed(object sender, EventArgs e)
+            private void StartToggleListener()
             {
-                Close();
+                Task.Factory.StartNew(() =>
+                {
+                    EventWaitHandle wh = new EventWaitHandle(false, EventResetMode.AutoReset, "EverythingToolbarToggleEvent");
+                    while (true)
+                    {
+                        wh.WaitOne();
+                        if (EverythingSearch.Instance.SearchTerm != null)
+                            EverythingSearch.Instance.SearchTerm = null;
+                        else
+                            EverythingSearch.Instance.SearchTerm = "";
+                    }
+                });
             }
 
             public static List<Rectangle> FindDockedTaskBars()
             {
                 List<Rectangle> dockedRects = new List<Rectangle>();
-                foreach (var tmpScrn in Screen.AllScreens)
+                foreach (var tmpScrn in System.Windows.Forms.Screen.AllScreens)
                 {
                     if (!tmpScrn.Bounds.Equals(tmpScrn.WorkingArea))
                     {
@@ -89,10 +95,28 @@ namespace EverythingToolbar.Launcher
         }
 
         [STAThread]
-        static void Main(string[] args)
+        static void Main()
         {
-            System.Windows.Application app = new System.Windows.Application();
-            app.Run(new LauncherWindow());
+            using (Mutex mutex = new Mutex(false, "EverythingToolbar.Launcher", out bool createdNew))
+            {
+                if (createdNew)
+                {
+                    Application app = new Application();
+                    app.Run(new LauncherWindow());
+                }
+                else
+                {
+                    try
+                    {
+                        EventWaitHandle wh = EventWaitHandle.OpenExisting("EverythingToolbarToggleEvent");
+                        wh.Set();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
         }
     }
 }
