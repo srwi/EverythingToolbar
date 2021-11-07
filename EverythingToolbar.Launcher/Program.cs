@@ -156,8 +156,16 @@ namespace EverythingToolbar.Launcher
             {
                 if (createdNew)
                 {
-                    Application app = new Application();
-                    app.Run(new LauncherWindow());
+                    using (System.Windows.Forms.NotifyIcon icon = new System.Windows.Forms.NotifyIcon())
+                    {
+                        Application app = new Application();
+                        icon.Icon = Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath);
+                        icon.ContextMenu = new System.Windows.Forms.ContextMenu(new System.Windows.Forms.MenuItem[] {
+                            new System.Windows.Forms.MenuItem("Quit", (s, e) => { app.Shutdown(); })
+                        });
+                        icon.Visible = true;
+                        app.Run(new LauncherWindow());
+                    }
                 }
                 else
                 {
