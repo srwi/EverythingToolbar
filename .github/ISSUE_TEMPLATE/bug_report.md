@@ -1,33 +1,65 @@
----
 name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
-
----
-
-<!-- Please make sure to fully read the README and search open and closed issues for duplicates before opening a new issue. -->
-
-**Describe the bug**
-A clear and concise description of what the bug is.
-
-**Steps to reproduce**
-Describe exactly how to reproduce the behaviour.
-
-**Expected behavior**
-A clear and concise description of what you expected to happen.
-
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Log file output**
-Add the log file output from `%TEMP%\EverythingToolbar.log` below.
-
-<details>
-<summary>Log output</summary>
-
-```
-Replace this line with the log file output.
-```
-</details>
+description: Create a report to help us improve 
+title: ""
+labels: []
+body:
+- type: checkboxes
+  attributes:
+    label: Preflight Checklist
+    description: Please ensure you've completed all of the following.
+    options:
+      - label: I have fully read the [README](https://github.com/stnkl/EverythingToolbar/blob/master/README.md) and it did not solve the problem.
+        required: true
+      - label: I have searched all [https://github.com/stnkl/EverythingToolbar/issues?q=](open and closed issues) for the same bug report without success.
+        required: true
+- type: input
+  attributes:
+    label: EverythingToolbar Version
+    description: What version of EverythingToolbar are you using?
+    placeholder: 0.7.3
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: Windows Version
+    description: What Windows version are you using? Click Start button > Settings > System > About.
+    placeholder: "e.g. Windows 10 version 1909"
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Steps to reproduce
+    description: Describe exactly how to reproduce the behaviour.
+    placeholder: |
+      1. Go to '...'
+      2. Click on '....'
+      3. Scroll down to '....'
+      4. See error
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Expected Behavior
+    description: A clear and concise description of what you expected to happen.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Actual Behavior
+    description: A clear description of what actually happens.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Screenshots
+    description: If applicable, add screenshots to help explain your problem. You can simply drag and drop any image file into the editor to add it to the report.
+- type: textarea
+  attributes:
+    label: Log output
+    description: Add the log file output from `%TEMP%\EverythingToolbar.log`.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Additional Information
+    description: If your problem needs further explanation please add more information here.
