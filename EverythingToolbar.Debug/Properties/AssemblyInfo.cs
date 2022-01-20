@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("EverythingToolbar.Debug")]
-[assembly: AssemblyCopyright("Copyright © Stephan Rumswinkel 2021")]
+[assembly: AssemblyCopyright("Copyright © Stephan Rumswinkel 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
