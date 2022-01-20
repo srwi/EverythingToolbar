@@ -343,7 +343,7 @@
     <value>テーマ</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>Enable thumbnails</value>
+    <value>サムネイルを有効</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Everything のフィルタを使用</value>

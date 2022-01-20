@@ -139,7 +139,7 @@
     <value>複製</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
-    <value>將檔案名稱複製到剪貼簿</value>
+    <value>複製完整名稱至剪貼簿</value>
   </data>
   <data name="ContextMenuCut" xml:space="preserve">
     <value>剪下</value>
@@ -163,7 +163,7 @@
     <value>貼上</value>
   </data>
   <data name="ContextMenuProperties" xml:space="preserve">
-    <value>檔案資訊</value>
+    <value>屬性</value>
   </data>
   <data name="ContextMenuRunAsAdmin" xml:space="preserve">
     <value>以管理員身份執行</value>
@@ -283,7 +283,7 @@
     <value>規則</value>
   </data>
   <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>用Everything 搜索</value>
+    <value>使用Everything 搜索</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
     <value>目標</value>
@@ -301,31 +301,31 @@
     <value>停用動畫</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>開啟搜索記錄</value>
+    <value>開啟搜尋記錄</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
-    <value>隱藏空的搜索</value>
+    <value>隱藏空的搜尋</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>符合大小寫</value>
+    <value>匹配大小寫</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
-    <value>符合路徑</value>
+    <value>匹配路徑</value>
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
-    <value>符合整句</value>
+    <value>匹配整句</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
-    <value>設定</value>
+    <value>偏好</value>
   </data>
   <data name="SettingsRegularExpressions" xml:space="preserve">
     <value>正規表達式</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>記得我的篩選器</value>
+    <value>記住過濾器</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>替換開始選單搜索（實驗性）</value>
+    <value>替換開始選單搜尋(實驗性)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>規則...</value>
@@ -343,7 +343,7 @@
     <value>佈景主題</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>Enable thumbnails</value>
+    <value>更改預覽圖</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>使用Everything篩選器</value>
