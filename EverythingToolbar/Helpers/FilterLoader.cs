@@ -306,13 +306,7 @@ namespace EverythingToolbar.Helpers
         {
             if (Properties.Settings.Default.isRememberFilter)
             {
-                foreach (Filter filter in DefaultFilters)
-                {
-                    if (filter.Name == Properties.Settings.Default.lastFilter)
-                        return filter;
-                }
-
-                foreach (Filter filter in UserFilters)
+                foreach (Filter filter in DefaultFilters.Union(UserFilters))
                 {
                     if (filter.Name == Properties.Settings.Default.lastFilter)
                         return filter;

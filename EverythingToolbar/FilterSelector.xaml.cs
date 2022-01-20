@@ -6,8 +6,6 @@ namespace EverythingToolbar
 {
     public partial class FilterSelector : UserControl
     {
-        bool preventInitialSelectionChange = true;
-
         public FilterSelector()
         {
             InitializeComponent();
@@ -37,12 +35,6 @@ namespace EverythingToolbar
 
         private void OnTabItemSelected(object sender, SelectionChangedEventArgs e)
         {
-            if (preventInitialSelectionChange)
-            {
-                preventInitialSelectionChange = false;
-                return;
-            }
-
             if (TabControl.SelectedIndex < 0)
                 return;
 
