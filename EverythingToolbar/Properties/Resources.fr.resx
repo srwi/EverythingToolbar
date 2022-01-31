@@ -184,13 +184,13 @@
     <value>Compact</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compact (detailed)</value>
+    <value>Compact (détaillé)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
     <value>Normal</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detailed)</value>
+    <value>Normal (détaillé)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -301,7 +301,7 @@
     <value>Désactiver les animation</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Enable search history</value>
+    <value>Activer l'historique des recherches</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>Masquer les résultats de recherche vides</value>
@@ -322,10 +322,10 @@
     <value>Expressions régulières</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>Remember filter</value>
+    <value>Mémoriser le filtre</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>Remplacer la recherche du menu Démarrer (expérimental)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>Règles...</value>
