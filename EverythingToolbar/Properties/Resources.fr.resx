@@ -307,10 +307,10 @@
     <value>Masquer les résultats de recherche vides</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>Sensible à la casse</value>
+    <value>Respecter la casse</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
-    <value>Chemin correspondant</value>
+    <value>Respecter le chemin</value>
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
     <value>Respecter le mot entier</value>
