@@ -313,7 +313,7 @@
     <value>Chemin correspondant</value>
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
-    <value>Mot entier seulement</value>
+    <value>Respecter le mot entier</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
     <value>Préférences</value>
