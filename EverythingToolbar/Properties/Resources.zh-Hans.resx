@@ -286,7 +286,7 @@
     <value>用Everything 搜索</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
-    <value>个对象</value>
+    <value>对象</value>
   </data>
   <data name="SearchResults" xml:space="preserve">
     <value>个对象</value>
