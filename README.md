@@ -56,10 +56,10 @@ Keyboard shortcuts
 |-------------------------------------------------------|--------------------------------------|
 | <kbd>&#8593;</kbd>/<kbd>&#8595;</kbd>                 | Navigate search results              |
 | <kbd>Ctrl</kbd>+<kbd>&#8593;</kbd>/<kbd>&#8595;</kbd> | Navigate search history (if enabled) |
-| <kbd>Return</kbd>                                     | Open                                 |
-| <kbd>Ctrl</kbd>+<kbd>Return</kbd>/<kbd>Click</kbd>    | Open path                            |
-| <kbd>Shift</kbd>+<kbd>Return</kbd>/<kbd>Click</kbd>   | Open in Everything                   |
-| <kbd>Alt</kbd>+<kbd>Return</kbd>/<kbd>Click</kbd>     | File properties                      |
+| <kbd>Enter</kbd>                                      | Open                                 |
+| <kbd>Ctrl</kbd>+<kbd>Enter</kbd>/<kbd>Click</kbd>     | Open path                            |
+| <kbd>Shift</kbd>+<kbd>Enter</kbd>/<kbd>Click</kbd>    | Open in Everything                   |
+| <kbd>Alt</kbd>+<kbd>Enter</kbd>/<kbd>Click</kbd>      | File properties                      |
 | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>     | Run as admin                         |
 | (<kbd>Shift</kbd>+)<kbd>Tab</kbd>                     | Cycle through filters                |
 | <kbd>Ctrl</kbd>+<kbd>0-9</kbd>                        | Select filter                        |
