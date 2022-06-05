@@ -139,58 +139,58 @@
     <value>Másolás</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
-    <value>Copy Full Name to Clipboard</value>
+    <value>Fájlnév másolása a vágólapra</value>
   </data>
   <data name="ContextMenuCut" xml:space="preserve">
-    <value>Cut</value>
+    <value>Kivágás</value>
   </data>
   <data name="ContextMenuOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>Megnyitás</value>
   </data>
   <data name="ContextMenuOpenPath" xml:space="preserve">
-    <value>Open Path</value>
+    <value>Megnyitás</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
-    <value>Open with...</value>
+    <value>Megnyitás ezzel...</value>
   </data>
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
-    <value>Choose app</value>
+    <value>Alkalmazás választása</value>
   </data>
   <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>No rules defined</value>
+    <value>Nincs szabály megadva</value>
   </data>
   <data name="ContextMenuPaste" xml:space="preserve">
-    <value>Paste</value>
+    <value>Beillesztés</value>
   </data>
   <data name="ContextMenuProperties" xml:space="preserve">
-    <value>Properties</value>
+    <value>Tulajdonságok</value>
   </data>
   <data name="ContextMenuRunAsAdmin" xml:space="preserve">
-    <value>Run as admin</value>
+    <value>Futtatás rendszergazdaként</value>
   </data>
   <data name="ContextMenuShowInEverything" xml:space="preserve">
-    <value>Show in Everything</value>
+    <value>Mutasd Everything-ben</value>
   </data>
   <data name="DefaultFilterAll" xml:space="preserve">
-    <value>All</value>
+    <value>Mind</value>
   </data>
   <data name="DefaultFilterFile" xml:space="preserve">
-    <value>File</value>
+    <value>Fájl</value>
   </data>
   <data name="DefaultFilterFolder" xml:space="preserve">
-    <value>Folder</value>
+    <value>Mappa</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>Compact</value>
+    <value>Kompakt</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compact (detailed)</value>
+    <value>Kompakt (részletes)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
-    <value>Normal</value>
+    <value>Normál</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detailed)</value>
+    <value>Normál (részletes)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -205,67 +205,67 @@
     <value>Win</value>
   </data>
   <data name="MessageBoxCopyException" xml:space="preserve">
-    <value>Do you want to copy the exception content to clipboard?</value>
+    <value>Szeretnéd a kivételt a vágólapra másolni?</value>
   </data>
   <data name="MessageBoxErrorTitle" xml:space="preserve">
-    <value>Error</value>
+    <value>Hiba</value>
   </data>
   <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
-    <value>Failed to copy file.</value>
+    <value>Fájlmásolás sikertelen.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
-    <value>Failed to copy path.</value>
+    <value>Az útvonalmásolás sikertelen.</value>
   </data>
   <data name="MessageBoxFailedToOpen" xml:space="preserve">
-    <value>Failed to open search result.</value>
+    <value>Sikertelen keresés megnyitás.</value>
   </data>
   <data name="MessageBoxFailedToOpenDialog" xml:space="preserve">
-    <value>Failed to open dialog.</value>
+    <value>Sikertelen dialógus megnyitás.</value>
   </data>
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
-    <value>Failed to open path.</value>
+    <value>Sikertelen útvonal megnyitás.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Failed to register hotkey. It might be in use by another application.</value>
+    <value>Sikertelen gyorsbillentyű regisztráció. Talán egy másik alkalmazás használja.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
-    <value>Failed to run command</value>
+    <value>Sikertelen parancs futtatás</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
-    <value>To utilize this sorting method it has to have fast sorting enabled. It can be enabled in your Everything settings.</value>
+    <value>Ezen rendezési mód használatához engedélyezni kell a gyors rendezést. Ez az Everything beállításokban megtehető.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
-    <value>Fast sorting not enabled</value>
+    <value>Gyors rendezsé nincs engedélyezve</value>
   </data>
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
-    <value>At least one regular expression is invalid.</value>
+    <value>Legalább egy alapértelmezett kifejezés érvénytelen.</value>
   </data>
   <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Rule names cannot be empty.</value>
+    <value>A szabály neveket nem lehet üresen hagyni.</value>
   </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
-    <value>Please select Everything.exe...</value>
+    <value>Kérem válassza az Everything.exe-t...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>Please select the Filters.csv file. By default it can be found in %APPDATA%\Everything. Its location might be different depending on your installation. If the file does not exist for you that means you didn't perform any changes to Everything's default filters.</value>
+    <value>Kérem válassza ki a Filters.csv fájlt. Alapértelmezetten az %APPDATA%\Everything elérési úton található, ez esetenként eltérhet. Ha nem létezik a fájl, az azt jelenti, hogy nem módosította a beállításokat.</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
-    <value>Filters.csv not found</value>
+    <value>Filters.csv nem található</value>
   </data>
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
-    <value>Unhandled exception occured</value>
+    <value>Váratlan kivétel történt</value>
   </data>
   <data name="RulesAutoApply" xml:space="preserve">
-    <value>Automatically apply rules based on condition</value>
+    <value>Szabályok automatikus alkalmazása kondíció alapján</value>
   </data>
   <data name="RulesCancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Mégse</value>
   </data>
   <data name="RulesCommand" xml:space="preserve">
-    <value>Command</value>
+    <value>Parancs</value>
   </data>
   <data name="RulesName" xml:space="preserve">
-    <value>Name</value>
+    <value>Név</value>
   </data>
   <data name="RulesRegularExpression" xml:space="preserve">
     <value>Regular Expression</value>
@@ -418,13 +418,13 @@
     <value>Path descending</value>
   </data>
   <data name="SortByRunCountAscending" xml:space="preserve">
-    <value>Run count ascending</value>
+    <value>Növekvő számlálás</value>
   </data>
   <data name="SortByRunCountDescending" xml:space="preserve">
-    <value>Run count descending</value>
+    <value>Csökkenő számlálás</value>
   </data>
   <data name="SortBySizeAscending" xml:space="preserve">
-    <value>Size ascending</value>
+    <value>Növekvő rendezés</value>
   </data>
   <data name="SortBySizeDescending" xml:space="preserve">
     <value>Size descending</value>
