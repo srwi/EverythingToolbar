@@ -304,52 +304,52 @@
     <value>Keresési előzmények be</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
-    <value>Hide empty search</value>
+    <value>Üres keresés elrejtése</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
     <value>Match Case</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
-    <value>Match Path</value>
+    <value>Útvonal egyezés</value>
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
-    <value>Match Whole Word</value>
+    <value>Teljes szó egyezése</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Preferenciák</value>
   </data>
   <data name="SettingsRegularExpressions" xml:space="preserve">
-    <value>Regular Expressions</value>
+    <value>Reguláris kifejezés</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>Remember filter</value>
+    <value>Szűrő megjegyzése</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>A start menü keresésének lecserélése (kísérleti)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
-    <value>Rules...</value>
+    <value>Szabályok...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Show quick toggles</value>
+    <value>Gyorskapcsolók megjelenítése</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>Show results count</value>
+    <value>A találatok száma</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
-    <value>Sort By</value>
+    <value>Rendezés</value>
   </data>
   <data name="SettingsTheme" xml:space="preserve">
-    <value>Theme</value>
+    <value>Téma</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>Enable thumbnails</value>
+    <value>Mutasson miniatűröket</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
-    <value>Use Everything filters</value>
+    <value>Everything szűrők használata</value>
   </data>
   <data name="SettingsView" xml:space="preserve">
-    <value>View</value>
+    <value>Megjelenít</value>
   </data>
   <data name="ShortcutOK" xml:space="preserve">
     <value>OK</value>
@@ -358,28 +358,28 @@
     <value>Enter shortcut...</value>
   </data>
   <data name="SortByAttributesAscending" xml:space="preserve">
-    <value>Attributes ascending</value>
+    <value>Növekvő attribútum</value>
   </data>
   <data name="SortByAttributesDescending" xml:space="preserve">
-    <value>Attributes descending</value>
+    <value>Csökkenő attribútum</value>
   </data>
   <data name="SortByDateAccessedAscending" xml:space="preserve">
-    <value>Date accessed ascending</value>
+    <value>Hozzáférés dátuma növekvő</value>
   </data>
   <data name="SortByDateAccessedDescending" xml:space="preserve">
-    <value>Date accessed descending</value>
+    <value>Hozzáférés dátuma csökkenő</value>
   </data>
   <data name="SortByDateCreatedAscending" xml:space="preserve">
-    <value>Date created ascending</value>
+    <value>Létrehozás dátuma növekvő</value>
   </data>
   <data name="SortByDateCreatedDescending" xml:space="preserve">
-    <value>Date created descending</value>
+    <value>Létrehozás dátuma csökkenő</value>
   </data>
   <data name="SortByDateModifiedAscending" xml:space="preserve">
-    <value>Date modified ascending</value>
+    <value>Módosítás dátuma növekvő</value>
   </data>
   <data name="SortByDateModifiedDescending" xml:space="preserve">
-    <value>Date modified descending</value>
+    <value>Módosítás dátuma csökkenő</value>
   </data>
   <data name="SortByDateRecentlyChangedAscending" xml:space="preserve">
     <value>Date recently changed ascending</value>
