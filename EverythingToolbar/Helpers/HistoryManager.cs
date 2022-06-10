@@ -46,16 +46,16 @@ namespace EverythingToolbar.Helpers
             if (File.Exists(historyPath))
             {
                 var serializer = new XmlSerializer(history.GetType());
-                using (var reader = XmlReader.Create(historyPath))
+                try
                 {
-                    try
+                    using (var reader = XmlReader.Create(historyPath))
                     {
                         return (List<string>)serializer.Deserialize(reader);
                     }
-                    catch (InvalidOperationException e)
-                    {
-                        ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to load search term history.");
-                    }
+                }
+                catch (Exception e)
+                {
+                    ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to load search term history.");
                 }
             }
 
@@ -64,11 +64,18 @@ namespace EverythingToolbar.Helpers
 
         public void SaveHistory()
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(historyPath));
-            var serializer = new XmlSerializer(history.GetType());
-            using (var writer = XmlWriter.Create(historyPath))
+            try
             {
-                serializer.Serialize(writer, history);
+                Directory.CreateDirectory(Path.GetDirectoryName(historyPath));
+                var serializer = new XmlSerializer(history.GetType());
+                using (var writer = XmlWriter.Create(historyPath))
+                {
+                    serializer.Serialize(writer, history);
+                }
+            }
+            catch (Exception e)
+            {
+                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to save search term history.");
             }
         }
 
