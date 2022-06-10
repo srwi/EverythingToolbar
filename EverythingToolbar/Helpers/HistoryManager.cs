@@ -48,7 +48,14 @@ namespace EverythingToolbar.Helpers
                 var serializer = new XmlSerializer(history.GetType());
                 using (var reader = XmlReader.Create(historyPath))
                 {
-                    return (List<string>)serializer.Deserialize(reader);
+                    try
+                    {
+                        return (List<string>)serializer.Deserialize(reader);
+                    }
+                    catch (InvalidOperationException e)
+                    {
+                        ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to load search term history.");
+                    }
                 }
             }
 
