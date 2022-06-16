@@ -37,6 +37,7 @@ Install
   - Download the [EverythingToolbar](https://github.com/stnkl/EverythingToolbar/releases) installer
   - [Chocolatey](https://chocolatey.org/): `choco install everythingtoolbar`
   - [winget](https://github.com/microsoft/winget-cli/): `winget install everythingtoolbar`
+  - [Manual installation](https://github.com/stnkl/EverythingToolbar/wiki/Installation-per-user-(experimental)) without admin rights (not recommended)
 - Enable EverythingToolbar via the context menu of the taskbar
   - *Note: You will have to open the context menu twice as it doesn't show up the first time you open it.*
 - Adjust size and position after unlocking the taskbar ([demonstration video](https://user-images.githubusercontent.com/17520641/107118574-19a1bf80-6882-11eb-843a-7e854e5d0684.gif))
