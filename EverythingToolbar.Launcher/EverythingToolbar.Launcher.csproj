@@ -37,6 +37,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icons\White.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -64,6 +67,11 @@
       <Project>{c8bb766a-d7bc-47f5-a0e7-d3225dd1f469}</Project>
       <Name>EverythingToolbar</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icons\Black.ico" />
+    <Content Include="Icons\Blue.ico" />
+    <Content Include="Icons\White.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
