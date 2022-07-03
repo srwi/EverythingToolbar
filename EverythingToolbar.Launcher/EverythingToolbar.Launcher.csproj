@@ -66,4 +66,8 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>taskkill /IM EverythingToolbar.Launcher.exe /F
+EXIT 0</PreBuildEvent>
+  </PropertyGroup>
 </Project>

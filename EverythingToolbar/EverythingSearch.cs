@@ -80,6 +80,30 @@ namespace EverythingToolbar
         [DllImport("Everything64.dll")]
         public static extern bool Everything_IsFastSort(uint sortType);
 
+        private bool _opened = false;
+        public bool DelayedOpened
+        {
+            get
+            {
+                return _opened;
+            }
+            private set
+            {
+                if (value)
+                {
+                    _opened = true;
+                }
+                else
+                {
+                    var t = Task.Run(async delegate
+                    {
+                        await Task.Delay(200);
+                        _opened = false;
+                    });
+                }
+            }
+        }
+
         private string _searchTerm;
         public string SearchTerm
         {
@@ -91,6 +115,8 @@ namespace EverythingToolbar
             {
                 if (_searchTerm == value)
                     return;
+
+                DelayedOpened = value != null;
 
                 _searchTerm = value;
                 lock (_searchResultsLock)

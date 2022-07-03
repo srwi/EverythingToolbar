@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Runtime.InteropServices;
@@ -85,7 +86,7 @@ namespace EverythingToolbar.Launcher
                     while (true)
                     {
                         wh.WaitOne();
-                        if (EverythingSearch.Instance.SearchTerm != null)
+                        if (EverythingSearch.Instance.DelayedOpened)
                         {
                             EverythingSearch.Instance.SearchTerm = null;
                         }
