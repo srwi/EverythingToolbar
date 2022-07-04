@@ -91,9 +91,12 @@ namespace EverythingToolbar.Launcher
 
                     break;
                 }
-                catch (IOException)
+                catch (Exception e)
                 {
-                    Thread.Sleep(1);
+                    if (e is IOException || e is UnauthorizedAccessException)
+                        Thread.Sleep(100);
+                    else
+                        throw;
                 }
             }
 
