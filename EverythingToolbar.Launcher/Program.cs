@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace EverythingToolbar.Launcher
         public partial class LauncherWindow : Window
         {
             static IntPtr handle;
+            private string TaskbarPinPath;
 
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
@@ -32,8 +34,13 @@ namespace EverythingToolbar.Launcher
                 Content = new ToolbarControl();
                 Loaded += OnLoaded;
 
+                TaskbarPinPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                    "\\Microsoft\\Internet Explorer\\Quick Launch\\User Pinned\\TaskBar\\EverythingToolbar.lnk";
+
                 SetPosition();
                 StartToggleListener();
+                if (!File.Exists(TaskbarPinPath))
+                    new TaskbarPinGuide().Show();
             }
 
             private void OnLoaded(object sender, RoutedEventArgs e)
