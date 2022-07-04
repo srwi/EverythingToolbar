@@ -1,7 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Runtime.InteropServices;
@@ -162,6 +161,7 @@ namespace EverythingToolbar.Launcher
                         Application app = new Application();
                         icon.Icon = Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath);
                         icon.ContextMenu = new System.Windows.Forms.ContextMenu(new System.Windows.Forms.MenuItem[] {
+                            new System.Windows.Forms.MenuItem("Run setup assistant", (s, e) => { new TaskbarPinGuide().Show(); }),
                             new System.Windows.Forms.MenuItem("Quit", (s, e) => { app.Shutdown(); })
                         });
                         icon.Visible = true;

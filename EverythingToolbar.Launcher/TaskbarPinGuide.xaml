@@ -1,0 +1,68 @@
+﻿<Window x:Class="EverythingToolbar.Launcher.TaskbarPinGuide"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:EverythingToolbar.Launcher"
+        WindowStartupLocation="Manual"
+        WindowStyle="ToolWindow"
+        Background="#202020" Foreground="White"
+        SizeToContent="WidthAndHeight" ResizeMode="NoResize"
+        Title="EverythingToolbar Setup Assistant">
+
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#FF373737"/>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="ContentPresenterBorder" CornerRadius="4" Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="#3a3a3a">
+                            <Grid>
+                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ContentPresenterBorder" Property="Background" Value="#3c3c3c" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ContentPresenterBorder" Property="Background" Value="#2a2a2a" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+    </Window.Resources>
+    
+    <StackPanel Margin="20, 10">
+        <StackPanel x:Name="PinToTaskbarBlock">
+            <TextBlock FontSize="14" Text="1. Pin to taskbar" FontWeight="Medium" Margin="0, 10" />
+            <Border BorderBrush="#1D1D1D" BorderThickness="1" Background="#2b2b2b" CornerRadius="4" Padding="15" Margin="0, 0, 0, 10">
+                <StackPanel>
+                    <TextBlock Margin="0, 0, 0, 10">To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'</TextBlock>
+                    <Image Source="Images/PinToTaskbar.png" Width="502" Height="217" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <StackPanel x:Name="HideWindowsSearchBlock" Opacity="0.2" IsHitTestVisible="False">
+            <TextBlock FontSize="14" Text="2. Hide Windows search" FontWeight="Medium" Margin="0, 10" />
+            <Border BorderBrush="#1D1D1D" BorderThickness="1" Background="#2b2b2b" CornerRadius="4" Padding="10" Margin="0, 0, 0, 10">
+                <StackPanel>
+                    <TextBlock Margin="0, 0, 0, 10">Optionally the original Windows search icon can be hidden:</TextBlock>
+                    <CheckBox x:Name="HideWindowsSearchCheckBox" Content="Hide" Foreground="White" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged" />
+                </StackPanel>
+            </Border>
+            <Button Style="{StaticResource ButtonStyle}" Height="42" Width="88" Background="#FF373737" Foreground="White" BorderBrush="{x:Null}" Click="OnCloseClicked">Close</Button>
+        </StackPanel>
+    </StackPanel>
+</Window>
