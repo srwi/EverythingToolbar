@@ -17,7 +17,6 @@ namespace EverythingToolbar.Launcher
         public partial class LauncherWindow : Window
         {
             static IntPtr handle;
-            private string TaskbarPinPath;
 
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
@@ -34,12 +33,9 @@ namespace EverythingToolbar.Launcher
                 Content = new ToolbarControl();
                 Loaded += OnLoaded;
 
-                TaskbarPinPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-                    "\\Microsoft\\Internet Explorer\\Quick Launch\\User Pinned\\TaskBar\\EverythingToolbar.lnk";
-
                 SetPosition();
                 StartToggleListener();
-                if (!File.Exists(TaskbarPinPath))
+                if (!File.Exists(Utils.GetTaskbarShortcutPath()))
                     new TaskbarPinGuide().Show();
             }
 
@@ -166,7 +162,7 @@ namespace EverythingToolbar.Launcher
                     using (System.Windows.Forms.NotifyIcon icon = new System.Windows.Forms.NotifyIcon())
                     {
                         Application app = new Application();
-                        icon.Icon = Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath);
+                        icon.Icon = Icon.ExtractAssociatedIcon(Utils.GetThemedIconPath());
                         icon.ContextMenu = new System.Windows.Forms.ContextMenu(new System.Windows.Forms.MenuItem[] {
                             new System.Windows.Forms.MenuItem("Run setup assistant", (s, e) => { new TaskbarPinGuide().Show(); }),
                             new System.Windows.Forms.MenuItem("Quit", (s, e) => { app.Shutdown(); })

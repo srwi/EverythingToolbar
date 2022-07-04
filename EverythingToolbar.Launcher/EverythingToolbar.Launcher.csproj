@@ -62,6 +62,7 @@
     <Compile Include="TaskbarPinGuide.xaml.cs">
       <DependentUpon>TaskbarPinGuide.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -105,7 +106,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>taskkill /IM EverythingToolbar.Launcher.exe /F
-EXIT 0</PreBuildEvent>
+    <PreBuildEvent>taskkill /IM EverythingToolbar.Launcher.exe /F 2&gt;nul &amp;set errorlevel=0
+Exit 0</PreBuildEvent>
   </PropertyGroup>
 </Project>
