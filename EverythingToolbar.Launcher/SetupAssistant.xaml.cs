@@ -17,8 +17,8 @@ namespace EverythingToolbar.Launcher
 
             AutostartCheckBox.IsChecked = Utils.GetAutostartState();
             HideWindowsSearchCheckBox.IsChecked = !Utils.GetWindowsSearchEnabledState();
-            CreateFileWatcher();
             OnTaskbarPinStateChanged(File.Exists(TaskbarShortcutPath));
+            CreateFileWatcher();
             Uri iconUri = new Uri("pack://application:,,,/Icons/" + Utils.GetWindowsTheme().ToString() + ".ico", UriKind.RelativeOrAbsolute);
             Icon = BitmapFrame.Create(iconUri);
         }
