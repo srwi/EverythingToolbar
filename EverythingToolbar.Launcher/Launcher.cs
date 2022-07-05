@@ -43,6 +43,31 @@ namespace EverythingToolbar.Launcher
                 handle = ((HwndSource)PresentationSource.FromVisual(this)).Handle;
             }
 
+            private void StartToggleListener()
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    EventWaitHandle wh = new EventWaitHandle(false, EventResetMode.AutoReset, "EverythingToolbarToggleEvent");
+                    while (true)
+                    {
+                        wh.WaitOne();
+                        if (EverythingSearch.Instance.DelayedOpened)
+                        {
+                            EverythingSearch.Instance.SearchTerm = null;
+                        }
+                        else
+                        {
+                            Dispatcher?.Invoke(() =>
+                            {
+                                SetPosition();
+                            });
+                            SetForegroundWindow(handle);
+                            EverythingSearch.Instance.SearchTerm = "";
+                        }
+                    }
+                });
+            }
+
             private void SetPosition()
             {
                 Rectangle taskbar = FindDockedTaskBars()[0];
@@ -77,31 +102,6 @@ namespace EverythingToolbar.Launcher
                         }
                     }
                 }
-            }
-
-            private void StartToggleListener()
-            {
-                Task.Factory.StartNew(() =>
-                {
-                    EventWaitHandle wh = new EventWaitHandle(false, EventResetMode.AutoReset, "EverythingToolbarToggleEvent");
-                    while (true)
-                    {
-                        wh.WaitOne();
-                        if (EverythingSearch.Instance.DelayedOpened)
-                        {
-                            EverythingSearch.Instance.SearchTerm = null;
-                        }
-                        else
-                        {
-                            Dispatcher?.Invoke(() =>
-                            {
-                                SetPosition();
-                            });
-                            SetForegroundWindow(handle);
-                            EverythingSearch.Instance.SearchTerm = "";
-                        }
-                    }
-                });
             }
 
             private static List<Rectangle> FindDockedTaskBars()
@@ -178,8 +178,7 @@ namespace EverythingToolbar.Launcher
                 {
                     try
                     {
-                        EventWaitHandle wh = EventWaitHandle.OpenExisting("EverythingToolbarToggleEvent");
-                        wh.Set();
+                        EventWaitHandle.OpenExisting("EverythingToolbarToggleEvent").Set();
                     }
                     catch (Exception ex)
                     {
