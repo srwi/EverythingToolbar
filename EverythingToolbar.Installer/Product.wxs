@@ -9,7 +9,7 @@
 
 		<PropertyRef Id="NETFRAMEWORK45"/>
 		<Condition Message="This application requires at least .NET Framework 4.7. Please install the .NET Framework and run this installer again."><![CDATA[Installed OR (NETFRAMEWORK45 AND NETFRAMEWORK45 >= "#460798")]]></Condition>
-		
+
 		<Property Id="WINDOWSBUILDNUMBER" Secure="yes">
 			<RegistrySearch Id="BuildNumberSearch" Root="HKLM" Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion" Name="CurrentBuildNumber" Type="raw" />
 		</Property>
@@ -21,6 +21,9 @@
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="ProgramFiles64Folder">
 				<Directory Id="APPLICATIONFOLDER" Name="EverythingToolbar" />
+			</Directory>
+			<Directory Id="ProgramMenuFolder">
+				<Directory Id="ApplicationProgramsFolder" Name="EverythingToolbar"/>
 			</Directory>
 		</Directory>
 
@@ -42,13 +45,24 @@
 				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32\!(bind.fileVersion.EverythingToolbarDll)" Name="CodeBase" Value="file:///[APPLICATIONFOLDER]EverythingToolbar.dll" Type="string" Action="write" />
 				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\ProgId" Value="CSDeskBand.Deskband" Type="string" Action="write" />
 			</Component>
-
 			<Component Id="EverythingToolbarAssembly" Guid="139bb06d-c8dc-4044-a2b7-037eab866497" Win64="yes">
 				<File Id="EverythingToolbarDll" KeyPath="yes" Source="$(var.HarvestPath)\EverythingToolbar.dll" />
 			</Component>
-
 			<Component Id="EverythingToolbar.Launcher.exe" Guid="7d17bda2-c6f8-4e9e-8110-1b36ba89ff09" Win64="yes">
 				<File Id="EverythingToolbar.Launcher.exe" KeyPath="yes" Source="$(var.HarvestPath)\EverythingToolbar.Launcher.exe" />
+			</Component>
+		</DirectoryRef>
+
+		<DirectoryRef Id="ApplicationProgramsFolder">
+			<Component Id="ApplicationShortcut" Guid="6fcae307-2eda-4c3c-af77-2d12daa46762">
+				<Condition>WINDOWSBUILDNUMBER >= 22000</Condition>
+				<Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="EverythingToolbar"
+                  Description="Everything integration for the Windows taskbar."
+                  Target="[#EverythingToolbar.Launcher.exe]"
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+				<RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+				<RegistryValue Root="HKCU" Key="Software\EverythingToolbar" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
 			</Component>
 		</DirectoryRef>
 
@@ -57,12 +71,13 @@
 			<ComponentRef Id="RegistryEntries" />
 			<ComponentRef Id="EverythingToolbarAssembly" />
 			<ComponentRef Id="EverythingToolbar.Launcher.exe" />
+			<ComponentRef Id="ApplicationShortcut" />
 		</Feature>
 
 		<InstallExecuteSequence>
 			<ScheduleReboot After="InstallFinalize">REMOVE="ALL"</ScheduleReboot>
 		</InstallExecuteSequence>
-		
+
 		<Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONFOLDER" />
 		<UI>
 			<UIRef Id="WixUI_InstallDir" />
@@ -78,9 +93,9 @@
 						Value="WelcomeDlg"
 						Order="2">1</Publish>
 			<Publish Dialog="ExitDialog"
-					Control="Finish"
-					Event="DoAction"
-					Value="LaunchApplication">WINDOWSBUILDNUMBER >= 22000 and NOT Installed</Publish>
+						Control="Finish"
+						Event="DoAction"
+						Value="LaunchApplication">WINDOWSBUILDNUMBER >= 22000 and NOT Installed</Publish>
 		</UI>
 
 		<Property Id="WixShellExecTarget" Value="[#EverythingToolbar.Launcher.exe]" />
