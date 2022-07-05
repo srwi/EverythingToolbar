@@ -12,7 +12,7 @@ using System.Windows.Interop;
 
 namespace EverythingToolbar.Launcher
 {
-    class Program
+    class Launcher
     {
         public partial class LauncherWindow : Window
         {
