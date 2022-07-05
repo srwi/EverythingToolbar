@@ -25,9 +25,6 @@ namespace EverythingToolbar.Launcher
 
         private void CreateFileWatcher()
         {
-            if (File.Exists(TaskbarShortcutPath))
-                return;
-
             watcher = new FileSystemWatcher
             {
                 Path = Path.GetDirectoryName(TaskbarShortcutPath),
@@ -78,8 +75,11 @@ namespace EverythingToolbar.Launcher
 
         private void OnClosed(object sender, EventArgs e)
         {
-            watcher.EnableRaisingEvents = false;
-            watcher.Dispose();
+            if (watcher != null)
+            {
+                watcher.EnableRaisingEvents = false;
+                watcher.Dispose();
+            }
 
             if (Utils.GetWindowsTheme() == Utils.WindowsTheme.Dark)
                 return;
