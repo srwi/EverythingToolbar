@@ -18,11 +18,12 @@
 	<!-- Exclude EverythingToolbar.dll from Heat generated file so we can extract the AssemblyVersion from it specifically -->
 	<xsl:key name="everythingToolbarDll" match="wix:Component[wix:File[@Source = '$(var.HarvestPath)\EverythingToolbar.dll']]" use="@Id"/>
 	<xsl:template match="*[self::wix:Component or self::wix:ComponentRef][key('everythingToolbarDll', @Id)]" />
+	<!-- Exclude EverythingToolbar.Launcher.exe from Heat generated file so we can use it for launch after installation -->
+	<xsl:key name="everythingToolbarLauncherExe" match="wix:Component[wix:File[@Source = '$(var.HarvestPath)\EverythingToolbar.Launcher.exe']]" use="@Id"/>
+	<xsl:template match="*[self::wix:Component or self::wix:ComponentRef][key('everythingToolbarLauncherExe', @Id)]" />
 
 	<xsl:key name="DllConfigFile" match="wix:Component[wix:File[@Source = '$(var.HarvestPath)\EverythingToolbar.dll.config']]" use="@Id"/>
 	<xsl:template match="*[self::wix:Component or self::wix:ComponentRef][key('DllConfigFile', @Id)]" />
-	<xsl:key name="InstallScript" match="wix:Component[wix:File[@Source = '$(var.HarvestPath)\install.cmd']]" use="@Id"/>
-	<xsl:template match="*[self::wix:Component or self::wix:ComponentRef][key('InstallScript', @Id)]" />
-	<xsl:key name="UninstallScript" match="wix:Component[wix:File[@Source = '$(var.HarvestPath)\uninstall.cmd']]" use="@Id"/>
-	<xsl:template match="*[self::wix:Component or self::wix:ComponentRef][key('UninstallScript', @Id)]" />
+	<xsl:key name="ExeConfigFile" match="wix:Component[wix:File[@Source = '$(var.HarvestPath)\EverythingToolbar.Launcher.exe.config']]" use="@Id"/>
+	<xsl:template match="*[self::wix:Component or self::wix:ComponentRef][key('ExeConfigFile', @Id)]" />
 </xsl:stylesheet>

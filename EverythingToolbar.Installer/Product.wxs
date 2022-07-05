@@ -8,7 +8,11 @@
 		<MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." AllowSameVersionUpgrades="yes" />
 
 		<PropertyRef Id="NETFRAMEWORK45"/>
-		<Condition Message="This application requires at least .NET Framework 4.7. Please install the .NET Framework then run this installer again."><![CDATA[Installed OR (NETFRAMEWORK45 AND NETFRAMEWORK45 >= "#460798")]]></Condition>
+		<Condition Message="This application requires at least .NET Framework 4.7. Please install the .NET Framework and run this installer again."><![CDATA[Installed OR (NETFRAMEWORK45 AND NETFRAMEWORK45 >= "#460798")]]></Condition>
+		
+		<Property Id="WINDOWSBUILDNUMBER" Secure="yes">
+			<RegistrySearch Id="BuildNumberSearch" Root="HKLM" Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion" Name="CurrentBuildNumber" Type="raw" />
+		</Property>
 
 		<Property Id="ARPNOREPAIR" Value="yes" Secure="yes" />
 
@@ -42,18 +46,23 @@
 			<Component Id="EverythingToolbarAssembly" Guid="139bb06d-c8dc-4044-a2b7-037eab866497" Win64="yes">
 				<File Id="EverythingToolbarDll" KeyPath="yes" Source="$(var.HarvestPath)\EverythingToolbar.dll" />
 			</Component>
+
+			<Component Id="EverythingToolbar.Launcher.exe" Guid="7d17bda2-c6f8-4e9e-8110-1b36ba89ff09" Win64="yes">
+				<File Id="EverythingToolbar.Launcher.exe" KeyPath="yes" Source="$(var.HarvestPath)\EverythingToolbar.Launcher.exe" />
+			</Component>
 		</DirectoryRef>
 
 		<Feature Id="MainApplication" Title="EverythingToolbar" Level="1">
 			<ComponentGroupRef Id="HeatGenerated" />
 			<ComponentRef Id="RegistryEntries" />
 			<ComponentRef Id="EverythingToolbarAssembly" />
+			<ComponentRef Id="EverythingToolbar.Launcher.exe" />
 		</Feature>
 
 		<InstallExecuteSequence>
 			<ScheduleReboot After="InstallFinalize">REMOVE="ALL"</ScheduleReboot>
 		</InstallExecuteSequence>
-
+		
 		<Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONFOLDER" />
 		<UI>
 			<UIRef Id="WixUI_InstallDir" />
@@ -68,6 +77,13 @@
 						Event="NewDialog"
 						Value="WelcomeDlg"
 						Order="2">1</Publish>
+			<Publish Dialog="ExitDialog"
+					Control="Finish"
+					Event="DoAction"
+					Value="LaunchApplication">WINDOWSBUILDNUMBER >= 22000 and NOT Installed</Publish>
 		</UI>
+
+		<Property Id="WixShellExecTarget" Value="[#EverythingToolbar.Launcher.exe]" />
+		<CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
 	</Product>
 </Wix>
