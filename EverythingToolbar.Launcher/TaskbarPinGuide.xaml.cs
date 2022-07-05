@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -17,9 +18,8 @@ namespace EverythingToolbar.Launcher
             AutostartCheckBox.IsChecked = Utils.GetAutostartState();
             HideWindowsSearchCheckBox.IsChecked = !Utils.GetWindowsSearchEnabledState();
             CreateFileWatcher();
-            if (File.Exists(TaskbarShortcutPath))
-                OnTaskbarPinCreated();
-            Uri iconUri = new Uri("pack://application:,,,/Icons/" + Utils.GetIconTypeBasedOnWindowsTheme().ToString() + ".ico", UriKind.RelativeOrAbsolute);
+            OnTaskbarPinStateChanged(File.Exists(TaskbarShortcutPath));
+            Uri iconUri = new Uri("pack://application:,,,/Icons/" + Utils.GetWindowsTheme().ToString() + ".ico", UriKind.RelativeOrAbsolute);
             Icon = BitmapFrame.Create(iconUri);
         }
 
@@ -37,19 +37,27 @@ namespace EverythingToolbar.Launcher
             };
 
             watcher.Created += new FileSystemEventHandler((source, e) => {
-                OnTaskbarPinCreated();
-                watcher.EnableRaisingEvents = false;
-                Utils.ChangeTaskbarPinIcon(Utils.GetIconTypeBasedOnWindowsTheme());
-                watcher.EnableRaisingEvents = true;
+                OnTaskbarPinStateChanged(true);
+            });
+            watcher.Deleted += new FileSystemEventHandler((source, e) => {
+                OnTaskbarPinStateChanged(false);
             });
         }
 
-        private void OnTaskbarPinCreated()
+        private void OnTaskbarPinStateChanged(bool state)
         {
             Dispatcher.Invoke(() =>
             {
-                OptionalSettingsBlock.Opacity = 1.0;
-                OptionalSettingsBlock.IsHitTestVisible = true;
+                if (state)
+                {
+                    OptionalSettingsBlock.Opacity = 1.0;
+                    OptionalSettingsBlock.IsHitTestVisible = true;
+                }
+                else
+                {
+                    OptionalSettingsBlock.Opacity = 0.2;
+                    OptionalSettingsBlock.IsHitTestVisible = false;
+                }
             });
         }
 
@@ -66,6 +74,21 @@ namespace EverythingToolbar.Launcher
         private void OnCloseClicked(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void OnClosed(object sender, EventArgs e)
+        {
+            watcher.EnableRaisingEvents = false;
+            watcher.Dispose();
+
+            if (Utils.GetWindowsTheme() == Utils.WindowsTheme.Dark)
+                return;
+
+            if (MessageBox.Show("An explorer restart is required to update the taskbar icon. Would you like to restart it now?",
+                "Restart explorer", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                Utils.ChangeTaskbarPinIcon(Utils.GetWindowsTheme());
+            }
         }
     }
 }

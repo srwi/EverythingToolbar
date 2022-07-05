@@ -5,7 +5,8 @@
         WindowStyle="ToolWindow"
         Background="#202020" Foreground="White"
         SizeToContent="WidthAndHeight" ResizeMode="NoResize"
-        Title="EverythingToolbar Setup Assistant">
+        Title="EverythingToolbar Setup Assistant"
+        Closed="OnClosed">
 
     <Window.Resources>
         <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
@@ -37,7 +38,7 @@
         </Style>
 
     </Window.Resources>
-    
+
     <StackPanel Margin="20, 10">
         <StackPanel>
             <TextBlock FontSize="14" Text="1. Pin to taskbar" FontWeight="Medium" Margin="0, 10" />
@@ -49,7 +50,7 @@
             </Border>
         </StackPanel>
 
-        <StackPanel x:Name="OptionalSettingsBlock" Opacity="0.2" IsHitTestVisible="False">
+        <StackPanel x:Name="OptionalSettingsBlock">
             <TextBlock FontSize="14" Text="2. Hide Windows search" FontWeight="Medium" Margin="0, 10" />
             <Border BorderBrush="#1D1D1D" BorderThickness="1" Background="#2b2b2b" CornerRadius="4" Padding="10" Margin="0, 0, 0, 10">
                 <StackPanel>

@@ -9,7 +9,7 @@ namespace EverythingToolbar.Launcher
 {
     internal class Utils
     {
-        public enum IconType
+        public enum WindowsTheme
         {
             Dark,
             Light
@@ -54,7 +54,7 @@ namespace EverythingToolbar.Launcher
                 key.DeleteValue("EverythingToolbar", false);
         }
 
-        public static IconType GetIconTypeBasedOnWindowsTheme()
+        public static WindowsTheme GetWindowsTheme()
         {
             bool systemUsesLightTheme;
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"))
@@ -63,54 +63,37 @@ namespace EverythingToolbar.Launcher
                 systemUsesLightTheme = registryValueObject != null && (int)registryValueObject > 0;
             }
 
-            return systemUsesLightTheme ? IconType.Light : IconType.Dark;
+            return systemUsesLightTheme ? WindowsTheme.Light : WindowsTheme.Dark;
         }
 
-        public static string GetIconPath(IconType iconType)
+        public static string GetIconPath(WindowsTheme theme)
         {
             string processPath = Process.GetCurrentProcess().MainModule.FileName;
-            return Directory.GetParent(processPath).FullName + "\\Icons\\" + iconType.ToString() + ".ico";
+            return Directory.GetParent(processPath).FullName + "\\Icons\\" + theme.ToString() + ".ico";
         }
 
         public static string GetThemedIconPath()
         {
-            return GetIconPath(GetIconTypeBasedOnWindowsTheme());
+            return GetIconPath(GetWindowsTheme());
         }
 
-        public static void ChangeTaskbarPinIcon(IconType iconType)
+        public static void ChangeTaskbarPinIcon(WindowsTheme theme)
         {
             string taskbarShortcutPath = GetTaskbarShortcutPath();
 
-            const int maxTries = 1000;
-            for (int i = 0; i < maxTries; i++)
-            {
-                try
-                {
-                    if (System.IO.File.Exists(taskbarShortcutPath))
-                        System.IO.File.Delete(taskbarShortcutPath);
-
-                    break;
-                }
-                catch (Exception e)
-                {
-                    if (e is IOException || e is UnauthorizedAccessException)
-                        Thread.Sleep(100);
-                    else
-                        throw;
-                }
-            }
-
             if (System.IO.File.Exists(taskbarShortcutPath))
-                throw new IOException("Could not access shortcut.");
-
-            string targetPath = Process.GetCurrentProcess().MainModule.FileName;
-            string iconPath = Utils.GetIconPath(iconType);
+                System.IO.File.Delete(taskbarShortcutPath);
 
             WshShell shell = new WshShell();
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(taskbarShortcutPath);
-            shortcut.TargetPath = targetPath;
-            shortcut.IconLocation = iconPath;
+            shortcut.TargetPath = Process.GetCurrentProcess().MainModule.FileName;
+            shortcut.IconLocation = GetIconPath(theme);
             shortcut.Save();
+
+            foreach (Process process in Process.GetProcessesByName("explorer"))
+            {
+                process.Kill();
+            }
         }
     }
 }
