@@ -3,10 +3,9 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:local="clr-namespace:EverythingToolbar;assembly=EverythingToolbar"
 		Title="EverythingToolbar.Debug"
-		Height="50"
+		Height="70"
 		Width="300"
 		ResizeMode="CanResizeWithGrip"
-		WindowStyle="None"
-		AllowsTransparency="True">
+		WindowStyle="ToolWindow">
 	<local:ToolbarControl />
 </Window>
