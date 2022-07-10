@@ -1,6 +1,7 @@
 ﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+             xmlns:local="clr-namespace:EverythingToolbar"
              x:Class="EverythingToolbar.FilterSelector">
     <Border BorderBrush="{DynamicResource TabBarBorder}"
             BorderThickness="0, 0, 0, 1">
@@ -12,13 +13,13 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type TabItem}">
-                                    <Border x:Name="Border"
-                                            Padding="16, 14"
-                                            BorderThickness="0, 0, 0, 4"
+                                    <StackPanel>
+                                        <Border x:Name="Border"
+                                            Padding="{Binding Converter={local:Win10or11Converter}, ConverterParameter='16,14;16,6'}"
                                             Background="Transparent"
                                             PreviewMouseDown="OnTabItemClicked">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock x:Name="ContentSiteIcon"
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock x:Name="ContentSiteIcon"
                                                        FontFamily="Segoe MDL2 Assets"
                                                        Text="{Binding Icon}"
                                                        FontSize="10pt"
@@ -26,13 +27,15 @@
                                                        Margin="-3, 0, 0, 0"
                                                        VerticalAlignment="Center"
                                                        HorizontalAlignment="Center" />
-                                            <TextBlock x:Name="ContentSite"
+                                                <TextBlock x:Name="ContentSite"
                                                        Text="{Binding Name}"
                                                        FontSize="10pt"
                                                        Foreground="{DynamicResource TabForeground}"
                                                        VerticalAlignment="Center" />
-                                        </StackPanel>
-                                    </Border>
+                                            </StackPanel>
+                                        </Border>
+                                        <Border x:Name="SelectedIndicator" Height="3" Width="{Binding Converter={local:Win10or11Converter}, ConverterParameter=NaN;12}" CornerRadius="2"></Border>
+                                    </StackPanel>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver"
                                                  Value="True">
@@ -41,8 +44,8 @@
                                                     Value="{DynamicResource TabForegroundHover}" />
                                         </Trigger>
                                         <Trigger Property="IsSelected" Value="True">
-                                            <Setter TargetName="Border"
-                                                    Property="BorderBrush"
+                                            <Setter TargetName="SelectedIndicator"
+                                                    Property="Background"
                                                     Value="{DynamicResource TabBorderActive}" />
                                             <Setter TargetName="ContentSite"
                                                     Property="FontWeight"
@@ -83,60 +86,65 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ComboBox">
-                                    <Border Name="Border"
-                                            BorderThickness="0, 0, 0, 4"
-                                            BorderBrush="{DynamicResource TabBorderActive}">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Name="ContentSite"
-                                                              IsHitTestVisible="False"
-                                                              Text="{TemplateBinding Text}"
-                                                              Margin="16, 14, 7, 14"
-                                                              Foreground="{DynamicResource TabForegroundActive}"
-                                                              FontWeight="Medium"
-                                                              FontSize="10pt" />
-                                            <ToggleButton Name="ToggleButton"
-                                                          Grid.ColumnSpan="2"
-                                                          VerticalAlignment="Stretch"
-                                                          HorizontalAlignment="Stretch"
-                                                          Focusable="false"
-                                                          Opacity="0"
-                                                          IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                          ClickMode="Press">
-                                            </ToggleButton>
-                                            <TextBlock Name="ComboBoxTextBlock"
-                                                       Text="🞃"
-                                                       IsHitTestVisible="False"
-                                                       Foreground="{DynamicResource TabForeground}"
-                                                       Grid.Column="1"
-                                                       VerticalAlignment="Center"
-                                                       Padding="0, 0, 7, 3" />
-                                            <Popup Name="Popup"
-                                                   Placement="Bottom"
-                                                   IsOpen="{TemplateBinding IsDropDownOpen}"
-                                                   AllowsTransparency="True"
-                                                   Focusable="False"
-                                                   PopupAnimation="None">
-                                                <Grid Name="DropDown"
-                                                      MinWidth="{TemplateBinding ActualWidth}"
-                                                      MaxHeight="{TemplateBinding MaxDropDownHeight}">
-                                                    <Border x:Name="DropDownBorder"
-                                                            Background="{DynamicResource ContextMenuBackground}"
-                                                            BorderBrush="{DynamicResource ContextMenuBorder}"
-                                                            BorderThickness="1"
-                                                            SnapsToDevicePixels="True" />
-                                                    <ScrollViewer>
-                                                        <StackPanel IsItemsHost="True"
-                                                                    Margin="0, 4"
-                                                                    KeyboardNavigation.DirectionalNavigation="Contained" />
-                                                    </ScrollViewer>
-                                                </Grid>
-                                            </Popup>
-                                        </Grid>
-                                    </Border>
+                                    <StackPanel>
+                                        <Border Name="Border">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Name="ContentSite"
+                                                           IsHitTestVisible="False"
+                                                           Text="{TemplateBinding Text}"
+                                                           Margin="{Binding Converter={local:Win10or11Converter}, ConverterParameter='16,14,7,14;16,6,7,6'}"
+                                                           Foreground="{DynamicResource TabForegroundActive}"
+                                                           FontWeight="Medium"
+                                                           FontSize="10pt" />
+                                                <ToggleButton Name="ToggleButton"
+                                                              Grid.ColumnSpan="2"
+                                                              VerticalAlignment="Stretch"
+                                                              HorizontalAlignment="Stretch"
+                                                              Focusable="false"
+                                                              Opacity="0"
+                                                              IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                              ClickMode="Press" />
+                                                <TextBlock Name="ComboBoxTextBlock"
+                                                           Text="🞃"
+                                                           IsHitTestVisible="False"
+                                                           Foreground="{DynamicResource TabForeground}"
+                                                           Grid.Column="1"
+                                                           VerticalAlignment="Center"
+                                                           Padding="0, 0, 7, 3" />
+                                                <Popup Name="Popup"
+                                                       Placement="Bottom"
+                                                       IsOpen="{TemplateBinding IsDropDownOpen}"
+                                                       AllowsTransparency="True"
+                                                       Focusable="False"
+                                                       PopupAnimation="None">
+                                                    <Grid Name="DropDown"
+                                                          MinWidth="{TemplateBinding ActualWidth}"
+                                                          MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                                        <Border x:Name="DropDownBorder"
+                                                                Background="{DynamicResource ContextMenuBackground}"
+                                                                BorderBrush="{DynamicResource ContextMenuBorder}"
+                                                                BorderThickness="1"
+                                                                CornerRadius="{Binding Converter={local:Win10or11Converter}, ConverterParameter=0;8}"
+                                                                SnapsToDevicePixels="True" />
+                                                        <ScrollViewer>
+                                                            <StackPanel IsItemsHost="True"
+                                                                        Margin="{Binding Converter={local:Win10or11Converter}, ConverterParameter='0,4;4'}"
+                                                                        KeyboardNavigation.DirectionalNavigation="Contained" />
+                                                        </ScrollViewer>
+                                                    </Grid>
+                                                </Popup>
+                                            </Grid>
+                                        </Border>
+                                        <Border x:Name="SelectedIndicator"
+                                                Background="{DynamicResource TabBorderActive}"
+                                                Height="{Binding Converter={local:Win10or11Converter}, ConverterParameter=4;3}"
+                                                Width="{Binding Converter={local:Win10or11Converter}, ConverterParameter=NaN;12}"
+                                                CornerRadius="{Binding Converter={local:Win10or11Converter}, ConverterParameter=0;2}" />
+                                    </StackPanel>
                                     <ControlTemplate.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=ComboBox, Path=SelectedItem}"
                                                      Value="{x:Null}">
@@ -149,8 +157,8 @@
                                             <Setter TargetName="ContentSite"
                                                     Property="TextBlock.FontWeight"
                                                     Value="Normal" />
-                                            <Setter TargetName="Border"
-                                                    Property="BorderBrush"
+                                            <Setter TargetName="SelectedIndicator"
+                                                    Property="Background"
                                                     Value="Transparent" />
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding HasItems, RelativeSource={RelativeSource Self}}"
@@ -181,7 +189,8 @@
                                     <Border x:Name="Bd"
                                             Background="Transparent"
                                             Margin="1"
-                                            Padding="11, 5, 35, 5">
+                                            Padding="11, 5, 35, 5"
+                                            CornerRadius="{Binding Converter={local:Win10or11Converter}, ConverterParameter=0;5}">
                                         <ContentPresenter x:Name="Cp"
                                                           TextBlock.Foreground="{DynamicResource ContextMenuItemForeground}" />
                                     </Border>

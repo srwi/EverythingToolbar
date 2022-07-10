@@ -80,23 +80,19 @@ namespace EverythingToolbar
             {
                 case Edge.Top:
                     Placement = PlacementMode.Bottom;
-                    PopupBorder.BorderThickness = new Thickness(1);
-                    PopupMarginBorder.Margin = new Thickness(10, 0, 10, 10);
+                    PopupMarginBorder.Margin = new Thickness(12, 0, 12, 12);
                     break;
                 case Edge.Left:
                     Placement = PlacementMode.Right;
-                    PopupBorder.BorderThickness = new Thickness(1);
-                    PopupMarginBorder.Margin = new Thickness(0, 10, 10, 10);
+                    PopupMarginBorder.Margin = new Thickness(0, 12, 12, 12);
                     break;
                 case Edge.Right:
                     Placement = PlacementMode.Left;
-                    PopupBorder.BorderThickness = new Thickness(1);
-                    PopupMarginBorder.Margin = new Thickness(10, 10, 0, 10);
+                    PopupMarginBorder.Margin = new Thickness(12, 12, 0, 12);
                     break;
                 case Edge.Bottom:
                     Placement = PlacementMode.Top;
-                    PopupBorder.BorderThickness = new Thickness(1, 1, 1, 0);
-                    PopupMarginBorder.Margin = new Thickness(10, 10, 10, 0);
+                    PopupMarginBorder.Margin = new Thickness(12, 12, 12, 0);
                     break;
             }
 

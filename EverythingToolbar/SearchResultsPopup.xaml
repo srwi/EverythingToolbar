@@ -19,30 +19,38 @@
                         Converter={local:SearchTermToIsOpenedConverter},
                         UpdateSourceTrigger=PropertyChanged,
                         Mode=OneWay}">
-    <Border x:Name="PopupMarginBorder">
+    <Popup.Resources>
+        <Style TargetType="{x:Type Border}">
+            <Setter Property="CornerRadius" Value="{Binding Converter={local:Win10or11Converter}, ConverterParameter=0;8}"/>
+        </Style>
+    </Popup.Resources>
+
+    <Border x:Name="PopupMarginBorder" Padding="{Binding Converter={local:Win10or11Converter}, ConverterParameter='0;0,0,0,12'}">
         <Grid>
             <Grid.RenderTransform>
                 <TranslateTransform x:Name="translateTransform" />
             </Grid.RenderTransform>
-            
+
             <Border Background="{DynamicResource SearchResultsViewBorder}">
                 <Border.Effect>
-                    <DropShadowEffect BlurRadius="14" Direction="-90" Opacity="0.55" RenderingBias="Quality" ShadowDepth="-100" />
+                    <DropShadowEffect BlurRadius="12" Direction="-90" Opacity="0.55" RenderingBias="Quality" ShadowDepth="-100" />
                 </Border.Effect>
             </Border>
 
             <Border x:Name="PopupBorder"
                     BorderThickness="1"
-                    Background="{DynamicResource SearchResultsViewHeader}">
+                    Background="{DynamicResource SearchResultsViewHeader}"
+                    Padding="{Binding Converter={local:Win10or11Converter}, ConverterParameter='0;0,31,0,0'}">
 
                 <Grid Name="ContentGrid">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="{Binding Converter={local:Win10or11Converter}, ConverterParameter=*;Auto}" />
+                        <RowDefinition Height="{Binding Converter={local:Win10or11Converter}, ConverterParameter=Auto;*}" />
                     </Grid.RowDefinitions>
 
-                    <Grid>
+                    <Grid Grid.Row="{Binding Converter={local:Win10or11Converter}, ConverterParameter=0;1}"
+                          Margin="{Binding Converter={local:Win10or11Converter}, ConverterParameter='0;23,20,23,16'}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
@@ -87,11 +95,13 @@
                         <local:SettingsControl Grid.Column="2" />
                     </Grid>
 
-                    <local:SearchResultsView x:Name="SearchResultsView" Grid.Row="1" />
+                    <local:SearchResultsView x:Name="SearchResultsView"
+                                             Grid.Row="{Binding Converter={local:Win10or11Converter}, ConverterParameter=1;2}" />
 
                     <local:SearchBox x:Name="SearchBox" TabIndex="999"
-                                     Grid.Row="2"
+                                     Grid.Row="{Binding Converter={local:Win10or11Converter}, ConverterParameter=2;0}"
                                      Height="40"
+                                     Margin="{Binding Converter={local:Win10or11Converter}, ConverterParameter='0;23,0'}"
                                      Visibility="{Binding Source={x:Static properties:Settings.Default},
                                                           Path=isIconOnly,
                                                           Converter={local:BoolToVisibilityConverter},
