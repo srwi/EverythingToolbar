@@ -39,8 +39,7 @@
 
             <Border x:Name="PopupBorder"
                     BorderThickness="1"
-                    Background="{DynamicResource SearchResultsViewHeader}"
-                    Padding="{Binding Converter={local:Win10or11Converter}, ConverterParameter='0;0,31,0,0'}">
+                    Background="{DynamicResource SearchResultsViewHeader}">
 
                 <Grid Name="ContentGrid">
                     <Grid.RowDefinitions>
@@ -101,7 +100,7 @@
                     <local:SearchBox x:Name="SearchBox" TabIndex="999"
                                      Grid.Row="{Binding Converter={local:Win10or11Converter}, ConverterParameter=2;0}"
                                      Height="40"
-                                     Margin="{Binding Converter={local:Win10or11Converter}, ConverterParameter='0;23,0'}"
+                                     Margin="{Binding Converter={local:Win10or11Converter}, ConverterParameter='0;23,31,23,0'}"
                                      Visibility="{Binding Source={x:Static properties:Settings.Default},
                                                           Path=isIconOnly,
                                                           Converter={local:BoolToVisibilityConverter},
