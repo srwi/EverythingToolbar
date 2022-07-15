@@ -161,7 +161,8 @@ namespace EverythingToolbar.Helpers
             GetModuleFileNameEx(hProcess, IntPtr.Zero, text, text.Capacity);
             CloseHandle(hProcess);
 
-            if (text.ToString().EndsWith("SearchApp.exe") || text.ToString().EndsWith("SearchUI.exe"))
+            if (text.ToString().EndsWith("SearchApp.exe") ||
+                text.ToString().EndsWith("SearchUI.exe")) // Win11: SearchHost.exe
             {
                 searchAppHwnd = hWnd;
                 searchTermQueue = "";

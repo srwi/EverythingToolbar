@@ -1,9 +1,25 @@
-﻿using System.IO;
+﻿using Microsoft.Win32;
+using System.IO;
 
 namespace EverythingToolbar.Helpers
 {
     class Utils
     {
+        private static int buildNumber = -1;
+        public static bool IsWindows11
+        {
+            get
+            {
+                if (buildNumber == -1)
+                {
+                    object registryValue = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuildNumber", "");
+                    buildNumber = System.Convert.ToInt32(registryValue);
+                }
+
+                return buildNumber >= 22000;
+            }
+        }
+
         // Taken from: https://stackoverflow.com/a/11124118/1477251
         public static string GetHumanReadableFileSize(string path)
         {
