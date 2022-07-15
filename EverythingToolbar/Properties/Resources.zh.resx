@@ -441,9 +441,6 @@
   <data name="ThemeLight" xml:space="preserve">
     <value>明亮</value>
   </data>
-  <data name="ThemeMedium" xml:space="preserve">
-    <value>中等</value>
-  </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>音訊</value>
   </data>
