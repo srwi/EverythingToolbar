@@ -36,9 +36,6 @@ namespace EverythingToolbar
                     case "DARK":
                         name = Properties.Resources.ThemeDark;
                         break;
-                    case "MEDIUM":
-                        name = Properties.Resources.ThemeMedium;
-                        break;
                     case "LIGHT":
                         name = Properties.Resources.ThemeLight;
                         break;
