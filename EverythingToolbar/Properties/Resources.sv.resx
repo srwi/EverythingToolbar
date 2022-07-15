@@ -343,7 +343,7 @@
     <value>Tema</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>Enable thumbnails</value>
+    <value>Aktivera miniatyrer</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Använd Everythings filter</value>
@@ -442,7 +442,7 @@
     <value>Ljus</value>
   </data>
   <data name="ThemeMedium" xml:space="preserve">
-    <value>Medium</value>
+    <value>Medel</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>Ljud</value>

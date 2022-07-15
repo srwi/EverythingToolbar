@@ -181,16 +181,16 @@
     <value>Katalog</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>Compact</value>
+    <value>Kompaktowy</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compact (detailed)</value>
+    <value>Kompaktowy (szczegółowy)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
-    <value>Normal</value>
+    <value>Normalny</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detailed)</value>
+    <value>Normalny (szczegółowy)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -301,7 +301,7 @@
     <value>Wyłącz animacje</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Enable search history</value>
+    <value>Włącz historię wyszukiwania</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>Ukryj puste wyszukanie</value>
@@ -322,19 +322,19 @@
     <value>Wyrażenie Regularne</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>Remember filter</value>
+    <value>Pamiętaj filtry</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>Zastąp wyszukiwanie w menu Start (eksperymentalne)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
     <value>Reguły...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Show quick toggles</value>
+    <value>Pokaż szybkie przełączniki</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>Show results count</value>
+    <value>Pokaż liczbę wyników</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Sortuj według</value>
@@ -343,7 +343,7 @@
     <value>Motyw</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>Enable thumbnails</value>
+    <value>Włącz miniatury</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Użuj filtrów Everything</value>
@@ -436,13 +436,13 @@
     <value>Nazwa typu malejąco</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Ciemny</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>Light</value>
+    <value>Jasny</value>
   </data>
   <data name="ThemeMedium" xml:space="preserve">
-    <value>Medium</value>
+    <value>Średni</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>Dźwięki</value>

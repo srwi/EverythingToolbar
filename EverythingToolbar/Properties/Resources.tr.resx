@@ -343,7 +343,7 @@
     <value>Tema</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>Enable thumbnails</value>
+    <value>Küçük resimleri etkinleştir</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Everything filtrelerini kullan</value>
@@ -358,67 +358,67 @@
     <value>Kısayol gir...</value>
   </data>
   <data name="SortByAttributesAscending" xml:space="preserve">
-    <value>Attributes ascending</value>
+    <value>Artan nitelikler</value>
   </data>
   <data name="SortByAttributesDescending" xml:space="preserve">
-    <value>Attributes descending</value>
+    <value>Azalan nitelikler</value>
   </data>
   <data name="SortByDateAccessedAscending" xml:space="preserve">
-    <value>Date accessed ascending</value>
+    <value>Artan erişim tarihi</value>
   </data>
   <data name="SortByDateAccessedDescending" xml:space="preserve">
-    <value>Date accessed descending</value>
+    <value>Azalan erişim tarihi</value>
   </data>
   <data name="SortByDateCreatedAscending" xml:space="preserve">
-    <value>Date created ascending</value>
+    <value>Artan oluşturulma tarihi</value>
   </data>
   <data name="SortByDateCreatedDescending" xml:space="preserve">
-    <value>Date created descending</value>
+    <value>Azalan oluşturulma tarihi</value>
   </data>
   <data name="SortByDateModifiedAscending" xml:space="preserve">
-    <value>Date modified ascending</value>
+    <value>Artan değiştirilme tarihi</value>
   </data>
   <data name="SortByDateModifiedDescending" xml:space="preserve">
-    <value>Date modified descending</value>
+    <value>Azalan değiştirilme tarihi</value>
   </data>
   <data name="SortByDateRecentlyChangedAscending" xml:space="preserve">
-    <value>Date recently changed ascending</value>
+    <value>Artan yakın zamanda değiştirilen tarihi</value>
   </data>
   <data name="SortByDateRecentlyChangedDescending" xml:space="preserve">
-    <value>Date recently changed descending</value>
+    <value>Azalan yakın zamanda değiştirilen tarihi</value>
   </data>
   <data name="SortByDateRunAscending" xml:space="preserve">
-    <value>Date run ascending</value>
+    <value>Artan çalıştırma tarihi</value>
   </data>
   <data name="SortByDateRunDescending" xml:space="preserve">
-    <value>Date run descending</value>
+    <value>Azalan çalıştırma tarihi</value>
   </data>
   <data name="SortByExtensionAscending" xml:space="preserve">
-    <value>Extension ascending</value>
+    <value>Uzantı artan</value>
   </data>
   <data name="SortByExtensionDescending" xml:space="preserve">
-    <value>Extension descending</value>
+    <value>Uzantı azalan</value>
   </data>
   <data name="SortByFileListFilenameAscending" xml:space="preserve">
-    <value>File list filename ascending</value>
+    <value>Dosya listesi artan dosya adı</value>
   </data>
   <data name="SortByFileListFilenameDescending" xml:space="preserve">
-    <value>File list filename descending</value>
+    <value>Dosya listesi azalan dosya adı</value>
   </data>
   <data name="SortByNameAscending" xml:space="preserve">
-    <value>Name ascending</value>
+    <value>Artan ad</value>
   </data>
   <data name="SortByNameDescending" xml:space="preserve">
-    <value>Name descending</value>
+    <value>Azalan ad</value>
   </data>
   <data name="SortByPathAscending" xml:space="preserve">
-    <value>Path ascending</value>
+    <value>Artan yol</value>
   </data>
   <data name="SortByPathDescending" xml:space="preserve">
-    <value>Path descending</value>
+    <value>Azalan yol</value>
   </data>
   <data name="SortByRunCountAscending" xml:space="preserve">
-    <value>Run count ascending</value>
+    <value>Artan çalıştırma sırası</value>
   </data>
   <data name="SortByRunCountDescending" xml:space="preserve">
     <value>Çalıştırılma sırası, azalan</value>
