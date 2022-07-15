@@ -441,9 +441,6 @@
   <data name="ThemeLight" xml:space="preserve">
     <value>ライト</value>
   </data>
-  <data name="ThemeMedium" xml:space="preserve">
-    <value>ダーク/ライト</value>
-  </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>オーディオ</value>
   </data>
