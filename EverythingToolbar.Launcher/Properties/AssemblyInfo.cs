@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("EverythingToolbar.Launcher")]
-[assembly: AssemblyCopyright("Copyright © Stephan Rumswinkel 2021")]
+[assembly: AssemblyCopyright("Copyright © Stephan Rumswinkel 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
