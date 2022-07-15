@@ -24,7 +24,7 @@
       <Value Profile="(Default)">C:\\Program Files\\Everything\\Everything.exe</Value>
     </Setting>
     <Setting Name="theme" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MEDIUM</Value>
+      <Value Profile="(Default)">DARK</Value>
     </Setting>
     <Setting Name="itemTemplate" Type="System.String" Scope="User">
       <Value Profile="(Default)">NORMAL</Value>

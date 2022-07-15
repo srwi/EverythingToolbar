@@ -21,6 +21,10 @@ namespace CSDeskBand
                 if (Settings.Default.isUpgradeRequired)
                 {
                     Settings.Default.Upgrade();
+
+                    if (Settings.Default.theme == "MEDIUM")
+                        Settings.Default.theme = "DARK";
+
                     Settings.Default.isUpgradeRequired = false;
                     Settings.Default.Save();
                 }
@@ -40,8 +44,8 @@ namespace CSDeskBand
             catch (Exception e)
             {
                 ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Unhandled exception");
-                if (MessageBox.Show(e.ToString() + "\n\n" + EverythingToolbar.Properties.Resources.MessageBoxCopyException,
-                    EverythingToolbar.Properties.Resources.MessageBoxUnhandledExceptionTitle,
+                if (MessageBox.Show(e.ToString() + "\n\n" + Resources.MessageBoxCopyException,
+                    Resources.MessageBoxUnhandledExceptionTitle,
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Error) == MessageBoxResult.Yes)
                 {
