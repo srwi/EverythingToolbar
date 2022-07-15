@@ -39,7 +39,8 @@
     <SolidColorBrush x:Key="SearchResultDateModified" Color="#7a7a7a" />
     <SolidColorBrush x:Key="SearchResultFileSize" Color="#7a7a7a" />
     <SolidColorBrush x:Key="ScrollbarBackground" Color="{Binding Converter={local:Win10or11Converter}, ConverterParameter=#1b1b1b;#2c2c2c}" />
-    <SolidColorBrush x:Key="ScrollbarButtonForeground" Color="{Binding Converter={local:Win10or11Converter}, ConverterParameter=#d9d9d9;#9f9f9f}" />
+    <SolidColorBrush x:Key="ScrollbarButtonForeground" Color="{Binding Converter={local:Win10or11Converter}, ConverterParameter=#767676;#9f9f9f}" />
+    <SolidColorBrush x:Key="ScrollbarButtonForegroundHover" Color="{Binding Converter={local:Win10or11Converter}, ConverterParameter=#767676;#cfcfcf}" />
     <SolidColorBrush x:Key="ScrollbarButtonForegroundActive" Color="{Binding Converter={local:Win10or11Converter}, ConverterParameter=#4f4f4f;#cfcfcf}" />
     <SolidColorBrush x:Key="ScrollbarButtonBackground" Color="{Binding Converter={local:Win10or11Converter}, ConverterParameter=#1b1b1b;#2c2c2c}" />
     <SolidColorBrush x:Key="ScrollbarButtonBackgroundHover" Color="{Binding Converter={local:Win10or11Converter}, ConverterParameter=#313131;#2c2c2c}" />

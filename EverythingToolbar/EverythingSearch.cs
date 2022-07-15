@@ -80,25 +80,25 @@ namespace EverythingToolbar
         [DllImport("Everything64.dll")]
         public static extern bool Everything_IsFastSort(uint sortType);
 
-        private bool _opened = false;
+        private bool delayedOpened = false;
         public bool DelayedOpened
         {
             get
             {
-                return _opened;
+                return delayedOpened;
             }
             private set
             {
                 if (value)
                 {
-                    _opened = true;
+                    delayedOpened = true;
                 }
                 else
                 {
                     var t = Task.Run(async delegate
                     {
                         await Task.Delay(200);
-                        _opened = false;
+                        delayedOpened = false;
                     });
                 }
             }
