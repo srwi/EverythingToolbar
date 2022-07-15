@@ -10,31 +10,35 @@
                 <TabControl.Resources>
                     <Style TargetType="{x:Type TabItem}">
                         <Setter Property="Focusable" Value="false" />
+                        <Setter Property="SnapsToDevicePixels" Value="True" />
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type TabItem}">
                                     <StackPanel>
                                         <Border x:Name="Border"
-                                            Padding="{Binding Converter={local:Win10or11Converter}, ConverterParameter='16,14;16,6'}"
-                                            Background="Transparent"
-                                            PreviewMouseDown="OnTabItemClicked">
+                                                Padding="{Binding Converter={local:Win10or11Converter}, ConverterParameter='16,14;16,6'}"
+                                                Background="Transparent"
+                                                PreviewMouseDown="OnTabItemClicked">
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock x:Name="ContentSiteIcon"
-                                                       FontFamily="Segoe MDL2 Assets"
-                                                       Text="{Binding Icon}"
-                                                       FontSize="10pt"
-                                                       Foreground="{DynamicResource TabForeground}"
-                                                       Margin="-3, 0, 0, 0"
-                                                       VerticalAlignment="Center"
-                                                       HorizontalAlignment="Center" />
+                                                           FontFamily="Segoe MDL2 Assets"
+                                                           Text="{Binding Icon}"
+                                                           FontSize="10pt"
+                                                           Foreground="{DynamicResource TabForeground}"
+                                                           Margin="-3, 0, 0, 0"
+                                                           VerticalAlignment="Center"
+                                                           HorizontalAlignment="Center" />
                                                 <TextBlock x:Name="ContentSite"
-                                                       Text="{Binding Name}"
-                                                       FontSize="10pt"
-                                                       Foreground="{DynamicResource TabForeground}"
-                                                       VerticalAlignment="Center" />
+                                                           Text="{Binding Name}"
+                                                           FontSize="10pt"
+                                                           Foreground="{DynamicResource TabForeground}"
+                                                           VerticalAlignment="Center" />
                                             </StackPanel>
                                         </Border>
-                                        <Border x:Name="SelectedIndicator" Height="3" Width="{Binding Converter={local:Win10or11Converter}, ConverterParameter=NaN;12}" CornerRadius="2"></Border>
+                                        <Border x:Name="SelectedIndicator"
+                                                Height="{Binding Converter={local:Win10or11Converter}, ConverterParameter=4;3}"
+                                                Width="{Binding Converter={local:Win10or11Converter}, ConverterParameter=NaN;12}"
+                                                CornerRadius="{Binding Converter={local:Win10or11Converter}, ConverterParameter=0;2}" />
                                     </StackPanel>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver"
@@ -83,6 +87,7 @@
                         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
                         <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
                         <Setter Property="Focusable" Value="false" />
+                        <Setter Property="SnapsToDevicePixels" Value="True" />
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ComboBox">
