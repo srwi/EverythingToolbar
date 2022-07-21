@@ -10,13 +10,13 @@ body:
     options:
       - label: I have fully read the [README](https://github.com/stnkl/EverythingToolbar/blob/master/README.md) and it did not solve the problem.
         required: true
-      - label: I have searched all [https://github.com/stnkl/EverythingToolbar/issues?q=](open and closed issues) for the same bug report without success.
+      - label: I have searched all [open and closed issues](https://github.com/stnkl/EverythingToolbar/issues?q=) for the same bug report without success.
         required: true
 - type: input
   attributes:
     label: EverythingToolbar Version
     description: What version of EverythingToolbar are you using?
-    placeholder: 0.7.3
+    placeholder: "e.g. 0.7.4"
   validations:
     required: true
 - type: input
