@@ -334,7 +334,7 @@
     <value>Show quick toggles</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>Mostrar recuento de resultados</value>
+    <value>Mostrar número de resultados</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Ordenar por</value>
@@ -343,7 +343,7 @@
     <value>Tema</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>Enable thumbnails</value>
+    <value>Habilitar miniaturas</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Usar filtros de Everything</value>
