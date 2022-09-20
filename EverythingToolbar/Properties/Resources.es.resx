@@ -331,7 +331,7 @@
     <value>Reglas...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Show quick toggles</value>
+    <value>Mostrar botones de acceso rápido</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
     <value>Mostrar número de resultados</value>
