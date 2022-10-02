@@ -110,10 +110,40 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.af.resx" />
+    <EmbeddedResource Include="Properties\Resources.ar.resx" />
+    <EmbeddedResource Include="Properties\Resources.ca.resx" />
+    <EmbeddedResource Include="Properties\Resources.cs.resx" />
+    <EmbeddedResource Include="Properties\Resources.da.resx" />
+    <EmbeddedResource Include="Properties\Resources.de.resx" />
+    <EmbeddedResource Include="Properties\Resources.el.resx" />
+    <EmbeddedResource Include="Properties\Resources.es.resx" />
+    <EmbeddedResource Include="Properties\Resources.fi.resx" />
+    <EmbeddedResource Include="Properties\Resources.fr.resx" />
+    <EmbeddedResource Include="Properties\Resources.he.resx" />
+    <EmbeddedResource Include="Properties\Resources.hu.resx" />
+    <EmbeddedResource Include="Properties\Resources.it.resx" />
+    <EmbeddedResource Include="Properties\Resources.ja.resx" />
+    <EmbeddedResource Include="Properties\Resources.ko-KR.resx" />
+    <EmbeddedResource Include="Properties\Resources.nl.resx" />
+    <EmbeddedResource Include="Properties\Resources.no.resx" />
+    <EmbeddedResource Include="Properties\Resources.pl.resx" />
+    <EmbeddedResource Include="Properties\Resources.pt-BR.resx" />
+    <EmbeddedResource Include="Properties\Resources.pt.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.ro.resx" />
+    <EmbeddedResource Include="Properties\Resources.ru.resx" />
+    <EmbeddedResource Include="Properties\Resources.sr.resx" />
+    <EmbeddedResource Include="Properties\Resources.sv.resx" />
+    <EmbeddedResource Include="Properties\Resources.tr.resx" />
+    <EmbeddedResource Include="Properties\Resources.ug.resx" />
+    <EmbeddedResource Include="Properties\Resources.uk.resx" />
+    <EmbeddedResource Include="Properties\Resources.vi.resx" />
+    <EmbeddedResource Include="Properties\Resources.zh-Hans.resx" />
+    <EmbeddedResource Include="Properties\Resources.zh.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
