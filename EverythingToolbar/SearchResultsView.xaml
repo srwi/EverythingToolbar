@@ -53,6 +53,7 @@
             <Separator />
             <MenuItem Header="{x:Static properties:Resources.ContextMenuProperties}"
                       Click="ShowFileProperties" />
+            <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWinContext}" Click="ShowFileWindowsContexMenu" />
         </ContextMenu>
 
         <Style TargetType="{x:Type ListViewItem}">

@@ -150,6 +150,9 @@
   <data name="ContextMenuOpenPath" xml:space="preserve">
     <value>Open Path</value>
   </data>
+  <data name="ContextMenuOpenWinContext" xml:space="preserve">
+    <value>Open system context menu</value>
+  </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
     <value>Open with...</value>
   </data>

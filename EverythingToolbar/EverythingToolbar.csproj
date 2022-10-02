@@ -326,6 +326,7 @@
     <Compile Include="SettingsControl.xaml.cs">
       <DependentUpon>SettingsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ShellContextMenu.cs" />
     <Compile Include="ShortcutSelector.xaml.cs">
       <DependentUpon>ShortcutSelector.xaml</DependentUpon>
     </Compile>

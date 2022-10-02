@@ -126,6 +126,18 @@ namespace EverythingToolbar
             ShellUtils.ShowFileProperties(FullPathAndFileName);
         }
 
+        public void ShowWindowsContexMenu()
+        {
+            ShowWindowsContexMenu(System.Windows.Forms.Control.MousePosition);
+        }
+        public void ShowWindowsContexMenu(System.Drawing.Point pos)
+        {
+            Peter.ShellContextMenu menu = new Peter.ShellContextMenu();
+            FileInfo[] arrFI = new FileInfo[1];
+            arrFI[0] = new FileInfo(FullPathAndFileName);
+            menu.ShowContextMenu(arrFI, pos);
+        }
+
         public void ShowInEverything()
         {
             EverythingSearch.Instance.OpenLastSearchInEverything(FullPathAndFileName);
