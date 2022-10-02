@@ -441,9 +441,6 @@
   <data name="ThemeLight" xml:space="preserve">
     <value>Ljus</value>
   </data>
-  <data name="ThemeMedium" xml:space="preserve">
-    <value>Medel</value>
-  </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>Ljud</value>
   </data>

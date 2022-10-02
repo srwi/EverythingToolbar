@@ -148,7 +148,7 @@
     <value>Abrir</value>
   </data>
   <data name="ContextMenuOpenPath" xml:space="preserve">
-    <value>Abrir ubicación</value>
+    <value>Abrir ruta</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
     <value>Abrir con...</value>
@@ -214,7 +214,7 @@
     <value>Error al copiar archivo.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
-    <value>Error al copiar ubicación.</value>
+    <value>Error al copiar ruta.</value>
   </data>
   <data name="MessageBoxFailedToOpen" xml:space="preserve">
     <value>Error al abrir resultado de búsqueda.</value>
@@ -232,13 +232,13 @@
     <value>Error al ejecutar el comando</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
-    <value>Para utilizar este método de ordenar tiene que tener ordenar rápido activado. Puede activarlo en los ajustes de Everything.</value>
+    <value>Para utilizar este método de clasificación tiene que tener activada la clasificación rápida. Se puede habilitar en la configuración de Everything.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
-    <value>Ordenar rápido no activado</value>
+    <value>Clasificación rápida no activada</value>
   </data>
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
-    <value>Al menos una expresión regular es inválida.</value>
+    <value>Al menos una expresión regular no es válida.</value>
   </data>
   <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
     <value>Los nombres de reglas no pueden estar vacíos.</value>
@@ -277,7 +277,7 @@
     <value>Tipo</value>
   </data>
   <data name="RulesWindowText" xml:space="preserve">
-    <value>Use %file%, %filename% y %path% como sustitutos en los comandos.</value>
+    <value>Utilice %file%, %filename% y %path% como marcadores de posición en los comandos.</value>
   </data>
   <data name="RulesWindowTitle" xml:space="preserve">
     <value>Reglas</value>
@@ -331,10 +331,10 @@
     <value>Reglas...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Show quick toggles</value>
+    <value>Mostrar botones de acceso rápido</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>Mostrar recuento de resultados</value>
+    <value>Mostrar número de resultados</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Ordenar por</value>
@@ -343,7 +343,7 @@
     <value>Tema</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>Enable thumbnails</value>
+    <value>Habilitar miniaturas</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Usar filtros de Everything</value>
@@ -355,94 +355,91 @@
     <value>Aceptar</value>
   </data>
   <data name="ShortcutWindowTitle" xml:space="preserve">
-    <value>Introducir atajo de teclado...</value>
+    <value>Introducir acceso directo...</value>
   </data>
   <data name="SortByAttributesAscending" xml:space="preserve">
-    <value>Atributos ascendiente</value>
+    <value>Atributos ascendentes</value>
   </data>
   <data name="SortByAttributesDescending" xml:space="preserve">
-    <value>Atributos descendiente</value>
+    <value>Atributos descendentes</value>
   </data>
   <data name="SortByDateAccessedAscending" xml:space="preserve">
-    <value>Fecha de acceso ascendiente</value>
+    <value>Fecha de acceso ascendente</value>
   </data>
   <data name="SortByDateAccessedDescending" xml:space="preserve">
-    <value>Fecha de acceso descendiente</value>
+    <value>Fecha de acceso descendente</value>
   </data>
   <data name="SortByDateCreatedAscending" xml:space="preserve">
-    <value>Fecha de creación ascendiente</value>
+    <value>Fecha de creación ascendente</value>
   </data>
   <data name="SortByDateCreatedDescending" xml:space="preserve">
-    <value>Fecha de creación descendiente</value>
+    <value>Fecha de creación descendente</value>
   </data>
   <data name="SortByDateModifiedAscending" xml:space="preserve">
-    <value>Fecha de modificación ascendiente</value>
+    <value>Fecha de modificación ascendente</value>
   </data>
   <data name="SortByDateModifiedDescending" xml:space="preserve">
-    <value>Fecha de modificación descendiente</value>
+    <value>Fecha de modificación descendente</value>
   </data>
   <data name="SortByDateRecentlyChangedAscending" xml:space="preserve">
-    <value>Fecha de cambio reciente ascendiente</value>
+    <value>Fecha de cambio reciente ascendente</value>
   </data>
   <data name="SortByDateRecentlyChangedDescending" xml:space="preserve">
-    <value>Fecha de cambio reciente descendiente</value>
+    <value>Fecha de cambio reciente descendente</value>
   </data>
   <data name="SortByDateRunAscending" xml:space="preserve">
-    <value>Fecha de ejecución ascendiente</value>
+    <value>Fecha de ejecución ascendente</value>
   </data>
   <data name="SortByDateRunDescending" xml:space="preserve">
-    <value>Fecha de ejecución descendiente</value>
+    <value>Fecha de ejecución descendente</value>
   </data>
   <data name="SortByExtensionAscending" xml:space="preserve">
-    <value>Extensión ascendiente</value>
+    <value>Extensión ascendente</value>
   </data>
   <data name="SortByExtensionDescending" xml:space="preserve">
-    <value>Extensión descendiente</value>
+    <value>Extensión descendente</value>
   </data>
   <data name="SortByFileListFilenameAscending" xml:space="preserve">
-    <value>Lista de archivos por nombre ascendiente</value>
+    <value>Lista de archivos por nombre ascendente</value>
   </data>
   <data name="SortByFileListFilenameDescending" xml:space="preserve">
-    <value>Lista de archivos por nombre descendiente</value>
+    <value>Lista de archivos por nombre descendente</value>
   </data>
   <data name="SortByNameAscending" xml:space="preserve">
-    <value>Nombre ascendiente</value>
+    <value>Nombre ascendente</value>
   </data>
   <data name="SortByNameDescending" xml:space="preserve">
-    <value>Nombre descendiente</value>
+    <value>Nombre descendente</value>
   </data>
   <data name="SortByPathAscending" xml:space="preserve">
-    <value>Ubicación ascendiente</value>
+    <value>Ruta ascendente</value>
   </data>
   <data name="SortByPathDescending" xml:space="preserve">
-    <value>Ubicación descendiente</value>
+    <value>Ruta descendente</value>
   </data>
   <data name="SortByRunCountAscending" xml:space="preserve">
     <value>Número de ejecuciones ascendiente</value>
   </data>
   <data name="SortByRunCountDescending" xml:space="preserve">
-    <value>Número de ejecuciones descendiente</value>
+    <value>Número de ejecuciones descendente</value>
   </data>
   <data name="SortBySizeAscending" xml:space="preserve">
-    <value>Tamaño ascendiente</value>
+    <value>Tamaño ascendente</value>
   </data>
   <data name="SortBySizeDescending" xml:space="preserve">
-    <value>Tamaño descendiente</value>
+    <value>Tamaño descendente</value>
   </data>
   <data name="SortByTypeNameAscending" xml:space="preserve">
-    <value>Nombre de tipo ascendiente</value>
+    <value>Nombre de tipo ascendente</value>
   </data>
   <data name="SortByTypeNameDescending" xml:space="preserve">
-    <value>Nombre de tipo descendiente</value>
+    <value>Nombre de tipo descendente</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>Oscuro</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
     <value>Claro</value>
-  </data>
-  <data name="ThemeMedium" xml:space="preserve">
-    <value>Mediano</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>Audio</value>
@@ -457,7 +454,7 @@
     <value>Ejecutable</value>
   </data>
   <data name="UserFilterPicture" xml:space="preserve">
-    <value>Foto</value>
+    <value>Imagen</value>
   </data>
   <data name="UserFilterPlaceholder" xml:space="preserve">
     <value>Más</value>
