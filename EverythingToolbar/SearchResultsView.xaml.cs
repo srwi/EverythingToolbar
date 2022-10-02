@@ -185,6 +185,11 @@ namespace EverythingToolbar
             SelectedItem?.ShowProperties();
         }
 
+        public void ShowFileWindowsContexMenu(object sender, RoutedEventArgs e)
+        {
+            SelectedItem?.ShowWindowsContexMenu();
+        }
+
         private void OnOpenWithMenuLoaded(object sender, RoutedEventArgs e)
         {
             MenuItem mi = sender as MenuItem;

@@ -160,6 +160,15 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show more options.
+        /// </summary>
+        public static string ContextMenuOpenWinContext {
+            get {
+                return ResourceManager.GetString("ContextMenuOpenWinContext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open with....
         /// </summary>
         public static string ContextMenuOpenWith {
