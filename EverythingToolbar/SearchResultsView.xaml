@@ -50,10 +50,10 @@
             <MenuItem Header="{x:Static properties:Resources.ContextMenuCopyFile}"
                       Click="CopyFile"
                       Icon="&#xE8C8;" />
-            <Separator />
             <MenuItem Header="{x:Static properties:Resources.ContextMenuProperties}"
                       Click="ShowFileProperties" />
-            <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWinContext}" Click="ShowFileWindowsContexMenu" />
+            <Separator />
+            <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWinContext}" Click="ShowFileWindowsContexMenu" Icon="&#xE712;" />
         </ContextMenu>
 
         <Style TargetType="{x:Type ListViewItem}">

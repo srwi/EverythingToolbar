@@ -160,7 +160,7 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open system context menu.
+        ///   Looks up a localized string similar to Show more options.
         /// </summary>
         public static string ContextMenuOpenWinContext {
             get {
