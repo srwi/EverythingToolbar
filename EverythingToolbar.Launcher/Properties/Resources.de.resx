@@ -118,39 +118,39 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClose" xml:space="preserve">
-    <value>Close</value>
+    <value>Schließen</value>
   </data>
   <data name="CheckboxEnable" xml:space="preserve">
-    <value>Enable</value>
+    <value>Aktivieren</value>
   </data>
   <data name="CheckboxHide" xml:space="preserve">
-    <value>Hide</value>
+    <value>Ausblenden</value>
   </data>
   <data name="ContextMenuQuit" xml:space="preserve">
-    <value>Quit</value>
+    <value>Beenden</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Run setup assistant...</value>
+    <value>Einrichtungsassistenten öffnen...</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
+    <value>Um EverythingToolbar an die Taskleiste anzuheften, öffnen Sie das Kontextmenü des Icons und wählen Sie 'An Taskleiste anheften'.</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Pin to taskbar</value>
+    <value>1. An Taskleiste anheften</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>Wahlweise kann das ursprüngliche Windows-Suchsymbol ausgeblendet werden.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Hide Windows search</value>
+    <value>2. Windows-Suchsymbol ausblenden</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
+    <value>Es wird empfohlen, die EverythingToolbar beim Systemstart automatisch zu starten.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Configure autostart</value>
+    <value>3. Autostart konfigurieren</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>EverythingToolbar Setup Assistant</value>
+    <value>EverythingToolbar Einrichtungsassistent</value>
   </data>
 </root>
