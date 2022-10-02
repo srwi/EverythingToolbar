@@ -88,7 +88,7 @@ namespace EverythingToolbar.Launcher
                     object registryValueObject = key?.GetValue("TaskbarAl");
                     if (registryValueObject != null && (int)registryValueObject == 1)
                     {
-                        Left = taskbar.Width / 2 - Properties.Settings.Default.popupSize.Width / 2;
+                        Left = taskbar.Width / 2 - EverythingToolbar.Properties.Settings.Default.popupSize.Width / 2;
                     }
                     else
                     {
@@ -167,8 +167,8 @@ namespace EverythingToolbar.Launcher
                         Application app = new Application();
                         icon.Icon = Icon.ExtractAssociatedIcon(Utils.GetThemedIconPath());
                         icon.ContextMenu = new System.Windows.Forms.ContextMenu(new System.Windows.Forms.MenuItem[] {
-                            new System.Windows.Forms.MenuItem("Run setup assistant", (s, e) => { new TaskbarPinGuide().Show(); }),
-                            new System.Windows.Forms.MenuItem("Quit", (s, e) => { app.Shutdown(); })
+                            new System.Windows.Forms.MenuItem(Properties.Resources.ContextMenuRunSetupAssistant, (s, e) => { new TaskbarPinGuide().Show(); }),
+                            new System.Windows.Forms.MenuItem(Properties.Resources.ContextMenuQuit, (s, e) => { app.Shutdown(); })
                         });
                         icon.Visible = true;
                         app.Run(new LauncherWindow());
