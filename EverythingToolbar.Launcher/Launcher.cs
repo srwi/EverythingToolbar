@@ -25,6 +25,8 @@ namespace EverythingToolbar.Launcher
 
             public LauncherWindow()
             {
+                ToolbarLogger.Initialize();
+
                 Width = 0;
                 Height = 0;
                 ShowInTaskbar = false;
