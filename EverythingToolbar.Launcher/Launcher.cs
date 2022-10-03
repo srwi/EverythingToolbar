@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -89,26 +88,28 @@ namespace EverythingToolbar.Launcher
 
             private void SetPosition()
             {
-                Rectangle taskbar = FindDockedTaskBars()[0];
+                System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.PrimaryScreen;
+                Rectangle taskbar = FindDockedTaskBar(screen);
                 double currentDpi = GetCurrentDpi();
 
-                if (taskbar.Y + taskbar.Height == System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height)
-                {
-                    Top = taskbar.Y * 96.0 / currentDpi;
-                    SearchResultsPopup.taskbarEdge = CSDeskBand.Edge.Bottom;
-                }
-                else
+                if (screen.WorkingArea.Y == taskbar.Y)
                 {
                     Top = taskbar.Height * 96.0 / currentDpi;
                     SearchResultsPopup.taskbarEdge = CSDeskBand.Edge.Top;
                 }
+                else
+                {
+                    Top = taskbar.Y * 96.0 / currentDpi;
+                    SearchResultsPopup.taskbarEdge = CSDeskBand.Edge.Bottom;
+                }
 
                 using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"))
                 {
-                    object registryValueObject = key?.GetValue("TaskbarAl");
-                    if (registryValueObject != null && (int)registryValueObject == 1)
+                    object taskbarAlignment = key?.GetValue("TaskbarAl");
+                    bool isCenterAligned = taskbarAlignment != null && (int)taskbarAlignment == 1;
+                    if (isCenterAligned)
                     {
-                        Left = taskbar.Width / 2 * 96.0 / currentDpi - EverythingToolbar.Properties.Settings.Default.popupSize.Width / 2;
+                        Left = (taskbar.Width * 96.0 / currentDpi - EverythingToolbar.Properties.Settings.Default.popupSize.Width) / 2;
                     }
                     else
                     {
@@ -124,54 +125,48 @@ namespace EverythingToolbar.Launcher
                 }
             }
 
-            private static List<Rectangle> FindDockedTaskBars()
+            private Rectangle FindDockedTaskBar(System.Windows.Forms.Screen screen)
             {
-                List<Rectangle> dockedRects = new List<Rectangle>();
-                foreach (var screen in System.Windows.Forms.Screen.AllScreens)
+                Rectangle rect = new Rectangle(0, 0, 0, 0);
+
+                if (!screen.Bounds.Equals(screen.WorkingArea))
                 {
-                    if (!screen.Bounds.Equals(screen.WorkingArea))
+                    var leftDockedWidth = Math.Abs((Math.Abs(screen.Bounds.Left) - Math.Abs(screen.WorkingArea.Left)));
+                    var topDockedHeight = Math.Abs((Math.Abs(screen.Bounds.Top) - Math.Abs(screen.WorkingArea.Top)));
+                    var rightDockedWidth = ((screen.Bounds.Width - leftDockedWidth) - screen.WorkingArea.Width);
+                    var bottomDockedHeight = ((screen.Bounds.Height - topDockedHeight) - screen.WorkingArea.Height);
+
+                    if (leftDockedWidth > 0)
                     {
-                        Rectangle rect = new Rectangle();
-
-                        var leftDockedWidth = Math.Abs((Math.Abs(screen.Bounds.Left) - Math.Abs(screen.WorkingArea.Left)));
-                        var topDockedHeight = Math.Abs((Math.Abs(screen.Bounds.Top) - Math.Abs(screen.WorkingArea.Top)));
-                        var rightDockedWidth = ((screen.Bounds.Width - leftDockedWidth) - screen.WorkingArea.Width);
-                        var bottomDockedHeight = ((screen.Bounds.Height - topDockedHeight) - screen.WorkingArea.Height);
-
-                        if ((leftDockedWidth > 0))
-                        {
-                            rect.X = screen.Bounds.Left;
-                            rect.Y = screen.Bounds.Top;
-                            rect.Width = leftDockedWidth;
-                            rect.Height = screen.Bounds.Height;
-                        }
-                        else if ((rightDockedWidth > 0))
-                        {
-                            rect.X = screen.WorkingArea.Right;
-                            rect.Y = screen.Bounds.Top;
-                            rect.Width = rightDockedWidth;
-                            rect.Height = screen.Bounds.Height;
-                        }
-                        else if ((topDockedHeight > 0))
-                        {
-                            rect.X = screen.WorkingArea.Left;
-                            rect.Y = screen.Bounds.Top;
-                            rect.Width = screen.WorkingArea.Width;
-                            rect.Height = topDockedHeight;
-                        }
-                        else if ((bottomDockedHeight > 0))
-                        {
-                            rect.X = screen.WorkingArea.Left;
-                            rect.Y = screen.WorkingArea.Bottom;
-                            rect.Width = screen.WorkingArea.Width;
-                            rect.Height = bottomDockedHeight;
-                        }
-
-                        dockedRects.Add(rect);
+                        rect.X = screen.Bounds.Left;
+                        rect.Y = screen.Bounds.Top;
+                        rect.Width = leftDockedWidth;
+                        rect.Height = screen.Bounds.Height;
+                    }
+                    else if (rightDockedWidth > 0)
+                    {
+                        rect.X = screen.WorkingArea.Right;
+                        rect.Y = screen.Bounds.Top;
+                        rect.Width = rightDockedWidth;
+                        rect.Height = screen.Bounds.Height;
+                    }
+                    else if (topDockedHeight > 0)
+                    {
+                        rect.X = screen.WorkingArea.Left;
+                        rect.Y = screen.Bounds.Top;
+                        rect.Width = screen.WorkingArea.Width;
+                        rect.Height = topDockedHeight;
+                    }
+                    else if (bottomDockedHeight > 0)
+                    {
+                        rect.X = screen.WorkingArea.Left;
+                        rect.Y = screen.WorkingArea.Bottom;
+                        rect.Width = screen.WorkingArea.Width;
+                        rect.Height = bottomDockedHeight;
                     }
                 }
 
-                return dockedRects;
+                return rect;
             }
         }
 
