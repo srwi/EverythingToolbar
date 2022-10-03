@@ -4,9 +4,9 @@
         xmlns:properties="clr-namespace:EverythingToolbar.Launcher.Properties"
         WindowStartupLocation="CenterScreen"
         Background="#202020" Foreground="White"
-        SizeToContent="WidthAndHeight" ResizeMode="NoResize"
+        SizeToContent="Height" ResizeMode="NoResize"
         Title="EverythingToolbar Setup Assistant"
-        Closed="OnClosed">
+        Closed="OnClosed" Width="575">
 
     <Window.Resources>
         <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
@@ -44,7 +44,7 @@
             <TextBlock FontSize="14" Text="{x:Static properties:Resources.SetupAssistantFirstStepTitle}" FontWeight="Medium" Margin="0, 10" />
             <Border BorderBrush="#1D1D1D" BorderThickness="1" Background="#2b2b2b" CornerRadius="4" Padding="15" Margin="0, 0, 0, 10">
                 <StackPanel>
-                    <TextBlock Margin="0, 0, 0, 10" Text="{x:Static properties:Resources.SetupAssistantFirstStepText}" />
+                    <TextBlock Margin="0, 0, 0, 10" TextWrapping="Wrap" Text="{x:Static properties:Resources.SetupAssistantFirstStepText}" />
                     <Image Source="Images/PinToTaskbar.png" Width="502" Height="217" />
                 </StackPanel>
             </Border>
@@ -54,14 +54,14 @@
             <TextBlock FontSize="14" Text="{x:Static properties:Resources.SetupAssistantSecondStepTitle}" FontWeight="Medium" Margin="0, 10" />
             <Border BorderBrush="#1D1D1D" BorderThickness="1" Background="#2b2b2b" CornerRadius="4" Padding="10" Margin="0, 0, 0, 10">
                 <StackPanel>
-                    <TextBlock Margin="0, 0, 0, 10" Text="{x:Static properties:Resources.SetupAssistantSecondStepText}" />
+                    <TextBlock Margin="0, 0, 0, 10" TextWrapping="Wrap" Text="{x:Static properties:Resources.SetupAssistantSecondStepText}" />
                     <CheckBox x:Name="HideWindowsSearchCheckBox" Content="{x:Static properties:Resources.CheckboxHide}" Foreground="White" Checked="HideWindowsSearchChanged" Unchecked="HideWindowsSearchChanged" />
                 </StackPanel>
             </Border>
             <TextBlock FontSize="14" Text="{x:Static properties:Resources.SetupAssistantThirdStepTitle}" FontWeight="Medium" Margin="0, 10" />
             <Border BorderBrush="#1D1D1D" BorderThickness="1" Background="#2b2b2b" CornerRadius="4" Padding="10" Margin="0, 0, 0, 10">
                 <StackPanel>
-                    <TextBlock Margin="0, 0, 0, 10" Text="{x:Static properties:Resources.SetupAssistantThirdStepText}" />
+                    <TextBlock Margin="0, 0, 0, 10" TextWrapping="Wrap" Text="{x:Static properties:Resources.SetupAssistantThirdStepText}" />
                     <CheckBox x:Name="AutostartCheckBox" Content="{x:Static properties:Resources.CheckboxEnable}" Foreground="White" Checked="AutostartChanged" Unchecked="AutostartChanged" />
                 </StackPanel>
             </Border>
