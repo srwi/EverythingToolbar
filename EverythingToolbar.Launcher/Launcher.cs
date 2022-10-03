@@ -39,6 +39,16 @@ namespace EverythingToolbar.Launcher
                 StartToggleListener();
                 if (!File.Exists(Utils.GetTaskbarShortcutPath()))
                     new TaskbarPinGuide().Show();
+
+                EverythingSearch.Instance.PropertyChanged += OnEverythingSearchPropertyChanged;
+            }
+
+            private void OnEverythingSearchPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName == "SearchTerm" && EverythingSearch.Instance.SearchTerm != null)
+                {
+                    SetForegroundWindow(handle);
+                }
             }
 
             private void OnLoaded(object sender, RoutedEventArgs e)
@@ -64,7 +74,6 @@ namespace EverythingToolbar.Launcher
                             {
                                 SetPosition();
                             });
-                            SetForegroundWindow(handle);
                             EverythingSearch.Instance.SearchTerm = "";
                         }
                     }
