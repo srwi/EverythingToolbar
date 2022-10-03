@@ -1,4 +1,4 @@
-﻿using EverythingToolbar.Helpers;
+using EverythingToolbar.Helpers;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -108,7 +108,7 @@ namespace EverythingToolbar.Launcher
                     object registryValueObject = key?.GetValue("TaskbarAl");
                     if (registryValueObject != null && (int)registryValueObject == 1)
                     {
-                        Left = (taskbar.Width / 2 - EverythingToolbar.Properties.Settings.Default.popupSize.Width / 2) * 96.0 / currentDpi;
+                        Left = taskbar.Width / 2 * 96.0 / currentDpi - EverythingToolbar.Properties.Settings.Default.popupSize.Width / 2;
                     }
                     else
                     {
