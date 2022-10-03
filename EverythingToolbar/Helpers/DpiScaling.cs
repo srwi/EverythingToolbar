@@ -102,7 +102,9 @@ namespace EverythingToolbar.Helpers
             InitialDpi = VisualTreeHelper.GetDpi(AssociatedObject).PixelsPerInchY;
             CurrentDpi = InitialDpi;
 
-            UpdateDpi(GetParentWindowDpi(AssociatedObject));
+            double parentWindowDpi = GetParentWindowDpi(AssociatedObject);
+            if (parentWindowDpi != 96.0)
+                UpdateDpi(parentWindowDpi);
         }
 
         [DebuggerStepThrough]
