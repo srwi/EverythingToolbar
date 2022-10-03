@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using EverythingToolbar.Helpers;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -68,18 +69,26 @@ namespace EverythingToolbar.Launcher
                 });
             }
 
+            private double GetCurrentDpi()
+            {
+                PresentationSource source = PresentationSource.FromVisual(this);
+                double dpi = 96.0 * source.CompositionTarget.TransformToDevice.M11;
+                return dpi;
+            }
+
             private void SetPosition()
             {
                 Rectangle taskbar = FindDockedTaskBars()[0];
+                double currentDpi = GetCurrentDpi();
 
                 if (taskbar.Y + taskbar.Height == System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height)
                 {
-                    Top = taskbar.Y;
+                    Top = taskbar.Y * 96.0 / currentDpi;
                     SearchResultsPopup.taskbarEdge = CSDeskBand.Edge.Bottom;
                 }
                 else
                 {
-                    Top = taskbar.Height;
+                    Top = taskbar.Height * 96.0 / currentDpi;
                     SearchResultsPopup.taskbarEdge = CSDeskBand.Edge.Top;
                 }
 
@@ -88,13 +97,13 @@ namespace EverythingToolbar.Launcher
                     object registryValueObject = key?.GetValue("TaskbarAl");
                     if (registryValueObject != null && (int)registryValueObject == 1)
                     {
-                        Left = taskbar.Width / 2 - EverythingToolbar.Properties.Settings.Default.popupSize.Width / 2;
+                        Left = (taskbar.Width / 2 - EverythingToolbar.Properties.Settings.Default.popupSize.Width / 2) * 96.0 / currentDpi;
                     }
                     else
                     {
                         if (CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
                         {
-                            Left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Width - 1;
+                            Left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Width * 96.0 / currentDpi - 1;
                         }
                         else
                         {
