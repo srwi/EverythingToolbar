@@ -148,7 +148,7 @@
     <value>Abrir</value>
   </data>
   <data name="ContextMenuOpenPath" xml:space="preserve">
-    <value>Abrir ruta</value>
+    <value>Abrir ubicación</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
     <value>Mostrar más opciones</value>
@@ -217,7 +217,7 @@
     <value>Error al copiar archivo.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
-    <value>Error al copiar ruta.</value>
+    <value>Error al copiar ubicación.</value>
   </data>
   <data name="MessageBoxFailedToOpen" xml:space="preserve">
     <value>Error al abrir resultado de búsqueda.</value>
@@ -415,10 +415,10 @@
     <value>Nombre descendente</value>
   </data>
   <data name="SortByPathAscending" xml:space="preserve">
-    <value>Ruta ascendente</value>
+    <value>Ubicación ascendente</value>
   </data>
   <data name="SortByPathDescending" xml:space="preserve">
-    <value>Ruta descendente</value>
+    <value>Ubicación descendente</value>
   </data>
   <data name="SortByRunCountAscending" xml:space="preserve">
     <value>Número de ejecuciones ascendiente</value>
