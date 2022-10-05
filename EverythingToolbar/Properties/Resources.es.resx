@@ -187,13 +187,13 @@
     <value>Compacta</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compacta (detallado)</value>
+    <value>Compacta (detallada)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
     <value>Normal</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detallado)</value>
+    <value>Normal (detallada)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
