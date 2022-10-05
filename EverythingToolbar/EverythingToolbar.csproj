@@ -52,6 +52,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
@@ -73,6 +74,7 @@
     <Compile Include="About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\NotConverter.cs" />
     <Compile Include="Converters\Win10or11Converter.cs" />
     <Compile Include="Converters\SearchResultsCountConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
@@ -227,6 +229,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Helpers\RegistryWatcher.cs" />
     <Compile Include="Rules.xaml.cs">
       <DependentUpon>Rules.xaml</DependentUpon>
     </Compile>

@@ -14,6 +14,7 @@ namespace EverythingToolbar
         private readonly ResourceLoader themes = new ResourceLoader("Themes", Properties.Resources.SettingsTheme);
         private readonly ResourceLoader itemTemplates = new ResourceLoader("ItemTemplates", Properties.Resources.SettingsView);
 
+
         public SettingsControl()
         {
             InitializeComponent();
@@ -34,7 +35,17 @@ namespace EverythingToolbar
             ItemTemplateMenu.SetBinding(ItemsControl.ItemsSourceProperty, itemTemplateMenuBinding);
 
             (SortByMenu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
+
+            Properties.Settings.Default.PropertyChanged += (obj, args) =>
+            {
+                if (args.PropertyName == "isSyncThemeEnabled")
+                {
+                    ApplicationResources.Instance.SyncTheme();
+                }
+            };
+            ApplicationResources.Instance.SyncTheme();
         }
+
 
         private void OpenAboutWindow(object sender, RoutedEventArgs e)
         {

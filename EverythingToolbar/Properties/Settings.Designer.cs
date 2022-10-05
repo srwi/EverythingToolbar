@@ -322,5 +322,17 @@ namespace EverythingToolbar.Properties {
                 this["isThumbnailsEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool isSyncThemeEnabled {
+            get {
+                return ((bool)(this["isSyncThemeEnabled"]));
+            }
+            set {
+                this["isSyncThemeEnabled"] = value;
+            }
+        }
     }
 }

@@ -745,6 +745,15 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto Theme.
+        /// </summary>
+        public static string SettingsThemeAuto {
+            get {
+                return ResourceManager.GetString("SettingsThemeAuto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable thumbnails.
         /// </summary>
         public static string SettingsThumbnailsEnabled {
