@@ -345,6 +345,9 @@
   <data name="SettingsTheme" xml:space="preserve">
     <value>ערכת נושא</value>
   </data>
+  <data name="SettingsThemeAuto" xml:space="preserve">
+    <value>Sync theme</value>
+  </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>הפעל תצוגה מקדימה</value>
   </data>
