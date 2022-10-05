@@ -229,7 +229,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="RegistryWatcher.cs" />
+    <Compile Include="Helpers\RegistryWatcher.cs" />
     <Compile Include="Rules.xaml.cs">
       <DependentUpon>Rules.xaml</DependentUpon>
     </Compile>

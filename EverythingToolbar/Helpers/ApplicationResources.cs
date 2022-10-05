@@ -43,7 +43,6 @@ namespace EverythingToolbar.Helpers
 
         public void ApplyTheme(string themeName)
         {
-            Console.WriteLine("THEME: '" + themeName + "'");
             if (!AddResource("Themes", themeName))
             {
                 Properties.Settings.Default.theme = (string)Properties.Settings.Default.Properties["theme"].DefaultValue;

@@ -346,7 +346,7 @@
     <value>Theme</value>
   </data>
   <data name="SettingsThemeAuto" xml:space="preserve">
-    <value>Auto Theme</value>
+    <value>Sync theme</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>Enable thumbnails</value>

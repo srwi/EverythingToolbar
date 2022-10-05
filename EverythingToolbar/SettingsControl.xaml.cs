@@ -1,5 +1,4 @@
 ﻿using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -15,7 +14,7 @@ namespace EverythingToolbar
         private readonly ResourceLoader themes = new ResourceLoader("Themes", Properties.Resources.SettingsTheme);
         private readonly ResourceLoader itemTemplates = new ResourceLoader("ItemTemplates", Properties.Resources.SettingsView);
 
-        private readonly RegistryEntry systemThemeRegistryEntry = new RegistryEntry("HKEY_CURRENT_USER", @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme");
+        private readonly RegistryEntry systemThemeRegistryEntry = new RegistryEntry("HKEY_CURRENT_USER", @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme");
         private RegistryWatcher systemThemeWatcher = null;
 
         public SettingsControl()
@@ -39,9 +38,9 @@ namespace EverythingToolbar
 
             (SortByMenu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
 
-            Settings.Default.PropertyChanged += (obj, args) =>
+            Properties.Settings.Default.PropertyChanged += (obj, args) =>
             {
-                if (args.PropertyName == "isThemeAutoEnabled")
+                if (args.PropertyName == "isSyncThemeEnabled")
                 {
                     UpdateAutoTheme();
                 }
@@ -57,8 +56,9 @@ namespace EverythingToolbar
                 systemThemeWatcher = null;
             }
 
-            if (!Settings.Default.isThemeAutoEnabled)
+            if (!Properties.Settings.Default.isSyncThemeEnabled)
             {
+                ApplicationResources.Instance.ApplyTheme(Properties.Settings.Default.theme);
                 return;
             }
 
@@ -66,8 +66,7 @@ namespace EverythingToolbar
             systemThemeWatcher = new RegistryWatcher(systemThemeRegistryEntry);
             systemThemeWatcher.OnChangeValue += (newValue) =>
             {
-                // Sync with GUI thread
-                this.Dispatcher.Invoke(() =>
+                Dispatcher.Invoke(() =>
                 {
                     ApplicationResources.Instance.ApplyThemeStandard((int)newValue == 1);
                 });

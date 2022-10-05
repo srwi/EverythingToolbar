@@ -77,7 +77,7 @@
     <Setting Name="isThumbnailsEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="isThemeAutoEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="isSyncThemeEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
