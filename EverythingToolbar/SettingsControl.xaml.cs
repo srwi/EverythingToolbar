@@ -14,8 +14,6 @@ namespace EverythingToolbar
         private readonly ResourceLoader themes = new ResourceLoader("Themes", Properties.Resources.SettingsTheme);
         private readonly ResourceLoader itemTemplates = new ResourceLoader("ItemTemplates", Properties.Resources.SettingsView);
 
-        private readonly RegistryEntry systemThemeRegistryEntry = new RegistryEntry("HKEY_CURRENT_USER", @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme");
-        private RegistryWatcher systemThemeWatcher = null;
 
         public SettingsControl()
         {
@@ -42,38 +40,10 @@ namespace EverythingToolbar
             {
                 if (args.PropertyName == "isSyncThemeEnabled")
                 {
-                    UpdateAutoTheme();
+                    ApplicationResources.Instance.SyncTheme();
                 }
             };
-            UpdateAutoTheme();            
-        }
-
-        private void UpdateAutoTheme()
-        {
-            if (systemThemeWatcher != null)
-            {
-                systemThemeWatcher.Stop();
-                systemThemeWatcher = null;
-            }
-
-            if (!Properties.Settings.Default.isSyncThemeEnabled)
-            {
-                ApplicationResources.Instance.ApplyTheme(Properties.Settings.Default.theme);
-                return;
-            }
-
-            // Watch system theme changes
-            systemThemeWatcher = new RegistryWatcher(systemThemeRegistryEntry);
-            systemThemeWatcher.OnChangeValue += (newValue) =>
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    ApplicationResources.Instance.ApplyThemeStandard((int)newValue == 1);
-                });
-            };
-
-            // Set to current system theme
-            ApplicationResources.Instance.ApplyThemeStandard((int)systemThemeRegistryEntry.GetValue() == 1);
+            ApplicationResources.Instance.SyncTheme();
         }
 
 

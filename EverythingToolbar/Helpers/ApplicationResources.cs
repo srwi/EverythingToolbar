@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace EverythingToolbar.Helpers
 {
@@ -17,9 +18,16 @@ namespace EverythingToolbar.Helpers
 
         public static readonly ApplicationResources Instance = new ApplicationResources();
 
+        private readonly RegistryEntry systemThemeRegistryEntry = new RegistryEntry("HKEY_CURRENT_USER", @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme");
+        private RegistryWatcher systemThemeWatcher = null;
+
         public void LoadDefaults()
         {
-            ApplyTheme(Properties.Settings.Default.theme);
+            if (Properties.Settings.Default.isSyncThemeEnabled)
+                SyncTheme();
+            else
+                ApplyTheme(Properties.Settings.Default.theme);
+
             ApplyItemTemplate(Properties.Settings.Default.itemTemplate);
         }
 
@@ -39,6 +47,31 @@ namespace EverythingToolbar.Helpers
                 NewResource = new ResourceDictionary() { Source = new Uri(path) }
             });
             return true;
+        }
+
+        public void SyncTheme()
+        {
+            if (systemThemeWatcher != null)
+            {
+                systemThemeWatcher.Stop();
+                systemThemeWatcher = null;
+            }
+
+            if (!Properties.Settings.Default.isSyncThemeEnabled)
+            {
+                Instance.ApplyTheme(Properties.Settings.Default.theme);
+                return;
+            }
+
+            // Watch system theme changes
+            systemThemeWatcher = new RegistryWatcher(systemThemeRegistryEntry);
+            systemThemeWatcher.OnChangeValue += (newValue) =>
+            {
+                Instance.ApplyThemeStandard((int)newValue == 1);
+            };
+
+            // Set to current system theme
+            Instance.ApplyThemeStandard((int)systemThemeRegistryEntry.GetValue() == 1);
         }
 
         public void ApplyTheme(string themeName)
