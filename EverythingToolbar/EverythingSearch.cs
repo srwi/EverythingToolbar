@@ -169,19 +169,9 @@ namespace EverythingToolbar
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private RegistryWatcher watcher;
-
         private EverythingSearch()
         {
             logger = ToolbarLogger.GetLogger("EverythingToolbar");
-
-            watcher = new RegistryWatcher("HKEY_CURRENT_USER", @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme");
-            Console.WriteLine("Light theme: " + watcher.GetValue().ToString());
-            watcher.OnChangeValue += (newValue) =>
-            {
-                Console.WriteLine("Light theme: " + newValue.ToString());
-            };
-
 
             try
             {

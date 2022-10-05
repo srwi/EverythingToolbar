@@ -1,4 +1,5 @@
 ﻿using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace EverythingToolbar
     {
         private readonly ResourceLoader themes = new ResourceLoader("Themes", Properties.Resources.SettingsTheme);
         private readonly ResourceLoader itemTemplates = new ResourceLoader("ItemTemplates", Properties.Resources.SettingsView);
+
+        private readonly RegistryEntry systemThemeRegistryEntry = new RegistryEntry("HKEY_CURRENT_USER", @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme");
+        private RegistryWatcher systemThemeWatcher = null;
 
         public SettingsControl()
         {
@@ -34,7 +38,40 @@ namespace EverythingToolbar
             ItemTemplateMenu.SetBinding(ItemsControl.ItemsSourceProperty, itemTemplateMenuBinding);
 
             (SortByMenu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
+
+
+            Settings.Default.PropertyChanged += (obj, args) =>
+            {
+                Console.WriteLine("Asdasd " + args.PropertyName);
+                if (args.PropertyName == "isThemeAutoEnabled")
+                {
+                    UpdateAutoTheme();
+                }
+            };
+
+            UpdateAutoTheme();
+
+            ApplicationResources.Instance.ApplyThemeStandard((int)systemThemeRegistryEntry.GetValue() == 1);
+            
         }
+
+        private void UpdateAutoTheme()
+        {
+            systemThemeWatcher = null; // destroy old watcher
+
+            if (!Settings.Default.isThemeAutoEnabled)
+            {
+                return;
+            }
+
+            systemThemeWatcher = new RegistryWatcher(systemThemeRegistryEntry);
+            systemThemeWatcher.OnChangeValue += (newValue) =>
+            {
+                Console.WriteLine("System theme: " + newValue.ToString());
+                ApplicationResources.Instance.ApplyThemeStandard((int)newValue == 1);
+            };
+        }
+
 
         private void OpenAboutWindow(object sender, RoutedEventArgs e)
         {

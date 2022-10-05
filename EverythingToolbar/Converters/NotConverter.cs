@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace EverythingToolbar
 {
-    [ValueConversion(typeof(bool), typeof(bool))]
-    public class NotConverter : IValueConverter
+    public class NotConverter : MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter,
             System.Globalization.CultureInfo culture)
@@ -22,6 +22,11 @@ namespace EverythingToolbar
                 throw new InvalidOperationException("Target must be bool");
 
             return !(bool)value;
+        }
+
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return this;
         }
     }
 }

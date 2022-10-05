@@ -43,6 +43,7 @@ namespace EverythingToolbar.Helpers
 
         public void ApplyTheme(string themeName)
         {
+            Console.WriteLine("THEME: '" + themeName + "'");
             if (!AddResource("Themes", themeName))
             {
                 Properties.Settings.Default.theme = (string)Properties.Settings.Default.Properties["theme"].DefaultValue;
@@ -51,14 +52,9 @@ namespace EverythingToolbar.Helpers
             }
         }
 
-        public void ApplyThemeDark()
+        public void ApplyThemeStandard(bool light)
         {
-            ApplyTheme("DARK");
-        }
-
-        public void ApplyThemeLight()
-        {
-            ApplyTheme("LIGHT");
+            ApplyTheme(light ? "LIGHT" : "DARK");
         }
 
         public void ApplyItemTemplate(string templateName)
