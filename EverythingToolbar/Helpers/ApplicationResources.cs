@@ -51,6 +51,16 @@ namespace EverythingToolbar.Helpers
             }
         }
 
+        public void ApplyThemeDark()
+        {
+            ApplyTheme("DARK");
+        }
+
+        public void ApplyThemeLight()
+        {
+            ApplyTheme("LIGHT");
+        }
+
         public void ApplyItemTemplate(string templateName)
         {
             if (!AddResource("ItemTemplates", templateName))

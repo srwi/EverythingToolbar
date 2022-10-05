@@ -80,7 +80,13 @@
             </MenuItem>
             <Separator />
             <MenuItem Header="{x:Static properties:Resources.SettingsView}" Name="ItemTemplateMenu" Click="OnItemTemplateClicked" />
-            <MenuItem Header="{x:Static properties:Resources.SettingsTheme}" Name="ThemeMenu" Click="OnThemeClicked" />
+            
+            <MenuItem Header="{x:Static properties:Resources.SettingsTheme}" Name="ThemeMenu" Click="OnThemeClicked"
+                      IsEnabled="{Binding Source={x:Static properties:Settings.Default}, Path=isThemeAutoEnabled, Converter={StaticResource local:NotConverter}, ConverterParameter=true, Mode=OneWay}" />
+
+            <MenuItem IsCheckable="True" Header="{x:Static properties:Resources.SettingsThemeAuto}" Click="OnMenuItemClicked"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isThemeAutoEnabled, Mode=TwoWay}" />
+            
             <MenuItem Header="{x:Static properties:Resources.SettingsPreferences}" Icon="&#xF8B0;">
                 <MenuItem Header="{x:Static properties:Resources.SettingsRules}" Click="OpenRulesWindow" Icon="&#xE7AC;" />
                 <MenuItem Header="{x:Static properties:Resources.SettingsChangeShortcut}" Click="OpenShortcutWindow" Icon="&#xE765;" />
