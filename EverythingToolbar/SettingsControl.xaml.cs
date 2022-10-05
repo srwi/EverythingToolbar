@@ -39,37 +39,42 @@ namespace EverythingToolbar
 
             (SortByMenu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
 
-
             Settings.Default.PropertyChanged += (obj, args) =>
             {
-                Console.WriteLine("Asdasd " + args.PropertyName);
                 if (args.PropertyName == "isThemeAutoEnabled")
                 {
                     UpdateAutoTheme();
                 }
             };
-
-            UpdateAutoTheme();
-
-            ApplicationResources.Instance.ApplyThemeStandard((int)systemThemeRegistryEntry.GetValue() == 1);
-            
+            UpdateAutoTheme();            
         }
 
         private void UpdateAutoTheme()
         {
-            systemThemeWatcher = null; // destroy old watcher
+            if (systemThemeWatcher != null)
+            {
+                systemThemeWatcher.Stop();
+                systemThemeWatcher = null;
+            }
 
             if (!Settings.Default.isThemeAutoEnabled)
             {
                 return;
             }
 
+            // Watch system theme changes
             systemThemeWatcher = new RegistryWatcher(systemThemeRegistryEntry);
             systemThemeWatcher.OnChangeValue += (newValue) =>
             {
-                Console.WriteLine("System theme: " + newValue.ToString());
-                ApplicationResources.Instance.ApplyThemeStandard((int)newValue == 1);
+                // Sync with GUI thread
+                this.Dispatcher.Invoke(() =>
+                {
+                    ApplicationResources.Instance.ApplyThemeStandard((int)newValue == 1);
+                });
             };
+
+            // Set to current system theme
+            ApplicationResources.Instance.ApplyThemeStandard((int)systemThemeRegistryEntry.GetValue() == 1);
         }
 
 

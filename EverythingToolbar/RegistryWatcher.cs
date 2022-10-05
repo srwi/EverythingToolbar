@@ -46,8 +46,17 @@ namespace EverythingToolbar
 
             this.watcher.EventArrived += Watcher_EventArrived;
 
+            this.Start();
+        }
+
+        public void Start()
+        {
             this.watcher.Start();
-            //this.watcher.Stop() // TODO: on dispose?
+        }
+
+        public void Stop()
+        {
+            this.watcher.Stop();
         }
 
         private static string EscapeBackticks(string unescaped)
