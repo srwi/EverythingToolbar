@@ -346,7 +346,7 @@
     <value>Thema</value>
   </data>
   <data name="SettingsThemeAuto" xml:space="preserve">
-    <value>Sync theme</value>
+    <value>Thema synchronisieren</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>Miniaturansicht aktivieren</value>
