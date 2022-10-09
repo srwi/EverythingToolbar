@@ -139,10 +139,10 @@
     <value>1. Anclar a la barra de tareas</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
+    <value>Es necesario reiniciar el explorador para actualizar el icono de la barra de tareas. ¿Desea reiniciarlo ahora?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>Restart explorer</value>
+    <value>Reiniciar explorador</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>Opcionalmente puede ocultarse el icono original de búsqueda de Windows.</value>
