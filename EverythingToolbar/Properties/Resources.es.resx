@@ -346,7 +346,7 @@
     <value>Tema</value>
   </data>
   <data name="SettingsThemeAuto" xml:space="preserve">
-    <value>Sync theme</value>
+    <value>Sincronizar tema</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>Habilitar miniaturas</value>
@@ -364,10 +364,10 @@
     <value>Introducir acceso directo...</value>
   </data>
   <data name="SortByAttributesAscending" xml:space="preserve">
-    <value>Atributos ascendentes</value>
+    <value>Atributos ascendente</value>
   </data>
   <data name="SortByAttributesDescending" xml:space="preserve">
-    <value>Atributos descendentes</value>
+    <value>Atributos descendente</value>
   </data>
   <data name="SortByDateAccessedAscending" xml:space="preserve">
     <value>Fecha de acceso ascendente</value>
