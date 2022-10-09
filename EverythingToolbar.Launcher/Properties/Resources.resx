@@ -138,6 +138,12 @@
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
     <value>1. Pin to taskbar</value>
   </data>
+  <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
+    <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
+  </data>
+  <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
+    <value>Restart explorer</value>
+  </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>Optionally the original Windows search icon can be hidden.</value>
   </data>

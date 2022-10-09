@@ -124,6 +124,24 @@ namespace EverythingToolbar.Launcher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An explorer restart is required to update the taskbar icon. Would you like to restart it now?.
+        /// </summary>
+        public static string SetupAssistantRestartExplorerDialogText {
+            get {
+                return ResourceManager.GetString("SetupAssistantRestartExplorerDialogText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restart explorer.
+        /// </summary>
+        public static string SetupAssistantRestartExplorerDialogTitle {
+            get {
+                return ResourceManager.GetString("SetupAssistantRestartExplorerDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Optionally the original Windows search icon can be hidden..
         /// </summary>
         public static string SetupAssistantSecondStepText {

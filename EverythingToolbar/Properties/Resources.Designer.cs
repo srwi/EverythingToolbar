@@ -745,7 +745,7 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Auto Theme.
+        ///   Looks up a localized string similar to Sync theme.
         /// </summary>
         public static string SettingsThemeAuto {
             get {

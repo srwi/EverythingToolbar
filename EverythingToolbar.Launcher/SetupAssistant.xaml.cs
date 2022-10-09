@@ -84,8 +84,8 @@ namespace EverythingToolbar.Launcher
             if (Utils.GetWindowsTheme() == Utils.WindowsTheme.Dark)
                 return;
 
-            if (MessageBox.Show("An explorer restart is required to update the taskbar icon. Would you like to restart it now?",
-                "Restart explorer", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show(Properties.Resources.SetupAssistantRestartExplorerDialogText,
+                Properties.Resources.SetupAssistantRestartExplorerDialogTitle, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 Utils.ChangeTaskbarPinIcon(Utils.GetWindowsTheme());
             }

@@ -5,7 +5,7 @@
         WindowStartupLocation="CenterScreen"
         Background="#202020" Foreground="White"
         SizeToContent="Height" ResizeMode="NoResize"
-        Title="EverythingToolbar Setup Assistant"
+        Title="{x:Static properties:Resources.SetupAssistantTitle}"
         Closed="OnClosed" Width="575">
 
     <Window.Resources>
