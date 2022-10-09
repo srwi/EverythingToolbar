@@ -139,10 +139,10 @@
     <value>1. An Taskleiste anheften</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
+    <value>Ein Neustart des Explorers ist erforderlich, um das Taskleisten-Symbol zu aktualisieren. Möchten Sie ihn jetzt neu starten?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>Restart explorer</value>
+    <value>Explorer neu starten</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>Wahlweise kann das ursprüngliche Windows-Suchsymbol ausgeblendet werden.</value>
