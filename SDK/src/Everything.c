@@ -37,62 +37,6 @@
 #include "../include/Everything.h"
 #include "../ipc/Everything_IPC.h"
 
-
-#define ES_BUF_SIZE MAX_PATH
-
-
-void es_wbuf_cat(wchar_t* buf, int max, const wchar_t* s)
-{
-	const wchar_t* p;
-	wchar_t* d;
-
-	max--;
-	d = buf;
-
-	while (max)
-	{
-		if (!*d) break;
-
-		d++;
-		max--;
-	}
-
-	p = s;
-	while (max)
-	{
-		if (!*p) break;
-
-		*d++ = *p;
-		p++;
-		max--;
-	}
-
-	*d = 0;
-}
-
-void es_wstring_cat(wchar_t* buf, const wchar_t* s)
-{
-	es_wbuf_cat(buf, ES_BUF_SIZE, s);
-}
-
-static HWND es_find_instance_window(wchar_t* es_instance)
-{
-	wchar_t window_class[ES_BUF_SIZE];
-	*window_class = 0;
-	es_wstring_cat(window_class, EVERYTHING_IPC_WNDCLASS);
-
-	if (*es_instance)
-	{
-		es_wstring_cat(window_class, L"_(");
-		es_wstring_cat(window_class, es_instance);
-		es_wstring_cat(window_class, L")");
-	}
-
-	HWND everything_hwnd = FindWindow(window_class, 0);
-	return everything_hwnd;
-}
-
-
 // return copydata code
 #define _EVERYTHING_COPYDATA_QUERYREPLY		0
 
@@ -154,6 +98,63 @@ static wchar_t* _Everything_InstanceName = L"Testname";
 static BOOL (WINAPI *_Everything_pChangeWindowMessageFilterEx)(HWND hWnd,UINT message,DWORD action,_EVERYTHING_PCHANGEFILTERSTRUCT pChangeFilterStruct) = 0;
 static HANDLE _Everything_user32_hdll = NULL;
 static BOOL _Everything_GotChangeWindowMessageFilterEx = FALSE;
+
+
+#define ES_BUF_SIZE MAX_PATH
+
+
+void es_wbuf_cat(wchar_t* buf, int max, const wchar_t* s)
+{
+	const wchar_t* p;
+	wchar_t* d;
+
+	max--;
+	d = buf;
+
+	while (max)
+	{
+		if (!*d) break;
+
+		d++;
+		max--;
+	}
+
+	p = s;
+	while (max)
+	{
+		if (!*p) break;
+
+		*d++ = *p;
+		p++;
+		max--;
+	}
+
+	*d = 0;
+}
+
+void es_wstring_cat(wchar_t* buf, const wchar_t* s)
+{
+	es_wbuf_cat(buf, ES_BUF_SIZE, s);
+}
+
+static HWND es_find_instance_window()
+{
+	wchar_t window_class[ES_BUF_SIZE];
+	*window_class = 0;
+	es_wstring_cat(window_class, EVERYTHING_IPC_WNDCLASS);
+
+	if (*_Everything_InstanceName)
+	{
+		es_wstring_cat(window_class, L"_(");
+		//es_wstring_cat(window_class, _Everything_InstanceName);
+		es_wstring_cat(window_class, L")");
+	}
+
+	HWND everything_hwnd = FindWindow(window_class, 0);
+	return everything_hwnd;
+}
+
+
 
 static void _Everything_Initialize(void)
 {
@@ -707,7 +708,7 @@ static DWORD EVERYTHINGAPI _Everything_query_thread_proc(void *param)
 {
 	HWND everything_hwnd;
 
-	everything_hwnd = es_find_instance_window(_Everything_InstanceName);
+	everything_hwnd = es_find_instance_window();
 	if (everything_hwnd)
 	{
 		WNDCLASSEX wcex;
@@ -912,7 +913,7 @@ static BOOL _Everything_SendIPCQuery(void)
 	BOOL ret;
 	
 		// find the everything ipc window.
-	everything_hwnd = es_find_instance_window(_Everything_InstanceName);
+	everything_hwnd = es_find_instance_window();
 	if (everything_hwnd)
 	{
 		_Everything_QueryVersion = 2;
@@ -2904,7 +2905,7 @@ static BOOL _Everything_SendAPIBoolCommand(int command,LPARAM lParam)
 {
 	HWND everything_hwnd;
 	
-	everything_hwnd = es_find_instance_window(_Everything_InstanceName);
+	everything_hwnd = es_find_instance_window();
 	if (everything_hwnd)
 	{
 		_Everything_LastError = 0;
@@ -2933,7 +2934,7 @@ static DWORD _Everything_SendAPIDwordCommand(int command,LPARAM lParam)
 {
 	HWND everything_hwnd;
 	
-	everything_hwnd = es_find_instance_window(_Everything_InstanceName);
+	everything_hwnd = es_find_instance_window();
 	if (everything_hwnd)
 	{
 		_Everything_LastError = 0;
@@ -3035,7 +3036,7 @@ static LRESULT _Everything_SendCopyData(int command,const void *data,int size)
 {
 	HWND everything_hwnd;
 	
-	everything_hwnd = es_find_instance_window(_Everything_InstanceName);
+	everything_hwnd = es_find_instance_window();
 	if (everything_hwnd)
 	{
 		COPYDATASTRUCT cds;

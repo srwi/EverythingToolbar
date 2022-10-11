@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingToolbar", "EverythingToolbar\EverythingToolbar.csproj", "{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD} = {BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingToolbar.Debug", "EverythingToolbar.Debug\EverythingToolbar.Debug.csproj", "{B4C262BB-FC90-47B9-B56A-8A1A40075B26}"
 EndProject
