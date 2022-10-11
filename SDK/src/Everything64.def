@@ -1,0 +1,103 @@
+LIBRARY Everything64
+
+EXPORTS
+
+	Everything_GetLastError
+
+	Everything_SetSearchA
+	Everything_SetSearchW
+	Everything_SetMatchPath
+	Everything_SetMatchCase
+	Everything_SetMatchWholeWord
+	Everything_SetRegex
+	Everything_SetMax
+	Everything_SetOffset
+	Everything_SetReplyID
+	Everything_SetReplyWindow
+
+	Everything_GetSearchA
+	Everything_GetSearchW
+	Everything_GetMatchPath
+	Everything_GetMatchCase
+	Everything_GetMatchWholeWord
+	Everything_GetRegex
+	Everything_GetMax
+	Everything_GetOffset
+	Everything_GetReplyID
+	Everything_GetReplyWindow
+
+	Everything_QueryA
+	Everything_QueryW
+	
+	Everything_IsQueryReply
+
+	Everything_SortResultsByPath
+	
+	Everything_GetNumFileResults
+	Everything_GetNumFolderResults
+	Everything_GetNumResults
+	Everything_GetTotFileResults
+	Everything_GetTotFolderResults
+	Everything_GetTotResults
+	
+	Everything_IsVolumeResult
+	Everything_IsFolderResult
+	Everything_IsFileResult
+
+	Everything_GetResultFileNameA
+	Everything_GetResultFileNameW
+	Everything_GetResultPathA
+	Everything_GetResultPathW
+	Everything_GetResultFullPathNameA
+	Everything_GetResultFullPathNameW
+	
+	Everything_Reset
+	Everything_CleanUp
+	
+	Everything_SetSort
+	Everything_SetRequestFlags
+	Everything_GetSort
+	Everything_GetRequestFlags
+	Everything_GetResultListSort
+	Everything_GetResultListRequestFlags
+	Everything_GetResultExtensionW
+	Everything_GetResultExtensionA
+	Everything_GetResultSize
+	Everything_GetResultDateCreated
+	Everything_GetResultDateModified
+	Everything_GetResultDateAccessed
+	Everything_GetResultAttributes
+	Everything_GetResultFileListFileNameW
+	Everything_GetResultFileListFileNameA
+	Everything_GetResultRunCount
+	Everything_GetResultDateRun
+	Everything_GetResultDateRecentlyChanged
+	Everything_GetResultHighlightedFileNameW
+	Everything_GetResultHighlightedFileNameA
+	Everything_GetResultHighlightedPathW
+	Everything_GetResultHighlightedPathA
+	Everything_GetResultHighlightedFullPathAndFileNameW
+	Everything_GetResultHighlightedFullPathAndFileNameA
+	Everything_GetMajorVersion
+	Everything_GetMinorVersion
+	Everything_GetRevision
+	Everything_GetBuildNumber
+	Everything_Exit
+	Everything_IsDBLoaded
+	Everything_IsAdmin
+	Everything_IsAppData
+	Everything_RebuildDB
+	Everything_UpdateAllFolderIndexes
+	Everything_SaveDB
+	Everything_SaveRunHistory
+	Everything_DeleteRunHistory
+	Everything_GetTargetMachine
+	Everything_IsFastSort
+	Everything_IsFileInfoIndexed
+	Everything_GetRunCountFromFileNameW
+	Everything_GetRunCountFromFileNameA
+	Everything_SetRunCountFromFileNameW
+	Everything_SetRunCountFromFileNameA
+	Everything_IncRunCountFromFileNameW
+	Everything_IncRunCountFromFileNameA
+		
