@@ -65,7 +65,7 @@ namespace EverythingToolbar
 
         private void OpenInstanceNameDialog(object sender, RoutedEventArgs e)
         {
-            var inputDialog = new InputDialog(Properties.Resources.SettingsSetInstanceName);
+            var inputDialog = new InputDialog(Properties.Resources.SettingsSetInstanceName, Properties.Settings.Default.instanceName);
             if (inputDialog.ShowDialog() == true)
             {
                 Properties.Settings.Default.instanceName = inputDialog.ResponseText;

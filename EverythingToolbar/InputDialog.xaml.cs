@@ -4,11 +4,12 @@ namespace EverythingToolbar
 {
     public partial class InputDialog : Window
     {
-        public InputDialog(string title = "Input")
+        public InputDialog(string title = "Input", string text = "")
         {
             InitializeComponent();
 
             Title = title;
+            ResponseText = text;
         }
 
         public string ResponseText
