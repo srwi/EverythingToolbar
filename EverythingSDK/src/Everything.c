@@ -148,8 +148,9 @@ static HWND es_find_instance_window()
 			((sizeof(window_class)
 				- sizeof(EVERYTHING_IPC_WNDCLASSW)
 				- sizeof(L"_(")
-				- sizeof(L")")
-				+ 3) / sizeof(wchar_t)))
+				- sizeof(L")")) 
+				/ sizeof(wchar_t))
+			+ 3) // 0
 		{
 			// Not enough space
 			return 0;
