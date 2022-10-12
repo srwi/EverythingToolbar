@@ -11,7 +11,7 @@ jobs:
       - name: Disable assembly signing
         run: ((Get-Content -path EverythingToolbar/EverythingToolbar.csproj -Raw) -replace '<SignAssembly>true</SignAssembly>','<SignAssembly>false</SignAssembly>') | Set-Content -Path EverythingToolbar/EverythingToolbar.csproj
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.2
+        uses: microsoft/setup-msbuild@v1.1.2
       - name: Install NuGet
         uses: nuget/setup-nuget@v1
       - name: NuGet dependencies
