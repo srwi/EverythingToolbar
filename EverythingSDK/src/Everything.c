@@ -42,6 +42,8 @@
 
 #define _EVERYTHING_MSGFLT_ALLOW		1
 
+#define ES_BUF_SIZE MAX_PATH
+
 typedef struct _EVERYTHING_tagCHANGEFILTERSTRUCT 
 {
 	DWORD cbSize;
@@ -100,9 +102,6 @@ static HANDLE _Everything_user32_hdll = NULL;
 static BOOL _Everything_GotChangeWindowMessageFilterEx = FALSE;
 
 
-#define ES_BUF_SIZE MAX_PATH
-
-
 void es_wbuf_cat(wchar_t* buf, int max, const wchar_t* s)
 {
 	const wchar_t* p;
@@ -153,8 +152,6 @@ static HWND es_find_instance_window()
 	HWND everything_hwnd = FindWindow(window_class, 0);
 	return everything_hwnd;
 }
-
-
 
 static void _Everything_Initialize(void)
 {

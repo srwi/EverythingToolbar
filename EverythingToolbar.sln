@@ -18,7 +18,7 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "EverythingToolbar.Installer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingToolbar.Launcher", "EverythingToolbar.Launcher\EverythingToolbar.Launcher.csproj", "{FC46FED2-0B98-497F-8F88-037A0780ACF2}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sdk.dll", "SDK\sdk.dll.vcxproj", "{BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EverythingSDK", "EverythingSDK\EverythingSDK.vcxproj", "{BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
