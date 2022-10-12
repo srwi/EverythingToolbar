@@ -96,7 +96,7 @@ static volatile LONG _Everything_InterlockedCount = 0;
 static CRITICAL_SECTION _Everything_cs;
 static HWND _Everything_ReplyWindow = 0;
 static DWORD _Everything_ReplyID = 0;
-static wchar_t* _Everything_InstanceName = 0;
+static wchar_t _Everything_InstanceName[256] = {0}; // The maximum length for lpszClassName is 256
 static BOOL (WINAPI *_Everything_pChangeWindowMessageFilterEx)(HWND hWnd,UINT message,DWORD action,_EVERYTHING_PCHANGEFILTERSTRUCT pChangeFilterStruct) = 0;
 static HANDLE _Everything_user32_hdll = NULL;
 static BOOL _Everything_GotChangeWindowMessageFilterEx = FALSE;
@@ -140,10 +140,21 @@ static HWND es_find_instance_window()
 {
 	wchar_t window_class[ES_BUF_SIZE];
 	*window_class = 0;
-	es_wstring_cat(window_class, EVERYTHING_IPC_WNDCLASS);
+	es_wstring_cat(window_class, EVERYTHING_IPC_WNDCLASSW);
 
-	if (_Everything_InstanceName)
+	if (*_Everything_InstanceName != 0)
 	{
+		if (wcslen(_Everything_InstanceName) > 
+			((sizeof(window_class)
+				- sizeof(EVERYTHING_IPC_WNDCLASSW)
+				- sizeof(L"_(")
+				- sizeof(L")")
+				+ 3) / sizeof(wchar_t)))
+		{
+			// Not enough space
+			return 0;
+		}
+
 		es_wstring_cat(window_class, L"_(");
 		es_wstring_cat(window_class, _Everything_InstanceName);
 		es_wstring_cat(window_class, L")");
@@ -698,14 +709,17 @@ static void _Everything_GetSearchTextA(LPSTR buf)
 
 void EVERYTHINGAPI Everything_SetInstanceName(LPCWSTR name)
 {
-	// does not work
-	//_Everything_InstanceName = name;
+	if (name == 0)
+	{
+		*_Everything_InstanceName = 0;
+		return;
+	}
+	if (wcslen(name) > (sizeof(_Everything_InstanceName) / sizeof(wchar_t)))
+	{
+		return;
+	}
 
-	// works when Everything runs under instance name "Testname"
-	_Everything_InstanceName = L"Testname";
-
-	// works when Everything runs under default instance
-	//_Everything_InstanceName = 0;
+	wcscpy(_Everything_InstanceName, name);
 }
 
 static DWORD EVERYTHINGAPI _Everything_query_thread_proc(void *param)
