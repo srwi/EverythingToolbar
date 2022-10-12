@@ -264,7 +264,7 @@
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)Everything64.dll</OutputFile>
-      <ModuleDefinitionFile>C:\Users\Stephan\Downloads\Everything-SDK\src\Everything64.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>$(ProjectDir)src\Everything64.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>

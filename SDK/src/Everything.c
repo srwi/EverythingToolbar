@@ -94,7 +94,7 @@ static volatile LONG _Everything_InterlockedCount = 0;
 static CRITICAL_SECTION _Everything_cs;
 static HWND _Everything_ReplyWindow = 0;
 static DWORD _Everything_ReplyID = 0;
-static wchar_t* _Everything_InstanceName = L"Testname";
+static wchar_t* _Everything_InstanceName = 0;
 static BOOL (WINAPI *_Everything_pChangeWindowMessageFilterEx)(HWND hWnd,UINT message,DWORD action,_EVERYTHING_PCHANGEFILTERSTRUCT pChangeFilterStruct) = 0;
 static HANDLE _Everything_user32_hdll = NULL;
 static BOOL _Everything_GotChangeWindowMessageFilterEx = FALSE;
@@ -143,10 +143,10 @@ static HWND es_find_instance_window()
 	*window_class = 0;
 	es_wstring_cat(window_class, EVERYTHING_IPC_WNDCLASS);
 
-	if (*_Everything_InstanceName)
+	if (_Everything_InstanceName)
 	{
 		es_wstring_cat(window_class, L"_(");
-		//es_wstring_cat(window_class, _Everything_InstanceName);
+		es_wstring_cat(window_class, _Everything_InstanceName);
 		es_wstring_cat(window_class, L")");
 	}
 
@@ -699,9 +699,16 @@ static void _Everything_GetSearchTextA(LPSTR buf)
 	*buf = 0;
 }
 
-static void _Everything_SetInstanceName(LPCWSTR name)
+void EVERYTHINGAPI Everything_SetInstanceName(LPCWSTR name)
 {
-	_Everything_InstanceName = name;
+	// does not work
+	//_Everything_InstanceName = name;
+
+	// works when Everything runs under instance name "Testname"
+	_Everything_InstanceName = L"Testname";
+
+	// works when Everything runs under default instance
+	//_Everything_InstanceName = 0;
 }
 
 static DWORD EVERYTHINGAPI _Everything_query_thread_proc(void *param)

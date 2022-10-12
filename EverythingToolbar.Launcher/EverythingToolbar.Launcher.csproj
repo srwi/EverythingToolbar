@@ -148,7 +148,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>taskkill /IM EverythingToolbar.Launcher.exe /F 2&gt;nul &amp;set errorlevel=0
-xcopy $(ProjectDir)..\SDK\x64\Release\Everything64.dll $(ProjectDir)$(OutDir) /c /i /r /y
+xcopy $(ProjectDir)..\SDK\x64\$(ConfigurationName)\Everything64.dll $(ProjectDir)$(OutDir) /c /i /r /y
 xcopy $(ProjectDir)..\README.md $(ProjectDir)$(OutDir) /c /i /r /y
 xcopy $(ProjectDir)..\LICENSE $(ProjectDir)$(OutDir) /c /i /r /y
 Exit 0</PreBuildEvent>

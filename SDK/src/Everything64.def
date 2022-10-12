@@ -100,4 +100,4 @@ EXPORTS
 	Everything_SetRunCountFromFileNameA
 	Everything_IncRunCountFromFileNameW
 	Everything_IncRunCountFromFileNameA
-		
+	Everything_SetInstanceName

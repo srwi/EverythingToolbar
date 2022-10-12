@@ -118,6 +118,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>xcopy $(ProjectDir)..\EverythingToolbar\Everything64.dll $(ProjectDir)$(OutDir) /c /i /r /y</PreBuildEvent>
+    <PreBuildEvent>xcopy $(ProjectDir)..\SDK\x64\$(ConfigurationName)\Everything64.dll $(ProjectDir)$(OutDir) /c /i /r /y</PreBuildEvent>
   </PropertyGroup>
 </Project>

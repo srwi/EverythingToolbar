@@ -35,6 +35,8 @@ namespace EverythingToolbar
 
         [DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
         private static extern uint Everything_SetSearchW(string lpSearchString);
+        [DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
+        private static extern uint Everything_SetInstanceName(string lpInstanceName);
         [DllImport("Everything64.dll")]
         private static extern void Everything_SetMatchPath(bool bEnable);
         [DllImport("Everything64.dll")]
@@ -201,6 +203,7 @@ namespace EverythingToolbar
 
             Properties.Settings.Default.PropertyChanged += OnSettingChanged;
             BindingOperations.EnableCollectionSynchronization(SearchResults, _searchResultsLock);
+            Everything_SetInstanceName("Testname");
         }
 
         private void OnSettingChanged(object sender, PropertyChangedEventArgs e)
