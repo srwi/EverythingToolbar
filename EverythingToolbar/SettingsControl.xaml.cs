@@ -62,7 +62,19 @@ namespace EverythingToolbar
             Window rules = new Rules();
             rules.Show();
         }
-        
+
+        private void OpenInstanceNameDialog(object sender, RoutedEventArgs e)
+        {
+            var inputDialog = new InputDialog(Properties.Resources.SettingsSetInstanceName);
+            if (inputDialog.ShowDialog() == true)
+            {
+                Properties.Settings.Default.instanceName = inputDialog.ResponseText;
+                Properties.Settings.Default.Save();
+
+                EverythingSearch.Instance.SetInstanceName(Properties.Settings.Default.instanceName);
+            }
+        }
+
         private void OpenShortcutWindow(object sender, RoutedEventArgs e)
         {
             EverythingSearch.Instance.Reset();

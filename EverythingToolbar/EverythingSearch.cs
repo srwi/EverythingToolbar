@@ -203,7 +203,7 @@ namespace EverythingToolbar
 
             Properties.Settings.Default.PropertyChanged += OnSettingChanged;
             BindingOperations.EnableCollectionSynchronization(SearchResults, _searchResultsLock);
-            Everything_SetInstanceName("Testname");
+            SetInstanceName(Properties.Settings.Default.instanceName);
         }
 
         private void OnSettingChanged(object sender, PropertyChangedEventArgs e)
@@ -223,6 +223,18 @@ namespace EverythingToolbar
                     SearchResults.Clear();
                 QueryBatch();
             }
+        }
+
+        public void SetInstanceName(string name)
+        {
+            if (name == "")
+            {
+                Everything_SetInstanceName("");
+                return;
+            }
+
+            ToolbarLogger.GetLogger("EverythingToolbar").Info("Setting Everything instance name: " + name);
+            Everything_SetInstanceName(name);
         }
 
         public void QueryBatch()
