@@ -250,7 +250,7 @@
     <value>Por favor seleccione Everything.exe...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>Por favor seleccione el archivo Filters.csv. Por defecto puede encontrarse en %APPDATA%\Everything. Su ubicación puede ser diferente dependiendo de la instalación. Si el archivo no existe para usted eso significa que no realizó ningún cambio a los filtros predeterminados de Everything.</value>
+    <value>Seleccione el archivo Filters.csv. Por defecto se encuentra en %APPDATA%\Everything. Su ubicación puede ser diferente dependiendo de su instalación. Si el archivo no existe, significa que no ha realizado ningún cambio en los filtros por defecto de Everything.</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
     <value>Filters.csv no encontrado</value>
