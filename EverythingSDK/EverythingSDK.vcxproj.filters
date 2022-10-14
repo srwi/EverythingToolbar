@@ -13,5 +13,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Everything.h" />
+    <ClInclude Include="include\Everything_IPC.h" />
   </ItemGroup>
 </Project>
