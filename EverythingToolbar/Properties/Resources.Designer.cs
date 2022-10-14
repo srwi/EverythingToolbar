@@ -709,6 +709,15 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set instance name....
+        /// </summary>
+        public static string SettingsSetInstanceName {
+            get {
+                return ResourceManager.GetString("SettingsSetInstanceName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show quick toggles.
         /// </summary>
         public static string SettingsShowQuickToggles {

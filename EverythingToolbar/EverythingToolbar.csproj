@@ -94,6 +94,9 @@
     <Compile Include="Helpers\ShellUtils.cs" />
     <Compile Include="Helpers\ShortcutManager.cs" />
     <Compile Include="Helpers\Utils.cs" />
+    <Compile Include="InputDialog.xaml.cs">
+      <DependentUpon>InputDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.af.Designer.cs">
       <DependentUpon>Resources.af.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -272,6 +275,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Page Include="FilterSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InputDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -515,7 +522,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>taskkill /f /im explorer.exe 2&gt;nul &amp;set errorlevel=0
-xcopy $(ProjectDir)Everything64.dll $(ProjectDir)$(OutDir) /c /i /r /y
+xcopy $(ProjectDir)..\EverythingSDK\x64\$(ConfigurationName)\Everything64.dll $(ProjectDir)$(OutDir) /c /i /r /y
 xcopy $(ProjectDir)..\README.md $(ProjectDir)$(OutDir) /c /i /r /y
 xcopy $(ProjectDir)..\LICENSE $(ProjectDir)$(OutDir) /c /i /r /y
 Exit 0</PreBuildEvent>
