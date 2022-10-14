@@ -334,7 +334,7 @@
     <value>Regeln...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>Set instance name...</value>
+    <value>Instanzname festlegen...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>Suchoptionen anzeigen</value>
