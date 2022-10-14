@@ -108,7 +108,7 @@
     </ClCompile>
     <Lib>
       <OutputFile>$(OutDir)Everything.lib</OutputFile>
-      <ModuleDefinitionFile>..\src\Everything.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>$(ProjectDir)src\Everything32.def</ModuleDefinitionFile>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
@@ -159,7 +159,7 @@
     </PreLinkEvent>
     <Link>
       <OutputFile>$(OutDir)Everything32.dll</OutputFile>
-      <ModuleDefinitionFile>D:\dev\everything\sdk\src\Everything.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>$(ProjectDir)src\Everything32.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command />
