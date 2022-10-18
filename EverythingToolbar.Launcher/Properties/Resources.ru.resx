@@ -139,16 +139,16 @@
     <value>Закрепить на панели задач</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
+    <value>Для обновления значка панели задач требуется перезапуск проводника. Перезапустить сейчас?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>Перезапустить проводник</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>При желании можно скрыть исходную иконку поиска Windows.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Hide Windows search</value>
+    <value>2. Скрыть поиск Windows</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
     <value>При запуске системы рекомендуется автоматически запускать шину EverythingToolbar.</value>
