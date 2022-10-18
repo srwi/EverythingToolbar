@@ -139,24 +139,24 @@
     <value>1. Aggiungi alla Barra delle applicazioni</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
+    <value>Per aggiornare la barra delle applicazioni è necessario riavviare Esplora Risorse. Riavviarlo ora?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>Restart explorer</value>
+    <value>Riavvia esplora risorse</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>Opzionalmente l'icona originale della ricerca di Windows può esser nascosta.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Hide Windows search</value>
+    <value>2. Nascondi ricerca di Windows</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
+    <value>Si consiglia di avviare EverythingToolbar automaticamente all'avvio del sistema.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Configure autostart</value>
+    <value>3. Configura avvio automatico</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>EverythingToolbar Setup Assistant</value>
+    <value>Assistente Configurazione EverythingToolbar</value>
   </data>
 </root>
