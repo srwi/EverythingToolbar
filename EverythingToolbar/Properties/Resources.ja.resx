@@ -151,7 +151,7 @@
     <value>パスを開く</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
-    <value>Show more options</value>
+    <value>詳細設定を表示</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
     <value>アプリで開く</value>
@@ -325,7 +325,7 @@
     <value>正規表現</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>フィルタを記憶する</value>
+    <value>フィルターを保存</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
     <value>スタートメニューの検索を置き換える (実験的)</value>
@@ -334,7 +334,7 @@
     <value>ルール...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>Set instance name...</value>
+    <value>インスタンス名を設定...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>検索時にクイックトグルを表示</value>
@@ -349,10 +349,10 @@
     <value>テーマ</value>
   </data>
   <data name="SettingsThemeAuto" xml:space="preserve">
-    <value>Sync theme</value>
+    <value>テーマを同期</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>サムネイルを有効</value>
+    <value>サムネイルを有効化</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Everything のフィルタを使用</value>
