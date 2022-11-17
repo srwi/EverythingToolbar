@@ -121,13 +121,13 @@
     <value>閉じる</value>
   </data>
   <data name="CheckboxEnable" xml:space="preserve">
-    <value>Enable</value>
+    <value>有効化</value>
   </data>
   <data name="CheckboxHide" xml:space="preserve">
     <value>非表示</value>
   </data>
   <data name="ContextMenuQuit" xml:space="preserve">
-    <value>Quit</value>
+    <value>終了</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>セットアップアシスタントを実行...</value>
