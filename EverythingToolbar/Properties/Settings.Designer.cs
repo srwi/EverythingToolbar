@@ -322,5 +322,15 @@ namespace EverythingToolbar.Properties {
                 this["isThumbnailsEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"Dsn=MS Access Database;dbq=H:\onedrive - american university of the caribbean school of medicine\Documents\Database3.accdb;defaultdir=H:\onedrive - american university of the caribbean school of medicine\Documents;driverid=25;fil=MS Access;maxbuffersize=2048;pagetimeout=5")]
+        public string ConnectionString {
+            get {
+                return ((string)(this["ConnectionString"]));
+            }
+        }
     }
 }

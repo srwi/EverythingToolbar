@@ -77,5 +77,13 @@
     <Setting Name="isThumbnailsEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="ConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;ConnectionString&gt;Dsn=MS Access Database;dbq=H:\onedrive - american university of the caribbean school of medicine\Documents\Database3.accdb;defaultdir=H:\onedrive - american university of the caribbean school of medicine\Documents;driverid=25;fil=MS Access;maxbuffersize=2048;pagetimeout=5&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.Odbc&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Dsn=MS Access Database;dbq=H:\onedrive - american university of the caribbean school of medicine\Documents\Database3.accdb;defaultdir=H:\onedrive - american university of the caribbean school of medicine\Documents;driverid=25;fil=MS Access;maxbuffersize=2048;pagetimeout=5</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
