@@ -166,34 +166,34 @@
     <value>Vložit</value>
   </data>
   <data name="ContextMenuProperties" xml:space="preserve">
-    <value>Properties</value>
+    <value>Vlastnosti</value>
   </data>
   <data name="ContextMenuRunAsAdmin" xml:space="preserve">
-    <value>Run as admin</value>
+    <value>Spustit jako správce</value>
   </data>
   <data name="ContextMenuShowInEverything" xml:space="preserve">
-    <value>Show in Everything</value>
+    <value>Zobrazit v Everything</value>
   </data>
   <data name="DefaultFilterAll" xml:space="preserve">
-    <value>All</value>
+    <value>Vše</value>
   </data>
   <data name="DefaultFilterFile" xml:space="preserve">
-    <value>File</value>
+    <value>Soubor</value>
   </data>
   <data name="DefaultFilterFolder" xml:space="preserve">
-    <value>Folder</value>
+    <value>Složka</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>Compact</value>
+    <value>Kompaktní</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compact (detailed)</value>
+    <value>Kompaktní (podrobný)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
-    <value>Normal</value>
+    <value>Normální</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detailed)</value>
+    <value>Normální (podrobný)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -208,52 +208,52 @@
     <value>Win</value>
   </data>
   <data name="MessageBoxCopyException" xml:space="preserve">
-    <value>Do you want to copy the exception content to clipboard?</value>
+    <value>Chcete zkopírovat obsah chyby do schránky?</value>
   </data>
   <data name="MessageBoxErrorTitle" xml:space="preserve">
-    <value>Error</value>
+    <value>Chyba</value>
   </data>
   <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
-    <value>Failed to copy file.</value>
+    <value>Kopírování souboru se nezdařilo.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
-    <value>Failed to copy path.</value>
+    <value>Kopírování cesty se nezdařilo.</value>
   </data>
   <data name="MessageBoxFailedToOpen" xml:space="preserve">
-    <value>Failed to open search result.</value>
+    <value>Nepodařilo se otevřít výsledek vyhledávání.</value>
   </data>
   <data name="MessageBoxFailedToOpenDialog" xml:space="preserve">
-    <value>Failed to open dialog.</value>
+    <value>Otevření dialogového okna se nezdařilo.</value>
   </data>
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
-    <value>Failed to open path.</value>
+    <value>Otevření cesty se nezdařilo.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Failed to register hotkey. It might be in use by another application.</value>
+    <value>Nepodařilo se zaregistrovat klávesovou zkratku. Může být používána jinou aplikací.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
-    <value>Failed to run command</value>
+    <value>Příkaz se nepodařilo spustit</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
-    <value>To utilize this sorting method it has to have fast sorting enabled. It can be enabled in your Everything settings.</value>
+    <value>Chcete-li použít tento způsob třídění, musí mít povolené rychlé třídění. Může být povoleno v nastavení Everything.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
-    <value>Fast sorting not enabled</value>
+    <value>Rychlé třídění není povoleno</value>
   </data>
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
-    <value>At least one regular expression is invalid.</value>
+    <value>Alespoň jeden regulární výraz je neplatný.</value>
   </data>
   <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Rule names cannot be empty.</value>
+    <value>Název pravidel nemůže být prázdný.</value>
   </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
-    <value>Please select Everything.exe...</value>
+    <value>Prosím vyberte Everything.exe...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>Please select the Filters.csv file. By default it can be found in %APPDATA%\Everything. Its location might be different depending on your installation. If the file does not exist for you that means you didn't perform any changes to Everything's default filters.</value>
+    <value>Vyberte prosím soubor Filters.csv. Ve výchozím nastavení jej lze nalézt v %APPDATA%\Everything. Jeho umístění se může lišit v závislosti na vaší instalaci. Pokud pro vás soubor neexistuje, znamená to, že jste neprovedli žádné změny ve výchozích filtrech Everything.</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
-    <value>Filters.csv not found</value>
+    <value>Filters.csv nebyl nalezen</value>
   </data>
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Unhandled exception occured</value>
@@ -262,151 +262,151 @@
     <value>Automatically apply rules based on condition</value>
   </data>
   <data name="RulesCancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Zrušit</value>
   </data>
   <data name="RulesCommand" xml:space="preserve">
-    <value>Command</value>
+    <value>Příkaz</value>
   </data>
   <data name="RulesName" xml:space="preserve">
-    <value>Name</value>
+    <value>Název</value>
   </data>
   <data name="RulesRegularExpression" xml:space="preserve">
-    <value>Regular Expression</value>
+    <value>Regulární výraz</value>
   </data>
   <data name="RulesSave" xml:space="preserve">
-    <value>Save</value>
+    <value>Uložit</value>
   </data>
   <data name="RulesType" xml:space="preserve">
-    <value>Type</value>
+    <value>Typ</value>
   </data>
   <data name="RulesWindowText" xml:space="preserve">
     <value>Use %file%, %filename% and %path% as placeholders in commands.</value>
   </data>
   <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Rules</value>
+    <value>Pravidla</value>
   </data>
   <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>Search with Everything</value>
+    <value>Hledat pomocí Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
-    <value>object</value>
+    <value>objekt</value>
   </data>
   <data name="SearchResults" xml:space="preserve">
-    <value>objects</value>
+    <value>objekty</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
-    <value>About EverythingToolbar...</value>
+    <value>O EverythingToolbar...</value>
   </data>
   <data name="SettingsChangeShortcut" xml:space="preserve">
-    <value>Change Shortcut...</value>
+    <value>Změnit zkratku...</value>
   </data>
   <data name="SettingsDisableAnimations" xml:space="preserve">
-    <value>Disable animations</value>
+    <value>Zakázat animace</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Enable search history</value>
+    <value>Povolit historii vyhledávání</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
-    <value>Hide empty search</value>
+    <value>Skrýt prázdné vyhledávání</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>Match Case</value>
+    <value>Rozlišovat malá a velká písmena</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
-    <value>Match Path</value>
+    <value>Rozlišovat cestu</value>
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
-    <value>Match Whole Word</value>
+    <value>Pouze celá slova</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Předvolby</value>
   </data>
   <data name="SettingsRegularExpressions" xml:space="preserve">
-    <value>Regular Expressions</value>
+    <value>Regulární výrazy</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>Remember filter</value>
+    <value>Zapamatovat si poslední filtr</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>Nahradit vyhledávání Start (experimentální)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
-    <value>Rules...</value>
+    <value>Pravidla...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>Set instance name...</value>
+    <value>Nastavit název instance...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>Show quick toggles</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>Show results count</value>
+    <value>Zobrazit počet výsledků</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
-    <value>Sort By</value>
+    <value>Seřadit dle</value>
   </data>
   <data name="SettingsTheme" xml:space="preserve">
-    <value>Theme</value>
+    <value>Motiv</value>
   </data>
   <data name="SettingsThemeAuto" xml:space="preserve">
-    <value>Sync theme</value>
+    <value>Synchronizovat motiv</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>Enable thumbnails</value>
+    <value>Povolit náhledy</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
-    <value>Use Everything filters</value>
+    <value>Použít Everything filtry</value>
   </data>
   <data name="SettingsView" xml:space="preserve">
-    <value>View</value>
+    <value>Zobrazit</value>
   </data>
   <data name="ShortcutOK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="ShortcutWindowTitle" xml:space="preserve">
-    <value>Enter shortcut...</value>
+    <value>Zadejte zkratku...</value>
   </data>
   <data name="SortByAttributesAscending" xml:space="preserve">
-    <value>Attributes ascending</value>
+    <value>Atributy vzestupně</value>
   </data>
   <data name="SortByAttributesDescending" xml:space="preserve">
-    <value>Attributes descending</value>
+    <value>Atributy sestupně</value>
   </data>
   <data name="SortByDateAccessedAscending" xml:space="preserve">
-    <value>Date accessed ascending</value>
+    <value>Datum přístupu vzestupně</value>
   </data>
   <data name="SortByDateAccessedDescending" xml:space="preserve">
-    <value>Date accessed descending</value>
+    <value>Datum přístupu sestupně</value>
   </data>
   <data name="SortByDateCreatedAscending" xml:space="preserve">
-    <value>Date created ascending</value>
+    <value>Datum vytvoření vzestupně</value>
   </data>
   <data name="SortByDateCreatedDescending" xml:space="preserve">
-    <value>Date created descending</value>
+    <value>Datum vytvoření sestupně</value>
   </data>
   <data name="SortByDateModifiedAscending" xml:space="preserve">
-    <value>Date modified ascending</value>
+    <value>Datum úpravy vzestupně</value>
   </data>
   <data name="SortByDateModifiedDescending" xml:space="preserve">
-    <value>Date modified descending</value>
+    <value>Datum úpravy sestupně</value>
   </data>
   <data name="SortByDateRecentlyChangedAscending" xml:space="preserve">
-    <value>Date recently changed ascending</value>
+    <value>Datum poslední změny vzestupně</value>
   </data>
   <data name="SortByDateRecentlyChangedDescending" xml:space="preserve">
-    <value>Date recently changed descending</value>
+    <value>Datum poslední změny sestupně</value>
   </data>
   <data name="SortByDateRunAscending" xml:space="preserve">
-    <value>Date run ascending</value>
+    <value>Datum spuštění vzestupně</value>
   </data>
   <data name="SortByDateRunDescending" xml:space="preserve">
-    <value>Date run descending</value>
+    <value>Datum spuštění sestupně</value>
   </data>
   <data name="SortByExtensionAscending" xml:space="preserve">
-    <value>Extension ascending</value>
+    <value>Přípona vzestupně</value>
   </data>
   <data name="SortByExtensionDescending" xml:space="preserve">
-    <value>Extension descending</value>
+    <value>Přípona sestupně</value>
   </data>
   <data name="SortByFileListFilenameAscending" xml:space="preserve">
     <value>File list filename ascending</value>
@@ -415,28 +415,28 @@
     <value>File list filename descending</value>
   </data>
   <data name="SortByNameAscending" xml:space="preserve">
-    <value>Name ascending</value>
+    <value>Název vzestupně</value>
   </data>
   <data name="SortByNameDescending" xml:space="preserve">
-    <value>Name descending</value>
+    <value>Název sestupně</value>
   </data>
   <data name="SortByPathAscending" xml:space="preserve">
-    <value>Path ascending</value>
+    <value>Cesta vzestupně</value>
   </data>
   <data name="SortByPathDescending" xml:space="preserve">
-    <value>Path descending</value>
+    <value>Cesta sestupně</value>
   </data>
   <data name="SortByRunCountAscending" xml:space="preserve">
-    <value>Run count ascending</value>
+    <value>Počet spuštění vzestupně</value>
   </data>
   <data name="SortByRunCountDescending" xml:space="preserve">
-    <value>Run count descending</value>
+    <value>Počet spuštění sestupně</value>
   </data>
   <data name="SortBySizeAscending" xml:space="preserve">
-    <value>Size ascending</value>
+    <value>Velikost vzestupně</value>
   </data>
   <data name="SortBySizeDescending" xml:space="preserve">
-    <value>Size descending</value>
+    <value>Velikost sestupně</value>
   </data>
   <data name="SortByTypeNameAscending" xml:space="preserve">
     <value>Type name ascending</value>
@@ -445,28 +445,28 @@
     <value>Type name descending</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Tmavý</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>Light</value>
+    <value>Světlý</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>Audio</value>
   </data>
   <data name="UserFilterCompressed" xml:space="preserve">
-    <value>Compressed</value>
+    <value>Komprimované</value>
   </data>
   <data name="UserFilterDocument" xml:space="preserve">
-    <value>Document</value>
+    <value>Dokumenty</value>
   </data>
   <data name="UserFilterExecutable" xml:space="preserve">
-    <value>Executable</value>
+    <value>Spustitelné</value>
   </data>
   <data name="UserFilterPicture" xml:space="preserve">
-    <value>Picture</value>
+    <value>Obrázky</value>
   </data>
   <data name="UserFilterPlaceholder" xml:space="preserve">
-    <value>More</value>
+    <value>Více</value>
   </data>
   <data name="UserFilterVideo" xml:space="preserve">
     <value>Video</value>
