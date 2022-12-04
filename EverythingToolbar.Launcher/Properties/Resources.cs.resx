@@ -118,45 +118,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClose" xml:space="preserve">
-    <value>Close</value>
+    <value>Zavřít</value>
   </data>
   <data name="CheckboxEnable" xml:space="preserve">
-    <value>Enable</value>
+    <value>Povolit</value>
   </data>
   <data name="CheckboxHide" xml:space="preserve">
-    <value>Hide</value>
+    <value>Skrýt</value>
   </data>
   <data name="ContextMenuQuit" xml:space="preserve">
-    <value>Quit</value>
+    <value>Ukončit</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Run setup assistant...</value>
+    <value>Spustit asistenta nastavení...</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
+    <value>Chcete-li připnout EverythingToolbar na hlavní panel klepněte pravým tlačítkem na jeho ikonu a zvolte 'Připnout na hlavní panel'.</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Pin to taskbar</value>
+    <value>1. Připnout na hlavní panel</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
+    <value>Pro aktualizaci ikony hlavního panelu je vyžadován restart průzkumníka. Chcete jej nyní restartovat?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>Restart explorer</value>
+    <value>Restartovat průzkumníka</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>Volitelně lze skrýt původní ikonu hledání systému Windows.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Hide Windows search</value>
+    <value>2. Skrýt vyhledávání Windows</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
+    <value>Doporučuje se automaticky spustit EverythingToolbar při spuštění systému.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Configure autostart</value>
+    <value>3. Nastavení automatického spuštění</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>EverythingToolbar Setup Assistant</value>
+    <value>EverythingToolbar Asistent Nastavení</value>
   </data>
 </root>
