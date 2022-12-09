@@ -148,7 +148,7 @@
     <value>Abrir</value>
   </data>
   <data name="ContextMenuOpenPath" xml:space="preserve">
-    <value>Abrir ruta</value>
+    <value>Abrir ubicación</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
     <value>Mostrar más opciones</value>
@@ -187,13 +187,13 @@
     <value>Compacta</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compacta (detallado)</value>
+    <value>Compacta (detallada)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
     <value>Normal</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detallado)</value>
+    <value>Normal (detallada)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -217,7 +217,7 @@
     <value>Error al copiar archivo.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
-    <value>Error al copiar ruta.</value>
+    <value>Error al copiar ubicación.</value>
   </data>
   <data name="MessageBoxFailedToOpen" xml:space="preserve">
     <value>Error al abrir resultado de búsqueda.</value>
@@ -250,7 +250,7 @@
     <value>Por favor seleccione Everything.exe...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>Por favor seleccione el archivo Filters.csv. Por defecto puede encontrarse en %APPDATA%\Everything. Su ubicación puede ser diferente dependiendo de la instalación. Si el archivo no existe para usted eso significa que no realizó ningún cambio a los filtros predeterminados de Everything.</value>
+    <value>Seleccione el archivo Filters.csv. Por defecto se encuentra en %APPDATA%\Everything. Su ubicación puede ser diferente dependiendo de su instalación. Si el archivo no existe, significa que no ha realizado ningún cambio en los filtros por defecto de Everything.</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
     <value>Filters.csv no encontrado</value>
@@ -333,6 +333,9 @@
   <data name="SettingsRules" xml:space="preserve">
     <value>Reglas...</value>
   </data>
+  <data name="SettingsSetInstanceName" xml:space="preserve">
+    <value>Establecer el nombre de la petición...</value>
+  </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>Mostrar botones de acceso rápido</value>
   </data>
@@ -344,6 +347,9 @@
   </data>
   <data name="SettingsTheme" xml:space="preserve">
     <value>Tema</value>
+  </data>
+  <data name="SettingsThemeAuto" xml:space="preserve">
+    <value>Sincronizar tema</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>Habilitar miniaturas</value>
@@ -361,10 +367,10 @@
     <value>Introducir acceso directo...</value>
   </data>
   <data name="SortByAttributesAscending" xml:space="preserve">
-    <value>Atributos ascendentes</value>
+    <value>Atributos ascendente</value>
   </data>
   <data name="SortByAttributesDescending" xml:space="preserve">
-    <value>Atributos descendentes</value>
+    <value>Atributos descendente</value>
   </data>
   <data name="SortByDateAccessedAscending" xml:space="preserve">
     <value>Fecha de acceso ascendente</value>
@@ -415,10 +421,10 @@
     <value>Nombre descendente</value>
   </data>
   <data name="SortByPathAscending" xml:space="preserve">
-    <value>Ruta ascendente</value>
+    <value>Ubicación ascendente</value>
   </data>
   <data name="SortByPathDescending" xml:space="preserve">
-    <value>Ruta descendente</value>
+    <value>Ubicación descendente</value>
   </data>
   <data name="SortByRunCountAscending" xml:space="preserve">
     <value>Número de ejecuciones ascendiente</value>

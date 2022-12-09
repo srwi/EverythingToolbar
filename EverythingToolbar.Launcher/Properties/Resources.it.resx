@@ -118,39 +118,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClose" xml:space="preserve">
-    <value>Close</value>
+    <value>Chiudi</value>
   </data>
   <data name="CheckboxEnable" xml:space="preserve">
-    <value>Enable</value>
+    <value>Abilita</value>
   </data>
   <data name="CheckboxHide" xml:space="preserve">
-    <value>Hide</value>
+    <value>Nascondi</value>
   </data>
   <data name="ContextMenuQuit" xml:space="preserve">
-    <value>Quit</value>
+    <value>Esci</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Run setup assistant...</value>
+    <value>Esegui assistente installazione...</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
+    <value>Per aggiungere EverythingToolbar alla barra delle applicazioni fare click destro sulla sua icona e selezioni 'Aggiungi alla barra delle applicazioni'.</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Pin to taskbar</value>
+    <value>1. Aggiungi alla Barra delle applicazioni</value>
+  </data>
+  <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
+    <value>Per aggiornare la barra delle applicazioni è necessario riavviare Esplora Risorse. Riavviarlo ora?</value>
+  </data>
+  <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
+    <value>Riavvia esplora risorse</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>Opzionalmente l'icona originale della ricerca di Windows può esser nascosta.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Hide Windows search</value>
+    <value>2. Nascondi ricerca di Windows</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
+    <value>Si consiglia di avviare EverythingToolbar automaticamente all'avvio del sistema.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Configure autostart</value>
+    <value>3. Configura avvio automatico</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>EverythingToolbar Setup Assistant</value>
+    <value>Assistente Configurazione EverythingToolbar</value>
   </data>
 </root>

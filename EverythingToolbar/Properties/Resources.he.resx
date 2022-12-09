@@ -333,6 +333,9 @@
   <data name="SettingsRules" xml:space="preserve">
     <value>כללים...</value>
   </data>
+  <data name="SettingsSetInstanceName" xml:space="preserve">
+    <value>Set instance name...</value>
+  </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>הצג הגדרות מהירות</value>
   </data>
@@ -344,6 +347,9 @@
   </data>
   <data name="SettingsTheme" xml:space="preserve">
     <value>ערכת נושא</value>
+  </data>
+  <data name="SettingsThemeAuto" xml:space="preserve">
+    <value>Sync theme</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>הפעל תצוגה מקדימה</value>

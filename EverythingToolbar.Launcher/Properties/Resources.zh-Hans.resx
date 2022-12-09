@@ -118,39 +118,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClose" xml:space="preserve">
-    <value>Close</value>
+    <value>关闭</value>
   </data>
   <data name="CheckboxEnable" xml:space="preserve">
-    <value>Enable</value>
+    <value>启用</value>
   </data>
   <data name="CheckboxHide" xml:space="preserve">
-    <value>Hide</value>
+    <value>隐藏</value>
   </data>
   <data name="ContextMenuQuit" xml:space="preserve">
-    <value>Quit</value>
+    <value>退出</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Run setup assistant...</value>
+    <value>运行设置助手...</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
+    <value>要将 EverythingToolbar 固定到任务栏，右键单击它的图标并点击“固定到任务栏”。</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Pin to taskbar</value>
+    <value>1. 固定到任务栏</value>
+  </data>
+  <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
+    <value>需要重新启动资源管理器来更新任务栏图标。您想现在重新启动它吗？</value>
+  </data>
+  <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
+    <value>重启资源管理器</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>可选择将原来的 Windows 搜索图标隐藏。</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Hide Windows search</value>
+    <value>2. 隐藏 Windows 搜索</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
+    <value>推荐在系统启动时自动启动 EverythingToolbar。</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Configure autostart</value>
+    <value>3. 配置开机自启</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>EverythingToolbar Setup Assistant</value>
+    <value>EverythingToolbar 设置助手</value>
   </data>
 </root>

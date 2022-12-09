@@ -151,7 +151,7 @@
     <value>Abrir Caminho</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
-    <value>Show more options</value>
+    <value>Mostrar mais opções</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
     <value>Abrir com</value>
@@ -208,31 +208,31 @@
     <value>Win</value>
   </data>
   <data name="MessageBoxCopyException" xml:space="preserve">
-    <value>Você deseja copiar o conteúdo do erro para área de transferência?</value>
+    <value>Você deseja copiar o conteúdo do erro para a área de transferência?</value>
   </data>
   <data name="MessageBoxErrorTitle" xml:space="preserve">
     <value>Erro</value>
   </data>
   <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
-    <value>Falha ao copiar arquivo.</value>
+    <value>Falha ao copiar o arquivo.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
-    <value>Falha ao copiar caminho.</value>
+    <value>Falha ao copiar o caminho.</value>
   </data>
   <data name="MessageBoxFailedToOpen" xml:space="preserve">
-    <value>Falha ao abrir resultado da pesquisa.</value>
+    <value>Falha ao abrir o resultado da pesquisa.</value>
   </data>
   <data name="MessageBoxFailedToOpenDialog" xml:space="preserve">
-    <value>Falha ao abrir caixa de diálogo.</value>
+    <value>Falha ao abrir a caixa de diálogo.</value>
   </data>
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
-    <value>Falha ao abrir caminho.</value>
+    <value>Falha ao abrir o caminho.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
     <value>Falha ao registrar a tecla de atalho. Ela pode estar sendo usada por outro aplicativo.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
-    <value>Falha ao executar comando</value>
+    <value>Falha ao executar o comando</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
     <value>Para utilizar este método de classificação, a classificação rápida deve estar ativada. Ele pode ser ativado nas suas configurações do Everything.</value>
@@ -301,22 +301,22 @@
     <value>Alterar Atalho...</value>
   </data>
   <data name="SettingsDisableAnimations" xml:space="preserve">
-    <value>Desabilitar animações</value>
+    <value>Desativar animações</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Ativar histórico de buscas</value>
+    <value>Habilitar histórico de buscas</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>Ocultar buscas sem resultados</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>Coincidir Caso</value>
+    <value>Corresponder Caso</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
-    <value>Coincidir Caminho</value>
+    <value>Corresponder Caminho</value>
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
-    <value>Coincidir Palavra Inteira</value>
+    <value>Corresponder Palavra Inteira</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
     <value>Preferências</value>
@@ -333,8 +333,11 @@
   <data name="SettingsRules" xml:space="preserve">
     <value>Regras...</value>
   </data>
+  <data name="SettingsSetInstanceName" xml:space="preserve">
+    <value>Definir nome da instância...</value>
+  </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Mostrar alternadores rápidos</value>
+    <value>Mostrar opções rápidas</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
     <value>Mostrar contagem de resultados</value>
@@ -345,11 +348,14 @@
   <data name="SettingsTheme" xml:space="preserve">
     <value>Tema</value>
   </data>
+  <data name="SettingsThemeAuto" xml:space="preserve">
+    <value>Sincronizar tema</value>
+  </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>Enable thumbnails</value>
+    <value>Habilitar miniaturas</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
-    <value>Usar Filtros do Everything</value>
+    <value>Usar filtros do Everything</value>
   </data>
   <data name="SettingsView" xml:space="preserve">
     <value>Visualizar</value>

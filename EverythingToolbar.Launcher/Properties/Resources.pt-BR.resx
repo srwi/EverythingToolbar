@@ -118,39 +118,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClose" xml:space="preserve">
-    <value>Close</value>
+    <value>Fechar</value>
   </data>
   <data name="CheckboxEnable" xml:space="preserve">
-    <value>Enable</value>
+    <value>Habilitar</value>
   </data>
   <data name="CheckboxHide" xml:space="preserve">
-    <value>Hide</value>
+    <value>Ocultar</value>
   </data>
   <data name="ContextMenuQuit" xml:space="preserve">
-    <value>Quit</value>
+    <value>Sair</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Run setup assistant...</value>
+    <value>Executar assistente de configuração...</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
+    <value>Para fixar o EverythingToolbar na barra de tarefas, clique com o botão direito no ícone e selecione 'Fixar na barra de tarefas'.</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Pin to taskbar</value>
+    <value>1. Fixar na barra de tarefas</value>
+  </data>
+  <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
+    <value>Uma reinicialização do explorador é necessária para atualizar o ícone da barra de tarefas. Você gostaria de reiniciá-lo agora?</value>
+  </data>
+  <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
+    <value>Reiniciar o explorador</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>Opcionalmente, o ícone de pesquisa original do Windows pode ser ocultado.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Hide Windows search</value>
+    <value>2. Ocultar pesquisa do Windows</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
+    <value>É recomendável iniciar o EverythingToolbar automaticamente quando o sistema iniciar.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Configure autostart</value>
+    <value>3. Configurar início automático</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>EverythingToolbar Setup Assistant</value>
+    <value>Assistente de Configuração do EverythingToolbar</value>
   </data>
 </root>

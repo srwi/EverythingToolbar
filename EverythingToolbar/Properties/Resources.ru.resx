@@ -151,7 +151,7 @@
     <value>Открыть путь</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
-    <value>Show more options</value>
+    <value>Показать больше настроек</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
     <value>Открыть с помощью...</value>
@@ -333,6 +333,9 @@
   <data name="SettingsRules" xml:space="preserve">
     <value>Правила...</value>
   </data>
+  <data name="SettingsSetInstanceName" xml:space="preserve">
+    <value>Установить название экземпляра...</value>
+  </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>Показывать переключатели</value>
   </data>
@@ -344,6 +347,9 @@
   </data>
   <data name="SettingsTheme" xml:space="preserve">
     <value>Тема</value>
+  </data>
+  <data name="SettingsThemeAuto" xml:space="preserve">
+    <value>Синхронизировать тему</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>Включить отображение миниатюр</value>

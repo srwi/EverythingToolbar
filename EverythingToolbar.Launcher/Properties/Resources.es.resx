@@ -138,6 +138,12 @@
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
     <value>1. Anclar a la barra de tareas</value>
   </data>
+  <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
+    <value>Es necesario reiniciar el explorador para actualizar el icono de la barra de tareas. ¿Desea reiniciarlo ahora?</value>
+  </data>
+  <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
+    <value>Reiniciar explorador</value>
+  </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>Opcionalmente puede ocultarse el icono original de búsqueda de Windows.</value>
   </data>

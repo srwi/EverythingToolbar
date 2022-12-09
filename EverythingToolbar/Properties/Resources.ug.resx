@@ -333,6 +333,9 @@
   <data name="SettingsRules" xml:space="preserve">
     <value>قائىدىلەر...</value>
   </data>
+  <data name="SettingsSetInstanceName" xml:space="preserve">
+    <value>Set instance name...</value>
+  </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>تېز ئالماشتۇرغۇچنى كۆرسىتىش</value>
   </data>
@@ -344,6 +347,9 @@
   </data>
   <data name="SettingsTheme" xml:space="preserve">
     <value>ئۇسلۇب</value>
+  </data>
+  <data name="SettingsThemeAuto" xml:space="preserve">
+    <value>Sync theme</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>سىنبەلگىلەرنى قوزغىتىش</value>

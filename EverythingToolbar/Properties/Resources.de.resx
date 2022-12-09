@@ -333,6 +333,9 @@
   <data name="SettingsRules" xml:space="preserve">
     <value>Regeln...</value>
   </data>
+  <data name="SettingsSetInstanceName" xml:space="preserve">
+    <value>Instanzname festlegen...</value>
+  </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>Suchoptionen anzeigen</value>
   </data>
@@ -344,6 +347,9 @@
   </data>
   <data name="SettingsTheme" xml:space="preserve">
     <value>Thema</value>
+  </data>
+  <data name="SettingsThemeAuto" xml:space="preserve">
+    <value>Thema synchronisieren</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>Miniaturansicht aktivieren</value>

@@ -333,6 +333,9 @@
   <data name="SettingsRules" xml:space="preserve">
     <value>規則...</value>
   </data>
+  <data name="SettingsSetInstanceName" xml:space="preserve">
+    <value>Set instance name...</value>
+  </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>顯示快速開關</value>
   </data>
@@ -344,6 +347,9 @@
   </data>
   <data name="SettingsTheme" xml:space="preserve">
     <value>佈景主題</value>
+  </data>
+  <data name="SettingsThemeAuto" xml:space="preserve">
+    <value>Sync theme</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>更改預覽圖</value>
