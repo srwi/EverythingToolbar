@@ -103,24 +103,19 @@ namespace EverythingToolbar.Launcher
                     SearchResultsPopup.taskbarEdge = CSDeskBand.Edge.Bottom;
                 }
 
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"))
+                if (Utils.IsTaskbarCenterAligned())
                 {
-                    object taskbarAlignment = key?.GetValue("TaskbarAl");
-                    bool isCenterAligned = taskbarAlignment != null && (int)taskbarAlignment == 1;
-                    if (isCenterAligned)
+                    Left = (taskbar.Width * 96.0 / currentDpi - EverythingToolbar.Properties.Settings.Default.popupSize.Width) / 2;
+                }
+                else
+                {
+                    if (CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
                     {
-                        Left = (taskbar.Width * 96.0 / currentDpi - EverythingToolbar.Properties.Settings.Default.popupSize.Width) / 2;
+                        Left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Width * 96.0 / currentDpi - 1;
                     }
                     else
                     {
-                        if (CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
-                        {
-                            Left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Width * 96.0 / currentDpi - 1;
-                        }
-                        else
-                        {
-                            Left = 0;
-                        }
+                        Left = 0;
                     }
                 }
             }
