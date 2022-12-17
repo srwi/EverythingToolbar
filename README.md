@@ -26,6 +26,7 @@ Demo
 Requirements
 ------------
 
+- Windows 10 (Support for Windows 11 currently in beta with EverythingToolbar &ge; 0.8.0)
 - [.NET Framework](https://dotnet.microsoft.com/download/dotnet-framework) &ge; 4.7 ([how to check](https://user-images.githubusercontent.com/14129585/104021832-ff36e080-5206-11eb-9f5f-10e4381992f9.jpg))
 - [Everything](https://www.voidtools.com/) &ge; 1.4.1 must be running (lite version not supported)
 - High DPI support requires at least Windows 10 Creators Update.
