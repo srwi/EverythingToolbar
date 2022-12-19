@@ -130,6 +130,7 @@ namespace EverythingToolbar
         {
             ShowWindowsContexMenu(System.Windows.Forms.Control.MousePosition);
         }
+
         public void ShowWindowsContexMenu(System.Drawing.Point pos)
         {
             Peter.ShellContextMenu menu = new Peter.ShellContextMenu();
