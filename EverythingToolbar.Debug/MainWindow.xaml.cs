@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using EverythingToolbar.Helpers;
+using System.Windows;
 
 namespace EverythingToolbar.Debug
 {

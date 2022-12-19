@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace EverythingToolbar.Helpers
 {
-    class HistoryManager
+    public class HistoryManager
     {
         private string historyPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "EverythingToolbar", "history.xml");
         private const int MAX_HISTORY_SIZE = 50;

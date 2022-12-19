@@ -36,6 +36,20 @@ namespace EverythingToolbar
             LastText = Text;
         }
 
+        private void OnKeyReleased(object sender, KeyEventArgs e)
+        {
+            //if (!SearchResultsPopup.IsOpen)
+            //    return;
+
+            if (e.Key == Key.Tab)
+            {
+                if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
+                    EverythingSearch.Instance.CycleFilters(-1);
+                else
+                    EverythingSearch.Instance.CycleFilters(1);
+            }
+        }
+
         private void OnPasteClicked(object sender, RoutedEventArgs args) { Paste(); }
         private void OnCopyClicked(object sender, RoutedEventArgs args) { Copy(); }
         private void OnCutClicked(object sender, RoutedEventArgs args) { Cut(); }

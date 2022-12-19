@@ -1,29 +1,13 @@
-﻿<Popup x:Class="EverythingToolbar.SearchResultsPopup"
-       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-       xmlns:local="clr-namespace:EverythingToolbar"
-       xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-       AllowsTransparency="True"
-       mc:Ignorable="d"
-       d:DesignWidth="300"
-       d:DesignHeight="300"
-       Opened="OnOpened"
-       Closed="OnClosed"
-       StaysOpen="{Binding SearchTerm,
-                           Converter={local:SearchTermToIsOpenedConverter},
-                           UpdateSourceTrigger=PropertyChanged,
-                           Mode=OneWay}"
-       IsOpen="{Binding SearchTerm,
-                        Converter={local:SearchTermToIsOpenedConverter},
-                        UpdateSourceTrigger=PropertyChanged,
-                        Mode=OneWay}">
-    <Popup.Resources>
-        <Style TargetType="{x:Type Border}">
-            <Setter Property="CornerRadius" Value="{Binding Converter={local:Win10or11Converter}, ConverterParameter=0;8}"/>
-        </Style>
-    </Popup.Resources>
+﻿<UserControl x:Class="EverythingToolbar.SearchResultsPopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:EverythingToolbar"
+             xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+             mc:Ignorable="d"
+             d:DesignWidth="300"
+             d:DesignHeight="300">
 
     <Border x:Name="PopupMarginBorder" Padding="{Binding Converter={local:Win10or11Converter}, ConverterParameter='0;0,0,0,12'}">
         <Grid>
@@ -150,4 +134,4 @@
             </Border>
         </Grid>
     </Border>
-</Popup>
+</UserControl>

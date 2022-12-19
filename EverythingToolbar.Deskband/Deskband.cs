@@ -1,4 +1,5 @@
 ﻿using EverythingToolbar;
+using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using System;
 using System.Runtime.InteropServices;
@@ -8,38 +9,27 @@ namespace CSDeskBand
 {
     [ComVisible(true)]
     [Guid("9d39b79c-e03c-4757-b1b6-ecce843748f3")]
-    [CSDeskBandRegistration(Name = "Everything Toolbar")]
+    [CSDeskBandRegistration(Name = "EverythingToolbar")]
     public class Deskband : CSDeskBandWpf
     {
-        private static ToolbarControl toolbarControl;
-        protected override UIElement UIElement => toolbarControl;
+        private static ToolbarControl ToolbarControl;
+        protected override UIElement UIElement => ToolbarControl;
 
         public Deskband()
         {
             try
             {
-                if (Settings.Default.isUpgradeRequired)
-                {
-                    Settings.Default.Upgrade();
-
-                    if (Settings.Default.theme == "MEDIUM")
-                        Settings.Default.theme = "DARK";
-
-                    Settings.Default.isUpgradeRequired = false;
-                    Settings.Default.Save();
-                }
-
-                toolbarControl = new ToolbarControl();
+                ToolbarControl = new ToolbarControl();
 
                 Options.MinHorizontalSize = new Size(18, 30);
                 Options.MinVerticalSize = new Size(30, 40);
 
-                toolbarControl.FocusRequested += OnFocusRequested;
-                toolbarControl.UnfocusRequested += OnUnfocusRequested;
+                EventDispatcher.Instance.FocusRequested += OnFocusRequested;
+                EventDispatcher.Instance.UnfocusRequested += OnUnfocusRequested;
                 TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
                 TaskbarInfo.TaskbarSizeChanged += OnTaskbarSizeChanged;
 
-                SearchResultsPopup.taskbarEdge = TaskbarInfo.Edge;
+                //SearchResultsPopup.taskbarEdge = TaskbarInfo.Edge;
             }
             catch (Exception e)
             {
@@ -81,15 +71,15 @@ namespace CSDeskBand
 
 		private void OnTaskbarEdgeChanged(object sender, TaskbarEdgeChangedEventArgs e)
         {
-            SearchResultsPopup.taskbarEdge = e.Edge;
+            //SearchResultsPopup.taskbarEdge = e.Edge;
             OnTaskbarSizeChanged(sender, null);
         }
 
         protected override void DeskbandOnClosed()
         {
             base.DeskbandOnClosed();
-            toolbarControl.Destroy();
-            toolbarControl = null;
+            ToolbarControl.Destroy();
+            ToolbarControl = null;
         }
     }
 }

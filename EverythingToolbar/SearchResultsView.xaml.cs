@@ -1,3 +1,4 @@
+using EverythingToolbar.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -21,6 +22,80 @@ namespace EverythingToolbar
 
             SearchResultsListView.ItemsSource = EverythingSearch.Instance.SearchResults;
             ((INotifyCollectionChanged)SearchResultsListView.Items).CollectionChanged += OnCollectionChanged;
+            EventDispatcher.Instance.KeyPressed += OnKeyPressed;
+        }
+
+        private void OnKeyPressed(object sender, KeyEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Up)
+            {
+                //Keyboard.Focus(SearchBox);
+                EverythingSearch.Instance.SearchTerm = HistoryManager.Instance.GetPreviousItem();
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Down)
+            {
+                //Keyboard.Focus(SearchBox);
+                EverythingSearch.Instance.SearchTerm = HistoryManager.Instance.GetNextItem();
+            }
+            else if (e.Key == Key.Up)
+            {
+                SelectPreviousSearchResult();
+            }
+            else if (e.Key == Key.Down)
+            {
+                SelectNextSearchResult();
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == Key.Enter)
+            {
+                string path = "";
+                if (SearchResultsListView.SelectedIndex >= 0)
+                    path = (SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
+                EverythingSearch.Instance.OpenLastSearchInEverything(path);
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Enter)
+            {
+                OpenFilePath(null, null);
+            }
+            else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.Enter)
+            {
+                RunAsAdmin(null, null);
+            }
+            else if (e.Key == Key.Enter)
+            {
+                OpenSelectedSearchResult();
+            }
+            else if (e.Key == Key.Space && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                e.Handled = true;
+                PreviewSelectedFile();
+            }
+            else if (e.Key >= Key.D0 && e.Key <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                int index = e.Key == Key.D0 ? 9 : e.Key - Key.D1;
+                EverythingSearch.Instance.SelectFilterFromIndex(index);
+            }
+            else if (e.Key == Key.Escape)
+            {
+                HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
+                EverythingSearch.Instance.SearchTerm = null;
+                Keyboard.ClearFocus();
+            }
+            else if (e.Key == Key.PageUp)
+            {
+                PageUp();
+            }
+            else if (e.Key == Key.PageDown)
+            {
+                PageDown();
+            }
+            else if (e.Key == Key.Home)
+            {
+                ScrollToHome();
+            }
+            else if (e.Key == Key.End)
+            {
+                ScrollToEnd();
+            }
         }
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

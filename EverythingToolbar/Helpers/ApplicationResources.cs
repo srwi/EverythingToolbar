@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace EverythingToolbar.Helpers
 {
@@ -12,7 +11,7 @@ namespace EverythingToolbar.Helpers
         public ResourceDictionary NewResource { get; set; }
     }
 
-    class ApplicationResources
+    public class ApplicationResources
     {
         public event EventHandler<ResourcesChangedEventArgs> ResourceChanged;
 
@@ -20,6 +19,8 @@ namespace EverythingToolbar.Helpers
 
         private readonly RegistryEntry systemThemeRegistryEntry = new RegistryEntry("HKEY_CURRENT_USER", @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme");
         private RegistryWatcher systemThemeWatcher = null;
+
+        private ApplicationResources() {}
 
         public void LoadDefaults()
         {

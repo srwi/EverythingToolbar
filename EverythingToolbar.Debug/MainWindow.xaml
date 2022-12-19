@@ -1,11 +1,14 @@
 ﻿<Window x:Class="EverythingToolbar.Debug.MainWindow"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:local="clr-namespace:EverythingToolbar;assembly=EverythingToolbar"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		Title="EverythingToolbar.Debug"
 		Height="70"
 		Width="300"
-		ResizeMode="CanResizeWithGrip"
-		WindowStyle="ToolWindow">
-	<local:ToolbarControl />
+		WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+    <StackPanel>
+        <local:SearchBox></local:SearchBox>
+    </StackPanel>
 </Window>

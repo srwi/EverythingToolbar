@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace EverythingToolbar.Helpers
 {
-    class ShortcutManager
+    public class ShortcutManager
     {
         public class WinKeyEventArgs : EventArgs
         {

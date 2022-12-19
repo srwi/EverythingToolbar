@@ -6,6 +6,7 @@
          xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
          xmlns:h="clr-namespace:EverythingToolbar.Helpers"
          LostKeyboardFocus="OnLostKeyboardFocus"
+         PreviewKeyUp="OnKeyReleased"
          TextChanged="OnTextChanged"
          Name="SearchBoxControl"
          CaretBrush="{DynamicResource SearchBoxForegroundActive}"
