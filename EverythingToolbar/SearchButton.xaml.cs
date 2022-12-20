@@ -51,9 +51,9 @@ namespace EverythingToolbar
         private void OnClick(object sender, RoutedEventArgs e)
         {
             if (SearchResultsWindow.Instance.IsOpen)
-                EventDispatcher.Instance.DispatchWindowHideRequested(sender, null);
+                EventDispatcher.Instance.InvokeHideWindow();
             else
-                EventDispatcher.Instance.DispatchWindowShowRequested(sender, null);
+                EventDispatcher.Instance.InvokeShowWindow();
         }
 
         private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

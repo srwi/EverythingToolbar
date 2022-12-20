@@ -36,7 +36,7 @@ namespace EverythingToolbar
             SearchBox.LostKeyboardFocus += (object sender, KeyboardFocusChangedEventArgs e) =>
             {
                 Keyboard.Focus(KeyboardFocusCapture);
-                EventDispatcher.Instance.DispatchUnfocusRequested(sender, e);
+                EventDispatcher.Instance.InvokeUnfocusRequested(sender, e);
             };
 
             if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
@@ -79,7 +79,7 @@ namespace EverythingToolbar
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            EventDispatcher.Instance.DispatchFocusRequested(sender, e);
+            EventDispatcher.Instance.InvokeFocusRequested(sender, e);
         }
 
         [DllImport("user32.dll")]

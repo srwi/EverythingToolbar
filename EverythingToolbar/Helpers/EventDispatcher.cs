@@ -9,36 +9,42 @@ namespace EverythingToolbar.Helpers
 {
     public class EventDispatcher
     {
+        // Events
+
         public static readonly EventDispatcher Instance = new EventDispatcher();
 
         public event EventHandler<EventArgs> FocusRequested;
-        public void DispatchFocusRequested(object sender, EventArgs e)
+        public void InvokeFocusRequested(object sender, EventArgs e)
         {
             FocusRequested?.Invoke(sender, e);
         }
 
         public event EventHandler<EventArgs> UnfocusRequested;
-        public void DispatchUnfocusRequested(object sender, EventArgs e)
+        public void InvokeUnfocusRequested(object sender, EventArgs e)
         {
             UnfocusRequested?.Invoke(sender, e);
         }
 
         public event EventHandler<KeyEventArgs> KeyPressed;
-        public void DispatchKeyPressed(object sender, KeyEventArgs e)
+        public void InvokeKeyPressed(object sender, KeyEventArgs e)
         {
             KeyPressed?.Invoke(sender, e);
         }
 
-        public event EventHandler<KeyEventArgs> WindowShowRequested;
-        public void DispatchWindowShowRequested(object sender, KeyEventArgs e)
+        // Delegates
+
+        public delegate void ShowWindowDelegate();
+        public event ShowWindowDelegate ShowWindow;
+        public void InvokeShowWindow()
         {
-            WindowShowRequested?.Invoke(sender, e);
+            ShowWindow?.Invoke();
         }
 
-        public event EventHandler<KeyEventArgs> WindowHideRequested;
-        public void DispatchWindowHideRequested(object sender, KeyEventArgs e)
+        public delegate void HideWindowDelegate();
+        public event HideWindowDelegate HideWindow;
+        public void InvokeHideWindow()
         {
-            WindowHideRequested?.Invoke(sender, e);
+            HideWindow?.Invoke();
         }
     }
 }

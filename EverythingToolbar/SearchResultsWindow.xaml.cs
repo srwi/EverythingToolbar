@@ -80,8 +80,8 @@ namespace EverythingToolbar
             ApplicationResources.Instance.LoadDefaults();
 
             LostKeyboardFocus += OnLostKeyboardFocus;
-            EventDispatcher.Instance.WindowHideRequested += OnWindowHideRequested;
-            EventDispatcher.Instance.WindowShowRequested += OnWindowShowRequested;
+            EventDispatcher.Instance.HideWindow += Hide;
+            EventDispatcher.Instance.ShowWindow += Show;
         }
 
         public new void Hide()
@@ -95,16 +95,6 @@ namespace EverythingToolbar
         {
             IsOpen = true;
             base.Show();
-        }
-
-        private void OnWindowHideRequested(object sender, KeyEventArgs e)
-        {
-            Hide();
-        }
-
-        private void OnWindowShowRequested(object sender, KeyEventArgs e)
-        {
-            Show();
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
