@@ -10,7 +10,7 @@
       MouseLeftButtonUp="OnMouseLeftButtonUp">
 
     <Grid.ContextMenu>
-        <ContextMenu Focusable="False">
+        <ContextMenu>
             <i:Interaction.Behaviors>
                 <h:DpiScaling x:Name="dpiScaling" />
             </i:Interaction.Behaviors>
@@ -32,7 +32,6 @@
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}">
                 <MenuItem.Style>
                     <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Focusable" Value="False" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchWholeWord, Mode=OneWay}"
                                          Value="True">

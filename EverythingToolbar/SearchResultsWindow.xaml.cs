@@ -1,5 +1,4 @@
-﻿//using CSDeskBand;
-using EverythingToolbar.Helpers;
+﻿using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using System;
 using System.Windows;
@@ -11,7 +10,7 @@ using System.Windows.Media.Animation;
 
 namespace EverythingToolbar
 {
-    public partial class SearchResultsPopup : UserControl
+    public partial class SearchResultsWindow : Window
     {
         //public static Edge taskbarEdge;
         public static double taskbarHeight = 0;
@@ -47,7 +46,7 @@ namespace EverythingToolbar
             }
         }
 
-        public SearchResultsPopup()
+        public SearchResultsWindow()
         {
             InitializeComponent();
             DataContext = EverythingSearch.Instance;
@@ -76,6 +75,16 @@ namespace EverythingToolbar
                 }
             };
             ApplicationResources.Instance.LoadDefaults();
+
+            LostKeyboardFocus += SearchResultsWindow_LostKeyboardFocus;
+        }
+
+        private void SearchResultsWindow_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (e.NewFocus == null)
+            {
+                Hide();
+            }
         }
 
         private void OnDragStarted(object sender, DragStartedEventArgs e)

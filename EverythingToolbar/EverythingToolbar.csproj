@@ -243,8 +243,8 @@
     <Compile Include="SearchButton.xaml.cs">
       <DependentUpon>SearchButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchResultsPopup.xaml.cs">
-      <DependentUpon>SearchResultsPopup.xaml</DependentUpon>
+    <Compile Include="SearchResultsWindow.xaml.cs">
+      <DependentUpon>SearchResultsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SearchResultsView.xaml.cs">
       <DependentUpon>SearchResultsView.xaml</DependentUpon>
@@ -295,7 +295,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SearchResultsPopup.xaml">
+    <Page Include="SearchResultsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

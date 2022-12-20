@@ -4,11 +4,6 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		Title="EverythingToolbar.Debug"
 		Height="70"
-		Width="300"
-		WindowStyle="None"
-        AllowsTransparency="True"
-        Background="Transparent">
-    <StackPanel>
-        <local:SearchBox></local:SearchBox>
-    </StackPanel>
+		Width="300">
+    <local:SearchBox></local:SearchBox>
 </Window>

@@ -29,7 +29,7 @@ namespace CSDeskBand
                 TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
                 TaskbarInfo.TaskbarSizeChanged += OnTaskbarSizeChanged;
 
-                //SearchResultsPopup.taskbarEdge = TaskbarInfo.Edge;
+                //SearchResultsWindow.taskbarEdge = TaskbarInfo.Edge;
             }
             catch (Exception e)
             {
@@ -48,14 +48,14 @@ namespace CSDeskBand
         {
             if (TaskbarInfo.Edge == Edge.Left || TaskbarInfo.Edge == Edge.Right)
             {
-                SearchResultsPopup.taskbarWidth = TaskbarInfo.Size.Width;
-                SearchResultsPopup.taskbarHeight = 0;
+                SearchResultsWindow.taskbarWidth = TaskbarInfo.Size.Width;
+                SearchResultsWindow.taskbarHeight = 0;
             }
 
             if (TaskbarInfo.Edge == Edge.Top || TaskbarInfo.Edge == Edge.Bottom)
             {
-                SearchResultsPopup.taskbarHeight = TaskbarInfo.Size.Height;
-                SearchResultsPopup.taskbarWidth = 0;
+                SearchResultsWindow.taskbarHeight = TaskbarInfo.Size.Height;
+                SearchResultsWindow.taskbarWidth = 0;
             }
         }
 
@@ -71,7 +71,7 @@ namespace CSDeskBand
 
 		private void OnTaskbarEdgeChanged(object sender, TaskbarEdgeChangedEventArgs e)
         {
-            //SearchResultsPopup.taskbarEdge = e.Edge;
+            //SearchResultsWindow.taskbarEdge = e.Edge;
             OnTaskbarSizeChanged(sender, null);
         }
 

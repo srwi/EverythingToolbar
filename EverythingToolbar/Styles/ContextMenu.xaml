@@ -7,7 +7,6 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Foreground" Value="{DynamicResource ContextMenuItemForeground}" />
         <Setter Property="FontSize" Value="13" />
-        <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type MenuItem}">
@@ -65,8 +64,7 @@
                             </Grid>
                             <Popup IsOpen="{Binding Path=IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
                                    Placement="Right"
-                                   x:Name="SubMenuPopup"
-                                   Focusable="False">
+                                   x:Name="SubMenuPopup">
                                 <Border x:Name="SubMenuBorder"
                                         Background="{DynamicResource ContextMenuBackground}"
                                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -140,7 +138,6 @@
     <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="{x:Type Separator}">
         <Setter Property="Background" Value="{DynamicResource ContextMenuSeparator}" />
         <Setter Property="Margin" Value="11, 7" />
-        <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Separator}">

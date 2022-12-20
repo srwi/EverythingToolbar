@@ -1,4 +1,5 @@
 ﻿using EverythingToolbar.Helpers;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -8,6 +9,7 @@ namespace EverythingToolbar
     public partial class SearchBox : TextBox
     {
         private string LastText = "";
+        private static SearchResultsWindow window = new SearchResultsWindow();
 
         public SearchBox()
         {
@@ -15,12 +17,25 @@ namespace EverythingToolbar
 
             DataContext = EverythingSearch.Instance;
             InputMethod.SetPreferredImeState(this, InputMethodState.DoNotCare);
+
+            Loaded += SearchBox_Loaded;
+        }
+
+        private void SearchBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            window.ShowActivated = false;
+            window.Show();
+            window.Hide();
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
-            EverythingSearch.Instance.Reset();
+            if (e.NewFocus == null)
+            {
+                HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
+                EverythingSearch.Instance.Reset();
+            }
+
         }
 
         private void OnMenuItemClicked(object sender, RoutedEventArgs e)
@@ -30,6 +45,15 @@ namespace EverythingToolbar
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            if (!string.IsNullOrEmpty(Text))
+            {
+                window.Show();
+            }
+            else
+            {
+                window.Hide();
+            }
+
             if (LastText == "")
                 CaretIndex = Text.Length;
 
@@ -38,7 +62,7 @@ namespace EverythingToolbar
 
         private void OnKeyReleased(object sender, KeyEventArgs e)
         {
-            //if (!SearchResultsPopup.IsOpen)
+            //if (!SearchResultsWindow.IsOpen)
             //    return;
 
             if (e.Key == Key.Tab)

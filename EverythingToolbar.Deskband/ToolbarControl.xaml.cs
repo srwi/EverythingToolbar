@@ -1,7 +1,9 @@
 using EverythingToolbar.Helpers;
 using NHotkey;
 using System;
+using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -77,7 +79,7 @@ namespace EverythingToolbar
 
         public void FocusSearchBox(object sender, HotkeyEventArgs e)
         {
-            //if (SearchResultsPopup.IsOpen)
+            //if (SearchResultsWindow.IsOpen)
             //{
             //    EverythingSearch.Instance.SearchTerm = null;
             //}

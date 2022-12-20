@@ -27,6 +27,6 @@
                                                  Converter={local:DoubleToVisibilityConverter},
                                                  ConverterParameter=-70}" />
 
-        <local:SearchResultsPopup x:Name="SearchResultsPopup" />
+        <!--<local:SearchResultsWindow x:Name="SearchResultsPopup" />-->
     </Grid>
 </UserControl>
