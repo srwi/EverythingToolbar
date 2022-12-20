@@ -76,8 +76,7 @@ namespace EverythingToolbar
             }
             else if (e.Key == Key.Escape)
             {
-                HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
-                EverythingSearch.Instance.SearchTerm = null;
+                EventDispatcher.Instance.DispatchWindowHideRequested(sender, null);
                 Keyboard.ClearFocus();
             }
             else if (e.Key == Key.PageUp)

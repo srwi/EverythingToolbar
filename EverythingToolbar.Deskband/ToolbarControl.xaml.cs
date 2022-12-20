@@ -17,6 +17,8 @@ namespace EverythingToolbar
         {
             InitializeComponent();
 
+            Loaded += OnLoaded;
+
             ApplicationResources.Instance.ResourceChanged += (object sender, ResourcesChangedEventArgs e) =>
             {
                 try
@@ -52,6 +54,13 @@ namespace EverythingToolbar
             ShortcutManager.Instance.SetFocusCallback(FocusSearchBox);
             if (Properties.Settings.Default.isReplaceStartMenuSearch)
                 ShortcutManager.Instance.HookStartMenu();
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            SearchResultsWindow.Instance.ShowActivated = false;
+            SearchResultsWindow.Instance.Show();
+            SearchResultsWindow.Instance.Hide();
         }
 
         public void Destroy()

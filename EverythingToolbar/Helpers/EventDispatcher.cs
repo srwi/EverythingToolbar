@@ -28,5 +28,17 @@ namespace EverythingToolbar.Helpers
         {
             KeyPressed?.Invoke(sender, e);
         }
+
+        public event EventHandler<KeyEventArgs> WindowShowRequested;
+        public void DispatchWindowShowRequested(object sender, KeyEventArgs e)
+        {
+            WindowShowRequested?.Invoke(sender, e);
+        }
+
+        public event EventHandler<KeyEventArgs> WindowHideRequested;
+        public void DispatchWindowHideRequested(object sender, KeyEventArgs e)
+        {
+            WindowHideRequested?.Invoke(sender, e);
+        }
     }
 }

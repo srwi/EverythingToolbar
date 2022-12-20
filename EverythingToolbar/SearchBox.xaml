@@ -6,6 +6,8 @@
          xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
          xmlns:h="clr-namespace:EverythingToolbar.Helpers"
          LostKeyboardFocus="OnLostKeyboardFocus"
+         GotKeyboardFocus="OnGotKeyboardFocus"
+         PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"
          PreviewKeyUp="OnKeyReleased"
          TextChanged="OnTextChanged"
          Name="SearchBoxControl"
@@ -46,6 +48,7 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="{DynamicResource SearchBoxWatermarkForeground}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TextBox}">

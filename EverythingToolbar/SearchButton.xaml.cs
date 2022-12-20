@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using EverythingToolbar.Helpers;
+using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -8,8 +9,6 @@ namespace EverythingToolbar
 {
     public partial class SearchButton : Button
     {
-        private bool popupWasOpen = false;
-
         public SearchButton()
         {
             InitializeComponent();
@@ -49,18 +48,12 @@ namespace EverythingToolbar
             }
         }
 
-        private void OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void OnClick(object sender, RoutedEventArgs e)
         {
-            popupWasOpen = EverythingSearch.Instance.SearchTerm != null;
-        }
-
-        private void OnMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton != MouseButton.Left)
-                return;
-
-            EverythingSearch.Instance.SearchTerm = popupWasOpen ? null : "";
-            popupWasOpen = false;
+            if (SearchResultsWindow.Instance.IsOpen)
+                EventDispatcher.Instance.DispatchWindowHideRequested(sender, null);
+            else
+                EventDispatcher.Instance.DispatchWindowShowRequested(sender, null);
         }
 
         private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

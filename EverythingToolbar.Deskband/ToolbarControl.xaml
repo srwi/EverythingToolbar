@@ -26,7 +26,5 @@
                                                  RelativeSource={RelativeSource Self},  
                                                  Converter={local:DoubleToVisibilityConverter},
                                                  ConverterParameter=-70}" />
-
-        <!--<local:SearchResultsWindow x:Name="SearchResultsPopup" />-->
     </Grid>
 </UserControl>

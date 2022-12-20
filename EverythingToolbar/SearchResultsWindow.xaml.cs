@@ -15,6 +15,7 @@ namespace EverythingToolbar
         //public static Edge taskbarEdge;
         public static double taskbarHeight = 0;
         public static double taskbarWidth = 0;
+        public bool IsOpen = false;
         Size dragStartSize = new Size();
         Point dragStartPosition = new Point();
         
@@ -46,7 +47,9 @@ namespace EverythingToolbar
             }
         }
 
-        public SearchResultsWindow()
+        public static readonly SearchResultsWindow Instance = new SearchResultsWindow();
+
+        private SearchResultsWindow()
         {
             InitializeComponent();
             DataContext = EverythingSearch.Instance;
@@ -76,12 +79,37 @@ namespace EverythingToolbar
             };
             ApplicationResources.Instance.LoadDefaults();
 
-            LostKeyboardFocus += SearchResultsWindow_LostKeyboardFocus;
+            LostKeyboardFocus += OnLostKeyboardFocus;
+            EventDispatcher.Instance.WindowHideRequested += OnWindowHideRequested;
+            EventDispatcher.Instance.WindowShowRequested += OnWindowShowRequested;
         }
 
-        private void SearchResultsWindow_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        public new void Hide()
         {
-            if (e.NewFocus == null)
+            IsOpen = false;
+            HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
+            base.Hide();
+        }
+
+        public new void Show()
+        {
+            IsOpen = true;
+            base.Show();
+        }
+
+        private void OnWindowHideRequested(object sender, KeyEventArgs e)
+        {
+            Hide();
+        }
+
+        private void OnWindowShowRequested(object sender, KeyEventArgs e)
+        {
+            Show();
+        }
+
+        private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (e.NewFocus == null)  // New focus outside application
             {
                 Hide();
             }
@@ -111,7 +139,7 @@ namespace EverythingToolbar
 
         private void OnOpened(object sender, EventArgs e)
         {
-            Keyboard.Focus(SearchBox);
+            //Keyboard.Focus(SearchBox);
 
             //switch (taskbarEdge)
             //{
@@ -170,11 +198,6 @@ namespace EverythingToolbar
             //else if (taskbarEdge == Edge.Left)
             //    inner.From = new Thickness(-50, 0, 50, 0);
             //ContentGrid?.BeginAnimation(MarginProperty, inner);
-        }
-
-        private void OnClosed(object sender, EventArgs e)
-        {
-            EverythingSearch.Instance.Reset();
         }
 
         private void OpenSearchInEverything(object sender, RoutedEventArgs e)
