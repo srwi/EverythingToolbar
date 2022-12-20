@@ -19,7 +19,7 @@ namespace EverythingToolbar
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            EventDispatcher.Instance.InvokeHideWindow();
+            //EventDispatcher.Instance.InvokeHideWindow();
         }
 
         private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)

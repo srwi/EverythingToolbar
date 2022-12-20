@@ -5,26 +5,32 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:EverythingToolbar"
         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-        AllowsTransparency="True"
         WindowStyle="None"
-        ShowInTaskbar="False"
-        Topmost="True"
         Background="Transparent"
+        ShowInTaskbar="False"
+        Width="500"
+        Height="500"
         mc:Ignorable="d"
-        d:DesignWidth="300"
-        d:DesignHeight="300">
+        d:DesignWidth="500"
+        d:DesignHeight="500">
+    <WindowChrome.WindowChrome>
+        <WindowChrome ResizeBorderThickness="8"
+                      GlassFrameThickness="-1"
+                      CaptionHeight="8"
+                      UseAeroCaptionButtons="False" />
+    </WindowChrome.WindowChrome>
 
-    <Border x:Name="PopupMarginBorder" Padding="{Binding Converter={local:Win10or11Converter}, ConverterParameter='0;0,0,0,12'}">
+    <Border x:Name="PopupMarginBorder" Padding="{Binding Converter={local:Win10or11Converter}, ConverterParameter='0;0,0,0,0'}">
         <Grid>
             <Grid.RenderTransform>
                 <TranslateTransform x:Name="translateTransform" />
             </Grid.RenderTransform>
 
-            <Border Background="{DynamicResource SearchResultsViewBorder}">
+            <!--<Border Background="{DynamicResource SearchResultsViewBorder}">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="12" Direction="-90" Opacity="0.55" RenderingBias="Quality" ShadowDepth="-100" />
                 </Border.Effect>
-            </Border>
+            </Border>-->
 
             <Border x:Name="PopupBorder"
                     BorderThickness="1"

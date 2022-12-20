@@ -1,6 +1,7 @@
 ﻿using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -13,6 +14,48 @@ namespace EverythingToolbar
 {
     public partial class SearchResultsWindow : Window
     {
+        private const int GWL_STYLE = -16;
+        private const int WS_SYSMENU = 0x80000;
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+        [DllImport("user32.dll")]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmSetWindowAttribute(IntPtr hwnd, DwmWindowAttribute dwAttribute, ref int pvAttribute, int cbAttribute);
+
+        [Flags]
+        public enum DwmWindowAttribute : uint
+        {
+            DWMWA_USE_IMMERSIVE_DARK_MODE = 20,
+            DWMWA_MICA_EFFECT = 1029,
+            DWMWA_SYSTEMBACKDROP_TYPE = 38
+        }
+
+        private void Window_ContentRendered(object sender, System.EventArgs e)
+        {
+            // Apply Mica brush
+            UpdateStyleAttributes((HwndSource)sender);
+        }
+
+        public static void UpdateStyleAttributes(HwndSource hwnd)
+        {
+            int trueValue = 0x01;
+            int mica = 0x03;
+            DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_MICA_EFFECT, ref trueValue, Marshal.SizeOf(typeof(int)));
+            DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_SYSTEMBACKDROP_TYPE, ref mica, Marshal.SizeOf(typeof(int)));
+            DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref trueValue, Marshal.SizeOf(typeof(int)));
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Get PresentationSource
+            PresentationSource presentationSource = PresentationSource.FromVisual((Visual)sender);
+
+            // Subscribe to PresentationSource's ContentRendered event
+            presentationSource.ContentRendered += Window_ContentRendered;
+        }
+
         //public static Edge taskbarEdge;
         public static double taskbarHeight = 0;
         public static double taskbarWidth = 0;
@@ -50,25 +93,25 @@ namespace EverythingToolbar
 
         public static readonly SearchResultsWindow Instance = new SearchResultsWindow();
 
-        protected override void OnSourceInitialized(EventArgs e)
-        {
-            base.OnSourceInitialized(e);
+        //protected override void OnSourceInitialized(EventArgs e)
+        //{
+        //    base.OnSourceInitialized(e);
 
-            // Preventing the window from getting focus keeps focus on the deskband search box
-            var source = PresentationSource.FromVisual(this) as HwndSource;
-            source.AddHook((IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) =>
-            {
-                const int WM_MOUSEACTIVATE = 0x0021;
-                const int MA_NOACTIVATE = 0x0003;
+        //    // Preventing the window from getting focus keeps focus on the deskband search box
+        //    var source = PresentationSource.FromVisual(this) as HwndSource;
+        //    source.AddHook((IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) =>
+        //    {
+        //        const int WM_MOUSEACTIVATE = 0x0021;
+        //        const int MA_NOACTIVATE = 0x0003;
 
-                if (msg == WM_MOUSEACTIVATE)
-                {
-                    handled = true;
-                    return new IntPtr(MA_NOACTIVATE);
-                }
-                else return IntPtr.Zero;
-            });
-        }
+        //        if (msg == WM_MOUSEACTIVATE)
+        //        {
+        //            handled = true;
+        //            return new IntPtr(MA_NOACTIVATE);
+        //        }
+        //        else return IntPtr.Zero;
+        //    });
+        //}
 
         private SearchResultsWindow()
         {
@@ -103,6 +146,8 @@ namespace EverythingToolbar
             LostKeyboardFocus += OnLostKeyboardFocus;
             EventDispatcher.Instance.HideWindow += Hide;
             EventDispatcher.Instance.ShowWindow += Show;
+
+            Loaded += Window_Loaded;
         }
 
         public new void Hide()
@@ -114,6 +159,9 @@ namespace EverythingToolbar
 
         public new void Show()
         {
+            if (!IsOpen)
+                OnOpened(null, null);
+
             IsOpen = true;
             base.Show();
             Keyboard.Focus(SearchBox);
@@ -173,43 +221,43 @@ namespace EverythingToolbar
             //        break;
             //}
 
-            //Height = Properties.Settings.Default.popupSize.Height;
-            //Width = Properties.Settings.Default.popupSize.Width;
+            Height = Properties.Settings.Default.popupSize.Height;
+            Width = Properties.Settings.Default.popupSize.Width;
 
-            //QuinticEase ease = new QuinticEase
-            //{
-            //    EasingMode = EasingMode.EaseOut
-            //};
+            QuinticEase ease = new QuinticEase
+            {
+                EasingMode = EasingMode.EaseOut
+            };
 
-            //int modifier = taskbarEdge == Edge.Right || taskbarEdge == Edge.Bottom ? 1 : -1;
-            //Duration duration = TimeSpan.FromSeconds(Properties.Settings.Default.isAnimationsDisabled ? 0 : 0.4);
-            //DoubleAnimation outer = new DoubleAnimation(modifier * 150, 0, duration)
-            //{
-            //    EasingFunction = ease
-            //};
-            //DependencyProperty outerProp = taskbarEdge == Edge.Bottom || taskbarEdge == Edge.Top ? TranslateTransform.YProperty : TranslateTransform.XProperty;
-            //translateTransform?.BeginAnimation(outerProp, outer);
+            int modifier = 1;
+            Duration duration = TimeSpan.FromSeconds(Properties.Settings.Default.isAnimationsDisabled ? 0 : 0.4);
+            DoubleAnimation outer = new DoubleAnimation(modifier * 150, 0, duration)
+            {
+                EasingFunction = ease
+            };
+            DependencyProperty outerProp = TranslateTransform.YProperty;
+            translateTransform?.BeginAnimation(outerProp, outer);
 
-            //DoubleAnimation opacity = new DoubleAnimation(0, 1, duration)
-            //{
-            //    EasingFunction = ease
-            //};
-            //PopupMarginBorder?.BeginAnimation(OpacityProperty, opacity);
+            DoubleAnimation opacity = new DoubleAnimation(0, 1, duration)
+            {
+                EasingFunction = ease
+            };
+            PopupMarginBorder?.BeginAnimation(OpacityProperty, opacity);
 
-            //duration = TimeSpan.FromSeconds(Properties.Settings.Default.isAnimationsDisabled ? 0 : 0.8);
-            //ThicknessAnimation inner = new ThicknessAnimation(new Thickness(0), duration)
-            //{
-            //    EasingFunction = ease
-            //};
+            duration = TimeSpan.FromSeconds(Properties.Settings.Default.isAnimationsDisabled ? 0 : 0.8);
+            ThicknessAnimation inner = new ThicknessAnimation(new Thickness(0), duration)
+            {
+                EasingFunction = ease
+            };
             //if (taskbarEdge == Edge.Top)
             //    inner.From = new Thickness(0, -50, 0, 50);
             //else if (taskbarEdge == Edge.Right)
             //    inner.From = new Thickness(50, 0, -50, 0);
             //else if (taskbarEdge == Edge.Bottom)
-            //    inner.From = new Thickness(0, 50, 0, -50);
+                inner.From = new Thickness(0, 50, 0, -50);
             //else if (taskbarEdge == Edge.Left)
             //    inner.From = new Thickness(-50, 0, 50, 0);
-            //ContentGrid?.BeginAnimation(MarginProperty, inner);
+            ContentGrid?.BeginAnimation(MarginProperty, inner);
         }
 
         private void OpenSearchInEverything(object sender, RoutedEventArgs e)
