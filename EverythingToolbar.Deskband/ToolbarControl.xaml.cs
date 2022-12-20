@@ -88,19 +88,19 @@ namespace EverythingToolbar
 
         public void FocusSearchBox(object sender, HotkeyEventArgs e)
         {
-            //if (SearchResultsWindow.IsOpen)
-            //{
-            //    EverythingSearch.Instance.SearchTerm = null;
-            //}
-            //else
-            //{
-            //    SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
-            //    FocusRequested?.Invoke(this, new EventArgs());
-            //    Keyboard.Focus(SearchBox);
+            if (SearchResultsWindow.Instance.IsOpen)
+            {
+                EverythingSearch.Instance.SearchTerm = null;
+            }
+            else
+            {
+                SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
+                EventDispatcher.Instance.InvokeFocusRequested(sender, e);
+                Keyboard.Focus(SearchBox);
 
-            //    if (Properties.Settings.Default.isIconOnly)
-            //        EverythingSearch.Instance.SearchTerm = "";
-            //}
+                if (Properties.Settings.Default.isIconOnly)
+                    EverythingSearch.Instance.SearchTerm = "";
+            }
         }
     }
 }

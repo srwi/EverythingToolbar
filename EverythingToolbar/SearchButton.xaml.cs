@@ -1,5 +1,6 @@
 ﻿using EverythingToolbar.Helpers;
 using Microsoft.Win32;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -53,7 +54,7 @@ namespace EverythingToolbar
             if (SearchResultsWindow.Instance.IsOpen)
                 EventDispatcher.Instance.InvokeHideWindow();
             else
-                EventDispatcher.Instance.InvokeShowWindow();
+            EventDispatcher.Instance.InvokeShowWindow();
         }
 
         private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

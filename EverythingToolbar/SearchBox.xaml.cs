@@ -1,5 +1,4 @@
 ﻿using EverythingToolbar.Helpers;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,10 +19,7 @@ namespace EverythingToolbar
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            if (e.NewFocus == null)
-            {
-                EventDispatcher.Instance.DispatchWindowHideRequested(sender, null);
-            }
+            EventDispatcher.Instance.InvokeHideWindow();
         }
 
         private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -52,7 +48,7 @@ namespace EverythingToolbar
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (!string.IsNullOrEmpty(Text))
-                EventDispatcher.Instance.DispatchWindowShowRequested(sender, null);
+                EventDispatcher.Instance.InvokeShowWindow();
 
             if (LastText == "")
                 CaretIndex = Text.Length;

@@ -45,12 +45,13 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <local:FilterSelector />
+                        <local:FilterSelector Focusable="False" />
 
                         <Button Content="{Binding TotalResultsNumber, Converter={local:SearchResultsCountConverter}}"
                                 Visibility="{Binding Source={x:Static properties:Settings.Default},
                                                      Path=isShowResultsCount,
                                                      Converter={local:BoolToVisibilityConverter}}"
+                                Focusable="False"
                                 Grid.Column="1"
                                 Click="OpenSearchInEverything">
                             <Button.Style>

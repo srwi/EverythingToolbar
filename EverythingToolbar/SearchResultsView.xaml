@@ -12,6 +12,7 @@
              d:DesignHeight="300">
     <UserControl.Resources>
         <ContextMenu x:Key="ListViewItemContextMenu"
+                     Focusable="False"
                      Opened="OnContextMenuOpened">
             <i:Interaction.Behaviors>
                 <h:DpiScaling x:Name="dpiScaling" />
@@ -60,6 +61,7 @@
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="Padding" Value="4, 1" />
             <Setter Property="Margin" Value="{Binding Converter={local:Win10or11Converter}, ConverterParameter='0;28,0,16,0'}" />
+            <Setter Property="Focusable" Value="False" />
             <Setter Property="ContextMenu" Value="{StaticResource ListViewItemContextMenu}" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -125,6 +127,7 @@
         <Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Focusable" Value="False" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RepeatButton}">
@@ -156,6 +159,7 @@
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="Focusable" Value="False" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RepeatButton}">
@@ -169,6 +173,7 @@
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="Focusable" Value="False" />
             <Setter Property="Width" Value="12" />
             <Setter Property="Template">
                 <Setter.Value>

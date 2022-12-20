@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
@@ -48,6 +49,26 @@ namespace EverythingToolbar
         }
 
         public static readonly SearchResultsWindow Instance = new SearchResultsWindow();
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            // Preventing the window from getting focus keeps focus on the deskband search box
+            var source = PresentationSource.FromVisual(this) as HwndSource;
+            source.AddHook((IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) =>
+            {
+                const int WM_MOUSEACTIVATE = 0x0021;
+                const int MA_NOACTIVATE = 0x0003;
+
+                if (msg == WM_MOUSEACTIVATE)
+                {
+                    handled = true;
+                    return new IntPtr(MA_NOACTIVATE);
+                }
+                else return IntPtr.Zero;
+            });
+        }
 
         private SearchResultsWindow()
         {
@@ -95,6 +116,7 @@ namespace EverythingToolbar
         {
             IsOpen = true;
             base.Show();
+            Keyboard.Focus(SearchBox);
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)

@@ -5,5 +5,5 @@
 		Title="EverythingToolbar.Debug"
 		Height="70"
 		Width="300">
-    <local:SearchBox></local:SearchBox>
+    <local:SearchButton></local:SearchButton>
 </Window>
