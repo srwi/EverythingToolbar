@@ -13,12 +13,22 @@
         mc:Ignorable="d"
         d:DesignWidth="500"
         d:DesignHeight="500">
+    
     <WindowChrome.WindowChrome>
         <WindowChrome ResizeBorderThickness="8"
                       GlassFrameThickness="-1"
                       CaptionHeight="8"
                       UseAeroCaptionButtons="False" />
     </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Win11/DARK.xaml" />
+                <ResourceDictionary Source="Themes/Win11/FilterSelector.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
 
     <Border x:Name="PopupMarginBorder" Padding="{Binding Converter={local:Win10or11Converter}, ConverterParameter='0;0,0,0,0'}">
         <Grid>
@@ -51,13 +61,12 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <local:FilterSelector Focusable="False" />
+                        <local:FilterSelector />
 
                         <Button Content="{Binding TotalResultsNumber, Converter={local:SearchResultsCountConverter}}"
                                 Visibility="{Binding Source={x:Static properties:Settings.Default},
                                                      Path=isShowResultsCount,
                                                      Converter={local:BoolToVisibilityConverter}}"
-                                Focusable="False"
                                 Grid.Column="1"
                                 Click="OpenSearchInEverything">
                             <Button.Style>

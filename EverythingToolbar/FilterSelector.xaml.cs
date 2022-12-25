@@ -1,5 +1,6 @@
 ﻿using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
+using System;
 using System.Windows.Controls;
 
 namespace EverythingToolbar
@@ -47,13 +48,6 @@ namespace EverythingToolbar
                 return;
 
             EverythingSearch.Instance.CurrentFilter = ComboBox.SelectedItem as Filter;
-        }
-
-        private void OnTabItemClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            var item = (sender as Border).DataContext;
-            int index = TabControl.Items.IndexOf(item);
-            TabControl.SelectedItem = TabControl.Items[index];
         }
     }
 }

@@ -86,7 +86,6 @@
                                            TextTrimming="WordEllipsis"/>
                                 <ScrollViewer x:Name="PART_ContentHost"
                                               Grid.Column="1"
-                                              Focusable="false"
                                               HorizontalScrollBarVisibility="Hidden"
                                               VerticalScrollBarVisibility="Hidden"/>
                                 <Border Grid.Column="2" Visibility="{Binding Source={x:Static properties:Settings.Default}, Path=isShowQuickToggles, Converter={local:BoolToVisibilityConverter}}">
@@ -94,13 +93,11 @@
                                         <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
                                                       ToolTip="{x:Static properties:Resources.SettingsMatchCase}"
                                                       Click="OnMenuItemClicked"
-                                                      Focusable="False"
                                                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase}"
                                                       Content="Aa" />
                                         <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
                                                       ToolTip="{x:Static properties:Resources.SettingsMatchWholeWord}"
                                                       Click="OnMenuItemClicked"
-                                                      Focusable="False"
                                                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord}">
                                             <TextBlock TextDecorations="Underline,OverLine"
                                                        FontSize="11"
@@ -110,14 +107,12 @@
                                         <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
                                                       ToolTip="{x:Static properties:Resources.SettingsMatchPath}"
                                                       Click="OnMenuItemClicked"
-                                                      Focusable="False"
                                                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath}"
                                                       Content="..\"
                                                       Margin="0, -2, 0, 1" />
                                         <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
                                                       ToolTip="{x:Static properties:Resources.SettingsRegularExpressions}"
                                                       Click="OnMenuItemClicked"
-                                                      Focusable="False"
                                                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled}"
                                                       Content=".*"
                                                       TextBlock.FontWeight="Bold"
@@ -189,7 +184,7 @@
     </TextBox.Resources>
 
     <TextBox.ContextMenu>
-        <ContextMenu Focusable="False">
+        <ContextMenu>
             <i:Interaction.Behaviors>
                 <h:DpiScaling x:Name="dpiScaling" />
             </i:Interaction.Behaviors>
@@ -219,7 +214,6 @@
                       Click="OnMenuItemClicked">
                 <MenuItem.Style>
                     <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Focusable" Value="False" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchWholeWord, Mode=OneWay}" Value="True">
                                 <Setter Property="IsEnabled" Value="False" />
