@@ -26,6 +26,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/Win11/DARK.xaml" />
                 <ResourceDictionary Source="Themes/Win11/FilterSelector.xaml" />
+                <ResourceDictionary Source="Styles/SearchBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
