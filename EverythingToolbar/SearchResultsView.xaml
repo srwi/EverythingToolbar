@@ -234,7 +234,7 @@
             <Setter Property="Template" Value="{StaticResource VerticalScrollBar}" />
         </Style>
     </UserControl.Resources>
-
+    
     <ListView Name="SearchResultsListView"
               BorderThickness="0"
               HorizontalContentAlignment="Stretch"
@@ -249,5 +249,5 @@
             </Style>
         </ListView.Resources>
     </ListView>
-
+        
 </UserControl>

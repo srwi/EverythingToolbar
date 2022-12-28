@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace EverythingToolbar
 {
-    public partial class SearchBox : TextBox
+    public partial class SearchBox : UserControl
     {
         private string LastText = "";
 
@@ -24,7 +24,7 @@ namespace EverythingToolbar
 
         private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            SelectAll();
+            TextBox.SelectAll();
         }
 
         private void SelectivelyIgnoreMouseButton(object sender, MouseButtonEventArgs e)
@@ -40,35 +40,19 @@ namespace EverythingToolbar
             }
         }
 
-        private void OnMenuItemClicked(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.Save();
-        }
-
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(Text))
+            if (!string.IsNullOrEmpty(TextBox.Text))
                 EventDispatcher.Instance.InvokeShowWindow();
 
             if (LastText == "")
-                CaretIndex = Text.Length;
+                TextBox.CaretIndex = TextBox.Text.Length;
 
-            LastText = Text;
+            LastText = TextBox.Text;
         }
 
-        private void OnKeyReleased(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Tab)
-            {
-                if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
-                    EverythingSearch.Instance.CycleFilters(-1);
-                else
-                    EverythingSearch.Instance.CycleFilters(1);
-            }
-        }
-
-        private void OnPasteClicked(object sender, RoutedEventArgs args) { Paste(); }
-        private void OnCopyClicked(object sender, RoutedEventArgs args) { Copy(); }
-        private void OnCutClicked(object sender, RoutedEventArgs args) { Cut(); }
+        private void OnPasteClicked(object sender, RoutedEventArgs args) { TextBox.Paste(); }
+        private void OnCopyClicked(object sender, RoutedEventArgs args) { TextBox.Copy(); }
+        private void OnCutClicked(object sender, RoutedEventArgs args) { TextBox.Cut(); }
     }
 }

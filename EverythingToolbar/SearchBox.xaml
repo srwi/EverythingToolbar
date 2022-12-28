@@ -1,19 +1,110 @@
-﻿<TextBox x:Class="EverythingToolbar.SearchBox"
-         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-         xmlns:local="clr-namespace:EverythingToolbar"
-         xmlns:h="clr-namespace:EverythingToolbar.Helpers"
-         LostKeyboardFocus="OnLostKeyboardFocus"
-         GotKeyboardFocus="OnGotKeyboardFocus"
-         PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"
-         PreviewKeyUp="OnKeyReleased"
-         TextChanged="OnTextChanged"
-         CaretBrush="{DynamicResource SearchBoxForegroundActive}"
-         Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+﻿<UserControl x:Class="EverythingToolbar.SearchBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+             xmlns:local="clr-namespace:EverythingToolbar"
+             xmlns:h="clr-namespace:EverythingToolbar.Helpers">
 
-    <TextBox.ContextMenu>
+    <UserControl.Resources>
+        <Style x:Key="QuickSettingsToggleButton"
+               TargetType="{x:Type ToggleButton}">
+            <Setter Property="Foreground"
+                    Value="{DynamicResource SearchBoxForegroundActive}" />
+            <Setter Property="Opacity"
+                    Value="0.5" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border Background="Transparent">
+                            <ContentPresenter TextBlock.Foreground="{TemplateBinding Foreground}"
+                                              TextBlock.FontSize="12pt"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              TextBlock.TextAlignment="Center"
+                                              Margin="2, 0"
+                                              MinWidth="19" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"
+                         Value="True">
+                    <Setter Property="Opacity"
+                            Value="0.7" />
+                </Trigger>
+                <Trigger Property="IsChecked"
+                         Value="True">
+                    <Setter Property="Opacity"
+                            Value="1" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <TextBox Name="TextBox"
+                 Padding="37, 0, 0, 0"
+                 Tag="{x:Static properties:Resources.SearchBoxWatermark}"
+                 Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 CaretBrush="{DynamicResource SearchBoxForegroundActive}"
+                 TextChanged="OnTextChanged"
+                 LostKeyboardFocus="OnLostKeyboardFocus"
+                 GotKeyboardFocus="OnGotKeyboardFocus"
+                 PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton" />
+
+        <Path Stroke="{DynamicResource SearchBoxLogo}"
+              IsHitTestVisible="False"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Center"
+              Margin="13, 0, 0, 0">
+            <Path.Data>
+                <GeometryGroup>
+                    <LineGeometry StartPoint="0, 17"
+                                  EndPoint="6, 11" />
+                    <EllipseGeometry Center="10, 7"
+                                     RadiusX="5.3"
+                                     RadiusY="5.3" />
+                </GeometryGroup>
+            </Path.Data>
+        </Path>
+
+        <Border Visibility="{Binding Source={x:Static properties:Settings.Default}, Path=isShowQuickToggles, Converter={local:BoolToVisibilityConverter}}"
+                HorizontalAlignment="Right"
+                Margin="0, 0, 6, 0">
+            <StackPanel Orientation="Horizontal"
+                        Visibility="{Binding ElementName=SearchBoxControl, Path=IsKeyboardFocused, Converter={local:BoolToVisibilityConverter}, Mode=OneWay}">
+                <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
+                              ToolTip="{x:Static properties:Resources.SettingsMatchCase}"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase}"
+                              Content="Aa" />
+                <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
+                              ToolTip="{x:Static properties:Resources.SettingsMatchWholeWord}"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord}">
+                    <TextBlock TextDecorations="Underline,OverLine"
+                               Text="Abl"
+                               FontSize="11"
+                               HorizontalAlignment="Center"
+                               Padding="0, 2, 0, 0" />
+                </ToggleButton>
+                <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
+                              ToolTip="{x:Static properties:Resources.SettingsMatchPath}"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath}"
+                              Content="..\"
+                              Margin="0, -2, 0, 1" />
+                <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
+                              ToolTip="{x:Static properties:Resources.SettingsRegularExpressions}"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled}"
+                              Content=".*"
+                              TextBlock.FontWeight="Bold"
+                              Margin="-2, 0, 4, 2" />
+            </StackPanel>
+        </Border>
+
+    </Grid>
+
+    <UserControl.ContextMenu>
         <ContextMenu>
             <i:Interaction.Behaviors>
                 <h:DpiScaling x:Name="dpiScaling" />
@@ -26,22 +117,18 @@
             <MenuItem Header="{x:Static properties:Resources.SettingsRegularExpressions}"
                       IsCheckable="True"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}"
-                      IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, Mode=OneWay}"
-                      Click="OnMenuItemClicked" />
+                      IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, Mode=OneWay}" />
             <MenuItem Header="{x:Static properties:Resources.SettingsMatchCase}"
                       IsCheckable="True"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase, Mode=TwoWay}"
-                      IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, Mode=OneWay}"
-                      Click="OnMenuItemClicked" />
+                      IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, Mode=OneWay}" />
             <MenuItem Header="{x:Static properties:Resources.SettingsMatchPath}"
                       IsCheckable="True"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath, Mode=TwoWay}"
-                      IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, Mode=OneWay}"
-                      Click="OnMenuItemClicked" />
+                      IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, Mode=OneWay}" />
             <MenuItem Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
                       IsCheckable="True"
-                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}"
-                      Click="OnMenuItemClicked">
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}">
                 <MenuItem.Style>
                     <Style TargetType="{x:Type MenuItem}"
                            BasedOn="{StaticResource {x:Type MenuItem}}">
@@ -76,6 +163,6 @@
                       Click="OnPasteClicked"
                       Icon="&#xE77F;" />
         </ContextMenu>
-    </TextBox.ContextMenu>
+    </UserControl.ContextMenu>
 
-</TextBox>
+</UserControl>
