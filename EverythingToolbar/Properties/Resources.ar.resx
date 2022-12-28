@@ -139,16 +139,16 @@
     <value>نسخة</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
-    <value>Copy Full Name to Clipboard</value>
+    <value>إنسخ الاسم الكامل إلى الحافظة</value>
   </data>
   <data name="ContextMenuCut" xml:space="preserve">
-    <value>Cut</value>
+    <value>قص</value>
   </data>
   <data name="ContextMenuOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>إفتح</value>
   </data>
   <data name="ContextMenuOpenPath" xml:space="preserve">
-    <value>Open Path</value>
+    <value>إفتح المسار</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
     <value>Show more options</value>
