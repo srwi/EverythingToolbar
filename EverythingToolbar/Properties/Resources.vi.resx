@@ -121,61 +121,61 @@
     <value>License</value>
   </data>
   <data name="AboutOK" xml:space="preserve">
-    <value>OK</value>
+    <value>Đồng Ý</value>
   </data>
   <data name="AboutVersion" xml:space="preserve">
-    <value>Version</value>
+    <value>Phiên bản</value>
   </data>
   <data name="AboutWebsite" xml:space="preserve">
-    <value>Website</value>
+    <value>Trang web</value>
   </data>
   <data name="AboutWindowTitle" xml:space="preserve">
-    <value>About EverythingToolbar</value>
+    <value>Về EverythingToolbar</value>
   </data>
   <data name="ContextMenuCopy" xml:space="preserve">
-    <value>Copy</value>
+    <value>Sao Chép</value>
   </data>
   <data name="ContextMenuCopyFile" xml:space="preserve">
-    <value>Copy</value>
+    <value>Sao Chép</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
     <value>Copy Full Name to Clipboard</value>
   </data>
   <data name="ContextMenuCut" xml:space="preserve">
-    <value>Cut</value>
+    <value>Cắt</value>
   </data>
   <data name="ContextMenuOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>Mở</value>
   </data>
   <data name="ContextMenuOpenPath" xml:space="preserve">
-    <value>Open Path</value>
+    <value>Mở đường dẫn</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
-    <value>Show more options</value>
+    <value>Hiển thị thêm tùy chọn</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
-    <value>Open with...</value>
+    <value>Mở bằng...</value>
   </data>
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
-    <value>Choose app</value>
+    <value>Chọn ứng dụng</value>
   </data>
   <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
     <value>No rules defined</value>
   </data>
   <data name="ContextMenuPaste" xml:space="preserve">
-    <value>Paste</value>
+    <value>Dán</value>
   </data>
   <data name="ContextMenuProperties" xml:space="preserve">
-    <value>Properties</value>
+    <value>Thuộc tính</value>
   </data>
   <data name="ContextMenuRunAsAdmin" xml:space="preserve">
-    <value>Run as admin</value>
+    <value>Chạy với quyền admin</value>
   </data>
   <data name="ContextMenuShowInEverything" xml:space="preserve">
     <value>Show in Everything</value>
   </data>
   <data name="DefaultFilterAll" xml:space="preserve">
-    <value>All</value>
+    <value>Tất cả</value>
   </data>
   <data name="DefaultFilterFile" xml:space="preserve">
     <value>File</value>
@@ -214,25 +214,25 @@
     <value>Error</value>
   </data>
   <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
-    <value>Failed to copy file.</value>
+    <value>Sao chép tệp tin thất bại.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
-    <value>Failed to copy path.</value>
+    <value>Sao chép đường dẫn tệp tin thất bại.</value>
   </data>
   <data name="MessageBoxFailedToOpen" xml:space="preserve">
     <value>Failed to open search result.</value>
   </data>
   <data name="MessageBoxFailedToOpenDialog" xml:space="preserve">
-    <value>Failed to open dialog.</value>
+    <value>Mở hộp thoại thất bại.</value>
   </data>
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
-    <value>Failed to open path.</value>
+    <value>Mở đường dẫn thất bại.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Failed to register hotkey. It might be in use by another application.</value>
+    <value>Đăng ký phím thất bại. Có vẻ như nút đó đã được sử dụng bởi chương trình khác.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
-    <value>Failed to run command</value>
+    <value>Chạy lệnh thất bại</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
     <value>To utilize this sorting method it has to have fast sorting enabled. It can be enabled in your Everything settings.</value>
@@ -253,7 +253,7 @@
     <value>Please select the Filters.csv file. By default it can be found in %APPDATA%\Everything. Its location might be different depending on your installation. If the file does not exist for you that means you didn't perform any changes to Everything's default filters.</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
-    <value>Filters.csv not found</value>
+    <value>Không tìm thấy Filters.csv</value>
   </data>
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Unhandled exception occured</value>
@@ -262,7 +262,7 @@
     <value>Automatically apply rules based on condition</value>
   </data>
   <data name="RulesCancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Hủy bỏ</value>
   </data>
   <data name="RulesCommand" xml:space="preserve">
     <value>Command</value>
@@ -445,13 +445,13 @@
     <value>Type name descending</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Tối</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>Light</value>
+    <value>Sáng</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
-    <value>Audio</value>
+    <value>Âm thanh</value>
   </data>
   <data name="UserFilterCompressed" xml:space="preserve">
     <value>Compressed</value>
