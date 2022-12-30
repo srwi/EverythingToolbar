@@ -298,8 +298,8 @@ namespace EverythingToolbar
         {
             dragStart = PointToScreen(Mouse.GetPosition(this));
 
-            var item = (sender as Border).DataContext;
-            SearchResultsListView.SelectedIndex = SearchResultsListView.Items.IndexOf(item);
+            //var item = (sender as Border).DataContext;
+            //SearchResultsListView.SelectedIndex = SearchResultsListView.Items.IndexOf(item);
         }
 
         private void OnListViewItemMouseMove(object sender, MouseEventArgs e)

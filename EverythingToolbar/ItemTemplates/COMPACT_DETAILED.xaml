@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:EverythingToolbar;assembly=EverythingToolbar">
-    <DataTemplate x:Key="searchResultsListTemplate">
+    
+    <DataTemplate x:Key="SearchResultsViewTemplate">
         <Grid x:Name="ListViewItem" Margin="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -42,4 +43,5 @@
                        Text="{Binding DateModified}" />
         </Grid>
     </DataTemplate>
+    
 </ResourceDictionary>

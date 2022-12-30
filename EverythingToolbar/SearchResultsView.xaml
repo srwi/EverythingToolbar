@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-             xmlns:local="clr-namespace:EverythingToolbar"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:h="clr-namespace:EverythingToolbar.Helpers"
@@ -11,243 +10,81 @@
              d:DesignWidth="300"
              d:DesignHeight="300">
     <UserControl.Resources>
-        <ContextMenu x:Key="ListViewItemContextMenu"
-                     Opened="OnContextMenuOpened">
-            <i:Interaction.Behaviors>
-                <h:DpiScaling x:Name="dpiScaling" />
-            </i:Interaction.Behaviors>
+        <ResourceDictionary>
 
-            <ContextMenu.Resources>
-                <ResourceDictionary Source="Styles/ContextMenu.xaml" />
-            </ContextMenu.Resources>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/ListViewItem.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-            <MenuItem Header="{x:Static properties:Resources.ContextMenuOpen}"
-                      Click="Open"
-                      FontWeight="Bold" />
-            <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenPath}"
-                      Click="OpenFilePath"
-                      Icon="&#xE838;" />
-            <MenuItem x:Name="OpenAsAdminMenuItem"
-                      Header="{x:Static properties:Resources.ContextMenuRunAsAdmin}"
-                      Click="RunAsAdmin"
-                      Icon="&#xE7EF;" />
-            <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWith}"
-                      Loaded="OnOpenWithMenuLoaded"
-                      Icon="&#xE7AC;">
-                <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWithNoRules}"
-                          IsEnabled="False" />
+            <ContextMenu x:Key="ListViewItemContextMenu"
+                         Opened="OnContextMenuOpened">
+                <i:Interaction.Behaviors>
+                    <h:DpiScaling x:Name="dpiScaling" />
+                </i:Interaction.Behaviors>
+
+                <ContextMenu.Resources>
+                    <ResourceDictionary Source="Styles/ContextMenu.xaml" />
+                </ContextMenu.Resources>
+
+                <MenuItem Header="{x:Static properties:Resources.ContextMenuOpen}"
+                          Click="Open"
+                          FontWeight="Bold" />
+                <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenPath}"
+                          Click="OpenFilePath"
+                          Icon="&#xE838;" />
+                <MenuItem x:Name="OpenAsAdminMenuItem"
+                          Header="{x:Static properties:Resources.ContextMenuRunAsAdmin}"
+                          Click="RunAsAdmin"
+                          Icon="&#xE7EF;" />
+                <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWith}"
+                          Loaded="OnOpenWithMenuLoaded"
+                          Icon="&#xE7AC;">
+                    <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWithNoRules}"
+                              IsEnabled="False" />
+                    <Separator />
+                    <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWithChooseApp}"
+                              Click="OpenWith" />
+                </MenuItem>
+                <MenuItem Header="{x:Static properties:Resources.ContextMenuShowInEverything}"
+                          Click="ShowInEverything"
+                          Icon="&#xF78B;" />
                 <Separator />
-                <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWithChooseApp}"
-                          Click="OpenWith" />
-            </MenuItem>
-            <MenuItem Header="{x:Static properties:Resources.ContextMenuShowInEverything}"
-                      Click="ShowInEverything"
-                      Icon="&#xF78B;" />
-            <Separator />
-            <MenuItem Header="{x:Static properties:Resources.ContextMenuCopyFullName}"
-                      Click="CopyPathToClipBoard" />
-            <MenuItem Header="{x:Static properties:Resources.ContextMenuCopyFile}"
-                      Click="CopyFile"
-                      Icon="&#xE8C8;" />
-            <MenuItem Header="{x:Static properties:Resources.ContextMenuProperties}"
-                      Click="ShowFileProperties" />
-            <Separator />
-            <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWinContext}" Click="ShowFileWindowsContexMenu" Icon="&#xE712;" />
-        </ContextMenu>
+                <MenuItem Header="{x:Static properties:Resources.ContextMenuCopyFullName}"
+                          Click="CopyPathToClipBoard" />
+                <MenuItem Header="{x:Static properties:Resources.ContextMenuCopyFile}"
+                          Click="CopyFile"
+                          Icon="&#xE8C8;" />
+                <MenuItem Header="{x:Static properties:Resources.ContextMenuProperties}"
+                          Click="ShowFileProperties" />
+                <Separator />
+                <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWinContext}"
+                          Click="ShowFileWindowsContexMenu"
+                          Icon="&#xE712;" />
+            </ContextMenu>
 
-        <Style TargetType="{x:Type ListViewItem}">
-            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="Open" />
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="Padding" Value="4, 1" />
-            <Setter Property="Margin" Value="{Binding Converter={local:Win10or11Converter}, ConverterParameter='0;28,0,16,0'}" />
-            <Setter Property="ContextMenu" Value="{StaticResource ListViewItemContextMenu}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListViewItem}">
-                        <Border x:Name="Bd"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="0"
-                                Background="{TemplateBinding Background}"
-                                Padding="0"
-                                CornerRadius="{Binding Converter={local:Win10or11Converter}, ConverterParameter=0;3}"
-                                SnapsToDevicePixels="True"
-                                PreviewMouseDown="OnListViewItemClicked"
-                                MouseMove="OnListViewItemMouseMove">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver"
-                                               Value="True" />
-                                </MultiTrigger.Conditions>
-                                <Setter Property="Background"
-                                        TargetName="Bd"
-                                        Value="{DynamicResource SearchResultBackgroundHover}" />
-                            </MultiTrigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelectionActive"
-                                               Value="False" />
-                                    <Condition Property="IsSelected"
-                                               Value="True" />
-                                </MultiTrigger.Conditions>
-                                <Setter Property="Background"
-                                        TargetName="Bd"
-                                        Value="{DynamicResource SearchResultBackgroundActive}" />
-                            </MultiTrigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelectionActive"
-                                               Value="True" />
-                                    <Condition Property="IsSelected"
-                                               Value="True" />
-                                </MultiTrigger.Conditions>
-                                <Setter Property="Background"
-                                        TargetName="Bd"
-                                        Value="{DynamicResource SearchResultBackgroundActive}" />
-                            </MultiTrigger>
-                            <Trigger Property="IsEnabled"
-                                     Value="False">
-                                <Setter Property="TextElement.Foreground"
-                                        TargetName="Bd"
-                                        Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+            <Style TargetType="{x:Type ListViewItem}"
+                   BasedOn="{StaticResource ListViewItemStyle}">
+                <EventSetter Event="PreviewMouseLeftButtonUp"
+                             Handler="Open" />
+                <EventSetter Event="PreviewMouseDown"
+                             Handler="OnListViewItemClicked" />
+                <EventSetter Event="MouseMove"
+                             Handler="OnListViewItemMouseMove" />
+                <Setter Property="ContextMenu"
+                        Value="{StaticResource ListViewItemContextMenu}" />
+            </Style>
 
-
-        <Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="OverridesDefaultStyle" Value="True" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type RepeatButton}">
-                        <Border x:Name="Border" CornerRadius="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}"
-                                Background="{DynamicResource ScrollbarButtonBackground}">
-                            <Path x:Name="Arrow"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  Data="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
-                                  Fill="{DynamicResource ScrollbarButtonForeground}">
-                            </Path>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{DynamicResource ScrollbarButtonBackgroundHover}" TargetName="Border" />
-                                <Setter Property="Fill" Value="{DynamicResource ScrollbarButtonForegroundHover}" TargetName="Arrow" />
-                            </Trigger>
-                            <Trigger Property="IsMouseCaptureWithin" Value="True">
-                                <Setter Property="Background" Value="{DynamicResource ScrollbarButtonBackgroundActive}" TargetName="Border" />
-                                <Setter Property="Fill" Value="{DynamicResource ScrollbarButtonForegroundActive}" TargetName="Arrow" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="ScrollBarPageButton" TargetType="{x:Type RepeatButton}">
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="OverridesDefaultStyle" Value="True" />
-            <Setter Property="IsTabStop" Value="False" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type RepeatButton}">
-                        <Border Background="{DynamicResource ScrollbarBackground}" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="OverridesDefaultStyle" Value="True" />
-            <Setter Property="IsTabStop" Value="False" />
-            <Setter Property="Width" Value="12" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Thumb}">
-                        <Border Padding="3, 0" Background="{DynamicResource ScrollbarBackground}">
-                            <Border x:Name="tb" Background="{DynamicResource ScrollbarThumbBackground}" CornerRadius="3" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{DynamicResource ScrollbarThumbBackgroundHover}" TargetName="tb" />
-                            </Trigger>
-                            <Trigger Property="IsMouseCaptureWithin" Value="True">
-                                <Setter Property="Background" Value="{DynamicResource ScrollbarThumbBackgroundActive}" TargetName="tb" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition MaxHeight="15" />
-                    <RowDefinition Height="0.00001*" />
-                    <RowDefinition MaxHeight="15" />
-                </Grid.RowDefinitions>
-                <RepeatButton Grid.Row="0"
-                              Style="{StaticResource ScrollBarLineButton}"
-                              Height="15"
-                              Tag="6, 6, 0, 0"
-                              Command="ScrollBar.LineUpCommand"
-                              Content="M 0 6 L 8 6 L 8 4 L 5 0 L 3 0 L 0 4 Z" />
-                <Track x:Name="PART_Track"
-                       Grid.Row="1"
-                       IsDirectionReversed="True">
-                    <Track.DecreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource ScrollBarPageButton}"
-                                      Command="ScrollBar.PageUpCommand" />
-                    </Track.DecreaseRepeatButton>
-                    <Track.Thumb>
-                        <Thumb Style="{StaticResource ScrollBarThumb}" />
-                    </Track.Thumb>
-                    <Track.IncreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource ScrollBarPageButton}"
-                                      Command="ScrollBar.PageDownCommand" />
-                    </Track.IncreaseRepeatButton>
-                </Track>
-                <RepeatButton Grid.Row="2"
-                              Style="{StaticResource ScrollBarLineButton}"
-                              Height="15"
-                              Tag="0, 0, 6, 6"
-                              Command="ScrollBar.LineDownCommand"
-                              Content="M 0 0 L 8 0 L 8 2 L 5 6 L 3 6 L 0 2 Z" />
-            </Grid>
-        </ControlTemplate>
-
-        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="OverridesDefaultStyle" Value="True" />
-            <Setter Property="Width" Value="12" />
-            <Setter Property="Height" Value="Auto" />
-            <Setter Property="Template" Value="{StaticResource VerticalScrollBar}" />
-        </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <ListView Name="SearchResultsListView"
               BorderThickness="0"
               HorizontalContentAlignment="Stretch"
               Background="{DynamicResource SearchResultsViewBackground}"
-              ItemTemplate="{DynamicResource searchResultsListTemplate}"
+              ItemTemplate="{DynamicResource SearchResultsViewTemplate}"
               ScrollViewer.ScrollChanged="OnScrollChanged"
               ScrollViewer.VerticalScrollBarVisibility="Visible"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-        <ListView.Resources>
-            <Style TargetType="{x:Type Border}">
-                <Setter Property="CornerRadius" Value="{Binding Converter={local:Win10or11Converter}, ConverterParameter=0;8}"/>
-            </Style>
-        </ListView.Resources>
     </ListView>
-        
+
 </UserControl>
