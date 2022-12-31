@@ -71,22 +71,26 @@ namespace EverythingToolbar
             }
             if ((Modifiers & ModifierKeys.Windows) != 0)
             {
-                shortcutText.Append(shortcutText.Length > 0 ? "+" : "");
+                if (shortcutText.Length > 0)
+                    shortcutText.Append("+");
                 shortcutText.Append(Properties.Resources.KeyWin);
             }
             if ((Modifiers & ModifierKeys.Alt) != 0)
             {
-                shortcutText.Append(shortcutText.Length > 0 ? "+" : "");
+                if (shortcutText.Length > 0)
+                    shortcutText.Append("+");
                 shortcutText.Append(Properties.Resources.KeyAlt);
             }
             if ((Modifiers & ModifierKeys.Shift) != 0)
             {
-                shortcutText.Append(shortcutText.Length > 0 ? "+" : "");
+                if (shortcutText.Length > 0)
+                    shortcutText.Append("+");
                 shortcutText.Append(Properties.Resources.KeyShift);
             }
             if (Key != Key.None)
             {
-                shortcutText.Append(shortcutText.Length > 0 ? "+" : "");
+                if (shortcutText.Length > 0)
+                    shortcutText.Append("+");
                 shortcutText.Append(Key.ToString());
             }
 

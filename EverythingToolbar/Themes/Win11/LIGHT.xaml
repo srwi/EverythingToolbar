@@ -33,6 +33,11 @@
     <SolidColorBrush x:Key="TabForeground" Color="#1B1B1B" />
     <SolidColorBrush x:Key="TabForegroundHover" Color="#000000" />
     <SolidColorBrush x:Key="TabForegroundActive" Color="#ffffff" />
+    
+    <SolidColorBrush x:Key="TabBarButtonBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="TabBarButtonBackgroundHover" Color="#88333333" />
+    <SolidColorBrush x:Key="TabBarButtonBackgroundActive" Color="#bb333333" />
+    
     <SolidColorBrush x:Key="TabBorder" Color="#eeeeee" />
     <SolidColorBrush x:Key="TabBorderActive" Color="#0067C0" />
     <SolidColorBrush x:Key="TabBarBorder" Color="Transparent" />

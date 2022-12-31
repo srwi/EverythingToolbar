@@ -14,7 +14,6 @@ namespace EverythingToolbar
         private readonly ResourceLoader themes = new ResourceLoader("Themes", Properties.Resources.SettingsTheme);
         private readonly ResourceLoader itemTemplates = new ResourceLoader("ItemTemplates", Properties.Resources.SettingsView);
 
-
         public SettingsControl()
         {
             InitializeComponent();
@@ -46,19 +45,14 @@ namespace EverythingToolbar
             ApplicationResources.Instance.SyncTheme();
         }
 
-
         private void OpenAboutWindow(object sender, RoutedEventArgs e)
         {
-            EverythingSearch.Instance.Reset();
-
             Window about = new About();
             about.Show();
         }
 
         private void OpenRulesWindow(object sender, RoutedEventArgs e)
         {
-            EverythingSearch.Instance.Reset();
-
             Window rules = new Rules();
             rules.Show();
         }
@@ -77,8 +71,6 @@ namespace EverythingToolbar
 
         private void OpenShortcutWindow(object sender, RoutedEventArgs e)
         {
-            EverythingSearch.Instance.Reset();
-
             ShortcutSelector shortcutSelector = new ShortcutSelector();
             if (shortcutSelector.ShowDialog().Value)
             {
@@ -106,11 +98,6 @@ namespace EverythingToolbar
                         MessageBoxImage.Error);
                 }
             }
-        }
-
-        private void OnMenuItemClicked(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.Save();
         }
 
         private void OnSortByClicked(object sender, RoutedEventArgs e)
@@ -180,10 +167,11 @@ namespace EverythingToolbar
             ApplicationResources.Instance.ApplyItemTemplate(itemChecked.Tag.ToString());
         }
 
-        private void OnMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OnClick(object sender, RoutedEventArgs e)
         {
             e.Handled = true;
 
+            // Simulate right mouse button click to open context menu
             var mouseDownEvent =
                 new MouseButtonEventArgs(Mouse.PrimaryDevice,
                     Environment.TickCount,
@@ -192,7 +180,6 @@ namespace EverythingToolbar
                     RoutedEvent = Mouse.MouseUpEvent,
                     Source = this,
                 };
-
             InputManager.Current.ProcessInput(mouseDownEvent);
         }
     }
