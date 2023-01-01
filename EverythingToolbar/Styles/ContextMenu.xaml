@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:EverythingToolbar">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style TargetType="{x:Type MenuItem}">
         <Setter Property="Background" Value="{DynamicResource ContextMenuBackground}" />
@@ -14,8 +13,8 @@
                     <Border x:Name="Border"
                             Background="{TemplateBinding Background}"
                             Padding="5, 5, 5, 5"
-                            CornerRadius="{Binding Converter={local:Win10or11Converter}, ConverterParameter=0;5}"
-                            Margin="{Binding Converter={local:Win10or11Converter}, ConverterParameter='0;4,0'}">
+                            CornerRadius="{DynamicResource ContextMenuMenuItemCornerRadius}"
+                            Margin="{DynamicResource ContextMenuMenuItemMargin}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition x:Name="Col0" MinWidth="28" Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup" />
@@ -161,7 +160,7 @@
                             BorderBrush="{DynamicResource ContextMenuBorder}"
                             BorderThickness="1"
                             Padding="0, 4"
-                            CornerRadius="{Binding Converter={local:Win10or11Converter}, ConverterParameter=0;8}">
+                            CornerRadius="{DynamicResource ContextMenuCornerRadius}">
                         <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                     </Border>
                 </ControlTemplate>
