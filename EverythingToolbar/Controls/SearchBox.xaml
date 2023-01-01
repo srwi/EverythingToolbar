@@ -111,7 +111,7 @@
             </i:Interaction.Behaviors>
 
             <ContextMenu.Resources>
-                <ResourceDictionary Source="Styles/ContextMenu.xaml" />
+                <ResourceDictionary Source="../Styles/ContextMenu.xaml" />
             </ContextMenu.Resources>
 
             <MenuItem Header="{x:Static properties:Resources.SettingsRegularExpressions}"

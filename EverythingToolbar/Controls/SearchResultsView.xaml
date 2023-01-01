@@ -13,7 +13,7 @@
         <ResourceDictionary>
 
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/ListViewItem.xaml" />
+                <ResourceDictionary Source="../Styles/ListViewItem.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <ContextMenu x:Key="ListViewItemContextMenu"

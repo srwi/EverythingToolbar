@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="../../Styles/FilterSelector/TabControl.xaml" />
-        <ResourceDictionary Source="../../Styles/FilterSelector/TabComboBox.xaml" />
+        <ResourceDictionary Source="../../../Styles/FilterSelector/PillTabControl.xaml" />
+        <ResourceDictionary Source="../../../Styles/FilterSelector/PillComboBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

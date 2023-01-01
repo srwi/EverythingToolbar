@@ -7,7 +7,7 @@
       xmlns:local="clr-namespace:EverythingToolbar">
 
     <Grid.Resources>
-        <ResourceDictionary Source="Themes/Win11/TabBarButton.xaml" />
+        <ResourceDictionary Source="../Themes/Win11/Controls/TabBarButton.xaml" />
     </Grid.Resources>
 
     <Grid.ContextMenu>
@@ -17,7 +17,7 @@
             </i:Interaction.Behaviors>
 
             <ContextMenu.Resources>
-                <ResourceDictionary Source="Styles/ContextMenu.xaml" />
+                <ResourceDictionary Source="../Styles/ContextMenu.xaml" />
             </ContextMenu.Resources>
 
             <MenuItem IsCheckable="True"
