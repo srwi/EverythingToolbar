@@ -9,18 +9,18 @@
     <SolidColorBrush x:Key="ContextMenuItemForegroundHover" Color="#d8d8d8" />
     <SolidColorBrush x:Key="ContextMenuItemForegroundActive" Color="#d8d8d8" />
     <SolidColorBrush x:Key="ContextMenuBackground" Color="#303030" />
-    <SolidColorBrush x:Key="SearchBoxBackground" Color="#333333" />
-    <SolidColorBrush x:Key="SearchBoxBackgroundHover" Color="#3f3f3f" />
-    <SolidColorBrush x:Key="SearchBoxBackgroundActive" Color="#1b1b1b" />
-    <SolidColorBrush x:Key="SearchBoxForeground" Color="#dadada" />
-    <SolidColorBrush x:Key="SearchBoxForegroundHover" Color="#dadada" />
-    <SolidColorBrush x:Key="SearchBoxForegroundActive" Color="#dadada" />
-    <SolidColorBrush x:Key="SearchBoxWatermarkForeground" Color="#dadada" />
-    <SolidColorBrush x:Key="SearchBoxWatermarkForegroundHover" Color="#dadada" />
-    <SolidColorBrush x:Key="SearchBoxWatermarkForegroundActive" Color="#999999" />
-    <SolidColorBrush x:Key="SearchBoxBorder" Color="#5c5c5c" />
-    <SolidColorBrush x:Key="SearchBoxBorderHover" Color="#777777" />
-    <SolidColorBrush x:Key="SearchBoxBorderActive" Color="#5c5c5c" />
+    <SolidColorBrush x:Key="TextBoxBackground" Color="#333333" />
+    <SolidColorBrush x:Key="TextBoxBackgroundHover" Color="#3f3f3f" />
+    <SolidColorBrush x:Key="TextBoxBackgroundActive" Color="#1b1b1b" />
+    <SolidColorBrush x:Key="TextBoxForeground" Color="#dadada" />
+    <SolidColorBrush x:Key="TextBoxForegroundHover" Color="#dadada" />
+    <SolidColorBrush x:Key="TextBoxForegroundActive" Color="#dadada" />
+    <SolidColorBrush x:Key="TextBoxWatermarkForeground" Color="#dadada" />
+    <SolidColorBrush x:Key="TextBoxWatermarkForegroundHover" Color="#dadada" />
+    <SolidColorBrush x:Key="TextBoxWatermarkForegroundActive" Color="#999999" />
+    <SolidColorBrush x:Key="TextBoxBorder" Color="#5c5c5c" />
+    <SolidColorBrush x:Key="TextBoxBorderHover" Color="#777777" />
+    <SolidColorBrush x:Key="TextBoxBorderActive" Color="#5c5c5c" />
     <SolidColorBrush x:Key="SearchBoxLogo" Color="#ffffff" />
     <SolidColorBrush x:Key="SearchBoxLogoHover" Color="#ffffff" />
     <SolidColorBrush x:Key="SearchBoxLogoActive" Color="#ffffff" />

@@ -567,9 +567,9 @@ namespace EverythingToolbar.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Search with Everything.
         /// </summary>
-        public static string SearchBoxWatermark {
+        public static string TextBoxWatermark {
             get {
-                return ResourceManager.GetString("SearchBoxWatermark", resourceCulture);
+                return ResourceManager.GetString("TextBoxWatermark", resourceCulture);
             }
         }
         

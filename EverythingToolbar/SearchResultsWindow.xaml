@@ -23,11 +23,13 @@
 
     <Window.Resources>
         <ResourceDictionary>
+            <SolidColorBrush x:Key="AccentColor"
+                             Color="#4CC2FF" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/Win11/DARK.xaml" />
                 <ResourceDictionary Source="Themes/Win11/Controls/FilterSelector.xaml" />
                 <ResourceDictionary Source="Themes/Win11/Controls/TabBarButton.xaml" />
-                <ResourceDictionary Source="Styles/TextBox.xaml" />
+                <ResourceDictionary Source="Themes/Win11/Controls/TextBox.xaml" />
                 <ResourceDictionary Source="Styles/ScrollbarWin11.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

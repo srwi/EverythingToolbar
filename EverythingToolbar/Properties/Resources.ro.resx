@@ -285,7 +285,7 @@
   <data name="RulesWindowTitle" xml:space="preserve">
     <value>Expresie Regulată</value>
   </data>
-  <data name="SearchBoxWatermark" xml:space="preserve">
+  <data name="TextBoxWatermark" xml:space="preserve">
     <value>Salvare</value>
   </data>
   <data name="SearchResult" xml:space="preserve">

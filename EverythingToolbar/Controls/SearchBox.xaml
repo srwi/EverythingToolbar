@@ -10,7 +10,7 @@
         <Style x:Key="QuickSettingsToggleButton"
                TargetType="{x:Type ToggleButton}">
             <Setter Property="Foreground"
-                    Value="{DynamicResource SearchBoxForegroundActive}" />
+                    Value="{DynamicResource TextBoxForegroundActive}" />
             <Setter Property="Opacity"
                     Value="0.5" />
             <Setter Property="Template">
@@ -46,9 +46,9 @@
     <Grid>
         <TextBox Name="TextBox"
                  Padding="37, 0, 0, 0"
-                 Tag="{x:Static properties:Resources.SearchBoxWatermark}"
+                 Tag="{x:Static properties:Resources.TextBoxWatermark}"
                  Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 CaretBrush="{DynamicResource SearchBoxForegroundActive}"
+                 CaretBrush="{DynamicResource TextBoxForegroundActive}"
                  TextChanged="OnTextChanged"
                  LostKeyboardFocus="OnLostKeyboardFocus"
                  GotKeyboardFocus="OnGotKeyboardFocus"

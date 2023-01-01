@@ -11,7 +11,7 @@
         Loaded="OnLoaded"
         IsVisibleChanged="OnIsVisibleChanged"
         Style="{DynamicResource SearchButtonStyle}"
-        ToolTip="{x:Static properties:Resources.SearchBoxWatermark}"
+        ToolTip="{x:Static properties:Resources.TextBoxWatermark}"
         Foreground="Black">
     <Button.Resources>
         <Style x:Key="SearchButtonStyle" TargetType="{x:Type Button}">

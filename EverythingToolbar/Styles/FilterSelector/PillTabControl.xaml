@@ -55,10 +55,10 @@
                                     Value="{DynamicResource TabForegroundActive}" />
                             <Setter TargetName="Border"
                                     Property="Background"
-                                    Value="{DynamicResource TabBackgroundActive}" />
+                                    Value="{DynamicResource AccentColor}" />
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{DynamicResource TabBackgroundActive}" />
+                                    Value="{DynamicResource AccentColor}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
