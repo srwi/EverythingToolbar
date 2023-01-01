@@ -351,19 +351,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\FilterSelector\PillComboBox.xaml">
+    <Page Include="Styles\PillComboBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\FilterSelector\TabComboBox.xaml">
+    <Page Include="Styles\TabComboBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\FilterSelector\PillTabControl.xaml">
+    <Page Include="Styles\PillTabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\FilterSelector\TabControl.xaml">
+    <Page Include="Styles\TabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

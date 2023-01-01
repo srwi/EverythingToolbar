@@ -3,7 +3,6 @@
                     xmlns:Sys="clr-namespace:System;assembly=mscorlib">
 
     <Sys:Double x:Key="ScrollbarWidth">16</Sys:Double>
-    <!--<Sys:Double x:Key="ScrollbarThumbWidth">18</Sys:Double>-->
     <Sys:Double x:Key="ScrollbarThumbHeight">18</Sys:Double>
     <Thickness x:Key="ScrollbarThumbPadding" />
     <CornerRadius x:Key="ScrollbarThumbCornerRadius" />
