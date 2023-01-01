@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Thickness x:Key="ListViewItemMargin"
+               Left="28"
+               Top="0"
+               Right="16"
+               Bottom="0" />
+    <CornerRadius x:Key="ListViewItemCornerRadius"
+                  BottomLeft="3"
+                  BottomRight="3"
+                  TopRight="3"
+                  TopLeft="3" />
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../../Styles/ListViewItem.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>
