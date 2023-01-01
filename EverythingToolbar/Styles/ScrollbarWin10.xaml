@@ -6,9 +6,7 @@
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
         <Setter Property="OverridesDefaultStyle"
-                Value="true" />
-        <Setter Property="Focusable"
-                Value="false" />
+                Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
@@ -48,11 +46,9 @@
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
         <Setter Property="OverridesDefaultStyle"
-                Value="true" />
+                Value="True" />
         <Setter Property="IsTabStop"
-                Value="false" />
-        <Setter Property="Focusable"
-                Value="false" />
+                Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
@@ -65,13 +61,11 @@
     <Style x:Key="ScrollBarThumb"
            TargetType="{x:Type Thumb}">
         <Setter Property="SnapsToDevicePixels"
-                Value="true" />
+                Value="True" />
         <Setter Property="OverridesDefaultStyle"
-                Value="true" />
+                Value="True" />
         <Setter Property="IsTabStop"
-                Value="false" />
-        <Setter Property="Focusable"
-                Value="false" />
+                Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
@@ -114,7 +108,7 @@
                           Content="M 0 4 L 4 0 L 8 4" />
             <Track x:Name="PART_Track"
                    Grid.Row="1"
-                   IsDirectionReversed="true">
+                   IsDirectionReversed="True">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Style="{StaticResource ScrollBarPageButton}"
                                   Command="ScrollBar.PageUpCommand" />
@@ -142,7 +136,7 @@
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
         <Setter Property="OverridesDefaultStyle"
-                Value="true" />
+                Value="True" />
         <Setter Property="Width"
                 Value="18" />
         <Setter Property="Height"
