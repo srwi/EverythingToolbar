@@ -69,7 +69,7 @@
                             </Grid>
                         </Border>
                         <Border x:Name="SelectedIndicator"
-                                Background="{DynamicResource TabBorderActive}"
+                                Background="{DynamicResource AccentColor}"
                                 Height="4" />
                     </StackPanel>
                     <ControlTemplate.Triggers>
