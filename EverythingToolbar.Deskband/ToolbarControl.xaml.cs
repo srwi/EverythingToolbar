@@ -58,9 +58,9 @@ namespace EverythingToolbar
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            SearchResultsWindow.Instance.ShowActivated = false;
-            SearchResultsWindow.Instance.Show();
-            SearchResultsWindow.Instance.Hide();
+            SearchWindow.Instance.ShowActivated = false;
+            SearchWindow.Instance.Show();
+            SearchWindow.Instance.Hide();
         }
 
         public void Destroy()
@@ -88,7 +88,7 @@ namespace EverythingToolbar
 
         public void FocusSearchBox(object sender, HotkeyEventArgs e)
         {
-            if (SearchResultsWindow.Instance.IsOpen)
+            if (SearchWindow.Instance.IsOpen)
             {
                 EverythingSearch.Instance.SearchTerm = null;
             }

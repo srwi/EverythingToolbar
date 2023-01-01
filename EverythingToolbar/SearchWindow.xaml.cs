@@ -12,7 +12,7 @@ using System.Windows.Media.Animation;
 
 namespace EverythingToolbar
 {
-    public partial class SearchResultsWindow : Window
+    public partial class SearchWindow : Window
     {
         private const int GWL_STYLE = -16;
         private const int WS_SYSMENU = 0x80000;
@@ -91,9 +91,9 @@ namespace EverythingToolbar
             }
         }
 
-        public static readonly SearchResultsWindow Instance = new SearchResultsWindow();
+        public static readonly SearchWindow Instance = new SearchWindow();
 
-        private SearchResultsWindow()
+        private SearchWindow()
         {
             InitializeComponent();
             DataContext = EverythingSearch.Instance;
@@ -153,28 +153,6 @@ namespace EverythingToolbar
             {
                 Hide();
             }
-        }
-
-        private void OnDragStarted(object sender, DragStartedEventArgs e)
-        {
-            dragStartSize.Height = Height;
-            dragStartSize.Width = Width;
-            dragStartPosition = PointToScreen(Mouse.GetPosition(this));
-        }
-
-        private void OnDragDelta(object sender, DragDeltaEventArgs e)
-        {
-            Point mousePos = PointToScreen(Mouse.GetPosition(this));
-            int widthModifier = (sender as Thumb).HorizontalAlignment == HorizontalAlignment.Left ? -1 : 1;
-            int heightModifier = (sender as Thumb).VerticalAlignment == VerticalAlignment.Top ? -1 : 1;
-            Width = dragStartSize.Width + widthModifier * (mousePos.X - dragStartPosition.X);
-            Height = dragStartSize.Height + heightModifier * (mousePos.Y - dragStartPosition.Y);
-        }
-
-        private void OnDragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            Settings.Default.popupSize = new Size(Width, Height);
-            Settings.Default.Save();
         }
 
         private void OnOpened(object sender, EventArgs e)

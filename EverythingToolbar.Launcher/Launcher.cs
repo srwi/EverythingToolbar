@@ -95,12 +95,12 @@ namespace EverythingToolbar.Launcher
                 if (screen.WorkingArea.Y == taskbar.Y)
                 {
                     Top = taskbar.Height * 96.0 / currentDpi;
-                    SearchResultsWindow.taskbarEdge = CSDeskBand.Edge.Top;
+                    SearchWindow.taskbarEdge = CSDeskBand.Edge.Top;
                 }
                 else
                 {
                     Top = taskbar.Y * 96.0 / currentDpi;
-                    SearchResultsWindow.taskbarEdge = CSDeskBand.Edge.Bottom;
+                    SearchWindow.taskbarEdge = CSDeskBand.Edge.Bottom;
                 }
 
                 if (Utils.IsTaskbarCenterAligned())

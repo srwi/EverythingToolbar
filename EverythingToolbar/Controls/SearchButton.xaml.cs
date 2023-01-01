@@ -51,7 +51,7 @@ namespace EverythingToolbar
 
         private void OnClick(object sender, RoutedEventArgs e)
         {
-            if (SearchResultsWindow.Instance.IsOpen)
+            if (SearchWindow.Instance.IsOpen)
                 EventDispatcher.Instance.InvokeHideWindow();
             else
                 EventDispatcher.Instance.InvokeShowWindow();

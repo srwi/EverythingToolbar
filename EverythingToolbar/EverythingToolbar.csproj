@@ -75,7 +75,6 @@
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\NotConverter.cs" />
-    <Compile Include="Converters\Win10or11Converter.cs" />
     <Compile Include="Converters\SearchResultsCountConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\ResourceLoaderToMenuItemsConverter.cs" />
@@ -243,8 +242,8 @@
     <Compile Include="Controls\SearchButton.xaml.cs">
       <DependentUpon>SearchButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchResultsWindow.xaml.cs">
-      <DependentUpon>SearchResultsWindow.xaml</DependentUpon>
+    <Compile Include="SearchWindow.xaml.cs">
+      <DependentUpon>SearchWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SearchResultsView.xaml.cs">
       <DependentUpon>SearchResultsView.xaml</DependentUpon>
@@ -295,7 +294,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SearchResultsWindow.xaml">
+    <Page Include="SearchWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -324,6 +323,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Win10\Controls\Scrollbar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Win10\Controls\SearchWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -420,6 +423,10 @@
     <Page Include="Themes\Win11\Controls\TabBarButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Win11\Controls\SearchWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
