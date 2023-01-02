@@ -27,6 +27,7 @@ namespace EverythingToolbar
             if (e.PropertyName == "isRegExEnabled" || e.PropertyName == "CurrentFilter")
             {
                 bool newEnabledState = !Properties.Settings.Default.isRegExEnabled && EverythingSearch.Instance.CurrentFilter.IsMatchWholeWord == null;
+                IsMatchWholeWordMenuItem.IsEnabled = newEnabledState;
                 IsMatchWholeWordButton.IsEnabled = newEnabledState;
             }
         }

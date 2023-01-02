@@ -1,9 +1,7 @@
 using EverythingToolbar.Helpers;
 using NHotkey;
 using System;
-using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -40,6 +38,9 @@ namespace EverythingToolbar
             ShortcutManager.Instance.SetFocusCallback(FocusSearchBox);
             if (Properties.Settings.Default.isReplaceStartMenuSearch)
                 ShortcutManager.Instance.HookStartMenu();
+
+            ResourceManager.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
+            ResourceManager.Instance.AutoApplyTheme();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

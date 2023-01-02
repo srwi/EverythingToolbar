@@ -57,7 +57,42 @@
                  TextChanged="OnTextChanged"
                  LostKeyboardFocus="OnLostKeyboardFocus"
                  GotKeyboardFocus="OnGotKeyboardFocus"
-                 PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton" />
+                 PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton">
+            <TextBox.ContextMenu>
+                <ContextMenu>
+                    <i:Interaction.Behaviors>
+                        <h:DpiScaling x:Name="dpiScaling" />
+                    </i:Interaction.Behaviors>
+
+                    <MenuItem Header="{x:Static properties:Resources.SettingsRegularExpressions}"
+                              IsCheckable="True"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}"
+                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, Mode=OneWay}" />
+                    <MenuItem Header="{x:Static properties:Resources.SettingsMatchCase}"
+                              IsCheckable="True"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase, Mode=TwoWay}"
+                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, Mode=OneWay}" />
+                    <MenuItem Header="{x:Static properties:Resources.SettingsMatchPath}"
+                              IsCheckable="True"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath, Mode=TwoWay}"
+                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, Mode=OneWay}" />
+                    <MenuItem Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
+                              IsCheckable="True"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}"
+                              Name="IsMatchWholeWordMenuItem" />
+                    <Separator />
+                    <MenuItem Header="{x:Static properties:Resources.ContextMenuCut}"
+                              Click="OnCutClicked"
+                              Icon="&#xE8C6;" />
+                    <MenuItem Header="{x:Static properties:Resources.ContextMenuCopy}"
+                              Click="OnCopyClicked"
+                              Icon="&#xE8C8;" />
+                    <MenuItem Header="{x:Static properties:Resources.ContextMenuPaste}"
+                              Click="OnPasteClicked"
+                              Icon="&#xE77F;" />
+                </ContextMenu>
+            </TextBox.ContextMenu>
+        </TextBox>
 
         <Path Stroke="{DynamicResource SearchBoxLogo}"
               IsHitTestVisible="False"
@@ -112,62 +147,5 @@
         </Border>
 
     </Grid>
-
-    <UserControl.ContextMenu>
-        <ContextMenu>
-            <i:Interaction.Behaviors>
-                <h:DpiScaling x:Name="dpiScaling" />
-            </i:Interaction.Behaviors>
-
-            <MenuItem Header="{x:Static properties:Resources.SettingsRegularExpressions}"
-                      IsCheckable="True"
-                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}"
-                      IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, Mode=OneWay}" />
-            <MenuItem Header="{x:Static properties:Resources.SettingsMatchCase}"
-                      IsCheckable="True"
-                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase, Mode=TwoWay}"
-                      IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, Mode=OneWay}" />
-            <MenuItem Header="{x:Static properties:Resources.SettingsMatchPath}"
-                      IsCheckable="True"
-                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath, Mode=TwoWay}"
-                      IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, Mode=OneWay}" />
-            <MenuItem Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
-                      IsCheckable="True"
-                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}">
-                <MenuItem.Style>
-                    <Style TargetType="{x:Type MenuItem}"
-                           BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchWholeWord, Mode=OneWay}"
-                                         Value="True">
-                                <Setter Property="IsEnabled"
-                                        Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchWholeWord, Mode=OneWay}"
-                                         Value="False">
-                                <Setter Property="IsEnabled"
-                                        Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=OneWay}"
-                                         Value="True">
-                                <Setter Property="IsEnabled"
-                                        Value="False" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </MenuItem.Style>
-            </MenuItem>
-            <Separator />
-            <MenuItem Header="{x:Static properties:Resources.ContextMenuCut}"
-                      Click="OnCutClicked"
-                      Icon="&#xE8C6;" />
-            <MenuItem Header="{x:Static properties:Resources.ContextMenuCopy}"
-                      Click="OnCopyClicked"
-                      Icon="&#xE8C8;" />
-            <MenuItem Header="{x:Static properties:Resources.ContextMenuPaste}"
-                      Click="OnPasteClicked"
-                      Icon="&#xE77F;" />
-        </ContextMenu>
-    </UserControl.ContextMenu>
 
 </UserControl>
