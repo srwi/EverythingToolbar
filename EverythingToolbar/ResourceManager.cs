@@ -74,8 +74,8 @@ namespace EverythingToolbar
             string themeFileName = isLightTheme ? "Light.xaml" : "Dark.xaml";
             AddResource(Path.Combine(themeLocation, themeFileName));
 
-            // Apply DataTemplate style
-            string dataTemplateLocation = Path.Combine(assemblyLocation, "DataTemplates", Properties.Settings.Default.itemTemplate + ".xaml");
+            // Apply ItemTemplate style
+            string dataTemplateLocation = Path.Combine(assemblyLocation, "ItemTemplates", Properties.Settings.Default.itemTemplate + ".xaml");
             AddResource(dataTemplateLocation);
 
             // Notify resource change

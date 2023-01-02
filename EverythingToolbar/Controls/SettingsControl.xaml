@@ -122,18 +122,18 @@
             </MenuItem>
             <Separator />
             <MenuItem Header="{x:Static properties:Resources.SettingsView}"
-                      Name="DataTemplateMenu">
+                      Name="ItemTemplateMenu">
                 <MenuItem Header="{x:Static properties:Resources.ItemTemplateCompact}"
-                          Click="OnDataTemplateClicked"
+                          Click="OnItemTemplateClicked"
                           Tag="Compact" />
                 <MenuItem Header="{x:Static properties:Resources.ItemTemplateCompactDetailed}"
-                          Click="OnDataTemplateClicked"
+                          Click="OnItemTemplateClicked"
                           Tag="CompactDetailed" />
                 <MenuItem Header="{x:Static properties:Resources.ItemTemplateNormal}"
-                          Click="OnDataTemplateClicked"
+                          Click="OnItemTemplateClicked"
                           Tag="Normal" />
                 <MenuItem Header="{x:Static properties:Resources.ItemTemplateNormalDetailed}"
-                          Click="OnDataTemplateClicked"
+                          Click="OnItemTemplateClicked"
                           Tag="NormalDetailed" />
             </MenuItem>
             <Separator />

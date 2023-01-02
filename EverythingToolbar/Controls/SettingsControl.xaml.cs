@@ -19,9 +19,9 @@ namespace EverythingToolbar
             (SortByMenu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
 
             // Preselect active datatemplate
-            for (int i = 0; i < DataTemplateMenu.Items.Count; i++)
+            for (int i = 0; i < ItemTemplateMenu.Items.Count; i++)
             {
-                MenuItem menuItem = DataTemplateMenu.Items[i] as MenuItem;
+                MenuItem menuItem = ItemTemplateMenu.Items[i] as MenuItem;
                 if (menuItem.Tag.ToString() == Properties.Settings.Default.itemTemplate)
                     menuItem.IsChecked = true;
                 else
@@ -123,7 +123,7 @@ namespace EverythingToolbar
             (menu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
         }
 
-        private void OnDataTemplateClicked(object sender, RoutedEventArgs e)
+        private void OnItemTemplateClicked(object sender, RoutedEventArgs e)
         {
             var selectedItem = sender as MenuItem;
             var menu = selectedItem.Parent as MenuItem;
