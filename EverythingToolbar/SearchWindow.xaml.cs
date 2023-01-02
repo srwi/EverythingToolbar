@@ -60,8 +60,6 @@ namespace EverythingToolbar
         public static double taskbarHeight = 0;
         public static double taskbarWidth = 0;
         public bool IsOpen = false;
-        Size dragStartSize = new Size();
-        Point dragStartPosition = new Point();
         
         public new double Height
         {
@@ -101,33 +99,24 @@ namespace EverythingToolbar
             if (Settings.Default.isUpgradeRequired)
             {
                 Settings.Default.Upgrade();
-
-                if (Settings.Default.theme == "MEDIUM")
-                    Settings.Default.theme = "DARK";
-
                 Settings.Default.isUpgradeRequired = false;
                 Settings.Default.Save();
             }
-
-            ApplicationResources.Instance.ResourceChanged += (object sender, ResourcesChangedEventArgs e) =>
-            {
-                try
-                {
-                    Resources.MergedDictionaries.Add(e.NewResource);
-                    Settings.Default.Save();
-                }
-                catch (Exception ex)
-                {
-                    ToolbarLogger.GetLogger("EverythingToolbar").Error(ex, "Failed to apply resource.");
-                }
-            };
-            ApplicationResources.Instance.LoadDefaults();
+            Settings.Default.PropertyChanged += (s, e) => Settings.Default.Save();
 
             LostKeyboardFocus += OnLostKeyboardFocus;
             EventDispatcher.Instance.HideWindow += Hide;
             EventDispatcher.Instance.ShowWindow += Show;
 
+            ResourceManager.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
+            ResourceManager.Instance.AutoApplyTheme();
+
             Loaded += Window_Loaded;
+        }
+
+        private void OnResourcesChanged(object sender, ResourcesChangedEventArgs e)
+        {
+            Resources = e.NewResource;
         }
 
         public new void Hide()

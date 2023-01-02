@@ -39,6 +39,11 @@
                     <Setter Property="Opacity"
                             Value="1" />
                 </Trigger>
+                <Trigger Property="IsEnabled"
+                         Value="False">
+                    <Setter Property="Opacity"
+                            Value="0.2" />
+                </Trigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
@@ -78,10 +83,12 @@
                 <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
                               ToolTip="{x:Static properties:Resources.SettingsMatchCase}"
                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase}"
+                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, Mode=OneWay}"
                               Content="Aa" />
                 <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
                               ToolTip="{x:Static properties:Resources.SettingsMatchWholeWord}"
-                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord}">
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord}"
+                              Name="IsMatchWholeWordButton">
                     <TextBlock TextDecorations="Underline,OverLine"
                                Text="Abl"
                                FontSize="11"
@@ -91,11 +98,13 @@
                 <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
                               ToolTip="{x:Static properties:Resources.SettingsMatchPath}"
                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath}"
+                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, Mode=OneWay}"
                               Content="..\"
                               Margin="0, -2, 0, 1" />
                 <ToggleButton Style="{StaticResource QuickSettingsToggleButton}"
                               ToolTip="{x:Static properties:Resources.SettingsRegularExpressions}"
                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled}"
+                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, Mode=OneWay}"
                               Content=".*"
                               TextBlock.FontWeight="Bold"
                               Margin="-2, 0, 4, 2" />
@@ -110,9 +119,9 @@
                 <h:DpiScaling x:Name="dpiScaling" />
             </i:Interaction.Behaviors>
 
-            <ContextMenu.Resources>
+            <!--<ContextMenu.Resources>
                 <ResourceDictionary Source="../Themes/Win11/Controls/ContextMenu.xaml" />
-            </ContextMenu.Resources>
+            </ContextMenu.Resources>-->
 
             <MenuItem Header="{x:Static properties:Resources.SettingsRegularExpressions}"
                       IsCheckable="True"

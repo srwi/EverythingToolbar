@@ -27,7 +27,7 @@
       <Value Profile="(Default)">DARK</Value>
     </Setting>
     <Setting Name="itemTemplate" Type="System.String" Scope="User">
-      <Value Profile="(Default)">NORMAL</Value>
+      <Value Profile="(Default)">Normal</Value>
     </Setting>
     <Setting Name="isAutoApplyRules" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

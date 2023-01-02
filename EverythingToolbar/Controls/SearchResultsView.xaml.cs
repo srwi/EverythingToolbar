@@ -23,6 +23,31 @@ namespace EverythingToolbar
             SearchResultsListView.ItemsSource = EverythingSearch.Instance.SearchResults;
             ((INotifyCollectionChanged)SearchResultsListView.Items).CollectionChanged += OnCollectionChanged;
             EventDispatcher.Instance.KeyPressed += OnKeyPressed;
+
+            // Mouse events must be added to the ItemContainerStyle each time it gets updated
+            Loaded += (s, e) =>
+            {
+                RegisterItemContainerStyleEvents(s, null);
+                ResourceManager.Instance.ResourceChanged += RegisterItemContainerStyleEvents;
+            };
+        }
+
+        private void RegisterItemContainerStyleEvents(object sender, ResourcesChangedEventArgs e)
+        {
+            EventSetter mouseUp = new EventSetter();
+            mouseUp.Event = PreviewMouseLeftButtonUpEvent;
+            mouseUp.Handler = new MouseButtonEventHandler(Open);
+            SearchResultsListView.ItemContainerStyle.Setters.Add(mouseUp);
+
+            EventSetter mouseDown = new EventSetter();
+            mouseDown.Event = PreviewMouseDownEvent;
+            mouseDown.Handler = new MouseButtonEventHandler(OnListViewItemMouseDown);
+            SearchResultsListView.ItemContainerStyle.Setters.Add(mouseDown);
+
+            EventSetter mouseMove = new EventSetter();
+            mouseMove.Event = MouseMoveEvent;
+            mouseMove.Handler = new MouseEventHandler(OnListViewItemMouseMove);
+            SearchResultsListView.ItemContainerStyle.Setters.Add(mouseMove);
         }
 
         private void OnKeyPressed(object sender, KeyEventArgs e)
@@ -294,17 +319,14 @@ namespace EverythingToolbar
             Rules.HandleRule(searchResult, command);
         }
 
-        private void OnListViewItemClicked(object sender, MouseButtonEventArgs e)
+        private void OnListViewItemMouseDown(object sender, MouseButtonEventArgs e)
         {
             dragStart = PointToScreen(Mouse.GetPosition(this));
-
-            //var item = (sender as Border).DataContext;
-            //SearchResultsListView.SelectedIndex = SearchResultsListView.Items.IndexOf(item);
         }
 
         private void OnListViewItemMouseMove(object sender, MouseEventArgs e)
         {
-            Vector diff = dragStart - PointToScreen(Mouse.GetPosition(this));
+            var diff = dragStart - PointToScreen(Mouse.GetPosition(this));
 
             if (e.LeftButton == MouseButtonState.Pressed &&
                 (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||

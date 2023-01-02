@@ -11,38 +11,36 @@ namespace EverythingToolbar
 {
     public partial class SettingsControl : Grid
     {
-        private readonly ResourceLoader themes = new ResourceLoader("Themes", Properties.Resources.SettingsTheme);
-        private readonly ResourceLoader itemTemplates = new ResourceLoader("ItemTemplates", Properties.Resources.SettingsView);
-
         public SettingsControl()
         {
             InitializeComponent();
 
-            Binding themeMenuBinding = new Binding()
-            {
-                Converter = new ResourceLoaderToMenuItemsConverter(),
-                ConverterParameter = "theme",
-                Source = themes.Resources
-            };
-            ThemeMenu.SetBinding(ItemsControl.ItemsSourceProperty, themeMenuBinding);
-            Binding itemTemplateMenuBinding = new Binding()
-            {
-                Converter = new ResourceLoaderToMenuItemsConverter(),
-                ConverterParameter = "itemTemplate",
-                Source = itemTemplates.Resources
-            };
-            ItemTemplateMenu.SetBinding(ItemsControl.ItemsSourceProperty, itemTemplateMenuBinding);
-
+            // Preselect sorting method
             (SortByMenu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
 
-            Properties.Settings.Default.PropertyChanged += (obj, args) =>
+            // Preselect active datatemplate
+            for (int i = 0; i < DataTemplateMenu.Items.Count; i++)
             {
-                if (args.PropertyName == "isSyncThemeEnabled")
-                {
-                    ApplicationResources.Instance.SyncTheme();
-                }
-            };
-            ApplicationResources.Instance.SyncTheme();
+                MenuItem menuItem = DataTemplateMenu.Items[i] as MenuItem;
+                if (menuItem.Tag.ToString() == Properties.Settings.Default.itemTemplate)
+                    menuItem.IsChecked = true;
+                else
+                    menuItem.IsChecked = false;
+            }
+
+            // IsEnabled property of matchWholeWord menu item needs to be handled
+            // in code because DataTriggers are not compatible with DynamicResources as MenuItem styles
+            Properties.Settings.Default.PropertyChanged += OnSettingsChanged;
+            EverythingSearch.Instance.PropertyChanged += OnSettingsChanged;
+        }
+
+        private void OnSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "isRegExEnabled" || e.PropertyName == "CurrentFilter")
+            {
+                bool newEnabledState = !Properties.Settings.Default.isRegExEnabled && EverythingSearch.Instance.CurrentFilter.IsMatchWholeWord == null;
+                IsMatchWholeWordMenuItem.IsEnabled = newEnabledState;
+            }
         }
 
         private void OpenAboutWindow(object sender, RoutedEventArgs e)
@@ -59,12 +57,11 @@ namespace EverythingToolbar
 
         private void OpenInstanceNameDialog(object sender, RoutedEventArgs e)
         {
-            var inputDialog = new InputDialog(Properties.Resources.SettingsSetInstanceName, Properties.Settings.Default.instanceName);
+            var inputDialog = new InputDialog(Properties.Resources.SettingsSetInstanceName,
+                                              Properties.Settings.Default.instanceName);
             if (inputDialog.ShowDialog() == true)
             {
                 Properties.Settings.Default.instanceName = inputDialog.ResponseText;
-                Properties.Settings.Default.Save();
-
                 EverythingSearch.Instance.SetInstanceName(Properties.Settings.Default.instanceName);
             }
         }
@@ -102,8 +99,8 @@ namespace EverythingToolbar
 
         private void OnSortByClicked(object sender, RoutedEventArgs e)
         {
-            MenuItem selectedItem = (MenuItem)sender;
-            MenuItem menu = (MenuItem)selectedItem.Parent;
+            var selectedItem = sender as MenuItem;
+            var menu = selectedItem.Parent as MenuItem;
             int selectedIndex = menu.Items.IndexOf(selectedItem);
 
             (menu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = false;
@@ -124,47 +121,26 @@ namespace EverythingToolbar
             }
 
             (menu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
-            Properties.Settings.Default.Save();
         }
 
-        private void OnThemeClicked(object sender, RoutedEventArgs e)
+        private void OnDataTemplateClicked(object sender, RoutedEventArgs e)
         {
-            MenuItem itemChecked = (MenuItem)e.OriginalSource;
-            MenuItem itemParent = (MenuItem)sender;
+            var selectedItem = sender as MenuItem;
+            var menu = selectedItem.Parent as MenuItem;
 
-            for (int i = 0; i < itemParent.Items.Count; i++)
+            for (int i = 0; i < menu.Items.Count; i++)
             {
-                if (itemParent.Items[i] == itemChecked)
+                var menuItem = menu.Items[i] as MenuItem;
+                if (menuItem == selectedItem)
                 {
-                    (itemParent.Items[i] as MenuItem).IsChecked = true;
-                    Properties.Settings.Default.theme = itemChecked.Tag.ToString();
-                    continue;
+                    menuItem.IsChecked = true;
+                    Properties.Settings.Default.itemTemplate = selectedItem.Tag.ToString();
                 }
-
-                (itemParent.Items[i] as MenuItem).IsChecked = false;
-            }
-
-            ApplicationResources.Instance.ApplyTheme(itemChecked.Tag.ToString());
-        }
-
-        private void OnItemTemplateClicked(object sender, RoutedEventArgs e)
-        {
-            MenuItem itemChecked = (MenuItem)e.OriginalSource;
-            MenuItem itemParent = (MenuItem)sender;
-
-            for (int i = 0; i < itemParent.Items.Count; i++)
-            {
-                if (itemParent.Items[i] == itemChecked)
+                else
                 {
-                    (itemParent.Items[i] as MenuItem).IsChecked = true;
-                    Properties.Settings.Default.itemTemplate = itemChecked.Tag.ToString();
-                    continue;
+                    menuItem.IsChecked = false;
                 }
-
-                (itemParent.Items[i] as MenuItem).IsChecked = false;
             }
-
-            ApplicationResources.Instance.ApplyItemTemplate(itemChecked.Tag.ToString());
         }
 
         private void OnClick(object sender, RoutedEventArgs e)

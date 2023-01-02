@@ -12,19 +12,11 @@
     <UserControl.Resources>
         <ResourceDictionary>
 
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Themes/Win11/Controls/ListViewItem.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
             <ContextMenu x:Key="ListViewItemContextMenu"
                          Opened="OnContextMenuOpened">
                 <i:Interaction.Behaviors>
                     <h:DpiScaling x:Name="dpiScaling" />
                 </i:Interaction.Behaviors>
-
-                <ContextMenu.Resources>
-                    <ResourceDictionary Source="../Themes/Win11/Controls/ContextMenu.xaml" />
-                </ContextMenu.Resources>
 
                 <MenuItem Header="{x:Static properties:Resources.ContextMenuOpen}"
                           Click="Open"
@@ -62,18 +54,6 @@
                           Icon="&#xE712;" />
             </ContextMenu>
 
-            <Style TargetType="{x:Type ListViewItem}"
-                   BasedOn="{StaticResource ListViewItemStyle}">
-                <EventSetter Event="PreviewMouseLeftButtonUp"
-                             Handler="Open" />
-                <EventSetter Event="PreviewMouseDown"
-                             Handler="OnListViewItemClicked" />
-                <EventSetter Event="MouseMove"
-                             Handler="OnListViewItemMouseMove" />
-                <Setter Property="ContextMenu"
-                        Value="{StaticResource ListViewItemContextMenu}" />
-            </Style>
-
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -82,6 +62,7 @@
               HorizontalContentAlignment="Stretch"
               Background="{DynamicResource SearchResultsViewBackground}"
               ItemTemplate="{DynamicResource SearchResultsViewTemplate}"
+              ItemContainerStyle="{DynamicResource ListViewItemStyle}"
               ScrollViewer.ScrollChanged="OnScrollChanged"
               ScrollViewer.VerticalScrollBarVisibility="Visible"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled">

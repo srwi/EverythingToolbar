@@ -19,20 +19,6 @@ namespace EverythingToolbar
 
             Loaded += OnLoaded;
 
-            ApplicationResources.Instance.ResourceChanged += (object sender, ResourcesChangedEventArgs e) =>
-            {
-                try
-                {
-                    Resources.MergedDictionaries.Add(e.NewResource);
-                    Properties.Settings.Default.Save();
-                }
-                catch (Exception ex)
-                {
-                    ToolbarLogger.GetLogger("EverythingToolbar").Error(ex, "Failed to apply resource.");
-                }
-            };
-            ApplicationResources.Instance.LoadDefaults();
-
             SearchBox.LostKeyboardFocus += (object sender, KeyboardFocusChangedEventArgs e) =>
             {
                 Keyboard.Focus(KeyboardFocusCapture);

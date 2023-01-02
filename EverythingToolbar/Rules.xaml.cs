@@ -36,7 +36,6 @@ namespace EverythingToolbar
             if(SaveRules(rules, (bool)autoApplyRulesCheckbox.IsChecked))
             {
                 Properties.Settings.Default.isAutoApplyRules = (bool)autoApplyRulesCheckbox.IsChecked;
-                Properties.Settings.Default.Save();
                 Close();
             }
         }

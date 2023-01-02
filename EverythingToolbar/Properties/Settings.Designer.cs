@@ -121,7 +121,7 @@ namespace EverythingToolbar.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("NORMAL")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Normal")]
         public string itemTemplate {
             get {
                 return ((string)(this["itemTemplate"]));

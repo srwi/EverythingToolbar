@@ -206,12 +206,10 @@ namespace EverythingToolbar.Helpers
                     {
                         Properties.Settings.Default.filtersPath = openFileDialog.FileName;
                         CreateFileWatcher();
-                        Properties.Settings.Default.Save();
                     }
                     else
                     {
                         Properties.Settings.Default.isImportFilters = false;
-                        Properties.Settings.Default.Save();
                         return DefaultUserFilters;
                     }
                 }

@@ -6,9 +6,9 @@
       xmlns:h="clr-namespace:EverythingToolbar.Helpers"
       xmlns:local="clr-namespace:EverythingToolbar">
 
-    <Grid.Resources>
+    <!--<Grid.Resources>
         <ResourceDictionary Source="../Themes/Win11/Controls/TabBarButton.xaml" />
-    </Grid.Resources>
+    </Grid.Resources>-->
 
     <Grid.ContextMenu>
         <ContextMenu>
@@ -16,9 +16,9 @@
                 <h:DpiScaling x:Name="dpiScaling" />
             </i:Interaction.Behaviors>
 
-            <ContextMenu.Resources>
+            <!--<ContextMenu.Resources>
                 <ResourceDictionary Source="../Themes/Win11/Controls/ContextMenu.xaml" />
-            </ContextMenu.Resources>
+            </ContextMenu.Resources>-->
 
             <MenuItem IsCheckable="True"
                       Header="{x:Static properties:Resources.SettingsRegularExpressions}"
@@ -34,29 +34,8 @@
                       IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, Mode=OneWay}" />
             <MenuItem IsCheckable="True"
                       Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
-                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}">
-                <MenuItem.Style>
-                    <Style TargetType="{x:Type MenuItem}"
-                           BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchWholeWord, Mode=OneWay}"
-                                         Value="True">
-                                <Setter Property="IsEnabled"
-                                        Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchWholeWord, Mode=OneWay}"
-                                         Value="False">
-                                <Setter Property="IsEnabled"
-                                        Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=OneWay}"
-                                         Value="True">
-                                <Setter Property="IsEnabled"
-                                        Value="False" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </MenuItem.Style>
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}"
+                      Name="IsMatchWholeWordMenuItem">
             </MenuItem>
             <Separator />
             <MenuItem Header="{x:Static properties:Resources.SettingsSortBy}"
@@ -143,15 +122,20 @@
             </MenuItem>
             <Separator />
             <MenuItem Header="{x:Static properties:Resources.SettingsView}"
-                      Name="ItemTemplateMenu"
-                      Click="OnItemTemplateClicked" />
-            <MenuItem Header="{x:Static properties:Resources.SettingsTheme}"
-                      Name="ThemeMenu"
-                      Click="OnThemeClicked"
-                      IsEnabled="{Binding Source={x:Static properties:Settings.Default}, Path=isSyncThemeEnabled, Converter={local:NotConverter}, Mode=OneWay}" />
-            <MenuItem IsCheckable="True"
-                      Header="{x:Static properties:Resources.SettingsThemeAuto}"
-                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isSyncThemeEnabled, Mode=TwoWay}" />
+                      Name="DataTemplateMenu">
+                <MenuItem Header="{x:Static properties:Resources.ItemTemplateCompact}"
+                          Click="OnDataTemplateClicked"
+                          Tag="Compact" />
+                <MenuItem Header="{x:Static properties:Resources.ItemTemplateCompactDetailed}"
+                          Click="OnDataTemplateClicked"
+                          Tag="CompactDetailed" />
+                <MenuItem Header="{x:Static properties:Resources.ItemTemplateNormal}"
+                          Click="OnDataTemplateClicked"
+                          Tag="Normal" />
+                <MenuItem Header="{x:Static properties:Resources.ItemTemplateNormalDetailed}"
+                          Click="OnDataTemplateClicked"
+                          Tag="NormalDetailed" />
+            </MenuItem>
             <Separator />
             <MenuItem Header="{x:Static properties:Resources.SettingsPreferences}"
                       Icon="&#xF8B0;">
@@ -203,6 +187,6 @@
     <Button Content="⋯"
             Click="OnClick"
             FontSize="14pt"
-            Style="{StaticResource TabBarButtonStyle}" />
+            Style="{DynamicResource TabBarButtonStyle}" />
 
 </Grid>

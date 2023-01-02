@@ -86,7 +86,7 @@ Leaving the regular expression field empty will never match.
 Customization
 -------------
 
-- Edit an existing theme/item template or create a new one in the `Themes` / `ItemTemplates` folder
+- Edit an existing theme/item template or create a new one in the `Themes` / `DataTemplates` folder
 - Restart Windows Explorer via the task manager
 - Select theme/item template from settings
 

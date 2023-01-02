@@ -320,7 +320,6 @@ namespace EverythingToolbar
             if (Properties.Settings.Default.isRememberFilter)
             {
                 Properties.Settings.Default.lastFilter = CurrentFilter.Name;
-                Properties.Settings.Default.Save();
             }
             else
             {
@@ -370,7 +369,6 @@ namespace EverythingToolbar
                     if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
                         Properties.Settings.Default.everythingPath = openFileDialog.FileName;
-                        Properties.Settings.Default.Save();
                     }
                     else
                     {

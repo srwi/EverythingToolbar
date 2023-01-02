@@ -1,6 +1,4 @@
-﻿using EverythingToolbar.Helpers;
-using System;
-using System.Windows;
+﻿using System.Windows;
 
 namespace EverythingToolbar.Debug
 {
@@ -10,11 +8,8 @@ namespace EverythingToolbar.Debug
         {
             InitializeComponent();
 
-            ApplicationResources.Instance.ResourceChanged += (object sender, ResourcesChangedEventArgs e) =>
-            {
-                Resources.MergedDictionaries.Add(e.NewResource);
-            };
-            ApplicationResources.Instance.LoadDefaults();
+            ResourceManager.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
+            ResourceManager.Instance.AutoApplyTheme();
         }
     }
 }

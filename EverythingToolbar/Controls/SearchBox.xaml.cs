@@ -15,6 +15,20 @@ namespace EverythingToolbar
 
             DataContext = EverythingSearch.Instance;
             InputMethod.SetPreferredImeState(this, InputMethodState.DoNotCare);
+
+            // IsEnabled property of matchWholeWord button needs to be handled
+            // in code because DataTriggers are not compatible with DynamicResources as MenuItem styles
+            Properties.Settings.Default.PropertyChanged += OnSettingsChanged;
+            EverythingSearch.Instance.PropertyChanged += OnSettingsChanged;
+        }
+
+        private void OnSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "isRegExEnabled" || e.PropertyName == "CurrentFilter")
+            {
+                bool newEnabledState = !Properties.Settings.Default.isRegExEnabled && EverythingSearch.Instance.CurrentFilter.IsMatchWholeWord == null;
+                IsMatchWholeWordButton.IsEnabled = newEnabledState;
+            }
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)

@@ -80,7 +80,6 @@ namespace EverythingToolbar.Helpers
         {
             Properties.Settings.Default.shortcutKey = (int)key;
             Properties.Settings.Default.shortcutModifiers = (int)mods;
-            Properties.Settings.Default.Save();
         }
 
         public void CaptureKeyboard(EventHandler<WinKeyEventArgs> callback)

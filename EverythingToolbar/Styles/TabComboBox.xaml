@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:properties="clr-namespace:EverythingToolbar.Properties">
+                    xmlns:properties="clr-namespace:EverythingToolbar.Properties;assembly=EverythingToolbar">
 
     <Style TargetType="{x:Type ComboBox}">
         <Setter Property="Background"
@@ -69,7 +69,7 @@
                             </Grid>
                         </Border>
                         <Border x:Name="SelectedIndicator"
-                                Background="{DynamicResource AccentColor}"
+                                Background="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}"
                                 Height="4" />
                     </StackPanel>
                     <ControlTemplate.Triggers>
