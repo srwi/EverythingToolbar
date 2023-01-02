@@ -8,7 +8,7 @@
         <Setter Property="Background"
                 Value="{DynamicResource TabBarButtonBackground}" />
         <Setter Property="Padding"
-                Value="10, 0, 10, 4" />
+                Value="10, 0, 10, 0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">

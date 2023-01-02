@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <CornerRadius x:Key="TabBarButtonCornerRadius"
-                  TopLeft="3"
-                  TopRight="3"
-                  BottomRight="3"
-                  BottomLeft="3" />
+                  TopLeft="4"
+                  TopRight="4"
+                  BottomRight="4"
+                  BottomLeft="4" />
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../../Styles/TabBarButton.xaml" />

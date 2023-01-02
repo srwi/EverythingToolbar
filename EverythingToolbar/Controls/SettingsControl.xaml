@@ -2,23 +2,14 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:h="clr-namespace:EverythingToolbar.Helpers"
       xmlns:local="clr-namespace:EverythingToolbar">
-
-    <!--<Grid.Resources>
-        <ResourceDictionary Source="../Themes/Win11/Controls/TabBarButton.xaml" />
-    </Grid.Resources>-->
 
     <Grid.ContextMenu>
         <ContextMenu>
             <i:Interaction.Behaviors>
                 <h:DpiScaling x:Name="dpiScaling" />
             </i:Interaction.Behaviors>
-
-            <!--<ContextMenu.Resources>
-                <ResourceDictionary Source="../Themes/Win11/Controls/ContextMenu.xaml" />
-            </ContextMenu.Resources>-->
 
             <MenuItem IsCheckable="True"
                       Header="{x:Static properties:Resources.SettingsRegularExpressions}"
@@ -187,6 +178,7 @@
     <Button Content="⋯"
             Click="OnClick"
             FontSize="14pt"
-            Style="{DynamicResource TabBarButtonStyle}" />
+            Style="{DynamicResource TabBarButtonStyle}"
+            Padding="10, 0, 10, 4" />
 
 </Grid>
