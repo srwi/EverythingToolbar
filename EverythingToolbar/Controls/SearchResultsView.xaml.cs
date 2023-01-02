@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -24,30 +25,36 @@ namespace EverythingToolbar
             ((INotifyCollectionChanged)SearchResultsListView.Items).CollectionChanged += OnCollectionChanged;
             EventDispatcher.Instance.KeyPressed += OnKeyPressed;
 
-            // Mouse events must be added to the ItemContainerStyle each time it gets updated
+            // Mouse events and context menu must be added to the ItemContainerStyle each time it gets updated
             Loaded += (s, e) =>
             {
-                RegisterItemContainerStyleEvents(s, null);
-                ResourceManager.Instance.ResourceChanged += RegisterItemContainerStyleEvents;
+                RegisterItemContainerStyleProperties(s, null);
+                ResourceManager.Instance.ResourceChanged += RegisterItemContainerStyleProperties;
             };
         }
 
-        private void RegisterItemContainerStyleEvents(object sender, ResourcesChangedEventArgs e)
+        private void RegisterItemContainerStyleProperties(object sender, ResourcesChangedEventArgs e)
         {
-            EventSetter mouseUp = new EventSetter();
-            mouseUp.Event = PreviewMouseLeftButtonUpEvent;
-            mouseUp.Handler = new MouseButtonEventHandler(Open);
-            SearchResultsListView.ItemContainerStyle.Setters.Add(mouseUp);
-
-            EventSetter mouseDown = new EventSetter();
-            mouseDown.Event = PreviewMouseDownEvent;
-            mouseDown.Handler = new MouseButtonEventHandler(OnListViewItemMouseDown);
-            SearchResultsListView.ItemContainerStyle.Setters.Add(mouseDown);
-
-            EventSetter mouseMove = new EventSetter();
-            mouseMove.Event = MouseMoveEvent;
-            mouseMove.Handler = new MouseEventHandler(OnListViewItemMouseMove);
-            SearchResultsListView.ItemContainerStyle.Setters.Add(mouseMove);
+            SearchResultsListView.ItemContainerStyle.Setters.Add(new EventSetter
+            {
+                Event = PreviewMouseLeftButtonUpEvent,
+                Handler = new MouseButtonEventHandler(Open)
+            });
+            SearchResultsListView.ItemContainerStyle.Setters.Add(new EventSetter
+            {
+                Event = PreviewMouseDownEvent,
+                Handler = new MouseButtonEventHandler(OnListViewItemMouseDown)
+            });
+            SearchResultsListView.ItemContainerStyle.Setters.Add(new EventSetter
+            {
+                Event = MouseMoveEvent,
+                Handler = new MouseEventHandler(OnListViewItemMouseMove)
+            });
+            SearchResultsListView.ItemContainerStyle.Setters.Add(new Setter()
+            {
+                Property = ContextMenuProperty,
+                Value = new Binding() { Source = Resources["ListViewItemContextMenu"] }
+            });
         }
 
         private void OnKeyPressed(object sender, KeyEventArgs e)
