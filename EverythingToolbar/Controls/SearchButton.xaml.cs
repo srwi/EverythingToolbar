@@ -1,9 +1,6 @@
 ﻿using EverythingToolbar.Helpers;
-using Microsoft.Win32;
-using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace EverythingToolbar
@@ -14,39 +11,44 @@ namespace EverythingToolbar
         {
             InitializeComponent();
 
-            SystemEvents.UserPreferenceChanged += OnUserPreferenceChanged;
+            ResourceManager.Instance.ResourceChanged += UpdateTheme;
+            EventDispatcher.Instance.ShowWindow += OnWindowShown;
+            EventDispatcher.Instance.HideWindow += OnWindowHidden;
         }
 
-        private void OnUserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
+        private void OnWindowHidden()
         {
-            if (e.Category == UserPreferenceCategory.General)
-                UpdateTheme();
+            Border border = Template.FindName("OuterBorder", this) as Border;
+            border.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        private void OnWindowShown()
         {
-            UpdateTheme();
+            Border border = Template.FindName("OuterBorder", this) as Border;
+            border.Background = new SolidColorBrush(Color.FromArgb(64, 255, 255, 255));
         }
 
-        private void UpdateTheme()
+        private void UpdateTheme(Theme newTheme)
         {
-            bool systemUsesLightTheme;
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"))
-            {
-                object registryValueObject = key?.GetValue("SystemUsesLightTheme");
-                systemUsesLightTheme = registryValueObject != null && (int)registryValueObject > 0;
-            }
-
-            if (systemUsesLightTheme)
+            Border border = Template.FindName("OuterBorder", this) as Border;
+            if (newTheme == Theme.Light)
             {
                 Foreground = new SolidColorBrush(Colors.Black);
-                (Template.FindName("OuterBorder", this) as Border).Opacity = 0.55;
+                border.Opacity = 0.55;
             }
             else
             {
                 Foreground = new SolidColorBrush(Colors.White);
-                (Template.FindName("OuterBorder", this) as Border).Opacity = 0.2;
+                border.Opacity = 0.2;
             }
+        }
+
+        private void UpdateTheme(object sender, ResourcesChangedEventArgs e)
+        {
+            if (IsLoaded)
+                UpdateTheme(e.NewTheme);
+            else
+                Loaded += (s, e_) => { UpdateTheme(e.NewTheme); };
         }
 
         private void OnClick(object sender, RoutedEventArgs e)

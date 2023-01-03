@@ -119,14 +119,14 @@ namespace EverythingToolbar
             Resources = e.NewResource;
         }
 
-        public new void Hide()
+        private new void Hide()
         {
             IsOpen = false;
             HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
             base.Hide();
         }
 
-        public new void Show()
+        private new void Show()
         {
             if (!IsOpen)
                 OnOpened(null, null);
@@ -140,7 +140,7 @@ namespace EverythingToolbar
         {
             if (e.NewFocus == null)  // New focus outside application
             {
-                Hide();
+                EventDispatcher.Instance.InvokeHideWindow();
             }
         }
 

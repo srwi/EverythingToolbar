@@ -8,11 +8,9 @@
         d:DesignHeight="40"
         d:DesignWidth="50"
         Click="OnClick"
-        Loaded="OnLoaded"
         IsVisibleChanged="OnIsVisibleChanged"
         Style="{DynamicResource SearchButtonStyle}"
-        ToolTip="{x:Static properties:Resources.TextBoxWatermark}"
-        Foreground="Black">
+        ToolTip="{x:Static properties:Resources.TextBoxWatermark}">
     <Button.Resources>
         <Style x:Key="SearchButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Template">
@@ -38,14 +36,6 @@
                             </Path>
                         </Grid>
                         <ControlTemplate.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=SearchResultsPopup,
-                                                           Path=IsOpen,
-                                                           Mode=OneWay}"
-                                         Value="True">
-                                <Setter Property="Background"
-                                        TargetName="OuterBorder"
-                                        Value="#40ffffff"/>
-                            </DataTrigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter Property="Background" TargetName="OuterBorder" Value="#40ffffff"/>
                             </Trigger>

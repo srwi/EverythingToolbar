@@ -7,9 +7,16 @@ using System.Windows;
 
 namespace EverythingToolbar
 {
+    public enum Theme
+    {
+        Dark,
+        Light
+    }
+
     public class ResourcesChangedEventArgs : EventArgs
     {
         public ResourceDictionary NewResource { get; set; }
+        public Theme NewTheme { get; set; }
     }
 
     public class ResourceManager
@@ -87,7 +94,8 @@ namespace EverythingToolbar
             // Notify resource change
             ResourceChanged?.Invoke(this, new ResourcesChangedEventArgs()
             {
-                NewResource = CurrentResources
+                NewResource = CurrentResources,
+                NewTheme = isLightTheme ? Theme.Light : Theme.Dark
             });
         }
 
