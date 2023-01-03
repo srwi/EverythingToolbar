@@ -317,41 +317,51 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Page Include="Themes\Win10\Controls\ContextMenu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Themes\Win10\Controls\ListViewItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Themes\Win10\Controls\Scrollbar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Themes\Win10\Controls\SearchWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Themes\Win10\Controls\TabBarButton.xaml">
+    <Content Include="Styles\QuickSettingsToggle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Themes\Win10\Controls\TextBox.xaml">
+    </Content>
+    <Content Include="Themes\Win10\Controls\ContextMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Themes\Win10\Light.xaml">
+    </Content>
+    <Content Include="Themes\Win10\Controls\ListViewItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
+    </Content>
+    <Content Include="Themes\Win10\Controls\Scrollbar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Win10\Controls\SearchWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Win10\Controls\QuickSettingsToggle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Win10\Controls\TabBarButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Win10\Controls\TextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Win10\Light.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Page Include="Controls\SettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -385,11 +395,11 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Page Include="Themes\Win10\Dark.xaml">
+    <Content Include="Themes\Win10\Dark.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
+    </Content>
     <Compile Include="Data\SearchResult.cs" />
     <Compile Include="Converters\HighlightedTextConverter.cs" />
     <Compile Include="Properties\Settings.cs" />
@@ -400,11 +410,11 @@
     <Compile Include="ShortcutSelector.xaml.cs">
       <DependentUpon>ShortcutSelector.xaml</DependentUpon>
     </Compile>
-    <Page Include="Themes\Win10\Controls\FilterSelector.xaml">
+    <Content Include="Themes\Win10\Controls\FilterSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
+    </Content>
     <Content Include="Styles\TabBarButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -453,6 +463,11 @@
     <Content Include="Themes\Win11\Controls\SearchWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Win11\Controls\QuickSettingsToggle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
