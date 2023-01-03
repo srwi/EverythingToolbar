@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
 
 namespace EverythingToolbar
@@ -17,6 +18,7 @@ namespace EverythingToolbar
         public event EventHandler<ResourcesChangedEventArgs> ResourceChanged;
         
         private static ResourceDictionary CurrentResources;
+        private readonly SynchronizationContext uiThreadContext;
         private readonly RegistryEntry systemThemeRegistryEntry = new RegistryEntry("HKEY_CURRENT_USER", @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme");
         private readonly RegistryWatcher systemThemeWatcher = null;
 
@@ -30,10 +32,14 @@ namespace EverythingToolbar
                 systemThemeWatcher = null;
             }
 
+            // Store UI thread SynchronizationContext so that the RegistryWatcher can later use it to access the UI thread
+            uiThreadContext = SynchronizationContext.Current;
             systemThemeWatcher = new RegistryWatcher(systemThemeRegistryEntry);
             systemThemeWatcher.OnChangeValue += (newValue) =>
             {
-                ApplyTheme((int)newValue == 1);
+                uiThreadContext.Post(state => {
+                    ApplyTheme((int)newValue == 1);
+                }, null);
             };
 
             Properties.Settings.Default.PropertyChanged += OnSettingsChanged;
