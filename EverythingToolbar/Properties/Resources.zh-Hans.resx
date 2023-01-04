@@ -334,13 +334,13 @@
     <value>规则...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>设置实例名称...</value>
+    <value>设置实例名称……</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>显示快速开关</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>显示结果计数</value>
+    <value>显示结果数</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>排序</value>
