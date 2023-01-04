@@ -130,7 +130,7 @@
     <value>退出</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>运行设置助手...</value>
+    <value>运行设置助手……</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
     <value>要将 EverythingToolbar 固定到任务栏，右键单击它的图标并点击“固定到任务栏”。</value>
