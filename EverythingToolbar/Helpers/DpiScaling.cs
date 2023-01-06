@@ -10,7 +10,6 @@ namespace EverythingToolbar.Helpers
 {
     public class DpiScaling : Behavior<FrameworkElement>
     {
-        // Requires Windows 10 Anniversary Update
         [DllImport("user32")]
         static extern uint GetDpiForWindow(IntPtr hWnd);
 
@@ -36,8 +35,6 @@ namespace EverythingToolbar.Helpers
 
         public static readonly DependencyProperty InitialDpiProperty
             = DependencyProperty.Register(nameof(InitialDpi), typeof(double), typeof(DpiScaling), new PropertyMetadata(96.0));
-
-        private static readonly Version Win10Anniversary = new Version(10, 0, 14393);
 
         public double CurrentDpi
         {
@@ -74,7 +71,7 @@ namespace EverythingToolbar.Helpers
 
         private static double GetParentWindowDpi(Visual visual)
         {
-            if (Environment.OSVersion.Version.CompareTo(Win10Anniversary) < 0)
+            if (Environment.OSVersion.Version < Utils.WindowsVersion.Windows10Anniversary)
             {
                 return 96.0;
             }
@@ -85,6 +82,7 @@ namespace EverythingToolbar.Helpers
                 return 96.0;
             }
 
+            // Requires Windows 10 Anniversary Update
             return GetDpiForWindow(hwnd.Handle);
         }
 
@@ -133,7 +131,7 @@ namespace EverythingToolbar.Helpers
                     handled = true;
                     break;
                 case WM_DPICHANGED_AFTERPARENT:
-                    // Used for the toolbar since we don't receive WM_DPICHANGED messages there.
+                    // Used for the toolbar since we don't receive WM_DPICHANGED messages there
                     UpdateDpi(GetParentWindowDpi(AssociatedObject));
                     handled = true;
                     break;

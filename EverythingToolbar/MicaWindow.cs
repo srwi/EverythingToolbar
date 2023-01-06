@@ -28,7 +28,7 @@ namespace EverythingToolbar
 
         public MicaWindow()
         {
-            if (Helpers.Utils.IsWindows11)
+            if (Environment.OSVersion.Version >= Helpers.Utils.WindowsVersion.Windows11)
                 Loaded += OnMicaWindowLoaded;
         }
 

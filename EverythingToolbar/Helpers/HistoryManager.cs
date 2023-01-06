@@ -9,10 +9,12 @@ namespace EverythingToolbar.Helpers
 {
     public class HistoryManager
     {
-        private string historyPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "EverythingToolbar", "history.xml");
-        private const int MAX_HISTORY_SIZE = 50;
+        private static readonly string HISTORY_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                                                                   "EverythingToolbar",
+                                                                   "history.xml");
+        private static readonly int MAX_HISTORY_SIZE = 50;
         private int currentIndex;
-        private int maxHistoryCount;
+        private int currentHistorySize;
         private List<string> history = new List<string>(MAX_HISTORY_SIZE);
 
         public static HistoryManager Instance = new HistoryManager();
@@ -21,7 +23,7 @@ namespace EverythingToolbar.Helpers
         {
             history = LoadHistory();
             currentIndex = history.Count;
-            maxHistoryCount = Properties.Settings.Default.isEnableHistory ? MAX_HISTORY_SIZE : 0;
+            currentHistorySize = Properties.Settings.Default.isEnableHistory ? MAX_HISTORY_SIZE : 0;
             Properties.Settings.Default.PropertyChanged += OnSettingChanged;
         }
 
@@ -31,24 +33,24 @@ namespace EverythingToolbar.Helpers
             {
                 if (Properties.Settings.Default.isEnableHistory)
                 {
-                    maxHistoryCount = MAX_HISTORY_SIZE;
+                    currentHistorySize = MAX_HISTORY_SIZE;
                 }
                 else
                 {
-                    maxHistoryCount = 0;
-                    history.Clear();
+                    currentHistorySize = 0;
+                    ClearHistory();
                 }
             }
         }
 
         public List<string> LoadHistory()
         {
-            if (File.Exists(historyPath))
+            if (File.Exists(HISTORY_PATH))
             {
-                var serializer = new XmlSerializer(history.GetType());
                 try
                 {
-                    using (var reader = XmlReader.Create(historyPath))
+                    var serializer = new XmlSerializer(history.GetType());
+                    using (var reader = XmlReader.Create(HISTORY_PATH))
                     {
                         return (List<string>)serializer.Deserialize(reader);
                     }
@@ -66,9 +68,9 @@ namespace EverythingToolbar.Helpers
         {
             try
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(historyPath));
+                Directory.CreateDirectory(Path.GetDirectoryName(HISTORY_PATH));
                 var serializer = new XmlSerializer(history.GetType());
-                using (var writer = XmlWriter.Create(historyPath))
+                using (var writer = XmlWriter.Create(HISTORY_PATH))
                 {
                     serializer.Serialize(writer, history);
                 }
@@ -79,16 +81,22 @@ namespace EverythingToolbar.Helpers
             }
         }
 
+        public void ClearHistory()
+        {
+            history.Clear();
+            SaveHistory();
+        }
+
         public void AddToHistory(string searchTerm)
         {
             if (string.IsNullOrEmpty(searchTerm))
                 return;
 
-            if (history.Count > 0 && history.ElementAt(history.Count - 1) == searchTerm)
+            if (history.Count > 0 && history.Last() == searchTerm)
                 return;
 
             history.Add(searchTerm);
-            while (history.Count > maxHistoryCount)
+            while (history.Count > currentHistorySize)
                 history.RemoveAt(0);
             currentIndex = history.Count;
             SaveHistory();

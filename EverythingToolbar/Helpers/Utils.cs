@@ -6,21 +6,19 @@ namespace EverythingToolbar.Helpers
 {
     class Utils
     {
-        private static int buildNumber = -1;
+        public static class WindowsVersion
+        {
+            public static Version Windows10 = new Version(10, 0, 10240);
+            public static Version Windows10Anniversary = new Version(10, 0, 14393);
+            public static Version Windows11 = new Version(10, 0, 22000);
+        }
+
+        // Property can be removed once start menu replacement is implemented in Windows 11
         public static bool IsWindows11
         {
             get
             {
-                if (buildNumber == -1)
-                {
-                    using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows NT\CurrentVersion"))
-                    {
-                        object currentBuildNumber = key?.GetValue("CurrentBuildNumber");
-                        buildNumber = Convert.ToInt32(currentBuildNumber);
-                    }
-                }
-
-                return buildNumber >= 22000;
+                return Environment.OSVersion.Version >= WindowsVersion.Windows11;
             }
         }
 

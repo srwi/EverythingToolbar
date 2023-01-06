@@ -73,7 +73,7 @@ namespace EverythingToolbar
             string assemblyLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             string themeLocation = assemblyLocation;
-            if (Utils.IsWindows11)
+            if (Environment.OSVersion.Version >= Utils.WindowsVersion.Windows11)
                 themeLocation = Path.Combine(themeLocation, "Themes", "Win11");
             else
                 themeLocation = Path.Combine(themeLocation, "Themes", "Win10");

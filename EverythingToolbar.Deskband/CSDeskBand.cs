@@ -1023,7 +1023,7 @@ namespace CSDeskBand
         {
             ToolbarLogger.Initialize();
             _logger = ToolbarLogger.GetLogger("EverythingToolbar");
-            _logger.Info("EverythingToolbar started. Version: {version}, OS: {os}",
+            _logger.Info("EverythingToolbar Deskband {version} started. OS: {os}",
                 Assembly.GetExecutingAssembly().GetName().Version,
                 Environment.OSVersion);
             //AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>

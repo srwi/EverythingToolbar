@@ -14,22 +14,11 @@ namespace EverythingToolbar.Launcher
             Light
         }
 
-        private static int buildNumber = -1;
-        public static bool IsWindows11
+        public static class WindowsVersion
         {
-            get
-            {
-                if (buildNumber == -1)
-                {
-                    using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows NT\CurrentVersion"))
-                    {
-                        object currentBuildNumber = key?.GetValue("CurrentBuildNumber");
-                        buildNumber = Convert.ToInt32(currentBuildNumber);
-                    }
-                }
-
-                return buildNumber >= 22000;
-            }
+            public static Version Windows10 = new Version(10, 0, 10240);
+            public static Version Windows10Anniversary = new Version(10, 0, 14393);
+            public static Version Windows11 = new Version(10, 0, 22000);
         }
 
         public static string GetTaskbarShortcutPath()
@@ -40,7 +29,7 @@ namespace EverythingToolbar.Launcher
 
         public static bool IsTaskbarCenterAligned()
         {
-            if (!IsWindows11)
+            if (Environment.OSVersion.Version < WindowsVersion.Windows11)
                 return false;
 
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"))
