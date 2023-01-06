@@ -28,7 +28,7 @@ namespace EverythingToolbar
                 KeepFileOpen = true,
                 OpenFileCacheTimeout = 30,
                 ConcurrentWrites = true,
-                Layout = "${longdate}|${level:uppercase=true}|${message}|${exception:format=tostring}"
+                Layout = "${longdate}|${level:uppercase=true}|${logger}|${message}|${exception:format=tostring}"
             };
             var fileRule = new LoggingRule("*", LogLevel.Debug, logfile);
             var config = new LoggingConfiguration();

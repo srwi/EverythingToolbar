@@ -8,6 +8,8 @@ namespace EverythingToolbar.Debug
         {
             InitializeComponent();
 
+            ToolbarLogger.Initialize();
+
             ResourceManager.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
             ResourceManager.Instance.AutoApplyTheme();
         }

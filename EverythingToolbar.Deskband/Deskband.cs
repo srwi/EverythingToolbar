@@ -1,6 +1,7 @@
 ﻿using EverythingToolbar;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
+using NLog;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -12,6 +13,7 @@ namespace CSDeskBand
     [CSDeskBandRegistration(Name = "EverythingToolbar")]
     public class Deskband : CSDeskBandWpf
     {
+        private static readonly ILogger _logger = ToolbarLogger.GetLogger<Deskband>();
         private static ToolbarControl ToolbarControl;
         protected override UIElement UIElement => ToolbarControl;
 
@@ -33,7 +35,7 @@ namespace CSDeskBand
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Unhandled exception");
+                _logger.Error(e, "Unhandled exception");
                 if (MessageBox.Show(e.ToString() + "\n\n" + Resources.MessageBoxCopyException,
                     Resources.MessageBoxUnhandledExceptionTitle,
                     MessageBoxButton.YesNo,

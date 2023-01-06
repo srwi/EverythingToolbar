@@ -1,5 +1,6 @@
 ﻿using EverythingToolbar.Data;
 using Microsoft.VisualBasic.FileIO;
+using NLog;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -148,6 +149,7 @@ namespace EverythingToolbar.Helpers
 
         public static readonly FilterLoader Instance = new FilterLoader();
         public event PropertyChangedEventHandler PropertyChanged;
+        private static readonly ILogger _logger = ToolbarLogger.GetLogger<FilterLoader>();
         private FileSystemWatcher watcher;
 
         private FilterLoader()
@@ -189,7 +191,7 @@ namespace EverythingToolbar.Helpers
 
             if (!File.Exists(Properties.Settings.Default.filtersPath))
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Info("Filters.csv could not be found at " + Properties.Settings.Default.filtersPath);
+                _logger.Info("Filters.csv could not be found at " + Properties.Settings.Default.filtersPath);
 
                 MessageBox.Show(Properties.Resources.MessageBoxSelectFiltersCsv,
                                 Properties.Resources.MessageBoxSelectFiltersCsvTitle,
@@ -259,7 +261,7 @@ namespace EverythingToolbar.Helpers
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Parsing Filters.csv failed.");
+                _logger.Error(e, "Parsing Filters.csv failed.");
                 return DefaultUserFilters;
             }
 

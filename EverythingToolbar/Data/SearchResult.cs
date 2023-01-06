@@ -1,4 +1,5 @@
 ﻿using EverythingToolbar.Helpers;
+using NLog;
 using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -13,6 +14,8 @@ namespace EverythingToolbar
 {
     public class SearchResult
     {
+        private static readonly ILogger _logger = ToolbarLogger.GetLogger<SearchResult>();
+
         public bool IsFile { get; set; }
 
         public string FullPathAndFileName { get; set; }
@@ -45,7 +48,7 @@ namespace EverythingToolbar
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open search result.");
+                _logger.Error(e, "Failed to open search result.");
                 MessageBox.Show(Properties.Resources.MessageBoxFailedToOpen, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -63,7 +66,7 @@ namespace EverythingToolbar
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open search result.");
+                _logger.Error(e, "Failed to open search result.");
                 MessageBox.Show(Properties.Resources.MessageBoxFailedToOpen, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -77,7 +80,7 @@ namespace EverythingToolbar
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open path.");
+                _logger.Error(e, "Failed to open path.");
                 MessageBox.Show(Properties.Resources.MessageBoxFailedToOpenPath, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -90,7 +93,7 @@ namespace EverythingToolbar
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open dialog.");
+                _logger.Error(e, "Failed to open dialog.");
                 MessageBox.Show(Properties.Resources.MessageBoxFailedToOpenDialog, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -103,7 +106,7 @@ namespace EverythingToolbar
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to copy file.");
+                _logger.Error(e, "Failed to copy file.");
                 MessageBox.Show(Properties.Resources.MessageBoxFailedToCopyFile, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -116,7 +119,7 @@ namespace EverythingToolbar
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to copy path.");
+                _logger.Error(e, "Failed to copy path.");
                 MessageBox.Show(Properties.Resources.MessageBoxFailedToCopyPath, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -163,11 +166,11 @@ namespace EverythingToolbar
                 }
                 catch (TimeoutException)
                 {
-                    ToolbarLogger.GetLogger("EverythingToolbar").Info("Opening QuickLook preview timed out. Is QuickLook running?");
+                    _logger.Info("Opening QuickLook preview timed out. Is QuickLook running?");
                 }
                 catch (Exception e)
                 {
-                    ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open preview.");
+                    _logger.Error(e, "Failed to open preview.");
                 }
             });
         }

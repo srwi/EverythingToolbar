@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace EverythingToolbar.Helpers
 {
     public class HistoryManager
     {
+        private static readonly ILogger _logger = ToolbarLogger.GetLogger<HistoryManager>();
         private static readonly string HISTORY_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                                                                    "EverythingToolbar",
                                                                    "history.xml");
@@ -57,7 +59,7 @@ namespace EverythingToolbar.Helpers
                 }
                 catch (Exception e)
                 {
-                    ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to load search term history.");
+                    _logger.Error(e, "Failed to load search term history.");
                 }
             }
 
@@ -77,7 +79,7 @@ namespace EverythingToolbar.Helpers
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to save search term history.");
+                _logger.Error(e, "Failed to save search term history.");
             }
         }
 

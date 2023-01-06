@@ -166,15 +166,13 @@ namespace EverythingToolbar
         public int BatchSize = 100;
         public static readonly EverythingSearch Instance = new EverythingSearch();
         private readonly object _searchResultsLock = new object();
-        private readonly ILogger logger;
+        private readonly ILogger _logger = ToolbarLogger.GetLogger<EverythingSearch>();
         private CancellationTokenSource cancellationTokenSource;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         private EverythingSearch()
         {
-            logger = ToolbarLogger.GetLogger("EverythingToolbar");
-
             try
             {
                 uint major = Everything_GetMajorVersion();
@@ -183,22 +181,22 @@ namespace EverythingToolbar
 
                 if ((major > 1) || ((major == 1) && (minor > 4)) || ((major == 1) && (minor == 4) && (revision >= 1)))
                 {
-                    logger.Info("Everything version: {major}.{minor}.{revision}", major, minor, revision);
+                    _logger.Info("Everything version: {major}.{minor}.{revision}", major, minor, revision);
                 }
                 else if (major == 0 && minor == 0 && revision == 0 && (ErrorCode)Everything_GetLastError() == ErrorCode.EVERYTHING_ERROR_IPC)
                 {
                     ErrorCode errorCode = (ErrorCode)Everything_GetLastError();
                     HandleError(errorCode);
-                    logger.Error("Failed to get Everything version number. Is Everything running?");
+                    _logger.Error("Failed to get Everything version number. Is Everything running?");
                 }
                 else
                 {
-                    logger.Error("Everything version {major}.{minor}.{revision} is not supported.", major, minor, revision);
+                    _logger.Error("Everything version {major}.{minor}.{revision} is not supported.", major, minor, revision);
                 }
             }
             catch (Exception e)
             {
-                logger.Error(e, "Everything64.dll could not be opened.");
+                _logger.Error(e, "Everything64.dll could not be opened.");
             }
 
             Properties.Settings.Default.PropertyChanged += OnSettingChanged;
@@ -233,7 +231,7 @@ namespace EverythingToolbar
                 return;
             }
 
-            ToolbarLogger.GetLogger("EverythingToolbar").Info("Setting Everything instance name: " + name);
+            _logger.Info("Setting Everything instance name: " + name);
             Everything_SetInstanceName(name);
         }
 
@@ -418,25 +416,25 @@ namespace EverythingToolbar
             switch(code)
             {
                 case ErrorCode.EVERYTHING_ERROR_MEMORY:
-                    logger.Error("Failed to allocate memory for the search query.");
+                    _logger.Error("Failed to allocate memory for the search query.");
                     break;
                 case ErrorCode.EVERYTHING_ERROR_IPC:
-                    logger.Error("IPC is not available.");
+                    _logger.Error("IPC is not available.");
                     break;
                 case ErrorCode.EVERYTHING_ERROR_REGISTERCLASSEX:
-                    logger.Error("Failed to register the search query window class.");
+                    _logger.Error("Failed to register the search query window class.");
                     break;
                 case ErrorCode.EVERYTHING_ERROR_CREATEWINDOW:
-                    logger.Error("Failed to create the search query window.");
+                    _logger.Error("Failed to create the search query window.");
                     break;
                 case ErrorCode.EVERYTHING_ERROR_CREATETHREAD:
-                    logger.Error("Failed to create the search query thread.");
+                    _logger.Error("Failed to create the search query thread.");
                     break;
                 case ErrorCode.EVERYTHING_ERROR_INVALIDINDEX:
-                    logger.Error("Invalid index.");
+                    _logger.Error("Invalid index.");
                     break;
                 case ErrorCode.EVERYTHING_ERROR_INVALIDCALL:
-                    logger.Error("Invalid call.");
+                    _logger.Error("Invalid call.");
                     break;
             }
         }

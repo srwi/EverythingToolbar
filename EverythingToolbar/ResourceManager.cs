@@ -1,4 +1,5 @@
 ﻿using EverythingToolbar.Helpers;
+using NLog;
 using System;
 using System.IO;
 using System.Reflection;
@@ -28,6 +29,7 @@ namespace EverythingToolbar
         private readonly SynchronizationContext uiThreadContext;
         private readonly RegistryEntry systemThemeRegistryEntry = new RegistryEntry("HKEY_CURRENT_USER", @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme");
         private readonly RegistryWatcher systemThemeWatcher = null;
+        private static readonly ILogger _logger = ToolbarLogger.GetLogger<ResourceManager>();
 
         private ResourceManager()
         {
@@ -102,7 +104,7 @@ namespace EverythingToolbar
         private void AddResource(string path)
         {
             if (!File.Exists(path))
-                ToolbarLogger.GetLogger("EverythingToolbar").Error("Could not find resource file " + path);
+                _logger.Error("Could not find resource file " + path);
 
             var resDict = new ResourceDictionary() { Source = new Uri(path) };
             CurrentResources.MergedDictionaries.Add(resDict);

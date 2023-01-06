@@ -1014,7 +1014,7 @@ namespace CSDeskBand
         private readonly CSDeskBandImpl _impl;
         private readonly AdornerDecorator _rootVisual;
 
-        private readonly ILogger _logger;
+        private static readonly ILogger _logger = ToolbarLogger.GetLogger<CSDeskBandWpf>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CSDeskBandWpf"/> class.
@@ -1022,10 +1022,9 @@ namespace CSDeskBand
         public CSDeskBandWpf()
         {
             ToolbarLogger.Initialize();
-            _logger = ToolbarLogger.GetLogger("EverythingToolbar");
             _logger.Info("EverythingToolbar Deskband {version} started. OS: {os}",
-                Assembly.GetExecutingAssembly().GetName().Version,
-                Environment.OSVersion);
+                         Assembly.GetExecutingAssembly().GetName().Version,
+                         Environment.OSVersion);
             //AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
             //{
             //	_logger.Error(e.Exception, "Unhandled first chance exception");

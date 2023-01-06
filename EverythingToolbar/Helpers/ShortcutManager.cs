@@ -1,5 +1,6 @@
 using NHotkey;
 using NHotkey.Wpf;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -25,6 +26,7 @@ namespace EverythingToolbar.Helpers
 
         public static readonly ShortcutManager Instance = new ShortcutManager();
 
+        private static readonly ILogger _logger = ToolbarLogger.GetLogger<ShortcutManager>();
         private WinEventDelegate winEventDelegate = null;
         private static Dictionary<string, EventHandler<HotkeyEventArgs>> shortcuts = new Dictionary<string, EventHandler<HotkeyEventArgs>>();
         private static Action<object, HotkeyEventArgs> focusToolbarCallback;
@@ -66,7 +68,7 @@ namespace EverythingToolbar.Helpers
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingInstance").Error(e, "Failed to register hotkey.");
+                _logger.Error(e, "Failed to register hotkey.");
                 return false;
             }
         }
