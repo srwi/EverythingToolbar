@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.IO;
 
 namespace EverythingToolbar.Helpers
@@ -12,18 +13,19 @@ namespace EverythingToolbar.Helpers
             {
                 if (buildNumber == -1)
                 {
-                    object registryValue = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuildNumber", "");
-                    buildNumber = System.Convert.ToInt32(registryValue);
+                    using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows NT\CurrentVersion"))
+                    {
+                        object currentBuildNumber = key?.GetValue("CurrentBuildNumber");
+                        buildNumber = Convert.ToInt32(currentBuildNumber);
+                    }
                 }
 
                 return buildNumber >= 22000;
             }
         }
 
-        // Taken from: https://stackoverflow.com/a/11124118/1477251
         public static string GetHumanReadableFileSize(string path)
         {
-            // Get file length
             long length;
             try
             {

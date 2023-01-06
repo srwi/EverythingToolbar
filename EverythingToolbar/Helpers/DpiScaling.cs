@@ -8,7 +8,6 @@ using System.Windows.Media;
 
 namespace EverythingToolbar.Helpers
 {
-    // Taken from: https://github.com/dsafa/audio-band/blob/f13b2f226991e46704684e060873e03b26441f0e/src/AudioBand/UI/Behaviors/DpiScaling.cs
     public class DpiScaling : Behavior<FrameworkElement>
     {
         // Requires Windows 10 Anniversary Update

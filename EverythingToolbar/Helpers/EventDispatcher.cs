@@ -9,9 +9,9 @@ namespace EverythingToolbar.Helpers
 {
     public class EventDispatcher
     {
-        // Events
-
         public static readonly EventDispatcher Instance = new EventDispatcher();
+
+        // Events
 
         public event EventHandler<EventArgs> FocusRequested;
         public void InvokeFocusRequested(object sender, EventArgs e)

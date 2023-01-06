@@ -60,7 +60,6 @@ namespace EverythingToolbar.Helpers
             }
         }
         
-
         public readonly ObservableCollection<Filter> DefaultUserFilters = new ObservableCollection<Filter>()
         {
             new Filter {
@@ -157,7 +156,7 @@ namespace EverythingToolbar.Helpers
                 Properties.Settings.Default.filtersPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                                                                        "Everything",
                                                                        "Filters.csv");
-            Properties.Settings.Default.PropertyChanged += OnPropertyChanged;
+            Properties.Settings.Default.PropertyChanged += OnSettingsChanged;
 
             using (var ifc = new InstalledFontCollection())
             {
@@ -172,7 +171,7 @@ namespace EverythingToolbar.Helpers
             CreateFileWatcher();
         }
 
-        private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "isRegExEnabled" || e.PropertyName == "isImportFilters")
                 RefreshFilters();

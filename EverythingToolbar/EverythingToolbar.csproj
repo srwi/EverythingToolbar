@@ -96,6 +96,7 @@
     <Compile Include="InputDialog.xaml.cs">
       <DependentUpon>InputDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MicaWindow.cs" />
     <Compile Include="Properties\Resources.af.Designer.cs">
       <DependentUpon>Resources.af.resx</DependentUpon>
       <AutoGen>True</AutoGen>

@@ -12,50 +12,8 @@ using System.Windows.Media.Animation;
 
 namespace EverythingToolbar
 {
-    public partial class SearchWindow : Window
+    public partial class SearchWindow : MicaWindow
     {
-        private const int GWL_STYLE = -16;
-        private const int WS_SYSMENU = 0x80000;
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-        [DllImport("user32.dll")]
-        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmSetWindowAttribute(IntPtr hwnd, DwmWindowAttribute dwAttribute, ref int pvAttribute, int cbAttribute);
-
-        [Flags]
-        public enum DwmWindowAttribute : uint
-        {
-            DWMWA_USE_IMMERSIVE_DARK_MODE = 20,
-            DWMWA_MICA_EFFECT = 1029,
-            DWMWA_SYSTEMBACKDROP_TYPE = 38
-        }
-
-        private void Window_ContentRendered(object sender, System.EventArgs e)
-        {
-            // Apply Mica brush
-            UpdateStyleAttributes((HwndSource)sender);
-        }
-
-        public static void UpdateStyleAttributes(HwndSource hwnd)
-        {
-            int trueValue = 0x01;
-            int mica = 0x03;
-            DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_MICA_EFFECT, ref trueValue, Marshal.SizeOf(typeof(int)));
-            DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_SYSTEMBACKDROP_TYPE, ref mica, Marshal.SizeOf(typeof(int)));
-            DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref trueValue, Marshal.SizeOf(typeof(int)));
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Get PresentationSource
-            PresentationSource presentationSource = PresentationSource.FromVisual((Visual)sender);
-
-            // Subscribe to PresentationSource's ContentRendered event
-            presentationSource.ContentRendered += Window_ContentRendered;
-        }
-
         //public static Edge taskbarEdge;
         public static double taskbarHeight = 0;
         public static double taskbarWidth = 0;
@@ -110,8 +68,6 @@ namespace EverythingToolbar
 
             ResourceManager.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
             ResourceManager.Instance.AutoApplyTheme();
-
-            Loaded += Window_Loaded;
         }
 
         private void OnResourcesChanged(object sender, ResourcesChangedEventArgs e)
