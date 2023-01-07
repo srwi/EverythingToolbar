@@ -18,7 +18,7 @@ namespace EverythingToolbar.Helpers
         {
             new Filter {
                 Name = Properties.Resources.DefaultFilterAll,
-                Icon = "\xE71D  ",
+                Icon = Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? "\xE71D  " : "",
                 IsMatchCase = null,
                 IsMatchWholeWord = null,
                 IsMatchPath = null,
@@ -28,7 +28,7 @@ namespace EverythingToolbar.Helpers
             },
             new Filter {
                 Name = Properties.Resources.DefaultFilterFile,
-                Icon = "\xE7C3  ",
+                Icon = Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? "\xE7C3  " : "",
                 IsMatchCase = null,
                 IsMatchWholeWord = null,
                 IsMatchPath = null,
@@ -38,7 +38,7 @@ namespace EverythingToolbar.Helpers
             },
             new Filter {
                 Name = Properties.Resources.DefaultFilterFolder,
-                Icon = "\xE8B7  ",
+                Icon = Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? "\xE8B7  " : "",
                 IsMatchCase = null,
                 IsMatchWholeWord = null,
                 IsMatchPath = null,
@@ -160,15 +160,6 @@ namespace EverythingToolbar.Helpers
                                                                        "Everything",
                                                                        "Filters.csv");
             Properties.Settings.Default.PropertyChanged += OnSettingsChanged;
-
-            using (var ifc = new InstalledFontCollection())
-            {
-                if (!ifc.Families.Any(f => f.Name == "Segoe MDL2 Assets"))
-                {
-                    foreach (Filter defaultFilter in _defaultFilters)
-                        defaultFilter.Icon = "";
-                }
-            }
 
             RefreshFilters();
             CreateFileWatcher();

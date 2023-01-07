@@ -17,7 +17,7 @@
                             Background="{DynamicResource TabBackground}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock x:Name="ContentSiteIcon"
-                                       FontFamily="Segoe MDL2 Assets"
+                                       FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                        Text="{Binding Icon}"
                                        FontSize="10pt"
                                        Foreground="{DynamicResource TabForeground}"
