@@ -25,15 +25,15 @@
                     <MenuItem Header="{x:Static properties:Resources.SettingsRegularExpressions}"
                               IsCheckable="True"
                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}"
-                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, Mode=OneWay}" />
+                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, TargetNullValue=True, Mode=OneWay}" />
                     <MenuItem Header="{x:Static properties:Resources.SettingsMatchCase}"
                               IsCheckable="True"
                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase, Mode=TwoWay}"
-                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, Mode=OneWay}" />
+                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, TargetNullValue=True, Mode=OneWay}" />
                     <MenuItem Header="{x:Static properties:Resources.SettingsMatchPath}"
                               IsCheckable="True"
                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath, Mode=TwoWay}"
-                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, Mode=OneWay}" />
+                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, TargetNullValue=True, Mode=OneWay}" />
                     <MenuItem Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
                               IsCheckable="True"
                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}"
@@ -68,46 +68,45 @@
             </Path.Data>
         </Path>
 
-        <Border Visibility="{Binding Source={x:Static properties:Settings.Default}, Path=isShowQuickToggles, Converter={local:BoolToVisibilityConverter}}"
-                HorizontalAlignment="Right"
-                Margin="0, 0, 6, 0">
-            <StackPanel Orientation="Horizontal"
-                        Visibility="{Binding ElementName=SearchBoxControl, Path=IsKeyboardFocused, Converter={local:BoolToVisibilityConverter}, Mode=OneWay}">
-                <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
-                              ToolTip="{x:Static properties:Resources.SettingsMatchCase}"
-                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase}"
-                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, Mode=OneWay}"
-                              Content="Aa"
-                              Margin="1" />
-                <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
-                              ToolTip="{x:Static properties:Resources.SettingsMatchWholeWord}"
-                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord}"
-                              Name="IsMatchWholeWordButton"
-                              Margin="1">
-                    <TextBlock TextDecorations="Underline,OverLine"
-                               Text="Abl"
-                               FontSize="11"
-                               Padding="0, 2, 0, 0"
-                               HorizontalAlignment="Center" />
-                </ToggleButton>
-                <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
-                              ToolTip="{x:Static properties:Resources.SettingsMatchPath}"
-                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath}"
-                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, Mode=OneWay}"
-                              Margin="1">
-                    <TextBlock Text="..\"
-                               FontSize="12pt"
-                               Margin="-1, -2, 0, 0" />
-                </ToggleButton>
-                <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
-                              ToolTip="{x:Static properties:Resources.SettingsRegularExpressions}"
-                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled}"
-                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, Mode=OneWay}"
-                              TextBlock.FontWeight="Bold"
-                              Content=".*"
-                              Margin="1" />
-            </StackPanel>
-        </Border>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0, 0, 6, 0"
+                    Background="Transparent"
+                    Visibility="{Binding Source={x:Static properties:Settings.Default}, Path=isShowQuickToggles, Converter={local:BoolToVisibilityConverter}}">
+            <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
+                          ToolTip="{x:Static properties:Resources.SettingsMatchCase}"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase}"
+                          IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, TargetNullValue=True, Mode=OneWay}"
+                          Content="Aa"
+                          Margin="1" />
+            <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
+                          ToolTip="{x:Static properties:Resources.SettingsMatchWholeWord}"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord}"
+                          Name="IsMatchWholeWordButton"
+                          Margin="1">
+                <TextBlock TextDecorations="Underline,OverLine"
+                           Text="Abl"
+                           FontSize="11"
+                           Padding="0, 2, 0, 0"
+                           HorizontalAlignment="Center" />
+            </ToggleButton>
+            <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
+                          ToolTip="{x:Static properties:Resources.SettingsMatchPath}"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath}"
+                          IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, TargetNullValue=True, Mode=OneWay}"
+                          Margin="1">
+                <TextBlock Text="..\"
+                           FontSize="12pt"
+                           Margin="-1, -2, 0, 0" />
+            </ToggleButton>
+            <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
+                          ToolTip="{x:Static properties:Resources.SettingsRegularExpressions}"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled}"
+                          IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, TargetNullValue=True, Mode=OneWay}"
+                          TextBlock.FontWeight="Bold"
+                          Content=".*"
+                          Margin="1" />
+        </StackPanel>
 
     </Grid>
 
