@@ -13,9 +13,8 @@ namespace EverythingToolbar
                 (EverythingSearch.Instance.SearchTerm == null || EverythingSearch.Instance.SearchTerm == ""))
                 return "";
 
-            string output = value.ToString() + " ";
-            output += (uint)value == 1 ? Properties.Resources.SearchResult : Properties.Resources.SearchResults;
-            return output;
+            string suffix = (int)value > 1 ? Properties.Resources.SearchResults : Properties.Resources.SearchResult;
+            return $"{value} {suffix}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

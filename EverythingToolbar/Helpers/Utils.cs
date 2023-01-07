@@ -6,6 +6,8 @@ namespace EverythingToolbar.Helpers
 {
     class Utils
     {
+        private Utils() { }
+
         public static class WindowsVersion
         {
             public static Version Windows10 = new Version(10, 0, 10240);

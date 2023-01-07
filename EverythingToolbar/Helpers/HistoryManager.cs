@@ -15,9 +15,9 @@ namespace EverythingToolbar.Helpers
                                                                    "EverythingToolbar",
                                                                    "history.xml");
         private static readonly int MAX_HISTORY_SIZE = 50;
+        private readonly List<string> history = new List<string>(MAX_HISTORY_SIZE);
         private int currentIndex;
         private int currentHistorySize;
-        private List<string> history = new List<string>(MAX_HISTORY_SIZE);
 
         public static HistoryManager Instance = new HistoryManager();
 

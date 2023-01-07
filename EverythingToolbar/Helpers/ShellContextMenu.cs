@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
+using System.Threading;
 
 namespace Peter
 {
@@ -90,25 +91,6 @@ namespace Peter
         /// <returns>true if the message has been handled, false otherwise</returns>
         protected override void WndProc(ref Message m)
         {
-            #region IContextMenu
-
-            if (_oContextMenu != null &&
-                m.Msg == (int)WM.MENUSELECT &&
-                ((int)ShellHelper.HiWord(m.WParam) & (int)MFT.SEPARATOR) == 0 &&
-                ((int)ShellHelper.HiWord(m.WParam) & (int)MFT.POPUP) == 0)
-            {
-                string info = string.Empty;
-
-                if (ShellHelper.LoWord(m.WParam) == (int)CMD_CUSTOM.ExpandCollapse)
-                    info = "Expands or collapses the current selected item";
-                else
-                {
-                    info = "";
-                }
-            }
-
-            #endregion
-
             #region IContextMenu2
 
             if (_oContextMenu2 != null &&
@@ -143,17 +125,19 @@ namespace Peter
         #region InvokeCommand
         private void InvokeCommand(IContextMenu oContextMenu, uint nCmd, string strFolder, Point pointInvoke)
         {
-            CMINVOKECOMMANDINFOEX invoke = new CMINVOKECOMMANDINFOEX();
-            invoke.cbSize = cbInvokeCommand;
-            invoke.lpVerb = (IntPtr)(nCmd - CMD_FIRST);
-            invoke.lpDirectory = strFolder;
-            invoke.lpVerbW = (IntPtr)(nCmd - CMD_FIRST);
-            invoke.lpDirectoryW = strFolder;
-            invoke.fMask = CMIC.UNICODE | CMIC.PTINVOKE |
+            CMINVOKECOMMANDINFOEX invoke = new CMINVOKECOMMANDINFOEX
+            {
+                cbSize = cbInvokeCommand,
+                lpVerb = (IntPtr)(nCmd - CMD_FIRST),
+                lpDirectory = strFolder,
+                lpVerbW = (IntPtr)(nCmd - CMD_FIRST),
+                lpDirectoryW = strFolder,
+                fMask = CMIC.UNICODE | CMIC.PTINVOKE |
                 ((Control.ModifierKeys & Keys.Control) != 0 ? CMIC.CONTROL_DOWN : 0) |
-                ((Control.ModifierKeys & Keys.Shift) != 0 ? CMIC.SHIFT_DOWN : 0);
-            invoke.ptInvoke = new POINT(pointInvoke.X, pointInvoke.Y);
-            invoke.nShow = SW.SHOWNORMAL;
+                ((Control.ModifierKeys & Keys.Shift) != 0 ? CMIC.SHIFT_DOWN : 0),
+                ptInvoke = new POINT(pointInvoke.X, pointInvoke.Y),
+                nShow = SW.SHOWNORMAL
+            };
 
             oContextMenu.InvokeCommand(ref invoke);
         }
@@ -205,12 +189,10 @@ namespace Peter
         /// <returns>IShellFolder for desktop folder</returns>
         private IShellFolder GetDesktopFolder()
         {
-            IntPtr pUnkownDesktopFolder = IntPtr.Zero;
-
             if (null == _oDesktopFolder)
             {
                 // Get desktop IShellFolder
-                int nResult = SHGetDesktopFolder(out pUnkownDesktopFolder);
+                int nResult = SHGetDesktopFolder(out IntPtr pUnkownDesktopFolder);
                 if (S_OK != nResult)
                 {
                     throw new ShellContextMenuException("Failed to get the desktop shell folder");
@@ -239,10 +221,9 @@ namespace Peter
                 }
 
                 // Get the PIDL for the folder file is in
-                IntPtr pPIDL = IntPtr.Zero;
                 uint pchEaten = 0;
                 SFGAO pdwAttributes = 0;
-                int nResult = oDesktopFolder.ParseDisplayName(IntPtr.Zero, IntPtr.Zero, folderName, ref pchEaten, out pPIDL, ref pdwAttributes);
+                int nResult = oDesktopFolder.ParseDisplayName(IntPtr.Zero, IntPtr.Zero, folderName, ref pchEaten, out IntPtr pPIDL, ref pdwAttributes);
                 if (S_OK != nResult)
                 {
                     return null;
@@ -250,16 +231,14 @@ namespace Peter
 
                 IntPtr pStrRet = Marshal.AllocCoTaskMem(MAX_PATH * 2 + 4);
                 Marshal.WriteInt32(pStrRet, 0, 0);
-                nResult = _oDesktopFolder.GetDisplayNameOf(pPIDL, SHGNO.FORPARSING, pStrRet);
+                _ = _oDesktopFolder.GetDisplayNameOf(pPIDL, SHGNO.FORPARSING, pStrRet);
                 StringBuilder strFolder = new StringBuilder(MAX_PATH);
                 StrRetToBuf(pStrRet, pPIDL, strFolder, MAX_PATH);
                 Marshal.FreeCoTaskMem(pStrRet);
-                pStrRet = IntPtr.Zero;
                 _strParentFolder = strFolder.ToString();
 
                 // Get the IShellFolder for folder
-                IntPtr pUnknownParentFolder = IntPtr.Zero;
-                nResult = oDesktopFolder.BindToObject(pPIDL, IntPtr.Zero, ref IID_IShellFolder, out pUnknownParentFolder);
+                nResult = oDesktopFolder.BindToObject(pPIDL, IntPtr.Zero, ref IID_IShellFolder, out IntPtr pUnknownParentFolder);
                 // Free the PIDL first
                 Marshal.FreeCoTaskMem(pPIDL);
                 if (S_OK != nResult)
@@ -374,64 +353,6 @@ namespace Peter
         }
         #endregion
 
-        #region InvokeContextMenuDefault
-        private void InvokeContextMenuDefault(FileInfo[] arrFI)
-        {
-            // Release all resources first.
-            ReleaseAll();
-
-            IntPtr pMenu = IntPtr.Zero,
-                iContextMenuPtr = IntPtr.Zero;
-
-            try
-            {
-                _arrPIDLs = GetPIDLs(arrFI);
-                if (null == _arrPIDLs)
-                {
-                    ReleaseAll();
-                    return;
-                }
-
-                if (false == GetContextMenuInterfaces(_oParentFolder, _arrPIDLs, out iContextMenuPtr))
-                {
-                    ReleaseAll();
-                    return;
-                }
-
-                pMenu = CreatePopupMenu();
-
-                int nResult = _oContextMenu.QueryContextMenu(
-                    pMenu,
-                    0,
-                    CMD_FIRST,
-                    CMD_LAST,
-                    CMF.DEFAULTONLY |
-                    ((Control.ModifierKeys & Keys.Shift) != 0 ? CMF.EXTENDEDVERBS : 0));
-
-                uint nDefaultCmd = (uint)GetMenuDefaultItem(pMenu, false, 0);
-                if (nDefaultCmd >= CMD_FIRST)
-                {
-                    InvokeCommand(_oContextMenu, nDefaultCmd, arrFI[0].DirectoryName, Control.MousePosition);
-                }
-
-                DestroyMenu(pMenu);
-                pMenu = IntPtr.Zero;
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                if (pMenu != IntPtr.Zero)
-                {
-                    DestroyMenu(pMenu);
-                }
-                ReleaseAll();
-            }
-        }
-        #endregion
-
         #region ShowContextMenu()
 
         /// <summary>
@@ -488,7 +409,7 @@ namespace Peter
 
                 pMenu = CreatePopupMenu();
 
-                int nResult = _oContextMenu.QueryContextMenu(
+                _oContextMenu.QueryContextMenu(
                     pMenu,
                     0,
                     CMD_FIRST,
@@ -562,10 +483,8 @@ namespace Peter
         private const uint CMD_LAST = 30000;
 
         private const int S_OK = 0;
-        private const int S_FALSE = 1;
-
-        private static int cbMenuItemInfo = Marshal.SizeOf(typeof(MENUITEMINFO));
-        private static int cbInvokeCommand = Marshal.SizeOf(typeof(CMINVOKECOMMANDINFOEX));
+        private static readonly int cbMenuItemInfo = Marshal.SizeOf(typeof(MENUITEMINFO));
+        private static readonly int cbInvokeCommand = Marshal.SizeOf(typeof(CMINVOKECOMMANDINFOEX));
 
         #endregion
 
@@ -590,10 +509,6 @@ namespace Peter
         // The DestroyMenu function destroys the specified menu and frees any memory that the menu occupies.
         [DllImport("user32", SetLastError = true, CharSet = CharSet.Auto)]
         private static extern bool DestroyMenu(IntPtr hMenu);
-
-        // Determines the default menu item on the specified menu
-        [DllImport("user32", SetLastError = true, CharSet = CharSet.Auto)]
-        private static extern int GetMenuDefaultItem(IntPtr hMenu, bool fByPos, uint gmdiFlags);
 
         #endregion
 
@@ -1461,8 +1376,7 @@ namespace Peter
         public event HookEventHandler HookInvoked;
         protected void OnHookInvoked(HookEventArgs e)
         {
-            if (HookInvoked != null)
-                HookInvoked(this, e);
+            HookInvoked?.Invoke(this, e);
         }
         // ************************************************************************
 
@@ -1488,10 +1402,12 @@ namespace Peter
                 return CallNextHookEx(m_hhook, code, wParam, lParam);
 
             // Let clients determine what to do
-            HookEventArgs e = new HookEventArgs();
-            e.HookCode = code;
-            e.wParam = wParam;
-            e.lParam = lParam;
+            HookEventArgs e = new HookEventArgs
+            {
+                HookCode = code,
+                wParam = wParam,
+                lParam = lParam
+            };
             OnHookInvoked(e);
 
             // Yield to the next hook in the chain
@@ -1507,7 +1423,7 @@ namespace Peter
                 m_hookType,
                 m_filterFunc,
                 IntPtr.Zero,
-                (int)AppDomain.GetCurrentThreadId());
+                Thread.CurrentThread.ManagedThreadId);
         }
         // ************************************************************************
 
@@ -1544,39 +1460,5 @@ namespace Peter
         // ************************************************************************
         #endregion
     }
-    #endregion
-
-    #region ShellHelper
-
-    internal static class ShellHelper
-    {
-        #region Low/High Word
-
-        /// <summary>
-        /// Retrieves the High Word of a WParam of a WindowMessage
-        /// </summary>
-        /// <param name="ptr">The pointer to the WParam</param>
-        /// <returns>The unsigned integer for the High Word</returns>
-        public static ulong HiWord(IntPtr ptr)
-        {
-            if (((ulong)ptr & 0x80000000) == 0x80000000)
-                return ((ulong)ptr >> 16);
-            else
-                return ((ulong)ptr >> 16) & 0xffff;
-        }
-
-        /// <summary>
-        /// Retrieves the Low Word of a WParam of a WindowMessage
-        /// </summary>
-        /// <param name="ptr">The pointer to the WParam</param>
-        /// <returns>The unsigned integer for the Low Word</returns>
-        public static ulong LoWord(IntPtr ptr)
-        {
-            return (ulong)ptr & 0xffff;
-        }
-
-        #endregion
-    }
-
     #endregion
 }

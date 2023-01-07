@@ -56,8 +56,8 @@ namespace EverythingToolbar
             }
         }
 
-        private uint _totalResultsNumber = 0;
-        public uint TotalResultsNumber
+        private int _totalResultsNumber = 0;
+        public int TotalResultsNumber
         {
             get => _totalResultsNumber;
             set
@@ -74,7 +74,6 @@ namespace EverythingToolbar
         public static readonly EverythingSearch Instance = new EverythingSearch();
 
         private bool _initialized = false;
-        private const int BatchSize = 100;
         private readonly object _searchResultsLock = new object();
         private readonly ILogger _logger = ToolbarLogger.GetLogger<EverythingSearch>();
         private CancellationTokenSource _cancellationTokenSource;
@@ -175,7 +174,7 @@ namespace EverythingToolbar
             {
                 try
                 {
-                    uint flags = SearchFlag.FULL_PATH_AND_FILE_NAME | SearchFlag.HIGHLIGHTED_PATH | SearchFlag.HIGHLIGHTED_FILE_NAME;
+                    uint flags = EVERYTHING_FULL_PATH_AND_FILE_NAME | EVERYTHING_HIGHLIGHTED_PATH | EVERYTHING_HIGHLIGHTED_FILE_NAME;
                     bool regEx = CurrentFilter.IsRegExEnabled ?? Properties.Settings.Default.isRegExEnabled;
 
                     string search = CurrentFilter.Search + (CurrentFilter.Search.Length > 0 && !regEx ? " " : "") + SearchTerm;
@@ -191,7 +190,7 @@ namespace EverythingToolbar
                     Everything_SetMatchPath(CurrentFilter.IsMatchPath ?? Properties.Settings.Default.isMatchPath);
                     Everything_SetMatchWholeWord(CurrentFilter.IsMatchWholeWord ?? Properties.Settings.Default.isMatchWholeWord);
                     Everything_SetRegex(regEx);
-                    Everything_SetMax((uint)BatchSize);
+                    Everything_SetMax(BATCH_SIZE);
                     lock (_searchResultsLock)
                         Everything_SetOffset((uint)SearchResults.Count);
 
@@ -202,7 +201,7 @@ namespace EverythingToolbar
                     }
 
                     uint resultsCount = Everything_GetNumResults();
-                    TotalResultsNumber = Everything_GetTotResults();
+                    TotalResultsNumber = (int)Everything_GetTotResults();
 
                     for (uint i = 0; i < resultsCount; i++)
                     {
@@ -330,9 +329,9 @@ namespace EverythingToolbar
             Everything_IncRunCountFromFileName(path);
         }
 
-        public bool GetIsFastSort(uint sortBy)
+        public bool GetIsFastSort(int sortBy)
         {
-            return Everything_IsFastSort(sortBy);
+            return Everything_IsFastSort((uint)sortBy);
         }
 
         private void HandleError(ErrorCode code)
@@ -363,6 +362,7 @@ namespace EverythingToolbar
             }
         }
 
+        [Flags]
         private enum ErrorCode
         {
             EVERYTHING_OK,
@@ -375,12 +375,11 @@ namespace EverythingToolbar
             EVERYTHING_ERROR_INVALIDCALL
         }
 
-        private class SearchFlag
-        {
-            public const int FULL_PATH_AND_FILE_NAME = 0x00000004;
-            public const int HIGHLIGHTED_FILE_NAME = 0x00002000;
-            public const int HIGHLIGHTED_PATH = 0x00004000;
-        }
+        private const uint BATCH_SIZE = 100;
+
+        private const int EVERYTHING_FULL_PATH_AND_FILE_NAME = 0x00000004;
+        private const int EVERYTHING_HIGHLIGHTED_FILE_NAME = 0x00002000;
+        private const int EVERYTHING_HIGHLIGHTED_PATH = 0x00004000;
 
         [DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
         private static extern uint Everything_SetSearchW(string lpSearchString);
@@ -410,8 +409,6 @@ namespace EverythingToolbar
         private static extern void Everything_SetSort(uint dwSortType);
         [DllImport("Everything64.dll")]
         private static extern void Everything_SetRequestFlags(uint dwRequestFlags);
-        [DllImport("Everything64.dll")]
-        private static extern bool Everything_GetResultDateModified(uint nIndex, out long lpFileTime);
         [DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
         private static extern IntPtr Everything_GetResultHighlightedFileName(uint nIndex);
         [DllImport("Everything64.dll")]
@@ -421,14 +418,14 @@ namespace EverythingToolbar
         [DllImport("Everything64.dll")]
         private static extern bool Everything_IsFileResult(uint nIndex);
         [DllImport("Everything64.dll")]
-        public static extern uint Everything_GetLastError();
+        private static extern uint Everything_GetLastError();
         [DllImport("Everything64.dll")]
-        public static extern uint Everything_GetMajorVersion();
+        private static extern uint Everything_GetMajorVersion();
         [DllImport("Everything64.dll")]
-        public static extern uint Everything_GetMinorVersion();
+        private static extern uint Everything_GetMinorVersion();
         [DllImport("Everything64.dll")]
-        public static extern uint Everything_GetRevision();
+        private static extern uint Everything_GetRevision();
         [DllImport("Everything64.dll")]
-        public static extern bool Everything_IsFastSort(uint sortType);
+        private static extern bool Everything_IsFastSort(uint sortType);
     }
 }

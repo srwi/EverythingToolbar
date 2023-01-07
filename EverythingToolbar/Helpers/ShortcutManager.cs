@@ -28,13 +28,13 @@ namespace EverythingToolbar.Helpers
 
         private static readonly ILogger _logger = ToolbarLogger.GetLogger<ShortcutManager>();
         private WinEventDelegate winEventDelegate = null;
-        private static Dictionary<string, EventHandler<HotkeyEventArgs>> shortcuts = new Dictionary<string, EventHandler<HotkeyEventArgs>>();
+        private static readonly Dictionary<string, EventHandler<HotkeyEventArgs>> shortcuts = new Dictionary<string, EventHandler<HotkeyEventArgs>>();
         private static Action<object, HotkeyEventArgs> focusToolbarCallback;
         private static LowLevelKeyboardProc llKeyboardHookProc;
         private static IntPtr llKeyboardHookId = IntPtr.Zero;
         private static IntPtr winEventHookId = IntPtr.Zero;
         private static IntPtr searchAppHwnd = IntPtr.Zero;
-        private static event EventHandler<WinKeyEventArgs> winKeyEventHandler;
+        private static event EventHandler<WinKeyEventArgs> WinKeyEventHandler;
         private static bool isException = false;
         private static bool isNativeSearchActive = false;
         private static string searchTermQueue = "";
@@ -87,14 +87,14 @@ namespace EverythingToolbar.Helpers
         public void CaptureKeyboard(EventHandler<WinKeyEventArgs> callback)
         {
             ReleaseKeyboard();
-            winKeyEventHandler += callback;
+            WinKeyEventHandler += callback;
             llKeyboardHookProc = WinKeyHookCallback;
             llKeyboardHookId = SetWindowsHookEx(WH_KEYBOARD_LL, llKeyboardHookProc, (IntPtr)0, 0);
         }
 
         public bool ReleaseKeyboard()
         {
-            winKeyEventHandler = null;
+            WinKeyEventHandler = null;
             return UnhookWindowsHookEx(llKeyboardHookId);
         }
 
@@ -110,23 +110,23 @@ namespace EverythingToolbar.Helpers
                     case Keys.ControlKey:
                     case Keys.LControlKey:
                     case Keys.RControlKey:
-                        winKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LeftCtrl));
+                        WinKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LeftCtrl));
                         break;
                     case Keys.Shift:
                     case Keys.ShiftKey:
                     case Keys.LShiftKey:
                     case Keys.RShiftKey:
-                        winKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LeftShift));
+                        WinKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LeftShift));
                         break;
                     case Keys.Alt:
-                        winKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LeftAlt));
+                        WinKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LeftAlt));
                         break;
                     case Keys.LWin:
                     case Keys.RWin:
-                        winKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LWin));
+                        WinKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LWin));
                         break;
                     default:
-                        winKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, KeyInterop.KeyFromVirtualKey((int)vkCode)));
+                        WinKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, KeyInterop.KeyFromVirtualKey((int)vkCode)));
                         break;
                 }
 
@@ -152,11 +152,10 @@ namespace EverythingToolbar.Helpers
             UnhookWinEvent(winEventHookId);
         }
 
-        public void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
+        private void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
             IntPtr hWnd = GetForegroundWindow();
-            uint lpdwProcessId;
-            GetWindowThreadProcessId(hWnd, out lpdwProcessId);
+            GetWindowThreadProcessId(hWnd, out uint lpdwProcessId);
             IntPtr hProcess = OpenProcess(0x0410, false, lpdwProcessId);
             StringBuilder text = new StringBuilder(1000);
             GetModuleFileNameEx(hProcess, IntPtr.Zero, text, text.Capacity);

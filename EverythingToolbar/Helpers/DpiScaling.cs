@@ -76,8 +76,7 @@ namespace EverythingToolbar.Helpers
                 return 96.0;
             }
 
-            var hwnd = PresentationSource.FromVisual(visual) as HwndSource;
-            if (hwnd == null)
+            if (!(PresentationSource.FromVisual(visual) is HwndSource hwnd))
             {
                 return 96.0;
             }

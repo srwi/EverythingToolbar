@@ -70,11 +70,6 @@ namespace EverythingToolbar
             ResourceManager.Instance.AutoApplyTheme();
         }
 
-        private void OnResourcesChanged(object sender, ResourcesChangedEventArgs e)
-        {
-            Resources = e.NewResource;
-        }
-
         private new void Hide()
         {
             IsOpen = false;
