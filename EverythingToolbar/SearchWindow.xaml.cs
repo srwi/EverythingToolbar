@@ -1,5 +1,6 @@
 ﻿using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
+using NHotkey;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -63,11 +64,25 @@ namespace EverythingToolbar
             Settings.Default.PropertyChanged += (s, e) => Settings.Default.Save();
 
             LostKeyboardFocus += OnLostKeyboardFocus;
+            Activated += OnActivated;
             EventDispatcher.Instance.HideWindow += Hide;
             EventDispatcher.Instance.ShowWindow += Show;
 
             ResourceManager.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
             ResourceManager.Instance.AutoApplyTheme();
+        }
+
+        private void OnActivated(object sender, EventArgs e)
+        {
+            SearchBox.Focus();
+        }
+
+        private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (e.NewFocus == null)  // New focus outside application
+            {
+                Hide();
+            }
         }
 
         private new void Hide()
@@ -79,23 +94,21 @@ namespace EverythingToolbar
 
         private new void Show()
         {
-            if (!IsOpen)
-                OnOpened(null, null);
-
             IsOpen = true;
             base.Show();
+
+            if (!IsOpen)
+                AnimateOpen();
+
             Keyboard.Focus(SearchBox);
         }
 
-        private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        public void Show(object sender, HotkeyEventArgs e)
         {
-            if (e.NewFocus == null)  // New focus outside application
-            {
-                EventDispatcher.Instance.InvokeHideWindow();
-            }
+            Show();
         }
 
-        private void OnOpened(object sender, EventArgs e)
+        private void AnimateOpen()
         {
             //Keyboard.Focus(SearchBox);
 
@@ -119,8 +132,8 @@ namespace EverythingToolbar
             //        break;
             //}
 
-            Height = Properties.Settings.Default.popupSize.Height;
-            Width = Properties.Settings.Default.popupSize.Width;
+            Height = Settings.Default.popupSize.Height;
+            Width = Settings.Default.popupSize.Width;
 
             QuinticEase ease = new QuinticEase
             {
@@ -128,7 +141,7 @@ namespace EverythingToolbar
             };
 
             int modifier = 1;
-            Duration duration = TimeSpan.FromSeconds(Properties.Settings.Default.isAnimationsDisabled ? 0 : 0.4);
+            Duration duration = TimeSpan.FromSeconds(Settings.Default.isAnimationsDisabled ? 0 : 0.4);
             DoubleAnimation outer = new DoubleAnimation(modifier * 150, 0, duration)
             {
                 EasingFunction = ease
@@ -142,7 +155,7 @@ namespace EverythingToolbar
             };
             PopupMarginBorder?.BeginAnimation(OpacityProperty, opacity);
 
-            duration = TimeSpan.FromSeconds(Properties.Settings.Default.isAnimationsDisabled ? 0 : 0.8);
+            duration = TimeSpan.FromSeconds(Settings.Default.isAnimationsDisabled ? 0 : 0.8);
             ThicknessAnimation inner = new ThicknessAnimation(new Thickness(0), duration)
             {
                 EasingFunction = ease
@@ -152,10 +165,15 @@ namespace EverythingToolbar
             //else if (taskbarEdge == Edge.Right)
             //    inner.From = new Thickness(50, 0, -50, 0);
             //else if (taskbarEdge == Edge.Bottom)
-                inner.From = new Thickness(0, 50, 0, -50);
+            inner.From = new Thickness(0, 50, 0, -50);
             //else if (taskbarEdge == Edge.Left)
             //    inner.From = new Thickness(-50, 0, 50, 0);
             ContentGrid?.BeginAnimation(MarginProperty, inner);
+        }
+
+        private void OnOpened(object sender, EventArgs e)
+        {
+            AnimateOpen();
         }
 
         private void OpenSearchInEverything(object sender, RoutedEventArgs e)

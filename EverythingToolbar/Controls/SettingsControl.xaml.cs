@@ -80,9 +80,7 @@ namespace EverythingToolbar
                     }
                 }
 
-                if (ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
-                    shortcutSelector.Key,
-                    shortcutSelector.Modifiers))
+                if (ShortcutManager.Instance.AddOrReplace("FocusSearchBox", shortcutSelector.Key, shortcutSelector.Modifiers))
                 {
                     ShortcutManager.Instance.SetShortcut(shortcutSelector.Key, shortcutSelector.Modifiers);
                 }

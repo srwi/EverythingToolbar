@@ -7,8 +7,6 @@ namespace EverythingToolbar
 {
     public partial class SearchBox : UserControl
     {
-        private string LastText = "";
-
         public SearchBox()
         {
             InitializeComponent();
@@ -32,9 +30,10 @@ namespace EverythingToolbar
             }
         }
 
-        private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        public new void Focus()
         {
-            //EventDispatcher.Instance.InvokeHideWindow();
+            TextBox.Focus();
+            Keyboard.Focus(TextBox);
         }
 
         private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -53,17 +52,6 @@ namespace EverythingToolbar
                     textBox.Focus();
                 }
             }
-        }
-
-        private void OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(TextBox.Text))
-                EventDispatcher.Instance.InvokeShowWindow();
-
-            if (LastText == "")
-                TextBox.CaretIndex = TextBox.Text.Length;
-
-            LastText = TextBox.Text;
         }
 
         private void OnPasteClicked(object sender, RoutedEventArgs args) { TextBox.Paste(); }

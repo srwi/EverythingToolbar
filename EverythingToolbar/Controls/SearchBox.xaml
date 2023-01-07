@@ -12,8 +12,6 @@
                  Tag="{x:Static properties:Resources.TextBoxWatermark}"
                  Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  CaretBrush="{DynamicResource TextBoxForegroundActive}"
-                 TextChanged="OnTextChanged"
-                 LostKeyboardFocus="OnLostKeyboardFocus"
                  GotKeyboardFocus="OnGotKeyboardFocus"
                  PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton">
             <TextBox.ContextMenu>
