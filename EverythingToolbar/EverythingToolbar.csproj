@@ -77,8 +77,6 @@
     <Compile Include="Converters\NotConverter.cs" />
     <Compile Include="Converters\SearchResultsCountConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="Converters\ResourceLoaderToMenuItemsConverter.cs" />
-    <Compile Include="Converters\SearchTermToIsOpenedConverter.cs" />
     <Compile Include="Converters\DoubleToVisibilityConverter.cs" />
     <Compile Include="Data\Filter.cs" />
     <Compile Include="EverythingSearch.cs" />

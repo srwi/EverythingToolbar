@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace EverythingToolbar
@@ -17,6 +18,11 @@ namespace EverythingToolbar
         [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
+        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         private string _name;
         public string Name
         {
@@ -24,7 +30,7 @@ namespace EverythingToolbar
             set
             {
                 _name = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Name"));
+                NotifyPropertyChanged();
             }
         }
 
@@ -35,7 +41,7 @@ namespace EverythingToolbar
             set
             {
                 _filetype = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FileType"));
+                NotifyPropertyChanged();
             }
         }
 
@@ -46,8 +52,8 @@ namespace EverythingToolbar
             set
             {
                 _expression = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Expression"));
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ExpressionValid"));
+                NotifyPropertyChanged();
+                NotifyPropertyChanged(nameof(ExpressionValid));
             }
         }
 
@@ -58,7 +64,7 @@ namespace EverythingToolbar
             set
             {
                 _command = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Command"));
+                NotifyPropertyChanged();
             }
         }
 

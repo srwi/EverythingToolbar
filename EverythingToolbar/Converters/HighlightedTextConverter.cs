@@ -14,8 +14,10 @@ namespace EverythingToolbar
         {
             if (value is string input)
             {
-                TextBlock textBlock = new TextBlock();
-                textBlock.TextTrimming = TextTrimming.CharacterEllipsis;
+                TextBlock textBlock = new TextBlock
+                {
+                    TextTrimming = TextTrimming.CharacterEllipsis
+                };
                 string[] segments = input.Split('*');
                 for (int j = 0; j < segments.Length; j++)
                 {

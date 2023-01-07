@@ -7,13 +7,14 @@ using System.ComponentModel;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace EverythingToolbar.Helpers
 {
     class FilterLoader : INotifyPropertyChanged
     {
-        private readonly ObservableCollection<Filter> defaultFilters = new ObservableCollection<Filter>
+        private readonly ObservableCollection<Filter> _defaultFilters = new ObservableCollection<Filter>
         {
             new Filter {
                 Name = Properties.Resources.DefaultFilterAll,
@@ -52,11 +53,11 @@ namespace EverythingToolbar.Helpers
             {
                 if (Properties.Settings.Default.isRegExEnabled)
                 {
-                    return new ObservableCollection<Filter>(defaultFilters.Skip(0).Take(1));
+                    return new ObservableCollection<Filter>(_defaultFilters.Skip(0).Take(1));
                 }
                 else
                 {
-                    return defaultFilters;
+                    return _defaultFilters;
                 }
             }
         }
@@ -124,7 +125,7 @@ namespace EverythingToolbar.Helpers
                 Search = "ext:3g2;3gp;3gp2;3gpp;amr;amv;asf;avi;bdmv;bik;d2v;divx;drc;dsa;dsm;dss;dsv;evo;f4v;flc;fli;flic;flv;hdmov;ifo;ivf;m1v;m2p;m2t;m2ts;m2v;m4b;m4p;m4v;mkv;mp2v;mp4;mp4v;mpe;mpeg;mpg;mpls;mpv2;mpv4;mov;mts;ogm;ogv;pss;pva;qt;ram;ratdvd;rm;rmm;rmvb;roq;rpm;smil;smk;swf;tp;tpr;ts;vob;vp6;webm;wm;wmp;wmv"
             }
         };
-        private ObservableCollection<Filter> userFiltersCache;
+        private ObservableCollection<Filter> _userFiltersCache;
         public ObservableCollection<Filter> UserFilters
         { 
             get
@@ -137,7 +138,7 @@ namespace EverythingToolbar.Helpers
                 {
                     if (Properties.Settings.Default.isImportFilters)
                     {
-                        return userFiltersCache ?? LoadFilters();
+                        return _userFiltersCache ?? LoadFilters();
                     }
                     else
                     {
@@ -150,7 +151,7 @@ namespace EverythingToolbar.Helpers
         public static readonly FilterLoader Instance = new FilterLoader();
         public event PropertyChangedEventHandler PropertyChanged;
         private static readonly ILogger _logger = ToolbarLogger.GetLogger<FilterLoader>();
-        private FileSystemWatcher watcher;
+        private FileSystemWatcher _watcher;
 
         private FilterLoader()
         {
@@ -164,13 +165,18 @@ namespace EverythingToolbar.Helpers
             {
                 if (!ifc.Families.Any(f => f.Name == "Segoe MDL2 Assets"))
                 {
-                    foreach (Filter defaultFilter in defaultFilters)
+                    foreach (Filter defaultFilter in _defaultFilters)
                         defaultFilter.Icon = "";
                 }
             }
 
             RefreshFilters();
             CreateFileWatcher();
+        }
+
+        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void OnSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -181,8 +187,8 @@ namespace EverythingToolbar.Helpers
 
         private void RefreshFilters()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DefaultFilters"));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UserFilters"));
+            NotifyPropertyChanged(nameof(DefaultFilters));
+            NotifyPropertyChanged(nameof(UserFilters));
         }
 
         private ObservableCollection<Filter> LoadFilters()
@@ -265,7 +271,7 @@ namespace EverythingToolbar.Helpers
                 return DefaultUserFilters;
             }
 
-            userFiltersCache = filters;
+            _userFiltersCache = filters;
             return filters;
         }
 
@@ -274,19 +280,19 @@ namespace EverythingToolbar.Helpers
             if (!File.Exists(Properties.Settings.Default.filtersPath))
                 return;
 
-            watcher = new FileSystemWatcher
+            _watcher = new FileSystemWatcher
             {
                 Path = Path.GetDirectoryName(Properties.Settings.Default.filtersPath),
                 Filter = Path.GetFileName(Properties.Settings.Default.filtersPath),
                 NotifyFilter = NotifyFilters.FileName
             };
 
-            watcher.Changed += new FileSystemEventHandler(OnFileChanged);
-            watcher.Created += new FileSystemEventHandler(OnFileChanged);
-            watcher.Deleted += new FileSystemEventHandler(OnFileChanged);
-            watcher.Renamed += new RenamedEventHandler(OnFileRenamed);
+            _watcher.Changed += new FileSystemEventHandler(OnFileChanged);
+            _watcher.Created += new FileSystemEventHandler(OnFileChanged);
+            _watcher.Deleted += new FileSystemEventHandler(OnFileChanged);
+            _watcher.Renamed += new RenamedEventHandler(OnFileRenamed);
 
-            watcher.EnableRaisingEvents = true;
+            _watcher.EnableRaisingEvents = true;
         }
 
         private void OnFileRenamed(object sender, RenamedEventArgs e)
