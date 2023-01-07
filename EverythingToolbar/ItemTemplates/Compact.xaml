@@ -5,18 +5,13 @@
     <DataTemplate x:Key="SearchResultsViewTemplate">
         <Grid x:Name="ListViewItem" Margin="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
             <Image Source="{Binding Icon, IsAsync=True}"
                    Width="16"
-                   Height="16"
-                   Margin="0, 0, 2, 0" />
+                   Height="16" />
             <ContentControl Content="{Binding HighlightedFileName, Converter={local:HighlightedTextConverter}, Mode=OneTime}"
                             Grid.Column="1"
                             FontSize="9pt"
