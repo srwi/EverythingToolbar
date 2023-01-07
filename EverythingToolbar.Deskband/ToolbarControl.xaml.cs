@@ -23,19 +23,19 @@ namespace EverythingToolbar
                 EventDispatcher.Instance.InvokeUnfocusRequested(sender, e);
             };
 
-            if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
-                   (Key)Properties.Settings.Default.shortcutKey,
-                   (ModifierKeys)Properties.Settings.Default.shortcutModifiers,
-                   FocusSearchBox))
-            {
-                ShortcutManager.Instance.SetShortcut(Key.None, ModifierKeys.None);
-                MessageBox.Show(Properties.Resources.MessageBoxFailedToRegisterHotkey,
-                    Properties.Resources.MessageBoxErrorTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
-            }
+            //if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
+            //       (Key)Properties.Settings.Default.shortcutKey,
+            //       (ModifierKeys)Properties.Settings.Default.shortcutModifiers,
+            //       FocusSearchBox))
+            //{
+            //    ShortcutManager.Instance.SetShortcut(Key.None, ModifierKeys.None);
+            //    MessageBox.Show(Properties.Resources.MessageBoxFailedToRegisterHotkey,
+            //        Properties.Resources.MessageBoxErrorTitle,
+            //        MessageBoxButton.OK,
+            //        MessageBoxImage.Error);
+            //}
 
-            ShortcutManager.Instance.SetFocusCallback(FocusSearchBox);
+            //ShortcutManager.Instance.SetFocusCallback(FocusSearchBox);
             if (Properties.Settings.Default.isReplaceStartMenuSearch)
                 ShortcutManager.Instance.HookStartMenu();
 
@@ -67,27 +67,6 @@ namespace EverythingToolbar
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             EventDispatcher.Instance.InvokeFocusRequested(sender, e);
-        }
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SetForegroundWindow(IntPtr hWnd);
-
-        public void FocusSearchBox(object sender, HotkeyEventArgs e)
-        {
-            if (SearchWindow.Instance.IsOpen)
-            {
-                EverythingSearch.Instance.SearchTerm = null;
-            }
-            else
-            {
-                SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
-                EventDispatcher.Instance.InvokeFocusRequested(sender, e);
-                Keyboard.Focus(SearchBox);
-
-                if (Properties.Settings.Default.isIconOnly)
-                    EverythingSearch.Instance.SearchTerm = "";
-            }
         }
     }
 }

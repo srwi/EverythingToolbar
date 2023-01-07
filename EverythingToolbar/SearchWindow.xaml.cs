@@ -75,6 +75,8 @@ namespace EverythingToolbar
         private void OnActivated(object sender, EventArgs e)
         {
             SearchBox.Focus();
+            NativeMethods.SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
+            EventDispatcher.Instance.InvokeFocusRequested(sender, e);
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -99,8 +101,6 @@ namespace EverythingToolbar
 
             if (!IsOpen)
                 AnimateOpen();
-
-            Keyboard.Focus(SearchBox);
         }
 
         public void Show(object sender, HotkeyEventArgs e)

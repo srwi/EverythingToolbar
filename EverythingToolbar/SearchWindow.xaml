@@ -9,6 +9,7 @@
         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         WindowStyle="None"
         Background="Transparent"
+        Topmost="True"
         ShowInTaskbar="False"
         Width="500"
         Height="500"
