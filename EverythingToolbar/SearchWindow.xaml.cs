@@ -4,7 +4,6 @@ using NHotkey;
 using System;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
@@ -92,10 +91,13 @@ namespace EverythingToolbar
 
         public new void Show()
         {
+            if (!TaskbarStateManager.Instance.IsIcon)
+                ShowActivated = false;
+            
             base.Show();
 
-            if (TaskbarStateManager.Instance.IsIcon)
-                NativeMethods.SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
+            if (!TaskbarStateManager.Instance.IsIcon)
+                ShowActivated = true;
 
             if (!IsOpen)
                 AnimateOpen();

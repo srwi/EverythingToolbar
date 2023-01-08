@@ -39,13 +39,6 @@ namespace EverythingToolbar
                 ShortcutManager.Instance.HookStartMenu();
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            SearchWindow.Instance.ShowActivated = false;
-            SearchWindow.Instance.Show();
-            SearchWindow.Instance.Hide();
-        }
-
         private void OnSearchWindowHiding(object sender, EventArgs e)
         {
             FocusKeyboardFocusCapture(sender, e);
@@ -94,7 +87,7 @@ namespace EverythingToolbar
             }
         }
 
-        private void OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void OnGotFocus(object sender, RoutedEventArgs e)
         {
             EventDispatcher.Instance.InvokeFocusRequested(sender, e);
         }
