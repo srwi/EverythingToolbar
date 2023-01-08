@@ -17,13 +17,35 @@ namespace EverythingToolbar.Helpers
 
         private TaskbarStateManager() { }
 
-        private Edge _taskbarEdge;
+        private Edge _taskbarEdge = Edge.Bottom;
         public Edge TaskbarEdge
         {
             get => _taskbarEdge;
             set
             {
                 _taskbarEdge = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private double _taskbarHeight;
+        public double TaskbarHeight
+        {
+            get => _taskbarHeight;
+            set
+            {
+                _taskbarHeight = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private double _taskbarWidth;
+        public double TaskbarWidth
+        {
+            get => _taskbarWidth;
+            set
+            {
+                _taskbarWidth = value;
                 NotifyPropertyChanged();
             }
         }

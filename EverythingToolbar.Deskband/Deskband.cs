@@ -2,6 +2,7 @@
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using NLog;
+using NLog.Common;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -33,7 +34,7 @@ namespace CSDeskBand
                 TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
                 TaskbarInfo.TaskbarSizeChanged += OnTaskbarSizeChanged;
 
-                //SearchWindow.taskbarEdge = TaskbarInfo.Edge;
+                TaskbarStateManager.Instance.TaskbarEdge = (EverythingToolbar.Helpers.Edge)TaskbarInfo.Edge;
             }
             catch (Exception e)
             {
@@ -75,14 +76,14 @@ namespace CSDeskBand
 
 		private void OnTaskbarEdgeChanged(object sender, TaskbarEdgeChangedEventArgs e)
         {
-            //SearchWindow.taskbarEdge = e.Edge;
+            TaskbarStateManager.Instance.TaskbarEdge = (EverythingToolbar.Helpers.Edge)e.Edge;
             OnTaskbarSizeChanged(sender, null);
         }
 
         protected override void DeskbandOnClosed()
         {
             base.DeskbandOnClosed();
-            ToolbarControl.Destroy();
+            ToolbarControl.Content = null;
             ToolbarControl = null;
         }
     }

@@ -1,4 +1,5 @@
 ﻿using EverythingToolbar.Helpers;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -7,6 +8,8 @@ namespace EverythingToolbar
 {
     public partial class SearchBox : UserControl
     {
+        public event EventHandler<TextChangedEventArgs> TextChanged;
+
         public SearchBox()
         {
             InitializeComponent();
@@ -18,6 +21,9 @@ namespace EverythingToolbar
             // in code because DataTriggers are not compatible with DynamicResources as MenuItem styles
             Properties.Settings.Default.PropertyChanged += OnSettingsChanged;
             EverythingSearch.Instance.PropertyChanged += OnSettingsChanged;
+
+            // Forward TextBox.TextChanged to SearchBox.TextChanged
+            TextBox.TextChanged += (s, e) => TextChanged?.Invoke(s, e);
         }
 
         private void OnSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -47,12 +53,6 @@ namespace EverythingToolbar
             {
                 SearchWindow.Instance.Hide();
             }
-        }
-
-        private void OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(TextBox.Text))
-                SearchWindow.Instance.Show();
         }
 
         private void SelectivelyIgnoreMouseButton(object sender, MouseButtonEventArgs e)

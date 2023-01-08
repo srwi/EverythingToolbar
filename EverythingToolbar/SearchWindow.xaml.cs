@@ -12,7 +12,6 @@ namespace EverythingToolbar
 {
     public partial class SearchWindow : MicaWindow
     {
-        //public static Edge taskbarEdge;
         public static double taskbarHeight = 0;
         public static double taskbarWidth = 0;
 
@@ -122,33 +121,16 @@ namespace EverythingToolbar
                 Show();
         }
 
+        public void PlaceWindow(Rect positionAndSize)
+        {
+            Width = positionAndSize.Width;
+            Height = positionAndSize.Height;
+            Left = positionAndSize.Left;
+            Top = positionAndSize.Top;
+        }
+
         private void AnimateOpen()
         {
-            //Keyboard.Focus(SearchBox);
-
-            //switch (taskbarEdge)
-            //{
-            //    case Edge.Top:
-            //        Placement = PlacementMode.Bottom;
-            //        PopupMarginBorder.Margin = new Thickness(12, 0, 12, 12);
-            //        break;
-            //    case Edge.Left:
-            //        Placement = PlacementMode.Right;
-            //        PopupMarginBorder.Margin = new Thickness(0, 12, 12, 12);
-            //        break;
-            //    case Edge.Right:
-            //        Placement = PlacementMode.Left;
-            //        PopupMarginBorder.Margin = new Thickness(12, 12, 0, 12);
-            //        break;
-            //    case Edge.Bottom:
-            //        Placement = PlacementMode.Top;
-            //        PopupMarginBorder.Margin = new Thickness(12, 12, 12, 0);
-            //        break;
-            //}
-
-            Height = Settings.Default.popupSize.Height;
-            Width = Settings.Default.popupSize.Width;
-
             QuinticEase ease = new QuinticEase
             {
                 EasingMode = EasingMode.EaseOut
@@ -174,14 +156,14 @@ namespace EverythingToolbar
             {
                 EasingFunction = ease
             };
-            //if (taskbarEdge == Edge.Top)
-            //    inner.From = new Thickness(0, -50, 0, 50);
-            //else if (taskbarEdge == Edge.Right)
-            //    inner.From = new Thickness(50, 0, -50, 0);
-            //else if (taskbarEdge == Edge.Bottom)
-            inner.From = new Thickness(0, 50, 0, -50);
-            //else if (taskbarEdge == Edge.Left)
-            //    inner.From = new Thickness(-50, 0, 50, 0);
+            if (TaskbarStateManager.Instance.TaskbarEdge == Edge.Top)
+                inner.From = new Thickness(0, -50, 0, 50);
+            else if (TaskbarStateManager.Instance.TaskbarEdge == Edge.Right)
+                inner.From = new Thickness(50, 0, -50, 0);
+            else if (TaskbarStateManager.Instance.TaskbarEdge == Edge.Bottom)
+                inner.From = new Thickness(0, 50, 0, -50);
+            else if (TaskbarStateManager.Instance.TaskbarEdge == Edge.Left)
+                inner.From = new Thickness(-50, 0, 50, 0);
             ContentGrid?.BeginAnimation(MarginProperty, inner);
         }
 

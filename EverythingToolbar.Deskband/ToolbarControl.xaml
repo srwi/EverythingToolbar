@@ -21,6 +21,7 @@
                  Name="KeyboardFocusCapture" />
 
         <local:SearchBox x:Name="SearchBox"
+                         TextChanged="OnTextBoxTextChanged"
                          Visibility="{Binding Path=ActualWidth,
                                               RelativeSource={RelativeSource Self},
                                               Converter={local:DoubleToVisibilityConverter},
