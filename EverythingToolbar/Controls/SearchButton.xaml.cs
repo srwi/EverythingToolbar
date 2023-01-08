@@ -53,10 +53,7 @@ namespace EverythingToolbar
 
         private void OnClick(object sender, RoutedEventArgs e)
         {
-            if (SearchWindow.Instance.IsOpen)
-                SearchWindow.Instance.Hide();
-            else
-                SearchWindow.Instance.Show();
+            SearchWindow.Instance.Toggle();
         }
 
         private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

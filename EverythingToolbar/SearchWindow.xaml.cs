@@ -14,7 +14,6 @@ namespace EverythingToolbar
         //public static Edge taskbarEdge;
         public static double taskbarHeight = 0;
         public static double taskbarWidth = 0;
-        public bool IsOpen = false;
 
         public new double Height
         {
@@ -83,7 +82,6 @@ namespace EverythingToolbar
 
         public new void Hide()
         {
-            IsOpen = false;
             HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
             Hiding?.Invoke(this, new EventArgs());
             base.Hide();
@@ -91,6 +89,8 @@ namespace EverythingToolbar
 
         public new void Show()
         {
+            Visibility visibility = Visibility;
+
             if (!TaskbarStateManager.Instance.IsIcon)
                 ShowActivated = false;
             
@@ -99,15 +99,21 @@ namespace EverythingToolbar
             if (!TaskbarStateManager.Instance.IsIcon)
                 ShowActivated = true;
 
-            if (!IsOpen)
+            if (visibility != Visibility.Visible)
                 AnimateOpen();
-
-            IsOpen = true;
         }
 
         public void Show(object sender, HotkeyEventArgs e)
         {
             Show();
+        }
+
+        public void Toggle()
+        {
+            if (Visibility == Visibility.Visible)
+                Hide();
+            else
+                Show();
         }
 
         private void AnimateOpen()
