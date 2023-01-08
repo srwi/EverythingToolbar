@@ -72,7 +72,7 @@ namespace EverythingToolbar
             {
                 SearchWindow.Instance.Show();
                 NativeMethods.SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
-                Keyboard.Focus(SearchBox);
+                SearchBox.Focus();
             }
         }
 

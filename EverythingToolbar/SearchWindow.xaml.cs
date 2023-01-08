@@ -4,6 +4,7 @@ using NHotkey;
 using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
@@ -71,9 +72,11 @@ namespace EverythingToolbar
         {
             if (TaskbarStateManager.Instance.IsIcon)
             {
+                NativeMethods.SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
                 SearchBox.Focus();
-                EventDispatcher.Instance.InvokeFocusRequested(sender, e);
             }
+
+            EventDispatcher.Instance.InvokeFocusRequested(sender, e);
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -95,13 +98,12 @@ namespace EverythingToolbar
         {
             Visibility visibility = Visibility;
 
-            if (!TaskbarStateManager.Instance.IsIcon)
-                ShowActivated = false;
-            
+            ShowActivated = TaskbarStateManager.Instance.IsIcon;
+
             base.Show();
 
-            if (!TaskbarStateManager.Instance.IsIcon)
-                ShowActivated = true;
+            Topmost = true;
+            Topmost = false;
 
             if (visibility != Visibility.Visible)
                 AnimateOpen();
