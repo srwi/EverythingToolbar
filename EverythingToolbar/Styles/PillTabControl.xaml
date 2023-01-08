@@ -55,10 +55,10 @@
                                     Value="{DynamicResource TabForegroundActive}" />
                             <Setter TargetName="Border"
                                     Property="Background"
-                                    Value="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}" />
+                                    Value="{DynamicResource AccentColor}" />
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}" />
+                                    Value="{DynamicResource AccentColor}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

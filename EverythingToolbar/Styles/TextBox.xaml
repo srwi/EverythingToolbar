@@ -65,7 +65,7 @@
                                  Value="true">
                             <Setter Property="BorderBrush"
                                     TargetName="BottomBorder"
-                                    Value="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}" />
+                                    Value="{DynamicResource AccentColor}" />
                             <Setter Property="Background"
                                     TargetName="TextBoxBorder"
                                     Value="{DynamicResource TextBoxBackgroundActive}" />

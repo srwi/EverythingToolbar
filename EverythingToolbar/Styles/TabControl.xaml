@@ -41,7 +41,7 @@
                                  Value="True">
                             <Setter TargetName="SelectedIndicator"
                                     Property="Background"
-                                    Value="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}" />
+                                    Value="{DynamicResource AccentColor}" />
                             <Setter TargetName="ContentSite"
                                     Property="FontWeight"
                                     Value="Medium" />

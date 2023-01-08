@@ -26,8 +26,8 @@
                                     CornerRadius="16"
                                     Padding="14, 0"
                                     Margin="0, 0, 4, 0"
-                                    BorderBrush="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}"
-                                    Background="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}">
+                                    BorderBrush="{DynamicResource AccentColor}"
+                                    Background="{DynamicResource AccentColor}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock x:Name="ContentSiteIcon"
                                                IsHitTestVisible="False"

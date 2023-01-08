@@ -49,6 +49,13 @@ namespace EverythingToolbar
         private SearchWindow()
         {
             InitializeComponent();
+
+            Loaded += (s, _) =>
+            {
+                ResourceManager.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
+                ResourceManager.Instance.AutoApplyTheme();
+            };
+
             DataContext = EverythingSearch.Instance;
 
             if (Settings.Default.isUpgradeRequired)
@@ -58,9 +65,6 @@ namespace EverythingToolbar
                 Settings.Default.Save();
             }
             Settings.Default.PropertyChanged += (s, e) => Settings.Default.Save();
-
-            ResourceManager.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
-            ResourceManager.Instance.AutoApplyTheme();
         }
 
         private void OnActivated(object sender, EventArgs e)

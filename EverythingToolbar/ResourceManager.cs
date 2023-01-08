@@ -1,10 +1,13 @@
 ﻿using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
 using NLog;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
+using System.Windows.Media;
+using Windows.UI.ViewManagement;
 
 namespace EverythingToolbar
 {
@@ -25,33 +28,52 @@ namespace EverythingToolbar
         public static readonly ResourceManager Instance = new ResourceManager();
         public event EventHandler<ResourcesChangedEventArgs> ResourceChanged;
         
-        private static ResourceDictionary CurrentResources;
-        private readonly SynchronizationContext uiThreadContext;
-        private readonly RegistryEntry systemThemeRegistryEntry = new RegistryEntry("HKEY_CURRENT_USER", @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme");
-        private readonly RegistryWatcher systemThemeWatcher = null;
+        private static ResourceDictionary _currentResources;
+        private readonly SynchronizationContext _uiThreadContext;
+        private readonly RegistryEntry _systemThemeRegistryEntry = new RegistryEntry("HKEY_CURRENT_USER", @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme");
+        private readonly RegistryWatcher _systemThemeWatcher = null;
         private static readonly ILogger _logger = ToolbarLogger.GetLogger<ResourceManager>();
+        private readonly UISettings _settings = new UISettings();
 
         private ResourceManager()
         {
-            CurrentResources = new ResourceDictionary();
+            _currentResources = new ResourceDictionary();
 
-            if (systemThemeWatcher != null)
+            if (_systemThemeWatcher != null)
             {
-                systemThemeWatcher.Stop();
-                systemThemeWatcher = null;
+                _systemThemeWatcher.Stop();
+                _systemThemeWatcher = null;
             }
 
             // Store UI thread SynchronizationContext so that the RegistryWatcher can later use it to access the UI thread
-            uiThreadContext = SynchronizationContext.Current;
-            systemThemeWatcher = new RegistryWatcher(systemThemeRegistryEntry);
-            systemThemeWatcher.OnChangeValue += (newValue) =>
+            _uiThreadContext = SynchronizationContext.Current;
+            _systemThemeWatcher = new RegistryWatcher(_systemThemeRegistryEntry);
+            _systemThemeWatcher.OnChangeValue += (newValue) =>
             {
-                uiThreadContext.Post(state => {
+                _uiThreadContext.Post(state => {
                     ApplyTheme((int)newValue == 1);
                 }, null);
             };
 
-            Properties.Settings.Default.PropertyChanged += OnSettingsChanged;
+            _settings.ColorValuesChanged += (UISettings sender, object args) =>
+            {
+                _uiThreadContext.Post(state => {
+                    AutoApplyTheme();
+                }, null);
+            };
+
+            Settings.Default.PropertyChanged += OnSettingsChanged;
+        }
+
+        private static SolidColorBrush GetBrush(Windows.UI.Color color)
+        {
+            return new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
+        }
+
+        public void AutoApplyTheme()
+        {
+            bool isLightTheme = (int)_systemThemeRegistryEntry.GetValue() == 1;
+            ApplyTheme(isLightTheme);
         }
 
         private void OnSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -62,15 +84,9 @@ namespace EverythingToolbar
             }
         }
 
-        public void AutoApplyTheme()
-        {
-            bool isLightTheme = (int)systemThemeRegistryEntry.GetValue() == 1;
-            ApplyTheme(isLightTheme);
-        }
-
         private void ApplyTheme(bool isLightTheme)
         {
-            CurrentResources.Clear();
+            _currentResources.Clear();
 
             string assemblyLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
@@ -93,10 +109,18 @@ namespace EverythingToolbar
             string dataTemplateLocation = Path.Combine(assemblyLocation, "ItemTemplates", Properties.Settings.Default.itemTemplate + ".xaml");
             AddResource(dataTemplateLocation);
 
+            // Apply accent color
+            SolidColorBrush accentColor;
+            if (isLightTheme)
+                accentColor = GetBrush(_settings.GetColorValue(UIColorType.AccentDark1));
+            else
+                accentColor = GetBrush(_settings.GetColorValue(UIColorType.AccentLight2));
+            AddSolidColorBrush(accentColor);
+
             // Notify resource change
             ResourceChanged?.Invoke(this, new ResourcesChangedEventArgs()
             {
-                NewResource = CurrentResources,
+                NewResource = _currentResources,
                 NewTheme = isLightTheme ? Theme.Light : Theme.Dark
             });
         }
@@ -104,10 +128,20 @@ namespace EverythingToolbar
         private void AddResource(string path)
         {
             if (!File.Exists(path))
+            {
                 _logger.Error("Could not find resource file " + path);
+                return;
+            }
 
             var resDict = new ResourceDictionary() { Source = new Uri(path) };
-            CurrentResources.MergedDictionaries.Add(resDict);
+            _currentResources.MergedDictionaries.Add(resDict);
+        }
+
+        private void AddSolidColorBrush(SolidColorBrush brush)
+        {
+            var resDict = new ResourceDictionary();
+            resDict.Add("AccentColor", brush);
+            _currentResources.MergedDictionaries.Add(resDict);
         }
     }
 }

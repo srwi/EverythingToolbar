@@ -10,7 +10,6 @@
         WindowStyle="None"
         Background="Transparent"
         ShowInTaskbar="False"
-        Topmost="True"
         Width="500"
         Height="500"
         Activated="OnActivated"

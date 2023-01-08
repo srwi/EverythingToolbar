@@ -13,7 +13,7 @@ namespace EverythingToolbar
                 (EverythingSearch.Instance.SearchTerm == null || EverythingSearch.Instance.SearchTerm == ""))
                 return "";
 
-            string suffix = (int)value > 1 ? Properties.Resources.SearchResults : Properties.Resources.SearchResult;
+            string suffix = (int)value == 1 ? Properties.Resources.SearchResult : Properties.Resources.SearchResults;
             return $"{value} {suffix}";
         }
 

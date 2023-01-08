@@ -10,10 +10,16 @@ namespace EverythingToolbar.Debug
         {
             InitializeComponent();
 
+            ToolbarLogger.Initialize();
+
             TaskbarStateManager.Instance.IsDeskband = false;
             TaskbarStateManager.Instance.IsIcon = true;
 
-            ToolbarLogger.Initialize();
+            Loaded += (s, _) =>
+            {
+                ResourceManager.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
+                ResourceManager.Instance.AutoApplyTheme();
+            };
 
             if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
                                                        (Key)EverythingToolbar.Properties.Settings.Default.shortcutKey,
@@ -26,9 +32,6 @@ namespace EverythingToolbar.Debug
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
-
-            ResourceManager.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
-            ResourceManager.Instance.AutoApplyTheme();
         }
     }
 }
