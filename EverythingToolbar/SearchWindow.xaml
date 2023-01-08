@@ -9,10 +9,12 @@
         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         WindowStyle="None"
         Background="Transparent"
-        Topmost="True"
         ShowInTaskbar="False"
+        Topmost="True"
         Width="500"
         Height="500"
+        Activated="OnActivated"
+        LostKeyboardFocus="OnLostKeyboardFocus"
         mc:Ignorable="d"
         d:DesignWidth="500"
         d:DesignHeight="500">
@@ -74,8 +76,8 @@
                                      Grid.Row="{DynamicResource SearchBoxGridRow}"
                                      Height="40"
                                      Margin="{DynamicResource SearchBoxMargin}"
-                                     Visibility="{Binding Source={x:Static properties:Settings.Default},
-                                                          Path=isIconOnly,
+                                     Visibility="{Binding Source={x:Static h:TaskbarStateManager.Instance},
+                                                          Path=IsIcon,
                                                           Converter={local:BoolToVisibilityConverter},
                                                           ConverterParameter=false}" />
                 </Grid>

@@ -87,6 +87,7 @@
     <Compile Include="Helpers\DpiScaling.cs" />
     <Compile Include="Helpers\EventDispatcher.cs" />
     <Compile Include="Helpers\FilterLoader.cs" />
+    <Compile Include="Helpers\TaskbarStateManager.cs" />
     <Compile Include="Helpers\HistoryManager.cs" />
     <Compile Include="Helpers\NativeMethods.cs" />
     <Compile Include="Helpers\ShellUtils.cs" />

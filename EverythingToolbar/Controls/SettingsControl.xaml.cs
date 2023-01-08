@@ -44,18 +44,21 @@ namespace EverythingToolbar
 
         private void OpenAboutWindow(object sender, RoutedEventArgs e)
         {
+            SearchWindow.Instance.Hide();
             Window about = new About();
             about.Show();
         }
 
         private void OpenRulesWindow(object sender, RoutedEventArgs e)
         {
+            SearchWindow.Instance.Hide();
             Window rules = new Rules();
             rules.Show();
         }
 
         private void OpenInstanceNameDialog(object sender, RoutedEventArgs e)
         {
+            SearchWindow.Instance.Hide();
             var inputDialog = new InputDialog(Properties.Resources.SettingsSetInstanceName,
                                               Properties.Settings.Default.instanceName);
             if (inputDialog.ShowDialog() == true)
@@ -67,6 +70,7 @@ namespace EverythingToolbar
 
         private void OpenShortcutWindow(object sender, RoutedEventArgs e)
         {
+            SearchWindow.Instance.Hide();
             ShortcutSelector shortcutSelector = new ShortcutSelector();
             if (shortcutSelector.ShowDialog().Value)
             {

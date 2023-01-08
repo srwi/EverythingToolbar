@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace EverythingToolbar.Helpers
 {
-    internal class NativeMethods
+    public class NativeMethods
     {
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]

@@ -32,9 +32,6 @@
     <Setting Name="isAutoApplyRules" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="isIconOnly" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="filtersPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>

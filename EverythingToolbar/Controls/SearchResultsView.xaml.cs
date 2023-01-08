@@ -108,7 +108,7 @@ namespace EverythingToolbar
             }
             else if (e.Key == Key.Escape)
             {
-                EventDispatcher.Instance.InvokeHideWindow();
+                SearchWindow.Instance.Hide();
                 Keyboard.ClearFocus();
             }
             else if (e.Key == Key.PageUp)

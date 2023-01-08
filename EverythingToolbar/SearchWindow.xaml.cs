@@ -2,10 +2,7 @@
 using EverythingToolbar.Properties;
 using NHotkey;
 using System;
-using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -19,7 +16,7 @@ namespace EverythingToolbar
         public static double taskbarHeight = 0;
         public static double taskbarWidth = 0;
         public bool IsOpen = false;
-        
+
         public new double Height
         {
             get
@@ -49,6 +46,7 @@ namespace EverythingToolbar
         }
 
         public static readonly SearchWindow Instance = new SearchWindow();
+        public event EventHandler<EventArgs> Hiding;
 
         private SearchWindow()
         {
@@ -63,20 +61,17 @@ namespace EverythingToolbar
             }
             Settings.Default.PropertyChanged += (s, e) => Settings.Default.Save();
 
-            LostKeyboardFocus += OnLostKeyboardFocus;
-            Activated += OnActivated;
-            EventDispatcher.Instance.HideWindow += Hide;
-            EventDispatcher.Instance.ShowWindow += Show;
-
             ResourceManager.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
             ResourceManager.Instance.AutoApplyTheme();
         }
 
         private void OnActivated(object sender, EventArgs e)
         {
-            SearchBox.Focus();
-            NativeMethods.SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
-            EventDispatcher.Instance.InvokeFocusRequested(sender, e);
+            if (TaskbarStateManager.Instance.IsIcon)
+            {
+                SearchBox.Focus();
+                EventDispatcher.Instance.InvokeFocusRequested(sender, e);
+            }
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -87,20 +82,25 @@ namespace EverythingToolbar
             }
         }
 
-        private new void Hide()
+        public new void Hide()
         {
             IsOpen = false;
             HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
+            Hiding?.Invoke(this, new EventArgs());
             base.Hide();
         }
 
-        private new void Show()
+        public new void Show()
         {
-            IsOpen = true;
             base.Show();
+
+            if (TaskbarStateManager.Instance.IsIcon)
+                NativeMethods.SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
 
             if (!IsOpen)
                 AnimateOpen();
+
+            IsOpen = true;
         }
 
         public void Show(object sender, HotkeyEventArgs e)
@@ -169,11 +169,6 @@ namespace EverythingToolbar
             //else if (taskbarEdge == Edge.Left)
             //    inner.From = new Thickness(-50, 0, 50, 0);
             ContentGrid?.BeginAnimation(MarginProperty, inner);
-        }
-
-        private void OnOpened(object sender, EventArgs e)
-        {
-            AnimateOpen();
         }
 
         private void OpenSearchInEverything(object sender, RoutedEventArgs e)

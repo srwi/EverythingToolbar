@@ -1,7 +1,6 @@
 using EverythingToolbar.Helpers;
 using NHotkey;
 using System;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,32 +14,29 @@ namespace EverythingToolbar
         {
             InitializeComponent();
 
-            Loaded += OnLoaded;
-
-            SearchBox.LostKeyboardFocus += (object sender, KeyboardFocusChangedEventArgs e) =>
-            {
-                Keyboard.Focus(KeyboardFocusCapture);
-                EventDispatcher.Instance.InvokeUnfocusRequested(sender, e);
-            };
-
-            //if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
-            //       (Key)Properties.Settings.Default.shortcutKey,
-            //       (ModifierKeys)Properties.Settings.Default.shortcutModifiers,
-            //       FocusSearchBox))
-            //{
-            //    ShortcutManager.Instance.SetShortcut(Key.None, ModifierKeys.None);
-            //    MessageBox.Show(Properties.Resources.MessageBoxFailedToRegisterHotkey,
-            //        Properties.Resources.MessageBoxErrorTitle,
-            //        MessageBoxButton.OK,
-            //        MessageBoxImage.Error);
-            //}
-
-            //ShortcutManager.Instance.SetFocusCallback(FocusSearchBox);
-            if (Properties.Settings.Default.isReplaceStartMenuSearch)
-                ShortcutManager.Instance.HookStartMenu();
-
             ResourceManager.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
             ResourceManager.Instance.AutoApplyTheme();
+
+            // Focus an invisible text box to prevent Windows from randomly focusing the search box
+            // and causing visual distraction
+            SearchBox.LostKeyboardFocus += OnSearchBoxLostKeyboardFocus;
+            SearchWindow.Instance.Hiding += OnSearchWindowHiding;
+
+            if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
+                   (Key)Properties.Settings.Default.shortcutKey,
+                   (ModifierKeys)Properties.Settings.Default.shortcutModifiers,
+                   FocusSearchBox))
+            {
+                ShortcutManager.Instance.SetShortcut(Key.None, ModifierKeys.None);
+                MessageBox.Show(Properties.Resources.MessageBoxFailedToRegisterHotkey,
+                    Properties.Resources.MessageBoxErrorTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+
+            ShortcutManager.Instance.SetFocusCallback(FocusSearchBox);
+            if (Properties.Settings.Default.isReplaceStartMenuSearch)
+                ShortcutManager.Instance.HookStartMenu();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -48,6 +44,40 @@ namespace EverythingToolbar
             SearchWindow.Instance.ShowActivated = false;
             SearchWindow.Instance.Show();
             SearchWindow.Instance.Hide();
+        }
+
+        private void OnSearchWindowHiding(object sender, EventArgs e)
+        {
+            FocusKeyboardFocusCapture(sender, e);
+        }
+
+        private void OnSearchBoxLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            EventDispatcher.Instance.InvokeUnfocusRequested(sender, e);
+
+            if (e.NewFocus == null)  // New focus outside application
+            {
+                FocusKeyboardFocusCapture(sender, e);
+            }
+        }
+
+        private void FocusKeyboardFocusCapture(object sender, EventArgs e)
+        {
+            Keyboard.Focus(KeyboardFocusCapture);
+        }
+
+        private void FocusSearchBox(object sender, HotkeyEventArgs e)
+        {
+            if (TaskbarStateManager.Instance.IsIcon)
+            {
+                SearchWindow.Instance.Show();
+            }
+            else
+            {
+                SearchWindow.Instance.Show();
+                NativeMethods.SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
+                Keyboard.Focus(SearchBox);
+            }
         }
 
         public void Destroy()

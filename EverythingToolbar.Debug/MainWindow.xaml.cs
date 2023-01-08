@@ -10,6 +10,9 @@ namespace EverythingToolbar.Debug
         {
             InitializeComponent();
 
+            TaskbarStateManager.Instance.IsDeskband = false;
+            TaskbarStateManager.Instance.IsIcon = true;
+
             ToolbarLogger.Initialize();
 
             if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",

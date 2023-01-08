@@ -19,6 +19,8 @@ namespace CSDeskBand
 
         public Deskband()
         {
+            TaskbarStateManager.Instance.IsDeskband = true;
+
             try
             {
                 ToolbarControl = new ToolbarControl();

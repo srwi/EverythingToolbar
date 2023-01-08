@@ -12,17 +12,17 @@ namespace EverythingToolbar
             InitializeComponent();
 
             ResourceManager.Instance.ResourceChanged += UpdateTheme;
-            EventDispatcher.Instance.ShowWindow += OnWindowShown;
-            EventDispatcher.Instance.HideWindow += OnWindowHidden;
+            SearchWindow.Instance.Activated += OnSearchWindowActivated;
+            SearchWindow.Instance.Deactivated += OnSearchWindowDeactivated;
         }
 
-        private void OnWindowHidden()
+        private void OnSearchWindowDeactivated(object sender, System.EventArgs e)
         {
             Border border = Template.FindName("OuterBorder", this) as Border;
             border.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
         }
 
-        private void OnWindowShown()
+        private void OnSearchWindowActivated(object sender, System.EventArgs e)
         {
             Border border = Template.FindName("OuterBorder", this) as Border;
             border.Background = new SolidColorBrush(Color.FromArgb(64, 255, 255, 255));
@@ -54,14 +54,14 @@ namespace EverythingToolbar
         private void OnClick(object sender, RoutedEventArgs e)
         {
             if (SearchWindow.Instance.IsOpen)
-                EventDispatcher.Instance.InvokeHideWindow();
+                SearchWindow.Instance.Hide();
             else
-                EventDispatcher.Instance.InvokeShowWindow();
+                SearchWindow.Instance.Show();
         }
 
         private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            Properties.Settings.Default.isIconOnly = (bool)e.NewValue;
+            TaskbarStateManager.Instance.IsIcon = (bool)e.NewValue;
         }
     }
 }

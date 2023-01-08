@@ -145,18 +145,6 @@ namespace EverythingToolbar.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool isIconOnly {
-            get {
-                return ((bool)(this["isIconOnly"]));
-            }
-            set {
-                this["isIconOnly"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string filtersPath {
             get {

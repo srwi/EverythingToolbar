@@ -41,6 +41,20 @@ namespace EverythingToolbar
             TextBox.SelectAll();
         }
 
+        private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (e.NewFocus == null)  // New focus outside application
+            {
+                SearchWindow.Instance.Hide();
+            }
+        }
+
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(TextBox.Text))
+                SearchWindow.Instance.Show();
+        }
+
         private void SelectivelyIgnoreMouseButton(object sender, MouseButtonEventArgs e)
         {
             TextBox textBox = (sender as TextBox);
