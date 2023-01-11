@@ -1,10 +1,9 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.IO;
 
 namespace EverythingToolbar.Helpers
 {
-    class Utils
+    public class Utils
     {
         private Utils() { }
 

@@ -1,11 +1,15 @@
 ﻿using EverythingToolbar;
+using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
+using Microsoft.Xaml.Behaviors;
 using NLog;
 using NLog.Common;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Interop;
 
 namespace CSDeskBand
 {
@@ -20,8 +24,6 @@ namespace CSDeskBand
 
         public Deskband()
         {
-            TaskbarStateManager.Instance.IsDeskband = true;
-
             try
             {
                 ToolbarControl = new ToolbarControl();

@@ -61,20 +61,6 @@ namespace EverythingToolbar.Helpers
             }
         }
 
-        private bool _isDeskband;
-        public bool IsDeskband
-        {
-            get => _isDeskband;
-            set
-            {
-                _isDeskband = value;
-                NotifyPropertyChanged();
-
-                if (!_isDeskband)
-                    IsIcon = true;
-            }
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")

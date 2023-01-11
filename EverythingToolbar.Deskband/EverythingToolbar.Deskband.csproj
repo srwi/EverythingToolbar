@@ -79,6 +79,7 @@
     <Compile Include="ToolbarControl.xaml.cs">
       <DependentUpon>ToolbarControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowPlacement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EverythingToolbar.pfx" />

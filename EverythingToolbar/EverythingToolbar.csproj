@@ -84,7 +84,7 @@
     <Compile Include="Controls\FilterSelector.xaml.cs">
       <DependentUpon>FilterSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\DpiScaling.cs" />
+    <Compile Include="Behaviors\DpiScaling.cs" />
     <Compile Include="Helpers\EventDispatcher.cs" />
     <Compile Include="Helpers\FilterLoader.cs" />
     <Compile Include="Helpers\TaskbarStateManager.cs" />
@@ -96,7 +96,7 @@
     <Compile Include="InputDialog.xaml.cs">
       <DependentUpon>InputDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MicaWindow.cs" />
+    <Compile Include="Behaviors\MicaWindow.cs" />
     <Compile Include="Properties\Resources.af.Designer.cs">
       <DependentUpon>Resources.af.resx</DependentUpon>
       <AutoGen>True</AutoGen>

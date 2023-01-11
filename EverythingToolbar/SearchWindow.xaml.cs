@@ -45,6 +45,7 @@ namespace EverythingToolbar
 
         public static readonly SearchWindow Instance = new SearchWindow();
         public event EventHandler<EventArgs> Hiding;
+        public event EventHandler<EventArgs> Showing;
 
         private SearchWindow()
         {
@@ -88,6 +89,9 @@ namespace EverythingToolbar
 
         public new void Hide()
         {
+            if (Visibility != Visibility.Visible)
+                return;
+
             HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
             Hiding?.Invoke(this, new EventArgs());
             base.Hide();
@@ -95,17 +99,15 @@ namespace EverythingToolbar
 
         public new void Show()
         {
-            Visibility visibility = Visibility;
+            if (Visibility == Visibility.Visible)
+                return;
 
             ShowActivated = TaskbarStateManager.Instance.IsIcon;
-
             base.Show();
-
             Topmost = true;
             Topmost = false;
-
-            if (visibility != Visibility.Visible)
-                AnimateOpen();
+            Showing?.Invoke(this, new EventArgs());
+            AnimateOpen();
         }
 
         public void Show(object sender, HotkeyEventArgs e)
@@ -119,14 +121,6 @@ namespace EverythingToolbar
                 Hide();
             else
                 Show();
-        }
-
-        public void PlaceWindow(Rect positionAndSize)
-        {
-            Width = positionAndSize.Width;
-            Height = positionAndSize.Height;
-            Left = positionAndSize.Left;
-            Top = positionAndSize.Top;
         }
 
         private void AnimateOpen()

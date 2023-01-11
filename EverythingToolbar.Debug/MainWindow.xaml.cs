@@ -12,7 +12,6 @@ namespace EverythingToolbar.Debug
 
             ToolbarLogger.Initialize();
 
-            TaskbarStateManager.Instance.IsDeskband = false;
             TaskbarStateManager.Instance.IsIcon = true;
 
             Loaded += (s, _) =>
