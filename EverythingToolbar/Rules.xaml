@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EverythingToolbar"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:h="clr-namespace:EverythingToolbar.Helpers"
+        xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
         xmlns:core="clr-namespace:System;assembly=mscorlib"
         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         mc:Ignorable="d"
@@ -15,7 +15,7 @@
         Height="350"
         Width="400">
     <i:Interaction.Behaviors>
-        <h:DpiScaling x:Name="dpiScaling" />
+        <b:DpiScaling />
     </i:Interaction.Behaviors>
 
     <Window.Resources>        

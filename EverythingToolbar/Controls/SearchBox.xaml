@@ -4,7 +4,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:properties="clr-namespace:EverythingToolbar.Properties"
              xmlns:local="clr-namespace:EverythingToolbar"
-             xmlns:h="clr-namespace:EverythingToolbar.Helpers">
+             xmlns:b="clr-namespace:EverythingToolbar.Behaviors">
 
     <Grid>
         <TextBox Name="TextBox"
@@ -18,7 +18,7 @@
             <TextBox.ContextMenu>
                 <ContextMenu>
                     <i:Interaction.Behaviors>
-                        <h:DpiScaling x:Name="dpiScaling" />
+                        <b:DpiScaling />
                     </i:Interaction.Behaviors>
 
                     <MenuItem Header="{x:Static properties:Resources.SettingsRegularExpressions}"

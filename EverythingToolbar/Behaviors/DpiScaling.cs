@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Behaviors
 {
     public class DpiScaling : Behavior<FrameworkElement>
     {
@@ -71,7 +71,7 @@ namespace EverythingToolbar.Helpers
 
         private static double GetParentWindowDpi(Visual visual)
         {
-            if (Environment.OSVersion.Version < Utils.WindowsVersion.Windows10Anniversary)
+            if (Environment.OSVersion.Version < Helpers.Utils.WindowsVersion.Windows10Anniversary)
             {
                 return 96.0;
             }

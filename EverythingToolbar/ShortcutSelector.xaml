@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:h="clr-namespace:EverythingToolbar.Helpers"
+        xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
         mc:Ignorable="d"
         Title="{x:Static properties:Resources.ShortcutWindowTitle}"
         Closed="OnClosed"
@@ -13,7 +13,7 @@
         Width="300"
         ResizeMode="NoResize">
     <i:Interaction.Behaviors>
-        <h:DpiScaling x:Name="dpiScaling" />
+        <b:DpiScaling />
     </i:Interaction.Behaviors>
 
     <Grid Margin="10">

@@ -1,13 +1,36 @@
-﻿using System;
+﻿using Microsoft.Xaml.Behaviors;
+using System;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Behaviors
 {
-    public class MicaWindow : Window
+    public class MicaWindow : Behavior<Window>
     {
+        protected override void OnAttached()
+        {
+            if (Environment.OSVersion.Version >= Helpers.Utils.WindowsVersion.Windows11)
+                AssociatedObject.Loaded += OnMicaWindowLoaded;
+        }
+
+        private void OnMicaWindowContentRendered(object sender, EventArgs e)
+        {
+            HwndSource hwnd = (HwndSource)sender;
+            int trueValue = 0x01;
+            int backdropType = (int)MicaWindowStyle.TransientWindow;
+            DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_MICA_EFFECT, ref trueValue, Marshal.SizeOf(typeof(int)));
+            DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_SYSTEMBACKDROP_TYPE, ref backdropType, Marshal.SizeOf(typeof(int)));
+            DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref trueValue, Marshal.SizeOf(typeof(int)));
+        }
+
+        private void OnMicaWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            PresentationSource presentationSource = PresentationSource.FromVisual((Visual)sender);
+            presentationSource.ContentRendered += OnMicaWindowContentRendered;
+        }
+
         [Flags]
         private enum DwmWindowAttribute : uint
         {
@@ -24,28 +47,6 @@ namespace EverythingToolbar
             MainWindow = 2, // Mica
             TransientWindow = 3, // Acrylic
             TabbedWindow = 4, // Tabbed
-        }
-
-        public MicaWindow()
-        {
-            if (Environment.OSVersion.Version >= Helpers.Utils.WindowsVersion.Windows11)
-                Loaded += OnMicaWindowLoaded;
-        }
-
-        private void OnMicaWindowContentRendered(object sender, System.EventArgs e)
-        {
-            HwndSource hwnd = (HwndSource)sender;
-            int trueValue = 0x01;
-            int backdropType = (int)MicaWindowStyle.TransientWindow;
-            DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_MICA_EFFECT, ref trueValue, Marshal.SizeOf(typeof(int)));
-            DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_SYSTEMBACKDROP_TYPE, ref backdropType, Marshal.SizeOf(typeof(int)));
-            DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref trueValue, Marshal.SizeOf(typeof(int)));
-        }
-
-        private void OnMicaWindowLoaded(object sender, RoutedEventArgs e)
-        {
-            PresentationSource presentationSource = PresentationSource.FromVisual((Visual)sender);
-            presentationSource.ContentRendered += OnMicaWindowContentRendered;
         }
 
         [DllImport("dwmapi.dll")]

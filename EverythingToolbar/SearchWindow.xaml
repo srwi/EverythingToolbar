@@ -1,9 +1,10 @@
-﻿<local:MicaWindow x:Class="EverythingToolbar.SearchWindow"
+﻿<Window x:Class="EverythingToolbar.SearchWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
         xmlns:h="clr-namespace:EverythingToolbar.Helpers"
         xmlns:local="clr-namespace:EverythingToolbar"
         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
@@ -24,9 +25,10 @@
                       CaptionHeight="8"
                       UseAeroCaptionButtons="False" />
     </WindowChrome.WindowChrome>
-    
+
     <i:Interaction.Behaviors>
-        <h:DpiScaling x:Name="dpiScaling" />
+        <b:DpiScaling />
+        <b:MicaWindow />
     </i:Interaction.Behaviors>
 
     <Border x:Name="PopupMarginBorder">
@@ -84,4 +86,4 @@
         </Grid>
     </Border>
     
-</local:MicaWindow>
+</Window>

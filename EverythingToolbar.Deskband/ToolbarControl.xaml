@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:h="clr-namespace:EverythingToolbar.Helpers;assembly=EverythingToolbar"
+             xmlns:b="clr-namespace:EverythingToolbar.Behaviors;assembly=EverythingToolbar"
              xmlns:local="clr-namespace:EverythingToolbar;assembly=EverythingToolbar"
              mc:Ignorable="d"
              KeyDown="OnKeyDown"
@@ -12,7 +12,7 @@
              HorizontalAlignment="Stretch">
     
     <i:Interaction.Behaviors>
-        <h:DpiScaling x:Name="dpiScaling" />
+        <b:DpiScaling />
     </i:Interaction.Behaviors>
 
     <Grid>

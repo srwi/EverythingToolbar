@@ -3,13 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:h="clr-namespace:EverythingToolbar.Helpers"
+        xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
         Title="{x:Static properties:Resources.AboutWindowTitle}"
         ResizeMode="NoResize"
         Height="330"
         Width="380">
     <i:Interaction.Behaviors>
-        <h:DpiScaling x:Name="dpiScaling" />
+        <b:DpiScaling />
     </i:Interaction.Behaviors>
 
     <Grid>

@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 
 namespace EverythingToolbar
 {
-    public partial class SearchWindow : MicaWindow
+    public partial class SearchWindow : Window
     {
         public static double taskbarHeight = 0;
         public static double taskbarWidth = 0;
