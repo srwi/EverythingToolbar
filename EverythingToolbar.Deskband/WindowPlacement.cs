@@ -17,16 +17,41 @@ namespace EverythingToolbar.Behaviors
         protected override void OnAttached()
         {
             AssociatedObject.Showing += OnShowing;
+            AssociatedObject.Hiding += OnHiding;
+            AssociatedObject.Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            RECT position = CalculatePosition();
+            AssociatedObject.Left = position.Left;
+            AssociatedObject.Top = position.Top;
+            AssociatedObject.Width = position.Right - position.Left;
+            AssociatedObject.Height = position.Bottom - position.Top;
+        }
+
+        private void OnHiding(object sender, EventArgs e)
+        {
+            RECT position = CalculatePosition();
+            AssociatedObject.AnimateHide(
+                position.Left,
+                position.Top,
+                position.Right - position.Left,
+                position.Bottom - position.Top,
+                TaskbarStateManager.Instance.TaskbarEdge
+            );
         }
 
         private void OnShowing(object sender, EventArgs e)
         {
             RECT position = CalculatePosition();
-
-            AssociatedObject.Left = position.Left;
-            AssociatedObject.Top = position.Top;
-            AssociatedObject.Width = position.Right - position.Left;
-            AssociatedObject.Height = position.Bottom - position.Top;
+            AssociatedObject.AnimateShow(
+                position.Left,
+                position.Top,
+                position.Right - position.Left,
+                position.Bottom - position.Top,
+                TaskbarStateManager.Instance.TaskbarEdge
+            );
         }
 
         private RECT CalculatePosition()
