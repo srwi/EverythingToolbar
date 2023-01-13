@@ -98,9 +98,7 @@ namespace EverythingToolbar.Behaviors
             InitialDpi = VisualTreeHelper.GetDpi(AssociatedObject).PixelsPerInchY;
             CurrentDpi = InitialDpi;
 
-            double parentWindowDpi = GetParentWindowDpi(AssociatedObject);
-            if (parentWindowDpi != 96.0)
-                UpdateDpi(parentWindowDpi);
+            UpdateDpi(GetParentWindowDpi(AssociatedObject));
         }
 
         [DebuggerStepThrough]
@@ -130,7 +128,7 @@ namespace EverythingToolbar.Behaviors
                     handled = true;
                     break;
                 case WM_DPICHANGED_AFTERPARENT:
-                    // Used for the toolbar since we don't receive WM_DPICHANGED messages there
+                    // Used for the deskband since we don't receive WM_DPICHANGED messages there
                     UpdateDpi(GetParentWindowDpi(AssociatedObject));
                     handled = true;
                     break;

@@ -28,10 +28,10 @@ namespace EverythingToolbar.Behaviors
             DpiScalingFactor = GetScalingFactor();
 
             RECT position = CalculatePosition();
-            AssociatedObject.Left = position.Left;
-            AssociatedObject.Top = position.Top;
-            AssociatedObject.Width = position.Right - position.Left;
-            AssociatedObject.Height = position.Bottom - position.Top;
+            AssociatedObject.Left = position.Left * DpiScalingFactor;
+            AssociatedObject.Top = position.Top * DpiScalingFactor;
+            AssociatedObject.Width = (position.Right - position.Left) * DpiScalingFactor;
+            AssociatedObject.Height = (position.Bottom - position.Top) * DpiScalingFactor;
         }
 
         private void OnHiding(object sender, EventArgs e)
