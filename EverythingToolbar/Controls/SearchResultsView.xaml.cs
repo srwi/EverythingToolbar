@@ -61,12 +61,10 @@ namespace EverythingToolbar
         {
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Up)
             {
-                //Keyboard.Focus(SearchBox);
                 EverythingSearch.Instance.SearchTerm = HistoryManager.Instance.GetPreviousItem();
             }
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Down)
             {
-                //Keyboard.Focus(SearchBox);
                 EverythingSearch.Instance.SearchTerm = HistoryManager.Instance.GetNextItem();
             }
             else if (e.Key == Key.Up)

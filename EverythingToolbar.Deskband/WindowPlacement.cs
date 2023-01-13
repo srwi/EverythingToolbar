@@ -36,14 +36,7 @@ namespace EverythingToolbar.Behaviors
 
         private void OnHiding(object sender, EventArgs e)
         {
-            RECT position = CalculatePosition();
-            AssociatedObject.AnimateHide(
-                position.Left * DpiScalingFactor,
-                position.Top * DpiScalingFactor,
-                (position.Right - position.Left) * DpiScalingFactor,
-                (position.Bottom - position.Top) * DpiScalingFactor,
-                TaskbarStateManager.Instance.TaskbarEdge
-            );
+            AssociatedObject.AnimateHide(TaskbarStateManager.Instance.TaskbarEdge);
         }
 
         private void OnShowing(object sender, EventArgs e)

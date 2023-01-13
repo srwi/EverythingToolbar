@@ -86,6 +86,11 @@ namespace EverythingToolbar
             }
         }
 
+        private void OnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            EventDispatcher.Instance.InvokeKeyPressed(this, e);
+        }
+
         private void OpenSearchInEverything(object sender, RoutedEventArgs e)
         {
             EverythingSearch.Instance.OpenLastSearchInEverything();
@@ -265,7 +270,7 @@ namespace EverythingToolbar
             ContentGrid.BeginAnimation(MarginProperty, contentAnimation);
         }
 
-        public void AnimateHide(double left, double top, double width, double height, Edge taskbarEdge)
+        public void AnimateHide(Edge taskbarEdge)
         {
             if (Environment.OSVersion.Version >= Utils.WindowsVersion.Windows11)
                 AnimateHideWin11(taskbarEdge);

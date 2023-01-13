@@ -90,6 +90,11 @@ namespace EverythingToolbar
             }
         }
 
+        private void OnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            EventDispatcher.Instance.InvokeKeyPressed(this, e);
+        }
+
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             // Prevent explorer crash when pressing Alt + F4
