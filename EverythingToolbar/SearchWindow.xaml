@@ -32,58 +32,52 @@
     </i:Interaction.Behaviors>
 
     <Border x:Name="PopupMarginBorder">
-        <Grid>
-            <Grid.RenderTransform>
-                <TranslateTransform x:Name="translateTransform" />
-            </Grid.RenderTransform>
+        <Border x:Name="PopupBorder"
+                BorderThickness="1"
+                Background="{DynamicResource SearchResultsViewHeader}">
 
-            <Border x:Name="PopupBorder"
-                    BorderThickness="1"
-                    Background="{DynamicResource SearchResultsViewHeader}">
+            <Grid Name="ContentGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="{DynamicResource FirstGridRowHeight}" />
+                    <RowDefinition Height="{DynamicResource SecondGridRowHeight}" />
+                    <RowDefinition Height="{DynamicResource ThirdGridRowHeight}" />
+                </Grid.RowDefinitions>
 
-                <Grid Name="ContentGrid">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="{DynamicResource FirstGridRowHeight}" />
-                        <RowDefinition Height="{DynamicResource SecondGridRowHeight}" />
-                        <RowDefinition Height="{DynamicResource ThirdGridRowHeight}" />
-                    </Grid.RowDefinitions>
+                <Grid Grid.Row="{DynamicResource TabBarGridRow}"
+                      Margin="{DynamicResource TabBarMargin}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Row="{DynamicResource TabBarGridRow}"
-                          Margin="{DynamicResource TabBarMargin}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+                    <local:FilterSelector />
 
-                        <local:FilterSelector />
-
-                        <Button Style="{DynamicResource TabBarButtonStyle}"
-                                Content="{Binding TotalResultsNumber, Converter={local:SearchResultsCountConverter}}"
-                                Visibility="{Binding Source={x:Static properties:Settings.Default},
+                    <Button Style="{DynamicResource TabBarButtonStyle}"
+                            Content="{Binding TotalResultsNumber, Converter={local:SearchResultsCountConverter}}"
+                            Visibility="{Binding Source={x:Static properties:Settings.Default},
                                                      Path=isShowResultsCount,
                                                      Converter={local:BoolToVisibilityConverter}}"
-                                Grid.Column="1"
-                                Click="OpenSearchInEverything" />
+                            Grid.Column="1"
+                            Click="OpenSearchInEverything" />
 
-                        <local:SettingsControl Grid.Column="2" />
-                    </Grid>
+                    <local:SettingsControl Grid.Column="2" />
+                </Grid>
 
-                    <local:SearchResultsView x:Name="SearchResultsView"
-                                             Grid.Row="{DynamicResource SearchResultsViewGridRow}" />
+                <local:SearchResultsView x:Name="SearchResultsView"
+                                         Grid.Row="{DynamicResource SearchResultsViewGridRow}" />
 
-                    <local:SearchBox x:Name="SearchBox"
-                                     TabIndex="999"
-                                     Grid.Row="{DynamicResource SearchBoxGridRow}"
-                                     Height="40"
-                                     Margin="{DynamicResource SearchBoxMargin}"
-                                     Visibility="{Binding Source={x:Static h:TaskbarStateManager.Instance},
+                <local:SearchBox x:Name="SearchBox"
+                                 TabIndex="999"
+                                 Grid.Row="{DynamicResource SearchBoxGridRow}"
+                                 Height="40"
+                                 Margin="{DynamicResource SearchBoxMargin}"
+                                 Visibility="{Binding Source={x:Static h:TaskbarStateManager.Instance},
                                                           Path=IsIcon,
                                                           Converter={local:BoolToVisibilityConverter},
                                                           ConverterParameter=false}" />
-                </Grid>
-            </Border>
-        </Grid>
+            </Grid>
+        </Border>
     </Border>
-    
+
 </Window>

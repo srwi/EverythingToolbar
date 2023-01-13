@@ -5,7 +5,6 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace EverythingToolbar
@@ -149,20 +148,15 @@ namespace EverythingToolbar
             Height = Settings.Default.popupSize.Height;
             Width = Settings.Default.popupSize.Width;
 
-            int modifier = taskbarEdge == Edge.Right || taskbarEdge == Edge.Bottom ? 1 : -1;
-            Duration duration = TimeSpan.FromSeconds(Settings.Default.isAnimationsDisabled ? 0 : 0.4);
-            DoubleAnimation outer = new DoubleAnimation(modifier * 150, 0, duration)
+            int sign = taskbarEdge == Edge.Right || taskbarEdge == Edge.Bottom ? 1 : -1;
+            double target = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? left : top;
+            Duration duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.4);
+            DoubleAnimation positionAnimation = new DoubleAnimation(target + 150 * sign, target, duration)
             {
                 EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut }
             };
-            DependencyProperty outerProp = taskbarEdge == Edge.Bottom || taskbarEdge == Edge.Top ? TranslateTransform.YProperty : TranslateTransform.XProperty;
-            translateTransform?.BeginAnimation(outerProp, outer);
-
-            DoubleAnimation opacity = new DoubleAnimation(0, 1, duration)
-            {
-                EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut }
-            };
-            PopupMarginBorder?.BeginAnimation(OpacityProperty, opacity);
+            DependencyProperty positionProperty = taskbarEdge == Edge.Bottom || taskbarEdge == Edge.Top ? TopProperty : LeftProperty;
+            BeginAnimation(positionProperty, positionAnimation);
 
             duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.8);
             ThicknessAnimation inner = new ThicknessAnimation(new Thickness(0), duration)
@@ -198,22 +192,43 @@ namespace EverythingToolbar
             {
                 EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut }
             };
-            if (TaskbarStateManager.Instance.TaskbarEdge == Edge.Top)
+            if (taskbarEdge == Edge.Top)
                 contentAnimation.From = new Thickness(0, -50, 0, 50);
-            else if (TaskbarStateManager.Instance.TaskbarEdge == Edge.Right)
+            else if (taskbarEdge == Edge.Right)
                 contentAnimation.From = new Thickness(50, 0, -50, 0);
-            else if (TaskbarStateManager.Instance.TaskbarEdge == Edge.Bottom)
+            else if (taskbarEdge == Edge.Bottom)
                 contentAnimation.From = new Thickness(0, 50, 0, -50);
-            else if (TaskbarStateManager.Instance.TaskbarEdge == Edge.Left)
+            else if (taskbarEdge == Edge.Left)
                 contentAnimation.From = new Thickness(-50, 0, 50, 0);
             ContentGrid.BeginAnimation(MarginProperty, contentAnimation);
         }
 
-        private void AnimateHideWin10()
+        private void AnimateHideWin10(Edge taskbarEdge)
         {
             // Move the window back so the next opening animation will not jump
-            DoubleAnimation animation = new DoubleAnimation(Top + Height, TimeSpan.Zero);
-            BeginAnimation(TopProperty, animation);
+            double target = 0;
+            DependencyProperty property = TopProperty;
+            switch(taskbarEdge)
+            {
+                case Edge.Left:
+                    target = Left - 150;
+                    property = LeftProperty;
+                    break;
+                case Edge.Right:
+                    target = Left + 150;
+                    property = LeftProperty;
+                    break;
+                case Edge.Top:
+                    target = Top - 150;
+                    property = TopProperty;
+                    break;
+                case Edge.Bottom:
+                    target = Top + 150;
+                    property = TopProperty;
+                    break;
+            }
+            DoubleAnimation animation = new DoubleAnimation(target, TimeSpan.Zero);
+            BeginAnimation(property, animation);
             base.Hide();
         }
 
@@ -239,13 +254,13 @@ namespace EverythingToolbar
             {
                 EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseIn }
             };
-            if (TaskbarStateManager.Instance.TaskbarEdge == Edge.Top)
+            if (taskbarEdge == Edge.Top)
                 contentAnimation.To = new Thickness(0, -50, 0, 50);
-            else if (TaskbarStateManager.Instance.TaskbarEdge == Edge.Right)
+            else if (taskbarEdge == Edge.Right)
                 contentAnimation.To = new Thickness(50, 0, -50, 0);
-            else if (TaskbarStateManager.Instance.TaskbarEdge == Edge.Bottom)
+            else if (taskbarEdge == Edge.Bottom)
                 contentAnimation.To = new Thickness(0, 50, 0, -50);
-            else if (TaskbarStateManager.Instance.TaskbarEdge == Edge.Left)
+            else if (taskbarEdge == Edge.Left)
                 contentAnimation.To = new Thickness(-50, 0, 50, 0);
             ContentGrid.BeginAnimation(MarginProperty, contentAnimation);
         }
@@ -255,8 +270,7 @@ namespace EverythingToolbar
             if (Environment.OSVersion.Version >= Utils.WindowsVersion.Windows11)
                 AnimateHideWin11(taskbarEdge);
             else
-                AnimateHideWin10();
-
+                AnimateHideWin10(taskbarEdge);
         }
     }
 }
