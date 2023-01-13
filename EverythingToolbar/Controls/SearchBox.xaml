@@ -8,7 +8,10 @@
 
     <Grid>
         <TextBox Name="TextBox"
-                 Padding="37, 0, 0, 0"
+                 Padding="{Binding ElementName=QuickToggleButtonsBorder,
+                                   Path=Visibility,
+                                   Converter={local:VisibilityToValueConverter},
+                                   ConverterParameter='37,0,130,0;37,0,10,0'}"
                  Tag="{x:Static properties:Resources.TextBoxWatermark}"
                  Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  CaretBrush="{DynamicResource TextBoxForegroundActive}"
@@ -67,45 +70,51 @@
             </Path.Data>
         </Path>
 
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    Margin="0, 0, 6, 0"
-                    Background="Transparent"
-                    Visibility="{Binding Source={x:Static properties:Settings.Default}, Path=isShowQuickToggles, Converter={local:BoolToVisibilityConverter}}">
-            <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
-                          ToolTip="{x:Static properties:Resources.SettingsMatchCase}"
-                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase}"
-                          IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, TargetNullValue=True, Mode=OneWay}"
-                          Content="Aa"
-                          Margin="1" />
-            <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
-                          ToolTip="{x:Static properties:Resources.SettingsMatchWholeWord}"
-                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord}"
-                          Name="IsMatchWholeWordButton"
-                          Margin="1">
-                <TextBlock TextDecorations="Underline,OverLine"
-                           Text="Abl"
-                           FontSize="11"
-                           Padding="0, 2, 0, 0"
-                           HorizontalAlignment="Center" />
-            </ToggleButton>
-            <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
-                          ToolTip="{x:Static properties:Resources.SettingsMatchPath}"
-                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath}"
-                          IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, TargetNullValue=True, Mode=OneWay}"
-                          Margin="1">
-                <TextBlock Text="..\"
-                           FontSize="12pt"
-                           Margin="-1, -2, 0, 0" />
-            </ToggleButton>
-            <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
-                          ToolTip="{x:Static properties:Resources.SettingsRegularExpressions}"
-                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled}"
-                          IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, TargetNullValue=True, Mode=OneWay}"
-                          TextBlock.FontWeight="Bold"
-                          Content=".*"
-                          Margin="1" />
-        </StackPanel>
+        <Border Name="QuickToggleButtonsBorder"
+                Visibility="{Binding Path=ActualWidth,
+                                     RelativeSource={RelativeSource Self},  
+                                     Converter={local:DoubleToVisibilityConverter},
+                                     ConverterParameter=200}">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0, 0, 6, 0"
+                        Background="Transparent"
+                        Visibility="{Binding Source={x:Static properties:Settings.Default}, Path=isShowQuickToggles, Converter={local:BoolToVisibilityConverter}}">
+                <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
+                              ToolTip="{x:Static properties:Resources.SettingsMatchCase}"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase}"
+                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, TargetNullValue=True, Mode=OneWay}"
+                              Content="Aa"
+                              Margin="1" />
+                <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
+                              ToolTip="{x:Static properties:Resources.SettingsMatchWholeWord}"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord}"
+                              Name="IsMatchWholeWordButton"
+                              Margin="1">
+                    <TextBlock TextDecorations="Underline,OverLine"
+                               Text="Abl"
+                               FontSize="11"
+                               Padding="0, 2, 0, 0"
+                               HorizontalAlignment="Center" />
+                </ToggleButton>
+                <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
+                              ToolTip="{x:Static properties:Resources.SettingsMatchPath}"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath}"
+                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, TargetNullValue=True, Mode=OneWay}"
+                              Margin="1">
+                    <TextBlock Text="..\"
+                               FontSize="12pt"
+                               Margin="-1, -2, 0, 0" />
+                </ToggleButton>
+                <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
+                              ToolTip="{x:Static properties:Resources.SettingsRegularExpressions}"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled}"
+                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, TargetNullValue=True, Mode=OneWay}"
+                              TextBlock.FontWeight="Bold"
+                              Content=".*"
+                              Margin="1" />
+            </StackPanel>
+        </Border>
 
     </Grid>
 
