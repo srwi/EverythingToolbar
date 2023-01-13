@@ -34,7 +34,6 @@ namespace CSDeskBand
                 EventDispatcher.Instance.FocusRequested += OnFocusRequested;
                 EventDispatcher.Instance.UnfocusRequested += OnUnfocusRequested;
                 TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
-                TaskbarInfo.TaskbarSizeChanged += OnTaskbarSizeChanged;
 
                 TaskbarStateManager.Instance.TaskbarEdge = (EverythingToolbar.Helpers.Edge)TaskbarInfo.Edge;
             }
@@ -51,21 +50,6 @@ namespace CSDeskBand
             }
         }
 
-        private void OnTaskbarSizeChanged(object sender, TaskbarSizeChangedEventArgs e)
-        {
-            if (TaskbarInfo.Edge == Edge.Left || TaskbarInfo.Edge == Edge.Right)
-            {
-                SearchWindow.taskbarWidth = TaskbarInfo.Size.Width;
-                SearchWindow.taskbarHeight = 0;
-            }
-
-            if (TaskbarInfo.Edge == Edge.Top || TaskbarInfo.Edge == Edge.Bottom)
-            {
-                SearchWindow.taskbarHeight = TaskbarInfo.Size.Height;
-                SearchWindow.taskbarWidth = 0;
-            }
-        }
-
         private void OnUnfocusRequested(object sender, EventArgs e)
         {
             UpdateFocus(false);
@@ -79,7 +63,6 @@ namespace CSDeskBand
 		private void OnTaskbarEdgeChanged(object sender, TaskbarEdgeChangedEventArgs e)
         {
             TaskbarStateManager.Instance.TaskbarEdge = (EverythingToolbar.Helpers.Edge)e.Edge;
-            OnTaskbarSizeChanged(sender, null);
         }
 
         protected override void DeskbandOnClosed()

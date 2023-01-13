@@ -11,8 +11,6 @@
         WindowStyle="None"
         Background="Transparent"
         ShowInTaskbar="False"
-        Width="500"
-        Height="500"
         Activated="OnActivated"
         LostKeyboardFocus="OnLostKeyboardFocus"
         PreviewKeyDown="OnPreviewKeyDown"
@@ -21,9 +19,9 @@
         d:DesignHeight="500">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome ResizeBorderThickness="8"
+        <WindowChrome ResizeBorderThickness="3"
                       GlassFrameThickness="-1"
-                      CaptionHeight="8"
+                      CaptionHeight="0"
                       UseAeroCaptionButtons="False" />
     </WindowChrome.WindowChrome>
 

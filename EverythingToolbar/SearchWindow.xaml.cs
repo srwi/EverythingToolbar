@@ -11,37 +11,6 @@ namespace EverythingToolbar
 {
     public partial class SearchWindow : Window
     {
-        public static double taskbarHeight = 0;
-        public static double taskbarWidth = 0;
-
-        public new double Height
-        {
-            get
-            {
-                return (double)GetValue(HeightProperty);
-            }
-            set
-            {
-                double screenHeight = SystemParameters.PrimaryScreenHeight;
-                double newHeight = Math.Max(Math.Min(screenHeight - taskbarHeight, value), 300);
-                SetValue(HeightProperty, newHeight);
-            }
-        }
-        
-        public new double Width
-        {
-            get
-            {
-                return (double)GetValue(WidthProperty);
-            }
-            set
-            {
-                double screenWidth = SystemParameters.PrimaryScreenWidth;
-                double newWidth = Math.Max(Math.Min(screenWidth - taskbarWidth, value), 300);
-                SetValue(WidthProperty, newWidth);
-            }
-        }
-
         public static readonly SearchWindow Instance = new SearchWindow();
         public event EventHandler<EventArgs> Hiding;
         public event EventHandler<EventArgs> Showing;
@@ -102,6 +71,9 @@ namespace EverythingToolbar
                 return;
 
             HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
+            if (Height != Settings.Default.popupSize.Height && Width != Settings.Default.popupSize.Width)
+                Settings.Default.popupSize = new Size(Width, Height);
+
             Hiding?.Invoke(this, new EventArgs());
         }
 
