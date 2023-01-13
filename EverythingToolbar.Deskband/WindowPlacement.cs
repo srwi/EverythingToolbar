@@ -14,6 +14,8 @@ namespace EverythingToolbar.Behaviors
         // Using a dependency property for binding is not required since the placement target will not change
         public UIElement PlacementTarget;
 
+        private double DpiScalingFactor;
+
         protected override void OnAttached()
         {
             AssociatedObject.Showing += OnShowing;
@@ -23,6 +25,8 @@ namespace EverythingToolbar.Behaviors
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            DpiScalingFactor = GetScalingFactor();
+
             RECT position = CalculatePosition();
             AssociatedObject.Left = position.Left;
             AssociatedObject.Top = position.Top;
@@ -34,10 +38,10 @@ namespace EverythingToolbar.Behaviors
         {
             RECT position = CalculatePosition();
             AssociatedObject.AnimateHide(
-                position.Left,
-                position.Top,
-                position.Right - position.Left,
-                position.Bottom - position.Top,
+                position.Left * DpiScalingFactor,
+                position.Top * DpiScalingFactor,
+                (position.Right - position.Left) * DpiScalingFactor,
+                (position.Bottom - position.Top) * DpiScalingFactor,
                 TaskbarStateManager.Instance.TaskbarEdge
             );
         }
@@ -46,10 +50,10 @@ namespace EverythingToolbar.Behaviors
         {
             RECT position = CalculatePosition();
             AssociatedObject.AnimateShow(
-                position.Left,
-                position.Top,
-                position.Right - position.Left,
-                position.Bottom - position.Top,
+                position.Left * DpiScalingFactor,
+                position.Top * DpiScalingFactor,
+                (position.Right - position.Left) * DpiScalingFactor,
+                (position.Bottom - position.Top) * DpiScalingFactor,
                 TaskbarStateManager.Instance.TaskbarEdge
             );
         }
@@ -85,13 +89,22 @@ namespace EverythingToolbar.Behaviors
             return windowPosition;
         }
 
+        private double GetScalingFactor()
+        {
+            IntPtr hwnd = ((HwndSource)PresentationSource.FromVisual(AssociatedObject)).Handle;
+            return 96.0 / GetDpiForWindow(hwnd);
+        }
+
         private int GetMargin()
         {
             if (Environment.OSVersion.Version >= Utils.WindowsVersion.Windows11)
-                return 12;
+                return (int)(12 / GetScalingFactor());
             else
                 return 0;
         }
+
+        [DllImport("user32")]
+        static extern uint GetDpiForWindow(IntPtr hWnd);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
