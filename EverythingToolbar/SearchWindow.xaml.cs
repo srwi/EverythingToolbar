@@ -198,11 +198,6 @@ namespace EverythingToolbar
             {
                 EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut }
             };
-            contentAnimation.Completed += (s, e) =>
-            {
-                // Force the window to stay on top until the hide animation moves it out of view
-                Topmost = true;
-            };
             if (TaskbarStateManager.Instance.TaskbarEdge == Edge.Top)
                 contentAnimation.From = new Thickness(0, -50, 0, 50);
             else if (TaskbarStateManager.Instance.TaskbarEdge == Edge.Right)
@@ -222,14 +217,14 @@ namespace EverythingToolbar
             base.Hide();
         }
 
-        private void AnimateHideWin11(double left, double top, double width, double height, Edge taskbarEdge)
+        private void AnimateHideWin11(Edge taskbarEdge)
         {
-            // Animation should take place behind taskbar
+            Topmost = true;
             Topmost = false;
 
             int sign = taskbarEdge == Edge.Right || taskbarEdge == Edge.Bottom ? 1 : -1;
-            double offset = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? width : height;
-            double target = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? left : top;
+            double offset = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? Width : Height;
+            double target = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? Left : Top;
             Duration duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.2);
             DoubleAnimation positionAnimation = new DoubleAnimation(target, target + offset * sign, duration)
             {
@@ -258,7 +253,7 @@ namespace EverythingToolbar
         public void AnimateHide(double left, double top, double width, double height, Edge taskbarEdge)
         {
             if (Environment.OSVersion.Version >= Utils.WindowsVersion.Windows11)
-                AnimateHideWin11(left, top, width, height, taskbarEdge);
+                AnimateHideWin11(taskbarEdge);
             else
                 AnimateHideWin10();
 
