@@ -1,6 +1,7 @@
 ﻿using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
+using NHotkey;
 using System;
 using System.Drawing;
 using System.IO;
@@ -8,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace EverythingToolbar.Launcher
 {
@@ -42,6 +44,23 @@ namespace EverythingToolbar.Launcher
 
                 if (!File.Exists(Utils.GetTaskbarShortcutPath()))
                     new TaskbarPinGuide().Show();
+
+                if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
+                       (Key)EverythingToolbar.Properties.Settings.Default.shortcutKey,
+                       (ModifierKeys)EverythingToolbar.Properties.Settings.Default.shortcutModifiers,
+                       FocusSearchBox))
+                {
+                    ShortcutManager.Instance.SetShortcut(Key.None, ModifierKeys.None);
+                    MessageBox.Show(EverythingToolbar.Properties.Resources.MessageBoxFailedToRegisterHotkey,
+                        EverythingToolbar.Properties.Resources.MessageBoxErrorTitle,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                }
+            }
+
+            private void FocusSearchBox(object sender, HotkeyEventArgs e)
+            {
+                SearchWindow.Instance.Show();
             }
 
             private void StartToggleListener()
