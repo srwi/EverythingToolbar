@@ -12,8 +12,6 @@ namespace EverythingToolbar.Behaviors
 {
     internal class SearchWindowPlacement : Behavior<SearchWindow>
     {
-        private double DpiScalingFactor;
-
         protected override void OnAttached()
         {
             AssociatedObject.Showing += OnShowing;
@@ -23,13 +21,12 @@ namespace EverythingToolbar.Behaviors
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            DpiScalingFactor = GetScalingFactor();
-
-            RECT position = CalculatePosition();
-            AssociatedObject.Left = position.Left * DpiScalingFactor;
-            AssociatedObject.Top = position.Top * DpiScalingFactor;
-            AssociatedObject.Width = (position.Right - position.Left) * DpiScalingFactor;
-            AssociatedObject.Height = (position.Bottom - position.Top) * DpiScalingFactor;
+            double scalingFactor = GetScalingFactor();
+            RECT position = CalculatePosition(scalingFactor);
+            AssociatedObject.Left = position.Left * scalingFactor;
+            AssociatedObject.Top = position.Top * scalingFactor;
+            AssociatedObject.Width = (position.Right - position.Left) * scalingFactor;
+            AssociatedObject.Height = (position.Bottom - position.Top) * scalingFactor;
         }
 
         private void OnHiding(object sender, EventArgs e)
@@ -39,22 +36,25 @@ namespace EverythingToolbar.Behaviors
 
         private void OnShowing(object sender, EventArgs e)
         {
-            RECT position = CalculatePosition();
+            double scalingFactor = GetScalingFactor();
+            RECT position = CalculatePosition(scalingFactor);
             AssociatedObject.AnimateShow(
-                position.Left * DpiScalingFactor,
-                position.Top * DpiScalingFactor,
-                (position.Right - position.Left) * DpiScalingFactor,
-                (position.Bottom - position.Top) * DpiScalingFactor,
+                position.Left * scalingFactor,
+                position.Top * scalingFactor,
+                (position.Right - position.Left) * scalingFactor,
+                (position.Bottom - position.Top) * scalingFactor,
                 TaskbarStateManager.Instance.TaskbarEdge
             );
         }
 
-        private RECT CalculatePosition()
+        private RECT CalculatePosition(double scalingFactor)
         {
             Screen screen = Screen.PrimaryScreen;
             TaskbarLocation taskbar = FindDockedTaskBar(screen);
             System.Windows.Size windowSize = Properties.Settings.Default.popupSize;
-            int margin = GetMargin();
+            windowSize.Width /= scalingFactor;
+            windowSize.Height /= scalingFactor;
+            int margin = (int)(GetMargin() / scalingFactor);
 
             RECT windowPosition = new RECT();
 
@@ -167,6 +167,8 @@ namespace EverythingToolbar.Behaviors
 
         private double GetScalingFactor()
         {
+            // Converting from wpf-size requires division by scaling factor;
+            // Converting to wpf-size requires multiplication with scaling factor
             IntPtr hwnd = ((HwndSource)PresentationSource.FromVisual(AssociatedObject)).Handle;
             return 96.0 / GetDpiForWindow(hwnd);
         }
@@ -174,7 +176,7 @@ namespace EverythingToolbar.Behaviors
         private int GetMargin()
         {
             if (Environment.OSVersion.Version >= Utils.WindowsVersion.Windows11)
-                return (int)(12 / GetScalingFactor());
+                return 12;
             else
                 return 0;
         }

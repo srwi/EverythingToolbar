@@ -59,6 +59,8 @@ namespace EverythingToolbar.Behaviors
             int margin = GetMargin();
             Rectangle workingArea = Screen.PrimaryScreen.WorkingArea;
             System.Windows.Size windowSize = Properties.Settings.Default.popupSize;
+            windowSize.Width /= DpiScalingFactor;
+            windowSize.Height /= DpiScalingFactor;
             Edge taskbarEdge = TaskbarStateManager.Instance.TaskbarEdge;
 
             RECT windowPosition = new RECT();
