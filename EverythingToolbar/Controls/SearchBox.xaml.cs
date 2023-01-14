@@ -34,6 +34,28 @@ namespace EverythingToolbar
                 IsMatchWholeWordMenuItem.IsEnabled = newEnabledState;
                 IsMatchWholeWordButton.IsEnabled = newEnabledState;
             }
+
+            if (e.PropertyName == "isShowQuickToggles")
+                UpdateQuickTogglesVisibility();
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdateQuickTogglesVisibility();
+        }
+
+        private void UpdateQuickTogglesVisibility()
+        {
+            if (Properties.Settings.Default.isShowQuickToggles && ActualWidth > 200)
+            {
+                QuickToggleButtons.Visibility = Visibility.Visible;
+                TextBox.Padding = new Thickness(37, 0, 130, 0);
+            }
+            else
+            {
+                QuickToggleButtons.Visibility = Visibility.Collapsed;
+                TextBox.Padding = new Thickness(37, 0, 10, 0);
+            }
         }
 
         public new void Focus()
