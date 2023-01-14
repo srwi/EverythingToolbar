@@ -9,6 +9,8 @@
         xmlns:local="clr-namespace:EverythingToolbar"
         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         WindowStyle="None"
+        MinWidth="600"
+        MinHeight="300"
         Background="Transparent"
         ShowInTaskbar="False"
         Activated="OnActivated"
