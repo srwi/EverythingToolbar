@@ -97,7 +97,7 @@ namespace EverythingToolbar.Behaviors
                 windowPosition.Left = (int)((screenWorkingArea.Width - windowSize.Width) / 2);
                 windowPosition.Left = Math.Max(margin, windowPosition.Left);
                 windowPosition.Right = (int)((screenWorkingArea.Width + windowSize.Width) / 2);
-                windowPosition.Right = Math.Min(screenWorkingArea.Width - margin, windowPosition.Left);
+                windowPosition.Right = Math.Min(screenWorkingArea.Width - margin, windowPosition.Right);
             }
             else
             {

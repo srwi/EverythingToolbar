@@ -71,7 +71,8 @@ namespace EverythingToolbar
                 return;
 
             HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
-            if (Height != Settings.Default.popupSize.Height && Width != Settings.Default.popupSize.Width)
+
+            if (Height != Settings.Default.popupSize.Height || Width != Settings.Default.popupSize.Width)
                 Settings.Default.popupSize = new Size(Width, Height);
 
             Hiding?.Invoke(this, new EventArgs());
