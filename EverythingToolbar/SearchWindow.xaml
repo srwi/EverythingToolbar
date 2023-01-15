@@ -30,6 +30,7 @@
     <i:Interaction.Behaviors>
         <b:DpiScaling />
         <b:MicaWindow />
+        <b:ThemeAwareness />
     </i:Interaction.Behaviors>
 
     <Border x:Name="PopupMarginBorder">

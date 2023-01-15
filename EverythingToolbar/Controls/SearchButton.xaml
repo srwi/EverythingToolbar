@@ -2,6 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         mc:Ignorable="d"
@@ -11,6 +13,11 @@
         IsVisibleChanged="OnIsVisibleChanged"
         Style="{DynamicResource SearchButtonStyle}"
         ToolTip="{x:Static properties:Resources.TextBoxWatermark}">
+
+    <i:Interaction.Behaviors>
+        <b:ThemeAwareness />
+    </i:Interaction.Behaviors>
+    
     <Button.Resources>
         <Style x:Key="SearchButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Template">

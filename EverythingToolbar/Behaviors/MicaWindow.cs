@@ -11,8 +11,19 @@ namespace EverythingToolbar.Behaviors
     {
         protected override void OnAttached()
         {
-            if (Environment.OSVersion.Version >= Helpers.Utils.WindowsVersion.Windows11)
+            base.OnAttached();
+
+            if (Environment.OSVersion.Version < Helpers.Utils.WindowsVersion.Windows11)
+                return;
+
+            if (AssociatedObject.IsLoaded)
+            {
+                OnMicaWindowLoaded(null, null);
+            }
+            else
+            {
                 AssociatedObject.Loaded += OnMicaWindowLoaded;
+            }
         }
 
         private void OnMicaWindowContentRendered(object sender, EventArgs e)

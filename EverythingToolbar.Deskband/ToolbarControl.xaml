@@ -14,6 +14,7 @@
     
     <i:Interaction.Behaviors>
         <b:DpiScaling />
+        <b:ThemeAwareness />
     </i:Interaction.Behaviors>
 
     <Grid>

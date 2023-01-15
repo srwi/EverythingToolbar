@@ -22,12 +22,6 @@ namespace EverythingToolbar
             };
             Interaction.GetBehaviors(SearchWindow.Instance).Add(behavior);
 
-            Loaded += (s, _) =>
-            {
-                ResourceManager.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
-                ResourceManager.Instance.AutoApplyTheme();
-            };
-
             // Focus an invisible text box to prevent Windows from randomly focusing the search box
             // and causing visual distraction
             SearchBox.LostKeyboardFocus += OnSearchBoxLostKeyboardFocus;

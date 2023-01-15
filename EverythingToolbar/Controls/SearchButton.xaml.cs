@@ -11,12 +11,6 @@ namespace EverythingToolbar
         {
             InitializeComponent();
 
-            Loaded += (s, e) =>
-            {
-                ResourceManager.Instance.ResourceChanged += UpdateTheme;
-                ResourceManager.Instance.AutoApplyTheme();
-            };
-
             SearchWindow.Instance.Activated += OnSearchWindowActivated;
             SearchWindow.Instance.Deactivated += OnSearchWindowDeactivated;
         }

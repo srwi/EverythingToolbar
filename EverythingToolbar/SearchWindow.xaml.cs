@@ -19,12 +19,6 @@ namespace EverythingToolbar
         {
             InitializeComponent();
 
-            Loaded += (s, _) =>
-            {
-                ResourceManager.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
-                ResourceManager.Instance.AutoApplyTheme();
-            };
-
             DataContext = EverythingSearch.Instance;
 
             if (Settings.Default.isUpgradeRequired)
