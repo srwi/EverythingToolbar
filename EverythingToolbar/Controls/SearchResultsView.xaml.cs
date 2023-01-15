@@ -1,3 +1,4 @@
+using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace EverythingToolbar
             Loaded += (s, e) =>
             {
                 RegisterItemContainerStyleProperties(s, null);
-                ResourceManager.Instance.ResourceChanged += RegisterItemContainerStyleProperties;
+                ThemeHandler.Instance.ResourceChanged += RegisterItemContainerStyleProperties;
             };
         }
 

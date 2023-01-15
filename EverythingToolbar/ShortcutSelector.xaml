@@ -12,6 +12,7 @@
         Height="80"
         Width="300"
         ResizeMode="NoResize">
+    
     <i:Interaction.Behaviors>
         <b:DpiScaling />
     </i:Interaction.Behaviors>
@@ -29,4 +30,5 @@
                 Grid.Column="1"
                 Click="OnOkClicked" />
     </Grid>
+    
 </Window>

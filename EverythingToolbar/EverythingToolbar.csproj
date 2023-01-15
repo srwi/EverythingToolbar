@@ -251,7 +251,6 @@
     </Compile>
     <Compile Include="Helpers\ToolbarLogger.cs" />
     <Compile Include="Helpers\WindowsThumbnailProvider.cs" />
-    <Compile Include="ResourceManager.cs" />
     <Page Include="About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

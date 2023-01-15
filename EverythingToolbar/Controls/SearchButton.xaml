@@ -14,10 +14,6 @@
         Style="{DynamicResource SearchButtonStyle}"
         ToolTip="{x:Static properties:Resources.TextBoxWatermark}">
 
-    <i:Interaction.Behaviors>
-        <b:ThemeAwareness />
-    </i:Interaction.Behaviors>
-    
     <Button.Resources>
         <Style x:Key="SearchButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Template">

@@ -1,4 +1,5 @@
-﻿using EverythingToolbar.Helpers;
+﻿using EverythingToolbar.Behaviors;
+using EverythingToolbar.Helpers;
 using System.Windows;
 using System.Windows.Input;
 
@@ -16,8 +17,8 @@ namespace EverythingToolbar.Debug
 
             Loaded += (s, _) =>
             {
-                ResourceManager.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
-                ResourceManager.Instance.AutoApplyTheme();
+                ThemeHandler.Instance.ResourceChanged += (sender, e) => { Resources = e.NewResource; };
+                ThemeHandler.Instance.AutoApplyTheme();
             };
 
             if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",

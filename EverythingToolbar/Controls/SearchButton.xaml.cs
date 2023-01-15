@@ -1,4 +1,5 @@
-﻿using EverythingToolbar.Helpers;
+﻿using EverythingToolbar.Behaviors;
+using EverythingToolbar.Helpers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -13,6 +14,12 @@ namespace EverythingToolbar
 
             SearchWindow.Instance.Activated += OnSearchWindowActivated;
             SearchWindow.Instance.Deactivated += OnSearchWindowDeactivated;
+
+            Loaded += (s, e) =>
+            {
+                ThemeHandler.Instance.ResourceChanged += UpdateTheme;
+                ThemeHandler.Instance.AutoApplyTheme();
+            };
         }
 
         private void OnSearchWindowDeactivated(object sender, System.EventArgs e)
