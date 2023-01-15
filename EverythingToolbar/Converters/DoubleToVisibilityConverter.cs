@@ -10,9 +10,9 @@ namespace EverythingToolbar
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int threshold = System.Convert.ToInt32(parameter);
+            double threshold = System.Convert.ToDouble(parameter);
 
-            if ((double)value > Math.Abs(threshold))
+            if (System.Convert.ToDouble(value) > Math.Abs(threshold))
             {
                 return threshold >= 0 ? Visibility.Visible : Visibility.Hidden;
             }

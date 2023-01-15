@@ -56,13 +56,19 @@
 
                     <local:FilterSelector />
 
-                    <Button Style="{DynamicResource TabBarButtonStyle}"
-                            Content="{Binding TotalResultsNumber, Converter={local:SearchResultsCountConverter}}"
-                            Visibility="{Binding Source={x:Static properties:Settings.Default},
-                                                 Path=isShowResultsCount,
-                                                 Converter={local:BoolToVisibilityConverter}}"
-                            Grid.Column="1"
-                            Click="OpenSearchInEverything" />
+                    <Border Visibility="{Binding TotalResultsNumber,
+                                                 Converter={local:DoubleToVisibilityConverter},
+                                                 ConverterParameter=1,
+                                                 FallbackValue=Hidden}"
+                            Grid.Column="1">
+                        <Button Style="{DynamicResource TabBarButtonStyle}"
+                                Content="{Binding TotalResultsNumber, 
+                                                  Converter={local:SearchResultsCountConverter}}"
+                                Visibility="{Binding Source={x:Static properties:Settings.Default},
+                                                     Path=isShowResultsCount,
+                                                     Converter={local:BoolToVisibilityConverter}}"
+                                Click="OpenSearchInEverything" />
+                    </Border>
 
                     <local:SettingsControl Grid.Column="2" />
                 </Grid>
