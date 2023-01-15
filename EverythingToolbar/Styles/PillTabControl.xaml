@@ -9,7 +9,7 @@
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Border x:Name="Border"
                             Height="32"
-                            BorderThickness="2, 1"
+                            BorderThickness="1"
                             CornerRadius="16"
                             Padding="14, 0"
                             Margin="0, 0, 4, 0"
@@ -57,8 +57,11 @@
                                     Property="Background"
                                     Value="{DynamicResource AccentColor}" />
                             <Setter TargetName="Border"
-                                    Property="BorderBrush"
-                                    Value="{DynamicResource AccentColor}" />
+                                    Property="BorderThickness"
+                                    Value="0" />
+                            <Setter TargetName="Border"
+                                    Property="Padding"
+                                    Value="15, 1" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

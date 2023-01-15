@@ -19,8 +19,6 @@ namespace EverythingToolbar
         {
             InitializeComponent();
 
-            DataContext = EverythingSearch.Instance;
-
             if (Settings.Default.isUpgradeRequired)
             {
                 Settings.Default.Upgrade();

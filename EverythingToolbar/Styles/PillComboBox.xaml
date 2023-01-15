@@ -22,10 +22,9 @@
                         <Grid>
                             <Border x:Name="Border"
                                     Height="32"
-                                    BorderThickness="2, 1"
+                                    BorderThickness="0"
                                     CornerRadius="16"
-                                    Padding="14, 0"
-                                    Margin="0, 0, 4, 0"
+                                    Padding="15, 1"
                                     BorderBrush="{DynamicResource AccentColor}"
                                     Background="{DynamicResource AccentColor}">
                                 <StackPanel Orientation="Horizontal">
@@ -95,6 +94,12 @@
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
                                     Value="{DynamicResource TabBorder}" />
+                            <Setter TargetName="Border"
+                                    Property="BorderThickness"
+                                    Value="1" />
+                            <Setter TargetName="Border"
+                                    Property="Padding"
+                                    Value="14, 0" />
                             <Setter TargetName="Border"
                                     Property="Background"
                                     Value="{DynamicResource TabBackground}" />

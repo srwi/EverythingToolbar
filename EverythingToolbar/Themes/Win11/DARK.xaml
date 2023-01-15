@@ -19,8 +19,8 @@
     <SolidColorBrush x:Key="TextBoxWatermarkForeground" Color="#dadada" />
     <SolidColorBrush x:Key="TextBoxWatermarkForegroundHover" Color="#dadada" />
     <SolidColorBrush x:Key="TextBoxWatermarkForegroundActive" Color="#999999" />
-    <SolidColorBrush x:Key="TextBoxBorder" Color="#333333" />
-    <SolidColorBrush x:Key="TextBoxBorderHover" Color="#363636" />
+    <SolidColorBrush x:Key="TextBoxBorder" Color="#18ffffff" />
+    <SolidColorBrush x:Key="TextBoxBorderHover" Color="#1affffff" />
     <SolidColorBrush x:Key="TextBoxBorderActive" Color="#333333" />
 
     <SolidColorBrush x:Key="SearchBoxLogo" Color="#ffffff" />
