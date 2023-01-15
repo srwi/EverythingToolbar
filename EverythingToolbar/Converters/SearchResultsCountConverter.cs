@@ -9,8 +9,7 @@ namespace EverythingToolbar
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (Properties.Settings.Default.isHideEmptySearchResults &&
-                (EverythingSearch.Instance.SearchTerm == null || EverythingSearch.Instance.SearchTerm == ""))
+            if (value == null)
                 return "";
 
             string suffix = (int)value == 1 ? Properties.Resources.SearchResult : Properties.Resources.SearchResults;

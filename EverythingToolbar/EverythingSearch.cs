@@ -18,7 +18,7 @@ namespace EverythingToolbar
 {
     public class EverythingSearch : INotifyPropertyChanged
     {
-        private string _searchTerm;
+        private string _searchTerm = "";
         public string SearchTerm
         {
             get => _searchTerm;
@@ -29,7 +29,7 @@ namespace EverythingToolbar
 
                 _searchTerm = value;
 
-                lock (_searchResultsLock)
+                lock (_lock)
                     SearchResults.Clear();
                 QueryBatch();
 
@@ -48,7 +48,7 @@ namespace EverythingToolbar
 
                 _currentFilter = value;
 
-                lock (_searchResultsLock)
+                lock (_lock)
                     SearchResults.Clear();
                 QueryBatch();
 
@@ -56,8 +56,8 @@ namespace EverythingToolbar
             }
         }
 
-        private int _totalResultsNumber = 0;
-        public int TotalResultsNumber
+        private int? _totalResultsNumber;
+        public int? TotalResultsNumber
         {
             get => _totalResultsNumber;
             set
@@ -73,15 +73,14 @@ namespace EverythingToolbar
 
         public static readonly EverythingSearch Instance = new EverythingSearch();
 
-        private bool _initialized = false;
-        private readonly object _searchResultsLock = new object();
+        private readonly object _lock = new object();
         private readonly ILogger _logger = ToolbarLogger.GetLogger<EverythingSearch>();
         private CancellationTokenSource _cancellationTokenSource;
 
         private EverythingSearch()
         {
             Properties.Settings.Default.PropertyChanged += OnSettingChanged;
-            BindingOperations.EnableCollectionSynchronization(SearchResults, _searchResultsLock);
+            BindingOperations.EnableCollectionSynchronization(SearchResults, _lock);
         }
 
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -102,13 +101,13 @@ namespace EverythingToolbar
                 e.PropertyName == "sortBy" ||
                 e.PropertyName == "isThumbnailsEnabled")
             {
-                lock (_searchResultsLock)
+                lock (_lock)
                     SearchResults.Clear();
                 QueryBatch();
             }
         }
 
-        public bool Initialize()
+        public void Initialize()
         {
             uint major = Everything_GetMajorVersion();
             uint minor = Everything_GetMinorVersion();
@@ -118,21 +117,18 @@ namespace EverythingToolbar
             {
                 _logger.Info("Everything version: {major}.{minor}.{revision}", major, minor, revision);
                 SetInstanceName(Properties.Settings.Default.instanceName);
-                _initialized = true;
             }
             else if (major == 0 && minor == 0 && revision == 0 && (ErrorCode)Everything_GetLastError() == ErrorCode.EVERYTHING_ERROR_IPC)
             {
                 HandleError((ErrorCode)Everything_GetLastError());
                 _logger.Error("Failed to get Everything version number. Is Everything running?");
-                _initialized = false;
+                return;
             }
             else
             {
                 _logger.Error("Everything version {major}.{minor}.{revision} is not supported.", major, minor, revision);
-                _initialized = false;
+                return;
             }
-            
-            return _initialized;
         }
 
         public void SetInstanceName(string name)
@@ -151,19 +147,13 @@ namespace EverythingToolbar
         {
             _cancellationTokenSource?.Cancel();
 
-            if (!_initialized)
-                Initialize();
-
-            if (SearchTerm == null)
+            if (SearchTerm == null || (SearchTerm == "" && Properties.Settings.Default.isHideEmptySearchResults))
             {
-                lock (_searchResultsLock)
+                lock (_lock)
+                {
                     SearchResults.Clear();
-                return;
-            }
-            
-            if (SearchTerm == "" && Properties.Settings.Default.isHideEmptySearchResults)
-            {
-                Clear();
+                    TotalResultsNumber = null;
+                }
                 return;
             }
 
@@ -191,7 +181,7 @@ namespace EverythingToolbar
                     Everything_SetMatchWholeWord(CurrentFilter.IsMatchWholeWord ?? Properties.Settings.Default.isMatchWholeWord);
                     Everything_SetRegex(regEx);
                     Everything_SetMax(BATCH_SIZE);
-                    lock (_searchResultsLock)
+                    lock (_lock)
                         Everything_SetOffset((uint)SearchResults.Count);
 
                     if (!Everything_QueryW(true))
@@ -201,7 +191,8 @@ namespace EverythingToolbar
                     }
 
                     uint resultsCount = Everything_GetNumResults();
-                    TotalResultsNumber = (int)Everything_GetTotResults();
+                    lock (_lock)
+                        TotalResultsNumber = (int)Everything_GetTotResults();
 
                     for (uint i = 0; i < resultsCount; i++)
                     {
@@ -213,7 +204,7 @@ namespace EverythingToolbar
                         StringBuilder fullPathAndFilename = new StringBuilder(4096);
                         Everything_GetResultFullPathNameW(i, fullPathAndFilename, 4096);
 
-                        lock (_searchResultsLock)
+                        lock (_lock)
                         {
                             SearchResults.Add(new SearchResult()
                             {
@@ -231,21 +222,16 @@ namespace EverythingToolbar
 
         public void Reset()
         {
-            Clear();
-
-            if (Properties.Settings.Default.isRememberFilter)
-            {
-                Properties.Settings.Default.lastFilter = CurrentFilter.Name;
-            }
+            if (Properties.Settings.Default.isHideEmptySearchResults)
+                SearchTerm = null;
             else
-            {
-                CurrentFilter = FilterLoader.Instance.DefaultFilters[0];
-            }
-        }
+                SearchTerm = "";
 
-        public void Clear()
-        {
-            SearchTerm = null;
+            if (!Properties.Settings.Default.isRememberFilter)
+                _currentFilter = FilterLoader.Instance.DefaultFilters[0];
+
+            lock (_lock)
+                SearchResults.Clear();
             QueryBatch();
         }
 
