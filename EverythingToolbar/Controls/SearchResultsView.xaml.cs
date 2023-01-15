@@ -29,8 +29,8 @@ namespace EverythingToolbar
             // Mouse events and context menu must be added to the ItemContainerStyle each time it gets updated
             Loaded += (s, e) =>
             {
-                RegisterItemContainerStyleProperties(s, null);
-                ThemeHandler.Instance.ResourceChanged += RegisterItemContainerStyleProperties;
+                RegisterItemContainerStyleProperties(null, null);
+                ThemeAwareness.ResourceChanged += RegisterItemContainerStyleProperties;
             };
         }
 

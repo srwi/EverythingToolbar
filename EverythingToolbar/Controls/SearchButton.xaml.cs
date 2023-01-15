@@ -15,11 +15,7 @@ namespace EverythingToolbar
             SearchWindow.Instance.Activated += OnSearchWindowActivated;
             SearchWindow.Instance.Deactivated += OnSearchWindowDeactivated;
 
-            Loaded += (s, e) =>
-            {
-                ThemeHandler.Instance.ResourceChanged += UpdateTheme;
-                ThemeHandler.Instance.AutoApplyTheme();
-            };
+            ThemeAwareness.ResourceChanged += UpdateTheme;
         }
 
         private void OnSearchWindowDeactivated(object sender, System.EventArgs e)
