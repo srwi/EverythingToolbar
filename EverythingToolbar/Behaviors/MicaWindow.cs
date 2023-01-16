@@ -4,11 +4,21 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Shell;
 
 namespace EverythingToolbar.Behaviors
 {
     public class MicaWindow : Behavior<Window>
     {
+        public static readonly DependencyProperty MicaWindowStyleProperty =
+            DependencyProperty.Register("MicaStyle", typeof(MicaWindowStyleType), typeof(MicaWindow), new FrameworkPropertyMetadata(MicaWindowStyleType.MainWindow));
+
+        public MicaWindowStyleType MicaWindowStyle
+        {
+            get => (MicaWindowStyleType)GetValue(MicaWindowStyleProperty);
+            set => SetValue(MicaWindowStyleProperty, value);
+        }
+
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -30,16 +40,24 @@ namespace EverythingToolbar.Behaviors
         {
             HwndSource hwnd = (HwndSource)sender;
             int trueValue = 0x01;
-            int backdropType = (int)MicaWindowStyle.TransientWindow;
+            int backdropType = (int)MicaWindowStyle;
+            DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref trueValue, Marshal.SizeOf(typeof(int)));
             DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_MICA_EFFECT, ref trueValue, Marshal.SizeOf(typeof(int)));
             DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_SYSTEMBACKDROP_TYPE, ref backdropType, Marshal.SizeOf(typeof(int)));
-            DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref trueValue, Marshal.SizeOf(typeof(int)));
         }
 
         private void OnMicaWindowLoaded(object sender, RoutedEventArgs e)
         {
             PresentationSource presentationSource = PresentationSource.FromVisual((Visual)sender);
             presentationSource.ContentRendered += OnMicaWindowContentRendered;
+
+            WindowChrome.SetWindowChrome(AssociatedObject, new WindowChrome()
+            {
+                ResizeBorderThickness = new Thickness(3),
+                GlassFrameThickness = new Thickness(-1),
+                CaptionHeight = 0,
+                UseAeroCaptionButtons = false,
+            });
         }
 
         [Flags]
@@ -51,7 +69,7 @@ namespace EverythingToolbar.Behaviors
         }
 
         [Flags]
-        private enum MicaWindowStyle : int
+        public enum MicaWindowStyleType : int
         {
             Auto = 0,
             Disable = 1,
