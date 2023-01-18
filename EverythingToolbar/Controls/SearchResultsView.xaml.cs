@@ -1,5 +1,3 @@
-using EverythingToolbar.Behaviors;
-using EverythingToolbar.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -10,6 +8,8 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using EverythingToolbar.Behaviors;
+using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar
 {
@@ -126,6 +126,12 @@ namespace EverythingToolbar
             {
                 ScrollToEnd();
             }
+            else if (e.Key == Key.Tab)
+            {
+                var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
+                EverythingSearch.Instance.CycleFilters(offset);
+                e.Handled = true;
+            }
         }
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -146,7 +152,7 @@ namespace EverythingToolbar
             }
         }
 
-        public void ScrollToVerticalOffset(double verticalOffset)
+        private void ScrollToVerticalOffset(double verticalOffset)
         {
             Dispatcher.Invoke(new Action(() =>
             {
@@ -154,7 +160,7 @@ namespace EverythingToolbar
             }), DispatcherPriority.ContextIdle);
         }
 
-        public void SelectNextSearchResult()
+        private void SelectNextSearchResult()
         {
             if (SearchResultsListView.SelectedIndex + 1 < SearchResultsListView.Items.Count)
             {
@@ -163,7 +169,7 @@ namespace EverythingToolbar
             }
         }
 
-        public void SelectPreviousSearchResult()
+        private void SelectPreviousSearchResult()
         {
             if (SearchResultsListView.SelectedIndex > 0)
             {
@@ -172,7 +178,7 @@ namespace EverythingToolbar
             }
         }
 
-        public void PageUp()
+        private void PageUp()
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -180,7 +186,7 @@ namespace EverythingToolbar
             }), DispatcherPriority.ContextIdle);
         }
 
-        public void PageDown()
+        private void PageDown()
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -188,7 +194,7 @@ namespace EverythingToolbar
             }), DispatcherPriority.ContextIdle);
         }
 
-        public void ScrollToHome()
+        private void ScrollToHome()
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -196,7 +202,7 @@ namespace EverythingToolbar
             }), DispatcherPriority.ContextIdle);
         }
 
-        public void ScrollToEnd()
+        private void ScrollToEnd()
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -204,7 +210,7 @@ namespace EverythingToolbar
             }), DispatcherPriority.ContextIdle);
         }
 
-        public void OpenSelectedSearchResult()
+        private void OpenSelectedSearchResult()
         {
             if (SearchResultsListView.SelectedIndex == -1)
                 SelectNextSearchResult();
@@ -218,12 +224,12 @@ namespace EverythingToolbar
             }
         }
 
-        public void OpenFilePath(object sender, RoutedEventArgs e)
+        private void OpenFilePath(object sender, RoutedEventArgs e)
         {
             SelectedItem?.OpenPath();
         }
 
-        public void PreviewSelectedFile()
+        private void PreviewSelectedFile()
         {
             SelectedItem?.PreviewInQuickLook();
         }

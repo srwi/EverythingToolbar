@@ -63,7 +63,7 @@ namespace EverythingToolbar
             get => _currentFilter;
             set
             {
-                if (_currentFilter == value)
+                if (_currentFilter.Equals(value))
                     return;
 
                 _currentFilter = value;
@@ -134,7 +134,7 @@ namespace EverythingToolbar
                 _logger.Info("Everything version: {major}.{minor}.{revision}", major, minor, revision);
                 SetInstanceName(Settings.Default.instanceName);
             }
-            else if (major == 0 && minor == 0 && revision == 0 && (ErrorCode)Everything_GetLastError() == ErrorCode.EVERYTHING_ERROR_IPC)
+            else if (major == 0 && minor == 0 && revision == 0 && (ErrorCode)Everything_GetLastError() == ErrorCode.ErrorIpc)
             {
                 HandleError((ErrorCode)Everything_GetLastError());
                 _logger.Error("Failed to get Everything version number. Is Everything running?");
@@ -178,6 +178,12 @@ namespace EverythingToolbar
             {
                 try
                 {
+                    lock (_lock)
+                    {
+                        if (!append)
+                            SearchResults.ClearSilent();                        
+                    }    
+                    
                     uint flags = EVERYTHING_FULL_PATH_AND_FILE_NAME | EVERYTHING_HIGHLIGHTED_PATH | EVERYTHING_HIGHLIGHTED_FILE_NAME;
                     bool regEx = CurrentFilter.IsRegExEnabled ?? Settings.Default.isRegExEnabled;
 
@@ -206,18 +212,14 @@ namespace EverythingToolbar
 
                     uint batchResultsCount = Everything_GetNumResults();
                     lock (_lock)
-                    {
                         TotalResultsNumber = (int)Everything_GetTotResults();
-                        if (!append)
-                            SearchResults.ClearSilent();                       
-                    }
 
                     for (uint i = 0; i < batchResultsCount; i++)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
 
-                        string highlightedPath = Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i)).ToString();
-                        string highlightedFileName = Marshal.PtrToStringUni(Everything_GetResultHighlightedFileName(i)).ToString();
+                        string highlightedPath = Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i));
+                        string highlightedFileName = Marshal.PtrToStringUni(Everything_GetResultHighlightedFileName(i));
                         bool isFile = Everything_IsFileResult(i);
                         StringBuilder fullPathAndFilename = new StringBuilder(4096);
                         Everything_GetResultFullPathNameW(i, fullPathAndFilename, 4096);
@@ -301,7 +303,7 @@ namespace EverythingToolbar
                 }
             }
 
-            string args = "";
+            var args = "";
             if (!string.IsNullOrEmpty(highlightedFile)) args += " -select \"" + highlightedFile + "\"";
             if (Settings.Default.sortBy <= 2) args += " -sort \"Name\"";
             else if (Settings.Default.sortBy <= 4) args += " -sort \"Path\"";
@@ -340,25 +342,25 @@ namespace EverythingToolbar
         {
             switch(code)
             {
-                case ErrorCode.EVERYTHING_ERROR_MEMORY:
+                case ErrorCode.ErrorMemory:
                     _logger.Error("Failed to allocate memory for the search query.");
                     break;
-                case ErrorCode.EVERYTHING_ERROR_IPC:
+                case ErrorCode.ErrorIpc:
                     _logger.Error("IPC is not available.");
                     break;
-                case ErrorCode.EVERYTHING_ERROR_REGISTERCLASSEX:
+                case ErrorCode.ErrorRegisterClassEx:
                     _logger.Error("Failed to register the search query window class.");
                     break;
-                case ErrorCode.EVERYTHING_ERROR_CREATEWINDOW:
+                case ErrorCode.ErrorCreateWindow:
                     _logger.Error("Failed to create the search query window.");
                     break;
-                case ErrorCode.EVERYTHING_ERROR_CREATETHREAD:
+                case ErrorCode.ErrorCreateThread:
                     _logger.Error("Failed to create the search query thread.");
                     break;
-                case ErrorCode.EVERYTHING_ERROR_INVALIDINDEX:
+                case ErrorCode.ErrorInvalidIndex:
                     _logger.Error("Invalid index.");
                     break;
-                case ErrorCode.EVERYTHING_ERROR_INVALIDCALL:
+                case ErrorCode.ErrorInvalidCall:
                     _logger.Error("Invalid call.");
                     break;
             }
@@ -367,14 +369,14 @@ namespace EverythingToolbar
         [Flags]
         private enum ErrorCode
         {
-            EVERYTHING_OK,
-            EVERYTHING_ERROR_MEMORY,
-            EVERYTHING_ERROR_IPC,
-            EVERYTHING_ERROR_REGISTERCLASSEX,
-            EVERYTHING_ERROR_CREATEWINDOW,
-            EVERYTHING_ERROR_CREATETHREAD,
-            EVERYTHING_ERROR_INVALIDINDEX,
-            EVERYTHING_ERROR_INVALIDCALL
+            Ok,
+            ErrorMemory,
+            ErrorIpc,
+            ErrorRegisterClassEx,
+            ErrorCreateWindow,
+            ErrorCreateThread,
+            ErrorInvalidIndex,
+            ErrorInvalidCall
         }
 
         private const uint BATCH_SIZE = 100;
