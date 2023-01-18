@@ -38,9 +38,9 @@ namespace EverythingToolbar.Behaviors
 
         private void OnMicaWindowContentRendered(object sender, EventArgs e)
         {
-            HwndSource hwnd = (HwndSource)sender;
-            int trueValue = 0x01;
-            int backdropType = (int)MicaWindowStyle;
+            var hwnd = (HwndSource)sender;
+            var trueValue = 0x01;
+            var backdropType = (int)MicaWindowStyle;
             DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref trueValue, Marshal.SizeOf(typeof(int)));
             DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_MICA_EFFECT, ref trueValue, Marshal.SizeOf(typeof(int)));
             DwmSetWindowAttribute(hwnd.Handle, DwmWindowAttribute.DWMWA_SYSTEMBACKDROP_TYPE, ref backdropType, Marshal.SizeOf(typeof(int)));
@@ -48,7 +48,7 @@ namespace EverythingToolbar.Behaviors
 
         private void OnMicaWindowLoaded(object sender, RoutedEventArgs e)
         {
-            PresentationSource presentationSource = PresentationSource.FromVisual((Visual)sender);
+            var presentationSource = PresentationSource.FromVisual((Visual)sender);
             presentationSource.ContentRendered += OnMicaWindowContentRendered;
 
             WindowChrome.SetWindowChrome(AssociatedObject, new WindowChrome()

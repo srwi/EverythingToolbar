@@ -1,8 +1,6 @@
-﻿using EverythingToolbar.Data;
-using EverythingToolbar.Helpers;
-using NLog;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -13,9 +11,33 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Forms;
+using EverythingToolbar.Data;
+using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
+using NLog;
 
 namespace EverythingToolbar
 {
+    public class SearchResultsCollection<T> : ObservableCollection<T>
+    {
+        public void AddSilent(T item)
+        {
+            Items.Add(item);
+        }
+
+        public void ClearSilent()
+        {
+            Items.Clear();
+        }
+
+        public void NotifyCollectionChanged()
+        {
+            OnPropertyChanged(new PropertyChangedEventArgs("Count"));
+            OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+    }
+
     public class EverythingSearch : INotifyPropertyChanged
     {
         private string _searchTerm = "";
@@ -29,9 +51,7 @@ namespace EverythingToolbar
 
                 _searchTerm = value;
 
-                lock (_lock)
-                    SearchResults.Clear();
-                QueryBatch();
+                QueryBatch(append: false);
 
                 NotifyPropertyChanged();
             }
@@ -48,9 +68,7 @@ namespace EverythingToolbar
 
                 _currentFilter = value;
 
-                lock (_lock)
-                    SearchResults.Clear();
-                QueryBatch();
+                QueryBatch(append: false);
 
                 NotifyPropertyChanged();
             }
@@ -69,7 +87,7 @@ namespace EverythingToolbar
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<SearchResult> SearchResults = new ObservableCollection<SearchResult>();
+        public readonly SearchResultsCollection<SearchResult> SearchResults = new SearchResultsCollection<SearchResult>();
 
         public static readonly EverythingSearch Instance = new EverythingSearch();
 
@@ -79,11 +97,11 @@ namespace EverythingToolbar
 
         private EverythingSearch()
         {
-            Properties.Settings.Default.PropertyChanged += OnSettingChanged;
+            Settings.Default.PropertyChanged += OnSettingChanged;
             BindingOperations.EnableCollectionSynchronization(SearchResults, _lock);
         }
 
-        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -101,9 +119,7 @@ namespace EverythingToolbar
                 e.PropertyName == "sortBy" ||
                 e.PropertyName == "isThumbnailsEnabled")
             {
-                lock (_lock)
-                    SearchResults.Clear();
-                QueryBatch();
+                QueryBatch(append: false);
             }
         }
 
@@ -116,18 +132,16 @@ namespace EverythingToolbar
             if ((major > 1) || ((major == 1) && (minor > 4)) || ((major == 1) && (minor == 4) && (revision >= 1)))
             {
                 _logger.Info("Everything version: {major}.{minor}.{revision}", major, minor, revision);
-                SetInstanceName(Properties.Settings.Default.instanceName);
+                SetInstanceName(Settings.Default.instanceName);
             }
             else if (major == 0 && minor == 0 && revision == 0 && (ErrorCode)Everything_GetLastError() == ErrorCode.EVERYTHING_ERROR_IPC)
             {
                 HandleError((ErrorCode)Everything_GetLastError());
                 _logger.Error("Failed to get Everything version number. Is Everything running?");
-                return;
             }
             else
             {
                 _logger.Error("Everything version {major}.{minor}.{revision} is not supported.", major, minor, revision);
-                return;
             }
         }
 
@@ -143,11 +157,11 @@ namespace EverythingToolbar
             Everything_SetInstanceName(name);
         }
 
-        public void QueryBatch()
+        public void QueryBatch(bool append)
         {
             _cancellationTokenSource?.Cancel();
 
-            if (SearchTerm == null || (SearchTerm == "" && Properties.Settings.Default.isHideEmptySearchResults))
+            if (SearchTerm == null || (SearchTerm == "" && Settings.Default.isHideEmptySearchResults))
             {
                 lock (_lock)
                 {
@@ -165,7 +179,7 @@ namespace EverythingToolbar
                 try
                 {
                     uint flags = EVERYTHING_FULL_PATH_AND_FILE_NAME | EVERYTHING_HIGHLIGHTED_PATH | EVERYTHING_HIGHLIGHTED_FILE_NAME;
-                    bool regEx = CurrentFilter.IsRegExEnabled ?? Properties.Settings.Default.isRegExEnabled;
+                    bool regEx = CurrentFilter.IsRegExEnabled ?? Settings.Default.isRegExEnabled;
 
                     string search = CurrentFilter.Search + (CurrentFilter.Search.Length > 0 && !regEx ? " " : "") + SearchTerm;
                     foreach (Filter filter in FilterLoader.Instance.DefaultUserFilters)
@@ -175,10 +189,10 @@ namespace EverythingToolbar
 
                     Everything_SetSearchW(search);
                     Everything_SetRequestFlags(flags);
-                    Everything_SetSort((uint)Properties.Settings.Default.sortBy);
-                    Everything_SetMatchCase(CurrentFilter.IsMatchCase ?? Properties.Settings.Default.isMatchCase);
-                    Everything_SetMatchPath(CurrentFilter.IsMatchPath ?? Properties.Settings.Default.isMatchPath);
-                    Everything_SetMatchWholeWord(CurrentFilter.IsMatchWholeWord ?? Properties.Settings.Default.isMatchWholeWord);
+                    Everything_SetSort((uint)Settings.Default.sortBy);
+                    Everything_SetMatchCase(CurrentFilter.IsMatchCase ?? Settings.Default.isMatchCase);
+                    Everything_SetMatchPath(CurrentFilter.IsMatchPath ?? Settings.Default.isMatchPath);
+                    Everything_SetMatchWholeWord(CurrentFilter.IsMatchWholeWord ?? Settings.Default.isMatchWholeWord);
                     Everything_SetRegex(regEx);
                     Everything_SetMax(BATCH_SIZE);
                     lock (_lock)
@@ -190,11 +204,15 @@ namespace EverythingToolbar
                         return;
                     }
 
-                    uint resultsCount = Everything_GetNumResults();
+                    uint batchResultsCount = Everything_GetNumResults();
                     lock (_lock)
+                    {
                         TotalResultsNumber = (int)Everything_GetTotResults();
+                        if (!append)
+                            SearchResults.ClearSilent();                       
+                    }
 
-                    for (uint i = 0; i < resultsCount; i++)
+                    for (uint i = 0; i < batchResultsCount; i++)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
 
@@ -206,7 +224,7 @@ namespace EverythingToolbar
 
                         lock (_lock)
                         {
-                            SearchResults.Add(new SearchResult()
+                            SearchResults.AddSilent(new SearchResult()
                             {
                                 HighlightedPath = highlightedPath,
                                 HighlightedFileName = highlightedFileName,
@@ -215,6 +233,9 @@ namespace EverythingToolbar
                             });
                         }
                     }
+                    
+                    if (!append || batchResultsCount > 0)
+                        SearchResults.NotifyCollectionChanged();
                 }
                 catch (OperationCanceledException) { }
             }, cancellationToken);
@@ -222,17 +243,12 @@ namespace EverythingToolbar
 
         public void Reset()
         {
-            if (Properties.Settings.Default.isHideEmptySearchResults)
-                SearchTerm = null;
-            else
-                SearchTerm = "";
+            SearchTerm = Settings.Default.isHideEmptySearchResults ? null : "";
 
-            if (!Properties.Settings.Default.isRememberFilter)
+            if (!Settings.Default.isRememberFilter)
                 _currentFilter = FilterLoader.Instance.DefaultFilters[0];
 
-            lock (_lock)
-                SearchResults.Clear();
-            QueryBatch();
+            QueryBatch(append: false);
         }
 
         public void CycleFilters(int offset = 1)
@@ -263,11 +279,11 @@ namespace EverythingToolbar
                 CurrentFilter = FilterLoader.Instance.UserFilters[index - defaultCount];
         }
 
-        public void OpenLastSearchInEverything(string highlighted_file = "")
+        public void OpenLastSearchInEverything(string highlightedFile = "")
         {
-            if(!File.Exists(Properties.Settings.Default.everythingPath))
+            if(!File.Exists(Settings.Default.everythingPath))
             {
-                MessageBox.Show(Properties.Resources.MessageBoxSelectEverythingExe);
+                MessageBox.Show(Resources.MessageBoxSelectEverythingExe);
                 using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
                     openFileDialog.InitialDirectory = "c:\\";
@@ -276,7 +292,7 @@ namespace EverythingToolbar
 
                     if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        Properties.Settings.Default.everythingPath = openFileDialog.FileName;
+                        Settings.Default.everythingPath = openFileDialog.FileName;
                     }
                     else
                     {
@@ -286,28 +302,28 @@ namespace EverythingToolbar
             }
 
             string args = "";
-            if (!string.IsNullOrEmpty(highlighted_file)) args += " -select \"" + highlighted_file + "\"";
-            if (Properties.Settings.Default.sortBy <= 2) args += " -sort \"Name\"";
-            else if (Properties.Settings.Default.sortBy <= 4) args += " -sort \"Path\"";
-            else if (Properties.Settings.Default.sortBy <= 6) args += " -sort \"Size\"";
-            else if (Properties.Settings.Default.sortBy <= 8) args += " -sort \"Extension\"";
-            else if (Properties.Settings.Default.sortBy <= 10) args += " -sort \"Type name\"";
-            else if (Properties.Settings.Default.sortBy <= 12) args += " -sort \"Date created\"";
-            else if (Properties.Settings.Default.sortBy <= 14) args += " -sort \"Date modified\"";
-            else if (Properties.Settings.Default.sortBy <= 16) args += " -sort \"Attributes\"";
-            else if (Properties.Settings.Default.sortBy <= 18) args += " -sort \"File list highlightedFileName\"";
-            else if (Properties.Settings.Default.sortBy <= 20) args += " -sort \"Run count\"";
-            else if (Properties.Settings.Default.sortBy <= 22) args += " -sort \"Date recently changed\"";
-            else if (Properties.Settings.Default.sortBy <= 24) args += " -sort \"Date accessed\"";
-            else if (Properties.Settings.Default.sortBy <= 26) args += " -sort \"Date run\"";
-            args += Properties.Settings.Default.sortBy % 2 > 0 ? " -sort-ascending" : " -sort-descending";
-            args += Properties.Settings.Default.isMatchCase ? " -case" : " -nocase";
-            args += Properties.Settings.Default.isMatchPath ? " -matchpath" : " -nomatchpath";
-            args += Properties.Settings.Default.isMatchWholeWord ? " -ww" : " -noww";
-            args += Properties.Settings.Default.isRegExEnabled ? " -regex" : " -noregex";
+            if (!string.IsNullOrEmpty(highlightedFile)) args += " -select \"" + highlightedFile + "\"";
+            if (Settings.Default.sortBy <= 2) args += " -sort \"Name\"";
+            else if (Settings.Default.sortBy <= 4) args += " -sort \"Path\"";
+            else if (Settings.Default.sortBy <= 6) args += " -sort \"Size\"";
+            else if (Settings.Default.sortBy <= 8) args += " -sort \"Extension\"";
+            else if (Settings.Default.sortBy <= 10) args += " -sort \"Type name\"";
+            else if (Settings.Default.sortBy <= 12) args += " -sort \"Date created\"";
+            else if (Settings.Default.sortBy <= 14) args += " -sort \"Date modified\"";
+            else if (Settings.Default.sortBy <= 16) args += " -sort \"Attributes\"";
+            else if (Settings.Default.sortBy <= 18) args += " -sort \"File list highlightedFileName\"";
+            else if (Settings.Default.sortBy <= 20) args += " -sort \"Run count\"";
+            else if (Settings.Default.sortBy <= 22) args += " -sort \"Date recently changed\"";
+            else if (Settings.Default.sortBy <= 24) args += " -sort \"Date accessed\"";
+            else if (Settings.Default.sortBy <= 26) args += " -sort \"Date run\"";
+            args += Settings.Default.sortBy % 2 > 0 ? " -sort-ascending" : " -sort-descending";
+            args += Settings.Default.isMatchCase ? " -case" : " -nocase";
+            args += Settings.Default.isMatchPath ? " -matchpath" : " -nomatchpath";
+            args += Settings.Default.isMatchWholeWord ? " -ww" : " -noww";
+            args += Settings.Default.isRegExEnabled ? " -regex" : " -noregex";
             args += " -s \"" + (CurrentFilter.Search + " " + SearchTerm).Replace("\"", "\"\"") + "\"";
 
-            Process.Start(Properties.Settings.Default.everythingPath, args);
+            Process.Start(Settings.Default.everythingPath, args);
         }
 
         public void IncrementRunCount(string path)

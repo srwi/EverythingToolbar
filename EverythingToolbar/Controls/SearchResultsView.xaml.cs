@@ -140,7 +140,7 @@ namespace EverythingToolbar
             {
                 if (e.VerticalOffset > e.ExtentHeight - 2 * e.ViewportHeight)
                 {
-                    EverythingSearch.Instance.QueryBatch();
+                    EverythingSearch.Instance.QueryBatch(append: true);
                     ScrollToVerticalOffset(e.VerticalOffset);
                 }
             }
