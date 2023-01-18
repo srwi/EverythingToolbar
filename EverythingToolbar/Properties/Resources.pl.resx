@@ -151,7 +151,7 @@
     <value>Otwórz ściężkę</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
-    <value>Show more options</value>
+    <value>Pokaż więcej opcji</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
     <value>Otwórz z...</value>
@@ -334,7 +334,7 @@
     <value>Reguły...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>Set instance name...</value>
+    <value>Ustaw nazwę instancji...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>Pokaż szybkie przełączniki</value>
@@ -349,7 +349,7 @@
     <value>Motyw</value>
   </data>
   <data name="SettingsThemeAuto" xml:space="preserve">
-    <value>Sync theme</value>
+    <value>Synchronizuj motyw</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>Włącz miniatury</value>
