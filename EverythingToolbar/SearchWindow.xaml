@@ -51,7 +51,7 @@
 
                     <Border Visibility="{Binding TotalResultsNumber,
                                                  Converter={local:DoubleToVisibilityConverter},
-                                                 ConverterParameter=1,
+                                                 ConverterParameter=0,
                                                  FallbackValue=Hidden}"
                             Grid.Column="1">
                         <Button Style="{DynamicResource TabBarButtonStyle}"

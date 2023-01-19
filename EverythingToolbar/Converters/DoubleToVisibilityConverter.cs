@@ -12,7 +12,7 @@ namespace EverythingToolbar
         {
             double threshold = System.Convert.ToDouble(parameter);
 
-            if (System.Convert.ToDouble(value) > Math.Abs(threshold))
+            if (System.Convert.ToDouble(value) >= Math.Abs(threshold))
             {
                 return threshold >= 0 ? Visibility.Visible : Visibility.Hidden;
             }
