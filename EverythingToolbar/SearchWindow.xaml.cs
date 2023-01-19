@@ -62,12 +62,20 @@ namespace EverythingToolbar
             if (Visibility != Visibility.Visible)
                 return;
 
-            HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
+            Hiding?.Invoke(this, EventArgs.Empty);
+        }
 
+        private void OnHidden(object sender, EventArgs e)
+        {
             if (Height != Settings.Default.popupSize.Height || Width != Settings.Default.popupSize.Width)
                 Settings.Default.popupSize = new Size(Width, Height);
 
-            Hiding?.Invoke(this, new EventArgs());
+            base.Hide();
+            
+            if (Settings.Default.isEnableHistory)
+                HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
+            else
+                EverythingSearch.Instance.Reset();
         }
 
         public new void Show()
@@ -82,7 +90,7 @@ namespace EverythingToolbar
             Topmost = true;
             Topmost = false;
 
-            Showing?.Invoke(this, new EventArgs());
+            Showing?.Invoke(this, EventArgs.Empty);
         }
 
         public void Show(object sender, HotkeyEventArgs e)
@@ -216,7 +224,7 @@ namespace EverythingToolbar
                 EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseIn }
             };
             DependencyProperty positionProperty = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? LeftProperty : TopProperty;
-            positionAnimation.Completed += (s, e) => { base.Hide(); };
+            positionAnimation.Completed += OnHidden;
             BeginAnimation(positionProperty, positionAnimation);
 
             duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.5);
