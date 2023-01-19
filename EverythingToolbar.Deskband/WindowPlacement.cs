@@ -18,6 +18,10 @@ namespace EverythingToolbar.Behaviors
 
         protected override void OnAttached()
         {
+            // Start with window outside of screen area to prevent flickering when loading for the first time
+            AssociatedObject.Left = 100000;
+            AssociatedObject.Top = 100000;
+
             AssociatedObject.Showing += OnShowing;
             AssociatedObject.Hiding += OnHiding;
             AssociatedObject.Loaded += OnLoaded;
@@ -26,12 +30,6 @@ namespace EverythingToolbar.Behaviors
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             DpiScalingFactor = GetScalingFactor();
-
-            RECT position = CalculatePosition();
-            AssociatedObject.Left = position.Left * DpiScalingFactor;
-            AssociatedObject.Top = position.Top * DpiScalingFactor;
-            AssociatedObject.Width = (position.Right - position.Left) * DpiScalingFactor;
-            AssociatedObject.Height = (position.Bottom - position.Top) * DpiScalingFactor;
         }
 
         private void OnHiding(object sender, EventArgs e)
@@ -94,8 +92,8 @@ namespace EverythingToolbar.Behaviors
         {
             if (Environment.OSVersion.Version >= Utils.WindowsVersion.Windows11)
                 return (int)(12 / GetScalingFactor());
-            else
-                return 0;
+            
+            return 0;
         }
 
         [DllImport("user32")]
