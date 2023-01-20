@@ -4,7 +4,6 @@ using NLog;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;

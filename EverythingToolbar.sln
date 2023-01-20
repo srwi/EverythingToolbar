@@ -8,8 +8,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingToolbar", "Everyt
 		{BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD} = {BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingToolbar.Debug", "EverythingToolbar.Debug\EverythingToolbar.Debug.csproj", "{B4C262BB-FC90-47B9-B56A-8A1A40075B26}"
-EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "EverythingToolbar.Installer", "EverythingToolbar.Installer\EverythingToolbar.Installer.wixproj", "{3A32975A-714F-408F-828A-04F5119EC1AB}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469} = {C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}
@@ -38,12 +36,6 @@ Global
 		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}.Release|x64.ActiveCfg = Release|Any CPU
 		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}.Release|x64.Build.0 = Release|Any CPU
-		{B4C262BB-FC90-47B9-B56A-8A1A40075B26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B4C262BB-FC90-47B9-B56A-8A1A40075B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B4C262BB-FC90-47B9-B56A-8A1A40075B26}.Debug|x64.ActiveCfg = Debug|x64
-		{B4C262BB-FC90-47B9-B56A-8A1A40075B26}.Debug|x64.Build.0 = Debug|x64
-		{B4C262BB-FC90-47B9-B56A-8A1A40075B26}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{B4C262BB-FC90-47B9-B56A-8A1A40075B26}.Release|x64.ActiveCfg = Debug|x64
 		{3A32975A-714F-408F-828A-04F5119EC1AB}.Debug|Any CPU.ActiveCfg = Release|x86
 		{3A32975A-714F-408F-828A-04F5119EC1AB}.Debug|x64.ActiveCfg = Release|x86
 		{3A32975A-714F-408F-828A-04F5119EC1AB}.Release|Any CPU.ActiveCfg = Release|x86
