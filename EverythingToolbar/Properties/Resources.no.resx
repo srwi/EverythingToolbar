@@ -193,7 +193,7 @@
     <value>Normal</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detailed)</value>
+    <value>Normal (detaljert)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -232,7 +232,7 @@
     <value>Failed to register hotkey. It might be in use by another application.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
-    <value>Failed to run command</value>
+    <value>Kunne ikke kjøre kommando</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
     <value>To utilize this sorting method it has to have fast sorting enabled. It can be enabled in your Everything settings.</value>
@@ -262,7 +262,7 @@
     <value>Automatically apply rules based on condition</value>
   </data>
   <data name="RulesCancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Avbryt</value>
   </data>
   <data name="RulesCommand" xml:space="preserve">
     <value>Command</value>
