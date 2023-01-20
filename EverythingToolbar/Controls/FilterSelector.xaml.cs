@@ -1,5 +1,6 @@
 ﻿using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
+using System;
 using System.Windows.Controls;
 
 namespace EverythingToolbar
@@ -9,15 +10,9 @@ namespace EverythingToolbar
         public FilterSelector()
         {
             InitializeComponent();
+            DataContext = FilterLoader.Instance;
             EverythingSearch.Instance.PropertyChanged += OnCurrentFilterChanged;
-            Loaded += OnLoaded;
-        }
-
-        private void OnLoaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            TabControl.ItemsSource = FilterLoader.Instance.DefaultFilters;
-            ComboBox.ItemsSource = FilterLoader.Instance.UserFilters;
-            SelectCurrentFilter();
+            Loaded += (s, e) => { SelectCurrentFilter(); };
         }
 
         private void SelectCurrentFilter()
