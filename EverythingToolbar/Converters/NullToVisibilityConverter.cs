@@ -6,18 +6,11 @@ using System.Windows.Markup;
 
 namespace EverythingToolbar
 {
-    public class DoubleToVisibilityConverter : MarkupExtension, IValueConverter
+    public class NullToVisibilityConverter : MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double threshold = System.Convert.ToDouble(parameter);
-
-            if (System.Convert.ToDouble(value) >= Math.Abs(threshold))
-            {
-                return threshold >= 0 ? Visibility.Visible : Visibility.Hidden;
-            }
-
-            return threshold >= 0 ? Visibility.Hidden : Visibility.Visible;
+            return value == null ? Visibility.Hidden : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

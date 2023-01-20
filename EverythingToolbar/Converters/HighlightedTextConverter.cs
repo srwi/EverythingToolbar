@@ -39,7 +39,7 @@ namespace EverythingToolbar
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException("This converter cannot be used in two-way binding.");
+            throw new NotSupportedException("This converter cannot be used in two-way binding.");
         }
 
         public override object ProvideValue(IServiceProvider serviceProvider)

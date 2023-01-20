@@ -50,9 +50,7 @@
                     <local:FilterSelector />
 
                     <Border Visibility="{Binding TotalResultsNumber,
-                                                 Converter={local:DoubleToVisibilityConverter},
-                                                 ConverterParameter=0,
-                                                 FallbackValue=Hidden}"
+                                                 Converter={local:NullToVisibilityConverter}}"
                             Grid.Column="1">
                         <Button Style="{DynamicResource TabBarButtonStyle}"
                                 Content="{Binding TotalResultsNumber, 
