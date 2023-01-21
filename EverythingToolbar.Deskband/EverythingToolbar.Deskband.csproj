@@ -75,7 +75,7 @@
   <ItemGroup>
     <Compile Include="CSDeskBand.cs" />
     <Compile Include="Deskband.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\AssemblyInfo.cs" Link="Properties\AssemblyInfo.cs" />
     <Compile Include="ToolbarControl.xaml.cs">
       <DependentUpon>ToolbarControl.xaml</DependentUpon>
     </Compile>
