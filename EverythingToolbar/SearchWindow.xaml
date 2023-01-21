@@ -5,8 +5,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
+        xmlns:c="clr-namespace:EverythingToolbar.Converters"
         xmlns:h="clr-namespace:EverythingToolbar.Helpers"
         xmlns:local="clr-namespace:EverythingToolbar"
+        xmlns:controls="clr-namespace:EverythingToolbar.Controls"
         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         WindowStyle="None"
         MinWidth="600"
@@ -47,34 +49,34 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <local:FilterSelector />
+                    <controls:FilterSelector />
 
                     <Border Visibility="{Binding TotalResultsNumber,
-                                                 Converter={local:NullToVisibilityConverter}}"
+                                                 Converter={c:NullToVisibilityConverter}}"
                             Grid.Column="1">
                         <Button Style="{DynamicResource TabBarButtonStyle}"
                                 Content="{Binding TotalResultsNumber, 
-                                                  Converter={local:SearchResultsCountConverter}}"
+                                                  Converter={c:SearchResultsCountConverter}}"
                                 Visibility="{Binding Source={x:Static properties:Settings.Default},
                                                      Path=isShowResultsCount,
-                                                     Converter={local:BoolToVisibilityConverter}}"
+                                                     Converter={c:BoolToVisibilityConverter}}"
                                 Click="OpenSearchInEverything" />
                     </Border>
 
-                    <local:SettingsControl Grid.Column="2" />
+                    <controls:SettingsControl Grid.Column="2" />
                 </Grid>
 
-                <local:SearchResultsView x:Name="SearchResultsView"
+                <controls:SearchResultsView x:Name="SearchResultsView"
                                          Grid.Row="{DynamicResource SearchResultsViewGridRow}" />
 
-                <local:SearchBox x:Name="SearchBox"
+                <controls:SearchBox x:Name="SearchBox"
                                  TabIndex="999"
                                  Grid.Row="{DynamicResource SearchBoxGridRow}"
                                  Height="40"
                                  Margin="{DynamicResource SearchBoxMargin}"
                                  Visibility="{Binding Source={x:Static h:TaskbarStateManager.Instance},
                                                       Path=IsIcon,
-                                                      Converter={local:BoolToVisibilityConverter},
+                                                      Converter={c:BoolToVisibilityConverter},
                                                       ConverterParameter=false}" />
             </Grid>
         </Border>

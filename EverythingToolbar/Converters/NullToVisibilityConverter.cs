@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Converters
 {
     public class NullToVisibilityConverter : MarkupExtension, IValueConverter
     {

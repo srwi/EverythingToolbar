@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Controls
 {
     public partial class SearchButton : Button
     {

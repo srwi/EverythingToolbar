@@ -7,8 +7,6 @@ namespace EverythingToolbar.Helpers
     {
         public static readonly EventDispatcher Instance = new EventDispatcher();
 
-        // Events
-
         public event EventHandler<EventArgs> FocusRequested;
         public void InvokeFocusRequested(object sender, EventArgs e)
         {

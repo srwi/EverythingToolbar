@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:b="clr-namespace:EverythingToolbar.Behaviors;assembly=EverythingToolbar"
-             xmlns:local="clr-namespace:EverythingToolbar;assembly=EverythingToolbar"
+             xmlns:c="clr-namespace:EverythingToolbar.Converters;assembly=EverythingToolbar"
+             xmlns:controls="clr-namespace:EverythingToolbar.Controls;assembly=EverythingToolbar"
              mc:Ignorable="d"
              PreviewKeyDown="OnPreviewKeyDown"
              KeyDown="OnKeyDown"
@@ -22,16 +23,16 @@
                  IsHitTestVisible="False"
                  Name="KeyboardFocusCapture" />
 
-        <local:SearchBox x:Name="SearchBox"
+        <controls:SearchBox x:Name="SearchBox"
                          TextChanged="OnTextBoxTextChanged"
                          Visibility="{Binding Path=ActualWidth,
                                               RelativeSource={RelativeSource Self},
-                                              Converter={local:DoubleToVisibilityConverter},
+                                              Converter={c:DoubleToVisibilityConverter},
                                               ConverterParameter=70}" />
 
-        <local:SearchButton Visibility="{Binding Path=ActualWidth,
+        <controls:SearchButton Visibility="{Binding Path=ActualWidth,
                                                  RelativeSource={RelativeSource Self},  
-                                                 Converter={local:DoubleToVisibilityConverter},
+                                                 Converter={c:DoubleToVisibilityConverter},
                                                  ConverterParameter=-70}" />
     </Grid>
     

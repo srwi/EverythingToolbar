@@ -2,7 +2,7 @@
 using NLog.Config;
 using System.IO;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Helpers
 {
     public static class ToolbarLogger
     {

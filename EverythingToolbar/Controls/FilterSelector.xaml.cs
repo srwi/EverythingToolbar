@@ -3,9 +3,9 @@ using EverythingToolbar.Helpers;
 using System;
 using System.Windows.Controls;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Controls
 {
-    public partial class FilterSelector : UserControl
+    public partial class FilterSelector
     {
         public FilterSelector()
         {

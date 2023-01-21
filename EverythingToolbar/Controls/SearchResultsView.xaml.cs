@@ -9,9 +9,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using EverythingToolbar.Behaviors;
+using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Controls
 {
     public partial class SearchResultsView
     {

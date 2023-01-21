@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Controls
 {
     public partial class SettingsControl : Grid
     {

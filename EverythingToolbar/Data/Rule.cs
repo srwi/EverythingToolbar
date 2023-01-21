@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Data
 {
     public enum FileType
     {

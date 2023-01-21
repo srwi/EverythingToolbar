@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Converters
 {
     public class SearchResultsCountConverter : MarkupExtension, IValueConverter
     {

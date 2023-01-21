@@ -2,6 +2,9 @@
 // Define the symbol DESKBAND_WINFORMS for winforms or DESKBAND_WPF for wpf
 // VERSION 3.1
 // LICENSE: https://raw.githubusercontent.com/dsafa/CSDeskBand/master/LICENSE
+
+using EverythingToolbar.Helpers;
+
 #pragma warning disable 1591
 namespace CSDeskBand
 {

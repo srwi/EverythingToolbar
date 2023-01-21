@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Xml;
 using System.Xml.Serialization;
+using EverythingToolbar.Data;
 
 namespace EverythingToolbar
 {

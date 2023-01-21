@@ -2,7 +2,7 @@
 using System.Management;
 using System.Security.Principal;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Helpers
 {
     public delegate void RegistryChange();
     public delegate void RegistryChangeValue(object newValue);

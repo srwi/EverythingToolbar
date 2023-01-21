@@ -2,7 +2,7 @@
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Converters
 {
     public class NotConverter : MarkupExtension, IValueConverter
     {

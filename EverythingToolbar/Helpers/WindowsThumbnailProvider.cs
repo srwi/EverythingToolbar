@@ -7,7 +7,7 @@ using System.Windows;
 using System.Linq;
 using System.Windows.Media;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Helpers
 {
     [Flags]
     public enum ThumbnailOptions

@@ -6,7 +6,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Markup;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Converters
 {
     public class HighlightedTextConverter : MarkupExtension, IValueConverter
     {
