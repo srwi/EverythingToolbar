@@ -1,14 +1,14 @@
-﻿using EverythingToolbar.Helpers;
-using Microsoft.Xaml.Behaviors;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
+using EverythingToolbar.Helpers;
+using Microsoft.Xaml.Behaviors;
 
-namespace EverythingToolbar.Behaviors
+namespace EverythingToolbar.Launcher
 {
     internal class SearchWindowPlacement : Behavior<SearchWindow>
     {
@@ -44,7 +44,7 @@ namespace EverythingToolbar.Behaviors
         {
             Screen screen = Screen.PrimaryScreen;
             TaskbarLocation taskbar = FindDockedTaskBar(screen);
-            System.Windows.Size windowSize = Properties.Settings.Default.popupSize;
+            System.Windows.Size windowSize = EverythingToolbar.Properties.Settings.Default.popupSize;
             windowSize.Width /= scalingFactor;
             windowSize.Height /= scalingFactor;
             int margin = (int)(GetMargin() / scalingFactor);
@@ -85,7 +85,7 @@ namespace EverythingToolbar.Behaviors
 
         private RECT SetHorizontalPosition(RECT windowPosition, Rectangle screenWorkingArea, System.Windows.Size windowSize, int margin)
         {
-            if (Launcher.Utils.IsTaskbarCenterAligned())
+            if (EverythingToolbar.Launcher.Utils.IsTaskbarCenterAligned())
             {
                 windowPosition.Left = (int)((screenWorkingArea.Width - windowSize.Width) / 2);
                 windowPosition.Left = Math.Max(margin, windowPosition.Left);
@@ -168,7 +168,7 @@ namespace EverythingToolbar.Behaviors
 
         private int GetMargin()
         {
-            if (Environment.OSVersion.Version >= Utils.WindowsVersion.Windows11)
+            if (Environment.OSVersion.Version >= Helpers.Utils.WindowsVersion.Windows11)
                 return 12;
             else
                 return 0;

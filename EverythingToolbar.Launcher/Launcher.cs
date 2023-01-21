@@ -1,29 +1,29 @@
-﻿using EverythingToolbar.Behaviors;
-using EverythingToolbar.Helpers;
-using Microsoft.Xaml.Behaviors;
-using NHotkey;
-using System;
+﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
+using EverythingToolbar.Behaviors;
+using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
+using Microsoft.Xaml.Behaviors;
+using NHotkey;
+using Application = System.Windows.Application;
+using MessageBox = System.Windows.MessageBox;
+using Resources = EverythingToolbar.Launcher.Properties.Resources;
 
 namespace EverythingToolbar.Launcher
 {
-    class Launcher
+    internal static class Launcher
     {
-        private const string EVENT_NAME = "EverythingToolbarToggleEvent";
-        private const string MUTEX_NAME = "EverythingToolbar.Launcher";
+        private const string EventName = "EverythingToolbarToggleEvent";
+        private const string MutexName = "EverythingToolbar.Launcher";
 
-        public partial class LauncherWindow : Window
+        private class LauncherWindow : Window
         {
-            [DllImport("user32.dll")]
-            [return: MarshalAs(UnmanagedType.Bool)]
-            private static extern bool SetForegroundWindow(IntPtr hWnd);
-
             public LauncherWindow()
             {
                 ToolbarLogger.Initialize();
@@ -46,8 +46,8 @@ namespace EverythingToolbar.Launcher
                     new TaskbarPinGuide().Show();
 
                 if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
-                       (Key)EverythingToolbar.Properties.Settings.Default.shortcutKey,
-                       (ModifierKeys)EverythingToolbar.Properties.Settings.Default.shortcutModifiers,
+                       (Key)Settings.Default.shortcutKey,
+                       (ModifierKeys)Settings.Default.shortcutModifiers,
                        FocusSearchBox))
                 {
                     ShortcutManager.Instance.SetShortcut(Key.None, ModifierKeys.None);
@@ -67,7 +67,7 @@ namespace EverythingToolbar.Launcher
             {
                 Task.Factory.StartNew(() =>
                 {
-                    EventWaitHandle wh = new EventWaitHandle(false, EventResetMode.AutoReset, EVENT_NAME);
+                    var wh = new EventWaitHandle(false, EventResetMode.AutoReset, EventName);
                     while (true)
                     {
                         wh.WaitOne();
@@ -89,19 +89,19 @@ namespace EverythingToolbar.Launcher
         }
 
         [STAThread]
-        static void Main()
+        private static void Main()
         {
-            using (Mutex mutex = new Mutex(false, MUTEX_NAME, out bool createdNew))
+            using (new Mutex(false, MutexName, out var createdNew))
             {
                 if (createdNew)
                 {
-                    using (System.Windows.Forms.NotifyIcon icon = new System.Windows.Forms.NotifyIcon())
+                    using (var icon = new NotifyIcon())
                     {
-                        Application app = new Application();
+                        var app = new Application();
                         icon.Icon = Icon.ExtractAssociatedIcon(Utils.GetThemedIconPath());
-                        icon.ContextMenu = new System.Windows.Forms.ContextMenu(new System.Windows.Forms.MenuItem[] {
-                            new System.Windows.Forms.MenuItem(Properties.Resources.ContextMenuRunSetupAssistant, (s, e) => { new TaskbarPinGuide().Show(); }),
-                            new System.Windows.Forms.MenuItem(Properties.Resources.ContextMenuQuit, (s, e) => { app.Shutdown(); })
+                        icon.ContextMenu = new ContextMenu(new [] {
+                            new MenuItem(Resources.ContextMenuRunSetupAssistant, (s, e) => { new TaskbarPinGuide().Show(); }),
+                            new MenuItem(Resources.ContextMenuQuit, (s, e) => { app.Shutdown(); })
                         });
                         icon.Visible = true;
                         app.Run(new LauncherWindow());
@@ -111,7 +111,7 @@ namespace EverythingToolbar.Launcher
                 {
                     try
                     {
-                        EventWaitHandle.OpenExisting(EVENT_NAME).Set();
+                        EventWaitHandle.OpenExisting(EventName).Set();
                     }
                     catch (Exception ex)
                     {
