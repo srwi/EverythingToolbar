@@ -91,10 +91,7 @@ namespace EverythingToolbar
 
             base.Hide();
             
-            if (Settings.Default.isEnableHistory)
-                HistoryManager.Instance.AddToHistory(EverythingSearch.Instance.SearchTerm);
-            else
-                EverythingSearch.Instance.Reset();
+            EverythingSearch.Instance.Reset();
         }
 
         public new void Show()

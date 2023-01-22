@@ -254,8 +254,14 @@ namespace EverythingToolbar
         {
             SearchTerm = Settings.Default.isHideEmptySearchResults ? null : "";
 
+            if (Settings.Default.isEnableHistory)
+                HistoryManager.Instance.AddToHistory(SearchTerm);
+
             if (!Settings.Default.isRememberFilter)
-                _currentFilter = FilterLoader.Instance.DefaultFilters[0];
+            {
+                CurrentFilter = FilterLoader.Instance.DefaultFilters[0];
+                return;
+            }
 
             QueryBatch(append: false);
         }
