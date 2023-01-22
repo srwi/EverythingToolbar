@@ -113,7 +113,7 @@ namespace EverythingToolbar.Behaviors
 
             // Apply ItemTemplate style
             string dataTemplateLocation = Path.Combine(assemblyLocation, "ItemTemplates", Settings.Default.itemTemplate + ".xaml");
-            AddResource(dataTemplateLocation);
+            AddResource(dataTemplateLocation, fallbackPath: Path.Combine(assemblyLocation, "ItemTemplates", "Normal.xaml"));
 
             // Apply accent color
             SolidColorBrush accentColor;
@@ -131,11 +131,15 @@ namespace EverythingToolbar.Behaviors
             });
         }
 
-        private void AddResource(string path)
+        private void AddResource(string path, string fallbackPath = null)
         {
             if (!File.Exists(path))
             {
                 _logger.Error("Could not find resource file " + path);
+
+                if (fallbackPath != null)
+                    AddResource(fallbackPath);
+
                 return;
             }
 
