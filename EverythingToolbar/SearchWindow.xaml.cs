@@ -219,19 +219,19 @@ namespace EverythingToolbar
             switch(taskbarEdge)
             {
                 case Edge.Left:
-                    target = Left - 150;
+                    target = RestoreBounds.Left - 150;
                     property = LeftProperty;
                     break;
                 case Edge.Right:
-                    target = Left + 150;
+                    target = RestoreBounds.Left + 150;
                     property = LeftProperty;
                     break;
                 case Edge.Top:
-                    target = Top - 150;
+                    target = RestoreBounds.Top - 150;
                     property = TopProperty;
                     break;
                 case Edge.Bottom:
-                    target = Top + 150;
+                    target = RestoreBounds.Top + 150;
                     property = TopProperty;
                     break;
             }
@@ -247,7 +247,7 @@ namespace EverythingToolbar
 
             int sign = taskbarEdge == Edge.Right || taskbarEdge == Edge.Bottom ? 1 : -1;
             double offset = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? Width : Height;
-            double target = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? Left : Top;
+            double target = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? RestoreBounds.Left : RestoreBounds.Top;
             Duration duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.2);
             DoubleAnimation positionAnimation = new DoubleAnimation(target, target + offset * sign, duration)
             {
