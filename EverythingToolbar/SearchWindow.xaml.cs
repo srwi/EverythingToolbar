@@ -23,9 +23,7 @@ namespace EverythingToolbar
             {
                 Settings.Default.Upgrade();
                 Settings.Default.isUpgradeRequired = false;
-                Settings.Default.Save();
             }
-            Settings.Default.PropertyChanged += (s, e) => Settings.Default.Save();
         }
 
         private void OnActivated(object sender, EventArgs e)
