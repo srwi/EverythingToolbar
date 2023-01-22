@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
+using System.Windows.Shell;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 
@@ -14,6 +15,8 @@ namespace EverythingToolbar
         public event EventHandler<EventArgs> Hiding;
         public event EventHandler<EventArgs> Showing;
 
+        private static readonly int DropShadowBlurRadius = 12;
+
         private SearchWindow()
         {
             InitializeComponent();
@@ -22,6 +25,19 @@ namespace EverythingToolbar
             {
                 Settings.Default.Upgrade();
                 Settings.Default.isUpgradeRequired = false;
+            }
+
+            if (Environment.OSVersion.Version < Utils.WindowsVersion.Windows11)
+            {
+                AllowsTransparency = true;
+                Loaded += (s, e) =>
+                {
+                    WindowChrome.SetWindowChrome(this, new WindowChrome()
+                    {
+                        ResizeBorderThickness = new Thickness(DropShadowBlurRadius + 3),
+                        CaptionHeight = 0
+                    });
+                };
             }
         }
 
@@ -123,6 +139,32 @@ namespace EverythingToolbar
         {
             Height = Settings.Default.popupSize.Height;
             Width = Settings.Default.popupSize.Width;
+            DropShadowEffect.BlurRadius = DropShadowBlurRadius;
+            Thickness contentGridOffset;
+            if (taskbarEdge == Edge.Top)
+            {
+                Left -= DropShadowBlurRadius;
+                contentGridOffset = new Thickness(0, -50, 0, 50);
+                PopupMarginBorder.Margin = new Thickness(DropShadowBlurRadius, 0, DropShadowBlurRadius, DropShadowBlurRadius);
+            }
+            else if (taskbarEdge == Edge.Right)
+            {
+                Top -= DropShadowBlurRadius;
+                contentGridOffset = new Thickness(50, 0, -50, 0);
+                PopupMarginBorder.Margin = new Thickness(DropShadowBlurRadius, DropShadowBlurRadius, 0, DropShadowBlurRadius);
+            }
+            else if (taskbarEdge == Edge.Left)
+            {
+                Top -= DropShadowBlurRadius;
+                contentGridOffset = new Thickness(-50, 0, 50, 0);
+                PopupMarginBorder.Margin = new Thickness(0, DropShadowBlurRadius, DropShadowBlurRadius, DropShadowBlurRadius);
+            }
+            else
+            {
+                Left -= DropShadowBlurRadius;
+                contentGridOffset = new Thickness(0, 50, 0, -50);
+                PopupMarginBorder.Margin = new Thickness(DropShadowBlurRadius, DropShadowBlurRadius, DropShadowBlurRadius, 0);
+            }
 
             int sign = taskbarEdge == Edge.Right || taskbarEdge == Edge.Bottom ? 1 : -1;
             double target = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? left : top;
@@ -137,16 +179,9 @@ namespace EverythingToolbar
             duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.8);
             ThicknessAnimation inner = new ThicknessAnimation(new Thickness(0), duration)
             {
-                EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut }
+                EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut },
+                From = contentGridOffset
             };
-            if (taskbarEdge == Edge.Top)
-                inner.From = new Thickness(0, -50, 0, 50);
-            else if (taskbarEdge == Edge.Right)
-                inner.From = new Thickness(50, 0, -50, 0);
-            else if (taskbarEdge == Edge.Bottom)
-                inner.From = new Thickness(0, 50, 0, -50);
-            else if (taskbarEdge == Edge.Left)
-                inner.From = new Thickness(-50, 0, 50, 0);
             ContentGrid.BeginAnimation(MarginProperty, inner);
         }
 

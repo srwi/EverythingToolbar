@@ -31,6 +31,14 @@
     </i:Interaction.Behaviors>
 
     <Border x:Name="PopupMarginBorder">
+        <Border.Effect>
+            <DropShadowEffect x:Name="DropShadowEffect"
+                              BlurRadius="0"
+                              Direction="-90"
+                              Opacity="0.55"
+                              RenderingBias="Quality"
+                              ShadowDepth="-100" />
+        </Border.Effect>
         <Border x:Name="PopupBorder"
                 BorderThickness="1"
                 Background="{DynamicResource SearchResultsViewHeader}">
