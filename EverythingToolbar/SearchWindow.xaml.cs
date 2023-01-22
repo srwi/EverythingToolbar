@@ -25,6 +25,12 @@ namespace EverythingToolbar
             }
         }
 
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (EverythingSearch.Instance.Initialize())
+                EverythingSearch.Instance.Reset();
+        }
+
         private void OnActivated(object sender, EventArgs e)
         {
             if (TaskbarStateManager.Instance.IsIcon)

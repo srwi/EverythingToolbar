@@ -125,18 +125,20 @@ namespace EverythingToolbar
             }
         }
 
-        public void Initialize()
+        public bool Initialize()
         {
-            uint major = Everything_GetMajorVersion();
-            uint minor = Everything_GetMinorVersion();
-            uint revision = Everything_GetRevision();
+            var major = Everything_GetMajorVersion();
+            var minor = Everything_GetMinorVersion();
+            var revision = Everything_GetRevision();
 
-            if ((major > 1) || ((major == 1) && (minor > 4)) || ((major == 1) && (minor == 4) && (revision >= 1)))
+            if (major > 1 || (major == 1 && minor > 4) || (major == 1 && minor == 4 && revision >= 1))
             {
                 _logger.Info("Everything version: {major}.{minor}.{revision}", major, minor, revision);
                 SetInstanceName(Settings.Default.instanceName);
+                return true;
             }
-            else if (major == 0 && minor == 0 && revision == 0 && (ErrorCode)Everything_GetLastError() == ErrorCode.ErrorIpc)
+            
+            if (major == 0 && minor == 0 && revision == 0 && (ErrorCode)Everything_GetLastError() == ErrorCode.ErrorIpc)
             {
                 HandleError((ErrorCode)Everything_GetLastError());
                 _logger.Error("Failed to get Everything version number. Is Everything running?");
@@ -145,6 +147,8 @@ namespace EverythingToolbar
             {
                 _logger.Error("Everything version {major}.{minor}.{revision} is not supported.", major, minor, revision);
             }
+
+            return false;
         }
 
         public void SetInstanceName(string name)
@@ -239,7 +243,8 @@ namespace EverythingToolbar
                     }
                     
                     if (!append || batchResultsCount > 0)
-                        SearchResults.NotifyCollectionChanged();
+                        lock (_lock)
+                            SearchResults.NotifyCollectionChanged();
                 }
                 catch (OperationCanceledException) { }
             }, cancellationToken);

@@ -18,6 +18,7 @@
         Activated="OnActivated"
         LostKeyboardFocus="OnLostKeyboardFocus"
         PreviewKeyDown="OnPreviewKeyDown"
+        Loaded="OnLoaded"
         DataContext="{Binding Source={x:Static local:EverythingSearch.Instance}}"
         mc:Ignorable="d"
         d:DesignWidth="500"
