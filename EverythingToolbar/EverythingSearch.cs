@@ -67,7 +67,9 @@ namespace EverythingToolbar
                     return;
 
                 _currentFilter = value;
-
+                
+                lock (_lock)
+                    SearchResults.Clear();
                 QueryBatch(append: false);
 
                 NotifyPropertyChanged();
