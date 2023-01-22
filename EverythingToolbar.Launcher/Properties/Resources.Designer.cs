@@ -19,7 +19,7 @@ namespace EverythingToolbar.Launcher.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -106,7 +106,7 @@ namespace EverythingToolbar.Launcher.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To pin EverythingToolbar to the taskbar right click its icon and select &apos;Pin to taskbar&apos;..
+        ///   Looks up a localized string similar to Select one of the following taskbar icons:.
         /// </summary>
         public static string SetupAssistantFirstStepText {
             get {
@@ -115,11 +115,29 @@ namespace EverythingToolbar.Launcher.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1. Pin to taskbar.
+        ///   Looks up a localized string similar to 1. Taskbar icon.
         /// </summary>
         public static string SetupAssistantFirstStepTitle {
             get {
                 return ResourceManager.GetString("SetupAssistantFirstStepTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It is recommended to start EverythingToolbar automatically on system startup..
+        /// </summary>
+        public static string SetupAssistantFourthStepText {
+            get {
+                return ResourceManager.GetString("SetupAssistantFourthStepText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4. Configure autostart.
+        /// </summary>
+        public static string SetupAssistantFourthStepTitle {
+            get {
+                return ResourceManager.GetString("SetupAssistantFourthStepTitle", resourceCulture);
             }
         }
         
@@ -142,7 +160,7 @@ namespace EverythingToolbar.Launcher.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Optionally the original Windows search icon can be hidden..
+        ///   Looks up a localized string similar to To pin EverythingToolbar to the taskbar right click its icon and select &apos;Pin to taskbar&apos;..
         /// </summary>
         public static string SetupAssistantSecondStepText {
             get {
@@ -151,7 +169,7 @@ namespace EverythingToolbar.Launcher.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2. Hide Windows search.
+        ///   Looks up a localized string similar to 2. Pin to taskbar.
         /// </summary>
         public static string SetupAssistantSecondStepTitle {
             get {
@@ -160,7 +178,7 @@ namespace EverythingToolbar.Launcher.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to It is recommended to start EverythingToolbar automatically on system startup..
+        ///   Looks up a localized string similar to Optionally the original Windows search icon can be hidden..
         /// </summary>
         public static string SetupAssistantThirdStepText {
             get {
@@ -169,7 +187,7 @@ namespace EverythingToolbar.Launcher.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 3. Configure autostart.
+        ///   Looks up a localized string similar to 3. Hide Windows search.
         /// </summary>
         public static string SetupAssistantThirdStepTitle {
             get {

@@ -132,11 +132,11 @@
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>Spustit asistenta nastavení...</value>
   </data>
-  <data name="SetupAssistantFirstStepText" xml:space="preserve">
+  <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>Chcete-li připnout EverythingToolbar na hlavní panel klepněte pravým tlačítkem na jeho ikonu a zvolte 'Připnout na hlavní panel'.</value>
   </data>
-  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Připnout na hlavní panel</value>
+  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
+    <value>2. Připnout na hlavní panel</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>Pro aktualizaci ikony hlavního panelu je vyžadován restart průzkumníka. Chcete jej nyní restartovat?</value>
@@ -144,17 +144,17 @@
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>Restartovat průzkumníka</value>
   </data>
-  <data name="SetupAssistantSecondStepText" xml:space="preserve">
+  <data name="SetupAssistantThirdStepText" xml:space="preserve">
     <value>Volitelně lze skrýt původní ikonu hledání systému Windows.</value>
   </data>
-  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Skrýt vyhledávání Windows</value>
+  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
+    <value>3. Skrýt vyhledávání Windows</value>
   </data>
-  <data name="SetupAssistantThirdStepText" xml:space="preserve">
+  <data name="SetupAssistantFourthStepText" xml:space="preserve">
     <value>Doporučuje se automaticky spustit EverythingToolbar při spuštění systému.</value>
   </data>
-  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Nastavení automatického spuštění</value>
+  <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
+    <value>4. Nastavení automatického spuštění</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar Asistent Nastavení</value>

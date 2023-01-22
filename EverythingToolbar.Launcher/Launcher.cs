@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -97,7 +97,10 @@ namespace EverythingToolbar.Launcher
                     using (var icon = new NotifyIcon())
                     {
                         var app = new Application();
-                        icon.Icon = Icon.ExtractAssociatedIcon(Utils.GetThemedIconPath());
+                        if (string.IsNullOrEmpty(Settings.Default.iconName))
+                            icon.Icon = Icon.ExtractAssociatedIcon(@"Icons\Medium.ico");
+                        else
+                            icon.Icon = Icon.ExtractAssociatedIcon(Settings.Default.iconName);
                         icon.ContextMenu = new ContextMenu(new [] {
                             new MenuItem(Resources.ContextMenuRunSetupAssistant, (s, e) => { new TaskbarPinGuide().Show(); }),
                             new MenuItem(Resources.ContextMenuQuit, (s, e) => { app.Shutdown(); })

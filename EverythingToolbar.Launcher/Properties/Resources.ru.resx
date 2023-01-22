@@ -132,11 +132,11 @@
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>Запустить с помощью...</value>
   </data>
-  <data name="SetupAssistantFirstStepText" xml:space="preserve">
+  <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>Чтобы закрепить EverythingToolbar на панели задач щёлкните правой кнопкой мыши и выберите 'Закрепить на панели задач'.</value>
   </data>
-  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>Закрепить на панели задач</value>
+  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
+    <value>2. Закрепить на панели задач</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>Для обновления значка панели задач требуется перезапуск проводника. Перезапустить сейчас?</value>
@@ -144,17 +144,17 @@
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>Перезапустить проводник</value>
   </data>
-  <data name="SetupAssistantSecondStepText" xml:space="preserve">
+  <data name="SetupAssistantThirdStepText" xml:space="preserve">
     <value>При желании можно скрыть исходную иконку поиска Windows.</value>
   </data>
-  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Скрыть поиск Windows</value>
+  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
+    <value>3. Скрыть поиск Windows</value>
   </data>
-  <data name="SetupAssistantThirdStepText" xml:space="preserve">
+  <data name="SetupAssistantFourthStepText" xml:space="preserve">
     <value>При запуске системы рекомендуется автоматически запускать шину EverythingToolbar.</value>
   </data>
-  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Настройка автозапуска</value>
+  <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
+    <value>4. Настройка автозапуска</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Помощник установки EverythingToolbar</value>

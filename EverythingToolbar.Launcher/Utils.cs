@@ -77,27 +77,7 @@ namespace EverythingToolbar.Launcher
             }
         }
 
-        public static WindowsTheme GetWindowsTheme()
-        {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"))
-            {
-                object systemUsesLightTheme = key?.GetValue("SystemUsesLightTheme");
-                bool isLightTheme = systemUsesLightTheme != null && (int)systemUsesLightTheme > 0;
-                return isLightTheme ? WindowsTheme.Light : WindowsTheme.Dark;
-            }
-        }
-
-        public static string GetIconPath(WindowsTheme theme)
-        {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", theme.ToString() + ".ico");
-        }
-
-        public static string GetThemedIconPath()
-        {
-            return GetIconPath(GetWindowsTheme());
-        }
-
-        public static void ChangeTaskbarPinIcon(WindowsTheme theme)
+        public static void ChangeTaskbarPinIcon(string iconName)
         {
             string taskbarShortcutPath = GetTaskbarShortcutPath();
 
@@ -107,7 +87,7 @@ namespace EverythingToolbar.Launcher
             WshShell shell = new WshShell();
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(taskbarShortcutPath);
             shortcut.TargetPath = Process.GetCurrentProcess().MainModule.FileName;
-            shortcut.IconLocation = GetIconPath(theme);
+            shortcut.IconLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, iconName);
             shortcut.Save();
 
             foreach (Process process in Process.GetProcessesByName("explorer"))

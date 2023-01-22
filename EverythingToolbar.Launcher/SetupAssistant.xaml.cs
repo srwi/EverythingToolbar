@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace EverythingToolbar.Launcher
@@ -9,6 +10,7 @@ namespace EverythingToolbar.Launcher
     {
         private FileSystemWatcher watcher;
         private string TaskbarShortcutPath = Utils.GetTaskbarShortcutPath();
+        private bool IconHasChanged;
 
         public TaskbarPinGuide()
         {
@@ -16,10 +18,21 @@ namespace EverythingToolbar.Launcher
 
             AutostartCheckBox.IsChecked = Utils.GetAutostartState();
             HideWindowsSearchCheckBox.IsChecked = !Utils.GetWindowsSearchEnabledState();
-            OnTaskbarPinStateChanged(File.Exists(TaskbarShortcutPath));
+            UpdateSetupStepVisibility();
             CreateFileWatcher();
-            Uri iconUri = new Uri("pack://application:,,,/Icons/" + Utils.GetWindowsTheme().ToString() + ".ico", UriKind.RelativeOrAbsolute);
-            Icon = BitmapFrame.Create(iconUri);
+
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            foreach (RadioButton radio in IconRadioButtons.Children)
+            {
+                if ((string)radio.Tag == EverythingToolbar.Properties.Settings.Default.iconName)
+                    radio.IsChecked = true;
+            }
+
+            IconHasChanged = false;
         }
 
         private void CreateFileWatcher()
@@ -33,26 +46,38 @@ namespace EverythingToolbar.Launcher
             };
 
             watcher.Created += new FileSystemEventHandler((source, e) => {
-                OnTaskbarPinStateChanged(true);
+                IconHasChanged = true;
+                UpdateSetupStepVisibility();
             });
             watcher.Deleted += new FileSystemEventHandler((source, e) => {
-                OnTaskbarPinStateChanged(false);
+                UpdateSetupStepVisibility();
             });
         }
 
-        private void OnTaskbarPinStateChanged(bool state)
+        private void UpdateSetupStepVisibility()
         {
             Dispatcher.Invoke(() =>
             {
-                if (state)
+                if (!string.IsNullOrEmpty(EverythingToolbar.Properties.Settings.Default.iconName))
                 {
-                    OptionalSettingsBlock.Opacity = 1.0;
-                    OptionalSettingsBlock.IsHitTestVisible = true;
+                    SectionTwo.Opacity = 1.0;
+                    SectionTwo.IsHitTestVisible = true;
                 }
                 else
                 {
-                    OptionalSettingsBlock.Opacity = 0.2;
-                    OptionalSettingsBlock.IsHitTestVisible = false;
+                    SectionTwo.Opacity = 0.2;
+                    SectionTwo.IsHitTestVisible = false;
+                }
+
+                if (File.Exists(TaskbarShortcutPath))
+                {
+                    SectionThree.Opacity = 1.0;
+                    SectionThree.IsHitTestVisible = true;
+                }
+                else
+                {
+                    SectionThree.Opacity = 0.2;
+                    SectionThree.IsHitTestVisible = false;
                 }
             });
         }
@@ -80,14 +105,22 @@ namespace EverythingToolbar.Launcher
                 watcher.Dispose();
             }
 
-            if (Utils.GetWindowsTheme() == Utils.WindowsTheme.Dark)
+            if (!IconHasChanged)
                 return;
 
             if (MessageBox.Show(Properties.Resources.SetupAssistantRestartExplorerDialogText,
                 Properties.Resources.SetupAssistantRestartExplorerDialogTitle, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                Utils.ChangeTaskbarPinIcon(Utils.GetWindowsTheme());
+                Utils.ChangeTaskbarPinIcon(EverythingToolbar.Properties.Settings.Default.iconName);
             }
+        }
+
+        private void OnIconRadioButtonChecked(object sender, RoutedEventArgs e)
+        {
+            EverythingToolbar.Properties.Settings.Default.iconName = (sender as RadioButton).Tag as string;
+            Icon = new BitmapImage(new Uri("pack://application:,,,/" + EverythingToolbar.Properties.Settings.Default.iconName));
+            IconHasChanged = true;
+            UpdateSetupStepVisibility();
         }
     }
 }

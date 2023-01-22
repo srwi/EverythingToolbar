@@ -132,11 +132,11 @@
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>Setup assistent uitvoeren...</value>
   </data>
-  <data name="SetupAssistantFirstStepText" xml:space="preserve">
+  <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>Om EverythingToolbar aan de taakbalk vast te pinnen, klikt u met de rechtermuisknop op het pictogram en selecteert u 'Vastmaken aan taakbalk'.</value>
   </data>
-  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Vastmaken aan taakbalk</value>
+  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
+    <value>2. Vastmaken aan taakbalk</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
@@ -144,17 +144,17 @@
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>Restart explorer</value>
   </data>
-  <data name="SetupAssistantSecondStepText" xml:space="preserve">
+  <data name="SetupAssistantThirdStepText" xml:space="preserve">
     <value>Optioneel kan het originele Windows-zoekpictogram worden verborgen.</value>
   </data>
-  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Verberg Windows zoeken</value>
+  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
+    <value>3. Verberg Windows zoeken</value>
   </data>
-  <data name="SetupAssistantThirdStepText" xml:space="preserve">
+  <data name="SetupAssistantFourthStepText" xml:space="preserve">
     <value>Het wordt aanbevolen om EverythingToolbar automatisch te starten bij het opstarten van het systeem.</value>
   </data>
-  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Automatisch starten configureren</value>
+  <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
+    <value>4. Automatisch starten configureren</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar configuratie assistent</value>

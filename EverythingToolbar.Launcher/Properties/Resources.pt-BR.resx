@@ -132,11 +132,11 @@
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>Executar assistente de configuração...</value>
   </data>
-  <data name="SetupAssistantFirstStepText" xml:space="preserve">
+  <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>Para fixar o EverythingToolbar na barra de tarefas, clique com o botão direito no ícone e selecione 'Fixar na barra de tarefas'.</value>
   </data>
-  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Fixar na barra de tarefas</value>
+  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
+    <value>2. Fixar na barra de tarefas</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>Uma reinicialização do explorador é necessária para atualizar o ícone da barra de tarefas. Você gostaria de reiniciá-lo agora?</value>
@@ -144,17 +144,17 @@
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>Reiniciar o explorador</value>
   </data>
-  <data name="SetupAssistantSecondStepText" xml:space="preserve">
+  <data name="SetupAssistantThirdStepText" xml:space="preserve">
     <value>Opcionalmente, o ícone de pesquisa original do Windows pode ser ocultado.</value>
   </data>
-  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Ocultar pesquisa do Windows</value>
+  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
+    <value>3. Ocultar pesquisa do Windows</value>
   </data>
-  <data name="SetupAssistantThirdStepText" xml:space="preserve">
+  <data name="SetupAssistantFourthStepText" xml:space="preserve">
     <value>É recomendável iniciar o EverythingToolbar automaticamente quando o sistema iniciar.</value>
   </data>
-  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Configurar início automático</value>
+  <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
+    <value>4. Configurar início automático</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Assistente de Configuração do EverythingToolbar</value>

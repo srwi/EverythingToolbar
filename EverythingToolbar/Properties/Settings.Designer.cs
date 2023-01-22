@@ -334,5 +334,17 @@ namespace EverythingToolbar.Properties {
                 this["instanceName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string iconName {
+            get {
+                return ((string)(this["iconName"]));
+            }
+            set {
+                this["iconName"] = value;
+            }
+        }
     }
 }
