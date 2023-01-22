@@ -71,7 +71,7 @@
                                     Value="{DynamicResource TextBoxBackgroundActive}" />
                             <Setter Property="BorderThickness"
                                     TargetName="TextBoxBorder"
-                                    Value="2" />
+                                    Value="{DynamicResource TextBoxBorderActiveThickness}" />
                             <Setter Property="BorderBrush"
                                     TargetName="TextBoxBorder"
                                     Value="{DynamicResource TextBoxBorderActive}" />

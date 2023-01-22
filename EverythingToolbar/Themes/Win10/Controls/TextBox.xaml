@@ -2,6 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Thickness x:Key="TextBoxAccentBorderThickness" />
+    <Thickness x:Key="TextBoxBorderActiveThickness"
+               Bottom="2"
+               Top="2"
+               Left="2"
+               Right="2" />
     <CornerRadius x:Key="TextBoxCornerRadius" />
 
     <ResourceDictionary.MergedDictionaries>

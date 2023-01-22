@@ -12,7 +12,7 @@
     
     <SolidColorBrush x:Key="TextBoxBackground" Color="#11ffffff" />
     <SolidColorBrush x:Key="TextBoxBackgroundHover" Color="#16ffffff" />
-    <SolidColorBrush x:Key="TextBoxBackgroundActive" Color="#202020" />
+    <SolidColorBrush x:Key="TextBoxBackgroundActive" Color="#a6202020" />
     <SolidColorBrush x:Key="TextBoxForeground" Color="#dadada" />
     <SolidColorBrush x:Key="TextBoxForegroundHover" Color="#dadada" />
     <SolidColorBrush x:Key="TextBoxForegroundActive" Color="#dadada" />
@@ -21,7 +21,7 @@
     <SolidColorBrush x:Key="TextBoxWatermarkForegroundActive" Color="#999999" />
     <SolidColorBrush x:Key="TextBoxBorder" Color="#18ffffff" />
     <SolidColorBrush x:Key="TextBoxBorderHover" Color="#1affffff" />
-    <SolidColorBrush x:Key="TextBoxBorderActive" Color="#333333" />
+    <SolidColorBrush x:Key="TextBoxBorderActive" Color="#aa333333" />
 
     <SolidColorBrush x:Key="SearchBoxLogo" Color="#ffffff" />
     <SolidColorBrush x:Key="SearchBoxLogoHover" Color="#ffffff" />
