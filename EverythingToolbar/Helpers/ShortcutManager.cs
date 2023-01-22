@@ -1,12 +1,14 @@
-using NHotkey;
-using NHotkey.Wpf;
-using NLog;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Input;
+using EverythingToolbar.Properties;
+using NHotkey;
+using NHotkey.Wpf;
+using NLog;
 
 namespace EverythingToolbar.Helpers
 {
@@ -44,14 +46,14 @@ namespace EverythingToolbar.Helpers
 
         private ShortcutManager()
         {
-            Properties.Settings.Default.PropertyChanged += OnSettingsChanged;
+            Settings.Default.PropertyChanged += OnSettingsChanged;
         }
 
-        private void OnSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnSettingsChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "isReplaceStartMenuSearch")
             {
-                if (Properties.Settings.Default.isReplaceStartMenuSearch)
+                if (Settings.Default.isReplaceStartMenuSearch)
                     HookStartMenu();
                 else
                     UnhookStartMenu();
@@ -80,8 +82,8 @@ namespace EverythingToolbar.Helpers
 
         public void SetShortcut(Key key, ModifierKeys mods)
         {
-            Properties.Settings.Default.shortcutKey = (int)key;
-            Properties.Settings.Default.shortcutModifiers = (int)mods;
+            Settings.Default.shortcutKey = (int)key;
+            Settings.Default.shortcutModifiers = (int)mods;
         }
 
         public void CaptureKeyboard(EventHandler<WinKeyEventArgs> callback)

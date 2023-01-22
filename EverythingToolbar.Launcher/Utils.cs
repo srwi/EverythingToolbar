@@ -1,8 +1,9 @@
-﻿using IWshRuntimeLibrary;
-using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
+using IWshRuntimeLibrary;
+using Microsoft.Win32;
+using File = System.IO.File;
 
 namespace EverythingToolbar.Launcher
 {
@@ -100,8 +101,8 @@ namespace EverythingToolbar.Launcher
         {
             string taskbarShortcutPath = GetTaskbarShortcutPath();
 
-            if (System.IO.File.Exists(taskbarShortcutPath))
-                System.IO.File.Delete(taskbarShortcutPath);
+            if (File.Exists(taskbarShortcutPath))
+                File.Delete(taskbarShortcutPath);
 
             WshShell shell = new WshShell();
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(taskbarShortcutPath);

@@ -1,10 +1,11 @@
-﻿using Microsoft.Xaml.Behaviors;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
+using EverythingToolbar.Helpers;
+using Microsoft.Xaml.Behaviors;
 
 namespace EverythingToolbar.Behaviors
 {
@@ -71,7 +72,7 @@ namespace EverythingToolbar.Behaviors
 
         private static double GetParentWindowDpi(Visual visual)
         {
-            if (Environment.OSVersion.Version < Helpers.Utils.WindowsVersion.Windows10Anniversary)
+            if (Environment.OSVersion.Version < Utils.WindowsVersion.Windows10Anniversary)
             {
                 return 96.0;
             }

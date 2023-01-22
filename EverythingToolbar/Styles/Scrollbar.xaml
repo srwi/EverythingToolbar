@@ -18,8 +18,7 @@
                               VerticalAlignment="Center"
                               Data="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
                               Fill="{DynamicResource ScrollbarButtonFill}"
-                              Stroke="{DynamicResource ScrollbarButtonStroke}">
-                        </Path>
+                              Stroke="{DynamicResource ScrollbarButtonStroke}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"

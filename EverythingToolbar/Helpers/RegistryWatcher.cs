@@ -1,6 +1,6 @@
-﻿using Microsoft.Win32;
-using System.Management;
+﻿using System.Management;
 using System.Security.Principal;
+using Microsoft.Win32;
 
 namespace EverythingToolbar.Helpers
 {

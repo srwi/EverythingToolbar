@@ -1,10 +1,12 @@
-﻿using NLog;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
+using EverythingToolbar.Properties;
+using NLog;
 
 namespace EverythingToolbar.Helpers
 {
@@ -25,15 +27,15 @@ namespace EverythingToolbar.Helpers
         {
             history = LoadHistory();
             currentIndex = history.Count;
-            currentHistorySize = Properties.Settings.Default.isEnableHistory ? MAX_HISTORY_SIZE : 0;
-            Properties.Settings.Default.PropertyChanged += OnSettingChanged;
+            currentHistorySize = Settings.Default.isEnableHistory ? MAX_HISTORY_SIZE : 0;
+            Settings.Default.PropertyChanged += OnSettingChanged;
         }
 
-        private void OnSettingChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnSettingChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "isEnableHistory")
             {
-                if (Properties.Settings.Default.isEnableHistory)
+                if (Settings.Default.isEnableHistory)
                 {
                     currentHistorySize = MAX_HISTORY_SIZE;
                 }

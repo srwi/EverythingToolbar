@@ -3,19 +3,29 @@
 // VERSION 3.1
 // LICENSE: https://raw.githubusercontent.com/dsafa/CSDeskBand/master/LICENSE
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Interop;
+using System.Windows.Media;
+using CSDeskBand.ContextMenu;
+using CSDeskBand.Interop;
 using EverythingToolbar.Helpers;
+using Microsoft.Win32;
+using NLog;
+using MSG = CSDeskBand.Interop.MSG;
 
 #pragma warning disable 1591
 namespace CSDeskBand
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Runtime.InteropServices;
-    using CSDeskBand.ContextMenu;
-    using CSDeskBand.Interop;
-    using static CSDeskBand.Interop.DESKBANDINFO.DBIF;
-    using static CSDeskBand.Interop.DESKBANDINFO.DBIM;
-    using static CSDeskBand.Interop.DESKBANDINFO.DBIMF;
+    using static DESKBANDINFO.DBIF;
+    using static DESKBANDINFO.DBIM;
+    using static DESKBANDINFO.DBIMF;
 
     /// <summary>
     /// Default implementation for icsdeskband
@@ -374,7 +384,7 @@ namespace CSDeskBand
             (_parentSite as IInputObjectSite)?.OnFocusChangeIS(this, focused ? 1 : 0);
         }
 
-        private void Options_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void Options_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (_parentSite == null)
             {
@@ -391,11 +401,6 @@ namespace CSDeskBand
 }
 namespace CSDeskBand
 {
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-    using CSDeskBand.ContextMenu;
-
     /// <summary>
     /// Options to configure the deskband
     /// </summary>
@@ -752,8 +757,6 @@ namespace CSDeskBand
 }
 namespace CSDeskBand
 {
-    using System;
-
     /// <summary>
     /// Specifies registration configuration for a deskband.
     /// </summary>
@@ -997,17 +1000,6 @@ namespace CSDeskBand
 #if DESKBAND_WPF
 namespace CSDeskBand
 {
-    using CSDeskBand.Interop;
-    using EverythingToolbar;
-    using NLog;
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Windows.Interop;  
-    using System.Reflection;
-    using System.Windows.Documents;
-    using System.Windows.Media;
-    using System.Windows;
-
     /// <summary>
     /// Wpf implementation of <see cref="ICSDeskBand"/>
     /// The deskband should also have these attributes <see cref="ComVisibleAttribute"/>, <see cref="GuidAttribute"/>, <see cref="CSDeskBandRegistrationAttribute"/>.
@@ -1272,7 +1264,7 @@ namespace CSDeskBand
             return _impl.Save(pStm, fClearDirty);
         }
 
-        public int UIActivateIO(int fActivate, ref Interop.MSG msg)
+        public int UIActivateIO(int fActivate, ref MSG msg)
         {
             return _impl.UIActivateIO(fActivate, ref msg);
         }
@@ -1282,7 +1274,7 @@ namespace CSDeskBand
             return _impl.HasFocusIO();
         }
 
-        public int TranslateAcceleratorIO(ref Interop.MSG msg)
+        public int TranslateAcceleratorIO(ref MSG msg)
         {
             return _impl.TranslateAcceleratorIO(ref msg);
         }
@@ -1303,10 +1295,6 @@ namespace CSDeskBand
 #endif
 namespace CSDeskBand
 {
-    using System;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-
     /// <summary>
     /// Size class that is independent of winforms or wpf.
     /// </summary>
@@ -1375,7 +1363,7 @@ namespace CSDeskBand
         /// Converts from <see cref="System.Windows.Size"/> to <see cref="DeskBandSize"/>.
         /// </summary>
         /// <param name="size">The <see cref="System.Windows.Size"/> to convert.</param>
-        public static implicit operator DeskBandSize(System.Windows.Size size)
+        public static implicit operator DeskBandSize(Size size)
         {
             return new DeskBandSize(Convert.ToInt32(size.Width), Convert.ToInt32(size.Height));
         }
@@ -1384,9 +1372,9 @@ namespace CSDeskBand
         /// Converts from <see cref="DeskBandSize"/> to <see cref="System.Windows.Size"/>.
         /// </summary>
         /// <param name="size">The <see cref="DeskBandSize"/> to convert.</param>
-        public static implicit operator System.Windows.Size(DeskBandSize size)
+        public static implicit operator Size(DeskBandSize size)
         {
-            return new System.Windows.Size(size.Width, size.Height);
+            return new Size(size.Width, size.Height);
         }
 #endif
 
@@ -1413,8 +1401,6 @@ namespace CSDeskBand
 }
 namespace CSDeskBand
 {
-    using CSDeskBand.Interop;
-
     /// <summary>
     /// Deskband Interface
     /// </summary>
@@ -1424,8 +1410,6 @@ namespace CSDeskBand
 }
 namespace CSDeskBand
 {
-    using System;
-
     internal interface IDeskBandProvider
     {
         IntPtr Handle { get; }
@@ -1436,12 +1420,6 @@ namespace CSDeskBand
 }
 namespace CSDeskBand
 {
-    using System;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
-    using CSDeskBand.Interop;
-    using Microsoft.Win32;
-
     /// <summary>
     /// Helper class to register deskband.
     /// </summary>
@@ -1562,10 +1540,6 @@ namespace CSDeskBand
 }
 namespace CSDeskBand
 {
-    using System;
-    using System.Runtime.InteropServices;
-    using CSDeskBand.Interop;
-
     /// <summary>
     /// The orientation of the taskbar.
     /// </summary>
@@ -1790,9 +1764,6 @@ namespace CSDeskBand
 #pragma warning disable 1591
 namespace CSDeskBand.Interop
 {
-    using System;
-    using System.Runtime.InteropServices;
-
     [ComImport]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [Guid("4CF504B0-DE96-11D0-8B3F-00A0C911E8E5")]
@@ -2556,11 +2527,6 @@ namespace CSDeskBand.Interop
 #endregion
 namespace CSDeskBand.ContextMenu
 {
-    using CSDeskBand.Interop;
-    using System;
-    using System.Collections.Generic;
-    using System.Runtime.InteropServices;
-
     /// <summary>
     /// Base class for deskband menu items.
     /// </summary>

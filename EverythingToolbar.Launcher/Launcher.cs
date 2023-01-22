@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using Microsoft.Xaml.Behaviors;

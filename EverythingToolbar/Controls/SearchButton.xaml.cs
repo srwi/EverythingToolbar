@@ -1,8 +1,9 @@
-﻿using EverythingToolbar.Behaviors;
-using EverythingToolbar.Helpers;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using EverythingToolbar.Behaviors;
+using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Controls
 {
@@ -18,13 +19,13 @@ namespace EverythingToolbar.Controls
             ThemeAwareness.ResourceChanged += UpdateTheme;
         }
 
-        private void OnSearchWindowDeactivated(object sender, System.EventArgs e)
+        private void OnSearchWindowDeactivated(object sender, EventArgs e)
         {
             Border border = Template.FindName("OuterBorder", this) as Border;
             border.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
         }
 
-        private void OnSearchWindowActivated(object sender, System.EventArgs e)
+        private void OnSearchWindowActivated(object sender, EventArgs e)
         {
             Border border = Template.FindName("OuterBorder", this) as Border;
             border.Background = new SolidColorBrush(Color.FromArgb(64, 255, 255, 255));

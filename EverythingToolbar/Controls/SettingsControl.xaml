@@ -29,8 +29,7 @@
             <MenuItem IsCheckable="True"
                       Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}"
-                      Name="IsMatchWholeWordMenuItem">
-            </MenuItem>
+                      Name="IsMatchWholeWordMenuItem" />
             <Separator />
             <MenuItem Header="{x:Static properties:Resources.SettingsSortBy}"
                       Name="SortByMenu"

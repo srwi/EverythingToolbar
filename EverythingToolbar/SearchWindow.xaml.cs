@@ -1,15 +1,14 @@
-﻿using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
-using NHotkey;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
+using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
 
 namespace EverythingToolbar
 {
-    public partial class SearchWindow : Window
+    public partial class SearchWindow
     {
         public static readonly SearchWindow Instance = new SearchWindow();
         public event EventHandler<EventArgs> Hiding;
@@ -89,11 +88,6 @@ namespace EverythingToolbar
             Topmost = false;
 
             Showing?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Show(object sender, HotkeyEventArgs e)
-        {
-            Show();
         }
 
         public void Toggle()

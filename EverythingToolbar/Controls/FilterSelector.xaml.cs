@@ -1,7 +1,7 @@
-﻿using EverythingToolbar.Data;
-using EverythingToolbar.Helpers;
-using System;
+﻿using System.ComponentModel;
 using System.Windows.Controls;
+using EverythingToolbar.Data;
+using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Controls
 {
@@ -26,7 +26,7 @@ namespace EverythingToolbar.Controls
             ComboBox.SelectionChanged += OnComboBoxItemSelected;
         }
 
-        private void OnCurrentFilterChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnCurrentFilterChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "CurrentFilter")
             {

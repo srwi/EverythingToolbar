@@ -19,8 +19,7 @@
                                    FontSize="{TemplateBinding FontSize}"
                                    Padding="{TemplateBinding Padding}"
                                    HorizontalAlignment="Center"
-                                   VerticalAlignment="Center">
-                        </TextBlock>
+                                   VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"

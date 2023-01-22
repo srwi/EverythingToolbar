@@ -1,6 +1,4 @@
-﻿using EverythingToolbar.Helpers;
-using NLog;
-using System;
+﻿using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
@@ -8,7 +6,15 @@ using System.IO.Pipes;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Media;
+using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
+using NLog;
+using Peter;
+using Clipboard = System.Windows.Clipboard;
+using MessageBox = System.Windows.MessageBox;
+using Point = System.Drawing.Point;
 
 namespace EverythingToolbar.Data
 {
@@ -48,7 +54,7 @@ namespace EverythingToolbar.Data
             catch (Exception e)
             {
                 _logger.Error(e, "Failed to open search result.");
-                MessageBox.Show(Properties.Resources.MessageBoxFailedToOpen, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Resources.MessageBoxFailedToOpen, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -66,7 +72,7 @@ namespace EverythingToolbar.Data
             catch (Exception e)
             {
                 _logger.Error(e, "Failed to open search result.");
-                MessageBox.Show(Properties.Resources.MessageBoxFailedToOpen, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Resources.MessageBoxFailedToOpen, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -80,7 +86,7 @@ namespace EverythingToolbar.Data
             catch (Exception e)
             {
                 _logger.Error(e, "Failed to open path.");
-                MessageBox.Show(Properties.Resources.MessageBoxFailedToOpenPath, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Resources.MessageBoxFailedToOpenPath, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -93,7 +99,7 @@ namespace EverythingToolbar.Data
             catch (Exception e)
             {
                 _logger.Error(e, "Failed to open dialog.");
-                MessageBox.Show(Properties.Resources.MessageBoxFailedToOpenDialog, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Resources.MessageBoxFailedToOpenDialog, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -106,7 +112,7 @@ namespace EverythingToolbar.Data
             catch (Exception e)
             {
                 _logger.Error(e, "Failed to copy file.");
-                MessageBox.Show(Properties.Resources.MessageBoxFailedToCopyFile, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Resources.MessageBoxFailedToCopyFile, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -119,7 +125,7 @@ namespace EverythingToolbar.Data
             catch (Exception e)
             {
                 _logger.Error(e, "Failed to copy path.");
-                MessageBox.Show(Properties.Resources.MessageBoxFailedToCopyPath, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Resources.MessageBoxFailedToCopyPath, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -130,12 +136,12 @@ namespace EverythingToolbar.Data
 
         public void ShowWindowsContexMenu()
         {
-            ShowWindowsContexMenu(System.Windows.Forms.Control.MousePosition);
+            ShowWindowsContexMenu(Control.MousePosition);
         }
 
-        public void ShowWindowsContexMenu(System.Drawing.Point pos)
+        public void ShowWindowsContexMenu(Point pos)
         {
-            Peter.ShellContextMenu menu = new Peter.ShellContextMenu();
+            ShellContextMenu menu = new ShellContextMenu();
             FileInfo[] arrFI = new FileInfo[1];
             arrFI[0] = new FileInfo(FullPathAndFileName);
             menu.ShowContextMenu(arrFI, pos);

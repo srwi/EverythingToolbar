@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.IO;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
-using System.Windows;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Helpers
 {
@@ -121,7 +122,7 @@ namespace EverythingToolbar.Helpers
             var extension = Path.GetExtension(fileName).ToLower();
 
             ThumbnailOptions to;
-            if (Directory.Exists(fileName) || !Properties.Settings.Default.isThumbnailsEnabled)
+            if (Directory.Exists(fileName) || !Settings.Default.isThumbnailsEnabled)
                 to = ThumbnailOptions.IconOnly;
             else if (ImageExtensions.Contains(extension) && File.Exists(fileName))
                 to = ThumbnailOptions.ThumbnailOnly;

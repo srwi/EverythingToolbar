@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Controls
 {
@@ -18,18 +20,18 @@ namespace EverythingToolbar.Controls
 
             // IsEnabled property of matchWholeWord button needs to be handled
             // in code because DataTriggers are not compatible with DynamicResources as MenuItem styles
-            Properties.Settings.Default.PropertyChanged += OnSettingsChanged;
+            Settings.Default.PropertyChanged += OnSettingsChanged;
             EverythingSearch.Instance.PropertyChanged += OnSettingsChanged;
 
             // Forward TextBox.TextChanged to SearchBox.TextChanged
             TextBox.TextChanged += (s, e) => TextChanged?.Invoke(s, e);
         }
 
-        private void OnSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnSettingsChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "isRegExEnabled" || e.PropertyName == "CurrentFilter")
             {
-                bool newEnabledState = !Properties.Settings.Default.isRegExEnabled && EverythingSearch.Instance.CurrentFilter.IsMatchWholeWord == null;
+                bool newEnabledState = !Settings.Default.isRegExEnabled && EverythingSearch.Instance.CurrentFilter.IsMatchWholeWord == null;
                 IsMatchWholeWordMenuItem.IsEnabled = newEnabledState;
                 IsMatchWholeWordButton.IsEnabled = newEnabledState;
             }
@@ -45,7 +47,7 @@ namespace EverythingToolbar.Controls
 
         private void UpdateQuickTogglesVisibility()
         {
-            if (Properties.Settings.Default.isShowQuickToggles && ActualWidth > 200)
+            if (Settings.Default.isShowQuickToggles && ActualWidth > 200)
             {
                 QuickToggleButtons.Visibility = Visibility.Visible;
                 TextBox.Padding = new Thickness(37, 0, 130, 0);

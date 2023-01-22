@@ -1,18 +1,20 @@
-﻿using EverythingToolbar.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Xml;
 using System.Xml.Serialization;
 using EverythingToolbar.Data;
+using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
 
 namespace EverythingToolbar
 {
-    public partial class Rules : Window
+    public partial class Rules
     {
         static List<Rule> rules = new List<Rule>();
         static string RulesPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EverythingToolbar", "rules.xml");
@@ -23,7 +25,7 @@ namespace EverythingToolbar
 
             rules = LoadRules();
             dataGrid.ItemsSource = rules;
-            autoApplyRulesCheckbox.IsChecked = Properties.Settings.Default.isAutoApplyRules;
+            autoApplyRulesCheckbox.IsChecked = Settings.Default.isAutoApplyRules;
             UpdateUI();
         }
 
@@ -36,7 +38,7 @@ namespace EverythingToolbar
         {
             if(SaveRules(rules, (bool)autoApplyRulesCheckbox.IsChecked))
             {
-                Properties.Settings.Default.isAutoApplyRules = (bool)autoApplyRulesCheckbox.IsChecked;
+                Settings.Default.isAutoApplyRules = (bool)autoApplyRulesCheckbox.IsChecked;
                 Close();
             }
         }
@@ -126,7 +128,7 @@ namespace EverythingToolbar
             dataGrid.SelectedIndex = selectedIndex + delta;
         }
 
-        private void DataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateUI();
         }
@@ -165,7 +167,7 @@ namespace EverythingToolbar
             if (searchResult == null)
                 return false;
 
-            if (Properties.Settings.Default.isAutoApplyRules && string.IsNullOrEmpty(command))
+            if (Settings.Default.isAutoApplyRules && string.IsNullOrEmpty(command))
             {
                 foreach (Rule r in LoadRules())
                 {

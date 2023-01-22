@@ -24,8 +24,7 @@
                                     SnapsToDevicePixels="True">
                                 <Border x:Name="InnerBorder"
                                         Background="Transparent"
-                                        SnapsToDevicePixels="True">
-                                </Border>
+                                        SnapsToDevicePixels="True" />
                             </Border>
                             <Path Stroke="{TemplateBinding Foreground}" StrokeThickness="1" Width="16" Height="18">
                                 <Path.Data>

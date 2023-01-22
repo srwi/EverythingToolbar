@@ -6,7 +6,9 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
 using Microsoft.Xaml.Behaviors;
+using Size = System.Windows.Size;
 
 namespace EverythingToolbar.Launcher
 {
@@ -44,7 +46,7 @@ namespace EverythingToolbar.Launcher
         {
             Screen screen = Screen.PrimaryScreen;
             TaskbarLocation taskbar = FindDockedTaskBar(screen);
-            System.Windows.Size windowSize = EverythingToolbar.Properties.Settings.Default.popupSize;
+            Size windowSize = Settings.Default.popupSize;
             windowSize.Width /= scalingFactor;
             windowSize.Height /= scalingFactor;
             int margin = (int)(GetMargin() / scalingFactor);
@@ -83,9 +85,9 @@ namespace EverythingToolbar.Launcher
             return windowPosition;
         }
 
-        private RECT SetHorizontalPosition(RECT windowPosition, Rectangle screenWorkingArea, System.Windows.Size windowSize, int margin)
+        private RECT SetHorizontalPosition(RECT windowPosition, Rectangle screenWorkingArea, Size windowSize, int margin)
         {
-            if (EverythingToolbar.Launcher.Utils.IsTaskbarCenterAligned())
+            if (Utils.IsTaskbarCenterAligned())
             {
                 windowPosition.Left = (int)((screenWorkingArea.Width - windowSize.Width) / 2);
                 windowPosition.Left = Math.Max(margin, windowPosition.Left);

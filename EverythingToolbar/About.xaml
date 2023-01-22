@@ -20,6 +20,7 @@
         </Grid.RowDefinitions>
         <Rectangle Fill="Black" />
         <TextBlock Text="EverythingToolbar"
+                   Grid.Row="0"
                    Padding="25, 0, 0, 0"
                    Foreground="White"
                    FontSize="26"
@@ -34,7 +35,7 @@
                     </Style>
                 </StackPanel.Resources>
                 <TextBlock>EverythingToolbar</TextBlock>
-                <TextBlock Name="VersionTextBlock"></TextBlock>
+                <TextBlock Name="VersionTextBlock" />
                 <TextBlock>Copyright © 2023 Stephan Rumswinkel</TextBlock>
                 <TextBlock>
                     <Run Text="{x:Static properties:Resources.AboutLicense}" />: MIT

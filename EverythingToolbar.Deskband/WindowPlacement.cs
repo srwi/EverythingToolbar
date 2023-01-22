@@ -1,11 +1,13 @@
-﻿using EverythingToolbar.Helpers;
-using Microsoft.Xaml.Behaviors;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
+using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
+using Microsoft.Xaml.Behaviors;
+using Size = System.Windows.Size;
 
 namespace EverythingToolbar.Behaviors
 {
@@ -56,7 +58,7 @@ namespace EverythingToolbar.Behaviors
 
             int margin = GetMargin();
             Rectangle workingArea = Screen.PrimaryScreen.WorkingArea;
-            System.Windows.Size windowSize = Properties.Settings.Default.popupSize;
+            Size windowSize = Settings.Default.popupSize;
             windowSize.Width /= DpiScalingFactor;
             windowSize.Height /= DpiScalingFactor;
             Edge taskbarEdge = TaskbarStateManager.Instance.TaskbarEdge;

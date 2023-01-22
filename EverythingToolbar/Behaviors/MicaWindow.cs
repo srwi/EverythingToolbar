@@ -1,10 +1,11 @@
-﻿using Microsoft.Xaml.Behaviors;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
+using EverythingToolbar.Helpers;
+using Microsoft.Xaml.Behaviors;
 
 namespace EverythingToolbar.Behaviors
 {
@@ -23,7 +24,7 @@ namespace EverythingToolbar.Behaviors
         {
             base.OnAttached();
 
-            if (Environment.OSVersion.Version < Helpers.Utils.WindowsVersion.Windows11)
+            if (Environment.OSVersion.Version < Utils.WindowsVersion.Windows11)
                 return;
 
             if (AssociatedObject.IsLoaded)

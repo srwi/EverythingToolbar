@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
+using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Converters
 {
@@ -12,7 +13,7 @@ namespace EverythingToolbar.Converters
             if (value == null)
                 return "";
 
-            string suffix = (int)value == 1 ? Properties.Resources.SearchResult : Properties.Resources.SearchResults;
+            string suffix = (int)value == 1 ? Resources.SearchResult : Resources.SearchResults;
             return $"{value} {suffix}";
         }
 

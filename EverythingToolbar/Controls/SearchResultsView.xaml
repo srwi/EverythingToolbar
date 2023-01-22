@@ -68,7 +68,6 @@
               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
               VirtualizingPanel.CacheLengthUnit="Page"
               VirtualizingPanel.CacheLength="1"
-              VirtualizingPanel.VirtualizationMode="Recycling">
-    </ListView>
+              VirtualizingPanel.VirtualizationMode="Recycling" />
 
 </UserControl>

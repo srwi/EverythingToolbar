@@ -1,10 +1,12 @@
-﻿using EverythingToolbar.Helpers;
-using System;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Controls
 {
@@ -15,13 +17,13 @@ namespace EverythingToolbar.Controls
             InitializeComponent();
 
             // Preselect sorting method
-            (SortByMenu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
+            (SortByMenu.Items[Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
 
             // Preselect active datatemplate
             for (int i = 0; i < ItemTemplateMenu.Items.Count; i++)
             {
                 MenuItem menuItem = ItemTemplateMenu.Items[i] as MenuItem;
-                if (menuItem.Tag.ToString() == Properties.Settings.Default.itemTemplate)
+                if (menuItem.Tag.ToString() == Settings.Default.itemTemplate)
                     menuItem.IsChecked = true;
                 else
                     menuItem.IsChecked = false;
@@ -29,15 +31,15 @@ namespace EverythingToolbar.Controls
 
             // IsEnabled property of matchWholeWord menu item needs to be handled
             // in code because DataTriggers are not compatible with DynamicResources as MenuItem styles
-            Properties.Settings.Default.PropertyChanged += OnSettingsChanged;
+            Settings.Default.PropertyChanged += OnSettingsChanged;
             EverythingSearch.Instance.PropertyChanged += OnSettingsChanged;
         }
 
-        private void OnSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnSettingsChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "isRegExEnabled" || e.PropertyName == "CurrentFilter")
             {
-                bool newEnabledState = !Properties.Settings.Default.isRegExEnabled && EverythingSearch.Instance.CurrentFilter.IsMatchWholeWord == null;
+                bool newEnabledState = !Settings.Default.isRegExEnabled && EverythingSearch.Instance.CurrentFilter.IsMatchWholeWord == null;
                 IsMatchWholeWordMenuItem.IsEnabled = newEnabledState;
             }
         }
@@ -60,11 +62,11 @@ namespace EverythingToolbar.Controls
         {
             SearchWindow.Instance.Hide();
             var inputDialog = new InputDialog(Properties.Resources.SettingsSetInstanceName,
-                                              Properties.Settings.Default.instanceName);
+                                              Settings.Default.instanceName);
             if (inputDialog.ShowDialog() == true)
             {
-                Properties.Settings.Default.instanceName = inputDialog.ResponseText;
-                EverythingSearch.Instance.SetInstanceName(Properties.Settings.Default.instanceName);
+                Settings.Default.instanceName = inputDialog.ResponseText;
+                EverythingSearch.Instance.SetInstanceName(Settings.Default.instanceName);
             }
         }
 
@@ -104,14 +106,14 @@ namespace EverythingToolbar.Controls
             var menu = selectedItem.Parent as MenuItem;
             int selectedIndex = menu.Items.IndexOf(selectedItem);
 
-            (menu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = false;
+            (menu.Items[Settings.Default.sortBy - 1] as MenuItem).IsChecked = false;
             (menu.Items[selectedIndex] as MenuItem).IsChecked = false;
 
             int[] fastSortExceptions = { 9, 10, 17, 18 };
             if (EverythingSearch.Instance.GetIsFastSort(selectedIndex + 1) ||
                 fastSortExceptions.Contains(selectedIndex + 1))
             {
-                Properties.Settings.Default.sortBy = selectedIndex + 1;
+                Settings.Default.sortBy = selectedIndex + 1;
             }
             else
             {
@@ -121,7 +123,7 @@ namespace EverythingToolbar.Controls
                                 MessageBoxImage.Asterisk);
             }
 
-            (menu.Items[Properties.Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
+            (menu.Items[Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
         }
 
         private void OnItemTemplateClicked(object sender, RoutedEventArgs e)
@@ -135,7 +137,7 @@ namespace EverythingToolbar.Controls
                 if (menuItem == selectedItem)
                 {
                     menuItem.IsChecked = true;
-                    Properties.Settings.Default.itemTemplate = selectedItem.Tag.ToString();
+                    Settings.Default.itemTemplate = selectedItem.Tag.ToString();
                 }
                 else
                 {

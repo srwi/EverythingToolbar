@@ -1,10 +1,10 @@
-﻿using EverythingToolbar;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Windows;
+using EverythingToolbar;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using NLog;
-using System;
-using System.Runtime.InteropServices;
-using System.Windows;
 
 namespace CSDeskBand
 {

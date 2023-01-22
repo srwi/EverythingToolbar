@@ -1,14 +1,15 @@
-﻿using EverythingToolbar.Helpers;
+﻿using System;
+using System.ComponentModel;
+using System.IO;
+using System.Reflection;
+using System.Windows;
+using System.Windows.Media;
+using Windows.UI.ViewManagement;
+using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using Microsoft.Xaml.Behaviors;
 using NLog;
-using System.IO;
-using System.Reflection;
-using System;
-using System.Windows;
-using Windows.UI.ViewManagement;
-using System.Windows.Media;
-using Windows.ApplicationModel.Store;
+using Color = Windows.UI.Color;
 
 namespace EverythingToolbar.Behaviors
 {
@@ -75,7 +76,7 @@ namespace EverythingToolbar.Behaviors
             Settings.Default.PropertyChanged += OnSettingsChanged;
         }
 
-        private void OnSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnSettingsChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "itemTemplate")
             {
@@ -111,7 +112,7 @@ namespace EverythingToolbar.Behaviors
             AddResource(Path.Combine(themeLocation, themeFileName));
 
             // Apply ItemTemplate style
-            string dataTemplateLocation = Path.Combine(assemblyLocation, "ItemTemplates", Properties.Settings.Default.itemTemplate + ".xaml");
+            string dataTemplateLocation = Path.Combine(assemblyLocation, "ItemTemplates", Settings.Default.itemTemplate + ".xaml");
             AddResource(dataTemplateLocation);
 
             // Apply accent color
@@ -149,9 +150,9 @@ namespace EverythingToolbar.Behaviors
             _currentResources.MergedDictionaries.Add(resDict);
         }
 
-        private static SolidColorBrush GetBrush(Windows.UI.Color color)
+        private static SolidColorBrush GetBrush(Color color)
         {
-            return new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
+            return new SolidColorBrush(System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B));
         }
     }
 }
