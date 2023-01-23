@@ -286,7 +286,7 @@
     <value>Regels</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
-    <value>Search with Everything</value>
+    <value>使用Everything 搜索</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
     <value>object</value>
