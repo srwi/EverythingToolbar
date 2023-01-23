@@ -132,11 +132,11 @@
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>セットアップアシスタントを実行...</value>
   </data>
-  <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>EverythingToolbar をタスクバーに固定するには、アイコンを右クリックし「タスクバーにピン留めする」を選択します。</value>
+  <data name="SetupAssistantSecondStepText" xml:space="preserve">
+    <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
   </data>
-  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. タスクバーに固定</value>
+  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
+    <value>2. Pin to taskbar</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>タスクバーアイコンを更新するにはエクスプローラの再起動が必要です。今すぐ再起動しますか？</value>
@@ -144,19 +144,25 @@
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>エクスプローラーを再起動</value>
   </data>
-  <data name="SetupAssistantSecondStepText" xml:space="preserve">
+  <data name="SetupAssistantThirdStepText" xml:space="preserve">
     <value>Optionally the original Windows search icon can be hidden.</value>
   </data>
-  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Windows の検索を隠す</value>
-  </data>
-  <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>システム起動時にEverythingToolbarを自動的に起動することをお勧めします.</value>
-  </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. 自動起動の設定</value>
+    <value>3. Hide Windows search</value>
+  </data>
+  <data name="SetupAssistantFourthStepText" xml:space="preserve">
+    <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
+  </data>
+  <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
+    <value>4. Configure autostart</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar セットアップアシスタント</value>
+  </data>
+  <data name="SetupAssistantFirstStepText" xml:space="preserve">
+    <value>Select one of the following taskbar icons:</value>
+  </data>
+  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
+    <value>1. Taskbar icon</value>
   </data>
 </root>
