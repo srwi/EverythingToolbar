@@ -1,50 +1,58 @@
 EverythingToolbar
 =================
 
-<a href="https://github.com/sponsors/stnkl"><img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86" height="25" /></a>
-<a href="https://paypal.me/rumswinkel"><img src="https://img.shields.io/static/v1?label=Donate&message=%E2%9D%A4&logo=PayPal&color=%23009cde" height="25" /></a>
-<a href="https://github.com/stnkl/EverythingToolbar/releases/latest"><img src="https://img.shields.io/github/downloads/stnkl/EverythingToolbar/total?color=green" height="25" /></a>
-<a href="https://crowdin.com/project/everythingtoolbar"><img src="https://badges.crowdin.net/everythingtoolbar/localized.svg" height="25" /></a>
+[![build](https://github.com/stnkl/EverythingToolbar/workflows/build/badge.svg)](https://github.com/stnkl/EverythingToolbar/actions)
+[![Crowdin](https://badges.crowdin.net/everythingtoolbar/localized.svg)](https://crowdin.com/project/everythingtoolbar)
+[![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/stnkl/EverythingToolbar/blob/master/LICENSE)
+[![Downloads](https://img.shields.io/github/downloads/stnkl/EverythingToolbar/total?color=blue)](https://github.com/stnkl/EverythingToolbar/releases/latest)
 
-Instant file search integration for the Windows taskbar powered by [Everything](https://www.voidtools.com/).
+[Everything](https://www.voidtools.com/) integration for the Windows taskbar.
 
-<img src="https://user-images.githubusercontent.com/17520641/213898038-c8f76cc4-572e-481c-82bf-e420900e1aff.gif">
+Features
+--------
 
-## Features
+- Instant search results using [Everything](https://www.voidtools.com/)
+- Quick navigation via keyboard shortcuts
+- Light and dark theme (or custom themes)
+- Customizable *open with* commands
+- Rules for opening files
+- Uses filters defined within Everything
 
-### Light & Dark
-EverythingToolbar seemlessly blends into Windows 10 and 11 and adjusts according to your theme settings.
+Demo
+----
 
-<img src="https://user-images.githubusercontent.com/17520641/213913562-076e00f3-f54b-40b4-b6a5-ec705302fe39.png">
+![demo](https://user-images.githubusercontent.com/17520641/102723553-04d88f00-4309-11eb-834f-d20c1ce14a67.gif)
 
-### Custom search filters
-EverythingToolbar reads custom filters previously defined in Everything. To enable this feature, check the `Use Everything filters` option in the EverythingToolbar settings. From now on, all filters will be available from the filter dropdown:
+Requirements
+------------
 
-![Custom search filters](https://user-images.githubusercontent.com/17520641/213913613-3621a0c1-0386-4d7a-ac0f-e7ab0239b222.png)
+- Windows 10 (Support for Windows 11 currently in beta with EverythingToolbar &ge; 0.8.0)
+- [.NET Framework](https://dotnet.microsoft.com/download/dotnet-framework) &ge; 4.7 ([how to check](https://user-images.githubusercontent.com/14129585/104021832-ff36e080-5206-11eb-9f5f-10e4381992f9.jpg))
+- [Everything](https://www.voidtools.com/) &ge; 1.4.1 must be running (lite version not supported)
+- High DPI support requires at least Windows 10 Creators Update.
 
-### Quick toggles for search options
-Quick access to search flags (match case, whole word, match path and reg-ex) allows you to find your files precisely.
+Install
+-------
+- Make sure [Everything](https://www.voidtools.com) is installed and running
+- Install EverythingToolbar using one of the following methods
+  - Download the [EverythingToolbar](https://github.com/stnkl/EverythingToolbar/releases) installer
+  - [Chocolatey](https://chocolatey.org/): `choco install everythingtoolbar`
+  - [winget](https://github.com/microsoft/winget-cli/): `winget install everythingtoolbar`
+  - [Manual installation](https://github.com/stnkl/EverythingToolbar/wiki/Installation-per-user-(experimental)) without admin rights (not recommended)
+- Enable EverythingToolbar via the context menu of the taskbar
+  - *Note: You will have to open the context menu twice as it doesn't show up the first time you open it.*
+- Adjust size and position after unlocking the taskbar ([demonstration video](https://user-images.githubusercontent.com/17520641/107118574-19a1bf80-6882-11eb-843a-7e854e5d0684.gif))
 
-![Quick toggles](https://user-images.githubusercontent.com/17520641/213913757-da27d69d-59eb-445b-9d44-5b2e34c6faf4.png)
+Build
+-----
 
-### RegEx-powered file associations
-Create custom *Open with* commands by selecting <kbd>Rules...</kbd> in the preferences. By checking the <kbd>Automatically apply rules based on condition</kbd> checkbox, matching files/folders will execute the appropriate command based on the type and regular expression field. Leaving the regular expression field empty will never match, but the entry will only be displayed in the *Open with* context menu of the search results.
+- Open solution in Visual Studio with .NET Framework 4.7 support
+- Disable signing in project properties
+- Build the project (Windows Explorer will restart)
+- Install the toolbar by running `EverythingToolbar/tools/install.cmd` as admin
 
-![Rules window](https://user-images.githubusercontent.com/17520641/213928743-a7f6a932-0b60-4dc3-8d2b-72ee09cf6e53.png)
-
-### Compatibility
-EverythingToolbar is compatible with both Windows 10 and Windows 11 and works well with tools like [ExplorerPatcher](https://github.com/valinet/ExplorerPatcher) and [StartAllBack](https://www.startallback.com/) to give you the full deskband integration even on Windows 11.
-
-![Windows 10 screenshot](https://user-images.githubusercontent.com/17520641/213918399-a566c476-9b7e-460b-97c5-479964ddfa78.png)
-
-### Other features:
-
-- Open EverythingToolbar at any time via a customizable shortcut
-- Drag and drop files to where you need them most
-- Quickly preview files thanks to [QuickLook](https://github.com/QL-Win/QuickLook) integration
-- Use custom Everything [instance names](https://www.voidtools.com/support/everything/multiple_instances/#named_instances)
-
-### Keyboard shortcuts
+Keyboard shortcuts
+------------------
 
 | Shortcut                                              | Function                             |
 |-------------------------------------------------------|--------------------------------------|
@@ -60,46 +68,32 @@ EverythingToolbar is compatible with both Windows 10 and Windows 11 and works we
 | <kbd>Ctrl</kbd>+<kbd>Space</kbd>                      | Preview file in [QuickLook](https://github.com/QL-Win/QuickLook) |
 | <kbd>Win</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd>            | Focus search box (customizable)      |
 
-## Installation
+Rules
+-----
 
-- Make sure [Everything](https://www.voidtools.com) &ge; 1.4.1 is installed and running (the Lite version is not supported)
-- Install EverythingToolbar using one of the following methods
-  - Download the installer for [EverythingToolbar](https://github.com/stnkl/EverythingToolbar/releases)
-  - [Chocolatey](https://chocolatey.org/): `choco install everythingtoolbar`
-  - [winget](https://github.com/microsoft/winget-cli/): `winget install everythingtoolbar`
-  - [Manual installation](https://github.com/stnkl/EverythingToolbar/wiki/Installation-per-user-(experimental)) without admin privileges (not recommended)
-- **Note:** For Everything 1.5a the instance name `1.5a` must be set in the EverythingToolbar settings.
+Create custom *open with* commands by selecting <kbd>Rules...</kbd> from settings. By checking <kbd>Automatically apply rules based on condition</kbd> matching files/folders based on the type and regular expression field will execute the corresponding command when opened.
 
-## Setup
+Examples:
 
-### Search icon
+| Name                     | Type | Regular Expression           | Command                 |
+|--------------------------|------|------------------------------|-------------------------|
+| Open terminal here...    | Any  |                              | `cmd /K "cd %path%"`    |
+| Total Commander (Left)   | Any  |                              | `totalcmd /O /L=%path%` |
+| Total Commander (Right)  | Any  |                              | `totalcmd /O /R=%path%` |
+| MSPaint                  | File | `.*\\PixelArt\\.*(bmp\|BMP)` | `mspaint %file%`        |
 
-*Recommended for **unmodified Windows 11** installations*
+Leaving the regular expression field empty will never match.
 
-- After installation on Windows 11 the setup assistant will guide you through the setup process
-  - Note: If you want to use the search icon on Windows 10 (not recommended) or the setup assistant did not start automatically, just search for `EverythingToolbar` in the Windows Start menu.
+Customization
+-------------
 
-### Deskband
+- Edit an existing theme/item template or create a new one in the `Themes` / `ItemTemplates` folder
+- Restart Windows Explorer via the task manager
+- Select theme/item template from settings
 
-*Recommended for **Windows 10** or in combination with [ExplorerPatcher](https://github.com/valinet/ExplorerPatcher)/[StartAllBack](https://www.startallback.com/)*
+Contribute
+----------
 
-- After installation on Windows 10, activate EverythingToolbar from the taskbar context menu
-  - **Note A:** You will need to open the context menu twice, as EverythingToolbar will not appear the first time.
-  - **Note B (*Windows 11 only*):** After installation, the search icon setup assistant will start automatically. If you want to use the deskband instead (only recommended in combination with ExplorerPatcher/StartAllback), close the assistant and end EverythingToolbar's background process via the taskbar tray icon.
-- Adjust size and position after unlocking the taskbar ([Demonstration video](https://user-images.githubusercontent.com/17520641/107118574-19a1bf80-6882-11eb-843a-7e854e5d0684.gif))
-
-## Build
-
-- Open the solution in Visual Studio with .NET Framework 4.7 support
-- Disable signing in project properties
-- Deskband:
-  - Build project `EverythingToolbar.Deskband` (Windows Explorer will be restarted) 
-  - Install the toolbar deskband by running `EverythingToolbar.Deskband/tools/install.cmd` as admin
-- Search icon:
-  - Set `EverythingToolbar.Launcher` as startup project and start debugging
-
-## Contribute
-
-All kinds of contributions (questions, bug reports, pull requests) are welcome! Helping with open issues is greatly appreciated. As a basic rule, before filing issues, feature requests or anything else, take a look at the issues and check if they have already been reported by another user. If so, engage in the already existing discussion.
+All kinds of contributions (questions, bug reports, pull requests) are welcome! Helping out with open issues is very much appreciated. As a basic rule, before filing issues, feature requests or anything else, take a look at the issues and check if it has already been reported by another user. If so, engage in the already existing discussion.
 
 You can also help by [translating EverythingToolbar](https://crowdin.com/project/everythingtoolbar).
