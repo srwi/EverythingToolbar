@@ -136,7 +136,7 @@
     <value>Чтобы закрепить EverythingToolbar на панели задач щёлкните правой кнопкой мыши и выберите 'Закрепить на панели задач'.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Pin to taskbar</value>
+    <value>2. Закрепить на панели задач</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>Для обновления значка панели задач требуется перезапуск проводника. Перезапустить сейчас?</value>
