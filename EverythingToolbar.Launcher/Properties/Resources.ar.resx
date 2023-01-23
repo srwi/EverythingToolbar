@@ -133,10 +133,10 @@
     <value>تشغيل مساعد الإعداد...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
+    <value>لتثبيت شريط الأدوات على شريط المهام، انقر يمين فوق الإيقونة و إختر "تثبيت إلى شريط المهام".</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Pin to taskbar</value>
+    <value>2. تثبيت إلى شريط المهام</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>مطلوب إعادة تشغيل المستكشف لتحديث أيقونة شريط المهام. هل ترغب في إعادة تشغيله الآن؟</value>
@@ -145,16 +145,16 @@
     <value>إعادة تشغيل المستكشف</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>يمكن إخفاء أيقونة البحث الأصلية في Windows"اختياري".</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Hide Windows search</value>
+    <value>3. إخفاء بحث Windows</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
+    <value>من المستحسن بدء تشغيل شريط الأدوات EverythingToolbar تلقائياً عند بدء تشغيل النظام.</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. Configure autostart</value>
+    <value>4. إعداد التشغيل التلقائي</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>مساعد إعداد EverythingToolbar</value>
