@@ -6,7 +6,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Markup;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Converters
 {
     public class HighlightedTextConverter : MarkupExtension, IValueConverter
     {
@@ -14,8 +14,10 @@ namespace EverythingToolbar
         {
             if (value is string input)
             {
-                TextBlock textBlock = new TextBlock();
-                textBlock.TextTrimming = TextTrimming.CharacterEllipsis;
+                TextBlock textBlock = new TextBlock
+                {
+                    TextTrimming = TextTrimming.CharacterEllipsis
+                };
                 string[] segments = input.Split('*');
                 for (int j = 0; j < segments.Length; j++)
                 {
@@ -37,7 +39,7 @@ namespace EverythingToolbar
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException("This converter cannot be used in two-way binding.");
+            throw new NotSupportedException("This converter cannot be used in two-way binding.");
         }
 
         public override object ProvideValue(IServiceProvider serviceProvider)

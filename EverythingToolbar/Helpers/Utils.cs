@@ -1,29 +1,24 @@
-﻿using Microsoft.Win32;
+﻿using System;
 using System.IO;
 
 namespace EverythingToolbar.Helpers
 {
-    class Utils
+    public class Utils
     {
-        private static int buildNumber = -1;
-        public static bool IsWindows11
-        {
-            get
-            {
-                if (buildNumber == -1)
-                {
-                    object registryValue = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuildNumber", "");
-                    buildNumber = System.Convert.ToInt32(registryValue);
-                }
+        private Utils() { }
 
-                return buildNumber >= 22000;
-            }
+        public static class WindowsVersion
+        {
+            public static Version Windows10 = new Version(10, 0, 10240);
+            public static Version Windows10Anniversary = new Version(10, 0, 14393);
+            public static Version Windows11 = new Version(10, 0, 22000);
         }
 
-        // Taken from: https://stackoverflow.com/a/11124118/1477251
+        // Property can be removed once start menu replacement is implemented in Windows 11
+        public static bool IsWindows11 => Environment.OSVersion.Version >= WindowsVersion.Windows11;
+
         public static string GetHumanReadableFileSize(string path)
         {
-            // Get file length
             long length;
             try
             {
@@ -35,37 +30,37 @@ namespace EverythingToolbar.Helpers
             }
 
             // Get absolute value
-            long absolute_i = length < 0 ? -length : length;
+            long absolute = length < 0 ? -length : length;
 
             // Determine the suffix and readable value
             string suffix;
             double readable;
-            if (absolute_i >= 0x1000000000000000) // Exabyte
+            if (absolute >= 0x1000000000000000) // Exabyte
             {
                 suffix = "EB";
                 readable = (length >> 50);
             }
-            else if (absolute_i >= 0x4000000000000) // Petabyte
+            else if (absolute >= 0x4000000000000) // Petabyte
             {
                 suffix = "PB";
                 readable = (length >> 40);
             }
-            else if (absolute_i >= 0x10000000000) // Terabyte
+            else if (absolute >= 0x10000000000) // Terabyte
             {
                 suffix = "TB";
                 readable = (length >> 30);
             }
-            else if (absolute_i >= 0x40000000) // Gigabyte
+            else if (absolute >= 0x40000000) // Gigabyte
             {
                 suffix = "GB";
                 readable = (length >> 20);
             }
-            else if (absolute_i >= 0x100000) // Megabyte
+            else if (absolute >= 0x100000) // Megabyte
             {
                 suffix = "MB";
                 readable = (length >> 10);
             }
-            else if (absolute_i >= 0x400) // Kilobyte
+            else if (absolute >= 0x400) // Kilobyte
             {
                 suffix = "KB";
                 readable = length;

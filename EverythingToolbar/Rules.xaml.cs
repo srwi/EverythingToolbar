@@ -1,20 +1,23 @@
-﻿using EverythingToolbar.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Xml;
 using System.Xml.Serialization;
+using EverythingToolbar.Data;
+using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
 
 namespace EverythingToolbar
 {
-    public partial class Rules : Window
+    public partial class Rules
     {
         static List<Rule> rules = new List<Rule>();
-        static string rulesPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EverythingToolbar", "rules.xml");
+        static string RulesPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EverythingToolbar", "rules.xml");
 
         public Rules()
         {
@@ -22,7 +25,7 @@ namespace EverythingToolbar
 
             rules = LoadRules();
             dataGrid.ItemsSource = rules;
-            autoApplyRulesCheckbox.IsChecked = Properties.Settings.Default.isAutoApplyRules;
+            autoApplyRulesCheckbox.IsChecked = Settings.Default.isAutoApplyRules;
             UpdateUI();
         }
 
@@ -35,18 +38,17 @@ namespace EverythingToolbar
         {
             if(SaveRules(rules, (bool)autoApplyRulesCheckbox.IsChecked))
             {
-                Properties.Settings.Default.isAutoApplyRules = (bool)autoApplyRulesCheckbox.IsChecked;
-                Properties.Settings.Default.Save();
+                Settings.Default.isAutoApplyRules = (bool)autoApplyRulesCheckbox.IsChecked;
                 Close();
             }
         }
 
         public static List<Rule> LoadRules()
         {
-            if (File.Exists(rulesPath))
+            if (File.Exists(RulesPath))
             {
                 var serializer = new XmlSerializer(rules.GetType());
-                using (var reader = XmlReader.Create(rulesPath))
+                using (var reader = XmlReader.Create(RulesPath))
                 {
                     return (List<Rule>)serializer.Deserialize(reader);
                 }
@@ -74,9 +76,9 @@ namespace EverythingToolbar
                 return false;
             }
 
-            Directory.CreateDirectory(Path.GetDirectoryName(rulesPath));
+            Directory.CreateDirectory(Path.GetDirectoryName(RulesPath));
             var serializer = new XmlSerializer(newRules.GetType());
-            using (var writer = XmlWriter.Create(rulesPath))
+            using (var writer = XmlWriter.Create(RulesPath))
             {
                 serializer.Serialize(writer, newRules);
             }
@@ -126,7 +128,7 @@ namespace EverythingToolbar
             dataGrid.SelectedIndex = selectedIndex + delta;
         }
 
-        private void DataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateUI();
         }
@@ -165,7 +167,7 @@ namespace EverythingToolbar
             if (searchResult == null)
                 return false;
 
-            if (Properties.Settings.Default.isAutoApplyRules && string.IsNullOrEmpty(command))
+            if (Settings.Default.isAutoApplyRules && string.IsNullOrEmpty(command))
             {
                 foreach (Rule r in LoadRules())
                 {

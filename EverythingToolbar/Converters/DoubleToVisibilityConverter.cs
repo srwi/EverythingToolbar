@@ -4,15 +4,15 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Converters
 {
     public class DoubleToVisibilityConverter : MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int threshold = System.Convert.ToInt32(parameter);
+            double threshold = System.Convert.ToDouble(parameter);
 
-            if ((double)value > Math.Abs(threshold))
+            if (System.Convert.ToDouble(value) >= Math.Abs(threshold))
             {
                 return threshold >= 0 ? Visibility.Visible : Visibility.Hidden;
             }
@@ -22,7 +22,7 @@ namespace EverythingToolbar
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException("This converter cannot be used in two-way binding.");
+            throw new NotSupportedException("This converter cannot be used in two-way binding.");
         }
 
         public override object ProvideValue(IServiceProvider serviceProvider)

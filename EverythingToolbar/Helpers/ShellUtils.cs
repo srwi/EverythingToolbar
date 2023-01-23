@@ -1,13 +1,15 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using Microsoft.Win32;
 
 namespace EverythingToolbar.Helpers
 {
     class ShellUtils
     {
+        private ShellUtils() { }
+
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
         static extern bool ShellExecuteEx(ref SHELLEXECUTEINFO lpExecInfo);
 
@@ -95,7 +97,6 @@ namespace EverythingToolbar.Helpers
         public static void CreateProcessFromCommandLine(string commandLine, string workingDirectory = null)
         {
             var si = new STARTUPINFO();
-            var pi = new PROCESS_INFORMATION();
 
             CreateProcess(
                 null,
@@ -107,7 +108,7 @@ namespace EverythingToolbar.Helpers
                 IntPtr.Zero,
                 workingDirectory,
                 ref si,
-                out pi);
+                out PROCESS_INFORMATION _);
         }
 
         public static void OpenWithDialog(string path)

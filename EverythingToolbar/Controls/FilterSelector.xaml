@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="EverythingToolbar.Controls.FilterSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Border BorderBrush="{DynamicResource TabBarBorder}"
+            BorderThickness="0, 0, 0, 1">
+        <StackPanel Orientation="Horizontal">
+            <TabControl x:Name="TabControl"
+                        SelectionChanged="OnTabItemSelected"
+                        ItemsSource="{Binding DefaultFilters}" />
+
+            <ComboBox Name="ComboBox"
+                      SelectionChanged="OnComboBoxItemSelected"
+                      ItemsSource="{Binding UserFilters}"
+                      DisplayMemberPath="Name" />
+        </StackPanel>
+    </Border>
+    
+</UserControl>

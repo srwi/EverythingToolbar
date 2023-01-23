@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Sys="clr-namespace:System;assembly=mscorlib">
+
+    <Thickness x:Key="TabBarMargin" Right="13" />
+    <Thickness x:Key="SearchBoxMargin" />
+    <GridLength x:Key="FirstGridRowHeight">Auto</GridLength>
+    <GridLength x:Key="SecondGridRowHeight">*</GridLength>
+    <GridLength x:Key="ThirdGridRowHeight">Auto</GridLength>
+    <Sys:Int32 x:Key="TabBarGridRow">0</Sys:Int32>
+    <Sys:Int32 x:Key="SearchResultsViewGridRow">1</Sys:Int32>
+    <Sys:Int32 x:Key="SearchBoxGridRow">2</Sys:Int32>
+
+</ResourceDictionary>

@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Sys="clr-namespace:System;assembly=mscorlib">
+
+    <Sys:Double x:Key="ScrollbarWidth">16</Sys:Double>
+    <Sys:Double x:Key="ScrollbarThumbHeight">18</Sys:Double>
+    <Thickness x:Key="ScrollbarThumbPadding" />
+    <CornerRadius x:Key="ScrollbarThumbCornerRadius" />
+    <CornerRadius x:Key="ScrollbarCornerRadius" />
+    <Sys:String x:Key="ScrollbarArrowUpCornerRadius">0</Sys:String>
+    <Sys:String x:Key="ScrollbarArrowUpContent">M 0 4 L 4 0 L 8 4</Sys:String>
+    <Sys:String x:Key="ScrollbarArrowDownCornerRadius">0</Sys:String>
+    <Sys:String x:Key="ScrollbarArrowDownContent">M 0 0 L 4 4 L 8 0</Sys:String>
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../../Styles/Scrollbar.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

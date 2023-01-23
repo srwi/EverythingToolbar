@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Navigation;
 
 namespace EverythingToolbar
 {
-    public partial class About : Window
+    public partial class About
     {
         public About()
         {
@@ -18,7 +19,7 @@ namespace EverythingToolbar
             Close();
         }
 
-        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;

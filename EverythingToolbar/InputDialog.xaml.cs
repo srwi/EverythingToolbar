@@ -2,7 +2,7 @@
 
 namespace EverythingToolbar
 {
-    public partial class InputDialog : Window
+    public partial class InputDialog
     {
         public InputDialog(string title = "Input", string text = "")
         {
@@ -14,17 +14,11 @@ namespace EverythingToolbar
 
         public string ResponseText
         {
-            get
-            {
-                return ResponseTextBox.Text;
-            }
-            set
-            {
-                ResponseTextBox.Text = value;
-            }
+            get => ResponseTextBox.Text;
+            private set => ResponseTextBox.Text = value;
         }
 
-        private void OnOkClicked(object sender, System.Windows.RoutedEventArgs e)
+        private void OnOkClicked(object sender, RoutedEventArgs e)
         {
             DialogResult = true;
         }

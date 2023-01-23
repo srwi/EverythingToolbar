@@ -1,8 +1,9 @@
-﻿using NLog;
+﻿using System.IO;
+using NLog;
 using NLog.Config;
-using System.IO;
+using NLog.Targets;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Helpers
 {
     public static class ToolbarLogger
     {
@@ -20,15 +21,16 @@ namespace EverythingToolbar
 
         public static void Initialize()
         {
-            var logfile = new NLog.Targets.FileTarget("logfile") {
+            var logfile = new FileTarget("logfile")
+            {
                 FileName = Path.Combine(Path.GetTempPath(), "EverythingToolbar.log"),
-                ArchiveEvery = NLog.Targets.FileArchivePeriod.Day,
-                ArchiveNumbering = NLog.Targets.ArchiveNumberingMode.Date,
+                ArchiveEvery = FileArchivePeriod.Day,
+                ArchiveNumbering = ArchiveNumberingMode.Date,
                 MaxArchiveFiles = 3,
                 KeepFileOpen = true,
                 OpenFileCacheTimeout = 30,
                 ConcurrentWrites = true,
-                Layout = "${longdate}|${level:uppercase=true}|${message}|${exception:format=tostring}"
+                Layout = "${longdate}|${level:uppercase=true}|${logger}|${message}|${exception:format=tostring}"
             };
             var fileRule = new LoggingRule("*", LogLevel.Debug, logfile);
             var config = new LoggingConfiguration();

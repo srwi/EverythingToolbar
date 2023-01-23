@@ -27,12 +27,9 @@
       <Value Profile="(Default)">DARK</Value>
     </Setting>
     <Setting Name="itemTemplate" Type="System.String" Scope="User">
-      <Value Profile="(Default)">NORMAL</Value>
+      <Value Profile="(Default)">Normal</Value>
     </Setting>
     <Setting Name="isAutoApplyRules" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="isIconOnly" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="filtersPath" Type="System.String" Scope="User">
@@ -81,6 +78,9 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="instanceName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="iconName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

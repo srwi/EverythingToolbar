@@ -1,5 +1,4 @@
-﻿using EverythingToolbar.Helpers;
-using System;
+﻿using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
@@ -7,12 +6,22 @@ using System.IO.Pipes;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Media;
+using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
+using NLog;
+using Peter;
+using Clipboard = System.Windows.Clipboard;
+using MessageBox = System.Windows.MessageBox;
+using Point = System.Drawing.Point;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Data
 {
     public class SearchResult
     {
+        private static readonly ILogger _logger = ToolbarLogger.GetLogger<SearchResult>();
+
         public bool IsFile { get; set; }
 
         public string FullPathAndFileName { get; set; }
@@ -41,12 +50,11 @@ namespace EverythingToolbar
                     WorkingDirectory = IsFile ? Path : FullPathAndFileName
                 });
                 EverythingSearch.Instance.IncrementRunCount(FullPathAndFileName);
-                EverythingSearch.Instance.SearchTerm = null;
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open search result.");
-                MessageBox.Show(Properties.Resources.MessageBoxFailedToOpen, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                _logger.Error(e, "Failed to open search result.");
+                MessageBox.Show(Resources.MessageBoxFailedToOpen, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -63,8 +71,8 @@ namespace EverythingToolbar
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open search result.");
-                MessageBox.Show(Properties.Resources.MessageBoxFailedToOpen, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                _logger.Error(e, "Failed to open search result.");
+                MessageBox.Show(Resources.MessageBoxFailedToOpen, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -77,8 +85,8 @@ namespace EverythingToolbar
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open path.");
-                MessageBox.Show(Properties.Resources.MessageBoxFailedToOpenPath, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                _logger.Error(e, "Failed to open path.");
+                MessageBox.Show(Resources.MessageBoxFailedToOpenPath, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -90,8 +98,8 @@ namespace EverythingToolbar
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open dialog.");
-                MessageBox.Show(Properties.Resources.MessageBoxFailedToOpenDialog, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                _logger.Error(e, "Failed to open dialog.");
+                MessageBox.Show(Resources.MessageBoxFailedToOpenDialog, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -103,8 +111,8 @@ namespace EverythingToolbar
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to copy file.");
-                MessageBox.Show(Properties.Resources.MessageBoxFailedToCopyFile, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                _logger.Error(e, "Failed to copy file.");
+                MessageBox.Show(Resources.MessageBoxFailedToCopyFile, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -116,8 +124,8 @@ namespace EverythingToolbar
             }
             catch (Exception e)
             {
-                ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to copy path.");
-                MessageBox.Show(Properties.Resources.MessageBoxFailedToCopyPath, Properties.Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                _logger.Error(e, "Failed to copy path.");
+                MessageBox.Show(Resources.MessageBoxFailedToCopyPath, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -128,11 +136,12 @@ namespace EverythingToolbar
 
         public void ShowWindowsContexMenu()
         {
-            ShowWindowsContexMenu(System.Windows.Forms.Control.MousePosition);
+            ShowWindowsContexMenu(Control.MousePosition);
         }
-        public void ShowWindowsContexMenu(System.Drawing.Point pos)
+
+        public void ShowWindowsContexMenu(Point pos)
         {
-            Peter.ShellContextMenu menu = new Peter.ShellContextMenu();
+            ShellContextMenu menu = new ShellContextMenu();
             FileInfo[] arrFI = new FileInfo[1];
             arrFI[0] = new FileInfo(FullPathAndFileName);
             menu.ShowContextMenu(arrFI, pos);
@@ -162,11 +171,11 @@ namespace EverythingToolbar
                 }
                 catch (TimeoutException)
                 {
-                    ToolbarLogger.GetLogger("EverythingToolbar").Info("Opening QuickLook preview timed out. Is QuickLook running?");
+                    _logger.Info("Opening QuickLook preview timed out. Is QuickLook running?");
                 }
                 catch (Exception e)
                 {
-                    ToolbarLogger.GetLogger("EverythingToolbar").Error(e, "Failed to open preview.");
+                    _logger.Error(e, "Failed to open preview.");
                 }
             });
         }

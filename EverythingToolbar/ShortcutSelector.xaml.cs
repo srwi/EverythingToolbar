@@ -1,12 +1,14 @@
-﻿using EverythingToolbar.Helpers;
-using NHotkey.Wpf;
+﻿using System;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
+using NHotkey.Wpf;
 
 namespace EverythingToolbar
 {
-    public partial class ShortcutSelector : Window
+    public partial class ShortcutSelector
     {
         public Key Key { get; private set; }
         public ModifierKeys Modifiers { get; private set; }
@@ -19,8 +21,8 @@ namespace EverythingToolbar
             ShortcutManager.Instance.UnhookStartMenu();
             HotkeyManager.Current.IsEnabled = false;
 
-            Modifiers = (ModifierKeys)Properties.Settings.Default.shortcutModifiers;
-            Key = (Key)Properties.Settings.Default.shortcutKey;
+            Modifiers = (ModifierKeys)Settings.Default.shortcutModifiers;
+            Key = (Key)Settings.Default.shortcutKey;
             UpdateTextBox();
         }
 
@@ -71,22 +73,26 @@ namespace EverythingToolbar
             }
             if ((Modifiers & ModifierKeys.Windows) != 0)
             {
-                shortcutText.Append(shortcutText.Length > 0 ? "+" : "");
+                if (shortcutText.Length > 0)
+                    shortcutText.Append("+");
                 shortcutText.Append(Properties.Resources.KeyWin);
             }
             if ((Modifiers & ModifierKeys.Alt) != 0)
             {
-                shortcutText.Append(shortcutText.Length > 0 ? "+" : "");
+                if (shortcutText.Length > 0)
+                    shortcutText.Append("+");
                 shortcutText.Append(Properties.Resources.KeyAlt);
             }
             if ((Modifiers & ModifierKeys.Shift) != 0)
             {
-                shortcutText.Append(shortcutText.Length > 0 ? "+" : "");
+                if (shortcutText.Length > 0)
+                    shortcutText.Append("+");
                 shortcutText.Append(Properties.Resources.KeyShift);
             }
             if (Key != Key.None)
             {
-                shortcutText.Append(shortcutText.Length > 0 ? "+" : "");
+                if (shortcutText.Length > 0)
+                    shortcutText.Append("+");
                 shortcutText.Append(Key.ToString());
             }
 
@@ -99,11 +105,11 @@ namespace EverythingToolbar
             Close();
         }
 
-        private void OnClosed(object sender, System.EventArgs e)
+        private void OnClosed(object sender, EventArgs e)
         {
             HotkeyManager.Current.IsEnabled = true;
             ShortcutManager.Instance.ReleaseKeyboard();
-            if (Properties.Settings.Default.isReplaceStartMenuSearch)
+            if (Settings.Default.isReplaceStartMenuSearch)
             {
                 ShortcutManager.Instance.HookStartMenu();
             }

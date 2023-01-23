@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Thickness x:Key="ContextMenuMenuItemMargin"
+               Left="4"
+               Right="4" />
+    <CornerRadius x:Key="ContextMenuMenuItemCornerRadius"
+                  BottomLeft="5"
+                  BottomRight="5"
+                  TopRight="5"
+                  TopLeft="5" />
+    <CornerRadius x:Key="ContextMenuCornerRadius"
+                  BottomLeft="8"
+                  BottomRight="8"
+                  TopRight="8"
+                  TopLeft="8" />
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../../Styles/ContextMenu.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

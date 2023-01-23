@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Thickness x:Key="TextBoxAccentBorderThickness"
+               Bottom="2" />
+    <Thickness x:Key="TextBoxBorderActiveThickness"
+               Bottom="1"
+               Top="1"
+               Left="1"
+               Right="1" />
+    <CornerRadius x:Key="TextBoxCornerRadius"
+                  BottomLeft="3"
+                  BottomRight="3"
+                  TopRight="3"
+                  TopLeft="3" />
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../../Styles/TextBox.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+</ResourceDictionary>
