@@ -286,7 +286,7 @@
     <value>규칙들</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
-    <value>Search with Everything</value>
+    <value>Everything으로 검색</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
     <value>항목</value>
