@@ -133,10 +133,10 @@
     <value>Esegui assistente installazione...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
+    <value>Per aggiungere EverythingToolbar alla barra delle applicazioni fare click destro sulla sua icona e selezioni 'Aggiungi alla barra delle applicazioni'.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Pin to taskbar</value>
+    <value>2. Aggiungi alla Barra delle applicazioni</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>Per aggiornare la barra delle applicazioni è necessario riavviare Esplora Risorse. Riavviarlo ora?</value>
@@ -145,16 +145,16 @@
     <value>Riavvia esplora risorse</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>Opzionalmente l'icona originale della ricerca di Windows può esser nascosta.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Hide Windows search</value>
+    <value>3. Nascondi ricerca di Windows</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
+    <value>Si consiglia di avviare EverythingToolbar automaticamente all'avvio del sistema.</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. Configure autostart</value>
+    <value>4. Configura avvio automatico</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Assistente Configurazione EverythingToolbar</value>
