@@ -295,7 +295,7 @@
     <value>objects</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
-    <value>About EverythingToolbar...</value>
+    <value>Sobre a EverythingToolbar...</value>
   </data>
   <data name="SettingsChangeShortcut" xml:space="preserve">
     <value>Change Shortcut...</value>
@@ -361,7 +361,7 @@
     <value>View</value>
   </data>
   <data name="ShortcutOK" xml:space="preserve">
-    <value>OK</value>
+    <value>Certo</value>
   </data>
   <data name="ShortcutWindowTitle" xml:space="preserve">
     <value>Enter shortcut...</value>

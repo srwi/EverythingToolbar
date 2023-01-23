@@ -159,4 +159,10 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar Einrichtungsassistent</value>
   </data>
+  <data name="SetupAssistantFirstStepText" xml:space="preserve">
+    <value>Bitte wählen Sie eines der folgenden Taskbar-Symbole:</value>
+  </data>
+  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
+    <value>1. Taskbar-Symbol</value>
+  </data>
 </root>

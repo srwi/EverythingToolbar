@@ -159,4 +159,10 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar configuratie assistent</value>
   </data>
+  <data name="SetupAssistantFirstStepText" xml:space="preserve">
+    <value>Select one of the following taskbar icons:</value>
+  </data>
+  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
+    <value>1. Taskbar icon</value>
+  </data>
 </root>

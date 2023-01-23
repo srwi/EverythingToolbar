@@ -286,7 +286,7 @@
     <value>Regels</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
-    <value>Zoeken met Everything...</value>
+    <value>Zoeken met Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
     <value>object</value>

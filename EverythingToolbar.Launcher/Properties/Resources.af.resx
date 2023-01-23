@@ -148,7 +148,7 @@
     <value>Optionally the original Windows search icon can be hidden.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>2. Hide Windows search</value>
+    <value>3. Hide Windows search</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
     <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
@@ -158,5 +158,11 @@
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar Setup Assistant</value>
+  </data>
+  <data name="SetupAssistantFirstStepText" xml:space="preserve">
+    <value>Select one of the following taskbar icons:</value>
+  </data>
+  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
+    <value>1. Taskbar icon</value>
   </data>
 </root>
