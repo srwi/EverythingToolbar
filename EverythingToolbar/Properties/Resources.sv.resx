@@ -285,8 +285,8 @@
   <data name="RulesWindowTitle" xml:space="preserve">
     <value>Regler</value>
   </data>
-  <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>Sök med Everything</value>
+  <data name="TextBoxWatermark" xml:space="preserve">
+    <value>Search with Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
     <value>objekt</value>
