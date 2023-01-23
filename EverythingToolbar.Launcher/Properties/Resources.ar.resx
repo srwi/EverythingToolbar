@@ -132,11 +132,11 @@
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>تشغيل مساعد الإعداد...</value>
   </data>
-  <data name="SetupAssistantFirstStepText" xml:space="preserve">
+  <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>لتثبيت شريط الأدوات على شريط المهام، انقر يمين فوق الإيقونة و إختر "تثبيت إلى شريط المهام".</value>
   </data>
-  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. تثبيت إلى شريط المهام</value>
+  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
+    <value>2. تثبيت إلى شريط المهام</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>مطلوب إعادة تشغيل المستكشف لتحديث أيقونة شريط المهام. هل ترغب في إعادة تشغيله الآن؟</value>
@@ -144,17 +144,17 @@
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>إعادة تشغيل المستكشف</value>
   </data>
-  <data name="SetupAssistantSecondStepText" xml:space="preserve">
+  <data name="SetupAssistantThirdStepText" xml:space="preserve">
     <value>يمكن إخفاء أيقونة البحث الأصلية في Windows"اختياري".</value>
   </data>
-  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. إخفاء بحث Windows</value>
+  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
+    <value>3. إخفاء بحث Windows</value>
   </data>
-  <data name="SetupAssistantThirdStepText" xml:space="preserve">
+  <data name="SetupAssistantFourthStepText" xml:space="preserve">
     <value>من المستحسن بدء تشغيل شريط الأدوات EverythingToolbar تلقائياً عند بدء تشغيل النظام.</value>
   </data>
-  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. إعداد التشغيل التلقائي</value>
+  <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
+    <value>4. إعداد التشغيل التلقائي</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>مساعد إعداد EverythingToolbar</value>

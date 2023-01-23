@@ -132,11 +132,11 @@
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>Uruchom asystenta konfiguracji...</value>
   </data>
-  <data name="SetupAssistantFirstStepText" xml:space="preserve">
+  <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>Aby przypiąć EverythingToolbar do paska zadań, kliknij prawym przyciskiem myszy na ikonę i wybierz 'Przypnij do paska zadań'.</value>
   </data>
-  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Przypnij do paska zadań</value>
+  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
+    <value>2. Przypnij do paska zadań</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>Aby zaktualizować ikonę paska zadań, wymagany jest restart Eksploratora Windows. Czy chcesz go teraz zrestartować?</value>
@@ -144,17 +144,17 @@
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>Uruchom ponownie Eksplorator Windows</value>
   </data>
-  <data name="SetupAssistantSecondStepText" xml:space="preserve">
+  <data name="SetupAssistantThirdStepText" xml:space="preserve">
     <value>Opcjonalnie, można ukryć oryginalną ikonę wyszukiwania Windows.</value>
   </data>
-  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Ukryj wyszukiwarkę Windows</value>
+  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
+    <value>3. Ukryj wyszukiwarkę Windows</value>
   </data>
-  <data name="SetupAssistantThirdStepText" xml:space="preserve">
+  <data name="SetupAssistantFourthStepText" xml:space="preserve">
     <value>Zaleca się automatyczne uruchamianie EverythingToolbar przy starcie systemu.</value>
   </data>
-  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Skonfiguruj automatyczne uruchamianie z systemem</value>
+  <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
+    <value>4. Skonfiguruj automatyczne uruchamianie z systemem</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Asystent konfiguracji EverythingToolbar</value>

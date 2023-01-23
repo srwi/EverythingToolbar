@@ -132,11 +132,11 @@
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>运行设置助手……</value>
   </data>
-  <data name="SetupAssistantFirstStepText" xml:space="preserve">
+  <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>要将 EverythingToolbar 固定到任务栏，右键单击它的图标并点击“固定到任务栏”。</value>
   </data>
-  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. 固定到任务栏</value>
+  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
+    <value>2. 固定到任务栏</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>需要重新启动资源管理器来更新任务栏图标。您想现在重新启动它吗？</value>
@@ -144,17 +144,17 @@
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>重启资源管理器</value>
   </data>
-  <data name="SetupAssistantSecondStepText" xml:space="preserve">
+  <data name="SetupAssistantThirdStepText" xml:space="preserve">
     <value>可选择将原来的 Windows 搜索图标隐藏。</value>
   </data>
-  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. 隐藏 Windows 搜索</value>
+  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
+    <value>3. 隐藏 Windows 搜索</value>
   </data>
-  <data name="SetupAssistantThirdStepText" xml:space="preserve">
+  <data name="SetupAssistantFourthStepText" xml:space="preserve">
     <value>推荐在系统启动时自动启动 EverythingToolbar。</value>
   </data>
-  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. 配置开机自启</value>
+  <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
+    <value>4. 配置开机自启</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar 设置助手</value>
