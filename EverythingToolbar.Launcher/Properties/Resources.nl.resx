@@ -133,10 +133,10 @@
     <value>Setup assistent uitvoeren...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
+    <value>Om EverythingToolbar aan de taakbalk vast te pinnen, klikt u met de rechtermuisknop op het pictogram en selecteert u 'Vastmaken aan taakbalk'.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Pin to taskbar</value>
+    <value>2. Vastmaken aan taakbalk</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
@@ -145,16 +145,16 @@
     <value>Restart explorer</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>Optioneel kan het originele Windows-zoekpictogram worden verborgen.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Hide Windows search</value>
+    <value>3. Verberg Windows zoeken</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
+    <value>Het wordt aanbevolen om EverythingToolbar automatisch te starten bij het opstarten van het systeem.</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. Configure autostart</value>
+    <value>4. Automatisch starten configureren</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar configuratie assistent</value>
