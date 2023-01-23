@@ -151,7 +151,7 @@
     <value>פתח את נתיב התיקיה</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
-    <value>Show more options</value>
+    <value>הצג אפשרויות נוספות</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
     <value>פתח באמצעות...</value>
@@ -334,7 +334,7 @@
     <value>כללים...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>Set instance name...</value>
+    <value>קבע שם מופע...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>הצג הגדרות מהירות</value>
@@ -349,7 +349,7 @@
     <value>ערכת נושא</value>
   </data>
   <data name="SettingsThemeAuto" xml:space="preserve">
-    <value>Sync theme</value>
+    <value>סנכרון רקע</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>הפעל תצוגה מקדימה</value>
