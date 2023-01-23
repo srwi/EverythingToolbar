@@ -285,8 +285,8 @@
   <data name="RulesWindowTitle" xml:space="preserve">
     <value>القواعد</value>
   </data>
-  <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>البحث باستخدام Everything</value>
+  <data name="TextBoxWatermark" xml:space="preserve">
+    <value>Search with Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
     <value>عنصر</value>
