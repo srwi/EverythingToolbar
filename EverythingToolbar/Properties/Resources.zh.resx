@@ -285,8 +285,8 @@
   <data name="RulesWindowTitle" xml:space="preserve">
     <value>規則</value>
   </data>
-  <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>使用Everything 搜索</value>
+  <data name="TextBoxWatermark" xml:space="preserve">
+    <value>Search with Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
     <value>目標</value>
