@@ -190,7 +190,7 @@
     <value>紧凑（详细）</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
-    <value>正常</value>
+    <value>普通</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
     <value>普通（详细）</value>
@@ -285,11 +285,11 @@
   <data name="RulesWindowTitle" xml:space="preserve">
     <value>规则</value>
   </data>
-  <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>用Everything 搜索</value>
+  <data name="TextBoxWatermark" xml:space="preserve">
+    <value>Search with Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
-    <value>对象</value>
+    <value>个对象</value>
   </data>
   <data name="SearchResults" xml:space="preserve">
     <value>个对象</value>
