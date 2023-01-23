@@ -285,8 +285,8 @@
   <data name="RulesWindowTitle" xml:space="preserve">
     <value>Szabályok</value>
   </data>
-  <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>Keresés az Everything-el</value>
+  <data name="TextBoxWatermark" xml:space="preserve">
+    <value>Search with Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
     <value>objektum</value>
