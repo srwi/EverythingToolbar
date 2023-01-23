@@ -121,7 +121,7 @@ namespace EverythingToolbar.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("NORMAL")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Normal")]
         public string itemTemplate {
             get {
                 return ((string)(this["itemTemplate"]));
@@ -140,18 +140,6 @@ namespace EverythingToolbar.Properties {
             }
             set {
                 this["isAutoApplyRules"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool isIconOnly {
-            get {
-                return ((bool)(this["isIconOnly"]));
-            }
-            set {
-                this["isIconOnly"] = value;
             }
         }
         
@@ -344,6 +332,18 @@ namespace EverythingToolbar.Properties {
             }
             set {
                 this["instanceName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string iconName {
+            get {
+                return ((string)(this["iconName"]));
+            }
+            set {
+                this["iconName"] = value;
             }
         }
     }

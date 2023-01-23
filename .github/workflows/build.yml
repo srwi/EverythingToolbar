@@ -9,7 +9,9 @@ jobs:
       - name: checkout
         uses: actions/checkout@v1
       - name: Disable assembly signing
-        run: ((Get-Content -path EverythingToolbar/EverythingToolbar.csproj -Raw) -replace '<SignAssembly>true</SignAssembly>','<SignAssembly>false</SignAssembly>') | Set-Content -Path EverythingToolbar/EverythingToolbar.csproj
+        run: |
+          ((Get-Content -path EverythingToolbar/EverythingToolbar.csproj -Raw) -replace '<SignAssembly>true</SignAssembly>','<SignAssembly>false</SignAssembly>') | Set-Content -Path EverythingToolbar/EverythingToolbar.csproj
+          ((Get-Content -path EverythingToolbar.Deskband/EverythingToolbar.Deskband.csproj -Raw) -replace '<SignAssembly>true</SignAssembly>','<SignAssembly>false</SignAssembly>') | Set-Content -Path EverythingToolbar.Deskband/EverythingToolbar.Deskband.csproj
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1.2
       - name: Install NuGet

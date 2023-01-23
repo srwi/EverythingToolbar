@@ -3,33 +3,54 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:properties="clr-namespace:EverythingToolbar.Launcher.Properties"
         WindowStartupLocation="CenterScreen"
-        Background="#202020" Foreground="White"
-        SizeToContent="Height" ResizeMode="NoResize"
+        Background="#202020"
+        Foreground="White"
+        SizeToContent="Height"
+        ResizeMode="NoResize"
         Title="{x:Static properties:Resources.SetupAssistantTitle}"
-        Closed="OnClosed" Width="575">
+        Closed="OnClosed"
+        Width="575">
 
     <Window.Resources>
-        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="#FF373737"/>
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Style x:Key="ButtonStyle"
+               TargetType="{x:Type Button}">
+            <Setter Property="Background"
+                    Value="#FF373737" />
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="FontSize"
+                    Value="15" />
+            <Setter Property="SnapsToDevicePixels"
+                    Value="True" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="ContentPresenterBorder" CornerRadius="4" Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="#3a3a3a">
+                        <Border x:Name="ContentPresenterBorder"
+                                CornerRadius="4"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="1"
+                                BorderBrush="#3a3a3a">
                             <Grid>
-                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                                <ContentPresenter Content="{TemplateBinding Content}"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  Margin="0,0,0,0" />
                             </Grid>
                         </Border>
 
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ContentPresenterBorder" Property="Background" Value="#3c3c3c" />
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="ContentPresenterBorder"
+                                        Property="Background"
+                                        Value="#3c3c3c" />
                             </Trigger>
 
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ContentPresenterBorder" Property="Background" Value="#2a2a2a" />
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+                                <Setter TargetName="ContentPresenterBorder"
+                                        Property="Background"
+                                        Value="#2a2a2a" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -40,32 +61,127 @@
     </Window.Resources>
 
     <StackPanel Margin="20, 10">
-        <StackPanel>
-            <TextBlock FontSize="14" Text="{x:Static properties:Resources.SetupAssistantFirstStepTitle}" FontWeight="Medium" Margin="0, 10" />
-            <Border BorderBrush="#1D1D1D" BorderThickness="1" Background="#2b2b2b" CornerRadius="4" Padding="15" Margin="0, 0, 0, 10">
+
+        <TextBlock FontSize="14"
+                   Text="{x:Static properties:Resources.SetupAssistantFirstStepTitle}"
+                   FontWeight="Medium"
+                   Margin="0, 10" />
+        <Border BorderBrush="#1D1D1D"
+                BorderThickness="1"
+                Background="#2b2b2b"
+                CornerRadius="4"
+                Padding="10"
+                Margin="0, 0, 0, 10">
+            <StackPanel>
+                <TextBlock Margin="0, 0, 0, 10"
+                           TextWrapping="Wrap"
+                           Text="{x:Static properties:Resources.SetupAssistantFirstStepText}" />
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                    <Image Source="Icons/Dark.ico"
+                           Width="40"
+                           Margin="10, 0" />
+                    <Image Source="Icons/Light.ico"
+                           Width="40"
+                           Margin="10, 0" />
+                    <Image Source="Icons/Medium.ico"
+                           Width="40"
+                           Margin="10, 0" />
+                </StackPanel>
+                <StackPanel Name="IconRadioButtons"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="0, 8, 0, 0">
+                    <RadioButton GroupName="Icon"
+                                 Margin="23, 0"
+                                 Tag="Icons/Dark.ico"
+                                 Checked="OnIconRadioButtonChecked" />
+                    <RadioButton GroupName="Icon"
+                                 Margin="23, 0"
+                                 Tag="Icons/Light.ico"
+                                 Checked="OnIconRadioButtonChecked" />
+                    <RadioButton GroupName="Icon"
+                                 Margin="23, 0"
+                                 Tag="Icons/Medium.ico"
+                                 Checked="OnIconRadioButtonChecked" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Name="SectionTwo">
+            <TextBlock FontSize="14"
+                       Text="{x:Static properties:Resources.SetupAssistantSecondStepTitle}"
+                       FontWeight="Medium"
+                       Margin="0, 10" />
+            <Border BorderBrush="#1D1D1D"
+                    BorderThickness="1"
+                    Background="#2b2b2b"
+                    CornerRadius="4"
+                    Padding="15"
+                    Margin="0, 0, 0, 10">
                 <StackPanel>
-                    <TextBlock Margin="0, 0, 0, 10" TextWrapping="Wrap" Text="{x:Static properties:Resources.SetupAssistantFirstStepText}" />
-                    <Image Source="Images/PinToTaskbar.png" Width="502" Height="217" />
+                    <TextBlock Margin="0, 0, 0, 10"
+                               TextWrapping="Wrap"
+                               Text="{x:Static properties:Resources.SetupAssistantSecondStepText}" />
+                    <Image Source="Images/PinToTaskbar.png"
+                           Width="502"
+                           Height="217" />
                 </StackPanel>
             </Border>
         </StackPanel>
 
-        <StackPanel x:Name="OptionalSettingsBlock">
-            <TextBlock FontSize="14" Text="{x:Static properties:Resources.SetupAssistantSecondStepTitle}" FontWeight="Medium" Margin="0, 10" />
-            <Border BorderBrush="#1D1D1D" BorderThickness="1" Background="#2b2b2b" CornerRadius="4" Padding="10" Margin="0, 0, 0, 10">
+        <StackPanel x:Name="SectionThree">
+            <TextBlock FontSize="14"
+                       Text="{x:Static properties:Resources.SetupAssistantThirdStepTitle}"
+                       FontWeight="Medium"
+                       Margin="0, 10" />
+            <Border BorderBrush="#1D1D1D"
+                    BorderThickness="1"
+                    Background="#2b2b2b"
+                    CornerRadius="4"
+                    Padding="10"
+                    Margin="0, 0, 0, 10">
                 <StackPanel>
-                    <TextBlock Margin="0, 0, 0, 10" TextWrapping="Wrap" Text="{x:Static properties:Resources.SetupAssistantSecondStepText}" />
-                    <CheckBox x:Name="HideWindowsSearchCheckBox" Content="{x:Static properties:Resources.CheckboxHide}" Foreground="White" Checked="HideWindowsSearchChanged" Unchecked="HideWindowsSearchChanged" />
+                    <TextBlock Margin="0, 0, 0, 10"
+                               TextWrapping="Wrap"
+                               Text="{x:Static properties:Resources.SetupAssistantThirdStepText}" />
+                    <CheckBox x:Name="HideWindowsSearchCheckBox"
+                              Content="{x:Static properties:Resources.CheckboxHide}"
+                              Foreground="White"
+                              Checked="HideWindowsSearchChanged"
+                              Unchecked="HideWindowsSearchChanged" />
                 </StackPanel>
             </Border>
-            <TextBlock FontSize="14" Text="{x:Static properties:Resources.SetupAssistantThirdStepTitle}" FontWeight="Medium" Margin="0, 10" />
-            <Border BorderBrush="#1D1D1D" BorderThickness="1" Background="#2b2b2b" CornerRadius="4" Padding="10" Margin="0, 0, 0, 10">
+            <TextBlock FontSize="14"
+                       Text="{x:Static properties:Resources.SetupAssistantFourthStepTitle}"
+                       FontWeight="Medium"
+                       Margin="0, 10" />
+            <Border BorderBrush="#1D1D1D"
+                    BorderThickness="1"
+                    Background="#2b2b2b"
+                    CornerRadius="4"
+                    Padding="10"
+                    Margin="0, 0, 0, 10">
                 <StackPanel>
-                    <TextBlock Margin="0, 0, 0, 10" TextWrapping="Wrap" Text="{x:Static properties:Resources.SetupAssistantThirdStepText}" />
-                    <CheckBox x:Name="AutostartCheckBox" Content="{x:Static properties:Resources.CheckboxEnable}" Foreground="White" Checked="AutostartChanged" Unchecked="AutostartChanged" />
+                    <TextBlock Margin="0, 0, 0, 10"
+                               TextWrapping="Wrap"
+                               Text="{x:Static properties:Resources.SetupAssistantFourthStepText}" />
+                    <CheckBox x:Name="AutostartCheckBox"
+                              Content="{x:Static properties:Resources.CheckboxEnable}"
+                              Foreground="White"
+                              Checked="AutostartChanged"
+                              Unchecked="AutostartChanged" />
                 </StackPanel>
             </Border>
-            <Button Style="{StaticResource ButtonStyle}" Margin="0, 10" Height="42" Width="88" Background="#FF373737" Foreground="White" BorderBrush="{x:Null}" Click="OnCloseClicked" Content="{x:Static properties:Resources.ButtonClose}" />
+            <Button Style="{StaticResource ButtonStyle}"
+                    Margin="0, 10"
+                    Height="42"
+                    Width="88"
+                    Background="#FF373737"
+                    Foreground="White"
+                    BorderBrush="{x:Null}"
+                    Click="OnCloseClicked"
+                    Content="{x:Static properties:Resources.ButtonClose}" />
         </StackPanel>
     </StackPanel>
 </Window>

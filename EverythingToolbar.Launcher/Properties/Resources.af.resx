@@ -132,11 +132,11 @@
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>Run setup assistant...</value>
   </data>
-  <data name="SetupAssistantFirstStepText" xml:space="preserve">
+  <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
   </data>
-  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Pin to taskbar</value>
+  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
+    <value>2. Pin to taskbar</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
@@ -144,17 +144,17 @@
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>Restart explorer</value>
   </data>
-  <data name="SetupAssistantSecondStepText" xml:space="preserve">
+  <data name="SetupAssistantThirdStepText" xml:space="preserve">
     <value>Optionally the original Windows search icon can be hidden.</value>
   </data>
-  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
+  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
     <value>2. Hide Windows search</value>
   </data>
-  <data name="SetupAssistantThirdStepText" xml:space="preserve">
+  <data name="SetupAssistantFourthStepText" xml:space="preserve">
     <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
   </data>
-  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Configure autostart</value>
+  <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
+    <value>4. Configure autostart</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar Setup Assistant</value>

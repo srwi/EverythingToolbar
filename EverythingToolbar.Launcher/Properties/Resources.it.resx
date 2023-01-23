@@ -132,11 +132,11 @@
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>Esegui assistente installazione...</value>
   </data>
-  <data name="SetupAssistantFirstStepText" xml:space="preserve">
+  <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>Per aggiungere EverythingToolbar alla barra delle applicazioni fare click destro sulla sua icona e selezioni 'Aggiungi alla barra delle applicazioni'.</value>
   </data>
-  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Aggiungi alla Barra delle applicazioni</value>
+  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
+    <value>2. Aggiungi alla Barra delle applicazioni</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>Per aggiornare la barra delle applicazioni è necessario riavviare Esplora Risorse. Riavviarlo ora?</value>
@@ -144,17 +144,17 @@
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>Riavvia esplora risorse</value>
   </data>
-  <data name="SetupAssistantSecondStepText" xml:space="preserve">
+  <data name="SetupAssistantThirdStepText" xml:space="preserve">
     <value>Opzionalmente l'icona originale della ricerca di Windows può esser nascosta.</value>
   </data>
-  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Nascondi ricerca di Windows</value>
+  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
+    <value>3. Nascondi ricerca di Windows</value>
   </data>
-  <data name="SetupAssistantThirdStepText" xml:space="preserve">
+  <data name="SetupAssistantFourthStepText" xml:space="preserve">
     <value>Si consiglia di avviare EverythingToolbar automaticamente all'avvio del sistema.</value>
   </data>
-  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Configura avvio automatico</value>
+  <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
+    <value>4. Configura avvio automatico</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Assistente Configurazione EverythingToolbar</value>

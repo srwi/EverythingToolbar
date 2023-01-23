@@ -13,9 +13,7 @@
 
         public override bool Equals(object obj)
         {
-            Filter item = obj as Filter;
-
-            if (item == null)
+            if (!(obj is Filter item))
             {
                 return false;
             }
@@ -25,7 +23,7 @@
 
         public override int GetHashCode()
         {
-            return this.Name.GetHashCode();
+            return Name.GetHashCode();
         }
     }
 }

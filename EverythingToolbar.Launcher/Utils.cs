@@ -1,8 +1,9 @@
-﻿using IWshRuntimeLibrary;
-using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
+using IWshRuntimeLibrary;
+using Microsoft.Win32;
+using File = System.IO.File;
 
 namespace EverythingToolbar.Launcher
 {
@@ -14,22 +15,11 @@ namespace EverythingToolbar.Launcher
             Light
         }
 
-        private static int buildNumber = -1;
-        public static bool IsWindows11
+        public static class WindowsVersion
         {
-            get
-            {
-                if (buildNumber == -1)
-                {
-                    using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows NT\CurrentVersion"))
-                    {
-                        object currentBuildNumber = key?.GetValue("CurrentBuildNumber");
-                        buildNumber = Convert.ToInt32(currentBuildNumber);
-                    }
-                }
-
-                return buildNumber >= 22000;
-            }
+            public static Version Windows10 = new Version(10, 0, 10240);
+            public static Version Windows10Anniversary = new Version(10, 0, 14393);
+            public static Version Windows11 = new Version(10, 0, 22000);
         }
 
         public static string GetTaskbarShortcutPath()
@@ -40,7 +30,7 @@ namespace EverythingToolbar.Launcher
 
         public static bool IsTaskbarCenterAligned()
         {
-            if (!IsWindows11)
+            if (Environment.OSVersion.Version < WindowsVersion.Windows11)
                 return false;
 
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"))
@@ -87,37 +77,17 @@ namespace EverythingToolbar.Launcher
             }
         }
 
-        public static WindowsTheme GetWindowsTheme()
-        {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"))
-            {
-                object systemUsesLightTheme = key?.GetValue("SystemUsesLightTheme");
-                bool isLightTheme = systemUsesLightTheme != null && (int)systemUsesLightTheme > 0;
-                return isLightTheme ? WindowsTheme.Light : WindowsTheme.Dark;
-            }
-        }
-
-        public static string GetIconPath(WindowsTheme theme)
-        {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", theme.ToString() + ".ico");
-        }
-
-        public static string GetThemedIconPath()
-        {
-            return GetIconPath(GetWindowsTheme());
-        }
-
-        public static void ChangeTaskbarPinIcon(WindowsTheme theme)
+        public static void ChangeTaskbarPinIcon(string iconName)
         {
             string taskbarShortcutPath = GetTaskbarShortcutPath();
 
-            if (System.IO.File.Exists(taskbarShortcutPath))
-                System.IO.File.Delete(taskbarShortcutPath);
+            if (File.Exists(taskbarShortcutPath))
+                File.Delete(taskbarShortcutPath);
 
             WshShell shell = new WshShell();
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(taskbarShortcutPath);
             shortcut.TargetPath = Process.GetCurrentProcess().MainModule.FileName;
-            shortcut.IconLocation = GetIconPath(theme);
+            shortcut.IconLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, iconName);
             shortcut.Save();
 
             foreach (Process process in Process.GetProcessesByName("explorer"))

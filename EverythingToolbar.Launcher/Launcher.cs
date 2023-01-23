@@ -1,26 +1,28 @@
-﻿using Microsoft.Win32;
 using System;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Interop;
+using System.Windows.Forms;
+using System.Windows.Input;
+using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
+using Microsoft.Xaml.Behaviors;
+using NHotkey;
+using Application = System.Windows.Application;
+using MessageBox = System.Windows.MessageBox;
+using Resources = EverythingToolbar.Launcher.Properties.Resources;
 
 namespace EverythingToolbar.Launcher
 {
-    class Launcher
+    internal static class Launcher
     {
-        public partial class LauncherWindow : Window
+        private const string EventName = "EverythingToolbarToggleEvent";
+        private const string MutexName = "EverythingToolbar.Launcher";
+
+        private class LauncherWindow : Window
         {
-            static IntPtr handle;
-
-            [DllImport("user32.dll")]
-            [return: MarshalAs(UnmanagedType.Bool)]
-            private static extern bool SetForegroundWindow(IntPtr hWnd);
-
             public LauncherWindow()
             {
                 ToolbarLogger.Initialize();
@@ -31,154 +33,77 @@ namespace EverythingToolbar.Launcher
                 Visibility = Visibility.Hidden;
                 ResizeMode = ResizeMode.NoResize;
                 WindowStyle = WindowStyle.None;
-                Content = new ToolbarControl();
-                Loaded += OnLoaded;
+
+                TaskbarStateManager.Instance.IsIcon = true;
+
+                var behavior = new SearchWindowPlacement();
+                Interaction.GetBehaviors(SearchWindow.Instance).Add(behavior);
 
                 StartToggleListener();
+
                 if (!File.Exists(Utils.GetTaskbarShortcutPath()))
                     new TaskbarPinGuide().Show();
 
-                EverythingSearch.Instance.PropertyChanged += OnEverythingSearchPropertyChanged;
-            }
-
-            private void OnEverythingSearchPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-            {
-                if (e.PropertyName == "SearchTerm" && EverythingSearch.Instance.SearchTerm != null)
+                if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
+                       (Key)Settings.Default.shortcutKey,
+                       (ModifierKeys)Settings.Default.shortcutModifiers,
+                       FocusSearchBox))
                 {
-                    SetForegroundWindow(handle);
+                    ShortcutManager.Instance.SetShortcut(Key.None, ModifierKeys.None);
+                    MessageBox.Show(EverythingToolbar.Properties.Resources.MessageBoxFailedToRegisterHotkey,
+                        EverythingToolbar.Properties.Resources.MessageBoxErrorTitle,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
                 }
             }
 
-            private void OnLoaded(object sender, RoutedEventArgs e)
+            private void FocusSearchBox(object sender, HotkeyEventArgs e)
             {
-                handle = ((HwndSource)PresentationSource.FromVisual(this)).Handle;
+                SearchWindow.Instance.Show();
             }
 
             private void StartToggleListener()
             {
                 Task.Factory.StartNew(() =>
                 {
-                    EventWaitHandle wh = new EventWaitHandle(false, EventResetMode.AutoReset, "EverythingToolbarToggleEvent");
+                    var wh = new EventWaitHandle(false, EventResetMode.AutoReset, EventName);
                     while (true)
                     {
                         wh.WaitOne();
-                        if (EverythingSearch.Instance.DelayedOpened)
-                        {
-                            EverythingSearch.Instance.SearchTerm = null;
-                        }
-                        else
-                        {
-                            Dispatcher?.Invoke(() =>
-                            {
-                                SetPosition();
-                            });
-                            SetForegroundWindow(handle);
-                            EverythingSearch.Instance.SearchTerm = "";
-                        }
+                        ToggleWindow();
                     }
                 });
             }
 
-            private double GetCurrentDpi()
+            private void ToggleWindow()
             {
-                PresentationSource source = PresentationSource.FromVisual(this);
-                double dpi = 96.0 * source.CompositionTarget.TransformToDevice.M11;
-                return dpi;
-            }
-
-            private void SetPosition()
-            {
-                System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.PrimaryScreen;
-                Rectangle taskbar = FindDockedTaskBar(screen);
-                double currentDpi = GetCurrentDpi();
-
-                if (screen.WorkingArea.Y == taskbar.Y)
+                Dispatcher?.Invoke(() =>
                 {
-                    Top = taskbar.Height * 96.0 / currentDpi;
-                    SearchResultsPopup.taskbarEdge = CSDeskBand.Edge.Top;
-                }
-                else
-                {
-                    Top = taskbar.Y * 96.0 / currentDpi;
-                    SearchResultsPopup.taskbarEdge = CSDeskBand.Edge.Bottom;
-                }
-
-                if (Utils.IsTaskbarCenterAligned())
-                {
-                    Left = (taskbar.Width * 96.0 / currentDpi - EverythingToolbar.Properties.Settings.Default.popupSize.Width) / 2;
-                }
-                else
-                {
-                    if (CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
-                    {
-                        Left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Width * 96.0 / currentDpi - 1;
-                    }
+                    if (SearchWindow.Instance.Visibility == Visibility.Visible)
+                        SearchWindow.Instance.Hide();
                     else
-                    {
-                        Left = 0;
-                    }
-                }
-            }
-
-            private Rectangle FindDockedTaskBar(System.Windows.Forms.Screen screen)
-            {
-                Rectangle rect = new Rectangle(0, 0, 0, 0);
-
-                if (!screen.Bounds.Equals(screen.WorkingArea))
-                {
-                    var leftDockedWidth = Math.Abs((Math.Abs(screen.Bounds.Left) - Math.Abs(screen.WorkingArea.Left)));
-                    var topDockedHeight = Math.Abs((Math.Abs(screen.Bounds.Top) - Math.Abs(screen.WorkingArea.Top)));
-                    var rightDockedWidth = ((screen.Bounds.Width - leftDockedWidth) - screen.WorkingArea.Width);
-                    var bottomDockedHeight = ((screen.Bounds.Height - topDockedHeight) - screen.WorkingArea.Height);
-
-                    if (leftDockedWidth > 0)
-                    {
-                        rect.X = screen.Bounds.Left;
-                        rect.Y = screen.Bounds.Top;
-                        rect.Width = leftDockedWidth;
-                        rect.Height = screen.Bounds.Height;
-                    }
-                    else if (rightDockedWidth > 0)
-                    {
-                        rect.X = screen.WorkingArea.Right;
-                        rect.Y = screen.Bounds.Top;
-                        rect.Width = rightDockedWidth;
-                        rect.Height = screen.Bounds.Height;
-                    }
-                    else if (topDockedHeight > 0)
-                    {
-                        rect.X = screen.WorkingArea.Left;
-                        rect.Y = screen.Bounds.Top;
-                        rect.Width = screen.WorkingArea.Width;
-                        rect.Height = topDockedHeight;
-                    }
-                    else if (bottomDockedHeight > 0)
-                    {
-                        rect.X = screen.WorkingArea.Left;
-                        rect.Y = screen.WorkingArea.Bottom;
-                        rect.Width = screen.WorkingArea.Width;
-                        rect.Height = bottomDockedHeight;
-                    }
-                }
-
-                return rect;
+                        SearchWindow.Instance.Show();
+                });
             }
         }
 
         [STAThread]
-        static void Main()
+        private static void Main()
         {
-            using (Mutex mutex = new Mutex(false, "EverythingToolbar.Launcher", out bool createdNew))
+            using (new Mutex(false, MutexName, out var createdNew))
             {
                 if (createdNew)
                 {
-                    using (System.Windows.Forms.NotifyIcon icon = new System.Windows.Forms.NotifyIcon())
+                    using (var icon = new NotifyIcon())
                     {
-                        Application app = new Application();
-                        icon.Icon = Icon.ExtractAssociatedIcon(Utils.GetThemedIconPath());
-                        icon.ContextMenu = new System.Windows.Forms.ContextMenu(new System.Windows.Forms.MenuItem[] {
-                            new System.Windows.Forms.MenuItem(Properties.Resources.ContextMenuRunSetupAssistant, (s, e) => { new TaskbarPinGuide().Show(); }),
-                            new System.Windows.Forms.MenuItem(Properties.Resources.ContextMenuQuit, (s, e) => { app.Shutdown(); })
+                        var app = new Application();
+                        if (string.IsNullOrEmpty(Settings.Default.iconName))
+                            icon.Icon = Icon.ExtractAssociatedIcon(@"Icons\Medium.ico");
+                        else
+                            icon.Icon = Icon.ExtractAssociatedIcon(Settings.Default.iconName);
+                        icon.ContextMenu = new ContextMenu(new [] {
+                            new MenuItem(Resources.ContextMenuRunSetupAssistant, (s, e) => { new TaskbarPinGuide().Show(); }),
+                            new MenuItem(Resources.ContextMenuQuit, (s, e) => { app.Shutdown(); })
                         });
                         icon.Visible = true;
                         app.Run(new LauncherWindow());
@@ -188,7 +113,7 @@ namespace EverythingToolbar.Launcher
                 {
                     try
                     {
-                        EventWaitHandle.OpenExisting("EverythingToolbarToggleEvent").Set();
+                        EventWaitHandle.OpenExisting(EventName).Set();
                     }
                     catch (Exception ex)
                     {

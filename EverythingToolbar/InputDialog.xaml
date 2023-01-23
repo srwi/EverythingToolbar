@@ -2,12 +2,13 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:h="clr-namespace:EverythingToolbar.Helpers"
+        xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         Height="80"
         Width="300">
+
     <i:Interaction.Behaviors>
-        <h:DpiScaling x:Name="dpiScaling" />
+        <b:DpiScaling />
     </i:Interaction.Behaviors>
 
     <Grid Margin="10">
@@ -16,6 +17,10 @@
             <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
         <TextBox Name="ResponseTextBox" />
-        <Button Margin="10, 0, 0, 0" Content="{x:Static properties:Resources.ShortcutOK}" Grid.Column="1" Click="OnOkClicked" />
+        <Button Margin="10, 0, 0, 0"
+                Content="{x:Static properties:Resources.ShortcutOK}"
+                Grid.Column="1"
+                Click="OnOkClicked" />
     </Grid>
+
 </Window>

@@ -132,11 +132,11 @@
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>Запустити установку...</value>
   </data>
-  <data name="SetupAssistantFirstStepText" xml:space="preserve">
+  <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>Щоб закріпити EverythingToolbar в панелі завдань, натисніть правою кнопкою миші по його значку, і виберіть "Закріпити на панелі завдань".</value>
   </data>
-  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Прикріпити до панелі завдань</value>
+  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
+    <value>2. Прикріпити до панелі завдань</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>Для оновлення значка панелі завдань потрібен перезапуск провідника. Хочете перезапустити зараз?</value>
@@ -144,17 +144,17 @@
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>Перезапустити провідник</value>
   </data>
-  <data name="SetupAssistantSecondStepText" xml:space="preserve">
+  <data name="SetupAssistantThirdStepText" xml:space="preserve">
     <value>За бажанням оригінальний значок пошуку Windows може бути прихований.</value>
   </data>
-  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Приховати пошук Windows</value>
+  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
+    <value>3. Приховати пошук Windows</value>
   </data>
-  <data name="SetupAssistantThirdStepText" xml:space="preserve">
+  <data name="SetupAssistantFourthStepText" xml:space="preserve">
     <value>Рекомендується автоматично запускати EverythingToolbar при запуску системи.</value>
   </data>
-  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Налаштуйте автозапуск</value>
+  <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
+    <value>4. Налаштуйте автозапуск</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Програма встановлення EverythingToolbar</value>

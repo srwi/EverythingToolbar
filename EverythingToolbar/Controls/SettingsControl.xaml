@@ -1,0 +1,186 @@
+﻿<Grid x:Class="EverythingToolbar.Controls.SettingsControl"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
+      xmlns:c="clr-namespace:EverythingToolbar.Converters"
+      xmlns:h="clr-namespace:EverythingToolbar.Helpers"
+      xmlns:local="clr-namespace:EverythingToolbar">
+
+    <Grid.ContextMenu>
+        <ContextMenu>
+            <i:Interaction.Behaviors>
+                <b:DpiScaling />
+            </i:Interaction.Behaviors>
+
+            <MenuItem IsCheckable="True"
+                      Header="{x:Static properties:Resources.SettingsRegularExpressions}"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}"
+                      IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, TargetNullValue=True, Mode=OneWay}" />
+            <MenuItem IsCheckable="True"
+                      Header="{x:Static properties:Resources.SettingsMatchCase}"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase, Mode=TwoWay}"
+                      IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, TargetNullValue=True, Mode=OneWay}" />
+            <MenuItem IsCheckable="True"
+                      Header="{x:Static properties:Resources.SettingsMatchPath}"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath, Mode=TwoWay}"
+                      IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, TargetNullValue=True, Mode=OneWay}" />
+            <MenuItem IsCheckable="True"
+                      Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}"
+                      Name="IsMatchWholeWordMenuItem" />
+            <Separator />
+            <MenuItem Header="{x:Static properties:Resources.SettingsSortBy}"
+                      Name="SortByMenu"
+                      Icon="&#xE8CB;">
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByNameAscending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByNameDescending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByPathAscending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByPathDescending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortBySizeAscending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortBySizeDescending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByExtensionAscending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByExtensionDescending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByTypeNameAscending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByTypeNameDescending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByDateCreatedAscending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByDateCreatedDescending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByDateModifiedAscending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByDateModifiedDescending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByAttributesAscending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByAttributesDescending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByFileListFilenameAscending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByFileListFilenameDescending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByRunCountAscending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByRunCountDescending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByDateRecentlyChangedAscending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByDateRecentlyChangedDescending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByDateAccessedAscending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByDateAccessedDescending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByDateRunAscending}"
+                          Click="OnSortByClicked" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SortByDateRunDescending}"
+                          Click="OnSortByClicked" />
+            </MenuItem>
+            <Separator />
+            <MenuItem Header="{x:Static properties:Resources.SettingsView}"
+                      Name="ItemTemplateMenu">
+                <MenuItem Header="{x:Static properties:Resources.ItemTemplateCompact}"
+                          Click="OnItemTemplateClicked"
+                          Tag="Compact" />
+                <MenuItem Header="{x:Static properties:Resources.ItemTemplateCompactDetailed}"
+                          Click="OnItemTemplateClicked"
+                          Tag="CompactDetailed" />
+                <MenuItem Header="{x:Static properties:Resources.ItemTemplateNormal}"
+                          Click="OnItemTemplateClicked"
+                          Tag="Normal" />
+                <MenuItem Header="{x:Static properties:Resources.ItemTemplateNormalDetailed}"
+                          Click="OnItemTemplateClicked"
+                          Tag="NormalDetailed" />
+            </MenuItem>
+            <Separator />
+            <MenuItem Header="{x:Static properties:Resources.SettingsPreferences}"
+                      Icon="&#xF8B0;">
+                <MenuItem Header="{x:Static properties:Resources.SettingsRules}"
+                          Click="OpenRulesWindow"
+                          Icon="&#xE7AC;" />
+                <MenuItem Header="{x:Static properties:Resources.SettingsChangeShortcut}"
+                          Click="OpenShortcutWindow"
+                          Icon="&#xE765;" />
+                <MenuItem Header="{x:Static properties:Resources.SettingsSetInstanceName}"
+                          Click="OpenInstanceNameDialog"
+                          Icon="&#xE74C;" />
+                <Separator />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SettingsUseEverythingFilters}"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isImportFilters, Mode=TwoWay}" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SettingsRememberFilter}"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRememberFilter, Mode=TwoWay}" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SettingsThumbnailsEnabled}"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isThumbnailsEnabled, Mode=TwoWay}" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SettingsHideEmptyResults}"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isHideEmptySearchResults, Mode=TwoWay}" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SettingsShowResultsCount}"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isShowResultsCount, Mode=TwoWay}" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SettingsShowQuickToggles}"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isShowQuickToggles, Mode=TwoWay}" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SettingsEnableHistory}"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isEnableHistory, Mode=TwoWay}" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SettingsReplaceStartMenuSearch}"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isReplaceStartMenuSearch, Mode=TwoWay}"
+                          Visibility="{Binding Source={x:Static h:Utils.IsWindows11}, Converter={c:BoolToVisibilityConverter}, ConverterParameter=true, Mode=OneWay}" />
+                <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SettingsDisableAnimations}"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isAnimationsDisabled, Mode=TwoWay}" />
+            </MenuItem>
+            <MenuItem Header="{x:Static properties:Resources.SettingsAbout}"
+                      Click="OpenAboutWindow"
+                      Icon="&#xE946;" />
+        </ContextMenu>
+    </Grid.ContextMenu>
+
+    <Button Content="⋯"
+            Click="OnClick"
+            FontSize="14pt"
+            Style="{DynamicResource TabBarButtonStyle}"
+            Padding="10, 0, 10, 4" />
+
+</Grid>
