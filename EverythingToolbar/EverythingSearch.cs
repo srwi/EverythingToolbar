@@ -167,7 +167,7 @@ namespace EverythingToolbar
         {
             _cancellationTokenSource?.Cancel();
 
-            if (SearchTerm == null || (SearchTerm == "" && Settings.Default.isHideEmptySearchResults))
+            if (SearchTerm.Length == 0 && Settings.Default.isHideEmptySearchResults)
             {
                 lock (_lock)
                 {
@@ -252,10 +252,10 @@ namespace EverythingToolbar
 
         public void Reset()
         {
-            SearchTerm = Settings.Default.isHideEmptySearchResults ? null : "";
-
             if (Settings.Default.isEnableHistory)
                 HistoryManager.Instance.AddToHistory(SearchTerm);
+            else
+                SearchTerm = "";
 
             if (!Settings.Default.isRememberFilter)
             {
