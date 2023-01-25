@@ -5,6 +5,9 @@
 		<Media Id="1" Cabinet="myapplication.cab" EmbedCab="yes" />
 		<MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." AllowSameVersionUpgrades="yes" />
 
+		<Icon Id="icon.ico" SourceFile="..\EverythingToolbar.Launcher\Icons\Medium.ico"/>
+		<Property Id="ARPPRODUCTICON" Value="icon.ico" />
+
 		<PropertyRef Id="NETFRAMEWORK45"/>
 		<Condition Message="This application requires at least .NET Framework 4.7. Please install the .NET Framework and run this installer again."><![CDATA[Installed OR (NETFRAMEWORK45 AND NETFRAMEWORK45 >= "#460798")]]></Condition>
 
@@ -39,13 +42,13 @@
 				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Value="mscoree.dll" Type="string" Action="write" />
 				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Name="ThreadingModel" Value="Both" Type="string" Action="write" />
 				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Name="Class" Value="CSDeskBand.Deskband" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Name="Assembly" Value="EverythingToolbar, Version=!(bind.fileVersion.EverythingToolbarDll), Culture=neutral, PublicKeyToken=3b7d0980372ca18d" Type="string" Action="write" />
+				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Name="Assembly" Value="EverythingToolbar.Deskband, Version=!(bind.fileVersion.EverythingToolbarDll), Culture=neutral, PublicKeyToken=3b7d0980372ca18d" Type="string" Action="write" />
 				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Name="CodeBase" Value="file:///[APPLICATIONFOLDER]EverythingToolbar.dll" Type="string" Action="write" />
+				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Name="CodeBase" Value="file:///[APPLICATIONFOLDER]EverythingToolbar.Deskband.dll" Type="string" Action="write" />
 				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32\!(bind.fileVersion.EverythingToolbarDll)" Name="Class" Value="CSDeskBand.Deskband" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32\!(bind.fileVersion.EverythingToolbarDll)" Name="Assembly" Value="EverythingToolbar, Version=!(bind.fileVersion.EverythingToolbarDll), Culture=neutral, PublicKeyToken=3b7d0980372ca18d" Type="string" Action="write" />
+				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32\!(bind.fileVersion.EverythingToolbarDll)" Name="Assembly" Value="EverythingToolbar.Deskband, Version=!(bind.fileVersion.EverythingToolbarDll), Culture=neutral, PublicKeyToken=3b7d0980372ca18d" Type="string" Action="write" />
 				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32\!(bind.fileVersion.EverythingToolbarDll)" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32\!(bind.fileVersion.EverythingToolbarDll)" Name="CodeBase" Value="file:///[APPLICATIONFOLDER]EverythingToolbar.dll" Type="string" Action="write" />
+				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32\!(bind.fileVersion.EverythingToolbarDll)" Name="CodeBase" Value="file:///[APPLICATIONFOLDER]EverythingToolbar.Deskband.dll" Type="string" Action="write" />
 				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\ProgId" Value="CSDeskBand.Deskband" Type="string" Action="write" />
 			</Component>
 			<Component Id="EverythingToolbarAssembly" Guid="139bb06d-c8dc-4044-a2b7-037eab866497" Win64="yes">

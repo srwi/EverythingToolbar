@@ -75,6 +75,10 @@
     <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EverythingToolbar.Deskband\EverythingToolbar.Deskband.csproj">
+      <Project>{c3f92b04-ffa3-40de-a64a-00019c5a8852}</Project>
+      <Name>EverythingToolbar.Deskband</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EverythingToolbar\EverythingToolbar.csproj">
       <Project>{c8bb766a-d7bc-47f5-a0e7-d3225dd1f469}</Project>
       <Name>EverythingToolbar</Name>
