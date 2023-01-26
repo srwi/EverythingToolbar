@@ -1018,10 +1018,10 @@ namespace CSDeskBand
         {
             ToolbarLogger.Initialize();
             _logger.Info($"EverythingToolbar Deskband {Assembly.GetExecutingAssembly().GetName().Version} started. OS: {Environment.OSVersion}");
-            //AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
-            //{
-            //	ToolbarLogger.Error(e.Exception, "Unhandled first chance exception");
-            //};
+            // AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
+            // {
+            // 	_logger.Error(e.Exception, "Unhandled first chance exception");
+            // };
 
             Options.Title = RegistrationHelper.GetToolbarName(GetType());
 

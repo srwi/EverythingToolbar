@@ -633,6 +633,12 @@
     <PackageReference Include="NHotkey.Wpf" Version="2.1.0" />
     <PackageReference Include="NLog" Version="5.1.1" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EverythingSDK\EverythingSDK.vcxproj">
+      <Project>{bf806ac1-5839-4daa-90f2-9d6f2b65c0fd}</Project>
+      <Name>EverythingSDK</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
