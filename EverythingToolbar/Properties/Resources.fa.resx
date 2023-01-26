@@ -223,31 +223,31 @@
     <value>باز کزدن نتیجه‌ی جستجو شکست خورد.</value>
   </data>
   <data name="MessageBoxFailedToOpenDialog" xml:space="preserve">
-    <value>Failed to open dialog.</value>
+    <value>باز کردن پنجره‌ی گفتگو شکست خورد.</value>
   </data>
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
-    <value>Failed to open path.</value>
+    <value>باز کردن مسیر شکست خورد.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Failed to register hotkey. It might be in use by another application.</value>
+    <value>ثبت کلید میانبر شکست خورد. ممکن است که یک نرم‌افزار دیگر به کار رفته باشد.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
-    <value>Failed to run command</value>
+    <value>اجرای دستور شکست خورد</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
-    <value>To utilize this sorting method it has to have fast sorting enabled. It can be enabled in your Everything settings.</value>
+    <value>برای استفاده از این روش مرتب‌سازی باید مرتب‌سازی سریع را فعال کنید. می‌توانید آن را در تنظیمات "Everything" فعال کرد.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
-    <value>Fast sorting not enabled</value>
+    <value>مرتب‌سازی سریع فعال نیست</value>
   </data>
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
-    <value>At least one regular expression is invalid.</value>
+    <value>حداقل یک عبارت منظم نامعتبر است.</value>
   </data>
   <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Rule names cannot be empty.</value>
+    <value>نام نمی‌تواند خالی باشد.</value>
   </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
-    <value>Please select Everything.exe...</value>
+    <value>لطفاً "Everything.exe" را انتخاب کنید...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
     <value>Please select the Filters.csv file. By default it can be found in %APPDATA%\Everything. Its location might be different depending on your installation. If the file does not exist for you that means you didn't perform any changes to Everything's default filters.</value>
