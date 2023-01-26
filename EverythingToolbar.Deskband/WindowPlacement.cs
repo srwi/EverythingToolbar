@@ -14,7 +14,7 @@ namespace EverythingToolbar.Behaviors
     internal class SearchWindowPlacement : Behavior<SearchWindow>
     {
         // Using a dependency property for binding is not required since the placement target will not change
-        public UIElement PlacementTarget;
+        public FrameworkElement PlacementTarget;
 
         private double DpiScalingFactor;
 
@@ -26,10 +26,11 @@ namespace EverythingToolbar.Behaviors
 
             AssociatedObject.Showing += OnShowing;
             AssociatedObject.Hiding += OnHiding;
-            AssociatedObject.Loaded += OnLoaded;
+
+            PlacementTarget.Loaded += OnPlacementTargetLoaded;
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        private void OnPlacementTargetLoaded(object sender, RoutedEventArgs e)
         {
             DpiScalingFactor = GetScalingFactor();
         }
@@ -92,7 +93,7 @@ namespace EverythingToolbar.Behaviors
 
         private double GetScalingFactor()
         {
-            IntPtr hwnd = ((HwndSource)PresentationSource.FromVisual(AssociatedObject)).Handle;
+            IntPtr hwnd = ((HwndSource)PresentationSource.FromVisual(PlacementTarget)).Handle;
             return 96.0 / GetDpiForWindow(hwnd);
         }
 
