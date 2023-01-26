@@ -58,9 +58,7 @@ namespace EverythingToolbar.Behaviors
 
             int margin = GetMargin();
             Rectangle workingArea = Screen.PrimaryScreen.WorkingArea;
-            Size windowSize = Settings.Default.popupSize;
-            windowSize.Width /= DpiScalingFactor;
-            windowSize.Height /= DpiScalingFactor;
+            Size windowSize = GetTargetWindowSize();
             Edge taskbarEdge = TaskbarStateManager.Instance.TaskbarEdge;
 
             RECT windowPosition = new RECT();
@@ -82,6 +80,14 @@ namespace EverythingToolbar.Behaviors
                     break;
             }
             return windowPosition;
+        }
+
+        private Size GetTargetWindowSize()
+        {
+            Size windowSize = Settings.Default.popupSize;
+            windowSize.Width = Math.Max(windowSize.Width, AssociatedObject.MinWidth) / DpiScalingFactor;
+            windowSize.Height = Math.Max(windowSize.Height, AssociatedObject.MinHeight) / DpiScalingFactor;
+            return windowSize;
         }
 
         private double GetScalingFactor()

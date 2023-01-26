@@ -46,9 +46,7 @@ namespace EverythingToolbar.Launcher
         {
             Screen screen = Screen.PrimaryScreen;
             TaskbarLocation taskbar = FindDockedTaskBar(screen);
-            Size windowSize = Settings.Default.popupSize;
-            windowSize.Width /= scalingFactor;
-            windowSize.Height /= scalingFactor;
+            Size windowSize = GetTargetWindowSize(scalingFactor);
             int margin = (int)(GetMargin() / scalingFactor);
 
             RECT windowPosition = new RECT();
@@ -83,6 +81,14 @@ namespace EverythingToolbar.Launcher
             TaskbarStateManager.Instance.TaskbarEdge = taskbar.Edge;
 
             return windowPosition;
+        }
+
+        private Size GetTargetWindowSize(double scalingFactor)
+        {
+            Size windowSize = Settings.Default.popupSize;
+            windowSize.Width = Math.Max(windowSize.Width, AssociatedObject.MinWidth) / scalingFactor;
+            windowSize.Height = Math.Max(windowSize.Height, AssociatedObject.MinHeight) / scalingFactor;
+            return windowSize;
         }
 
         private RECT SetHorizontalPosition(RECT windowPosition, Rectangle screenWorkingArea, Size windowSize, int margin)
