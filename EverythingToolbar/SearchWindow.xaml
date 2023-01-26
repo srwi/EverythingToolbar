@@ -41,6 +41,7 @@
         </Border.Effect>
         <Border x:Name="PopupBorder"
                 BorderThickness="1"
+                BorderBrush="{DynamicResource SearchResultsViewBorder}"
                 Background="{DynamicResource SearchResultsViewHeader}">
 
             <Grid Name="ContentGrid">

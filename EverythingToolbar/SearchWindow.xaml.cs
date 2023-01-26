@@ -140,6 +140,7 @@ namespace EverythingToolbar
             Thickness contentGridOffset;
             if (taskbarEdge == Edge.Top)
             {
+                Top -= DropShadowBlurRadius;
                 Left -= DropShadowBlurRadius;
                 contentGridOffset = new Thickness(0, -50, 0, 50);
                 PopupMarginBorder.Margin = new Thickness(DropShadowBlurRadius, 0, DropShadowBlurRadius, DropShadowBlurRadius);
@@ -147,17 +148,20 @@ namespace EverythingToolbar
             else if (taskbarEdge == Edge.Right)
             {
                 Top -= DropShadowBlurRadius;
+                Left += DropShadowBlurRadius;
                 contentGridOffset = new Thickness(50, 0, -50, 0);
                 PopupMarginBorder.Margin = new Thickness(DropShadowBlurRadius, DropShadowBlurRadius, 0, DropShadowBlurRadius);
             }
             else if (taskbarEdge == Edge.Left)
             {
                 Top -= DropShadowBlurRadius;
+                Left -= DropShadowBlurRadius;
                 contentGridOffset = new Thickness(-50, 0, 50, 0);
                 PopupMarginBorder.Margin = new Thickness(0, DropShadowBlurRadius, DropShadowBlurRadius, DropShadowBlurRadius);
             }
             else
             {
+                Top += DropShadowBlurRadius;
                 Left -= DropShadowBlurRadius;
                 contentGridOffset = new Thickness(0, 50, 0, -50);
                 PopupMarginBorder.Margin = new Thickness(DropShadowBlurRadius, DropShadowBlurRadius, DropShadowBlurRadius, 0);
@@ -236,8 +240,8 @@ namespace EverythingToolbar
                     break;
             }
             DoubleAnimation animation = new DoubleAnimation(target, TimeSpan.Zero);
+            animation.Completed += OnHidden;
             BeginAnimation(property, animation);
-            base.Hide();
         }
 
         private void AnimateHideWin11(Edge taskbarEdge)
