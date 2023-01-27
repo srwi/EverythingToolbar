@@ -44,11 +44,17 @@ namespace EverythingToolbar.Data
         {
             try
             {
-                Process.Start(new ProcessStartInfo(FullPathAndFileName)
+                if (IsFile)
                 {
-                    UseShellExecute = true,
-                    WorkingDirectory = IsFile ? Path : FullPathAndFileName
-                });
+                    Process.Start(new ProcessStartInfo(FullPathAndFileName)
+                    {
+                        WorkingDirectory = Path
+                    });
+                }
+                else
+                {
+                    ShellUtils.OpenFolderWithDefaultApp(FullPathAndFileName);
+                }
                 EverythingSearch.Instance.IncrementRunCount(FullPathAndFileName);
             }
             catch (Exception e)
@@ -80,7 +86,7 @@ namespace EverythingToolbar.Data
         {
             try
             {
-                ShellUtils.OpenPathWithDefaultApp(FullPathAndFileName);
+                ShellUtils.OpenParentFolderWithDefaultApp(FullPathAndFileName);
                 EverythingSearch.Instance.IncrementRunCount(FullPathAndFileName);
             }
             catch (Exception e)

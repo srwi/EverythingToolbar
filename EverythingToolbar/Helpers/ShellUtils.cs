@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace EverythingToolbar.Helpers
 {
@@ -118,18 +119,32 @@ namespace EverythingToolbar.Helpers
             Process.Start("rundll32.exe", args);
         }
 
-        public static void OpenPathWithDefaultApp(string path)
+        public static void OpenFolderWithDefaultApp(string folder)
+        {
+            if (TryOpenDirectoryWithDefaultApp(folder))
+                return;
+
+            CreateProcessFromCommandLine($"explorer.exe \"{folder}\"");
+        }
+
+        public static void OpenParentFolderWithDefaultApp(string path)
+        {
+            if (TryOpenDirectoryWithDefaultApp(Path.GetDirectoryName(path)))
+                return;
+            
+            CreateProcessFromCommandLine($"explorer.exe /select,\"{path}\"");
+        }
+
+        private static bool TryOpenDirectoryWithDefaultApp(string directory)
         {
             var shell = (string)Registry.ClassesRoot.OpenSubKey(@"Directory\shell")?.GetValue("");
             var command = Registry.ClassesRoot.OpenSubKey(@"Directory\shell\" + shell + @"\command")?.GetValue("");
-            if (command != null)
-            {
-                string parent = Path.GetDirectoryName(path);
-                CreateProcessFromCommandLine(command.ToString().Replace("%1", parent));
-                return;
-            }
 
-            CreateProcessFromCommandLine("explorer.exe /select,\"" + path + "\"");
+            if (command == null)
+                return false;
+
+            CreateProcessFromCommandLine(command.ToString().Replace("%1", directory));
+            return true;
         }
     }
 }
