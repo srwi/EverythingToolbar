@@ -165,8 +165,7 @@
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isEnableHistory, Mode=TwoWay}" />
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SettingsReplaceStartMenuSearch}"
-                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isReplaceStartMenuSearch, Mode=TwoWay}"
-                          Visibility="{Binding Source={x:Static h:Utils.IsWindows11}, Converter={c:BoolToVisibilityConverter}, ConverterParameter=true, Mode=OneWay}" />
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isReplaceStartMenuSearch, Mode=TwoWay}" />
                 <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SettingsDisableAnimations}"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isAnimationsDisabled, Mode=TwoWay}" />

@@ -63,11 +63,13 @@ namespace EverythingToolbar.Controls
         {
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Up)
             {
-                EverythingSearch.Instance.SearchTerm = HistoryManager.Instance.GetPreviousItem();
+                EventDispatcher.Instance.InvokeSearchTermReplaced(this, HistoryManager.Instance.GetPreviousItem());
+                e.Handled = true;
             }
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Down)
             {
-                EverythingSearch.Instance.SearchTerm = HistoryManager.Instance.GetNextItem();
+                EventDispatcher.Instance.InvokeSearchTermReplaced(this, HistoryManager.Instance.GetNextItem());
+                e.Handled = true;
             }
             else if (e.Key == Key.Up)
             {

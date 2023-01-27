@@ -56,6 +56,10 @@ namespace EverythingToolbar.Launcher
                         MessageBoxButton.OK,
                         MessageBoxImage.Error);
                 }
+
+                ShortcutManager.Instance.SetFocusCallback(FocusSearchBox);
+                if (Settings.Default.isReplaceStartMenuSearch)
+                    ShortcutManager.Instance.HookStartMenu();
             }
 
             private void FocusSearchBox(object sender, HotkeyEventArgs e)

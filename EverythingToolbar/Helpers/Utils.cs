@@ -14,9 +14,6 @@ namespace EverythingToolbar.Helpers
             public static Version Windows11 = new Version(10, 0, 22000);
         }
 
-        // Property can be removed once start menu replacement is implemented in Windows 11
-        public static bool IsWindows11 => Environment.OSVersion.Version >= WindowsVersion.Windows11;
-
         public static string GetHumanReadableFileSize(string path)
         {
             long length;

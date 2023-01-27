@@ -62,6 +62,7 @@ namespace CSDeskBand
 
         protected override void DeskbandOnClosed()
         {
+            ShortcutManager.Instance.UnhookStartMenu();
             base.DeskbandOnClosed();
             ToolbarControl.Content = null;
             ToolbarControl = null;

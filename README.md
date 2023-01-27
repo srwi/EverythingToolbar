@@ -40,6 +40,7 @@ EverythingToolbar is compatible with both Windows 10 and Windows 11 and works we
 ### Other features:
 
 - Open EverythingToolbar at any time via a customizable shortcut
+- Redirect Start menu search to EverythingToolbar (experimental)
 - Drag and drop files to where you need them most
 - Quickly preview files thanks to [QuickLook](https://github.com/QL-Win/QuickLook) integration
 - Use custom Everything [instance names](https://www.voidtools.com/support/everything/multiple_instances/#named_instances)

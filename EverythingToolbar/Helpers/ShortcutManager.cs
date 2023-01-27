@@ -164,7 +164,8 @@ namespace EverythingToolbar.Helpers
             CloseHandle(hProcess);
 
             if (text.ToString().EndsWith("SearchApp.exe") ||
-                text.ToString().EndsWith("SearchUI.exe")) // Win11: SearchHost.exe
+                text.ToString().EndsWith("SearchUI.exe") ||
+                text.ToString().EndsWith("SearchHost.exe"))
             {
                 searchAppHwnd = hWnd;
                 searchTermQueue = "";
@@ -176,7 +177,8 @@ namespace EverythingToolbar.Helpers
                 {
                     searchAppHwnd = IntPtr.Zero;
                     focusToolbarCallback?.Invoke(null, null);
-                    EverythingSearch.Instance.SearchTerm = searchTermQueue;
+                    SearchWindow.Instance.Show();
+                    EventDispatcher.Instance.InvokeSearchTermReplaced(this, searchTermQueue);
                     searchTermQueue = "";
                 }
                 isException = false;

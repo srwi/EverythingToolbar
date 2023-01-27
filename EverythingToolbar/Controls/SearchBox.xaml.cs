@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Controls
@@ -25,6 +26,14 @@ namespace EverythingToolbar.Controls
 
             // Forward TextBox.TextChanged to SearchBox.TextChanged
             TextBox.TextChanged += (s, e) => TextChanged?.Invoke(s, e);
+
+            EventDispatcher.Instance.SearchTermReplaced += OnSearchTermReplaced;
+        }
+
+        private void OnSearchTermReplaced(object sender, string newSearchTerm)
+        {
+            TextBox.Text = newSearchTerm;
+            TextBox.CaretIndex = TextBox.Text.Length;
         }
 
         private void OnSettingsChanged(object sender, PropertyChangedEventArgs e)
