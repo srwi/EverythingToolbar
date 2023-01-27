@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace EverythingToolbar.Helpers
 {
@@ -138,9 +137,11 @@ namespace EverythingToolbar.Helpers
         private static bool TryOpenDirectoryWithDefaultApp(string directory)
         {
             var shell = (string)Registry.ClassesRoot.OpenSubKey(@"Directory\shell")?.GetValue("");
-            var command = Registry.ClassesRoot.OpenSubKey(@"Directory\shell\" + shell + @"\command")?.GetValue("");
 
+            var command = Registry.ClassesRoot.OpenSubKey(@"Directory\shell\" + shell + @"\command")?.GetValue("");
             if (command == null)
+                command = Registry.ClassesRoot.OpenSubKey(@"Folder\shell\open\command")?.GetValue("");
+            if (((string)command).ToLower().Contains(@"\explorer.exe"))
                 return false;
 
             CreateProcessFromCommandLine(command.ToString().Replace("%1", directory));
