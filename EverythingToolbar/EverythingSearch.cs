@@ -257,7 +257,7 @@ namespace EverythingToolbar
             else
                 SearchTerm = "";
 
-            if (!Settings.Default.isRememberFilter)
+            if (!Settings.Default.isRememberFilter && CurrentFilter != FilterLoader.Instance.DefaultFilters[0])
             {
                 CurrentFilter = FilterLoader.Instance.DefaultFilters[0];
                 return;

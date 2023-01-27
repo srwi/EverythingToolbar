@@ -24,16 +24,15 @@
                  Name="KeyboardFocusCapture" />
 
         <controls:SearchBox x:Name="SearchBox"
-                         TextChanged="OnTextBoxTextChanged"
-                         Visibility="{Binding Path=ActualWidth,
-                                              RelativeSource={RelativeSource Self},
-                                              Converter={c:DoubleToVisibilityConverter},
-                                              ConverterParameter=70}" />
+                            Visibility="{Binding Path=ActualWidth,
+                                                 RelativeSource={RelativeSource Self},
+                                                 Converter={c:DoubleToVisibilityConverter},
+                                                 ConverterParameter=70}" />
 
         <controls:SearchButton Visibility="{Binding Path=ActualWidth,
-                                                 RelativeSource={RelativeSource Self},  
-                                                 Converter={c:DoubleToVisibilityConverter},
-                                                 ConverterParameter=-70}" />
+                                                    RelativeSource={RelativeSource Self},  
+                                                    Converter={c:DoubleToVisibilityConverter},
+                                                    ConverterParameter=-70}" />
     </Grid>
     
 </UserControl>

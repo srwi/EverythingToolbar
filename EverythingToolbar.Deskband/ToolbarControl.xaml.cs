@@ -23,6 +23,8 @@ namespace EverythingToolbar
             };
             Interaction.GetBehaviors(SearchWindow.Instance).Add(behavior);
 
+            SearchBox.GotKeyboardFocus += OnSearchBoxGotKeyboardFocus;
+
             // Focus an invisible text box to prevent Windows from randomly focusing the search box
             // and causing visual distraction
             SearchBox.LostKeyboardFocus += OnSearchBoxLostKeyboardFocus;
@@ -45,12 +47,6 @@ namespace EverythingToolbar
                 ShortcutManager.Instance.HookStartMenu();
         }
 
-        private void OnTextBoxTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty((sender as TextBox).Text))
-                SearchWindow.Instance.Show();
-        }
-
         private void OnSearchWindowHiding(object sender, EventArgs e)
         {
             FocusKeyboardFocusCapture(sender, e);
@@ -66,6 +62,11 @@ namespace EverythingToolbar
             }
         }
 
+        private void OnSearchBoxGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            SearchWindow.Instance.Show();
+        }
+
         private void FocusKeyboardFocusCapture(object sender, EventArgs e)
         {
             Keyboard.Focus(KeyboardFocusCapture);
@@ -79,7 +80,6 @@ namespace EverythingToolbar
             }
             else
             {
-                SearchWindow.Instance.Show();
                 NativeMethods.SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
                 SearchBox.Focus();
             }

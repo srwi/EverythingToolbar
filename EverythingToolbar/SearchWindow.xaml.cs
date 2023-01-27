@@ -134,92 +134,174 @@ namespace EverythingToolbar
 
         private void AnimateShowWin10(double left, double top, double width, double height, Edge taskbarEdge)
         {
-            Height = Settings.Default.popupSize.Height;
-            Width = Settings.Default.popupSize.Width;
             DropShadowEffect.BlurRadius = DropShadowBlurRadius;
-            Thickness contentGridOffset;
             if (taskbarEdge == Edge.Top)
             {
                 Top -= DropShadowBlurRadius;
                 Left -= DropShadowBlurRadius;
-                contentGridOffset = new Thickness(0, -50, 0, 50);
                 PopupMarginBorder.Margin = new Thickness(DropShadowBlurRadius, 0, DropShadowBlurRadius, DropShadowBlurRadius);
             }
             else if (taskbarEdge == Edge.Right)
             {
                 Top -= DropShadowBlurRadius;
                 Left += DropShadowBlurRadius;
-                contentGridOffset = new Thickness(50, 0, -50, 0);
                 PopupMarginBorder.Margin = new Thickness(DropShadowBlurRadius, DropShadowBlurRadius, 0, DropShadowBlurRadius);
             }
             else if (taskbarEdge == Edge.Left)
             {
                 Top -= DropShadowBlurRadius;
                 Left -= DropShadowBlurRadius;
-                contentGridOffset = new Thickness(-50, 0, 50, 0);
                 PopupMarginBorder.Margin = new Thickness(0, DropShadowBlurRadius, DropShadowBlurRadius, DropShadowBlurRadius);
             }
             else
             {
                 Top += DropShadowBlurRadius;
                 Left -= DropShadowBlurRadius;
-                contentGridOffset = new Thickness(0, 50, 0, -50);
                 PopupMarginBorder.Margin = new Thickness(DropShadowBlurRadius, DropShadowBlurRadius, DropShadowBlurRadius, 0);
             }
 
-            int sign = taskbarEdge == Edge.Right || taskbarEdge == Edge.Bottom ? 1 : -1;
-            double target = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? left : top;
-            Duration duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.4);
-            DoubleAnimation positionAnimation = new DoubleAnimation(target + 150 * sign, target, duration)
+            DependencyProperty property = null;
+            double from = 0;
+            double to = 0;
+            switch (taskbarEdge)
             {
+                case Edge.Left:
+                    from = left - 150;
+                    to = left;
+                    property = LeftProperty;
+                    break;
+                case Edge.Right:
+                    from = left + 150;
+                    to = left;
+                    property = LeftProperty;
+                    break;
+                case Edge.Top:
+                    from = top - 150;
+                    to = top;
+                    property = TopProperty;
+                    break;
+                case Edge.Bottom:
+                    from = top + 150;
+                    to = top;
+                    property = TopProperty;
+                    break;
+            }
+            BeginAnimation(property, new DoubleAnimation()
+            {
+                From = from,
+                To = to,
+                Duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.4),
                 EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut }
-            };
-            DependencyProperty positionProperty = taskbarEdge == Edge.Bottom || taskbarEdge == Edge.Top ? TopProperty : LeftProperty;
-            BeginAnimation(positionProperty, positionAnimation);
+            });
 
-            duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.8);
-            ThicknessAnimation inner = new ThicknessAnimation(new Thickness(0), duration)
+            BeginAnimation(OpacityProperty, new DoubleAnimation()
             {
+                From = 0,
+                To = 1,
+                Duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.4),
+                EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut }
+            });
+
+            var fromThickness = new Thickness(0);
+            switch (taskbarEdge)
+            {
+                case Edge.Left:
+                    fromThickness = new Thickness(-50, 0, 50, 0);
+                    break;
+                case Edge.Right:
+                    fromThickness = new Thickness(50, 0, -50, 0);
+                    break;
+                case Edge.Top:
+                    fromThickness = new Thickness(0, -50, 0, 50);
+                    break;
+                case Edge.Bottom:
+                    fromThickness = new Thickness(0, 50, 0, -50);
+                    break;
+            }
+            ContentGrid.BeginAnimation(MarginProperty, new ThicknessAnimation()
+            {
+                From = fromThickness,
+                To = new Thickness(0),
+                Duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.8),
                 EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut },
-                From = contentGridOffset
-            };
-            ContentGrid.BeginAnimation(MarginProperty, inner);
+            });
         }
 
         private void AnimateShowWin11(double left, double top, double width, double height, Edge taskbarEdge)
         {
-            int sign = taskbarEdge == Edge.Right || taskbarEdge == Edge.Bottom ? 1 : -1;
-            double offset = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? width : height;
-            double target = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? left : top;
-            Duration duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.2);
-            DoubleAnimation positionAnimation = new DoubleAnimation(target + offset * sign, target, duration)
+            DependencyProperty property = null;
+            double from = 0;
+            double to = 0;
+            switch (taskbarEdge)
             {
+                case Edge.Left:
+                    from = left - width;
+                    to = left;
+                    property = LeftProperty;
+                    break;
+                case Edge.Right:
+                    from = left + width;
+                    to = left;
+                    property = LeftProperty;
+                    break;
+                case Edge.Top:
+                    from = top - height;
+                    to = top;
+                    property = TopProperty;
+                    break;
+                case Edge.Bottom:
+                    from = top + height;
+                    to = top;
+                    property = TopProperty;
+                    break;
+            }
+            BeginAnimation(property, new DoubleAnimation()
+            {
+                From = from,
+                To = to,
+                Duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.2),
                 EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
-            };
-            DependencyProperty positionProperty = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? LeftProperty : TopProperty;
-            BeginAnimation(positionProperty, positionAnimation);
+            });
 
-            duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.4);
-            ThicknessAnimation contentAnimation = new ThicknessAnimation(new Thickness(0), duration)
+            var fromThickness = new Thickness(0);
+            switch (taskbarEdge)
             {
+                case Edge.Top:
+                    fromThickness = new Thickness(0, -50, 0, 50);
+                    break;
+                case Edge.Right:
+                    fromThickness = new Thickness(50, 0, -50, 0);
+                    break;
+                case Edge.Bottom:
+                    fromThickness = new Thickness(0, 50, 0, -50);
+                    break;
+                case Edge.Left:
+                    fromThickness = new Thickness(-50, 0, 50, 0);
+                    break;
+            }
+            ContentGrid.BeginAnimation(MarginProperty, new ThicknessAnimation()
+            {
+                From = fromThickness,
+                To = new Thickness(0),
+                Duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.4),
                 EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut }
-            };
-            if (taskbarEdge == Edge.Top)
-                contentAnimation.From = new Thickness(0, -50, 0, 50);
-            else if (taskbarEdge == Edge.Right)
-                contentAnimation.From = new Thickness(50, 0, -50, 0);
-            else if (taskbarEdge == Edge.Bottom)
-                contentAnimation.From = new Thickness(0, 50, 0, -50);
-            else if (taskbarEdge == Edge.Left)
-                contentAnimation.From = new Thickness(-50, 0, 50, 0);
-            ContentGrid.BeginAnimation(MarginProperty, contentAnimation);
+            });
         }
 
         private void AnimateHideWin10(Edge taskbarEdge)
         {
-            // Move the window back so the next opening animation will not jump
+            Topmost = true;
+            Topmost = false;
+
+            BeginAnimation(OpacityProperty, new DoubleAnimation()
+            {
+                From = 1,
+                To = 0,
+                Duration = TimeSpan.FromMilliseconds(30),
+            });
+
             double target = 0;
-            DependencyProperty property = TopProperty;
+            DependencyProperty property = null;
             switch(taskbarEdge)
             {
                 case Edge.Left:
@@ -239,7 +321,11 @@ namespace EverythingToolbar
                     property = TopProperty;
                     break;
             }
-            DoubleAnimation animation = new DoubleAnimation(target, TimeSpan.Zero);
+            DoubleAnimation animation = new DoubleAnimation()
+            {
+                To = target,
+                Duration = TimeSpan.FromMilliseconds(30),
+            };
             animation.Completed += OnHidden;
             BeginAnimation(property, animation);
         }
@@ -249,32 +335,64 @@ namespace EverythingToolbar
             Topmost = true;
             Topmost = false;
 
-            int sign = taskbarEdge == Edge.Right || taskbarEdge == Edge.Bottom ? 1 : -1;
-            double offset = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? Width : Height;
-            double target = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? RestoreBounds.Left : RestoreBounds.Top;
-            Duration duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.2);
-            DoubleAnimation positionAnimation = new DoubleAnimation(target, target + offset * sign, duration)
+            DependencyProperty property = null;
+            double from = 0;
+            double to = 0;
+            switch (taskbarEdge)
             {
-                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseIn }
+                case Edge.Left:
+                    from = RestoreBounds.Left;
+                    to = RestoreBounds.Left - Width;
+                    property = LeftProperty;
+                    break;
+                case Edge.Right:
+                    from = RestoreBounds.Left;
+                    to = RestoreBounds.Left + Width;
+                    property = LeftProperty;
+                    break;
+                case Edge.Top:
+                    from = RestoreBounds.Top;
+                    to = RestoreBounds.Top - Height;
+                    property = TopProperty;
+                    break;
+                case Edge.Bottom:
+                    from = RestoreBounds.Top;
+                    to = RestoreBounds.Top + Height;
+                    property = TopProperty;
+                    break;
+            }
+            DoubleAnimation animation = new DoubleAnimation()
+            {
+                From = from,
+                To = to,
+                Duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.2),
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseIn },
             };
-            DependencyProperty positionProperty = taskbarEdge == Edge.Right || taskbarEdge == Edge.Left ? LeftProperty : TopProperty;
-            positionAnimation.Completed += OnHidden;
-            BeginAnimation(positionProperty, positionAnimation);
+            animation.Completed += OnHidden;
+            BeginAnimation(property, animation);
 
-            duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.5);
-            ThicknessAnimation contentAnimation = new ThicknessAnimation(new Thickness(0), duration)
+            var toThickness = new Thickness(0);
+            switch (taskbarEdge)
             {
+                case Edge.Top:
+                    toThickness = new Thickness(0, -50, 0, 50);
+                    break;
+                case Edge.Right:
+                    toThickness = new Thickness(50, 0, -50, 0);
+                    break;
+                case Edge.Bottom:
+                    toThickness = new Thickness(0, 50, 0, -50);
+                    break;
+                case Edge.Left:
+                    toThickness = new Thickness(-50, 0, 50, 0);
+                    break;
+            }
+            ContentGrid.BeginAnimation(MarginProperty, new ThicknessAnimation()
+            {
+                To = toThickness,
+                Duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.5),
                 EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseIn }
-            };
-            if (taskbarEdge == Edge.Top)
-                contentAnimation.To = new Thickness(0, -50, 0, 50);
-            else if (taskbarEdge == Edge.Right)
-                contentAnimation.To = new Thickness(50, 0, -50, 0);
-            else if (taskbarEdge == Edge.Bottom)
-                contentAnimation.To = new Thickness(0, 50, 0, -50);
-            else if (taskbarEdge == Edge.Left)
-                contentAnimation.To = new Thickness(-50, 0, 50, 0);
-            ContentGrid.BeginAnimation(MarginProperty, contentAnimation);
+            });
         }
 
         public void AnimateHide(Edge taskbarEdge)
