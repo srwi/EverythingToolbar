@@ -334,7 +334,7 @@
     <value>Règles...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>Set instance name...</value>
+    <value>Définir le nom de l'instance...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>Afficher les options rapides</value>
