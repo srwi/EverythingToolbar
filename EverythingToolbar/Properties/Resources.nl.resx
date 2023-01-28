@@ -334,7 +334,7 @@
     <value>Regels...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>Set instance name...</value>
+    <value>Naam van instantie instellen...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>Snel schakelen weergeven</value>
@@ -358,7 +358,7 @@
     <value>Gebruik Everything filters</value>
   </data>
   <data name="SettingsView" xml:space="preserve">
-    <value>Bekijk</value>
+    <value>Uiterlijk</value>
   </data>
   <data name="ShortcutOK" xml:space="preserve">
     <value>Ok</value>
