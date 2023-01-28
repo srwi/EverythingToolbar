@@ -349,7 +349,7 @@
     <value>Thema</value>
   </data>
   <data name="SettingsThemeAuto" xml:space="preserve">
-    <value>Sync theme</value>
+    <value>Thema synchroniseren</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>Miniaturen inschakelen</value>
