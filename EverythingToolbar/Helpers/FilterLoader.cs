@@ -12,7 +12,7 @@ using NLog;
 
 namespace EverythingToolbar.Helpers
 {
-    class FilterLoader : INotifyPropertyChanged
+    internal class FilterLoader : INotifyPropertyChanged
     {
         private readonly ObservableCollection<Filter> _defaultFilters = new ObservableCollection<Filter>
         {
@@ -52,13 +52,9 @@ namespace EverythingToolbar.Helpers
             get
             {
                 if (Settings.Default.isRegExEnabled)
-                {
                     return new ObservableCollection<Filter>(_defaultFilters.Skip(0).Take(1));
-                }
-                else
-                {
-                    return _defaultFilters;
-                }
+                
+                return _defaultFilters;
             }
         }
         
@@ -131,26 +127,18 @@ namespace EverythingToolbar.Helpers
             get
             {
                 if (Settings.Default.isRegExEnabled)
-                {
                     return new ObservableCollection<Filter>();
-                }
-                else
-                {
-                    if (Settings.Default.isImportFilters)
-                    {
-                        return _userFiltersCache ?? LoadFilters();
-                    }
-                    else
-                    {
-                        return DefaultUserFilters;
-                    }
-                }
+
+                if (Settings.Default.isImportFilters)
+                    return _userFiltersCache ?? LoadFilters();
+
+                return DefaultUserFilters;
             }
         }
 
         public static readonly FilterLoader Instance = new FilterLoader();
         public event PropertyChangedEventHandler PropertyChanged;
-        private static readonly ILogger _logger = ToolbarLogger.GetLogger<FilterLoader>();
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<FilterLoader>();
         private FileSystemWatcher _watcher;
 
         private FilterLoader()
@@ -161,22 +149,43 @@ namespace EverythingToolbar.Helpers
                                                                        "Filters.csv");
             Settings.Default.PropertyChanged += OnSettingsChanged;
 
-            RefreshFilters();
-            CreateFileWatcher();
+            NotifyFiltersChanged();
+            
+            if (Settings.Default.isImportFilters)
+                CreateFileWatcher();
         }
 
-        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void OnSettingsChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "isRegExEnabled" || e.PropertyName == "isImportFilters")
-                RefreshFilters();
+            switch (e.PropertyName)
+            {
+                case "isRegExEnabled":
+                    NotifyFiltersChanged();
+                    break;
+                case "isImportFilters":
+                {
+                    if (Settings.Default.isImportFilters)
+                    {
+                        CreateFileWatcher();
+                    }
+                    else
+                    {
+                        StopFileWatcher();
+                        _userFiltersCache = null;
+                    }
+                
+                    NotifyFiltersChanged();
+                    break;
+                }
+            }
         }
 
-        private void RefreshFilters()
+        private void NotifyFiltersChanged()
         {
             NotifyPropertyChanged(nameof(DefaultFilters));
             NotifyPropertyChanged(nameof(UserFilters));
@@ -188,13 +197,13 @@ namespace EverythingToolbar.Helpers
 
             if (!File.Exists(Settings.Default.filtersPath))
             {
-                _logger.Info("Filters.csv could not be found at " + Settings.Default.filtersPath);
+                Logger.Info("Filters.csv could not be found at " + Settings.Default.filtersPath);
 
                 MessageBox.Show(Resources.MessageBoxSelectFiltersCsv,
                                 Resources.MessageBoxSelectFiltersCsvTitle,
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Information);
-                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                using (var openFileDialog = new OpenFileDialog())
                 {
                     openFileDialog.InitialDirectory = Path.Combine(Settings.Default.filtersPath, "..");
                     openFileDialog.Filter = "Filters.csv|Filters.csv|All files (*.*)|*.*";
@@ -215,55 +224,64 @@ namespace EverythingToolbar.Helpers
 
             try
             {
-                using (TextFieldParser csvParser = new TextFieldParser(Settings.Default.filtersPath))
+                using (var csvParser = new TextFieldParser(Settings.Default.filtersPath))
                 {
-                    csvParser.CommentTokens = new string[] { "#" };
-                    csvParser.SetDelimiters(new string[] { "," });
+                    csvParser.CommentTokens = new[] { "#" };
+                    csvParser.SetDelimiters(",");
                     csvParser.HasFieldsEnclosedInQuotes = true;
 
-                    // Skip header row
-                    csvParser.ReadLine();
+                    var header = csvParser.ReadFields();
 
                     while (!csvParser.EndOfData)
                     {
-                        string[] fields = csvParser.ReadFields();
+                        var fields = csvParser.ReadFields();
+
+                        if (header == null || fields == null)
+                            continue;
+                        
+                        var filter = header.Zip(fields, (h, f) => new { h, f }).ToDictionary(x => x.h, x => x.f);
 
                         // Skip default filters
-                        string search = fields[6].Trim();
-                        if (search == "file:" ||
-                            search == "folder:" ||
-                            search == "")
+                        if (filter["Name"] == "EVERYTHING" || filter["Name"] == "FOLDER")
                             continue;
 
                         // Everything's default filters are uppercase
-                        fields[0] = fields[0].Replace("AUDIO", Resources.UserFilterAudio);
-                        fields[0] = fields[0].Replace("COMPRESSED", Resources.UserFilterCompressed);
-                        fields[0] = fields[0].Replace("DOCUMENT", Resources.UserFilterDocument);
-                        fields[0] = fields[0].Replace("EXECUTABLE", Resources.UserFilterExecutable);
-                        fields[0] = fields[0].Replace("PICTURE", Resources.UserFilterPicture);
-                        fields[0] = fields[0].Replace("VIDEO", Resources.UserFilterVideo);
+                        filter["Name"] = filter["Name"].Replace("AUDIO", Resources.UserFilterAudio);
+                        filter["Name"] = filter["Name"].Replace("COMPRESSED", Resources.UserFilterCompressed);
+                        filter["Name"] = filter["Name"].Replace("DOCUMENT", Resources.UserFilterDocument);
+                        filter["Name"] = filter["Name"].Replace("EXECUTABLE", Resources.UserFilterExecutable);
+                        filter["Name"] = filter["Name"].Replace("PICTURE", Resources.UserFilterPicture);
+                        filter["Name"] = filter["Name"].Replace("VIDEO", Resources.UserFilterVideo);
 
                         filters.Add(new Filter()
                         {
-                            Name = fields[0],
-                            IsMatchCase = fields[1] == "1",
-                            IsMatchWholeWord = fields[2] == "1",
-                            IsMatchPath = fields[3] == "1",
-                            IsRegExEnabled = fields[5] == "1",
-                            Search = fields[6],
-                            Macro = fields[7]
+                            Name = filter["Name"],
+                            IsMatchCase = filter["Case"] == "1",
+                            IsMatchWholeWord = filter["Whole Word"] == "1",
+                            IsMatchPath = filter["Path"] == "1",
+                            IsRegExEnabled = filter["Regex"] == "1",
+                            Search = filter["Search"],
+                            Macro = filter["Macro"]
                         });
                     }
                 }
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Parsing Filters.csv failed.");
+                Logger.Error(e, "Parsing Filters.csv failed.");
                 return DefaultUserFilters;
             }
 
             _userFiltersCache = filters;
             return filters;
+        }
+
+        private void StopFileWatcher()
+        {
+            if (_watcher == null)
+                return;
+
+            _watcher.EnableRaisingEvents = false;
         }
 
         private void CreateFileWatcher()
@@ -275,38 +293,40 @@ namespace EverythingToolbar.Helpers
             {
                 Path = Path.GetDirectoryName(Settings.Default.filtersPath),
                 Filter = Path.GetFileName(Settings.Default.filtersPath),
-                NotifyFilter = NotifyFilters.FileName
+                NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite
             };
 
-            _watcher.Changed += new FileSystemEventHandler(OnFileChanged);
-            _watcher.Created += new FileSystemEventHandler(OnFileChanged);
-            _watcher.Deleted += new FileSystemEventHandler(OnFileChanged);
-            _watcher.Renamed += new RenamedEventHandler(OnFileRenamed);
+            _watcher.Changed += OnFileChanged;
+            _watcher.Created += OnFileChanged;
+            _watcher.Deleted += OnFileChanged;
+            _watcher.Renamed += OnFileRenamed;
 
             _watcher.EnableRaisingEvents = true;
         }
 
         private void OnFileRenamed(object sender, RenamedEventArgs e)
         {
+            Settings.Default.filtersPath = e.FullPath;
+            CreateFileWatcher();
             LoadFilters();
-            RefreshFilters();
+            NotifyFiltersChanged();
         }
 
         private void OnFileChanged(object source, FileSystemEventArgs e)
         {
             LoadFilters();
-            RefreshFilters();
+            NotifyFiltersChanged();
         }
 
         public Filter GetLastFilter()
         {
-            if (Settings.Default.isRememberFilter)
+            if (!Settings.Default.isRememberFilter)
+                return DefaultFilters[0];
+            
+            foreach (var filter in DefaultFilters.Union(UserFilters))
             {
-                foreach (Filter filter in DefaultFilters.Union(UserFilters))
-                {
-                    if (filter.Name == Settings.Default.lastFilter)
-                        return filter;
-                }
+                if (filter.Name == Settings.Default.lastFilter)
+                    return filter;
             }
 
             return DefaultFilters[0];
