@@ -139,10 +139,10 @@
     <value>2. Vastmaken aan taakbalk</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
+    <value>Een verkenner herstart is vereist om het taakbalkpictogram bij te werken. Wilt u het nu herstarten?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>Restart explorer</value>
+    <value>Herstart verkenner</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
     <value>Optioneel kan het originele Windows-zoekpictogram worden verborgen.</value>
@@ -160,9 +160,9 @@
     <value>EverythingToolbar configuratie assistent</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>Select one of the following taskbar icons:</value>
+    <value>Selecteer een van de volgende taakbalkpictogrammen:</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Taskbar icon</value>
+    <value>1. Taakbalk pictogram</value>
   </data>
 </root>
