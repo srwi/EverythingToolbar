@@ -1,20 +1,26 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using EverythingToolbar.Properties;
+using MessageBox = System.Windows.MessageBox;
+using RadioButton = System.Windows.Controls.RadioButton;
 
 namespace EverythingToolbar.Launcher
 {
-    public partial class TaskbarPinGuide : Window
+    public partial class SetupAssistant
     {
-        private FileSystemWatcher watcher;
-        private string TaskbarShortcutPath = Utils.GetTaskbarShortcutPath();
-        private bool IconHasChanged;
+        private readonly string _taskbarShortcutPath = Utils.GetTaskbarShortcutPath();
+        private readonly NotifyIcon _icon;
+        private bool _iconHasChanged;
+        private FileSystemWatcher _watcher;
 
-        public TaskbarPinGuide()
+        public SetupAssistant(NotifyIcon icon)
         {
             InitializeComponent();
+
+            _icon = icon;
 
             AutostartCheckBox.IsChecked = Utils.GetAutostartState();
             HideWindowsSearchCheckBox.IsChecked = !Utils.GetWindowsSearchEnabledState();
@@ -26,39 +32,41 @@ namespace EverythingToolbar.Launcher
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            _icon.Visible = false;
+
             foreach (RadioButton radio in IconRadioButtons.Children)
             {
-                if ((string)radio.Tag == EverythingToolbar.Properties.Settings.Default.iconName)
+                if ((string)radio.Tag == Settings.Default.iconName)
                     radio.IsChecked = true;
             }
 
-            IconHasChanged = false;
+            _iconHasChanged = false;
         }
 
         private void CreateFileWatcher()
         {
-            watcher = new FileSystemWatcher
+            _watcher = new FileSystemWatcher
             {
-                Path = Path.GetDirectoryName(TaskbarShortcutPath),
-                Filter = Path.GetFileName(TaskbarShortcutPath),
+                Path = Path.GetDirectoryName(_taskbarShortcutPath),
+                Filter = Path.GetFileName(_taskbarShortcutPath),
                 NotifyFilter = NotifyFilters.FileName,
                 EnableRaisingEvents = true
             };
 
-            watcher.Created += new FileSystemEventHandler((source, e) => {
-                IconHasChanged = true;
+            _watcher.Created += (source, e) => {
+                _iconHasChanged = true;
                 UpdateSetupStepVisibility();
-            });
-            watcher.Deleted += new FileSystemEventHandler((source, e) => {
+            };
+            _watcher.Deleted += (source, e) => {
                 UpdateSetupStepVisibility();
-            });
+            };
         }
 
         private void UpdateSetupStepVisibility()
         {
             Dispatcher.Invoke(() =>
             {
-                if (!string.IsNullOrEmpty(EverythingToolbar.Properties.Settings.Default.iconName))
+                if (!string.IsNullOrEmpty(Settings.Default.iconName))
                 {
                     SectionTwo.Opacity = 1.0;
                     SectionTwo.IsHitTestVisible = true;
@@ -69,7 +77,7 @@ namespace EverythingToolbar.Launcher
                     SectionTwo.IsHitTestVisible = false;
                 }
 
-                if (File.Exists(TaskbarShortcutPath))
+                if (File.Exists(_taskbarShortcutPath))
                 {
                     SectionThree.Opacity = 1.0;
                     SectionThree.IsHitTestVisible = true;
@@ -84,12 +92,12 @@ namespace EverythingToolbar.Launcher
 
         private void HideWindowsSearchChanged(object sender, RoutedEventArgs e)
         {
-            Utils.SetWindowsSearchEnabledState(!(bool)HideWindowsSearchCheckBox.IsChecked);
+            Utils.SetWindowsSearchEnabledState(HideWindowsSearchCheckBox.IsChecked != null && !(bool)HideWindowsSearchCheckBox.IsChecked);
         }
 
         private void AutostartChanged(object sender, RoutedEventArgs e)
         {
-            Utils.SetAutostartState((bool)AutostartCheckBox.IsChecked);
+            Utils.SetAutostartState(AutostartCheckBox.IsChecked != null && (bool)AutostartCheckBox.IsChecked);
         }
 
         private void OnCloseClicked(object sender, RoutedEventArgs e)
@@ -99,27 +107,29 @@ namespace EverythingToolbar.Launcher
 
         private void OnClosed(object sender, EventArgs e)
         {
-            if (watcher != null)
+            _icon.Visible = true;
+
+            if (_watcher != null)
             {
-                watcher.EnableRaisingEvents = false;
-                watcher.Dispose();
+                _watcher.EnableRaisingEvents = false;
+                _watcher.Dispose();
             }
 
-            if (!IconHasChanged)
+            if (!_iconHasChanged)
                 return;
 
             if (MessageBox.Show(Properties.Resources.SetupAssistantRestartExplorerDialogText,
                 Properties.Resources.SetupAssistantRestartExplorerDialogTitle, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                Utils.ChangeTaskbarPinIcon(EverythingToolbar.Properties.Settings.Default.iconName);
+                Utils.ChangeTaskbarPinIcon(Settings.Default.iconName);
             }
         }
 
         private void OnIconRadioButtonChecked(object sender, RoutedEventArgs e)
         {
-            EverythingToolbar.Properties.Settings.Default.iconName = (sender as RadioButton).Tag as string;
-            Icon = new BitmapImage(new Uri("pack://application:,,,/" + EverythingToolbar.Properties.Settings.Default.iconName));
-            IconHasChanged = true;
+            Settings.Default.iconName = ((RadioButton)sender).Tag as string;
+            Icon = new BitmapImage(new Uri("pack://application:,,,/" + Settings.Default.iconName));
+            _iconHasChanged = true;
             UpdateSetupStepVisibility();
         }
     }

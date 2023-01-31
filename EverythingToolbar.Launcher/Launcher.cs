@@ -24,7 +24,7 @@ namespace EverythingToolbar.Launcher
 
         private class LauncherWindow : Window
         {
-            public LauncherWindow()
+            public LauncherWindow(NotifyIcon icon)
             {
                 ToolbarLogger.Initialize();
 
@@ -43,7 +43,7 @@ namespace EverythingToolbar.Launcher
                 StartToggleListener();
 
                 if (!File.Exists(Utils.GetTaskbarShortcutPath()))
-                    new TaskbarPinGuide().Show();
+                    new SetupAssistant(icon).Show();
 
                 if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
                        (Key)Settings.Default.shortcutKey,
@@ -62,7 +62,7 @@ namespace EverythingToolbar.Launcher
                     ShortcutManager.Instance.HookStartMenu();
             }
 
-            private void FocusSearchBox(object sender, HotkeyEventArgs e)
+            private static void FocusSearchBox(object sender, HotkeyEventArgs e)
             {
                 SearchWindow.Instance.Show();
             }
@@ -94,11 +94,12 @@ namespace EverythingToolbar.Launcher
 
         private static string GetIconPath()
         {
-            string processPath = Process.GetCurrentProcess().MainModule.FileName;
+            var processPath = Process.GetCurrentProcess().MainModule?.FileName ?? string.Empty;
+            
             if (string.IsNullOrEmpty(Settings.Default.iconName))
                 return Path.Combine(processPath, "..", "Icons", "Medium.ico");
-            else
-                return Path.Combine(processPath, "..", Settings.Default.iconName);
+            
+            return Path.Combine(processPath, "..", Settings.Default.iconName);
         }
 
         [STAThread]
@@ -108,16 +109,16 @@ namespace EverythingToolbar.Launcher
             {
                 if (createdNew)
                 {
-                    using (var icon = new NotifyIcon())
+                    using (var trayIcon = new NotifyIcon())
                     {
                         var app = new Application();
-                        icon.Icon = Icon.ExtractAssociatedIcon(GetIconPath());
-                        icon.ContextMenu = new ContextMenu(new [] {
-                            new MenuItem(Resources.ContextMenuRunSetupAssistant, (s, e) => { new TaskbarPinGuide().Show(); }),
+                        trayIcon.Icon = Icon.ExtractAssociatedIcon(GetIconPath());
+                        trayIcon.ContextMenu = new ContextMenu(new [] {
+                            new MenuItem(Resources.ContextMenuRunSetupAssistant, (s, e) => { new SetupAssistant(trayIcon).Show(); }),
                             new MenuItem(Resources.ContextMenuQuit, (s, e) => { app.Shutdown(); })
                         });
-                        icon.Visible = true;
-                        app.Run(new LauncherWindow());
+                        trayIcon.Visible = true;
+                        app.Run(new LauncherWindow(trayIcon));
                     }
                 }
                 else
