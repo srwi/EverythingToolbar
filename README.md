@@ -78,15 +78,16 @@ EverythingToolbar is compatible with both Windows 10 and Windows 11 and works we
 *Recommended for **unmodified Windows 11** installations*
 
 - After installation on Windows 11 the setup assistant will guide you through the setup process
-  - Note: If you want to use the search icon on Windows 10 (not recommended) or the setup assistant did not start automatically, just search for `EverythingToolbar` in the Windows Start menu.
+  > If you want to use the search icon on Windows 10 (not recommended) or the setup assistant did not start automatically, just search for `EverythingToolbar` in the Windows Start menu.
 
 ### Deskband
 
 *Recommended for **Windows 10** or in combination with [ExplorerPatcher](https://github.com/valinet/ExplorerPatcher)/[StartAllBack](https://www.startallback.com/)*
 
 - After installation on Windows 10, activate EverythingToolbar from the taskbar context menu
-  - **Note A:** You will need to open the context menu twice, as EverythingToolbar will not appear the first time.
-  - **Note B (*Windows 11 only*):** After installation, the search icon setup assistant will start automatically. If you want to use the deskband instead (only recommended in combination with ExplorerPatcher/StartAllback), close the assistant and end EverythingToolbar's background process via the taskbar tray icon.
+  > You will need to open the context menu twice, as EverythingToolbar will not appear the first time.
+  
+  > **Windows 11 only**: After installation, the search icon setup assistant will start automatically. If you want to use the deskband instead (only recommended in combination with ExplorerPatcher/StartAllback), close the assistant and end EverythingToolbar's background process via the taskbar tray icon.
 - Adjust size and position after unlocking the taskbar ([Demonstration video](https://user-images.githubusercontent.com/17520641/107118574-19a1bf80-6882-11eb-843a-7e854e5d0684.gif))
 
 ## Build
