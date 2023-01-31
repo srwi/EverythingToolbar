@@ -44,7 +44,7 @@ namespace EverythingToolbar.Launcher
 
         private RECT CalculatePosition(double scalingFactor)
         {
-            Screen screen = Screen.PrimaryScreen;
+            Screen screen = Screen.FromPoint(Cursor.Position);
             TaskbarLocation taskbar = FindDockedTaskBar(screen);
             Size windowSize = GetTargetWindowSize(scalingFactor);
             int margin = (int)(GetMargin() / scalingFactor);
@@ -77,6 +77,11 @@ namespace EverythingToolbar.Launcher
                 windowPosition.Top = margin;
                 windowPosition.Bottom = Math.Min(windowPosition.Top + (int)windowSize.Height, screen.WorkingArea.Height - margin);
             }
+
+            windowPosition.Left += screen.Bounds.Left;
+            windowPosition.Right += screen.Bounds.Left;
+            windowPosition.Top += screen.Bounds.Top;
+            windowPosition.Bottom += screen.Bounds.Top;
 
             TaskbarStateManager.Instance.TaskbarEdge = taskbar.Edge;
 
