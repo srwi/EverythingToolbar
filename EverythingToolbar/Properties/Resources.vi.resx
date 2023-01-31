@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutLicense" xml:space="preserve">
-    <value>License</value>
+    <value>Giấy phép</value>
   </data>
   <data name="AboutOK" xml:space="preserve">
     <value>Đồng Ý</value>
@@ -139,7 +139,7 @@
     <value>Sao Chép</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
-    <value>Copy Full Name to Clipboard</value>
+    <value>Sao chép tên đầy đủ vào bộ nhớ tạm</value>
   </data>
   <data name="ContextMenuCut" xml:space="preserve">
     <value>Cắt</value>
@@ -160,7 +160,7 @@
     <value>Chọn ứng dụng</value>
   </data>
   <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>No rules defined</value>
+    <value>Không có quy tắc được xác định</value>
   </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Dán</value>
@@ -172,28 +172,28 @@
     <value>Chạy với quyền admin</value>
   </data>
   <data name="ContextMenuShowInEverything" xml:space="preserve">
-    <value>Show in Everything</value>
+    <value>Hiện trong Everything</value>
   </data>
   <data name="DefaultFilterAll" xml:space="preserve">
     <value>Tất cả</value>
   </data>
   <data name="DefaultFilterFile" xml:space="preserve">
-    <value>File</value>
+    <value>Tệp</value>
   </data>
   <data name="DefaultFilterFolder" xml:space="preserve">
-    <value>Folder</value>
+    <value>Thư mục</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>Compact</value>
+    <value>Thu gọn</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compact (detailed)</value>
+    <value>Thu gọn (chi tiết)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
-    <value>Normal</value>
+    <value>Bình thường</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detailed)</value>
+    <value>Bình thường (chi tiết)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
@@ -208,10 +208,10 @@
     <value>Win</value>
   </data>
   <data name="MessageBoxCopyException" xml:space="preserve">
-    <value>Do you want to copy the exception content to clipboard?</value>
+    <value>Bạn có muốn sao chép nội dung ngoại lệ tới bộ nhớ tạm?</value>
   </data>
   <data name="MessageBoxErrorTitle" xml:space="preserve">
-    <value>Error</value>
+    <value>Lỗi</value>
   </data>
   <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
     <value>Sao chép tệp tin thất bại.</value>
@@ -220,7 +220,7 @@
     <value>Sao chép đường dẫn tệp tin thất bại.</value>
   </data>
   <data name="MessageBoxFailedToOpen" xml:space="preserve">
-    <value>Failed to open search result.</value>
+    <value>Không thể mở kết quả tìm kiếm.</value>
   </data>
   <data name="MessageBoxFailedToOpenDialog" xml:space="preserve">
     <value>Mở hộp thoại thất bại.</value>
@@ -235,130 +235,130 @@
     <value>Chạy lệnh thất bại</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
-    <value>To utilize this sorting method it has to have fast sorting enabled. It can be enabled in your Everything settings.</value>
+    <value>Để tận dụng phương pháp sắp xếp này, tùy chọn sắp xếp nhanh phải được bật. Nó có thể được bật trong cài đặt phần mềm Everything của bạn.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
-    <value>Fast sorting not enabled</value>
+    <value>Sắp xếp nhanh không được bật</value>
   </data>
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
-    <value>At least one regular expression is invalid.</value>
+    <value>Ít nhất một cú pháp không hợp pháp.</value>
   </data>
   <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Rule names cannot be empty.</value>
+    <value>Tên quy tắc không được để trống.</value>
   </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
-    <value>Please select Everything.exe...</value>
+    <value>Vui lòng chọn Everything.exe...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>Please select the Filters.csv file. By default it can be found in %APPDATA%\Everything. Its location might be different depending on your installation. If the file does not exist for you that means you didn't perform any changes to Everything's default filters.</value>
+    <value>Vui lòng chọn tệp Filters.csv. Mặc định, nó có thể được tìm ở %APPDATA%\Everything. Vị trí của nó có thể khác biệt dựa trên bản cài đặt của bạn. Nếu tệp này không có sẵn cho bạn thì có nghĩa rằng bạn chưa thay đổi gì tới bộ lọc mặc định của Everything.</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
     <value>Không tìm thấy Filters.csv</value>
   </data>
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
-    <value>Unhandled exception occured</value>
+    <value>Ngoại lệ ngoài ý muốn đã xảy ra</value>
   </data>
   <data name="RulesAutoApply" xml:space="preserve">
-    <value>Automatically apply rules based on condition</value>
+    <value>Tự động áp dụng các quy tắc dựa trên điều kiện</value>
   </data>
   <data name="RulesCancel" xml:space="preserve">
     <value>Hủy bỏ</value>
   </data>
   <data name="RulesCommand" xml:space="preserve">
-    <value>Command</value>
+    <value>Lệnh</value>
   </data>
   <data name="RulesName" xml:space="preserve">
-    <value>Name</value>
+    <value>Tên</value>
   </data>
   <data name="RulesRegularExpression" xml:space="preserve">
-    <value>Regular Expression</value>
+    <value>Cú pháp thường dùng</value>
   </data>
   <data name="RulesSave" xml:space="preserve">
-    <value>Save</value>
+    <value>Lưu</value>
   </data>
   <data name="RulesType" xml:space="preserve">
-    <value>Type</value>
+    <value>Kiểu</value>
   </data>
   <data name="RulesWindowText" xml:space="preserve">
-    <value>Use %file%, %filename% and %path% as placeholders in commands.</value>
+    <value>Dùng %file%, %filename% và %path% làm khung giữ chỗ trong các lệnh.</value>
   </data>
   <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Rules</value>
+    <value>Quy tắc</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
-    <value>Search with Everything</value>
+    <value>Tìm kiếm bằng Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
-    <value>object</value>
+    <value>đối tượng</value>
   </data>
   <data name="SearchResults" xml:space="preserve">
-    <value>objects</value>
+    <value>đối tượng</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
     <value>Về EverythingToolbar...</value>
   </data>
   <data name="SettingsChangeShortcut" xml:space="preserve">
-    <value>Change Shortcut...</value>
+    <value>Thay đổi phím tắt...</value>
   </data>
   <data name="SettingsDisableAnimations" xml:space="preserve">
-    <value>Disable animations</value>
+    <value>Tắt hiệu ứng</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>Enable search history</value>
+    <value>Bật lịch sử tìm kiếm</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
-    <value>Hide empty search</value>
+    <value>Ẩn kết quả tìm kiếm trống</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>Match Case</value>
+    <value>Khớp chữ hoa/thường</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
-    <value>Match Path</value>
+    <value>Khớp đường dẫn</value>
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
-    <value>Match Whole Word</value>
+    <value>Khớp toàn bộ từ</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Tùy chọn</value>
   </data>
   <data name="SettingsRegularExpressions" xml:space="preserve">
-    <value>Regular Expressions</value>
+    <value>Cú pháp thường dùng</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>Remember filter</value>
+    <value>Ghi nhớ bộ lọc</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Replace start menu search (experimental)</value>
+    <value>Thay thế thanh tìm kiếm của start menu (thử nghiệm)</value>
   </data>
   <data name="SettingsRules" xml:space="preserve">
-    <value>Rules...</value>
+    <value>Quy tắc...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>Set instance name...</value>
+    <value>Đặt tên tiến trình...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Show quick toggles</value>
+    <value>Hiển thị công tắc nhanh</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
-    <value>Show results count</value>
+    <value>Hiển thị số đếm kết quả</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
-    <value>Sort By</value>
+    <value>Sắp xếp theo</value>
   </data>
   <data name="SettingsTheme" xml:space="preserve">
-    <value>Theme</value>
+    <value>Giao diện</value>
   </data>
   <data name="SettingsThemeAuto" xml:space="preserve">
-    <value>Sync theme</value>
+    <value>Đồng bộ giao diện</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>Enable thumbnails</value>
+    <value>Bật hình nhỏ</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
-    <value>Use Everything filters</value>
+    <value>Sử dụng bộ lọc của Everything</value>
   </data>
   <data name="SettingsView" xml:space="preserve">
-    <value>View</value>
+    <value>Hiển thị</value>
   </data>
   <data name="ShortcutOK" xml:space="preserve">
     <value>OK</value>

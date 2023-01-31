@@ -127,42 +127,42 @@
     <value>Скрыть</value>
   </data>
   <data name="ContextMenuQuit" xml:space="preserve">
-    <value>Выйти</value>
+    <value>Выход</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>Запустить с помощью...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>Чтобы закрепить EverythingToolbar на панели задач щёлкните правой кнопкой мыши и выберите 'Закрепить на панели задач'.</value>
+    <value>Чтобы закрепить EverythingToolbar на панели задач, щёлкните правой кнопкой мыши и выберите 'Закрепить на панели задач'.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
     <value>2. Закрепить на панели задач</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>Для обновления значка панели задач требуется перезапуск проводника. Перезапустить сейчас?</value>
+    <value>Чтобы обновить значок панели задач, нужно перезапустить Проводник. Сделать это сейчас?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>Перезапустить проводник</value>
+    <value>Перезапустить Проводник</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>При желании можно скрыть исходную иконку поиска Windows.</value>
+    <value>При желании можно скрыть исходный значок поиска Windows.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
     <value>3. Скрыть поиск Windows</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>При запуске системы рекомендуется автоматически запускать шину EverythingToolbar.</value>
+    <value>Рекомендуется запускать EverythingToolbar автоматически при старте системы.</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. Настройка автозапуска</value>
+    <value>4. Настроить автозапуск</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Помощник установки EverythingToolbar</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>Select one of the following taskbar icons:</value>
+    <value>Выберите один из этих значков панели задач:</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Taskbar icon</value>
+    <value>1. Значок панели задач</value>
   </data>
 </root>

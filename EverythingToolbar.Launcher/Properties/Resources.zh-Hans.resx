@@ -163,6 +163,6 @@
     <value>Select one of the following taskbar icons:</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Taskbar icon</value>
+    <value>1. 任务栏图标</value>
   </data>
 </root>

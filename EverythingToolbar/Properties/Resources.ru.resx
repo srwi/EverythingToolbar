@@ -151,7 +151,7 @@
     <value>Открыть путь</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
-    <value>Показать больше настроек</value>
+    <value>Ещё настройки</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
     <value>Открыть с помощью...</value>
@@ -445,7 +445,7 @@
     <value>Тип (по убыванию)</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Темная</value>
+    <value>Тёмная</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
     <value>Светлая</value>
