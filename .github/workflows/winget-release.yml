@@ -13,7 +13,8 @@ jobs:
     steps:
       - name: Submit installer to Windows Package Manager Community Repository
         run: |
-          $github = Get-Content "${{ github.event_path }}"" | ConvertFrom-Json
-          $installerUrl = $github.release.assets | Where-Object -Property name -match "EverythingToolbar*.msi" | Select -ExpandProperty browser_download_url -First 1
+          $github = Invoke-RestMethod -uri "https://api.github.com/repos/stnkl/EverythingToolbar/releases"
+          $targetRelease = $github | Where-Object { $_.prerelease -eq $false } | Select -First 1
+          $installerUrl = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match "EverythingToolbar.*msi" | Select -ExpandProperty browser_download_url
           iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
-          .\wingetcreate.exe update stnkl.EverythingToolbar -s -v $github.release.tag_name -u $installerUrl -t ${{ secrets.WINGET_PAT }}
+          .\wingetcreate.exe update stnkl.EverythingToolbar -s -v $targetRelease.tag_name -u $installerUrl -t ${{ secrets.WINGET_PAT }}
