@@ -145,7 +145,7 @@
     <value>エクスプローラーを再起動</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>オプションで、元の Windows 検索アイコンを非表示にできます。</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
     <value>3. Windows の検索を隠す</value>
