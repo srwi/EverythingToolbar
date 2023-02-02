@@ -160,9 +160,9 @@
     <value>EverythingToolbar セットアップアシスタント</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>Select one of the following taskbar icons:</value>
+    <value>タスクバーに表示されるアイコンを選択してください。</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Taskbar icon</value>
+    <value>1. タスクバーアイコン</value>
   </data>
 </root>
