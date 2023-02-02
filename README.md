@@ -78,7 +78,9 @@ EverythingToolbar is compatible with both Windows 10 and Windows 11 and works we
 *Recommended for **unmodified Windows 11** installations*
 
 - After installation on Windows 11 the setup assistant will guide you through the setup process
-  > If you want to use the search icon on Windows 10 (not recommended) or the setup assistant did not start automatically, just search for `EverythingToolbar` in the Windows Start menu.
+  > If the setup assistant did not start automatically, search for `EverythingToolbar` in the Windows Start menu.
+  
+  > If you want to use the search icon on Windows 10 (not recommended), search for `EverythingToolbar.Launcher.exe`, start it manually and follow the setup process.
 
 ### Deskband
 
