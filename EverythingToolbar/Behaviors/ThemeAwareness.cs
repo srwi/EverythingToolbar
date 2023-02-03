@@ -86,7 +86,7 @@ namespace EverythingToolbar.Behaviors
 
         public void AutoApplyTheme()
         {
-            bool isLightTheme = (int)_systemThemeRegistryEntry.GetValue() == 1;
+            bool isLightTheme = (int)_systemThemeRegistryEntry.GetValue(0) == 1;
             ApplyTheme(isLightTheme);
         }
 
