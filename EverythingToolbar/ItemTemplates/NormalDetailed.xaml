@@ -36,7 +36,7 @@
                        Margin="10, 5, 10, 6"
                        FontSize="10pt"
                        Foreground="{DynamicResource SearchResultDateModified}"
-                       Text="{Binding DateModified, IsAsync=True}" />
+                       Text="{Binding HumanReadableDateModified, IsAsync=True}" />
             <TextBlock Grid.Column="2"
                        Grid.Row="1"
                        VerticalAlignment="Top"
@@ -44,7 +44,7 @@
                        HorizontalAlignment="Right"
                        FontSize="10pt"
                        Foreground="{DynamicResource SearchResultFileSize}"
-                       Text="{Binding FileSize, IsAsync=True}" />
+                       Text="{Binding HumanReadableFileSize, IsAsync=True}" />
         </Grid>
     </DataTemplate>
     

@@ -24,7 +24,7 @@
                        Margin="10, 5, 10, 6"
                        FontSize="10pt"
                        Foreground="{DynamicResource SearchResultDateModified}"
-                       Text="{Binding DateModified, IsAsync=True}" />
+                       Text="{Binding HumanReadableDateModified, IsAsync=True}" />
         </Grid>
     </DataTemplate>
     

@@ -301,7 +301,7 @@ namespace EverythingToolbar.Controls
 
         public void ShowFileWindowsContexMenu(object sender, RoutedEventArgs e)
         {
-            SelectedItem?.ShowWindowsContexMenu();
+            SelectedItem?.ShowWindowsContextMenu();
         }
 
         private void OnOpenWithMenuLoaded(object sender, RoutedEventArgs e)

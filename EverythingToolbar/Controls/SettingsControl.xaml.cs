@@ -110,7 +110,7 @@ namespace EverythingToolbar.Controls
             (menu.Items[selectedIndex] as MenuItem).IsChecked = false;
 
             int[] fastSortExceptions = { 9, 10, 17, 18 };
-            if (EverythingSearch.Instance.GetIsFastSort(selectedIndex + 1) ||
+            if (EverythingSearch.GetIsFastSort(selectedIndex + 1) ||
                 fastSortExceptions.Contains(selectedIndex + 1))
             {
                 Settings.Default.sortBy = selectedIndex + 1;

@@ -15,6 +15,7 @@ using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using NLog;
+using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 namespace EverythingToolbar
 {
@@ -178,7 +179,7 @@ namespace EverythingToolbar
             }
 
             _cancellationTokenSource = new CancellationTokenSource();
-            CancellationToken cancellationToken = _cancellationTokenSource.Token;
+            var cancellationToken = _cancellationTokenSource.Token;
 
             Task.Run(() =>
             {
@@ -188,13 +189,15 @@ namespace EverythingToolbar
                     {
                         if (!append)
                             SearchResults.ClearSilent();                        
-                    }    
-                    
-                    uint flags = EVERYTHING_FULL_PATH_AND_FILE_NAME | EVERYTHING_HIGHLIGHTED_PATH | EVERYTHING_HIGHLIGHTED_FILE_NAME;
-                    bool regEx = CurrentFilter.IsRegExEnabled ?? Settings.Default.isRegExEnabled;
+                    }
 
-                    string search = CurrentFilter.Search + (CurrentFilter.Search.Length > 0 && !regEx ? " " : "") + SearchTerm;
-                    foreach (Filter filter in FilterLoader.Instance.DefaultUserFilters)
+                    const uint flags = EVERYTHING_FULL_PATH_AND_FILE_NAME | EVERYTHING_HIGHLIGHTED_PATH |
+                                       EVERYTHING_HIGHLIGHTED_FILE_NAME | EVERYTHING_REQUEST_SIZE |
+                                       EVERYTHING_REQUEST_DATE_MODIFIED;
+                    var regEx = CurrentFilter.IsRegExEnabled ?? Settings.Default.isRegExEnabled;
+
+                    var search = CurrentFilter.Search + (CurrentFilter.Search.Length > 0 && !regEx ? " " : "") + SearchTerm;
+                    foreach (var filter in FilterLoader.Instance.DefaultUserFilters)
                     {
                         search = search.Replace(filter.Macro + ":", filter.Search + " ");
                     }
@@ -216,7 +219,7 @@ namespace EverythingToolbar
                         return;
                     }
 
-                    uint batchResultsCount = Everything_GetNumResults();
+                    var batchResultsCount = Everything_GetNumResults();
                     lock (_lock)
                         TotalResultsNumber = (int)Everything_GetTotResults();
 
@@ -224,11 +227,13 @@ namespace EverythingToolbar
                     {
                         cancellationToken.ThrowIfCancellationRequested();
 
-                        string highlightedPath = Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i));
-                        string highlightedFileName = Marshal.PtrToStringUni(Everything_GetResultHighlightedFileName(i));
-                        bool isFile = Everything_IsFileResult(i);
-                        StringBuilder fullPathAndFilename = new StringBuilder(4096);
+                        var highlightedPath = Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i));
+                        var highlightedFileName = Marshal.PtrToStringUni(Everything_GetResultHighlightedFileName(i));
+                        var isFile = Everything_IsFileResult(i);
+                        var fullPathAndFilename = new StringBuilder(4096);
                         Everything_GetResultFullPathNameW(i, fullPathAndFilename, 4096);
+                        Everything_GetResultSize(i, out var fileSize);
+                        Everything_GetResultDateModified(i, out var dateModified);
 
                         lock (_lock)
                         {
@@ -237,7 +242,9 @@ namespace EverythingToolbar
                                 HighlightedPath = highlightedPath,
                                 HighlightedFileName = highlightedFileName,
                                 FullPathAndFileName = fullPathAndFilename.ToString(),
-                                IsFile = isFile
+                                IsFile = isFile,
+                                DateModified = dateModified,
+                                FileSize = fileSize
                             });
                         }
                     }
@@ -268,14 +275,14 @@ namespace EverythingToolbar
 
         public void CycleFilters(int offset = 1)
         {
-            int defaultSize = FilterLoader.Instance.DefaultFilters.Count;
-            int userSize = FilterLoader.Instance.UserFilters.Count;
-            int defaultIndex = FilterLoader.Instance.DefaultFilters.IndexOf(CurrentFilter);
-            int userIndex = FilterLoader.Instance.UserFilters.IndexOf(CurrentFilter);
+            var defaultSize = FilterLoader.Instance.DefaultFilters.Count;
+            var userSize = FilterLoader.Instance.UserFilters.Count;
+            var defaultIndex = FilterLoader.Instance.DefaultFilters.IndexOf(CurrentFilter);
+            var userIndex = FilterLoader.Instance.UserFilters.IndexOf(CurrentFilter);
 
-            int d = defaultIndex >= 0 ? defaultIndex : defaultSize;
-            int u = userIndex >= 0 ? userIndex : 0;
-            int i = (d + u + offset + defaultSize + userSize) % (defaultSize + userSize);
+            var d = defaultIndex >= 0 ? defaultIndex : defaultSize;
+            var u = userIndex >= 0 ? userIndex : 0;
+            var i = (d + u + offset + defaultSize + userSize) % (defaultSize + userSize);
 
             if (i < defaultSize)
                 CurrentFilter = FilterLoader.Instance.DefaultFilters[i];
@@ -285,8 +292,8 @@ namespace EverythingToolbar
 
         public void SelectFilterFromIndex(int index)
         {
-            int defaultCount = FilterLoader.Instance.DefaultFilters.Count;
-            int userCount = FilterLoader.Instance.UserFilters.Count;
+            var defaultCount = FilterLoader.Instance.DefaultFilters.Count;
+            var userCount = FilterLoader.Instance.UserFilters.Count;
 
             if (index < defaultCount)
                 CurrentFilter = FilterLoader.Instance.DefaultFilters[index];
@@ -299,7 +306,7 @@ namespace EverythingToolbar
             if(!File.Exists(Settings.Default.everythingPath))
             {
                 MessageBox.Show(Resources.MessageBoxSelectEverythingExe);
-                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                using (var openFileDialog = new OpenFileDialog())
                 {
                     openFileDialog.InitialDirectory = "c:\\";
                     openFileDialog.Filter = "Everything.exe|Everything.exe|All files (*.*)|*.*";
@@ -341,12 +348,12 @@ namespace EverythingToolbar
             Process.Start(Settings.Default.everythingPath, args);
         }
 
-        public void IncrementRunCount(string path)
+        public static void IncrementRunCount(string path)
         {
             Everything_IncRunCountFromFileName(path);
         }
 
-        public bool GetIsFastSort(int sortBy)
+        public static bool GetIsFastSort(int sortBy)
         {
             return Everything_IsFastSort((uint)sortBy);
         }
@@ -376,6 +383,10 @@ namespace EverythingToolbar
                 case ErrorCode.ErrorInvalidCall:
                     _logger.Error("Invalid call.");
                     break;
+                case ErrorCode.Ok:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(code), code, null);
             }
         }
 
@@ -397,6 +408,8 @@ namespace EverythingToolbar
         private const int EVERYTHING_FULL_PATH_AND_FILE_NAME = 0x00000004;
         private const int EVERYTHING_HIGHLIGHTED_FILE_NAME = 0x00002000;
         private const int EVERYTHING_HIGHLIGHTED_PATH = 0x00004000;
+        private const int EVERYTHING_REQUEST_SIZE = 0x00000010;
+        private const int EVERYTHING_REQUEST_DATE_MODIFIED = 0x00000040;
 
         [DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
         private static extern uint Everything_SetSearchW(string lpSearchString);
@@ -444,5 +457,9 @@ namespace EverythingToolbar
         private static extern uint Everything_GetRevision();
         [DllImport("Everything64.dll")]
         private static extern bool Everything_IsFastSort(uint sortType);
+        [DllImport("Everything64.dll")]
+        private static extern bool Everything_GetResultSize(UInt32 nIndex, out long lpFileSize);
+        [DllImport("Everything64.dll")]
+        private static extern bool Everything_GetResultDateModified(UInt32 nIndex, out FILETIME lpFileTime);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
+using System.Runtime.InteropServices.ComTypes;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,7 +21,7 @@ namespace EverythingToolbar.Data
 {
     public class SearchResult
     {
-        private static readonly ILogger _logger = ToolbarLogger.GetLogger<SearchResult>();
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<SearchResult>();
 
         public bool IsFile { get; set; }
 
@@ -34,9 +35,30 @@ namespace EverythingToolbar.Data
 
         public string HighlightedFileName { get; set; }
 
-        public string FileSize => IsFile ? Utils.GetHumanReadableFileSize(FullPathAndFileName) : "";
+        public long FileSize { get; set; }
 
-        public string DateModified => File.GetLastWriteTime(FullPathAndFileName).ToString("g");
+        public FILETIME DateModified { get; set; }
+
+        public string HumanReadableFileSize
+        {
+            get
+            {
+                if (!IsFile)
+                    return string.Empty;
+
+                return Utils.GetHumanReadableFileSize(FileSize);
+
+            }
+        }
+
+        public string HumanReadableDateModified
+        {
+            get
+            {
+                long dateModified = (((long)DateModified.dwHighDateTime) << 32) | ((uint)DateModified.dwLowDateTime);
+                return DateTime.FromFileTime(dateModified).ToString("g");
+            }
+        }
 
         public ImageSource Icon => WindowsThumbnailProvider.GetThumbnail(FullPathAndFileName, 16, 16);
 
@@ -55,11 +77,11 @@ namespace EverythingToolbar.Data
                 {
                     ShellUtils.OpenFolderWithDefaultApp(FullPathAndFileName);
                 }
-                EverythingSearch.Instance.IncrementRunCount(FullPathAndFileName);
+                EverythingSearch.IncrementRunCount(FullPathAndFileName);
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Failed to open search result.");
+                Logger.Error(e, "Failed to open search result.");
                 MessageBox.Show(Resources.MessageBoxFailedToOpen, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -73,11 +95,11 @@ namespace EverythingToolbar.Data
                     Verb = "runas",
                     UseShellExecute = true
                 });
-                EverythingSearch.Instance.IncrementRunCount(FullPathAndFileName);
+                EverythingSearch.IncrementRunCount(FullPathAndFileName);
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Failed to open search result.");
+                Logger.Error(e, "Failed to open search result.");
                 MessageBox.Show(Resources.MessageBoxFailedToOpen, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -87,11 +109,11 @@ namespace EverythingToolbar.Data
             try
             {
                 ShellUtils.OpenParentFolderWithDefaultApp(FullPathAndFileName);
-                EverythingSearch.Instance.IncrementRunCount(FullPathAndFileName);
+                EverythingSearch.IncrementRunCount(FullPathAndFileName);
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Failed to open path.");
+                Logger.Error(e, "Failed to open path.");
                 MessageBox.Show(Resources.MessageBoxFailedToOpenPath, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -104,7 +126,7 @@ namespace EverythingToolbar.Data
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Failed to open dialog.");
+                Logger.Error(e, "Failed to open dialog.");
                 MessageBox.Show(Resources.MessageBoxFailedToOpenDialog, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -117,7 +139,7 @@ namespace EverythingToolbar.Data
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Failed to copy file.");
+                Logger.Error(e, "Failed to copy file.");
                 MessageBox.Show(Resources.MessageBoxFailedToCopyFile, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -130,7 +152,7 @@ namespace EverythingToolbar.Data
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Failed to copy path.");
+                Logger.Error(e, "Failed to copy path.");
                 MessageBox.Show(Resources.MessageBoxFailedToCopyPath, Resources.MessageBoxErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -140,17 +162,12 @@ namespace EverythingToolbar.Data
             ShellUtils.ShowFileProperties(FullPathAndFileName);
         }
 
-        public void ShowWindowsContexMenu()
+        public void ShowWindowsContextMenu()
         {
-            ShowWindowsContexMenu(Control.MousePosition);
-        }
-
-        public void ShowWindowsContexMenu(Point pos)
-        {
-            ShellContextMenu menu = new ShellContextMenu();
-            FileInfo[] arrFI = new FileInfo[1];
+            var menu = new ShellContextMenu();
+            var arrFI = new FileInfo[1];
             arrFI[0] = new FileInfo(FullPathAndFileName);
-            menu.ShowContextMenu(arrFI, pos);
+            menu.ShowContextMenu(arrFI, Control.MousePosition);
         }
 
         public void ShowInEverything()
@@ -170,18 +187,18 @@ namespace EverythingToolbar.Data
 
                         using (var writer = new StreamWriter(client))
                         {
-                            writer.WriteLine($"{"QuickLook.App.PipeMessages.Toggle"}|{FullPathAndFileName}");
+                            writer.WriteLine($"QuickLook.App.PipeMessages.Toggle|{FullPathAndFileName}");
                             writer.Flush();
                         }
                     }
                 }
                 catch (TimeoutException)
                 {
-                    _logger.Info("Opening QuickLook preview timed out. Is QuickLook running?");
+                    Logger.Info("Opening QuickLook preview timed out. Is QuickLook running?");
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e, "Failed to open preview.");
+                    Logger.Error(e, "Failed to open preview.");
                 }
             });
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 
 namespace EverythingToolbar.Helpers
 {
@@ -14,18 +13,8 @@ namespace EverythingToolbar.Helpers
             public static Version Windows11 = new Version(10, 0, 22000);
         }
 
-        public static string GetHumanReadableFileSize(string path)
+        public static string GetHumanReadableFileSize(long length)
         {
-            long length;
-            try
-            {
-                length = new FileInfo(path).Length;
-            }
-            catch
-            {
-                return "";
-            }
-
             // Get absolute value
             long absolute = length < 0 ? -length : length;
 
