@@ -15,7 +15,6 @@ using NLog;
 using Peter;
 using Clipboard = System.Windows.Clipboard;
 using MessageBox = System.Windows.MessageBox;
-using Point = System.Drawing.Point;
 
 namespace EverythingToolbar.Data
 {
@@ -43,11 +42,10 @@ namespace EverythingToolbar.Data
         {
             get
             {
-                if (!IsFile)
+                if (!IsFile || FileSize < 0)
                     return string.Empty;
 
                 return Utils.GetHumanReadableFileSize(FileSize);
-
             }
         }
 
@@ -55,7 +53,7 @@ namespace EverythingToolbar.Data
         {
             get
             {
-                long dateModified = (((long)DateModified.dwHighDateTime) << 32) | ((uint)DateModified.dwLowDateTime);
+                var dateModified = ((long)DateModified.dwHighDateTime << 32) | (uint)DateModified.dwLowDateTime;
                 return DateTime.FromFileTime(dateModified).ToString("g");
             }
         }
