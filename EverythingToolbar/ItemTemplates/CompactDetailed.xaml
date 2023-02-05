@@ -8,7 +8,7 @@
                 <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="1.5*" />
                 <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="56" />
+                <ColumnDefinition Width="62" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Image Source="{Binding Icon, IsAsync=True}"
