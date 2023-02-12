@@ -14,7 +14,7 @@ jobs:
       - name: Submit installer to Windows Package Manager Community Repository
         run: |
           $gitToken = "${{ secrets.WINGET_PAT }}"
-          $github = Invoke-RestMethod -uri "https://api.github.com/repos/stnkl/EverythingToolbar/releases"
+          $github = Invoke-RestMethod -uri "https://api.github.com/repos/srwi/EverythingToolbar/releases"
           $targetRelease = $github | Where-Object { $_.prerelease -eq $false } | Select -First 1
           $installerUrl = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match "EverythingToolbar.*msi" | Select -ExpandProperty browser_download_url
           iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe

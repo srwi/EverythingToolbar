@@ -2,7 +2,7 @@ EverythingToolbar
 =================
 
 <a href="https://paypal.me/rumswinkel"><img src="https://img.shields.io/static/v1?label=Donate&message=%E2%9D%A4&logo=PayPal&color=%23009cde" height="25" /></a>
-<a href="https://github.com/stnkl/EverythingToolbar/releases/latest"><img src="https://img.shields.io/github/downloads/stnkl/EverythingToolbar/total?color=critical" height="25" /></a>
+<a href="https://github.com/srwi/EverythingToolbar/releases/latest"><img src="https://img.shields.io/github/downloads/srwi/EverythingToolbar/total?color=critical" height="25" /></a>
 <a href="https://crowdin.com/project/everythingtoolbar"><img src="https://badges.crowdin.net/everythingtoolbar/localized.svg" height="25" /></a>
 
 Instant file search integration for the Windows taskbar powered by [Everything](https://www.voidtools.com/).
@@ -64,10 +64,10 @@ EverythingToolbar is compatible with both Windows 10 and Windows 11 and works we
 
 - Make sure [Everything](https://www.voidtools.com) &ge; 1.4.1 is installed and running (the Lite version is not supported)
 - Install EverythingToolbar using one of the following methods
-  - Download the installer for [EverythingToolbar](https://github.com/stnkl/EverythingToolbar/releases)
+  - Download the installer for [EverythingToolbar](https://github.com/srwi/EverythingToolbar/releases)
   - [Chocolatey](https://chocolatey.org/): `choco install everythingtoolbar`
   - [winget](https://github.com/microsoft/winget-cli/): `winget install everythingtoolbar`
-  - [Manual installation](https://github.com/stnkl/EverythingToolbar/wiki/Installation-per-user-(experimental)) without admin privileges (not recommended)
+  - [Manual installation](https://github.com/srwi/EverythingToolbar/wiki/Installation-per-user-(experimental)) without admin privileges (not recommended)
 - **Note:** For Everything 1.5a the instance name `1.5a` must be set in the EverythingToolbar settings.
 
 ## Setup

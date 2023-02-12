@@ -1,6 +1,6 @@
 name: Bug report
 description: Create a bug report
-title: "Bug: "
+title: ""
 labels: []
 body:
 - type: checkboxes
@@ -8,9 +8,9 @@ body:
     label: Preflight Checklist
     description: Please ensure you've completed all of the following.
     options:
-      - label: I have fully read the [README](https://github.com/stnkl/EverythingToolbar/blob/master/README.md) and it did not solve the problem.
+      - label: I have fully read the [README](https://github.com/srwi/EverythingToolbar/blob/master/README.md) and it did not solve the problem.
         required: true
-      - label: I have searched all [open and closed issues](https://github.com/stnkl/EverythingToolbar/issues?q=) for the same bug report without success.
+      - label: I have searched all [open and closed issues](https://github.com/srwi/EverythingToolbar/issues?q=) for the same bug report without success.
         required: true
 - type: input
   attributes:

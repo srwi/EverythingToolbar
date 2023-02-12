@@ -42,9 +42,9 @@
                 </TextBlock>
                 <TextBlock>
                     <Run Text="{x:Static properties:Resources.AboutWebsite}" />:
-                    <Hyperlink NavigateUri="https://www.github.com/stnkl/EverythingToolbar"
+                    <Hyperlink NavigateUri="https://www.github.com/srwi/EverythingToolbar"
                                RequestNavigate="Hyperlink_RequestNavigate">
-                        https://www.github.com/stnkl/EverythingToolbar
+                        https://www.github.com/srwi/EverythingToolbar
                     </Hyperlink>
                 </TextBlock>
             </StackPanel>
