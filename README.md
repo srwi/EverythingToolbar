@@ -1,7 +1,6 @@
 EverythingToolbar
 =================
 
-<a href="https://github.com/sponsors/stnkl"><img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86" height="25" /></a>
 <a href="https://paypal.me/rumswinkel"><img src="https://img.shields.io/static/v1?label=Donate&message=%E2%9D%A4&logo=PayPal&color=%23009cde" height="25" /></a>
 <a href="https://github.com/stnkl/EverythingToolbar/releases/latest"><img src="https://img.shields.io/github/downloads/stnkl/EverythingToolbar/total?color=critical" height="25" /></a>
 <a href="https://crowdin.com/project/everythingtoolbar"><img src="https://badges.crowdin.net/everythingtoolbar/localized.svg" height="25" /></a>
@@ -101,13 +100,6 @@ EverythingToolbar is compatible with both Windows 10 and Windows 11 and works we
   - Install the toolbar deskband by running `/tools/install_deskband.cmd` as admin
 - Search icon:
   - Set `EverythingToolbar.Launcher` as startup project and start debugging
-
-## Support EverythingToolbar
-
-If you enjoy using EverythingToolbar and want to support its further development, consider donating or becoming a sponsor:
-
-<a href="https://github.com/sponsors/stnkl"><img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86" /></a> <a href="https://paypal.me/rumswinkel"><img src="https://img.shields.io/static/v1?label=Donate&message=%E2%9D%A4&logo=PayPal&color=%23009cde" /></a>
-
 
 ## Contribute
 
