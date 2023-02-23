@@ -58,7 +58,7 @@ namespace EverythingToolbar.Behaviors
             GetWindowRect(hwnd, out RECT placementTarget);
 
             int margin = GetMargin();
-            Rectangle workingArea = Screen.PrimaryScreen.WorkingArea;
+            Rectangle workingArea = Screen.FromPoint(Cursor.Position).WorkingArea;
             Size windowSize = GetTargetWindowSize();
             Edge taskbarEdge = TaskbarStateManager.Instance.TaskbarEdge;
 
@@ -68,14 +68,14 @@ namespace EverythingToolbar.Behaviors
                 case Edge.Bottom:
                 case Edge.Top:
                     windowPosition.Right = Math.Min(placementTarget.Left + (int)windowSize.Width, workingArea.Right - margin);
-                    windowPosition.Left = Math.Max(margin, windowPosition.Right - (int)windowSize.Width);
+                    windowPosition.Left = Math.Max(workingArea.Left + margin, windowPosition.Right - (int)windowSize.Width);
                     windowPosition.Top = Math.Max(workingArea.Top + margin, placementTarget.Top - margin - (int)windowSize.Height);
                     windowPosition.Bottom = Math.Min(workingArea.Bottom - margin, placementTarget.Bottom + margin + (int)windowSize.Height);
                     break;
                 case Edge.Left:
                 case Edge.Right:
                     windowPosition.Bottom = Math.Min(placementTarget.Top + (int)windowSize.Height, workingArea.Bottom - margin);
-                    windowPosition.Top = Math.Max(margin, windowPosition.Bottom - (int)windowSize.Height);
+                    windowPosition.Top = Math.Max(workingArea.Top + margin, windowPosition.Bottom - (int)windowSize.Height);
                     windowPosition.Left = Math.Max(workingArea.Left + margin, placementTarget.Left - margin - (int)windowSize.Width);
                     windowPosition.Right = Math.Min(workingArea.Right - margin, placementTarget.Right + margin + (int)windowSize.Width);
                     break;
