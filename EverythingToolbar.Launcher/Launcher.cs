@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,7 @@ using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using Microsoft.Xaml.Behaviors;
 using NHotkey;
+using NLog;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
 using Resources = EverythingToolbar.Launcher.Properties.Resources;
@@ -24,12 +26,14 @@ namespace EverythingToolbar.Launcher
         private const string MutexName = "EverythingToolbar.Launcher";
         private static bool _searchWindowRecentlyClosed;
         private static Timer _searchWindowRecentlyClosedTimer;
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger("Launcher");
 
         private class LauncherWindow : Window
         {
             public LauncherWindow(NotifyIcon icon)
             {
                 ToolbarLogger.Initialize();
+                Logger.Info($"EverythingToolbar Launcher {Assembly.GetExecutingAssembly().GetName().Version} started. OS: {Environment.OSVersion}");
 
                 _searchWindowRecentlyClosedTimer = new Timer(500);
                 _searchWindowRecentlyClosedTimer.AutoReset = false;
