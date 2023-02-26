@@ -16,15 +16,15 @@ namespace EverythingToolbar
 {
     public partial class Rules
     {
-        static List<Rule> rules = new List<Rule>();
-        static string RulesPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EverythingToolbar", "rules.xml");
+        private static List<Rule> _rules = new List<Rule>();
+        private static string RulesPath => Path.Combine(Utils.GetConfigDirectory(), "rules.xml");
 
         public Rules()
         {
             InitializeComponent();
 
-            rules = LoadRules();
-            dataGrid.ItemsSource = rules;
+            _rules = LoadRules();
+            dataGrid.ItemsSource = _rules;
             autoApplyRulesCheckbox.IsChecked = Settings.Default.isAutoApplyRules;
             UpdateUI();
         }
@@ -36,7 +36,7 @@ namespace EverythingToolbar
 
         private void Save(object sender, RoutedEventArgs e)
         {
-            if(SaveRules(rules, (bool)autoApplyRulesCheckbox.IsChecked))
+            if(SaveRules(_rules, (bool)autoApplyRulesCheckbox.IsChecked))
             {
                 Settings.Default.isAutoApplyRules = (bool)autoApplyRulesCheckbox.IsChecked;
                 Close();
@@ -47,7 +47,7 @@ namespace EverythingToolbar
         {
             if (File.Exists(RulesPath))
             {
-                var serializer = new XmlSerializer(rules.GetType());
+                var serializer = new XmlSerializer(_rules.GetType());
                 using (var reader = XmlReader.Create(RulesPath))
                 {
                     return (List<Rule>)serializer.Deserialize(reader);
@@ -88,23 +88,23 @@ namespace EverythingToolbar
 
         private void AddItem(object sender, RoutedEventArgs e)
         {
-            rules.Insert(rules.Count, new Rule() { Name = "", Type = FileType.Any, Expression = "", Command = "" });
+            _rules.Insert(_rules.Count, new Rule() { Name = "", Type = FileType.Any, Expression = "", Command = "" });
             RefreshList();
-            dataGrid.SelectedIndex = rules.Count - 1;
+            dataGrid.SelectedIndex = _rules.Count - 1;
         }
 
         private void DeleteSelected(object sender, RoutedEventArgs e)
         {
             int selectedIndex = dataGrid.SelectedIndex;
-            rules.RemoveAt(selectedIndex);
+            _rules.RemoveAt(selectedIndex);
             RefreshList();
-            if (rules.Count > selectedIndex)
+            if (_rules.Count > selectedIndex)
             {
                 dataGrid.SelectedIndex = selectedIndex;
             }
-            else if (rules.Count > 0)
+            else if (_rules.Count > 0)
             {
-                dataGrid.SelectedIndex = rules.Count - 1;
+                dataGrid.SelectedIndex = _rules.Count - 1;
             }
         }
 
@@ -122,8 +122,8 @@ namespace EverythingToolbar
         {
             int selectedIndex = dataGrid.SelectedIndex;
             Rule item = dataGrid.SelectedItem as Rule;
-            rules.RemoveAt(selectedIndex);
-            rules.Insert(selectedIndex + delta, item);
+            _rules.RemoveAt(selectedIndex);
+            _rules.Insert(selectedIndex + delta, item);
             RefreshList();
             dataGrid.SelectedIndex = selectedIndex + delta;
         }
@@ -136,13 +136,13 @@ namespace EverythingToolbar
         private void RefreshList()
         {
             dataGrid.ItemsSource = null;
-            dataGrid.ItemsSource = rules;
+            dataGrid.ItemsSource = _rules;
         }
 
         private void UpdateUI()
         {
             DeleteButton.IsEnabled = dataGrid.SelectedIndex >= 0;
-            MoveDownButton.IsEnabled = dataGrid.SelectedIndex + 1 < rules.Count && dataGrid.SelectedIndex >= 0;
+            MoveDownButton.IsEnabled = dataGrid.SelectedIndex + 1 < _rules.Count && dataGrid.SelectedIndex >= 0;
             MoveUpButton.IsEnabled = dataGrid.SelectedIndex > 0;
 
             if ((bool)autoApplyRulesCheckbox.IsChecked)

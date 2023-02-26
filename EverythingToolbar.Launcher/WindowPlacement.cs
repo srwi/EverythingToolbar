@@ -33,6 +33,7 @@ namespace EverythingToolbar.Launcher
         {
             double scalingFactor = GetScalingFactor();
             RECT position = CalculatePosition(scalingFactor);
+            ToolbarLogger.GetLogger<SearchWindowPlacement>().Debug($"position: {position.Left}, position.Right: {position.Right}, position.Top: {position.Top}, position.Bottom: {position.Bottom}");
             AssociatedObject.AnimateShow(
                 position.Left * scalingFactor,
                 position.Top * scalingFactor,
@@ -50,6 +51,12 @@ namespace EverythingToolbar.Launcher
             int margin = (int)(GetMargin() / scalingFactor);
 
             RECT windowPosition = new RECT();
+
+            ToolbarLogger.GetLogger<SearchWindowPlacement>().Debug($"Calculating window position...");
+            ToolbarLogger.GetLogger<SearchWindowPlacement>().Debug($"taskbar.Edge: {taskbar.Edge}");
+            ToolbarLogger.GetLogger<SearchWindowPlacement>().Debug($"taskbar.Position: {taskbar.Position}");
+            ToolbarLogger.GetLogger<SearchWindowPlacement>().Debug($"margin: {margin}");
+            ToolbarLogger.GetLogger<SearchWindowPlacement>().Debug($"windowSize: {windowSize.Width}, {windowSize.Height}");
 
             if (taskbar.Edge == Edge.Top)
             {

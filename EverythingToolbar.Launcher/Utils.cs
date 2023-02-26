@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using EverythingToolbar.Helpers;
 using IWshRuntimeLibrary;
 using Microsoft.Win32;
 using File = System.IO.File;
@@ -9,12 +10,6 @@ namespace EverythingToolbar.Launcher
 {
     internal class Utils
     {
-        public enum WindowsTheme
-        {
-            Dark,
-            Light
-        }
-
         public static class WindowsVersion
         {
             public static Version Windows10 = new Version(10, 0, 10240);
@@ -30,12 +25,15 @@ namespace EverythingToolbar.Launcher
 
         public static bool IsTaskbarCenterAligned()
         {
+            ToolbarLogger.GetLogger<Utils>().Debug($"Windows version: {Environment.OSVersion.Version}");
+
             if (Environment.OSVersion.Version < WindowsVersion.Windows11)
                 return false;
 
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"))
             {
                 object taskbarAlignment = key?.GetValue("TaskbarAl");
+                ToolbarLogger.GetLogger<Utils>().Debug($"taskbarAlignment: {taskbarAlignment}");
                 bool leftAligned = taskbarAlignment != null && (int)taskbarAlignment == 0;
                 return !leftAligned;
             }

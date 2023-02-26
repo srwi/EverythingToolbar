@@ -7,6 +7,7 @@ namespace EverythingToolbar.Helpers
 {
     public static class ToolbarLogger
     {
+        private static readonly string DebugFlagFileName = Path.Combine(Utils.GetConfigDirectory(), "debug.txt");
         private static readonly LogFactory LogFactory = new LogFactory();
 
         public static ILogger GetLogger(string name)
@@ -17,6 +18,11 @@ namespace EverythingToolbar.Helpers
         public static ILogger GetLogger<T>()
         {
             return LogFactory.GetLogger(typeof(T).FullName);
+        }
+
+        private static LogLevel GetLogLevel()
+        {
+            return File.Exists(DebugFlagFileName) ? LogLevel.Debug : LogLevel.Info;
         }
 
         public static void Initialize()
@@ -32,10 +38,11 @@ namespace EverythingToolbar.Helpers
                 ConcurrentWrites = true,
                 Layout = "${longdate}|${level:uppercase=true}|${logger}|${message}|${exception:format=tostring}"
             };
-            var fileRule = new LoggingRule("*", LogLevel.Debug, logfile);
+            var fileRule = new LoggingRule("*", GetLogLevel(), logfile);
             var config = new LoggingConfiguration();
             config.LoggingRules.Add(fileRule);
             LogFactory.Configuration = config;
+            GetLogger("ToolbarLogger").Debug("Debug logging enabled.");
         }
     }
 }

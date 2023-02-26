@@ -1,22 +1,27 @@
 ﻿using System;
+using System.IO;
 
 namespace EverythingToolbar.Helpers
 {
-    public class Utils
+    public static class Utils
     {
-        private Utils() { }
+        public static string GetConfigDirectory()
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "EverythingToolbar");
+        }
 
         public static class WindowsVersion
         {
-            public static Version Windows10 = new Version(10, 0, 10240);
-            public static Version Windows10Anniversary = new Version(10, 0, 14393);
-            public static Version Windows11 = new Version(10, 0, 22000);
+            public static readonly Version Windows10 = new Version(10, 0, 10240);
+            public static readonly Version Windows10Anniversary = new Version(10, 0, 14393);
+            public static readonly Version Windows11 = new Version(10, 0, 22000);
         }
 
         public static string GetHumanReadableFileSize(long length)
         {
             // Get absolute value
-            long absolute = length < 0 ? -length : length;
+            var absolute = length < 0 ? -length : length;
 
             // Determine the suffix and readable value
             string suffix;
