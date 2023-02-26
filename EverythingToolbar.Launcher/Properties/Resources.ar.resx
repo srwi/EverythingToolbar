@@ -139,13 +139,13 @@
     <value>2. تثبيت إلى شريط المهام</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>مطلوب إعادة تشغيل المستكشف لتحديث أيقونة شريط المهام. هل ترغب في إعادة تشغيله الآن؟</value>
+    <value>مطلوب إعادة تشغيل مدير ملفات النظام لتحديث أيقونة شريط المهام. هل ترغب في إعادة تشغيله الآن؟</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>إعادة تشغيل المستكشف</value>
+    <value>إعادة تشغيل مدير ملفات النظام</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>يمكن إخفاء أيقونة البحث الأصلية في Windows"اختياري".</value>
+    <value>يمكن إخفاء أيقونة البحث الأصلية في Windows بشكل إختياري.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
     <value>3. إخفاء بحث Windows</value>
@@ -160,9 +160,9 @@
     <value>مساعد إعداد EverythingToolbar</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>Select one of the following taskbar icons:</value>
+    <value>إختر أحد رموز شريط المهام التالية:</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Taskbar icon</value>
+    <value>1. أيقونة شريط المهام</value>
   </data>
 </root>
