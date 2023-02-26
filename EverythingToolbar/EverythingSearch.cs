@@ -128,6 +128,8 @@ namespace EverythingToolbar
 
         public bool Initialize()
         {
+            SetInstanceName(Settings.Default.instanceName);
+            
             var major = Everything_GetMajorVersion();
             var minor = Everything_GetMinorVersion();
             var revision = Everything_GetRevision();
@@ -135,7 +137,6 @@ namespace EverythingToolbar
             if (major > 1 || (major == 1 && minor > 4) || (major == 1 && minor == 4 && revision >= 1))
             {
                 _logger.Info("Everything version: {major}.{minor}.{revision}", major, minor, revision);
-                SetInstanceName(Settings.Default.instanceName);
                 return true;
             }
             
@@ -154,13 +155,9 @@ namespace EverythingToolbar
 
         public void SetInstanceName(string name)
         {
-            if (name == "")
-            {
-                Everything_SetInstanceName("");
-                return;
-            }
-
-            _logger.Info("Setting Everything instance name: " + name);
+            if (name != string.Empty)
+                _logger.Info("Setting Everything instance name: " + name);
+            
             Everything_SetInstanceName(name);
         }
 
