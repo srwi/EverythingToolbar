@@ -14,6 +14,7 @@ using NHotkey;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
 using Resources = EverythingToolbar.Launcher.Properties.Resources;
+using Timer = System.Timers.Timer;
 
 namespace EverythingToolbar.Launcher
 {
@@ -21,12 +22,18 @@ namespace EverythingToolbar.Launcher
     {
         private const string EventName = "EverythingToolbarToggleEvent";
         private const string MutexName = "EverythingToolbar.Launcher";
+        private static bool _searchWindowRecentlyClosed;
+        private static Timer _searchWindowRecentlyClosedTimer;
 
         private class LauncherWindow : Window
         {
             public LauncherWindow(NotifyIcon icon)
             {
                 ToolbarLogger.Initialize();
+
+                _searchWindowRecentlyClosedTimer = new Timer(500);
+                _searchWindowRecentlyClosedTimer.AutoReset = false;
+                _searchWindowRecentlyClosedTimer.Elapsed += (s, e) => { _searchWindowRecentlyClosed = false; };
 
                 Width = 0;
                 Height = 0;
@@ -60,6 +67,14 @@ namespace EverythingToolbar.Launcher
                 ShortcutManager.Instance.SetFocusCallback(FocusSearchBox);
                 if (Settings.Default.isReplaceStartMenuSearch)
                     ShortcutManager.Instance.HookStartMenu();
+
+                SearchWindow.Instance.Hiding += OnSearchWindowHiding;
+            }
+
+            private static void OnSearchWindowHiding(object sender, EventArgs e)
+            {
+                _searchWindowRecentlyClosed = true;
+                _searchWindowRecentlyClosedTimer.Start();
             }
 
             private static void FocusSearchBox(object sender, HotkeyEventArgs e)
@@ -82,6 +97,10 @@ namespace EverythingToolbar.Launcher
 
             private void ToggleWindow()
             {
+                // Prevent search window from reappearing after clicking the icon to close
+                if (_searchWindowRecentlyClosed)
+                    return;
+                
                 Dispatcher?.Invoke(() =>
                 {
                     if (SearchWindow.Instance.Visibility == Visibility.Visible)
