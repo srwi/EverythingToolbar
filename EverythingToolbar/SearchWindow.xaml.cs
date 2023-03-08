@@ -88,6 +88,10 @@ namespace EverythingToolbar
         {
             if (Height != Settings.Default.popupSize.Height || Width != Settings.Default.popupSize.Width)
                 Settings.Default.popupSize = new Size(Width, Height);
+            
+            // Push outside of screens to prevent flickering when showing
+            BeginAnimation(TopProperty, new DoubleAnimation { To = 100000, Duration = TimeSpan.Zero });
+            BeginAnimation(LeftProperty, new DoubleAnimation { To = 100000, Duration = TimeSpan.Zero });
 
             base.Hide();
             
@@ -122,9 +126,9 @@ namespace EverythingToolbar
             Width = width;
             Height = height;
             if (taskbarEdge == Edge.Right || taskbarEdge == Edge.Left)
-                Top = top;
+                BeginAnimation(TopProperty, new DoubleAnimation { To = top, Duration = TimeSpan.Zero });
             else
-                Left = left;
+                BeginAnimation(LeftProperty, new DoubleAnimation { To = left, Duration = TimeSpan.Zero });
 
             if (Environment.OSVersion.Version >= Utils.WindowsVersion.Windows11)
                 AnimateShowWin11(left, top, width, height, taskbarEdge);

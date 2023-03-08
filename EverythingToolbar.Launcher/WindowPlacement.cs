@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
@@ -60,35 +62,30 @@ namespace EverythingToolbar.Launcher
 
             if (taskbar.Edge == Edge.Top)
             {
-                windowPosition.Top = taskbar.Position.Height + margin;
+                windowPosition.Top = taskbar.Position.Bottom + margin;
                 windowPosition.Bottom = Math.Min(windowPosition.Top + (int)windowSize.Height, screen.WorkingArea.Bottom - margin);
                 windowPosition = SetHorizontalPosition(windowPosition, screen.WorkingArea, windowSize, margin);
             }
             else if (taskbar.Edge == Edge.Bottom)
             {
                 windowPosition.Bottom = taskbar.Position.Y - margin;
-                windowPosition.Top = Math.Max(margin, windowPosition.Bottom - (int)windowSize.Height);
+                windowPosition.Top = Math.Max(screen.WorkingArea.Top + margin, windowPosition.Bottom - (int)windowSize.Height);
                 windowPosition = SetHorizontalPosition(windowPosition, screen.WorkingArea, windowSize, margin);
             }
             else if (taskbar.Edge == Edge.Left)
             {
-                windowPosition.Left = taskbar.Position.Width + margin;
-                windowPosition.Right = Math.Min(windowPosition.Left + (int)windowSize.Width, screen.WorkingArea.Width - margin);
+                windowPosition.Left = taskbar.Position.Right + margin;
+                windowPosition.Right = Math.Min(windowPosition.Left + (int)windowSize.Width, screen.WorkingArea.Right - margin);
                 windowPosition.Top = margin;
-                windowPosition.Bottom = Math.Min(windowPosition.Top + (int)windowSize.Height, screen.WorkingArea.Height - margin);
+                windowPosition.Bottom = Math.Min(windowPosition.Top + (int)windowSize.Height, screen.WorkingArea.Bottom - margin);
             }
             else if (taskbar.Edge == Edge.Right)
             {
-                windowPosition.Right = taskbar.Position.X - margin;
-                windowPosition.Left = Math.Max(windowPosition.Right - (int)windowSize.Width, margin);
+                windowPosition.Right = taskbar.Position.Left - margin;
+                windowPosition.Left = Math.Max(windowPosition.Right - (int)windowSize.Width, screen.WorkingArea.Left + margin);
                 windowPosition.Top = margin;
-                windowPosition.Bottom = Math.Min(windowPosition.Top + (int)windowSize.Height, screen.WorkingArea.Height - margin);
+                windowPosition.Bottom = Math.Min(windowPosition.Top + (int)windowSize.Height, screen.WorkingArea.Bottom - margin);
             }
-
-            windowPosition.Left += screen.Bounds.Left;
-            windowPosition.Right += screen.Bounds.Left;
-            windowPosition.Top += screen.Bounds.Top;
-            windowPosition.Bottom += screen.Bounds.Top;
 
             TaskbarStateManager.Instance.TaskbarEdge = taskbar.Edge;
 
@@ -107,22 +104,22 @@ namespace EverythingToolbar.Launcher
         {
             if (Utils.IsTaskbarCenterAligned())
             {
-                windowPosition.Left = (int)((screenWorkingArea.Width - windowSize.Width) / 2);
-                windowPosition.Left = Math.Max(margin, windowPosition.Left);
-                windowPosition.Right = (int)((screenWorkingArea.Width + windowSize.Width) / 2);
-                windowPosition.Right = Math.Min(screenWorkingArea.Width - margin, windowPosition.Right);
+                windowPosition.Left = screenWorkingArea.Left + (int)((screenWorkingArea.Width - windowSize.Width) / 2);
+                windowPosition.Left = Math.Max(screenWorkingArea.Left + margin, windowPosition.Left);
+                windowPosition.Right = screenWorkingArea.Left + (int)((screenWorkingArea.Width + windowSize.Width) / 2);
+                windowPosition.Right = Math.Min(screenWorkingArea.Right - margin, windowPosition.Right);
             }
             else
             {
                 if (CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
                 {
-                    windowPosition.Right = screenWorkingArea.Width - margin;
-                    windowPosition.Left = Math.Max(windowPosition.Right - (int)windowSize.Width, margin);
+                    windowPosition.Right = screenWorkingArea.Right - margin;
+                    windowPosition.Left = Math.Max(windowPosition.Right - (int)windowSize.Width, screenWorkingArea.Left + margin);
                 }
                 else
                 {
-                    windowPosition.Left = margin;
-                    windowPosition.Right = Math.Min(windowPosition.Left + (int)windowSize.Width, screenWorkingArea.Width - margin);
+                    windowPosition.Left = screenWorkingArea.Left + margin;
+                    windowPosition.Right = Math.Min(windowPosition.Left + (int)windowSize.Width, screenWorkingArea.Right - margin);
                 }
             }
 
@@ -137,42 +134,42 @@ namespace EverythingToolbar.Launcher
                 Edge = Edge.Bottom,
             };
 
-            var leftDockedWidth = Math.Abs((Math.Abs(screen.Bounds.Left) - Math.Abs(screen.WorkingArea.Left)));
-            var topDockedHeight = Math.Abs((Math.Abs(screen.Bounds.Top) - Math.Abs(screen.WorkingArea.Top)));
-            var rightDockedWidth = ((screen.Bounds.Width - leftDockedWidth) - screen.WorkingArea.Width);
-            var bottomDockedHeight = ((screen.Bounds.Height - topDockedHeight) - screen.WorkingArea.Height);
+            var topDockedHeight = Math.Abs(Math.Abs(screen.Bounds.Top) - Math.Abs(screen.WorkingArea.Top));
+            var bottomDockedHeight = screen.Bounds.Height - topDockedHeight - screen.WorkingArea.Height;
+            var leftDockedWidth = Math.Abs(Math.Abs(screen.Bounds.Left) - Math.Abs(screen.WorkingArea.Left));
+            var rightDockedWidth = screen.Bounds.Width - leftDockedWidth - screen.WorkingArea.Width;
 
-            if (leftDockedWidth > 0)
+            List<int> docks = new List<int> { bottomDockedHeight, topDockedHeight, leftDockedWidth, rightDockedWidth };
+            switch (docks.IndexOf(docks.Max()))
             {
-                location.Position.X = screen.Bounds.Left;
-                location.Position.Y = screen.Bounds.Top;
-                location.Position.Width = leftDockedWidth;
-                location.Position.Height = screen.Bounds.Height;
-                location.Edge = Edge.Left;
-            }
-            else if (rightDockedWidth > 0)
-            {
-                location.Position.X = screen.WorkingArea.Right;
-                location.Position.Y = screen.Bounds.Top;
-                location.Position.Width = rightDockedWidth;
-                location.Position.Height = screen.Bounds.Height;
-                location.Edge = Edge.Right;
-            }
-            else if (topDockedHeight > 0)
-            {
-                location.Position.X = screen.WorkingArea.Left;
-                location.Position.Y = screen.Bounds.Top;
-                location.Position.Width = screen.WorkingArea.Width;
-                location.Position.Height = topDockedHeight;
-                location.Edge = Edge.Top;
-            }
-            else
-            {
-                location.Position.X = screen.WorkingArea.Left;
-                location.Position.Y = screen.WorkingArea.Bottom;
-                location.Position.Width = screen.WorkingArea.Width;
-                location.Position.Height = bottomDockedHeight;
-                location.Edge = Edge.Bottom;
+                case 0:  // Edge.Bottom
+                    location.Position.X = screen.WorkingArea.Left;
+                    location.Position.Y = screen.WorkingArea.Bottom;
+                    location.Position.Width = screen.WorkingArea.Width;
+                    location.Position.Height = bottomDockedHeight;
+                    location.Edge = Edge.Bottom;
+                    break;
+                case 1:  // Edge.Top
+                    location.Position.X = screen.WorkingArea.Left;
+                    location.Position.Y = screen.Bounds.Top;
+                    location.Position.Width = screen.WorkingArea.Width;
+                    location.Position.Height = topDockedHeight;
+                    location.Edge = Edge.Top;
+                    break;
+                case 2:  // Edge.Left
+                    location.Position.X = screen.Bounds.Left;
+                    location.Position.Y = screen.Bounds.Top;
+                    location.Position.Width = leftDockedWidth;
+                    location.Position.Height = screen.Bounds.Height;
+                    location.Edge = Edge.Left;
+                    break;
+                case 3:  // Edge.Right
+                    location.Position.X = screen.WorkingArea.Right;
+                    location.Position.Y = screen.Bounds.Top;
+                    location.Position.Width = rightDockedWidth;
+                    location.Position.Height = screen.Bounds.Height;
+                    location.Edge = Edge.Right;
+                    break;
             }
 
             return location;
@@ -196,10 +193,6 @@ namespace EverythingToolbar.Launcher
 
         [DllImport("user32")]
         static extern uint GetDpiForWindow(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
         private struct TaskbarLocation
         {
