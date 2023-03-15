@@ -1,7 +1,5 @@
 name: Bug report
 description: Create a bug report
-title: ""
-labels: []
 body:
 - type: checkboxes
   attributes:
