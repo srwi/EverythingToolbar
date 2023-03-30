@@ -26,11 +26,6 @@
 			<Directory Id="ProgramMenuFolder">
 				<Directory Id="ApplicationProgramsFolder" Name="EverythingToolbar"/>
 			</Directory>
-
-			<Component Id="ApplicationAutostart">
-				<Condition>WINDOWSBUILDNUMBER >= 22000</Condition>
-				<RegistryValue Root="HKCU" Key="Software\Microsoft\Windows\CurrentVersion\Run" Type="string" Name="EverythingToolbar" Value="&quot;[#EverythingToolbar.Launcher.exe]&quot;" KeyPath="yes"/>
-			</Component>
 		</Directory>
 
 		<DirectoryRef Id="APPLICATIONFOLDER">
@@ -78,7 +73,6 @@
 			<ComponentRef Id="EverythingToolbarAssembly" />
 			<ComponentRef Id="EverythingToolbar.Launcher.exe" />
 			<ComponentRef Id="ApplicationShortcut" />
-			<ComponentRef Id="ApplicationAutostart" />
 		</Feature>
 
 		<InstallExecuteSequence>
