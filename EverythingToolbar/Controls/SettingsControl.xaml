@@ -4,8 +4,6 @@
       xmlns:properties="clr-namespace:EverythingToolbar.Properties"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
-      xmlns:c="clr-namespace:EverythingToolbar.Converters"
-      xmlns:h="clr-namespace:EverythingToolbar.Helpers"
       xmlns:local="clr-namespace:EverythingToolbar">
 
     <Grid.ContextMenu>
