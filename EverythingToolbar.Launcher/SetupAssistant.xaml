@@ -13,7 +13,7 @@
         Width="575">
 
     <i:Interaction.Behaviors>
-        <b:MicaWindow MicaWindowStyle="MainWindow" />
+        <b:MicaWindow />
     </i:Interaction.Behaviors>
 
     <Window.Resources>

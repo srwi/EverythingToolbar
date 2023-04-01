@@ -12,12 +12,21 @@ namespace EverythingToolbar.Behaviors
     public class MicaWindow : Behavior<Window>
     {
         public static readonly DependencyProperty MicaWindowStyleProperty =
-            DependencyProperty.Register("MicaStyle", typeof(MicaWindowStyleType), typeof(MicaWindow), new FrameworkPropertyMetadata(MicaWindowStyleType.MainWindow));
+            DependencyProperty.Register(nameof(MicaWindowStyle), typeof(MicaWindowStyleType), typeof(MicaWindow), new FrameworkPropertyMetadata(MicaWindowStyleType.MainWindow));
 
         public MicaWindowStyleType MicaWindowStyle
         {
             get => (MicaWindowStyleType)GetValue(MicaWindowStyleProperty);
             set => SetValue(MicaWindowStyleProperty, value);
+        }
+        
+        public static readonly DependencyProperty CaptionHeightProperty =
+            DependencyProperty.Register(nameof(CaptionHeight), typeof(int), typeof(MicaWindow), new FrameworkPropertyMetadata(20));
+
+        public int CaptionHeight
+        {
+            get => (int)GetValue(CaptionHeightProperty);
+            set => SetValue(CaptionHeightProperty, value);
         }
 
         protected override void OnAttached()
@@ -50,14 +59,14 @@ namespace EverythingToolbar.Behaviors
         private void OnMicaWindowLoaded(object sender, RoutedEventArgs e)
         {
             var presentationSource = PresentationSource.FromVisual((Visual)sender);
-            presentationSource.ContentRendered += OnMicaWindowContentRendered;
+            if (presentationSource != null) presentationSource.ContentRendered += OnMicaWindowContentRendered;
 
-            WindowChrome.SetWindowChrome(AssociatedObject, new WindowChrome()
+            WindowChrome.SetWindowChrome(AssociatedObject, new WindowChrome
             {
                 ResizeBorderThickness = new Thickness(3),
                 GlassFrameThickness = new Thickness(-1),
-                CaptionHeight = 0,
-                UseAeroCaptionButtons = false,
+                CaptionHeight = CaptionHeight,
+                UseAeroCaptionButtons = true,
             });
         }
 

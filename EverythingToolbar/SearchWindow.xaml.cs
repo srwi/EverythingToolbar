@@ -32,7 +32,7 @@ namespace EverythingToolbar
                 AllowsTransparency = true;
                 Loaded += (s, e) =>
                 {
-                    WindowChrome.SetWindowChrome(this, new WindowChrome()
+                    WindowChrome.SetWindowChrome(this, new WindowChrome
                     {
                         ResizeBorderThickness = new Thickness(DropShadowBlurRadius + 3),
                         CaptionHeight = 0
