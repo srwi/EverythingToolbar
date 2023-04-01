@@ -25,7 +25,7 @@
                             BorderBrush="{DynamicResource QuickSettingsToggleButtonBorderBrush}"
                             CornerRadius="{DynamicResource QuickSettingsToggleButtonCornerRadius}">
                         <ContentPresenter TextBlock.Foreground="{TemplateBinding Foreground}"
-                                          TextBlock.FontSize="12pt"
+                                          TextBlock.FontSize="11pt"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           TextBlock.TextAlignment="Center" />

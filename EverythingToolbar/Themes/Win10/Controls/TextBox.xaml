@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Thickness x:Key="TextBoxAccentBorderThickness" />
     <Thickness x:Key="TextBoxBorderActiveThickness"
                Bottom="2"
                Top="2"

@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Path x:Key="SearchBoxIcon" Stroke="{DynamicResource SearchBoxIconColor}"
+          IsHitTestVisible="False"
+          HorizontalAlignment="Left"
+          VerticalAlignment="Center"
+          Margin="20, 0, 0, 0"
+          StrokeThickness="1.5">
+        <Path.Data>
+            <GeometryGroup>
+                <LineGeometry StartPoint="10, 15"
+                              EndPoint="6, 11" />
+                <EllipseGeometry Center="2, 7"
+                                 RadiusX="5.3"
+                                 RadiusY="5.3" />
+            </GeometryGroup>
+        </Path.Data>
+    </Path>
+
+</ResourceDictionary>

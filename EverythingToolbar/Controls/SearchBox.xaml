@@ -51,26 +51,12 @@
             </TextBox.ContextMenu>
         </TextBox>
 
-        <Path Stroke="{DynamicResource SearchBoxLogo}"
-              IsHitTestVisible="False"
-              HorizontalAlignment="Left"
-              VerticalAlignment="Center"
-              Margin="13, 0, 0, 0">
-            <Path.Data>
-                <GeometryGroup>
-                    <LineGeometry StartPoint="0, 17"
-                                  EndPoint="6, 11" />
-                    <EllipseGeometry Center="10, 7"
-                                     RadiusX="5.3"
-                                     RadiusY="5.3" />
-                </GeometryGroup>
-            </Path.Data>
-        </Path>
+        <ContentControl Content="{DynamicResource SearchBoxIcon}" />
 
         <StackPanel Name="QuickToggleButtons"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
-                    Margin="0, 0, 6, 0"
+                    Margin="0, 0, 11, 0"
                     Background="Transparent">
             <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
                           ToolTip="{x:Static properties:Resources.SettingsMatchCase}"

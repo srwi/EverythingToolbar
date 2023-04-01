@@ -2,6 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style TargetType="{x:Type TextBox}">
+        <Setter Property="MaxHeight"
+                Value="{DynamicResource TextBoxMaxHeight}" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="FontSize"
@@ -37,9 +39,6 @@
                                           Padding="{TemplateBinding Padding}"
                                           HorizontalScrollBarVisibility="Hidden"
                                           VerticalScrollBarVisibility="Hidden" />
-                            <Border x:Name="BottomBorder"
-                                    BorderThickness="{DynamicResource TextBoxAccentBorderThickness}"
-                                    CornerRadius="{DynamicResource TextBoxCornerRadius}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -63,9 +62,6 @@
                         </Trigger>
                         <Trigger Property="Control.IsKeyboardFocused"
                                  Value="true">
-                            <Setter Property="BorderBrush"
-                                    TargetName="BottomBorder"
-                                    Value="{DynamicResource AccentColor}" />
                             <Setter Property="Background"
                                     TargetName="TextBoxBorder"
                                     Value="{DynamicResource TextBoxBackgroundActive}" />

@@ -23,9 +23,7 @@
     <SolidColorBrush x:Key="TextBoxBorderHover" Color="#e4e4e4" />
     <SolidColorBrush x:Key="TextBoxBorderActive" Color="#e4e4e4" />
 
-    <SolidColorBrush x:Key="SearchBoxLogo" Color="#1b1b1b" />
-    <SolidColorBrush x:Key="SearchBoxLogoHover" Color="#1b1b1b" />
-    <SolidColorBrush x:Key="SearchBoxLogoActive" Color="#1b1b1b" />
+    <SolidColorBrush x:Key="SearchBoxIconColor" Color="#1b1b1b" />
 
     <SolidColorBrush x:Key="QuickSettingsToggleButtonBackgroundHover" Color="#23595959" />
     <SolidColorBrush x:Key="QuickSettingsToggleButtonBackgroundActive" Color="#1a595959" />
