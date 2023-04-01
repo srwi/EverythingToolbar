@@ -66,7 +66,7 @@ namespace EverythingToolbar.Behaviors
                 ResizeBorderThickness = new Thickness(3),
                 GlassFrameThickness = new Thickness(-1),
                 CaptionHeight = CaptionHeight,
-                UseAeroCaptionButtons = true,
+                UseAeroCaptionButtons = true
             });
         }
 
@@ -79,7 +79,7 @@ namespace EverythingToolbar.Behaviors
         }
 
         [Flags]
-        public enum MicaWindowStyleType : int
+        public enum MicaWindowStyleType
         {
             Auto = 0,
             Disable = 1,

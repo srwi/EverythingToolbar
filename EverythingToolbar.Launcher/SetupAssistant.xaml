@@ -7,6 +7,7 @@
         WindowStartupLocation="CenterScreen"
         Height="410"
         Background="Transparent"
+        WindowStyle="ToolWindow"
         Title="{x:Static properties:Resources.SetupAssistantTitle}"
         Closed="OnClosed"
         Foreground="White"
@@ -83,21 +84,11 @@
                                 Background="#0cffffff"
                                 CornerRadius="4"
                                 Padding="10"
-                                Margin="0, 2">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Image x:Name="icon"
-                                       Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
-                                       Width="40"
-                                       Height="40"
-                                       Margin="6"
-                                       RenderOptions.BitmapScalingMode="Fant" />
-                                <TextBlock x:Name="text" Foreground="White" Text="{TemplateBinding Content}"
-                                           Grid.Column="1" VerticalAlignment="Center" Margin="5" />
-                            </Grid>
+                                Margin="10">
+                            <Image x:Name="icon"
+                                   Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
+                                   Margin="25"
+                                   RenderOptions.BitmapScalingMode="Fant" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -112,10 +103,9 @@
             </Setter>
         </Style>
 
-
     </Window.Resources>
 
-    <Grid Margin="20">
+    <Grid Margin="20, 15, 20, 20">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="40" />
@@ -136,23 +126,23 @@
                     <TextBlock Grid.Row="1"
                                TextWrapping="Wrap"
                                Text="{x:Static properties:Resources.SetupAssistantFirstStepText}" />
-                    <StackPanel Name="IconRadioButtons" VerticalAlignment="Center" Grid.Row="2">
+                    <UniformGrid  Name="IconRadioButtons" VerticalAlignment="Center" Rows="1" Grid.Row="2">
                         <RadioButton GroupName="Icon"
+                                     Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                                      Style="{StaticResource RadioButtonVerticalStyle}"
                                      Tag="Icons/Dark.ico"
-                                     Content="Dark"
                                      Checked="OnIconRadioButtonChecked" />
                         <RadioButton GroupName="Icon"
+                                     Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                                      Style="{StaticResource RadioButtonVerticalStyle}"
                                      Tag="Icons/Light.ico"
-                                     Content="Light"
                                      Checked="OnIconRadioButtonChecked" />
                         <RadioButton GroupName="Icon"
+                                     Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                                      Style="{StaticResource RadioButtonVerticalStyle}"
                                      Tag="Icons/Medium.ico"
-                                     Content="Medium"
                                      Checked="OnIconRadioButtonChecked" />
-                    </StackPanel>
+                    </UniformGrid>
                 </Grid>
             </TabItem>
 
@@ -170,7 +160,7 @@
                     <TextBlock Grid.Row="1"
                                TextWrapping="Wrap"
                                Text="{x:Static properties:Resources.SetupAssistantSecondStepText}" />
-                    <Image Grid.Row="2" Source="Images/PinToTaskbar.png" />
+                    <Image Grid.Row="2" Source="Images/PinToTaskbar.png" Margin="0, 0, 0, 10" />
                 </Grid>
             </TabItem>
 
