@@ -14,6 +14,7 @@ using EverythingToolbar.Properties;
 using NLog;
 using Peter;
 using Clipboard = System.Windows.Clipboard;
+using DataObject = System.Windows.DataObject;
 using MessageBox = System.Windows.MessageBox;
 
 namespace EverythingToolbar.Data
@@ -133,7 +134,10 @@ namespace EverythingToolbar.Data
         {
             try
             {
-                Clipboard.SetFileDropList(new StringCollection { FullPathAndFileName });
+                //Use `copy: false` as workaround for issue #361
+                var dataObj = new DataObject();
+                dataObj.SetFileDropList(new StringCollection { FullPathAndFileName });
+                Clipboard.SetDataObject(dataObj, copy: false);
             }
             catch (Exception e)
             {
