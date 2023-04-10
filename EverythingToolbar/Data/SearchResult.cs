@@ -134,10 +134,9 @@ namespace EverythingToolbar.Data
         {
             try
             {
-                //Use `copy: false` as workaround for issue #361
                 var dataObj = new DataObject();
                 dataObj.SetFileDropList(new StringCollection { FullPathAndFileName });
-                Clipboard.SetDataObject(dataObj, copy: false);
+                Clipboard.SetDataObject(dataObj, copy: false);  // Fixes #362
             }
             catch (Exception e)
             {
@@ -150,7 +149,9 @@ namespace EverythingToolbar.Data
         {
             try
             {
-                Clipboard.SetText(FullPathAndFileName);
+                var dataObj = new DataObject();
+                dataObj.SetText(FullPathAndFileName);
+                Clipboard.SetDataObject(dataObj, copy: false); // Fixes #362
             }
             catch (Exception e)
             {
