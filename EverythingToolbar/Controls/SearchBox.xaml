@@ -51,7 +51,7 @@
             </TextBox.ContextMenu>
         </TextBox>
 
-        <ContentControl Content="{DynamicResource SearchBoxIcon}" />
+        <Control Style="{DynamicResource SearchBoxIconStyle}" />
 
         <StackPanel Name="QuickToggleButtons"
                     Orientation="Horizontal"
