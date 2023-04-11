@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <Style x:Key="SearchBoxIconStyle"
-           TargetType="{x:Type Grid}">
+           TargetType="{x:Type Control}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Grid}">
+                <ControlTemplate TargetType="{x:Type Control}">
                     <Path Stroke="{DynamicResource SearchBoxIconColor}"
                           IsHitTestVisible="False"
                           HorizontalAlignment="Left"
