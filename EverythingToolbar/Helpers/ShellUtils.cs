@@ -118,34 +118,29 @@ namespace EverythingToolbar.Helpers
             Process.Start("rundll32.exe", args);
         }
 
-        public static void OpenFolderWithDefaultApp(string folder)
+        private static bool WindowsExplorerIsDefault()
         {
-            if (TryOpenDirectoryWithDefaultApp(folder))
-                return;
-
-            CreateProcessFromCommandLine($"explorer.exe \"{folder}\"");
-        }
-
-        public static void OpenParentFolderWithDefaultApp(string path)
-        {
-            if (TryOpenDirectoryWithDefaultApp(Path.GetDirectoryName(path)))
-                return;
+            var folderShell = (string)Registry.ClassesRoot.OpenSubKey(@"Folder\shell")?.GetValue(null);
+            if (folderShell != null && Registry.ClassesRoot.OpenSubKey(@"Folder\shell\" + folderShell + @"\command")?.GetValue(null) != null)
+                return false;
             
-            CreateProcessFromCommandLine($"explorer.exe /select,\"{path}\"");
-        }
-
-        private static bool TryOpenDirectoryWithDefaultApp(string directory)
-        {
-            var shell = (string)Registry.ClassesRoot.OpenSubKey(@"Directory\shell")?.GetValue("");
-
-            var command = Registry.ClassesRoot.OpenSubKey(@"Directory\shell\" + shell + @"\command")?.GetValue("");
-            if (command == null)
-                command = Registry.ClassesRoot.OpenSubKey(@"Folder\shell\open\command")?.GetValue("");
-            if (((string)command).ToLower().Contains(@"\explorer.exe"))
+            var directoryShell = (string)Registry.ClassesRoot.OpenSubKey(@"Directory\shell")?.GetValue(null);
+            if (directoryShell != null && Registry.ClassesRoot.OpenSubKey(@"Directory\shell\" + directoryShell + @"\command")?.GetValue(null) != null)
                 return false;
 
-            CreateProcessFromCommandLine(command.ToString().Replace("%1", directory));
             return true;
+        }
+        
+        public static void OpenParentFolderAndSelect(string path)
+        {
+            if (WindowsExplorerIsDefault())
+            {
+                CreateProcessFromCommandLine($"explorer.exe /select,\"{path}\"");
+                return;
+            }
+            
+            var parent = Path.GetDirectoryName(path) ?? path;
+            Process.Start(parent);
         }
     }
 }
