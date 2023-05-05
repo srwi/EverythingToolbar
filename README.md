@@ -62,7 +62,7 @@ EverythingToolbar is compatible with both Windows 10 and Windows 11 and works we
 
 ## Installation
 
-- Make sure [Everything](https://www.voidtools.com) &ge; 1.4.1 is installed and running (the Lite version is not supported)
+- Make sure you are running Windows 10 or 11 and [Everything](https://www.voidtools.com) &ge; 1.4.1 is installed and running (the Lite version is not supported)
 - Install EverythingToolbar using one of the following methods
   - Download the installer for [EverythingToolbar](https://github.com/srwi/EverythingToolbar/releases)
   - [Chocolatey](https://chocolatey.org/): `choco install everythingtoolbar`
