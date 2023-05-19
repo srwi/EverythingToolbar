@@ -35,7 +35,12 @@
                     </Style>
                 </StackPanel.Resources>
                 <TextBlock>EverythingToolbar</TextBlock>
-                <TextBlock Name="VersionTextBlock" />
+                <TextBox Name="VersionTextBlock"
+                         Margin="23,5,15,5"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         IsReadOnly="True"
+                         Text="{Binding Text, Mode=OneWay}" />
                 <TextBlock>Copyright © 2023 Stephan Rumswinkel</TextBlock>
                 <TextBlock>
                     <Run Text="{x:Static properties:Resources.AboutLicense}" />: MIT
@@ -53,8 +58,7 @@
                    Grid.Row="2"/>
         <Button Grid.Row="2"
                 Margin="250, 10, 10, 10"
-                Click="Button_Click">
-            OK
-        </Button>
+                Click="Button_Click" Content="{x:Static properties:Resources.AboutOK}" />
+        
     </Grid>
 </Window>
