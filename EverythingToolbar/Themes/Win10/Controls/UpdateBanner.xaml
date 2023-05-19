@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <CornerRadius x:Key="UpdateBannerCornerRadius"
+                  TopLeft="0"
+                  TopRight="0"
+                  BottomRight="0"
+                  BottomLeft="0" />
+    <CornerRadius x:Key="UpdateBannerButtonCornerRadius"
+                  TopLeft="2"
+                  TopRight="2"
+                  BottomRight="2"
+                  BottomLeft="2" />
+    <Thickness x:Key="UpdateBannerMargin"
+               Left="0"
+               Top="0"
+               Right="0"
+               Bottom="0" />
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../../Styles/UpdateBannerButton.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

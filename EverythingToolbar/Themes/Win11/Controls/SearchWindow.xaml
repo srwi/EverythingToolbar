@@ -2,21 +2,23 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Sys="clr-namespace:System;assembly=mscorlib">
 
-    <Thickness x:Key="TabBarMargin"
-               Left="23"
-               Top="20"
-               Right="23"
-               Bottom="16" />
     <Thickness x:Key="SearchBoxMargin"
                Left="23"
                Top="31"
                Right="23"
                Bottom="0" />
+    <Thickness x:Key="TabBarMargin"
+               Left="23"
+               Top="20"
+               Right="23"
+               Bottom="16" />
     <GridLength x:Key="FirstGridRowHeight">Auto</GridLength>
     <GridLength x:Key="SecondGridRowHeight">Auto</GridLength>
-    <GridLength x:Key="ThirdGridRowHeight">*</GridLength>
+    <GridLength x:Key="ThirdGridRowHeight">Auto</GridLength>
+    <GridLength x:Key="FourthGridRowHeight">*</GridLength>
     <Sys:Int32 x:Key="SearchBoxGridRow">0</Sys:Int32>
     <Sys:Int32 x:Key="TabBarGridRow">1</Sys:Int32>
-    <Sys:Int32 x:Key="SearchResultsViewGridRow">2</Sys:Int32>
+    <Sys:Int32 x:Key="UpdateBannerGridRow">2</Sys:Int32>
+    <Sys:Int32 x:Key="SearchResultsViewGridRow">3</Sys:Int32>
 
 </ResourceDictionary>

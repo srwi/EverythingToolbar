@@ -5,10 +5,12 @@
     <Thickness x:Key="TabBarMargin" Right="13" />
     <Thickness x:Key="SearchBoxMargin" />
     <GridLength x:Key="FirstGridRowHeight">Auto</GridLength>
-    <GridLength x:Key="SecondGridRowHeight">*</GridLength>
-    <GridLength x:Key="ThirdGridRowHeight">Auto</GridLength>
+    <GridLength x:Key="SecondGridRowHeight">Auto</GridLength>
+    <GridLength x:Key="ThirdGridRowHeight">*</GridLength>
+    <GridLength x:Key="FourthGridRowHeight">Auto</GridLength>
     <Sys:Int32 x:Key="TabBarGridRow">0</Sys:Int32>
-    <Sys:Int32 x:Key="SearchResultsViewGridRow">1</Sys:Int32>
-    <Sys:Int32 x:Key="SearchBoxGridRow">2</Sys:Int32>
+    <Sys:Int32 x:Key="SearchResultsViewGridRow">2</Sys:Int32>
+    <Sys:Int32 x:Key="UpdateBannerGridRow">1</Sys:Int32>
+    <Sys:Int32 x:Key="SearchBoxGridRow">3</Sys:Int32>
 
 </ResourceDictionary>

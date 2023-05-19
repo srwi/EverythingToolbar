@@ -49,6 +49,7 @@
                     <RowDefinition Height="{DynamicResource FirstGridRowHeight}" />
                     <RowDefinition Height="{DynamicResource SecondGridRowHeight}" />
                     <RowDefinition Height="{DynamicResource ThirdGridRowHeight}" />
+                    <RowDefinition Height="{DynamicResource FourthGridRowHeight}" />
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="{DynamicResource TabBarGridRow}"
@@ -75,19 +76,21 @@
 
                     <controls:SettingsControl Grid.Column="2" />
                 </Grid>
+                
+                <controls:UpdateBanner Grid.Row="{DynamicResource UpdateBannerGridRow}" />
 
                 <controls:SearchResultsView x:Name="SearchResultsView"
-                                         Grid.Row="{DynamicResource SearchResultsViewGridRow}" />
+                                            Grid.Row="{DynamicResource SearchResultsViewGridRow}" />
 
                 <controls:SearchBox x:Name="SearchBox"
-                                 TabIndex="999"
-                                 Grid.Row="{DynamicResource SearchBoxGridRow}"
-                                 Height="40"
-                                 Margin="{DynamicResource SearchBoxMargin}"
-                                 Visibility="{Binding Source={x:Static h:TaskbarStateManager.Instance},
-                                                      Path=IsIcon,
-                                                      Converter={c:BoolToVisibilityConverter},
-                                                      ConverterParameter=false}" />
+                                    TabIndex="999"
+                                    Grid.Row="{DynamicResource SearchBoxGridRow}"
+                                    Height="40"
+                                    Margin="{DynamicResource SearchBoxMargin}"
+                                    Visibility="{Binding Source={x:Static h:TaskbarStateManager.Instance},
+                                                         Path=IsIcon,
+                                                         Converter={c:BoolToVisibilityConverter},
+                                                         ConverterParameter=false}" />
             </Grid>
         </Border>
     </Border>
