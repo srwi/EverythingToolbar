@@ -45,8 +45,16 @@ namespace EverythingToolbar
                 default:
                     if (e.IsDown)
                     {
-                        Key = e.Key;
-                        Modifiers = TempMods;
+                        if (TempMods == ModifierKeys.None && e.Key == Key.Escape)
+                        {
+                            Key = Key.None;
+                            Modifiers = ModifierKeys.None;
+                        }
+                        else
+                        {
+                            Key = e.Key;
+                            Modifiers = TempMods;
+                        }
                     }
                     break;
             }
