@@ -160,9 +160,9 @@
     <value>Asistente de configuración de EverythingToolbar</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>Select one of the following taskbar icons:</value>
+    <value>Seleccionar uno de los siguientes iconos de la barra de tareas:</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Taskbar icon</value>
+    <value>1. Icono de la barra de tareas</value>
   </data>
 </root>
