@@ -151,7 +151,7 @@
     <value>開啟路徑</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
-    <value>Show more options</value>
+    <value>顯示更多選項</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
     <value>開啟方式...</value>
@@ -334,7 +334,7 @@
     <value>規則...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>Set instance name...</value>
+    <value>設定實體名稱...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>顯示快速開關</value>
@@ -349,7 +349,7 @@
     <value>佈景主題</value>
   </data>
   <data name="SettingsThemeAuto" xml:space="preserve">
-    <value>Sync theme</value>
+    <value>同步主題</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>更改預覽圖</value>
@@ -470,5 +470,17 @@
   </data>
   <data name="UserFilterVideo" xml:space="preserve">
     <value>影片</value>
+  </data>
+  <data name="UpdateBannerText" xml:space="preserve">
+    <value>Update available:</value>
+  </data>
+  <data name="UpdateBannerSkip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="UpdateBannerDownload" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="SettingsCheckForUpdates" xml:space="preserve">
+    <value>Check for updates automatically</value>
   </data>
 </root>
