@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutLicense" xml:space="preserve">
-    <value>Licensz</value>
+    <value>Licenc</value>
   </data>
   <data name="AboutOK" xml:space="preserve">
     <value>OK</value>
@@ -151,7 +151,7 @@
     <value>Megnyitás</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
-    <value>Show more options</value>
+    <value>Továbbiak megjelenítése</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
     <value>Megnyitás ezzel...</value>
@@ -310,7 +310,7 @@
     <value>Üres keresés elrejtése</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>Match Case</value>
+    <value>Egyező eset</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
     <value>Útvonal egyezés</value>
@@ -334,7 +334,7 @@
     <value>Szabályok...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>Set instance name...</value>
+    <value>Példánynév beállítása...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>Gyorskapcsolók megjelenítése</value>
@@ -349,7 +349,7 @@
     <value>Téma</value>
   </data>
   <data name="SettingsThemeAuto" xml:space="preserve">
-    <value>Sync theme</value>
+    <value>Téma szinkron</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>Mutasson miniatűröket</value>
@@ -364,7 +364,7 @@
     <value>OK</value>
   </data>
   <data name="ShortcutWindowTitle" xml:space="preserve">
-    <value>Enter shortcut...</value>
+    <value>Gyorsbill. beáll.</value>
   </data>
   <data name="SortByAttributesAscending" xml:space="preserve">
     <value>Növekvő attribútum</value>
@@ -391,40 +391,40 @@
     <value>Módosítás dátuma csökkenő</value>
   </data>
   <data name="SortByDateRecentlyChangedAscending" xml:space="preserve">
-    <value>Date recently changed ascending</value>
+    <value>A legutóbbi változás dátuma növekvő</value>
   </data>
   <data name="SortByDateRecentlyChangedDescending" xml:space="preserve">
-    <value>Date recently changed descending</value>
+    <value>A legutóbbi változás dátuma csökkenő</value>
   </data>
   <data name="SortByDateRunAscending" xml:space="preserve">
-    <value>Date run ascending</value>
+    <value>Futtatás dátuma, növekvő</value>
   </data>
   <data name="SortByDateRunDescending" xml:space="preserve">
-    <value>Date run descending</value>
+    <value>Futtatás dátuma, csökkenő</value>
   </data>
   <data name="SortByExtensionAscending" xml:space="preserve">
-    <value>Extension ascending</value>
+    <value>Kiterjesztés, növekvő</value>
   </data>
   <data name="SortByExtensionDescending" xml:space="preserve">
-    <value>Extension descending</value>
+    <value>Kiterjesztés, csökkenő</value>
   </data>
   <data name="SortByFileListFilenameAscending" xml:space="preserve">
-    <value>File list filename ascending</value>
+    <value>Fájllista fájlnév, növekvő</value>
   </data>
   <data name="SortByFileListFilenameDescending" xml:space="preserve">
-    <value>File list filename descending</value>
+    <value>Fájllista fájlnév, csökkenő</value>
   </data>
   <data name="SortByNameAscending" xml:space="preserve">
-    <value>Name ascending</value>
+    <value>Név alapján, növekvő</value>
   </data>
   <data name="SortByNameDescending" xml:space="preserve">
-    <value>Name descending</value>
+    <value>Név alapján, csökkenő</value>
   </data>
   <data name="SortByPathAscending" xml:space="preserve">
-    <value>Path ascending</value>
+    <value>Útvonal, növekvő</value>
   </data>
   <data name="SortByPathDescending" xml:space="preserve">
-    <value>Path descending</value>
+    <value>Útvonal, csökkenő</value>
   </data>
   <data name="SortByRunCountAscending" xml:space="preserve">
     <value>Növekvő számlálás</value>
@@ -436,39 +436,51 @@
     <value>Növekvő rendezés</value>
   </data>
   <data name="SortBySizeDescending" xml:space="preserve">
-    <value>Size descending</value>
+    <value>Méret, csökkenő</value>
   </data>
   <data name="SortByTypeNameAscending" xml:space="preserve">
-    <value>Type name ascending</value>
+    <value>Beírt nevek, növekvő</value>
   </data>
   <data name="SortByTypeNameDescending" xml:space="preserve">
-    <value>Type name descending</value>
+    <value>Beírt nevek, csökkenő</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Sötét</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>Light</value>
+    <value>Világos</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
-    <value>Audio</value>
+    <value>Audió</value>
   </data>
   <data name="UserFilterCompressed" xml:space="preserve">
-    <value>Compressed</value>
+    <value>Tömörített</value>
   </data>
   <data name="UserFilterDocument" xml:space="preserve">
-    <value>Document</value>
+    <value>Dokumentum</value>
   </data>
   <data name="UserFilterExecutable" xml:space="preserve">
-    <value>Executable</value>
+    <value>Futtatható</value>
   </data>
   <data name="UserFilterPicture" xml:space="preserve">
-    <value>Picture</value>
+    <value>Kép</value>
   </data>
   <data name="UserFilterPlaceholder" xml:space="preserve">
-    <value>More</value>
+    <value>Továbbiak</value>
   </data>
   <data name="UserFilterVideo" xml:space="preserve">
-    <value>Video</value>
+    <value>Videó</value>
+  </data>
+  <data name="UpdateBannerText" xml:space="preserve">
+    <value>Update available:</value>
+  </data>
+  <data name="UpdateBannerSkip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="UpdateBannerDownload" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="SettingsCheckForUpdates" xml:space="preserve">
+    <value>Check for updates automatically</value>
   </data>
 </root>
