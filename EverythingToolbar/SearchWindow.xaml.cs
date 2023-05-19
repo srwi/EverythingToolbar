@@ -125,15 +125,22 @@ namespace EverythingToolbar
         {
             Width = width;
             Height = height;
-            if (taskbarEdge == Edge.Right || taskbarEdge == Edge.Left)
-                BeginAnimation(TopProperty, new DoubleAnimation { To = top, Duration = TimeSpan.Zero });
-            else
-                BeginAnimation(LeftProperty, new DoubleAnimation { To = left, Duration = TimeSpan.Zero });
-
-            if (Environment.OSVersion.Version >= Utils.WindowsVersion.Windows11)
-                AnimateShowWin11(left, top, width, height, taskbarEdge);
-            else
-                AnimateShowWin10(left, top, width, height, taskbarEdge);
+            
+            var vertical = taskbarEdge == Edge.Left || taskbarEdge == Edge.Right;
+            var animation = new DoubleAnimation
+            {
+                To = vertical ? top : left,
+                Duration = TimeSpan.Zero
+            };
+            animation.Completed += (s, e) =>
+            {
+                if (Environment.OSVersion.Version >= Utils.WindowsVersion.Windows11)
+                    AnimateShowWin11(left, top, width, height, taskbarEdge);
+                else
+                    AnimateShowWin10(left, top, width, height, taskbarEdge);
+            };
+            
+            BeginAnimation(vertical ? TopProperty : LeftProperty, animation);
         }
 
         private void AnimateShowWin10(double left, double top, double width, double height, Edge taskbarEdge)
@@ -190,7 +197,7 @@ namespace EverythingToolbar
                     property = TopProperty;
                     break;
             }
-            BeginAnimation(property, new DoubleAnimation()
+            BeginAnimation(property, new DoubleAnimation
             {
                 From = from,
                 To = to,
@@ -198,7 +205,7 @@ namespace EverythingToolbar
                 EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut }
             });
 
-            BeginAnimation(OpacityProperty, new DoubleAnimation()
+            BeginAnimation(OpacityProperty, new DoubleAnimation
             {
                 From = 0,
                 To = 1,
@@ -259,7 +266,7 @@ namespace EverythingToolbar
                     property = TopProperty;
                     break;
             }
-            BeginAnimation(property, new DoubleAnimation()
+            BeginAnimation(property, new DoubleAnimation
             {
                 From = from,
                 To = to,
@@ -283,7 +290,7 @@ namespace EverythingToolbar
                     fromThickness = new Thickness(-50, 0, 50, 0);
                     break;
             }
-            ContentGrid.BeginAnimation(MarginProperty, new ThicknessAnimation()
+            ContentGrid.BeginAnimation(MarginProperty, new ThicknessAnimation
             {
                 From = fromThickness,
                 To = new Thickness(0),
@@ -297,7 +304,7 @@ namespace EverythingToolbar
             Topmost = true;
             Topmost = false;
 
-            BeginAnimation(OpacityProperty, new DoubleAnimation()
+            BeginAnimation(OpacityProperty, new DoubleAnimation
             {
                 From = 1,
                 To = 0,
@@ -325,7 +332,7 @@ namespace EverythingToolbar
                     property = TopProperty;
                     break;
             }
-            DoubleAnimation animation = new DoubleAnimation()
+            DoubleAnimation animation = new DoubleAnimation
             {
                 To = target,
                 Duration = TimeSpan.FromMilliseconds(30),
@@ -365,7 +372,7 @@ namespace EverythingToolbar
                     property = TopProperty;
                     break;
             }
-            DoubleAnimation animation = new DoubleAnimation()
+            DoubleAnimation animation = new DoubleAnimation
             {
                 From = from,
                 To = to,
@@ -391,7 +398,7 @@ namespace EverythingToolbar
                     toThickness = new Thickness(-50, 0, 50, 0);
                     break;
             }
-            ContentGrid.BeginAnimation(MarginProperty, new ThicknessAnimation()
+            ContentGrid.BeginAnimation(MarginProperty, new ThicknessAnimation
             {
                 To = toThickness,
                 Duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.5),
