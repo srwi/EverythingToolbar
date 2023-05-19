@@ -53,6 +53,7 @@ EverythingToolbar is compatible with both Windows 10 and Windows 11 and works we
 | <kbd>Enter</kbd>                                      | Open                                 |
 | <kbd>Ctrl</kbd>+<kbd>Enter</kbd>/<kbd>Click</kbd>     | Open path                            |
 | <kbd>Shift</kbd>+<kbd>Enter</kbd>/<kbd>Click</kbd>    | Open in Everything                   |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd>         | Copy full path to clipboard          |
 | <kbd>Alt</kbd>+<kbd>Enter</kbd>/<kbd>Click</kbd>      | File properties                      |
 | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>     | Run as admin                         |
 | (<kbd>Shift</kbd>+)<kbd>Tab</kbd>                     | Cycle through filters                |

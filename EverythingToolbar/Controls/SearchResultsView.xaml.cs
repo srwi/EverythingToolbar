@@ -90,6 +90,10 @@ namespace EverythingToolbar.Controls
             {
                 OpenFilePath(null, null);
             }
+            else if (e.Key == Key.C && Keyboard.Modifiers == (ModifierKeys.Shift | ModifierKeys.Control))
+            {
+                SelectedItem?.CopyPathToClipboard();
+            }
             else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.Enter)
             {
                 RunAsAdmin(null, null);
@@ -157,10 +161,10 @@ namespace EverythingToolbar.Controls
 
         private void ScrollToVerticalOffset(double verticalOffset)
         {
-            Dispatcher.Invoke(new Action(() =>
+            Dispatcher.Invoke(() =>
             {
                 GetScrollViewer().ScrollToVerticalOffset(verticalOffset);
-            }), DispatcherPriority.ContextIdle);
+            }, DispatcherPriority.ContextIdle);
         }
 
         private void SelectNextSearchResult()
