@@ -118,51 +118,51 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClose" xml:space="preserve">
-    <value>Close</value>
+    <value>關閉</value>
   </data>
   <data name="CheckboxEnable" xml:space="preserve">
-    <value>Enable</value>
+    <value>啟用</value>
   </data>
   <data name="CheckboxHide" xml:space="preserve">
-    <value>Hide</value>
+    <value>隱藏</value>
   </data>
   <data name="ContextMenuQuit" xml:space="preserve">
-    <value>Quit</value>
+    <value>離開</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Run setup assistant...</value>
+    <value>執行設定助理...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
+    <value>將 EverythingToobar 釘選至工作列，右鍵點選圖示並選取「釘選到工作列」。</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Pin to taskbar</value>
+    <value>2. 釘選到工作列</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
+    <value>更新工作列圖示需要重新啟動檔案總管，您想要立即重新啟動嗎？</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>Restart explorer</value>
+    <value>重新啟動檔案總管</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>另外，原本的 Windows 搜尋圖示可以被隱藏。</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Hide Windows search</value>
+    <value>3. 隱藏 Windows 搜尋</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
+    <value>建議在系統啟動時自動執行 EverythingToolbar。</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. Configure autostart</value>
+    <value>4. 設定啟動時自動執行</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>EverythingToolbar Setup Assistant</value>
+    <value>EverythingToolbar 設定助手</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>Select one of the following taskbar icons:</value>
+    <value>從下列項目選擇一個工作列圖示：</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Taskbar icon</value>
+    <value>1. 工作列圖示</value>
   </data>
 </root>
