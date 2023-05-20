@@ -208,7 +208,7 @@
     <value>Win</value>
   </data>
   <data name="MessageBoxCopyException" xml:space="preserve">
-    <value>هل ترغب في نسخ المحتوى الاستثنائي إلى الحافظة؟</value>
+    <value>هل ترغب في نسخ المحتوى المُستثنى إلى الحافظة؟</value>
   </data>
   <data name="MessageBoxErrorTitle" xml:space="preserve">
     <value>حدث خطأ</value>
@@ -337,7 +337,7 @@
     <value>تعيين اسم النموذج...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>عرض اختصارات سريعة</value>
+    <value>عرض التبديلات سريعة</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
     <value>عرض عدد النتائج</value>
@@ -470,5 +470,17 @@
   </data>
   <data name="UserFilterVideo" xml:space="preserve">
     <value>فيديو</value>
+  </data>
+  <data name="UpdateBannerText" xml:space="preserve">
+    <value>Update available:</value>
+  </data>
+  <data name="UpdateBannerSkip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="UpdateBannerDownload" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="SettingsCheckForUpdates" xml:space="preserve">
+    <value>Check for updates automatically</value>
   </data>
 </root>

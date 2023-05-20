@@ -471,4 +471,16 @@
   <data name="UserFilterVideo" xml:space="preserve">
     <value>Videos</value>
   </data>
+  <data name="UpdateBannerText" xml:space="preserve">
+    <value>Update verfügbar:</value>
+  </data>
+  <data name="UpdateBannerSkip" xml:space="preserve">
+    <value>Überspringen</value>
+  </data>
+  <data name="UpdateBannerDownload" xml:space="preserve">
+    <value>Herunterladen</value>
+  </data>
+  <data name="SettingsCheckForUpdates" xml:space="preserve">
+    <value>Automatisch nach Updates suchen</value>
+  </data>
 </root>

@@ -151,7 +151,7 @@
     <value>3. إخفاء بحث Windows</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>من المستحسن بدء تشغيل شريط الأدوات EverythingToolbar تلقائياً عند بدء تشغيل النظام.</value>
+    <value>من المستحسن بَدْء تشغيل شريط الأدوات EverythingToolbar تلقائياً عند بَدْء تشغيل النظام.</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
     <value>4. إعداد التشغيل التلقائي</value>

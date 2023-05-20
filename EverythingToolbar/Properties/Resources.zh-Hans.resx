@@ -214,7 +214,7 @@
     <value>错误</value>
   </data>
   <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
-    <value>复制文件失败。</value>
+    <value>无法复制文件</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>复制路径失败。</value>
@@ -334,7 +334,7 @@
     <value>规则...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>设置实例名称……</value>
+    <value>设置实例名称...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>显示快速开关</value>
@@ -470,5 +470,17 @@
   </data>
   <data name="UserFilterVideo" xml:space="preserve">
     <value>视频</value>
+  </data>
+  <data name="UpdateBannerText" xml:space="preserve">
+    <value>Update available:</value>
+  </data>
+  <data name="UpdateBannerSkip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="UpdateBannerDownload" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="SettingsCheckForUpdates" xml:space="preserve">
+    <value>Check for updates automatically</value>
   </data>
 </root>
