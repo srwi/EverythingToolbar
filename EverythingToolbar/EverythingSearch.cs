@@ -321,6 +321,7 @@ namespace EverythingToolbar
             }
 
             var args = "";
+            if (!string.IsNullOrEmpty(Settings.Default.instanceName)) args += " -instance \"" + Settings.Default.instanceName + "\"";
             if (!string.IsNullOrEmpty(highlightedFile)) args += " -select \"" + highlightedFile + "\"";
             if (Settings.Default.sortBy <= 2) args += " -sort \"Name\"";
             else if (Settings.Default.sortBy <= 4) args += " -sort \"Path\"";
