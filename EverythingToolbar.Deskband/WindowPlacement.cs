@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
@@ -7,7 +6,7 @@ using System.Windows.Interop;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using Microsoft.Xaml.Behaviors;
-using Size = System.Windows.Size;
+using Point = System.Drawing.Point;
 
 namespace EverythingToolbar.Behaviors
 {
@@ -42,7 +41,7 @@ namespace EverythingToolbar.Behaviors
 
         private void OnShowing(object sender, EventArgs e)
         {
-            RECT position = CalculatePosition();
+            var position = CalculatePosition();
             AssociatedObject.AnimateShow(
                 position.Left * DpiScalingFactor,
                 position.Top * DpiScalingFactor,
@@ -54,15 +53,16 @@ namespace EverythingToolbar.Behaviors
 
         private RECT CalculatePosition()
         {
-            IntPtr hwnd = ((HwndSource)PresentationSource.FromVisual(PlacementTarget)).Handle;
-            GetWindowRect(hwnd, out RECT placementTarget);
+            var hwnd = ((HwndSource)PresentationSource.FromVisual(PlacementTarget)).Handle;
+            GetWindowRect(hwnd, out var placementTarget);
 
-            int margin = GetMargin();
-            Rectangle workingArea = Screen.FromPoint(Cursor.Position).WorkingArea;
-            Size windowSize = GetTargetWindowSize();
-            Edge taskbarEdge = TaskbarStateManager.Instance.TaskbarEdge;
+            var margin = GetMargin();
+            var placementTargetPos = new Point(placementTarget.Left, placementTarget.Top);
+            var workingArea = Screen.FromPoint(placementTargetPos).WorkingArea;
+            var windowSize = GetTargetWindowSize();
+            var taskbarEdge = TaskbarStateManager.Instance.TaskbarEdge;
 
-            RECT windowPosition = new RECT();
+            var windowPosition = new RECT();
             switch (taskbarEdge)
             {
                 case Edge.Bottom:
@@ -85,7 +85,7 @@ namespace EverythingToolbar.Behaviors
 
         private Size GetTargetWindowSize()
         {
-            Size windowSize = Settings.Default.popupSize;
+            var windowSize = Settings.Default.popupSize;
             windowSize.Width = Math.Max(windowSize.Width, AssociatedObject.MinWidth) / DpiScalingFactor;
             windowSize.Height = Math.Max(windowSize.Height, AssociatedObject.MinHeight) / DpiScalingFactor;
             return windowSize;
@@ -93,7 +93,7 @@ namespace EverythingToolbar.Behaviors
 
         private double GetScalingFactor()
         {
-            IntPtr hwnd = ((HwndSource)PresentationSource.FromVisual(PlacementTarget)).Handle;
+            var hwnd = ((HwndSource)PresentationSource.FromVisual(PlacementTarget)).Handle;
             return 96.0 / GetDpiForWindow(hwnd);
         }
 
@@ -113,7 +113,7 @@ namespace EverythingToolbar.Behaviors
         static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct RECT
+        private struct RECT
         {
             public int Left;
             public int Top;
