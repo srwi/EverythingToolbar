@@ -472,15 +472,15 @@
     <value>فيديو</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Update available:</value>
+    <value>تحديث متوفر:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Skip</value>
+    <value>تخطي</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
-    <value>Download</value>
+    <value>تحميل</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>Check for updates automatically</value>
+    <value>التحقق من التحديثات تلقائياً</value>
   </data>
 </root>
