@@ -472,15 +472,15 @@
     <value>Vídeo</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Update available:</value>
+    <value>Atualização Disponível:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Skip</value>
+    <value>Pular</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
     <value>Download</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>Check for updates automatically</value>
+    <value>Checar por atualizações automaticamente</value>
   </data>
 </root>
