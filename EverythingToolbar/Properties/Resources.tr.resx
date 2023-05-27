@@ -334,7 +334,7 @@
     <value>Kurallar...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>Set instance name...</value>
+    <value>Everything "instance" adını ayarla...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>Hızlı düğmeleri göster</value>
@@ -472,15 +472,15 @@
     <value>Video</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Update available:</value>
+    <value>Güncelleme mevcut:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Skip</value>
+    <value>Atla</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
-    <value>Download</value>
+    <value>İndir</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>Check for updates automatically</value>
+    <value>Güncellemeleri otomatik olarak kontrol et</value>
   </data>
 </root>
