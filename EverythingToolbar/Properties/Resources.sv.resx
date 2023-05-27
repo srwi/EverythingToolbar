@@ -472,15 +472,15 @@
     <value>Video</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Update available:</value>
+    <value>Uppdatering tillgänglig:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Skip</value>
+    <value>Hoppa över</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
-    <value>Download</value>
+    <value>Ladda ner</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>Check for updates automatically</value>
+    <value>Sök efter uppdateringar automatiskt</value>
   </data>
 </root>
