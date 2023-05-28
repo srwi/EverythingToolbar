@@ -83,7 +83,7 @@ namespace EverythingToolbar.Launcher
 
             private static void FocusSearchBox(object sender, HotkeyEventArgs e)
             {
-                SearchWindow.Instance.Show();
+                SearchWindow.Instance.Toggle();
             }
 
             private void StartToggleListener()
@@ -107,10 +107,7 @@ namespace EverythingToolbar.Launcher
                 
                 Dispatcher?.Invoke(() =>
                 {
-                    if (SearchWindow.Instance.Visibility == Visibility.Visible)
-                        SearchWindow.Instance.Hide();
-                    else
-                        SearchWindow.Instance.Show();
+                    SearchWindow.Instance.Toggle();
                 });
             }
         }

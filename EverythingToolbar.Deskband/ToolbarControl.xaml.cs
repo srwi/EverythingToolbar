@@ -1,6 +1,5 @@
 using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using EverythingToolbar.Behaviors;
@@ -11,7 +10,7 @@ using NHotkey;
 
 namespace EverythingToolbar
 {
-    public partial class ToolbarControl : UserControl
+    public partial class ToolbarControl
     {
         public ToolbarControl()
         {
@@ -49,7 +48,7 @@ namespace EverythingToolbar
 
         private void OnSearchWindowHiding(object sender, EventArgs e)
         {
-            FocusKeyboardFocusCapture(sender, e);
+            Keyboard.Focus(KeyboardFocusCapture);
         }
 
         private void OnSearchBoxLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -58,7 +57,7 @@ namespace EverythingToolbar
 
             if (e.NewFocus == null)  // New focus outside application
             {
-                FocusKeyboardFocusCapture(sender, e);
+                Keyboard.Focus(KeyboardFocusCapture);
             }
         }
 
@@ -67,16 +66,15 @@ namespace EverythingToolbar
             SearchWindow.Instance.Show();
         }
 
-        private void FocusKeyboardFocusCapture(object sender, EventArgs e)
-        {
-            Keyboard.Focus(KeyboardFocusCapture);
-        }
-
         private void FocusSearchBox(object sender, HotkeyEventArgs e)
         {
             if (TaskbarStateManager.Instance.IsIcon)
             {
-                SearchWindow.Instance.Show();
+                SearchWindow.Instance.Toggle();
+            }
+            else if (SearchBox.IsKeyboardFocusWithin)
+            {
+                SearchWindow.Instance.Hide();
             }
             else
             {
