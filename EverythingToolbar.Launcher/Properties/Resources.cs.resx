@@ -130,7 +130,7 @@
     <value>Ukončit</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Spustit asistenta nastavení...</value>
+    <value>Spustit průvodce nastavením...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>Chcete-li připnout EverythingToolbar na hlavní panel, klepněte pravým tlačítkem na jeho ikonu a zvolte „Připnout na hlavní panel“.</value>
