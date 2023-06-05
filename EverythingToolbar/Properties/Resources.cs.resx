@@ -256,10 +256,10 @@
     <value>Filters.csv nebyl nalezen</value>
   </data>
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
-    <value>Unhandled exception occured</value>
+    <value>Došlo k neošetřené výjimce</value>
   </data>
   <data name="RulesAutoApply" xml:space="preserve">
-    <value>Automatically apply rules based on condition</value>
+    <value>Automaticky použít pravidla na základě podmínky</value>
   </data>
   <data name="RulesCancel" xml:space="preserve">
     <value>Zrušit</value>
@@ -280,7 +280,7 @@
     <value>Typ</value>
   </data>
   <data name="RulesWindowText" xml:space="preserve">
-    <value>Use %file%, %filename% and %path% as placeholders in commands.</value>
+    <value>Použijte %file%, %filename% a %path% jako zástupné symboly v příkazech.</value>
   </data>
   <data name="RulesWindowTitle" xml:space="preserve">
     <value>Pravidla</value>
@@ -337,7 +337,7 @@
     <value>Nastavit název instance...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>Show quick toggles</value>
+    <value>Zobrazit rychlé možnosti</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
     <value>Zobrazit počet výsledků</value>
@@ -439,10 +439,10 @@
     <value>Velikost sestupně</value>
   </data>
   <data name="SortByTypeNameAscending" xml:space="preserve">
-    <value>Type name ascending</value>
+    <value>Typ vzestupně</value>
   </data>
   <data name="SortByTypeNameDescending" xml:space="preserve">
-    <value>Type name descending</value>
+    <value>Typ sestupně</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>Tmavý</value>
@@ -472,15 +472,15 @@
     <value>Video</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Update available:</value>
+    <value>Je dostupná aktualizace:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Skip</value>
+    <value>Přeskočit</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
-    <value>Download</value>
+    <value>Stáhnout</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>Check for updates automatically</value>
+    <value>Kontrolovat aktualizace automaticky</value>
   </data>
 </root>
