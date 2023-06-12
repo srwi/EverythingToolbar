@@ -19,6 +19,13 @@ body:
     required: true
 - type: input
   attributes:
+    label: Everything Version
+    description: What version of Everything are you using?
+    placeholder: "e.g. 1.4.1.1024 (x64)"
+  validations:
+    required: true
+- type: input
+  attributes:
     label: Windows Version
     description: What Windows version are you using? Click Start button > Settings > System > About.
     placeholder: "e.g. Windows 10 version 1909"
