@@ -38,13 +38,6 @@ namespace EverythingToolbar.Controls
 
         private void OnSettingsChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "isRegExEnabled" || e.PropertyName == "CurrentFilter")
-            {
-                bool newEnabledState = !Settings.Default.isRegExEnabled && EverythingSearch.Instance.CurrentFilter.IsMatchWholeWord == null;
-                IsMatchWholeWordMenuItem.IsEnabled = newEnabledState;
-                IsMatchWholeWordButton.IsEnabled = newEnabledState;
-            }
-
             if (e.PropertyName == "isShowQuickToggles")
                 UpdateQuickTogglesVisibility();
         }

@@ -1,10 +1,10 @@
 ﻿<UserControl x:Class="EverythingToolbar.Controls.SearchBox"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
+             xmlns:c="clr-namespace:EverythingToolbar.Converters"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-             xmlns:local="clr-namespace:EverythingToolbar"
-             xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              SizeChanged="OnSizeChanged">
 
     <Grid>
@@ -23,20 +23,17 @@
 
                     <MenuItem Header="{x:Static properties:Resources.SettingsRegularExpressions}"
                               IsCheckable="True"
-                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}"
-                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, TargetNullValue=True, Mode=OneWay}" />
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}" />
                     <MenuItem Header="{x:Static properties:Resources.SettingsMatchCase}"
                               IsCheckable="True"
-                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase, Mode=TwoWay}"
-                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, TargetNullValue=True, Mode=OneWay}" />
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase, Mode=TwoWay}" />
                     <MenuItem Header="{x:Static properties:Resources.SettingsMatchPath}"
                               IsCheckable="True"
-                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath, Mode=TwoWay}"
-                              IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, TargetNullValue=True, Mode=OneWay}" />
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath, Mode=TwoWay}" />
                     <MenuItem Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
                               IsCheckable="True"
                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}"
-                              Name="IsMatchWholeWordMenuItem" />
+                              IsEnabled="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={c:NotConverter}}" />
                     <Separator />
                     <MenuItem Header="{x:Static properties:Resources.ContextMenuCut}"
                               Click="OnCutClicked"
@@ -61,12 +58,12 @@
             <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
                           ToolTip="{x:Static properties:Resources.SettingsMatchCase}"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase}"
-                          IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, TargetNullValue=True, Mode=OneWay}"
                           Content="Aa"
                           Margin="1" />
             <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
                           ToolTip="{x:Static properties:Resources.SettingsMatchWholeWord}"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord}"
+                          IsEnabled="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={c:NotConverter}}"
                           Name="IsMatchWholeWordButton"
                           Margin="1">
                 <TextBlock TextDecorations="Underline,OverLine"
@@ -78,7 +75,6 @@
             <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
                           ToolTip="{x:Static properties:Resources.SettingsMatchPath}"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath}"
-                          IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, TargetNullValue=True, Mode=OneWay}"
                           Margin="1">
                 <TextBlock Text="..\"
                            FontSize="12pt"
@@ -87,7 +83,6 @@
             <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
                           ToolTip="{x:Static properties:Resources.SettingsRegularExpressions}"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled}"
-                          IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, TargetNullValue=True, Mode=OneWay}"
                           TextBlock.FontWeight="Bold"
                           Content=".*"
                           Margin="1" />

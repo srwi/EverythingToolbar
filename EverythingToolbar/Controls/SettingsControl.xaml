@@ -4,7 +4,7 @@
       xmlns:properties="clr-namespace:EverythingToolbar.Properties"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
-      xmlns:local="clr-namespace:EverythingToolbar">
+      xmlns:c="clr-namespace:EverythingToolbar.Converters">
 
     <Grid.ContextMenu>
         <ContextMenu>
@@ -14,20 +14,17 @@
 
             <MenuItem IsCheckable="True"
                       Header="{x:Static properties:Resources.SettingsRegularExpressions}"
-                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}"
-                      IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsRegExEnabled, TargetNullValue=True, Mode=OneWay}" />
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=TwoWay}" />
             <MenuItem IsCheckable="True"
                       Header="{x:Static properties:Resources.SettingsMatchCase}"
-                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase, Mode=TwoWay}"
-                      IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchCase, TargetNullValue=True, Mode=OneWay}" />
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchCase, Mode=TwoWay}" />
             <MenuItem IsCheckable="True"
                       Header="{x:Static properties:Resources.SettingsMatchPath}"
-                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath, Mode=TwoWay}"
-                      IsEnabled="{Binding Source={x:Static local:EverythingSearch.Instance}, Path=CurrentFilter.IsMatchPath, TargetNullValue=True, Mode=OneWay}" />
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchPath, Mode=TwoWay}" />
             <MenuItem IsCheckable="True"
                       Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isMatchWholeWord, Mode=TwoWay}"
-                      Name="IsMatchWholeWordMenuItem" />
+                      IsEnabled="{Binding Source={x:Static properties:Settings.Default}, Path=isRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={c:NotConverter}}" />
             <Separator />
             <MenuItem Header="{x:Static properties:Resources.SettingsSortBy}"
                       Name="SortByMenu"

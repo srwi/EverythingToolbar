@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -10,7 +9,7 @@ using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Controls
 {
-    public partial class SettingsControl : Grid
+    public partial class SettingsControl
     {
         public SettingsControl()
         {
@@ -27,20 +26,6 @@ namespace EverythingToolbar.Controls
                     menuItem.IsChecked = true;
                 else
                     menuItem.IsChecked = false;
-            }
-
-            // IsEnabled property of matchWholeWord menu item needs to be handled
-            // in code because DataTriggers are not compatible with DynamicResources as MenuItem styles
-            Settings.Default.PropertyChanged += OnSettingsChanged;
-            EverythingSearch.Instance.PropertyChanged += OnSettingsChanged;
-        }
-
-        private void OnSettingsChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "isRegExEnabled" || e.PropertyName == "CurrentFilter")
-            {
-                bool newEnabledState = !Settings.Default.isRegExEnabled && EverythingSearch.Instance.CurrentFilter.IsMatchWholeWord == null;
-                IsMatchWholeWordMenuItem.IsEnabled = newEnabledState;
             }
         }
 

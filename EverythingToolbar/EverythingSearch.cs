@@ -161,6 +161,20 @@ namespace EverythingToolbar
             Everything_SetInstanceName(name);
         }
 
+        private string ExpandDefaultMacros(string search)
+        {
+            foreach (var filter in FilterLoader.Instance.DefaultUserFilters)
+            {
+                search = search.Replace(filter.Macro + ":", filter.Search + " ");
+            }
+            return search;
+        }
+
+        private string BuildFinalSearchTerm()
+        {
+            return CurrentFilter.GetSearchPrefix() + ExpandDefaultMacros(SearchTerm);
+        }
+
         public void QueryBatch(bool append)
         {
             _cancellationTokenSource?.Cancel();
@@ -185,27 +199,22 @@ namespace EverythingToolbar
                     lock (_lock)
                     {
                         if (!append)
-                            SearchResults.ClearSilent();                        
+                            SearchResults.ClearSilent();
                     }
 
                     const uint flags = EVERYTHING_FULL_PATH_AND_FILE_NAME | EVERYTHING_HIGHLIGHTED_PATH |
                                        EVERYTHING_HIGHLIGHTED_FILE_NAME | EVERYTHING_REQUEST_SIZE |
                                        EVERYTHING_REQUEST_DATE_MODIFIED;
-                    var regEx = CurrentFilter.IsRegExEnabled ?? Settings.Default.isRegExEnabled;
 
-                    var search = CurrentFilter.Search + (CurrentFilter.Search.Length > 0 && !regEx ? " " : "") + SearchTerm;
-                    foreach (var filter in FilterLoader.Instance.DefaultUserFilters)
-                    {
-                        search = search.Replace(filter.Macro + ":", filter.Search + " ");
-                    }
-
+                    var search = BuildFinalSearchTerm();
+                    _logger.Debug("Searching: " + search);
                     Everything_SetSearchW(search);
                     Everything_SetRequestFlags(flags);
                     Everything_SetSort((uint)Settings.Default.sortBy);
-                    Everything_SetMatchCase(CurrentFilter.IsMatchCase ?? Settings.Default.isMatchCase);
-                    Everything_SetMatchPath(CurrentFilter.IsMatchPath ?? Settings.Default.isMatchPath);
-                    Everything_SetMatchWholeWord(CurrentFilter.IsMatchWholeWord ?? Settings.Default.isMatchWholeWord);
-                    Everything_SetRegex(regEx);
+                    Everything_SetMatchCase(Settings.Default.isMatchCase);
+                    Everything_SetMatchPath(Settings.Default.isMatchPath);
+                    Everything_SetMatchWholeWord(Settings.Default.isMatchWholeWord && !Settings.Default.isRegExEnabled);
+                    Everything_SetRegex(Settings.Default.isRegExEnabled);
                     Everything_SetMax(BATCH_SIZE);
                     lock (_lock)
                         Everything_SetOffset((uint)SearchResults.Count);
@@ -339,10 +348,11 @@ namespace EverythingToolbar
             args += Settings.Default.sortBy % 2 > 0 ? " -sort-ascending" : " -sort-descending";
             args += Settings.Default.isMatchCase ? " -case" : " -nocase";
             args += Settings.Default.isMatchPath ? " -matchpath" : " -nomatchpath";
-            args += Settings.Default.isMatchWholeWord ? " -ww" : " -noww";
+            args += Settings.Default.isMatchWholeWord && !Settings.Default.isRegExEnabled ? " -ww" : " -noww";
             args += Settings.Default.isRegExEnabled ? " -regex" : " -noregex";
-            args += " -s \"" + (CurrentFilter.Search + " " + SearchTerm).Replace("\"", "\"\"") + "\"";
+            args += " -s \"" + BuildFinalSearchTerm().Replace("\"", "\"\"") + "\"";
 
+            _logger.Debug("Showing in Everything with args: " + args);
             Process.Start(Settings.Default.everythingPath, args);
         }
 
