@@ -478,9 +478,9 @@
     <value>Pular</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
-    <value>Download</value>
+    <value>Baixar</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>Checar por atualizações automaticamente</value>
+    <value>Procurar atualizações automaticamente</value>
   </data>
 </root>
