@@ -472,15 +472,15 @@
     <value>视频</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Update available:</value>
+    <value>有可用更新：</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Skip</value>
+    <value>跳过</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
-    <value>Download</value>
+    <value>下载</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>Check for updates automatically</value>
+    <value>自动检查更新</value>
   </data>
 </root>

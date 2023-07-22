@@ -118,51 +118,51 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClose" xml:space="preserve">
-    <value>Close</value>
+    <value>Kapat</value>
   </data>
   <data name="CheckboxEnable" xml:space="preserve">
-    <value>Enable</value>
+    <value>Etkinleştir</value>
   </data>
   <data name="CheckboxHide" xml:space="preserve">
-    <value>Hide</value>
+    <value>Gizle</value>
   </data>
   <data name="ContextMenuQuit" xml:space="preserve">
-    <value>Quit</value>
+    <value>Çıkış</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Run setup assistant...</value>
+    <value>Kurulum yardımcısını çalıştır...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
+    <value>EverythingToolbar'ı görev çubuğuna sabitlemek için simgesine sağ tıklayıp 'Görev çubuğuna sabitle'yi seçin.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Pin to taskbar</value>
+    <value>2. Görev çubuğuna sabitle</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
+    <value>Görev çubuğu simgesini güncellemek için Windows Gezgini'nin yeniden başlatılması gerekiyor. Şimdi yeniden başlat?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>Restart explorer</value>
+    <value>Yeniden başlat</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>İsteğe bağlı olarak Windows Arama simgesi gizlenilebilir.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Hide Windows search</value>
+    <value>3. Windows Arama'yı gizle</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
+    <value>EverythingToolbar'ın sistem ile otomatik olarak başlatılması önerilir.</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. Configure autostart</value>
+    <value>4. Otomatik başlatmayı ayarla</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>EverythingToolbar Setup Assistant</value>
+    <value>EverythingToolbar Kurulum Asistanı</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>Select one of the following taskbar icons:</value>
+    <value>Aşağıdaki görev çubuğu simgelerinden birini seçin:</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Taskbar icon</value>
+    <value>1. Görev çubuğu simgesi</value>
   </data>
 </root>

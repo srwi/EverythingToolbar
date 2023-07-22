@@ -130,13 +130,13 @@
     <value>Ukončit</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Spustit asistenta nastavení...</value>
+    <value>Spustit průvodce nastavením...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>Chcete-li připnout EverythingToolbar na hlavní panel klepněte pravým tlačítkem na jeho ikonu a zvolte 'Připnout na hlavní panel'.</value>
+    <value>Chcete-li připnout EverythingToolbar na hlavní panel, klepněte pravým tlačítkem na jeho ikonu a zvolte „Připnout na hlavní panel“.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Připnout na hlavní panel</value>
+    <value>2. Připnutí na hlavním panelu</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>Pro aktualizaci ikony hlavního panelu je vyžadován restart průzkumníka. Chcete jej nyní restartovat?</value>
@@ -151,18 +151,18 @@
     <value>3. Skrýt vyhledávání Windows</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>Doporučuje se automaticky spustit EverythingToolbar při spuštění systému.</value>
+    <value>Doporučuje se automaticky spustit EverythingToolbar po spuštění systému.</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
     <value>4. Nastavení automatického spuštění</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>EverythingToolbar Asistent Nastavení</value>
+    <value>Průvodce nastavením EverythingToolbar</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>Select one of the following taskbar icons:</value>
+    <value>Vyberte jednu z následujících ikon:</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Taskbar icon</value>
+    <value>1. Ikona na hlavním panelu</value>
   </data>
 </root>
