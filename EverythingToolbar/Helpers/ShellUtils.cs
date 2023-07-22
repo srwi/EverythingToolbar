@@ -2,12 +2,16 @@
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using Microsoft.Win32;
+using NLog;
 
 namespace EverythingToolbar.Helpers
 {
     class ShellUtils
     {
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<ShellUtils>();
+        
         private ShellUtils() { }
 
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
@@ -130,12 +134,36 @@ namespace EverythingToolbar.Helpers
 
             return true;
         }
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+        private static extern int GetShortPathName(
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string path,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            StringBuilder shortPath,
+            int shortPathLength
+        );
+
+        private static string GetShortPath(string path)
+        {
+            var shortPathBuilder = new StringBuilder(255);
+            var result = GetShortPathName(@"\\?\" + path, shortPathBuilder, shortPathBuilder.Capacity);
+            
+            if (result == 0)
+            {
+                Logger.Info($"Failed to get short path for '{path}'.");
+                return path;
+            }
+            
+            return shortPathBuilder.ToString();
+        }
         
         public static void OpenParentFolderAndSelect(string path)
         {
             if (WindowsExplorerIsDefault())
             {
-                CreateProcessFromCommandLine($"explorer.exe /select,\"{path}\"");
+                var shortPath = GetShortPath(path);
+                CreateProcessFromCommandLine($"explorer.exe /select,\"{shortPath}\"");
                 return;
             }
             
