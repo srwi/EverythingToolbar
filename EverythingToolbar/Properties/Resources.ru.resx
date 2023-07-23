@@ -289,10 +289,10 @@
     <value>Найти с помощью Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
-    <value>объект</value>
+    <value>элемент</value>
   </data>
   <data name="SearchResults" xml:space="preserve">
-    <value>объектов</value>
+    <value>элем.</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
     <value>Об EverythingToolbar...</value>
@@ -472,15 +472,15 @@
     <value>Видео</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Update available:</value>
+    <value>Есть обновление:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Skip</value>
+    <value>Пропустить</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
-    <value>Download</value>
+    <value>Загрузить</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>Check for updates automatically</value>
+    <value>Проверять обновления автоматически</value>
   </data>
 </root>
