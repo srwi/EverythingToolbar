@@ -310,7 +310,7 @@
     <value>Ocultar buscas sem resultados</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>Corresponder Caso</value>
+    <value>Diferenciar Maiúsculas</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
     <value>Corresponder Caminho</value>
