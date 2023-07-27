@@ -151,7 +151,7 @@
     <value>Открыть путь</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
-    <value>Ещё настройки</value>
+    <value>Больше настроек</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
     <value>Открыть с помощью...</value>
