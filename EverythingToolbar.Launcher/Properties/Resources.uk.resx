@@ -160,9 +160,9 @@
     <value>Програма встановлення EverythingToolbar</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>Select one of the following taskbar icons:</value>
+    <value>Виберіть один із варіантів іконок для панелі завдань:</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Taskbar icon</value>
+    <value>1. Значок панелі завдань</value>
   </data>
 </root>
