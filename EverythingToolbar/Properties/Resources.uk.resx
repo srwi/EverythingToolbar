@@ -244,7 +244,7 @@
     <value>Якийсь регулярний вираз неправильний.</value>
   </data>
   <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Назва правила не може бути пустою.</value>
+    <value>* Поле "Назва" не може бути порожнім.</value>
   </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Будь ласка, виберіть Everything.exe...</value>
@@ -472,15 +472,15 @@
     <value>Відео</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Update available:</value>
+    <value>Доступне оновлення:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Skip</value>
+    <value>Пропустити</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
-    <value>Download</value>
+    <value>Завантажити</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>Check for updates automatically</value>
+    <value>Автоматично перевіряти наявність оновлень</value>
   </data>
 </root>
