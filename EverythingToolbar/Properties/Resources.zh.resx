@@ -472,7 +472,7 @@
     <value>影片</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Update available:</value>
+    <value>可用更新：</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
     <value>Skip</value>
