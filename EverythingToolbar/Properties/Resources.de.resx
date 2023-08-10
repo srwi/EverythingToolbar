@@ -478,7 +478,7 @@
     <value>Überspringen</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
-    <value>Herunterladen</value>
+    <value>Download</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
     <value>Automatisch nach Updates suchen</value>
