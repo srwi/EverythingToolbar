@@ -133,7 +133,7 @@
     <value>Esegui assistente installazione...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>Per aggiungere EverythingToolbar alla barra delle applicazioni fare click destro sulla sua icona e selezioni 'Aggiungi alla barra delle applicazioni'.</value>
+    <value>Per aggiungere EverythingToolbar alla barra delle applicazioni fare click destro sulla sua icona e seleziona 'Aggiungi alla barra delle applicazioni'.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
     <value>2. Aggiungi alla Barra delle applicazioni</value>
@@ -145,7 +145,7 @@
     <value>Riavvia esplora risorse</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>Opzionalmente l'icona originale della ricerca di Windows può esser nascosta.</value>
+    <value>A scelta l'icona originale della ricerca di Windows può essere nascosta.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
     <value>3. Nascondi ricerca di Windows</value>
@@ -163,6 +163,6 @@
     <value>Scegli una delle seguenti icone per la barra delle applicazioni:</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>Icona della barra delle applicazioni</value>
+    <value>Icona barra delle applicazioni</value>
   </data>
 </root>
