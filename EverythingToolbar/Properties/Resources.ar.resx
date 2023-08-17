@@ -483,4 +483,7 @@
   <data name="SettingsCheckForUpdates" xml:space="preserve">
     <value>التحقق من التحديثات تلقائياً</value>
   </data>
+  <data name="SettingsSelectFirstResult" xml:space="preserve">
+    <value>Select first result</value>
+  </data>
 </root>
