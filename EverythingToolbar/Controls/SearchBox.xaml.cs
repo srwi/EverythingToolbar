@@ -12,6 +12,8 @@ namespace EverythingToolbar.Controls
     {
         public event EventHandler<TextChangedEventArgs> TextChanged;
 
+        private int LastCaretIndex = 0;
+
         public SearchBox()
         {
             InitializeComponent();
@@ -67,6 +69,11 @@ namespace EverythingToolbar.Controls
             Keyboard.Focus(TextBox);
         }
 
+        public void RestoreCaretIndex()
+        {
+            TextBox.CaretIndex = Math.Min(LastCaretIndex, TextBox.Text.Length);
+        }
+
         private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             TextBox.SelectAll();
@@ -74,6 +81,8 @@ namespace EverythingToolbar.Controls
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
+            LastCaretIndex = TextBox.CaretIndex;
+
             if (e.NewFocus == null)  // New focus outside application
             {
                 SearchWindow.Instance.Hide();

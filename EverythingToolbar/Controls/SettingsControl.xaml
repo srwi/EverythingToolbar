@@ -150,6 +150,9 @@
                           Header="{x:Static properties:Resources.SettingsHideEmptyResults}"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isHideEmptySearchResults, Mode=TwoWay}" />
                 <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SettingsSelectFirstResult}"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isAutoSelectFirstResult, Mode=TwoWay}" />
+                <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SettingsShowResultsCount}"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=isShowResultsCount, Mode=TwoWay}" />
                 <MenuItem IsCheckable="True"

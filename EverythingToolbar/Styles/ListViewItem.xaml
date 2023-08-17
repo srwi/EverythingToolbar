@@ -3,6 +3,8 @@
 
     <Style x:Key="ListViewItemStyle"
            TargetType="{x:Type ListViewItem}">
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
         <Setter Property="BorderThickness"

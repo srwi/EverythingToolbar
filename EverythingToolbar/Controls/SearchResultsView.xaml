@@ -50,7 +50,7 @@
                           Click="ShowFileProperties" />
                 <Separator />
                 <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWinContext}"
-                          Click="ShowFileWindowsContexMenu"
+                          Click="ShowFileWindowsContextMenu"
                           Icon="&#xE712;" />
             </ContextMenu>
 

@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using EverythingToolbar.Behaviors;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Controls
 {
@@ -81,9 +82,10 @@ namespace EverythingToolbar.Controls
             }
             else if (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == Key.Enter)
             {
-                string path = "";
-                if (SearchResultsListView.SelectedIndex >= 0)
-                    path = (SearchResultsListView.SelectedItem as SearchResult).FullPathAndFileName;
+                if (SearchResultsListView.SelectedItem == null)
+                    return;
+                    
+                var path = ((SearchResult)SearchResultsListView.SelectedItem).FullPathAndFileName;
                 EverythingSearch.Instance.OpenLastSearchInEverything(path);
             }
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Enter)
@@ -143,6 +145,9 @@ namespace EverythingToolbar.Controls
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            if (!Settings.Default.isAutoSelectFirstResult)
+                return;
+            
             if (SearchResultsListView.SelectedIndex == -1 && SearchResultsListView.Items.Count > 0)
                 SearchResultsListView.SelectedIndex = 0;
         }
@@ -173,6 +178,7 @@ namespace EverythingToolbar.Controls
             {
                 SearchResultsListView.SelectedIndex++;
                 SearchResultsListView.ScrollIntoView(SearchResultsListView.SelectedItem);
+                FocusSearchWindow();  // Remove keyboard focus from any controls (in particular the search box)
             }
         }
 
@@ -182,7 +188,13 @@ namespace EverythingToolbar.Controls
             {
                 SearchResultsListView.SelectedIndex--;
                 SearchResultsListView.ScrollIntoView(SelectedItem);
+                FocusSearchWindow();  // Remove keyboard focus from any controls (in particular the search box)
+                return;
             }
+
+            SearchResultsListView.SelectedIndex = -1;
+            SearchWindow.Instance.SearchBox.Focus();
+            SearchWindow.Instance.SearchBox.RestoreCaretIndex();
         }
 
         private void PageUp()
@@ -220,15 +232,12 @@ namespace EverythingToolbar.Controls
         private void OpenSelectedSearchResult()
         {
             if (SearchResultsListView.SelectedIndex == -1)
-                SelectNextSearchResult();
+                return;
 
-            if (SearchResultsListView.SelectedIndex != -1)
-            {
-                if (Rules.HandleRule(SelectedItem))
-                    return;
+            if (Rules.HandleRule(SelectedItem))
+                return;
 
-                SelectedItem?.Open();
-            }
+            SelectedItem?.Open();
         }
 
         private void OpenFilePath(object sender, RoutedEventArgs e)
@@ -243,8 +252,8 @@ namespace EverythingToolbar.Controls
 
         private ScrollViewer GetScrollViewer()
         {
-            Decorator listViewBorder = VisualTreeHelper.GetChild(SearchResultsListView, 0) as Decorator;
-            return listViewBorder.Child as ScrollViewer;
+            var listViewBorder = VisualTreeHelper.GetChild(SearchResultsListView, 0) as Decorator;
+            return listViewBorder?.Child as ScrollViewer;
         }
 
         private void CopyPathToClipBoard(object sender, RoutedEventArgs e)
@@ -303,7 +312,7 @@ namespace EverythingToolbar.Controls
             SelectedItem?.ShowProperties();
         }
 
-        public void ShowFileWindowsContexMenu(object sender, RoutedEventArgs e)
+        public void ShowFileWindowsContextMenu(object sender, RoutedEventArgs e)
         {
             SelectedItem?.ShowWindowsContextMenu();
         }
@@ -333,8 +342,11 @@ namespace EverythingToolbar.Controls
 
         private void OpenWithRule(object sender, RoutedEventArgs e)
         {
-            SearchResult searchResult = SearchResultsListView.SelectedItem as SearchResult;
-            string command = (sender as MenuItem).Tag?.ToString() ?? "";
+            if (SearchResultsListView.SelectedItem == null)
+                return;
+            
+            var searchResult = SearchResultsListView.SelectedItem as SearchResult;
+            var command = (sender as MenuItem).Tag?.ToString() ?? "";
             Rules.HandleRule(searchResult, command);
         }
 
@@ -363,16 +375,19 @@ namespace EverythingToolbar.Controls
 
         private void OnContextMenuOpened(object sender, RoutedEventArgs e)
         {
-            ContextMenu cm = sender as ContextMenu;
-            MenuItem mi = cm.Items[2] as MenuItem;
+            var cm = sender as ContextMenu;
+            var mi = cm.Items[2] as MenuItem;
 
             string[] extensions = { ".exe", ".bat", ".cmd" };
-            bool isExecutable = (bool)SelectedItem?.IsFile && extensions.Any(ext => SelectedItem.FullPathAndFileName.EndsWith(ext));
+            var isExecutable = SelectedItem.IsFile && extensions.Any(ext => SelectedItem.FullPathAndFileName.EndsWith(ext));
 
-            if (isExecutable)
-                mi.Visibility = Visibility.Visible;
-            else
-                mi.Visibility = Visibility.Collapsed;
+            mi.Visibility = isExecutable ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void FocusSearchWindow()
+        {
+            var scope = FocusManager.GetFocusScope(this);
+            FocusManager.SetFocusedElement(scope, SearchWindow.Instance);
         }
     }
 }
