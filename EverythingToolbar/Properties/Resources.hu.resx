@@ -483,4 +483,7 @@
   <data name="SettingsCheckForUpdates" xml:space="preserve">
     <value>Check for updates automatically</value>
   </data>
+  <data name="SettingsSelectFirstResult" xml:space="preserve">
+    <value>Select first result</value>
+  </data>
 </root>
