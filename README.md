@@ -58,7 +58,7 @@ EverythingToolbar is compatible with both Windows 10 and Windows 11 and works we
 | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>     | Run as admin                         |
 | (<kbd>Shift</kbd>+)<kbd>Tab</kbd>                     | Cycle through filters                |
 | <kbd>Ctrl</kbd>+<kbd>0-9</kbd>                        | Select filter                        |
-| <kbd>Ctrl</kbd>+<kbd>Space</kbd>                      | Preview file in [QuickLook](https://github.com/QL-Win/QuickLook) |
+| <kbd>Space</kbd>                                      | Preview file in [QuickLook](https://github.com/QL-Win/QuickLook) |
 | <kbd>Win</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd>            | Focus search box (customizable)      |
 
 ## Installation

@@ -84,7 +84,7 @@ namespace EverythingToolbar.Controls
             {
                 if (SearchResultsListView.SelectedItem == null)
                     return;
-                    
+
                 var path = ((SearchResult)SearchResultsListView.SelectedItem).FullPathAndFileName;
                 EverythingSearch.Instance.OpenLastSearchInEverything(path);
             }
@@ -104,8 +104,11 @@ namespace EverythingToolbar.Controls
             {
                 OpenSelectedSearchResult();
             }
-            else if (e.Key == Key.Space && Keyboard.Modifiers == ModifierKeys.Control)
+            else if (e.Key == Key.Space)
             {
+                if (SearchWindow.Instance.SearchBox.IsKeyboardFocusWithin)
+                    return;
+
                 e.Handled = true;
                 PreviewSelectedFile();
             }
