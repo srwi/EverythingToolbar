@@ -132,11 +132,13 @@ namespace EverythingToolbar.Controls
             }
             else if (e.Key == Key.Home)
             {
-                ScrollToHome();
+                if (!SearchWindow.Instance.SearchBox.IsKeyboardFocusWithin)
+                    SelectFirstSearchResult();
             }
             else if (e.Key == Key.End)
             {
-                ScrollToEnd();
+                if (!SearchWindow.Instance.SearchBox.IsKeyboardFocusWithin)
+                    SelectLastSearchResult();
             }
             else if (e.Key == Key.Tab)
             {
@@ -150,7 +152,7 @@ namespace EverythingToolbar.Controls
         {
             if (!Settings.Default.isAutoSelectFirstResult)
                 return;
-            
+
             if (SearchResultsListView.SelectedIndex == -1 && SearchResultsListView.Items.Count > 0)
                 SearchResultsListView.SelectedIndex = 0;
         }
@@ -200,36 +202,45 @@ namespace EverythingToolbar.Controls
             SearchWindow.Instance.SearchBox.RestoreCaretIndex();
         }
 
+        private void SelectFirstSearchResult()
+        {
+            SearchResultsListView.SelectedIndex = 0;
+            SearchResultsListView.ScrollIntoView(SelectedItem);
+        }
+
+        private void SelectLastSearchResult()
+        {
+            SearchResultsListView.SelectedIndex = SearchResultsListView.Items.Count - 1;
+            SearchResultsListView.ScrollIntoView(SelectedItem);
+        }
+
+        private int GetPageSize()
+        {
+            var itemIndex = Math.Max(SearchResultsListView.SelectedIndex, 0);
+            var item = SearchResultsListView.ItemContainerGenerator.ContainerFromIndex(itemIndex) as ListViewItem;
+            return (int)(SearchResultsListView.ActualHeight / item.ActualHeight);
+        }
+
         private void PageUp()
         {
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                GetScrollViewer().PageUp();
-            }), DispatcherPriority.ContextIdle);
+            if (SearchResultsListView.SelectedIndex < 0)
+                return;
+
+            var stepSize = Math.Max(0, GetPageSize() - 1);
+            var newIndex = Math.Max(SearchResultsListView.SelectedIndex - stepSize, 0);
+            SearchResultsListView.SelectedIndex = newIndex;
+            SearchResultsListView.ScrollIntoView(SelectedItem);
         }
 
         private void PageDown()
         {
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                GetScrollViewer().PageDown();
-            }), DispatcherPriority.ContextIdle);
-        }
+            if (SearchResultsListView.SelectedIndex < 0)
+                return;
 
-        private void ScrollToHome()
-        {
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                GetScrollViewer().ScrollToHome();
-            }), DispatcherPriority.ContextIdle);
-        }
-
-        private void ScrollToEnd()
-        {
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                GetScrollViewer().ScrollToEnd();
-            }), DispatcherPriority.ContextIdle);
+            var stepSize = Math.Max(0, GetPageSize() - 1);
+            var newIndex = Math.Min(SearchResultsListView.SelectedIndex + stepSize, SearchResultsListView.Items.Count - 1);
+            SearchResultsListView.SelectedIndex = newIndex;
+            SearchResultsListView.ScrollIntoView(SelectedItem);
         }
 
         private void OpenSelectedSearchResult()
