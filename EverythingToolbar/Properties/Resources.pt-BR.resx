@@ -484,9 +484,9 @@
     <value>Procurar atualizações automaticamente</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
-    <value>Select first result</value>
+    <value>Selecionar primeiro resultado</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>Double-click to open</value>
+    <value>Duplo clique para abrir</value>
   </data>
 </root>
