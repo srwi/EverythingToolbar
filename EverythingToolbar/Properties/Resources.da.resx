@@ -486,4 +486,7 @@
   <data name="SettingsSelectFirstResult" xml:space="preserve">
     <value>Select first result</value>
   </data>
+  <data name="SettingsDoubleClickToOpen" xml:space="preserve">
+    <value>Double-click to open</value>
+  </data>
 </root>
