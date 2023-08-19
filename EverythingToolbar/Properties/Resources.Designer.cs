@@ -619,6 +619,15 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Double-click to open.
+        /// </summary>
+        public static string SettingsDoubleClickToOpen {
+            get {
+                return ResourceManager.GetString("SettingsDoubleClickToOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable search history.
         /// </summary>
         public static string SettingsEnableHistory {

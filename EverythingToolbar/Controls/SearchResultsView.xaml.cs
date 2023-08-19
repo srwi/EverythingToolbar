@@ -41,7 +41,12 @@ namespace EverythingToolbar.Controls
             SearchResultsListView.ItemContainerStyle.Setters.Add(new EventSetter
             {
                 Event = PreviewMouseLeftButtonUpEvent,
-                Handler = new MouseButtonEventHandler(Open)
+                Handler = new MouseButtonEventHandler(SingleClickSearchResult)
+            });
+            SearchResultsListView.ItemContainerStyle.Setters.Add(new EventSetter
+            {
+                Event = PreviewMouseDoubleClickEvent,
+                Handler = new MouseButtonEventHandler(DoubleClickSearchResult)
             });
             SearchResultsListView.ItemContainerStyle.Setters.Add(new EventSetter
             {
@@ -290,6 +295,18 @@ namespace EverythingToolbar.Controls
         {
             SelectedItem?.CopyToClipboard();
             EverythingSearch.Instance.Reset();
+        }
+
+        private void SingleClickSearchResult(object sender, MouseEventArgs e)
+        {
+            if (!Settings.Default.isDoubleClickToOpen)
+                Open(sender, e);
+        }
+
+        private void DoubleClickSearchResult(object sender, MouseEventArgs e)
+        {
+            if (Settings.Default.isDoubleClickToOpen)
+                Open(sender, e);
         }
 
         private void Open(object sender, RoutedEventArgs e)
