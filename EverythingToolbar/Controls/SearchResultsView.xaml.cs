@@ -107,7 +107,10 @@ namespace EverythingToolbar.Controls
             }
             else if (e.Key == Key.Enter)
             {
-                OpenSelectedSearchResult();
+                if (SearchResultsListView.SelectedIndex >= 0)
+                    OpenSelectedSearchResult();
+                else
+                    SelectNextSearchResult();
             }
             else if (e.Key == Key.Space)
             {
