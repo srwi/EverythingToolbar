@@ -484,9 +484,9 @@
     <value>アップデートを自動で確認する</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
-    <value>Select first result</value>
+    <value>最初の結果を選択する</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>Double-click to open</value>
+    <value>ダブルクリックで開く</value>
   </data>
 </root>
