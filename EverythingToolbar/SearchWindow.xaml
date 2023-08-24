@@ -19,6 +19,7 @@
         LostKeyboardFocus="OnLostKeyboardFocus"
         PreviewKeyDown="OnPreviewKeyDown"
         Loaded="OnLoaded"
+        UseLayoutRounding="True"
         DataContext="{Binding Source={x:Static local:EverythingSearch.Instance}}"
         mc:Ignorable="d"
         d:DesignWidth="500"
