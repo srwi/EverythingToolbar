@@ -484,9 +484,9 @@
     <value>Automatisch controleren op updates</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
-    <value>Select first result</value>
+    <value>Eerste resultaat selecteren</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>Double-click to open</value>
+    <value>Dubbelklik om te openen</value>
   </data>
 </root>
