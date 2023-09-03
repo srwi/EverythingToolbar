@@ -373,7 +373,7 @@
     <value>Attributi discendenti</value>
   </data>
   <data name="SortByDateAccessedAscending" xml:space="preserve">
-    <value>Data di sccesso crescente</value>
+    <value>Data di accesso crescente</value>
   </data>
   <data name="SortByDateAccessedDescending" xml:space="preserve">
     <value>Data di accesso decrescente</value>
