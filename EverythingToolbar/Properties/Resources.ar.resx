@@ -127,16 +127,16 @@
     <value>الإصدار</value>
   </data>
   <data name="AboutWebsite" xml:space="preserve">
-    <value>الموقع</value>
+    <value>الموقع الإلكتروني</value>
   </data>
   <data name="AboutWindowTitle" xml:space="preserve">
-    <value>حول شريط أدوات Everything،</value>
+    <value>حول EverythingToolbar،</value>
   </data>
   <data name="ContextMenuCopy" xml:space="preserve">
-    <value>نسخة</value>
+    <value>نسخ</value>
   </data>
   <data name="ContextMenuCopyFile" xml:space="preserve">
-    <value>نسخة</value>
+    <value>نسخ ملف</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
     <value>إنسخ الاسم الكامل إلى الحافظة</value>
@@ -226,7 +226,7 @@
     <value>فشل فتح مربع الحوار.</value>
   </data>
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
-    <value>فشل في فتح المسار.</value>
+    <value>فشل فتح المسار.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
     <value>فشل في تسجيل مفتاح الاختصار. قد يكون قيد الاستخدام من قبل تطبيق آخر.</value>
@@ -235,7 +235,7 @@
     <value>فشل في تشغيل الأمر</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
-    <value>لاستخدام طريقة الفرز هذه يجب تمكين الفرز السريع. يمكن تمكينها في الإعدادات.</value>
+    <value>لاستخدام هذا الفرز، يجب تمكين "الفرز السريع" في الإعدادات.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
     <value>الفرز السريع غير مفعل</value>
@@ -250,13 +250,13 @@
     <value>الرجاء تحديد Everything.exe...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>الرجاء تحديد ملف "Filters.csv". بشكل افتراضي يمكن العثور عليه في "%APPDATA%\Everything". قد يكون موقعه مختلفاً اعتمادًا على التثبيت الخاص بك. إذا كان الملف غير موجود لديك، هذا يعني أنك لم تقم بأي تغييرات على الفلاتر الافتراضية.</value>
+    <value>الرجاء تحديد ملف "Filters.csv". افتراضيًا يمكن العثور عليه في "%APPDATA%\Everything". قد يختلف موقع هذا الملف وفقاً لخياراتك الخاصة عند التثبيت. إذا كان الملف غير موجود، فهذا يعني أنك لم تقم بإجراء تغييرات على الفلاتر الافتراضية.</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
-    <value>لم يتم العثور على Filters.csv</value>
+    <value>لم يتم العثور على الملف Filters.csv</value>
   </data>
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
-    <value>حدث استثناء لم يتم التّعامل معه</value>
+    <value>حدث استثناء غير معالج</value>
   </data>
   <data name="RulesAutoApply" xml:space="preserve">
     <value>تطبيق القواعد تلقائياً بناءً على الشرط</value>
@@ -322,7 +322,7 @@
     <value>الإعدادات</value>
   </data>
   <data name="SettingsRegularExpressions" xml:space="preserve">
-    <value>تعبيرات عادية</value>
+    <value>تعبيرات نمطية</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
     <value>تذكر التصفية</value>
@@ -400,10 +400,10 @@
     <value>تاريخ التشغيل تصاعديًا</value>
   </data>
   <data name="SortByDateRunDescending" xml:space="preserve">
-    <value>تاريخ التشغيل تنازليًا</value>
+    <value>تاريخ التشغيل - تنازليًا</value>
   </data>
   <data name="SortByExtensionAscending" xml:space="preserve">
-    <value>ملحقات تصاعديًا</value>
+    <value>امتداد الملف - تصاعديًا</value>
   </data>
   <data name="SortByExtensionDescending" xml:space="preserve">
     <value>ملحقات تنازليًا</value>
@@ -412,7 +412,7 @@
     <value>"اسم ملف" قائمة الملف تصاعديًا</value>
   </data>
   <data name="SortByFileListFilenameDescending" xml:space="preserve">
-    <value>"اسم ملف" قائمة الملف تنازليًا</value>
+    <value>اسم "قائمة الملفات" - تنازليًا</value>
   </data>
   <data name="SortByNameAscending" xml:space="preserve">
     <value>الاسم تصاعديًا</value>
@@ -472,7 +472,7 @@
     <value>فيديو</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>تحديث متوفر:</value>
+    <value>التحديث متوفر:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
     <value>تخطي</value>
@@ -481,12 +481,12 @@
     <value>تحميل</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>التحقق من التحديثات تلقائياً</value>
+    <value>التحقق تلقائياً من التحديثات</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
-    <value>حدد النتيجة الأولى</value>
+    <value>تحديد النتيجة الأولى</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>انقر مرتين للفتح</value>
+    <value>النقر مرتين للفتح</value>
   </data>
 </root>
