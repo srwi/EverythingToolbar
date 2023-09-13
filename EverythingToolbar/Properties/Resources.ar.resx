@@ -286,7 +286,7 @@
     <value>القواعد</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
-    <value>البحث باستخدام Everything</value>
+    <value>بحث باستخدام Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
     <value>عنصر</value>
@@ -487,6 +487,6 @@
     <value>تحديد النتيجة الأولى</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>النقر مرتين للفتح</value>
+    <value>النقر المزدوج للفتح</value>
   </data>
 </root>
