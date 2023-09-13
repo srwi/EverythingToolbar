@@ -484,9 +484,9 @@
     <value>التحقق من التحديثات تلقائياً</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
-    <value>Select first result</value>
+    <value>حدد النتيجة الأولى</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>Double-click to open</value>
+    <value>انقر مرتين للفتح</value>
   </data>
 </root>
