@@ -483,4 +483,10 @@
   <data name="SettingsCheckForUpdates" xml:space="preserve">
     <value>自动检查更新</value>
   </data>
+  <data name="SettingsSelectFirstResult" xml:space="preserve">
+    <value>选择第一个结果</value>
+  </data>
+  <data name="SettingsDoubleClickToOpen" xml:space="preserve">
+    <value>双击打开</value>
+  </data>
 </root>

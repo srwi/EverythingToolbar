@@ -373,7 +373,7 @@
     <value>Attributi discendenti</value>
   </data>
   <data name="SortByDateAccessedAscending" xml:space="preserve">
-    <value>Data di sccesso crescente</value>
+    <value>Data di accesso crescente</value>
   </data>
   <data name="SortByDateAccessedDescending" xml:space="preserve">
     <value>Data di accesso decrescente</value>
@@ -482,5 +482,11 @@
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
     <value>Controlla automaticamente la disponibilità di aggiornamenti</value>
+  </data>
+  <data name="SettingsSelectFirstResult" xml:space="preserve">
+    <value>Seleziona il primo risultato</value>
+  </data>
+  <data name="SettingsDoubleClickToOpen" xml:space="preserve">
+    <value>Doppio click per aprire</value>
   </data>
 </root>

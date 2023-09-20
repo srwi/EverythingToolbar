@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClose" xml:space="preserve">
-    <value>اغلق</value>
+    <value>إغلاق</value>
   </data>
   <data name="CheckboxEnable" xml:space="preserve">
     <value>تمكين</value>
@@ -133,36 +133,36 @@
     <value>تشغيل مساعد الإعداد...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>لتثبيت شريط الأدوات على شريط المهام، انقر يمين فوق الإيقونة و إختر "تثبيت إلى شريط المهام".</value>
+    <value>لتثبيت EverythingToolbar على شريط المهام، انقر بالزر الأيمن على أيقونة الأداة وحدّد "تثبيت إلى شريط المهام".</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
     <value>2. تثبيت إلى شريط المهام</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>مطلوب إعادة تشغيل مدير ملفات النظام لتحديث أيقونة شريط المهام. هل ترغب في إعادة تشغيله الآن؟</value>
+    <value>يجب إعادة تشغيل مستكشف الملفات لتحديث أيقونة شريط المهام. هل ترغب في إعادة التشغيل الآن؟</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>إعادة تشغيل مدير ملفات النظام</value>
+    <value>إعادة تشغيل مستكشف الملفات</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>يمكن إخفاء أيقونة البحث الأصلية في Windows بشكل إختياري.</value>
+    <value>يمكن إخفاء أيقونة البحث الأصلية لـ Windows اختياريًا.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
     <value>3. إخفاء بحث Windows</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>من المستحسن بَدْء تشغيل شريط الأدوات EverythingToolbar تلقائياً عند بَدْء تشغيل النظام.</value>
+    <value>يفضل بدء EverythingToolbar تلقائيًا عند بدء تشغيل النظام.</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. إعداد التشغيل التلقائي</value>
+    <value>4. تكوين التشغيل التلقائي</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>مساعد إعداد EverythingToolbar</value>
+    <value>مساعد الإعداد لـ EverythingToolbar</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>إختر أحد رموز شريط المهام التالية:</value>
+    <value>اختر إحدى أيقونات شريط المهام التالية:</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. أيقونة شريط المهام</value>
+    <value>1. تعيين أيقونة شريط المهام</value>
   </data>
 </root>

@@ -475,12 +475,18 @@
     <value>Mise à jour disponible :</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Skip</value>
+    <value>Ignorer</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
-    <value>Download</value>
+    <value>Télécharger</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
     <value>Vérifier automatiquement les mises à jour</value>
+  </data>
+  <data name="SettingsSelectFirstResult" xml:space="preserve">
+    <value>Sélectionner le premier résultat</value>
+  </data>
+  <data name="SettingsDoubleClickToOpen" xml:space="preserve">
+    <value>Double-cliquer pour ouvrir</value>
   </data>
 </root>
