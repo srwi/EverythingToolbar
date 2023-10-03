@@ -484,9 +484,9 @@
     <value>Güncellemeleri otomatik olarak kontrol et</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
-    <value>Select first result</value>
+    <value>İlk sonucu seç</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>Double-click to open</value>
+    <value>Açmak için çift tıklayın</value>
   </data>
 </root>
