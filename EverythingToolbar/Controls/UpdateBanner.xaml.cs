@@ -9,7 +9,6 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using System.Windows;
-using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using NLog;
@@ -19,7 +18,7 @@ namespace EverythingToolbar.Controls
     public partial class UpdateBanner
     {
         private Version _latestVersion;
-        private static readonly ILogger Logger = ToolbarLogger.GetLogger<ThemeAwareness>();
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<UpdateBanner>();
         private static readonly string ApiUrl = "https://api.github.com/repos/srwi/EverythingToolbar/releases";
         private static readonly string LatestReleaseUrl = "https://github.com/srwi/EverythingToolbar/releases/latest";
         
@@ -52,9 +51,9 @@ namespace EverythingToolbar.Controls
                     }
                 }
             }
-            catch (Exception e)
+            catch
             {
-                Logger.Error(e, "Failed to get latest release version.");
+                Logger.Info("Failed to get latest release version.");
             }
             
             return null;
