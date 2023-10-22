@@ -475,7 +475,7 @@
     <value>可用更新：</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Skip</value>
+    <value>跳過</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
     <value>Download</value>
