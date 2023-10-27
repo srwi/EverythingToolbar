@@ -7,6 +7,7 @@ using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using Microsoft.Xaml.Behaviors;
 using NHotkey;
+using Windows.System;
 
 namespace EverythingToolbar
 {
@@ -85,7 +86,12 @@ namespace EverythingToolbar
 
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
-            EventDispatcher.Instance.InvokeKeyPressed(this, e);
+            if (SearchBox.IsKeyboardFocusWithin && e.Key == Key.Down && !Settings.Default.isAutoSelectFirstResult)
+            {
+                SearchWindow.Instance.FocusSearchResultsView();
+                e.Handled = true;
+                return;
+            }
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)

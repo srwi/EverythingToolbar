@@ -114,10 +114,9 @@ namespace EverythingToolbar.Controls
             }
             else if (e.Key == Key.Space)
             {
-                if (SearchWindow.Instance.SearchBox.IsKeyboardFocusWithin)
+                if (!IsKeyboardFocusWithin)
                     return;
 
-                e.Handled = true;
                 PreviewSelectedFile();
             }
             else if (e.Key >= Key.D0 && e.Key <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control)
@@ -191,7 +190,8 @@ namespace EverythingToolbar.Controls
             {
                 SearchResultsListView.SelectedIndex++;
                 SearchResultsListView.ScrollIntoView(SearchResultsListView.SelectedItem);
-                FocusSearchWindow();  // Remove keyboard focus from any controls (in particular the search box)
+                //FocusSearchWindow();  // Remove keyboard focus from any controls (in particular the search box)
+                //Keyboard.Focus(SearchResultsListView);
             }
         }
 
@@ -201,7 +201,8 @@ namespace EverythingToolbar.Controls
             {
                 SearchResultsListView.SelectedIndex--;
                 SearchResultsListView.ScrollIntoView(SelectedItem);
-                FocusSearchWindow();  // Remove keyboard focus from any controls (in particular the search box)
+                //FocusSearchWindow();  // Remove keyboard focus from any controls (in particular the search box)
+                //Keyboard.Focus(SearchResultsListView);
                 return;
             }
 

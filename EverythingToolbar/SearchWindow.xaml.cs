@@ -41,6 +41,11 @@ namespace EverythingToolbar
             }
         }
 
+        public void FocusSearchResultsView()
+        {
+            Keyboard.Focus(SearchResultsView.SearchResultsListView);
+        }
+
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             if (EverythingSearch.Instance.Initialize())
