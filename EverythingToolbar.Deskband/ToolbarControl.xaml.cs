@@ -86,11 +86,18 @@ namespace EverythingToolbar
 
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (SearchBox.IsKeyboardFocusWithin && e.Key == Key.Down && !Settings.Default.isAutoSelectFirstResult)
+            if (Settings.Default.isAutoSelectFirstResult)
             {
-                SearchWindow.Instance.FocusSearchResultsView();
-                e.Handled = true;
-                return;
+                // Keyboard focus is kept on search box so keyboard events must be forwarded to the ListView
+                EventDispatcher.Instance.InvokeKeyPressed(this, e);
+            }
+            else
+            {
+                if (SearchBox.IsKeyboardFocusWithin && e.Key == Key.Down)
+                {
+                    SearchWindow.Instance.FocusSearchResultsViewAndSelectFirstResult();
+                    e.Handled = true;
+                }
             }
         }
 

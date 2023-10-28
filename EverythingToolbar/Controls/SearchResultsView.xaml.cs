@@ -79,11 +79,18 @@ namespace EverythingToolbar.Controls
             }
             else if (e.Key == Key.Up)
             {
-                SelectPreviousSearchResult();
+                //if (SearchResultsListView.SelectedIndex == 0)
+                //    SearchBox)  TODO: Select searchbox
+                //SelectPreviousSearchResult();
             }
             else if (e.Key == Key.Down)
             {
-                SelectNextSearchResult();
+                if (!SearchResultsListView.IsKeyboardFocusWithin)
+                {
+                    SelectFirstSearchResult();
+                    e.Handled |= true;
+                }
+                //SelectNextSearchResult();
             }
             else if (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == Key.Enter)
             {
@@ -131,21 +138,21 @@ namespace EverythingToolbar.Controls
             }
             else if (e.Key == Key.PageUp)
             {
-                PageUp();
+                //PageUp();
             }
             else if (e.Key == Key.PageDown)
             {
-                PageDown();
+                //PageDown();
             }
             else if (e.Key == Key.Home)
             {
-                if (!SearchWindow.Instance.SearchBox.IsKeyboardFocusWithin)
-                    SelectFirstSearchResult();
+                //if (!SearchWindow.Instance.SearchBox.IsKeyboardFocusWithin)
+                //    SelectFirstSearchResult();
             }
             else if (e.Key == Key.End)
             {
-                if (!SearchWindow.Instance.SearchBox.IsKeyboardFocusWithin)
-                    SelectLastSearchResult();
+                //if (!SearchWindow.Instance.SearchBox.IsKeyboardFocusWithin)
+                //    SelectLastSearchResult();
             }
             else if (e.Key == Key.Tab)
             {
@@ -160,7 +167,7 @@ namespace EverythingToolbar.Controls
             if (!Settings.Default.isAutoSelectFirstResult)
                 return;
 
-            if (SearchResultsListView.SelectedIndex == -1 && SearchResultsListView.Items.Count > 0)
+            if (SearchResultsListView.SelectedIndex == -1 && !SearchResultsListView.Items.IsEmpty)
                 SearchResultsListView.SelectedIndex = 0;
         }
 
@@ -190,8 +197,7 @@ namespace EverythingToolbar.Controls
             {
                 SearchResultsListView.SelectedIndex++;
                 SearchResultsListView.ScrollIntoView(SearchResultsListView.SelectedItem);
-                //FocusSearchWindow();  // Remove keyboard focus from any controls (in particular the search box)
-                //Keyboard.Focus(SearchResultsListView);
+                FocusSelectedItem();
             }
         }
 
@@ -201,20 +207,24 @@ namespace EverythingToolbar.Controls
             {
                 SearchResultsListView.SelectedIndex--;
                 SearchResultsListView.ScrollIntoView(SelectedItem);
-                //FocusSearchWindow();  // Remove keyboard focus from any controls (in particular the search box)
-                //Keyboard.Focus(SearchResultsListView);
-                return;
+                FocusSelectedItem();
             }
-
-            SearchResultsListView.SelectedIndex = -1;
-            SearchWindow.Instance.SearchBox.Focus();
-            SearchWindow.Instance.SearchBox.RestoreCaretIndex();
+            else
+            {
+                SearchResultsListView.SelectedIndex = -1;
+                SearchWindow.Instance.SearchBox.Focus();
+                SearchWindow.Instance.SearchBox.RestoreCaretIndex();
+            }
         }
 
-        private void SelectFirstSearchResult()
+        public void SelectFirstSearchResult()
         {
+            if (SearchResultsListView.Items.IsEmpty)
+                return;
+
             SearchResultsListView.SelectedIndex = 0;
             SearchResultsListView.ScrollIntoView(SelectedItem);
+            FocusSelectedItem();
         }
 
         private void SelectLastSearchResult()
@@ -419,10 +429,11 @@ namespace EverythingToolbar.Controls
             mi.Visibility = isExecutable ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void FocusSearchWindow()
+        private void FocusSelectedItem()
         {
-            var scope = FocusManager.GetFocusScope(this);
-            FocusManager.SetFocusedElement(scope, SearchWindow.Instance);
+            var selectedItem = (ListViewItem)SearchResultsListView.ItemContainerGenerator.ContainerFromItem(SelectedItem);
+            if (selectedItem != null)
+                Keyboard.Focus(selectedItem);
         }
     }
 }
