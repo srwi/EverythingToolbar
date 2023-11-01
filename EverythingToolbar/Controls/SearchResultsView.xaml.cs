@@ -25,8 +25,10 @@ namespace EverythingToolbar.Controls
             InitializeComponent();
 
             SearchResultsListView.ItemsSource = EverythingSearch.Instance.SearchResults;
-            ((INotifyCollectionChanged)SearchResultsListView.Items).CollectionChanged += OnCollectionChanged;
-            EventDispatcher.Instance.KeyPressed += OnKeyPressed;
+            ((INotifyCollectionChanged)SearchResultsListView.Items).CollectionChanged += AutoSelectFirstResult;
+
+            EventDispatcher.Instance.SearchResultsListViewKeyEvent += OnKeyPressed;
+            SearchResultsListView.PreviewKeyDown += OnKeyPressed;
 
             // Mouse events and context menu must be added to the ItemContainerStyle each time it gets updated
             Loaded += (s, e) =>
@@ -67,30 +69,19 @@ namespace EverythingToolbar.Controls
 
         private void OnKeyPressed(object sender, KeyEventArgs e)
         {
-            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Up)
+            if (e.Key == Key.Space)
             {
-                EventDispatcher.Instance.InvokeSearchTermReplaced(this, HistoryManager.Instance.GetPreviousItem());
-                e.Handled = true;
+                if (!IsKeyboardFocusWithin)  // TODO: Check if necessary
+                    return;
+
+                PreviewSelectedFile();
             }
-            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Down)
+            else if (e.Key == Key.Enter)
             {
-                EventDispatcher.Instance.InvokeSearchTermReplaced(this, HistoryManager.Instance.GetNextItem());
-                e.Handled = true;
-            }
-            else if (e.Key == Key.Up)
-            {
-                //if (SearchResultsListView.SelectedIndex == 0)
-                //    SearchBox)  TODO: Select searchbox
-                //SelectPreviousSearchResult();
-            }
-            else if (e.Key == Key.Down)
-            {
-                if (!SearchResultsListView.IsKeyboardFocusWithin)
-                {
-                    SelectFirstSearchResult();
-                    e.Handled |= true;
-                }
-                //SelectNextSearchResult();
+                if (SearchResultsListView.SelectedIndex >= 0)
+                    OpenSelectedSearchResult();
+                else
+                    SelectNextSearchResult();
             }
             else if (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == Key.Enter)
             {
@@ -102,84 +93,66 @@ namespace EverythingToolbar.Controls
             }
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Enter)
             {
-                OpenFilePath(null, null);
-            }
-            else if (e.Key == Key.C && Keyboard.Modifiers == (ModifierKeys.Shift | ModifierKeys.Control))
-            {
-                SelectedItem?.CopyPathToClipboard();
+                OpenFilePath(this, null);
             }
             else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.Enter)
             {
-                RunAsAdmin(null, null);
+                RunAsAdmin(this, null);
             }
-            else if (e.Key == Key.Enter)
+            else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.C)
             {
-                if (SearchResultsListView.SelectedIndex >= 0)
-                    OpenSelectedSearchResult();
-                else
-                    SelectNextSearchResult();
+                SelectedItem?.CopyPathToClipboard();
             }
-            else if (e.Key == Key.Space)
-            {
-                if (!IsKeyboardFocusWithin)
-                    return;
 
-                PreviewSelectedFile();
-            }
-            else if (e.Key >= Key.D0 && e.Key <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control)
+            // The following key bindings are only required when forwarding events from the search box
+            // and should not be executed when the ListView is already focused since it handles them itself.
+            if (IsKeyboardFocusWithin)
+                return;
+
+            if (e.Key == Key.Up)
             {
-                int index = e.Key == Key.D0 ? 9 : e.Key - Key.D1;
-                EverythingSearch.Instance.SelectFilterFromIndex(index);
+                SelectPreviousSearchResult();
             }
-            else if (e.Key == Key.Escape)
+            else if (e.Key == Key.Down)
             {
-                SearchWindow.Instance.Hide();
-                Keyboard.ClearFocus();
+                SelectNextSearchResult();
             }
             else if (e.Key == Key.PageUp)
             {
-                //PageUp();
+                PageUp();
             }
             else if (e.Key == Key.PageDown)
             {
-                //PageDown();
+                PageDown();
             }
             else if (e.Key == Key.Home)
             {
-                //if (!SearchWindow.Instance.SearchBox.IsKeyboardFocusWithin)
-                //    SelectFirstSearchResult();
+                SelectFirstSearchResult();
             }
             else if (e.Key == Key.End)
             {
-                //if (!SearchWindow.Instance.SearchBox.IsKeyboardFocusWithin)
-                //    SelectLastSearchResult();
-            }
-            else if (e.Key == Key.Tab)
-            {
-                var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
-                EverythingSearch.Instance.CycleFilters(offset);
-                e.Handled = true;
+                SelectLastSearchResult();
             }
         }
 
-        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void AutoSelectFirstResult(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (!Settings.Default.isAutoSelectFirstResult)
                 return;
 
-            if (SearchResultsListView.SelectedIndex == -1 && !SearchResultsListView.Items.IsEmpty)
+            if (SearchResultsListView.SelectedItems.Count == 0 && !SearchResultsListView.Items.IsEmpty)
                 SearchResultsListView.SelectedIndex = 0;
         }
 
         private void OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            if (e.VerticalChange > 0)
+            if (e.VerticalChange <= 0)
+                return;
+            
+            if (e.VerticalOffset > e.ExtentHeight - 2 * e.ViewportHeight)
             {
-                if (e.VerticalOffset > e.ExtentHeight - 2 * e.ViewportHeight)
-                {
-                    EverythingSearch.Instance.QueryBatch(append: true);
-                    ScrollToVerticalOffset(e.VerticalOffset);
-                }
+                EverythingSearch.Instance.QueryBatch(append: true);
+                ScrollToVerticalOffset(e.VerticalOffset);
             }
         }
 
@@ -431,6 +404,9 @@ namespace EverythingToolbar.Controls
 
         private void FocusSelectedItem()
         {
+            if (Settings.Default.isAutoSelectFirstResult)
+                return;
+
             var selectedItem = (ListViewItem)SearchResultsListView.ItemContainerGenerator.ContainerFromItem(SelectedItem);
             if (selectedItem != null)
                 Keyboard.Focus(selectedItem);

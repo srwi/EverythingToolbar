@@ -7,7 +7,6 @@ using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using Microsoft.Xaml.Behaviors;
 using NHotkey;
-using Windows.System;
 
 namespace EverythingToolbar
 {
@@ -81,23 +80,6 @@ namespace EverythingToolbar
             {
                 NativeMethods.SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
                 SearchBox.Focus();
-            }
-        }
-
-        private void OnPreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (Settings.Default.isAutoSelectFirstResult)
-            {
-                // Keyboard focus is kept on search box so keyboard events must be forwarded to the ListView
-                EventDispatcher.Instance.InvokeKeyPressed(this, e);
-            }
-            else
-            {
-                if (SearchBox.IsKeyboardFocusWithin && e.Key == Key.Down)
-                {
-                    SearchWindow.Instance.FocusSearchResultsViewAndSelectFirstResult();
-                    e.Handled = true;
-                }
             }
         }
 

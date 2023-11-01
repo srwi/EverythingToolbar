@@ -14,7 +14,8 @@
                  CaretBrush="{DynamicResource TextBoxForegroundActive}"
                  GotKeyboardFocus="OnGotKeyboardFocus"
                  LostKeyboardFocus="OnLostKeyboardFocus"
-                 PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton">
+                 PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"
+                 PreviewKeyDown="OnPreviewKeyDown">
             <TextBox.ContextMenu>
                 <ContextMenu>
                     <i:Interaction.Behaviors>

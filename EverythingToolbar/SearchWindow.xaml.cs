@@ -39,6 +39,26 @@ namespace EverythingToolbar
                     });
                 };
             }
+
+            PreviewKeyDown += (s, e) =>
+            {
+                if (e.Key >= Key.D0 && e.Key <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control)
+                {
+                    int index = e.Key == Key.D0 ? 9 : e.Key - Key.D1;
+                    EverythingSearch.Instance.SelectFilterFromIndex(index);
+                }
+                else if (e.Key == Key.Escape)
+                {
+                    Instance.Hide();
+                    Keyboard.ClearFocus();
+                }
+                else if (e.Key == Key.Tab)  // TODO: not registered
+                {
+                    var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
+                    EverythingSearch.Instance.CycleFilters(offset);
+                    e.Handled = true;
+                }
+            };
         }
 
         public void FocusSearchResultsViewAndSelectFirstResult()

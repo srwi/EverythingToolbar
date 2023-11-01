@@ -8,7 +8,6 @@
              xmlns:c="clr-namespace:EverythingToolbar.Converters;assembly=EverythingToolbar"
              xmlns:controls="clr-namespace:EverythingToolbar.Controls;assembly=EverythingToolbar"
              mc:Ignorable="d"
-             PreviewKeyDown="OnPreviewKeyDown"
              KeyDown="OnKeyDown"
              GotFocus="OnGotFocus"
              HorizontalAlignment="Stretch">

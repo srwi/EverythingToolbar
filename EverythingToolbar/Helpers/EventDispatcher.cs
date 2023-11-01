@@ -25,6 +25,12 @@ namespace EverythingToolbar.Helpers
             KeyPressed?.Invoke(sender, e);
         }
 
+        public event EventHandler<KeyEventArgs> SearchResultsListViewKeyEvent;
+        public void InvokeSearchResultsListViewKeyEvent(object sender, KeyEventArgs e)
+        {
+            SearchResultsListViewKeyEvent?.Invoke(sender, e);
+        }
+
         public event EventHandler<string> SearchTermReplaced;
         public void InvokeSearchTermReplaced(object sender, string newSearchTerm)
         {

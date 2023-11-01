@@ -26,13 +26,43 @@ namespace EverythingToolbar.Controls
             Settings.Default.PropertyChanged += OnSettingsChanged;
             EverythingSearch.Instance.PropertyChanged += OnSettingsChanged;
 
+            EventDispatcher.Instance.SearchTermReplaced += (_, searchTerm) => { UpdateSearchTerm(searchTerm); };
+
             // Forward TextBox.TextChanged to SearchBox.TextChanged
             TextBox.TextChanged += (s, e) => TextChanged?.Invoke(s, e);
-
-            EventDispatcher.Instance.SearchTermReplaced += OnSearchTermReplaced;
         }
 
-        private void OnSearchTermReplaced(object sender, string newSearchTerm)
+        private void OnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Up)
+            {
+                UpdateSearchTerm(HistoryManager.Instance.GetPreviousItem());
+                e.Handled = true;
+                return;
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Down)
+            {
+                UpdateSearchTerm(HistoryManager.Instance.GetNextItem());
+                e.Handled = true;
+                return;
+            }
+
+            if (Settings.Default.isAutoSelectFirstResult)
+            {
+                // The search bar should not lose focus in this mode, so some key events
+                // need to be forwarded to the SearchResultsListView
+                if (e.Key == Key.Home || e.Key == Key.End ||
+                    e.Key == Key.PageDown || e.Key == Key.PageUp ||
+                    e.Key == Key.Enter ||
+                    e.Key == Key.Up || e.Key == Key.Down)
+                {
+                    EventDispatcher.Instance.InvokeSearchResultsListViewKeyEvent(this, e);
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void UpdateSearchTerm(string newSearchTerm)
         {
             TextBox.Text = newSearchTerm;
             TextBox.CaretIndex = TextBox.Text.Length;
