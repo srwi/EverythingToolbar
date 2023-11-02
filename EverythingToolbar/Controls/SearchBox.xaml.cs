@@ -46,6 +46,12 @@ namespace EverythingToolbar.Controls
                 e.Handled = true;
                 return;
             }
+            else if (Keyboard.Modifiers == ModifierKeys.None && e.Key == Key.Down)
+            {
+                EventDispatcher.Instance.InvokeSearchResultsListViewKeyEvent(this, e);
+                e.Handled = true;
+                return;
+            }
 
             if (Settings.Default.isAutoSelectFirstResult)
             {
@@ -54,7 +60,7 @@ namespace EverythingToolbar.Controls
                 if (e.Key == Key.Home || e.Key == Key.End ||
                     e.Key == Key.PageDown || e.Key == Key.PageUp ||
                     e.Key == Key.Enter ||
-                    e.Key == Key.Up || e.Key == Key.Down)
+                    e.Key == Key.Up)
                 {
                     EventDispatcher.Instance.InvokeSearchResultsListViewKeyEvent(this, e);
                     e.Handled = true;

@@ -61,12 +61,6 @@ namespace EverythingToolbar
             };
         }
 
-        public void FocusSearchResultsViewAndSelectFirstResult()
-        {
-            Keyboard.Focus(SearchResultsView.SearchResultsListView);
-            SearchResultsView.SelectFirstSearchResult();
-        }
-
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             if (EverythingSearch.Instance.Initialize())

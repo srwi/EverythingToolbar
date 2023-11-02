@@ -103,6 +103,10 @@ namespace EverythingToolbar.Controls
             {
                 SelectedItem?.CopyPathToClipboard();
             }
+            else if (e.Key == Key.Up && !Settings.Default.isAutoSelectFirstResult)
+            {
+                // TODO: Select search box
+            }
 
             // The following key bindings are only required when forwarding events from the search box
             // and should not be executed when the ListView is already focused since it handles them itself.
@@ -166,28 +170,22 @@ namespace EverythingToolbar.Controls
 
         private void SelectNextSearchResult()
         {
-            if (SearchResultsListView.SelectedIndex + 1 < SearchResultsListView.Items.Count)
-            {
-                SearchResultsListView.SelectedIndex++;
-                SearchResultsListView.ScrollIntoView(SearchResultsListView.SelectedItem);
-                FocusSelectedItem();
-            }
+            if (SearchResultsListView.SelectedIndex >= SearchResultsListView.Items.Count - 1)
+                return;
+            
+            SearchResultsListView.SelectedIndex++;
+            SearchResultsListView.ScrollIntoView(SearchResultsListView.SelectedItem);
+            FocusSelectedItem();
         }
 
         private void SelectPreviousSearchResult()
         {
-            if (SearchResultsListView.SelectedIndex > 0)
-            {
-                SearchResultsListView.SelectedIndex--;
-                SearchResultsListView.ScrollIntoView(SelectedItem);
-                FocusSelectedItem();
-            }
-            else
-            {
-                SearchResultsListView.SelectedIndex = -1;
-                SearchWindow.Instance.SearchBox.Focus();
-                SearchWindow.Instance.SearchBox.RestoreCaretIndex();
-            }
+            if (SearchResultsListView.SelectedIndex <= 0)
+                return;
+
+            SearchResultsListView.SelectedIndex--;
+            SearchResultsListView.ScrollIntoView(SelectedItem);
+            FocusSelectedItem();
         }
 
         public void SelectFirstSearchResult()
@@ -204,6 +202,7 @@ namespace EverythingToolbar.Controls
         {
             SearchResultsListView.SelectedIndex = SearchResultsListView.Items.Count - 1;
             SearchResultsListView.ScrollIntoView(SelectedItem);
+            FocusSelectedItem();
         }
 
         private int GetPageSize()
