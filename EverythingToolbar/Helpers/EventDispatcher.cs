@@ -19,10 +19,10 @@ namespace EverythingToolbar.Helpers
             UnfocusRequested?.Invoke(sender, e);
         }
 
-        public event EventHandler<KeyEventArgs> KeyPressed;
-        public void InvokeKeyPressed(object sender, KeyEventArgs e)
+        public event EventHandler<EventArgs> SearchBoxFocusRequested;
+        public void InvokeSearchBoxFocused(object sender, EventArgs e)
         {
-            KeyPressed?.Invoke(sender, e);
+            SearchBoxFocusRequested?.Invoke(sender, e);
         }
 
         public event EventHandler<KeyEventArgs> SearchResultsListViewKeyEvent;

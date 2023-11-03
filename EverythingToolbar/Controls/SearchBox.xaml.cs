@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 
@@ -26,10 +27,18 @@ namespace EverythingToolbar.Controls
             Settings.Default.PropertyChanged += OnSettingsChanged;
             EverythingSearch.Instance.PropertyChanged += OnSettingsChanged;
 
-            EventDispatcher.Instance.SearchTermReplaced += (_, searchTerm) => { UpdateSearchTerm(searchTerm); };
+            EventDispatcher.Instance.SearchTermReplaced += (s, searchTerm) => { UpdateSearchTerm(searchTerm); };
+            EventDispatcher.Instance.SearchBoxFocusRequested += OnFocusRequested;
 
             // Forward TextBox.TextChanged to SearchBox.TextChanged
             TextBox.TextChanged += (s, e) => TextChanged?.Invoke(s, e);
+        }
+
+        private void OnFocusRequested(object sender, EventArgs e)
+        {
+            // Hidden SearchBoxes should not respond to focus requests
+            if (Visibility == Visibility.Visible)
+                Focus();
         }
 
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
@@ -46,7 +55,8 @@ namespace EverythingToolbar.Controls
                 e.Handled = true;
                 return;
             }
-            else if (Keyboard.Modifiers == ModifierKeys.None && e.Key == Key.Down)
+            else if (Keyboard.Modifiers == ModifierKeys.None &&
+                (e.Key == Key.Down || e.Key == Key.Enter))
             {
                 EventDispatcher.Instance.InvokeSearchResultsListViewKeyEvent(this, e);
                 e.Handled = true;
@@ -59,7 +69,6 @@ namespace EverythingToolbar.Controls
                 // need to be forwarded to the SearchResultsListView
                 if (e.Key == Key.Home || e.Key == Key.End ||
                     e.Key == Key.PageDown || e.Key == Key.PageUp ||
-                    e.Key == Key.Enter ||
                     e.Key == Key.Up)
                 {
                     EventDispatcher.Instance.InvokeSearchResultsListViewKeyEvent(this, e);
@@ -101,6 +110,7 @@ namespace EverythingToolbar.Controls
 
         public new void Focus()
         {
+            NativeMethods.SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
             TextBox.Focus();
             Keyboard.Focus(TextBox);
         }

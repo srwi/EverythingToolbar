@@ -71,11 +71,10 @@ namespace EverythingToolbar
         {
             if (TaskbarStateManager.Instance.IsIcon)
             {
-                NativeMethods.SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
-                SearchBox.Focus();
+                EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
             }
 
-            EventDispatcher.Instance.InvokeFocusRequested(sender, e);
+            EventDispatcher.Instance.InvokeFocusRequested(this, EventArgs.Empty);
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -84,11 +83,6 @@ namespace EverythingToolbar
             {
                 Hide();
             }
-        }
-
-        private void OnPreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            EventDispatcher.Instance.InvokeKeyPressed(this, e);
         }
 
         private void OpenSearchInEverything(object sender, RoutedEventArgs e)

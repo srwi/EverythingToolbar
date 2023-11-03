@@ -71,9 +71,6 @@ namespace EverythingToolbar.Controls
         {
             if (e.Key == Key.Space)
             {
-                if (!IsKeyboardFocusWithin)  // TODO: Check if necessary
-                    return;
-
                 PreviewSelectedFile();
             }
             else if (e.Key == Key.Enter)
@@ -105,7 +102,12 @@ namespace EverythingToolbar.Controls
             }
             else if (e.Key == Key.Up && !Settings.Default.isAutoSelectFirstResult)
             {
-                // TODO: Select search box
+                if (SearchResultsListView.SelectedIndex == 0)
+                {
+                    SearchResultsListView.SelectedIndex = -1;
+                    EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
+                    e.Handled = true;
+                }
             }
 
             // The following key bindings are only required when forwarding events from the search box

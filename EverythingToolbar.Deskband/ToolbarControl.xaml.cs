@@ -78,8 +78,7 @@ namespace EverythingToolbar
             }
             else
             {
-                NativeMethods.SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
-                SearchBox.Focus();
+                EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
             }
         }
 

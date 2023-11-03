@@ -17,7 +17,6 @@
         ShowInTaskbar="False"
         Activated="OnActivated"
         LostKeyboardFocus="OnLostKeyboardFocus"
-        PreviewKeyDown="OnPreviewKeyDown"
         Loaded="OnLoaded"
         UseLayoutRounding="True"
         DataContext="{Binding Source={x:Static local:EverythingSearch.Instance}}"
