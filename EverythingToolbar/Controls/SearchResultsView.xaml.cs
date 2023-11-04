@@ -100,6 +100,10 @@ namespace EverythingToolbar.Controls
             {
                 SelectedItem?.CopyPathToClipboard();
             }
+            else if (Keyboard.Modifiers == (ModifierKeys.Control) && e.Key == Key.C)
+            {
+                SelectedItem?.CopyToClipboard();
+            }
             else if (e.Key == Key.Up && !Settings.Default.isAutoSelectFirstResult)
             {
                 if (SearchResultsListView.SelectedIndex == 0)
