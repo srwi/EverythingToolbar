@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media.Animation;
 using System.Windows.Shell;
 using EverythingToolbar.Helpers;
@@ -40,25 +39,8 @@ namespace EverythingToolbar
                 };
             }
 
-            PreviewKeyDown += (s, e) =>
-            {
-                if (e.Key >= Key.D0 && e.Key <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control)
-                {
-                    int index = e.Key == Key.D0 ? 9 : e.Key - Key.D1;
-                    EverythingSearch.Instance.SelectFilterFromIndex(index);
-                }
-                else if (e.Key == Key.Escape)
-                {
-                    Instance.Hide();
-                    Keyboard.ClearFocus();
-                }
-                else if (e.Key == Key.Tab)
-                {
-                    var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
-                    EverythingSearch.Instance.CycleFilters(offset);
-                    e.Handled = true;
-                }
-            };
+            EventDispatcher.Instance.GlobalKeyEvent += OnPreviewKeyDown;
+            PreviewKeyDown += OnPreviewKeyDown;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -75,6 +57,26 @@ namespace EverythingToolbar
             }
 
             EventDispatcher.Instance.InvokeFocusRequested(this, EventArgs.Empty);
+        }
+
+        private void OnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key >= Key.D0 && e.Key <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                int index = e.Key == Key.D0 ? 9 : e.Key - Key.D1;
+                EverythingSearch.Instance.SelectFilterFromIndex(index);
+            }
+            else if (e.Key == Key.Escape)
+            {
+                Instance.Hide();
+                Keyboard.ClearFocus();
+            }
+            else if (e.Key == Key.Tab)
+            {
+                var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
+                EverythingSearch.Instance.CycleFilters(offset);
+                e.Handled = true;
+            }
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)

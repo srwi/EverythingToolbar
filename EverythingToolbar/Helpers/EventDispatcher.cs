@@ -25,10 +25,10 @@ namespace EverythingToolbar.Helpers
             SearchBoxFocusRequested?.Invoke(sender, e);
         }
 
-        public event EventHandler<KeyEventArgs> SearchResultsListViewKeyEvent;
-        public void InvokeSearchResultsListViewKeyEvent(object sender, KeyEventArgs e)
+        public event EventHandler<KeyEventArgs> GlobalKeyEvent;
+        public void InvokeGlobalKeyEvent(object sender, KeyEventArgs e)
         {
-            SearchResultsListViewKeyEvent?.Invoke(sender, e);
+            GlobalKeyEvent?.Invoke(sender, e);
         }
 
         public event EventHandler<string> SearchTermReplaced;

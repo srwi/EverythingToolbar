@@ -55,13 +55,13 @@ namespace EverythingToolbar.Controls
                 e.Handled = true;
                 return;
             }
-            else if (Keyboard.Modifiers == ModifierKeys.None &&
-                (e.Key == Key.Down || e.Key == Key.Enter ||
-                 e.Key == Key.Home || e.Key == Key.End ||
-                 e.Key == Key.PageDown || e.Key == Key.PageUp ||
-                 e.Key == Key.Up || e.Key == Key.Down))
+            else if (e.Key == Key.Home || e.Key == Key.End || 
+                e.Key == Key.PageDown || e.Key == Key.PageUp ||
+                e.Key == Key.Up || e.Key == Key.Down ||
+                e.Key == Key.Escape|| e.Key == Key.Enter ||
+                (e.Key >= Key.D0 && e.Key <= Key.D9))
             {
-                EventDispatcher.Instance.InvokeSearchResultsListViewKeyEvent(this, e);
+                EventDispatcher.Instance.InvokeGlobalKeyEvent(this, e);
                 e.Handled = true;
                 return;
             }

@@ -27,7 +27,7 @@ namespace EverythingToolbar.Controls
             SearchResultsListView.ItemsSource = EverythingSearch.Instance.SearchResults;
             ((INotifyCollectionChanged)SearchResultsListView.Items).CollectionChanged += AutoSelectFirstResult;
 
-            EventDispatcher.Instance.SearchResultsListViewKeyEvent += OnKeyPressed;
+            EventDispatcher.Instance.GlobalKeyEvent += OnKeyPressed;
             SearchResultsListView.PreviewKeyDown += OnKeyPressed;
 
             // Mouse events and context menu must be added to the ItemContainerStyle each time it gets updated
@@ -73,12 +73,9 @@ namespace EverythingToolbar.Controls
             {
                 PreviewSelectedFile();
             }
-            else if (e.Key == Key.Enter)
+            else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.Enter)
             {
-                if (SearchResultsListView.SelectedIndex >= 0)
-                    OpenSelectedSearchResult();
-                else
-                    SelectNextSearchResult();
+                RunAsAdmin(this, null);
             }
             else if (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == Key.Enter)
             {
@@ -92,9 +89,12 @@ namespace EverythingToolbar.Controls
             {
                 OpenFilePath(this, null);
             }
-            else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.Enter)
+            else if (e.Key == Key.Enter)
             {
-                RunAsAdmin(this, null);
+                if (SearchResultsListView.SelectedIndex >= 0)
+                    OpenSelectedSearchResult();
+                else
+                    SelectNextSearchResult();
             }
             else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.C)
             {
@@ -199,11 +199,9 @@ namespace EverythingToolbar.Controls
             if (n < 0 || n >= SearchResultsListView.Items.Count)
                 return;
 
-            if (!Settings.Default.isAutoSelectFirstResult)
-                SearchResultsListView.Focus();
-
             SearchResultsListView.SelectedIndex = n;
             SearchResultsListView.ScrollIntoView(SelectedItem);
+            FocusSelectedItem();
         }
 
         private int GetPageSize()
@@ -400,6 +398,16 @@ namespace EverythingToolbar.Controls
             var isExecutable = SelectedItem.IsFile && extensions.Any(ext => SelectedItem.FullPathAndFileName.EndsWith(ext));
 
             mi.Visibility = isExecutable ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void FocusSelectedItem()
+        {
+            if (Settings.Default.isAutoSelectFirstResult)
+                return;
+
+            var selectedItem = (ListViewItem)SearchResultsListView.ItemContainerGenerator.ContainerFromItem(SelectedItem);
+            if (selectedItem != null)
+                Keyboard.Focus(selectedItem);
         }
     }
 }
