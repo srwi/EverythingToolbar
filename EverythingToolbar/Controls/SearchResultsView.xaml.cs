@@ -252,6 +252,7 @@ namespace EverythingToolbar.Controls
         private void PreviewSelectedFile()
         {
             SelectedItem?.PreviewInQuickLook();
+            SelectedItem?.PreviewInSeer();
         }
 
         private ScrollViewer GetScrollViewer()

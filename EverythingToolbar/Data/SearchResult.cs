@@ -3,7 +3,6 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
-using System.Runtime.InteropServices.ComTypes;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,9 +12,11 @@ using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using NLog;
 using Peter;
+using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 using Clipboard = System.Windows.Clipboard;
 using DataObject = System.Windows.DataObject;
 using MessageBox = System.Windows.MessageBox;
+using System.Runtime.InteropServices;
 
 namespace EverythingToolbar.Data
 {
@@ -194,7 +195,36 @@ namespace EverythingToolbar.Data
                 }
                 catch (Exception e)
                 {
-                    Logger.Error(e, "Failed to open preview.");
+                    Logger.Error(e, "Failed to open QuickLook preview.");
+                }
+            });
+        }
+
+        public void PreviewInSeer()
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    IntPtr seer = NativeMethods.FindWindowEx(IntPtr.Zero, IntPtr.Zero, "SeerWindowClass", null);
+
+                    const int SEER_INVOKE_W32 = 5000;
+                    const int WM_COPYDATA = 0x004A;
+
+                    NativeMethods.COPYDATASTRUCT cd = new NativeMethods.COPYDATASTRUCT
+                    {
+                        cbData = (FullPathAndFileName.Length + 1) * 2,
+                        lpData = Marshal.StringToHGlobalUni(FullPathAndFileName),
+                        dwData = new IntPtr(SEER_INVOKE_W32)
+                    };
+
+                    NativeMethods.SendMessage(seer, WM_COPYDATA, IntPtr.Zero, ref cd);
+
+                    Marshal.FreeHGlobal(cd.lpData);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e, "Failed to open Seer preview.");
                 }
             });
         }
