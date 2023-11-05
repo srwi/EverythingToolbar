@@ -52,7 +52,7 @@ namespace EverythingToolbar
                     Instance.Hide();
                     Keyboard.ClearFocus();
                 }
-                else if (e.Key == Key.Tab)  // TODO: not registered
+                else if (e.Key == Key.Tab)
                 {
                     var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
                     EverythingSearch.Instance.CycleFilters(offset);

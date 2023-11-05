@@ -100,48 +100,48 @@ namespace EverythingToolbar.Controls
             {
                 SelectedItem?.CopyPathToClipboard();
             }
-            else if (Keyboard.Modifiers == (ModifierKeys.Control) && e.Key == Key.C)
+            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.C)
             {
                 SelectedItem?.CopyToClipboard();
             }
-            else if (e.Key == Key.Up && !Settings.Default.isAutoSelectFirstResult)
+            else if (e.Key == Key.Up)
             {
-                if (SearchResultsListView.SelectedIndex == 0)
+                if (SearchResultsListView.SelectedIndex == 0 && !Settings.Default.isAutoSelectFirstResult)
                 {
                     SearchResultsListView.SelectedIndex = -1;
                     EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
-                    e.Handled = true;
                 }
-            }
+                else
+                {
+                    SelectPreviousSearchResult();
+                }
 
-            // The following key bindings are only required when forwarding events from the search box
-            // and should not be executed when the ListView is already focused since it handles them itself.
-            if (IsKeyboardFocusWithin)
-                return;
-
-            if (e.Key == Key.Up)
-            {
-                SelectPreviousSearchResult();
+                e.Handled = true;
             }
             else if (e.Key == Key.Down)
             {
                 SelectNextSearchResult();
+                e.Handled = true;
             }
             else if (e.Key == Key.PageUp)
             {
                 PageUp();
+                e.Handled = true;
             }
             else if (e.Key == Key.PageDown)
             {
                 PageDown();
+                e.Handled = true;
             }
             else if (e.Key == Key.Home)
             {
                 SelectFirstSearchResult();
+                e.Handled = true;
             }
             else if (e.Key == Key.End)
             {
                 SelectLastSearchResult();
+                e.Handled = true;
             }
         }
 
@@ -176,39 +176,34 @@ namespace EverythingToolbar.Controls
 
         private void SelectNextSearchResult()
         {
-            if (SearchResultsListView.SelectedIndex >= SearchResultsListView.Items.Count - 1)
-                return;
-            
-            SearchResultsListView.SelectedIndex++;
-            SearchResultsListView.ScrollIntoView(SearchResultsListView.SelectedItem);
-            FocusSelectedItem();
+            SelectNthSearchResult(SearchResultsListView.SelectedIndex + 1);
         }
 
         private void SelectPreviousSearchResult()
         {
-            if (SearchResultsListView.SelectedIndex <= 0)
-                return;
-
-            SearchResultsListView.SelectedIndex--;
-            SearchResultsListView.ScrollIntoView(SelectedItem);
-            FocusSelectedItem();
+            SelectNthSearchResult(SearchResultsListView.SelectedIndex - 1);
         }
 
         public void SelectFirstSearchResult()
         {
-            if (SearchResultsListView.Items.IsEmpty)
-                return;
-
-            SearchResultsListView.SelectedIndex = 0;
-            SearchResultsListView.ScrollIntoView(SelectedItem);
-            FocusSelectedItem();
+            SelectNthSearchResult(0);
         }
 
         private void SelectLastSearchResult()
         {
-            SearchResultsListView.SelectedIndex = SearchResultsListView.Items.Count - 1;
+            SelectNthSearchResult(SearchResultsListView.Items.Count - 1);
+        }
+
+        private void SelectNthSearchResult(int n)
+        {
+            if (n < 0 || n >= SearchResultsListView.Items.Count)
+                return;
+
+            if (!Settings.Default.isAutoSelectFirstResult)
+                SearchResultsListView.Focus();
+
+            SearchResultsListView.SelectedIndex = n;
             SearchResultsListView.ScrollIntoView(SelectedItem);
-            FocusSelectedItem();
         }
 
         private int GetPageSize()
@@ -405,16 +400,6 @@ namespace EverythingToolbar.Controls
             var isExecutable = SelectedItem.IsFile && extensions.Any(ext => SelectedItem.FullPathAndFileName.EndsWith(ext));
 
             mi.Visibility = isExecutable ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private void FocusSelectedItem()
-        {
-            if (Settings.Default.isAutoSelectFirstResult)
-                return;
-
-            var selectedItem = (ListViewItem)SearchResultsListView.ItemContainerGenerator.ContainerFromItem(SelectedItem);
-            if (selectedItem != null)
-                Keyboard.Focus(selectedItem);
         }
     }
 }

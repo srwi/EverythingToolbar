@@ -56,24 +56,14 @@ namespace EverythingToolbar.Controls
                 return;
             }
             else if (Keyboard.Modifiers == ModifierKeys.None &&
-                (e.Key == Key.Down || e.Key == Key.Enter))
+                (e.Key == Key.Down || e.Key == Key.Enter ||
+                 e.Key == Key.Home || e.Key == Key.End ||
+                 e.Key == Key.PageDown || e.Key == Key.PageUp ||
+                 e.Key == Key.Up || e.Key == Key.Down))
             {
                 EventDispatcher.Instance.InvokeSearchResultsListViewKeyEvent(this, e);
                 e.Handled = true;
                 return;
-            }
-
-            if (Settings.Default.isAutoSelectFirstResult)
-            {
-                // The search bar should not lose focus in this mode, so some key events
-                // need to be forwarded to the SearchResultsListView
-                if (e.Key == Key.Home || e.Key == Key.End ||
-                    e.Key == Key.PageDown || e.Key == Key.PageUp ||
-                    e.Key == Key.Up)
-                {
-                    EventDispatcher.Instance.InvokeSearchResultsListViewKeyEvent(this, e);
-                    e.Handled = true;
-                }
             }
         }
 
