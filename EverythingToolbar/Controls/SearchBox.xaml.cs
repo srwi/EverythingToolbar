@@ -58,8 +58,8 @@ namespace EverythingToolbar.Controls
             else if (e.Key == Key.Home || e.Key == Key.End || 
                 e.Key == Key.PageDown || e.Key == Key.PageUp ||
                 e.Key == Key.Up || e.Key == Key.Down ||
-                e.Key == Key.Escape|| e.Key == Key.Enter ||
-                (e.Key >= Key.D0 && e.Key <= Key.D9))
+                e.Key == Key.Escape || e.Key == Key.Enter ||
+                (e.Key >= Key.D0 && e.Key <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control))
             {
                 EventDispatcher.Instance.InvokeGlobalKeyEvent(this, e);
                 e.Handled = true;
