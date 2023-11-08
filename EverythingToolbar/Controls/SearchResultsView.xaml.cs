@@ -238,15 +238,16 @@ namespace EverythingToolbar.Controls
             if (SearchResultsListView.SelectedIndex == -1)
                 return;
 
-            if (Rules.HandleRule(SelectedItem))
-                return;
+            if (!Rules.HandleRule(SelectedItem))
+                SelectedItem?.Open();
 
-            SelectedItem?.Open();
+            SearchWindow.Instance.Hide();
         }
 
         private void OpenFilePath(object sender, RoutedEventArgs e)
         {
             SelectedItem?.OpenPath();
+            SearchWindow.Instance.Hide();
         }
 
         private void PreviewSelectedFile()
@@ -269,11 +270,13 @@ namespace EverythingToolbar.Controls
         private void OpenWith(object sender, RoutedEventArgs e)
         {
             SelectedItem?.OpenWith();
+            SearchWindow.Instance.Hide();
         }
 
         private void ShowInEverything(object sender, RoutedEventArgs e)
         {
             SelectedItem?.ShowInEverything();
+            SearchWindow.Instance.Hide();
         }
 
         private void CopyFile(object sender, RoutedEventArgs e)
@@ -304,12 +307,15 @@ namespace EverythingToolbar.Controls
             {
                 case ModifierKeys.Alt:
                     SelectedItem?.ShowProperties();
+                    SearchWindow.Instance.Hide();
                     break;
                 case ModifierKeys.Control:
                     SelectedItem?.OpenPath();
+                    SearchWindow.Instance.Hide();
                     break;
                 case ModifierKeys.Shift:
                     SelectedItem?.ShowInEverything();
+                    SearchWindow.Instance.Hide();
                     break;
                 default:
                     OpenSelectedSearchResult();
@@ -320,11 +326,13 @@ namespace EverythingToolbar.Controls
         public void RunAsAdmin(object sender, RoutedEventArgs e)
         {
             SelectedItem?.RunAsAdmin();
+            SearchWindow.Instance.Hide();
         }
 
         public void ShowFileProperties(object sender, RoutedEventArgs e)
         {
             SelectedItem?.ShowProperties();
+            SearchWindow.Instance.Hide();
         }
 
         public void ShowFileWindowsContextMenu(object sender, RoutedEventArgs e)
