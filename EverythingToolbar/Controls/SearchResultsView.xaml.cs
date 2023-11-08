@@ -264,7 +264,6 @@ namespace EverythingToolbar.Controls
         private void CopyPathToClipBoard(object sender, RoutedEventArgs e)
         {
             SelectedItem?.CopyPathToClipboard();
-            EverythingSearch.Instance.Reset();
         }
 
         private void OpenWith(object sender, RoutedEventArgs e)
@@ -280,7 +279,6 @@ namespace EverythingToolbar.Controls
         private void CopyFile(object sender, RoutedEventArgs e)
         {
             SelectedItem?.CopyToClipboard();
-            EverythingSearch.Instance.Reset();
         }
 
         private void SingleClickSearchResult(object sender, MouseEventArgs e)
