@@ -13,8 +13,10 @@ namespace EverythingToolbar.Converters
             if (value == null)
                 return "";
 
+            string formattedValue = ((int)value).ToString("N0", culture);
+
             string suffix = (int)value == 1 ? Resources.SearchResult : Resources.SearchResults;
-            return $"{value} {suffix}";
+            return $"{formattedValue} {suffix}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
