@@ -151,7 +151,7 @@
     <value>경로 열기</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
-    <value>Show more options</value>
+    <value>옵션 더 보기</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
     <value>다른 프로그램으로 열기</value>
@@ -334,7 +334,7 @@
     <value>규칙...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>Set instance name...</value>
+    <value>인스턴스 이름 지정...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>빠른 토글 표시</value>
@@ -349,7 +349,7 @@
     <value>테마</value>
   </data>
   <data name="SettingsThemeAuto" xml:space="preserve">
-    <value>Sync theme</value>
+    <value>테마 동기화</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>썸네일 적용</value>
@@ -472,21 +472,21 @@
     <value>비디오</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Update available:</value>
+    <value>업데이트 사용 가능:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Skip</value>
+    <value>건너뛰기</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
-    <value>Download</value>
+    <value>다운로드</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>Check for updates automatically</value>
+    <value>자동으로 업데이트 확인</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
-    <value>Select first result</value>
+    <value>첫 번째 검색 결과 선택</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>Double-click to open</value>
+    <value>두 번 클릭으로 열기</value>
   </data>
 </root>
