@@ -118,51 +118,51 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClose" xml:space="preserve">
-    <value>Close</value>
+    <value>닫기</value>
   </data>
   <data name="CheckboxEnable" xml:space="preserve">
-    <value>Enable</value>
+    <value>사용</value>
   </data>
   <data name="CheckboxHide" xml:space="preserve">
-    <value>Hide</value>
+    <value>숨기기</value>
   </data>
   <data name="ContextMenuQuit" xml:space="preserve">
-    <value>Quit</value>
+    <value>나가기</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Run setup assistant...</value>
+    <value>설정 도우미 시작...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
+    <value>EverythingToolbar를 작업 표시줄에 고정하려면 아이콘을 오른쪽 클릭하여 '작업 표시줄에 고정'을 선택하세요.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Pin to taskbar</value>
+    <value>2. 작업 표시줄에 고정</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
+    <value>작업 표시줄 아이콘을 업데이트하려면 탐색기를 다시 시작해야 합니다. 지금 탐색기를 다시 시작하시겠습니까?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>Restart explorer</value>
+    <value>탐색기 다시 시작</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>기존 Windows 검색 아이콘을 숨길 수 있습니다.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Hide Windows search</value>
+    <value>3. Windows 검색 숨기기</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
+    <value>시스템 시작 시 EverythingToolbar를 자동으로 실행하는 것을 권장합니다.</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. Configure autostart</value>
+    <value>4. 자동 시작 설정</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>EverythingToolbar Setup Assistant</value>
+    <value>EverythingToolbar 설정 도우미</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>Select one of the following taskbar icons:</value>
+    <value>다음 중 사용할 작업 표시줄 아이콘을 선택하세요:</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Taskbar icon</value>
+    <value>1. 작업 표시줄 아이콘</value>
   </data>
 </root>
