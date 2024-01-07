@@ -33,7 +33,7 @@ namespace EverythingToolbar.Behaviors
         {
             base.OnAttached();
 
-            if (Environment.OSVersion.Version < Utils.WindowsVersion.Windows11)
+            if (Utils.GetWindowsVersion() < Utils.WindowsVersion.Windows11)
                 return;
 
             if (AssociatedObject.IsLoaded)

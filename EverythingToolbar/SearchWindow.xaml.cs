@@ -26,7 +26,7 @@ namespace EverythingToolbar
                 Settings.Default.isUpgradeRequired = false;
             }
 
-            if (Environment.OSVersion.Version < Utils.WindowsVersion.Windows11)
+            if (Utils.GetWindowsVersion() < Utils.WindowsVersion.Windows11)
             {
                 AllowsTransparency = true;
                 Loaded += (s, e) =>
@@ -150,7 +150,7 @@ namespace EverythingToolbar
             };
             animation.Completed += (s, e) =>
             {
-                if (Environment.OSVersion.Version >= Utils.WindowsVersion.Windows11)
+                if (Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
                     AnimateShowWin11(left, top, width, height, taskbarEdge);
                 else
                     AnimateShowWin10(left, top, width, height, taskbarEdge);
@@ -424,7 +424,7 @@ namespace EverythingToolbar
 
         public void AnimateHide(Edge taskbarEdge)
         {
-            if (Environment.OSVersion.Version >= Utils.WindowsVersion.Windows11)
+            if (Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
                 AnimateHideWin11(taskbarEdge);
             else
                 AnimateHideWin10(taskbarEdge);

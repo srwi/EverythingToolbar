@@ -16,6 +16,7 @@ using System.Windows.Media;
 using CSDeskBand.ContextMenu;
 using CSDeskBand.Interop;
 using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
 using Microsoft.Win32;
 using NLog;
 using MSG = CSDeskBand.Interop.MSG;
@@ -1018,6 +1019,8 @@ namespace CSDeskBand
         {
             ToolbarLogger.Initialize();
             Logger.Info($"EverythingToolbar {Assembly.GetExecutingAssembly().GetName().Version} started. OS: {Environment.OSVersion}");
+            if (Settings.Default.OSBuildNumberOverride != 0)
+                Logger.Info($"OS build number override: {Settings.Default.OSBuildNumberOverride}");
             AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
             {
              	Logger.Debug(e.Exception, "Unhandled first chance exception");

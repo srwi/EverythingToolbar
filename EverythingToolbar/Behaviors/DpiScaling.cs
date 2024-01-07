@@ -72,7 +72,7 @@ namespace EverythingToolbar.Behaviors
 
         private static double GetParentWindowDpi(Visual visual)
         {
-            if (Environment.OSVersion.Version < Utils.WindowsVersion.Windows10Anniversary)
+            if (Utils.GetWindowsVersion() < Utils.WindowsVersion.Windows10Anniversary)
             {
                 return 96.0;
             }

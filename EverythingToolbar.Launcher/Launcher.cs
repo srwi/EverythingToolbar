@@ -34,6 +34,8 @@ namespace EverythingToolbar.Launcher
             {
                 ToolbarLogger.Initialize();
                 Logger.Info($"EverythingToolbar Launcher {Assembly.GetExecutingAssembly().GetName().Version} started. OS: {Environment.OSVersion}");
+                if (Settings.Default.OSBuildNumberOverride != 0)
+                    Logger.Info($"OS build number override: {Settings.Default.OSBuildNumberOverride}");
 
                 _searchWindowRecentlyClosedTimer = new Timer(500);
                 _searchWindowRecentlyClosedTimer.AutoReset = false;

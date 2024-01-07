@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Helpers
 {
@@ -9,6 +10,14 @@ namespace EverythingToolbar.Helpers
         {
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "EverythingToolbar");
+        }
+
+        public static Version GetWindowsVersion()
+        {
+            if (Settings.Default.OSBuildNumberOverride != 0)
+                return new Version(10, 0, Settings.Default.OSBuildNumberOverride);
+
+            return Environment.OSVersion.Version;
         }
 
         public static class WindowsVersion

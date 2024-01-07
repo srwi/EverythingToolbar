@@ -99,7 +99,7 @@ namespace EverythingToolbar.Behaviors
 
         private int GetMargin()
         {
-            if (Environment.OSVersion.Version >= Utils.WindowsVersion.Windows11)
+            if (Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
                 return (int)(12 / GetScalingFactor());
             
             return 0;

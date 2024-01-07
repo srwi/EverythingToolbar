@@ -18,7 +18,7 @@ namespace EverythingToolbar.Helpers
         {
             new Filter {
                 Name = Resources.DefaultFilterAll,
-                Icon = Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? "\xE71D  " : "",
+                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE71D  " : "",
                 IsMatchCase = false,
                 IsMatchWholeWord = false,
                 IsMatchPath = false,
@@ -28,7 +28,7 @@ namespace EverythingToolbar.Helpers
             },
             new Filter {
                 Name = Resources.DefaultFilterFile,
-                Icon = Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? "\xE7C3  " : "",
+                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE7C3  " : "",
                 IsMatchCase = false,
                 IsMatchWholeWord = false,
                 IsMatchPath = false,
@@ -38,7 +38,7 @@ namespace EverythingToolbar.Helpers
             },
             new Filter {
                 Name = Resources.DefaultFilterFolder,
-                Icon = Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? "\xE8B7  " : "",
+                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE8B7  " : "",
                 IsMatchCase = false,
                 IsMatchWholeWord = false,
                 IsMatchPath = false,

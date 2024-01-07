@@ -26,12 +26,10 @@ namespace EverythingToolbar.Launcher
 
         public static bool IsTaskbarCenterAligned()
         {
-            ToolbarLogger.GetLogger<Utils>().Debug($"Windows version: {Environment.OSVersion.Version}");
-            
             if (Settings.Default.isForceCenterAlignment)
                 return true;
 
-            if (Environment.OSVersion.Version < WindowsVersion.Windows11)
+            if (Helpers.Utils.GetWindowsVersion() < Helpers.Utils.WindowsVersion.Windows11)
                 return false;
 
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"))

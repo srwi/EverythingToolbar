@@ -185,7 +185,7 @@ namespace EverythingToolbar.Launcher
 
         private int GetMargin()
         {
-            if (Environment.OSVersion.Version >= Helpers.Utils.WindowsVersion.Windows11)
+            if (Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11)
                 return 12;
             else
                 return 0;
