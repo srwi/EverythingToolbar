@@ -238,16 +238,16 @@ namespace EverythingToolbar.Controls
             if (SearchResultsListView.SelectedIndex == -1)
                 return;
 
+            SearchWindow.Instance.Hide();
+
             if (!Rules.HandleRule(SelectedItem))
                 SelectedItem?.Open();
-
-            SearchWindow.Instance.Hide();
         }
 
         private void OpenFilePath(object sender, RoutedEventArgs e)
         {
-            SelectedItem?.OpenPath();
             SearchWindow.Instance.Hide();
+            SelectedItem?.OpenPath();
         }
 
         private void PreviewSelectedFile()
