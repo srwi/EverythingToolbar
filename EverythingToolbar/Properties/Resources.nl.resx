@@ -280,7 +280,7 @@
     <value>Soort</value>
   </data>
   <data name="RulesWindowText" xml:space="preserve">
-    <value>Gebruik% file%,% filename% en% path% als placeholder in de opdracht.</value>
+    <value>Gebruik %file%, %filename% en %path% als placeholder in de opdracht.</value>
   </data>
   <data name="RulesWindowTitle" xml:space="preserve">
     <value>Regels</value>
