@@ -33,9 +33,8 @@ namespace EverythingToolbar.Launcher
 
         private void OnShowing(object sender, EventArgs e)
         {
-            double scalingFactor = GetScalingFactor();
-            RECT position = CalculatePosition(scalingFactor);
-            ToolbarLogger.GetLogger<SearchWindowPlacement>().Debug($"position: {position.Left}, position.Right: {position.Right}, position.Top: {position.Top}, position.Bottom: {position.Bottom}");
+            var scalingFactor = GetScalingFactor();
+            var position = CalculatePosition(scalingFactor);
             AssociatedObject.AnimateShow(
                 position.Left * scalingFactor,
                 position.Top * scalingFactor,
@@ -47,18 +46,12 @@ namespace EverythingToolbar.Launcher
 
         private RECT CalculatePosition(double scalingFactor)
         {
-            Screen screen = Screen.FromPoint(Cursor.Position);
-            TaskbarLocation taskbar = FindDockedTaskBar(screen);
-            Size windowSize = GetTargetWindowSize(scalingFactor);
-            int margin = (int)(GetMargin() / scalingFactor);
+            var screen = Screen.FromPoint(Cursor.Position);
+            var taskbar = FindDockedTaskBar(screen);
+            var windowSize = GetTargetWindowSize(scalingFactor);
+            var margin = (int)(GetMargin() / scalingFactor);
 
-            RECT windowPosition = new RECT();
-
-            ToolbarLogger.GetLogger<SearchWindowPlacement>().Debug($"Calculating window position...");
-            ToolbarLogger.GetLogger<SearchWindowPlacement>().Debug($"taskbar.Edge: {taskbar.Edge}");
-            ToolbarLogger.GetLogger<SearchWindowPlacement>().Debug($"taskbar.Position: {taskbar.Position}");
-            ToolbarLogger.GetLogger<SearchWindowPlacement>().Debug($"margin: {margin}");
-            ToolbarLogger.GetLogger<SearchWindowPlacement>().Debug($"windowSize: {windowSize.Width}, {windowSize.Height}");
+            var windowPosition = new RECT();
 
             if (taskbar.Edge == Edge.Top)
             {
@@ -94,7 +87,7 @@ namespace EverythingToolbar.Launcher
 
         private Size GetTargetWindowSize(double scalingFactor)
         {
-            Size windowSize = Settings.Default.popupSize;
+            var windowSize = Settings.Default.popupSize;
             windowSize.Width = Math.Max(windowSize.Width, AssociatedObject.MinWidth) / scalingFactor;
             windowSize.Height = Math.Max(windowSize.Height, AssociatedObject.MinHeight) / scalingFactor;
             return windowSize;
@@ -128,67 +121,55 @@ namespace EverythingToolbar.Launcher
 
         private TaskbarLocation FindDockedTaskBar(Screen screen)
         {
-            TaskbarLocation location = new TaskbarLocation
-            {
-                Position = new Rectangle(0, 0, 0, 0),
-                Edge = Edge.Bottom,
-            };
-
             var topDockedHeight = Math.Abs(Math.Abs(screen.Bounds.Top) - Math.Abs(screen.WorkingArea.Top));
             var bottomDockedHeight = screen.Bounds.Height - topDockedHeight - screen.WorkingArea.Height;
             var leftDockedWidth = Math.Abs(Math.Abs(screen.Bounds.Left) - Math.Abs(screen.WorkingArea.Left));
             var rightDockedWidth = screen.Bounds.Width - leftDockedWidth - screen.WorkingArea.Width;
 
-            List<int> docks = new List<int> { bottomDockedHeight, topDockedHeight, leftDockedWidth, rightDockedWidth };
-            switch (docks.IndexOf(docks.Max()))
+            if (leftDockedWidth > 0 && bottomDockedHeight == 0)
             {
-                case 0:  // Edge.Bottom
-                    location.Position.X = screen.WorkingArea.Left;
-                    location.Position.Y = screen.WorkingArea.Bottom;
-                    location.Position.Width = screen.WorkingArea.Width;
-                    location.Position.Height = bottomDockedHeight;
-                    location.Edge = Edge.Bottom;
-                    break;
-                case 1:  // Edge.Top
-                    location.Position.X = screen.WorkingArea.Left;
-                    location.Position.Y = screen.Bounds.Top;
-                    location.Position.Width = screen.WorkingArea.Width;
-                    location.Position.Height = topDockedHeight;
-                    location.Edge = Edge.Top;
-                    break;
-                case 2:  // Edge.Left
-                    location.Position.X = screen.Bounds.Left;
-                    location.Position.Y = screen.Bounds.Top;
-                    location.Position.Width = leftDockedWidth;
-                    location.Position.Height = screen.Bounds.Height;
-                    location.Edge = Edge.Left;
-                    break;
-                case 3:  // Edge.Right
-                    location.Position.X = screen.WorkingArea.Right;
-                    location.Position.Y = screen.Bounds.Top;
-                    location.Position.Width = rightDockedWidth;
-                    location.Position.Height = screen.Bounds.Height;
-                    location.Edge = Edge.Right;
-                    break;
+                return new TaskbarLocation
+                {
+                    Position = new Rectangle(screen.Bounds.Left, screen.Bounds.Top, leftDockedWidth, screen.Bounds.Height),
+                    Edge = Edge.Left
+                };
+            }
+            if (rightDockedWidth > 0 && bottomDockedHeight == 0)
+            {
+                return new TaskbarLocation
+                {
+                    Position = new Rectangle(screen.WorkingArea.Right, screen.Bounds.Top, rightDockedWidth, screen.Bounds.Height),
+                    Edge = Edge.Right
+                };
+
+            }
+            if (topDockedHeight > 0 && bottomDockedHeight == 0)
+            {
+                return new TaskbarLocation
+                {
+                    Position = new Rectangle(screen.WorkingArea.Left, screen.Bounds.Top, screen.WorkingArea.Width, topDockedHeight),
+                    Edge = Edge.Top
+                };
             }
 
-            return location;
+            return new TaskbarLocation
+            {
+                Position = new Rectangle(screen.WorkingArea.Left, screen.WorkingArea.Bottom, screen.WorkingArea.Width, bottomDockedHeight),
+                Edge = Edge.Bottom
+            };
         }
 
         private double GetScalingFactor()
         {
             // Converting from wpf-size requires division by scaling factor;
             // Converting to wpf-size requires multiplication with scaling factor
-            IntPtr hwnd = ((HwndSource)PresentationSource.FromVisual(AssociatedObject)).Handle;
+            var hwnd = ((HwndSource)PresentationSource.FromVisual(AssociatedObject)).Handle;
             return 96.0 / GetDpiForWindow(hwnd);
         }
 
         private int GetMargin()
         {
-            if (Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11)
-                return 12;
-            else
-                return 0;
+            return Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11 ? 12 : 0;
         }
 
         [DllImport("user32")]
