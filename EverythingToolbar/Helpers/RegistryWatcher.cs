@@ -1,6 +1,8 @@
-﻿using System.Management;
+﻿using System;
+using System.Management;
 using System.Security.Principal;
 using Microsoft.Win32;
+using NLog;
 
 namespace EverythingToolbar.Helpers
 {
@@ -30,6 +32,7 @@ namespace EverythingToolbar.Helpers
     {
         private readonly ManagementEventWatcher watcher;
         private readonly RegistryEntry target;
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<RegistryWatcher>();
 
         public event RegistryChange OnChange;
         public event RegistryChangeValue OnChangeValue;
@@ -44,9 +47,22 @@ namespace EverythingToolbar.Helpers
             Start();
         }
 
+        ~RegistryWatcher()
+        {
+            if (watcher != null)
+                watcher.Dispose();
+        }
+
         public void Start()
         {
-            watcher.Start();
+            try
+            {
+                watcher.Start();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, $"Failed to initialize RegistryWatcher for target {target}.");
+            }
         }
 
         public void Stop()
