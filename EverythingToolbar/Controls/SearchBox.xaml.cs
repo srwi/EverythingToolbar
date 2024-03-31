@@ -36,7 +36,7 @@ namespace EverythingToolbar.Controls
 
         private void OnFocusRequested(object sender, EventArgs e)
         {
-            // Hidden SearchBoxes should not respond to focus requests
+            // Only visible SearchBoxes should respond to focus requests
             if (Visibility == Visibility.Visible)
                 Focus();
         }
@@ -47,15 +47,13 @@ namespace EverythingToolbar.Controls
             {
                 UpdateSearchTerm(HistoryManager.Instance.GetPreviousItem());
                 e.Handled = true;
-                return;
             }
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Down)
             {
                 UpdateSearchTerm(HistoryManager.Instance.GetNextItem());
                 e.Handled = true;
-                return;
             }
-            else if (e.Key == Key.Home || e.Key == Key.End || 
+            else if ((e.Key == Key.Home || e.Key == Key.End) && Keyboard.Modifiers != ModifierKeys.Shift && Settings.Default.isAutoSelectFirstResult ||
                 e.Key == Key.PageDown || e.Key == Key.PageUp ||
                 e.Key == Key.Up || e.Key == Key.Down ||
                 e.Key == Key.Escape || e.Key == Key.Enter ||
@@ -63,7 +61,6 @@ namespace EverythingToolbar.Controls
             {
                 EventDispatcher.Instance.InvokeGlobalKeyEvent(this, e);
                 e.Handled = true;
-                return;
             }
         }
 
