@@ -487,6 +487,6 @@
     <value>Выберите первый результат</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>Double-click to open</value>
+    <value>Двойной щелчок - открыть</value>
   </data>
 </root>
