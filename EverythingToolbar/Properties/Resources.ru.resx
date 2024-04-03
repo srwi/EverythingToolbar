@@ -160,7 +160,7 @@
     <value>Выбрать приложение</value>
   </data>
   <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>Не задано правил</value>
+    <value>Не заданы правила</value>
   </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Вставить</value>
