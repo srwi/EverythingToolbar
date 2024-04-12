@@ -139,16 +139,16 @@
     <value>2. Görev çubuğuna sabitle</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>Görev çubuğu simgesini güncellemek için Windows Gezgini'nin yeniden başlatılması gerekiyor. Şimdi yeniden başlat?</value>
+    <value>Görev çubuğu simgesini güncellemek için Windows Gezgini'nin yeniden başlatılması gerekiyor. Windows Gezgini'ni şimdi yeniden başlatmak ister misiniz?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>Yeniden başlat</value>
+    <value>Windows Gezgini'ni yeniden başlat</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>İsteğe bağlı olarak Windows Arama simgesi gizlenilebilir.</value>
+    <value>İsteğe bağlı olarak Windows arama simgesi gizlenilebilir.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Windows Arama'yı gizle</value>
+    <value>3. Windows aramayı gizle</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
     <value>EverythingToolbar'ın sistem ile otomatik olarak başlatılması önerilir.</value>
