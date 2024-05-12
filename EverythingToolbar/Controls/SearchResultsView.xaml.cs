@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
@@ -18,7 +17,7 @@ namespace EverythingToolbar.Controls
     public partial class SearchResultsView
     {
         private SearchResult SelectedItem => SearchResultsListView.SelectedItem as SearchResult;
-        private Point dragStart;
+        private Point _dragStart;
 
         public SearchResultsView()
         {
@@ -184,7 +183,7 @@ namespace EverythingToolbar.Controls
             SelectNthSearchResult(SearchResultsListView.SelectedIndex - 1);
         }
 
-        public void SelectFirstSearchResult()
+        private void SelectFirstSearchResult()
         {
             SelectNthSearchResult(0);
         }
@@ -204,10 +203,12 @@ namespace EverythingToolbar.Controls
             FocusSelectedItem();
         }
 
-        private int GetPageSize()
+        private int? GetPageSize()
         {
-            var itemIndex = Math.Max(SearchResultsListView.SelectedIndex, 0);
-            var item = SearchResultsListView.ItemContainerGenerator.ContainerFromIndex(itemIndex) as ListViewItem;
+            var item = SearchResultsListView.ItemContainerGenerator.ContainerFromIndex(SearchResultsListView.SelectedIndex) as ListViewItem;
+            if (item == null)
+                return null;
+
             return (int)(SearchResultsListView.ActualHeight / item.ActualHeight);
         }
 
@@ -216,7 +217,11 @@ namespace EverythingToolbar.Controls
             if (SearchResultsListView.SelectedIndex < 0)
                 return;
 
-            var stepSize = Math.Max(0, GetPageSize() - 1);
+            var pageSize = GetPageSize();
+            if (pageSize == null)
+                return;
+
+            var stepSize = Math.Max(0, pageSize.Value - 1);
             var newIndex = Math.Max(SearchResultsListView.SelectedIndex - stepSize, 0);
             SearchResultsListView.SelectedIndex = newIndex;
             SearchResultsListView.ScrollIntoView(SelectedItem);
@@ -227,7 +232,11 @@ namespace EverythingToolbar.Controls
             if (SearchResultsListView.SelectedIndex < 0)
                 return;
 
-            var stepSize = Math.Max(0, GetPageSize() - 1);
+            var pageSize = GetPageSize();
+            if (pageSize == null)
+                return;
+
+            var stepSize = Math.Max(0, pageSize.Value - 1);
             var newIndex = Math.Min(SearchResultsListView.SelectedIndex + stepSize, SearchResultsListView.Items.Count - 1);
             SearchResultsListView.SelectedIndex = newIndex;
             SearchResultsListView.ScrollIntoView(SelectedItem);
@@ -287,13 +296,13 @@ namespace EverythingToolbar.Controls
         private void SingleClickSearchResult(object sender, MouseEventArgs e)
         {
             if (!Settings.Default.isDoubleClickToOpen)
-                Open(sender, e);
+                Open();
         }
 
         private void DoubleClickSearchResult(object sender, MouseEventArgs e)
         {
             if (Settings.Default.isDoubleClickToOpen)
-                Open(sender, e);
+                Open();
         }
 
         private void Open(object sender, RoutedEventArgs e)
@@ -301,7 +310,7 @@ namespace EverythingToolbar.Controls
             OpenSelectedSearchResult();
         }
 
-        private void Open(object sender, MouseEventArgs e)
+        private void Open()
         {
             switch (Keyboard.Modifiers)
             {
@@ -317,47 +326,51 @@ namespace EverythingToolbar.Controls
                     SelectedItem?.ShowInEverything();
                     SearchWindow.Instance.Hide();
                     break;
+                case ModifierKeys.None:
+                case ModifierKeys.Windows:
                 default:
                     OpenSelectedSearchResult();
                     break;
             }
         }
 
-        public void RunAsAdmin(object sender, RoutedEventArgs e)
+        private void RunAsAdmin(object sender, RoutedEventArgs e)
         {
             SelectedItem?.RunAsAdmin();
             SearchWindow.Instance.Hide();
         }
 
-        public void ShowFileProperties(object sender, RoutedEventArgs e)
+        private void ShowFileProperties(object sender, RoutedEventArgs e)
         {
             SelectedItem?.ShowProperties();
             SearchWindow.Instance.Hide();
         }
 
-        public void ShowFileWindowsContextMenu(object sender, RoutedEventArgs e)
+        private void ShowFileWindowsContextMenu(object sender, RoutedEventArgs e)
         {
             SelectedItem?.ShowWindowsContextMenu();
         }
 
         private void OnOpenWithMenuLoaded(object sender, RoutedEventArgs e)
         {
-            MenuItem mi = sender as MenuItem;
+            var mi = sender as MenuItem;
+            if (mi == null)
+                return;
 
             while (mi.Items.Count > 3)
                 mi.Items.RemoveAt(0);
 
-            List<Rule> rules = Rules.LoadRules();
+            var rules = Rules.LoadRules();
 
             if (rules.Count > 0)
                 (mi.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
             else
                 (mi.Items[0] as MenuItem).Visibility = Visibility.Visible;
 
-            for (int i = rules.Count - 1; i >= 0; i--)
+            for (var i = rules.Count - 1; i >= 0; i--)
             {
-                Rule rule = rules[i];
-                MenuItem ruleMenuItem = new MenuItem() { Header = rule.Name, Tag = rule.Command };
+                var rule = rules[i];
+                var ruleMenuItem = new MenuItem() { Header = rule.Name, Tag = rule.Command };
                 ruleMenuItem.Click += OpenWithRule;
                 mi.Items.Insert(0, ruleMenuItem);
             }
@@ -375,12 +388,12 @@ namespace EverythingToolbar.Controls
 
         private void OnListViewItemMouseDown(object sender, MouseButtonEventArgs e)
         {
-            dragStart = PointToScreen(Mouse.GetPosition(this));
+            _dragStart = PointToScreen(Mouse.GetPosition(this));
         }
 
         private void OnListViewItemMouseMove(object sender, MouseEventArgs e)
         {
-            var diff = dragStart - PointToScreen(Mouse.GetPosition(this));
+            var diff = _dragStart - PointToScreen(Mouse.GetPosition(this));
 
             if (e.LeftButton == MouseButtonState.Pressed &&
                 (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
@@ -399,7 +412,9 @@ namespace EverythingToolbar.Controls
         private void OnContextMenuOpened(object sender, RoutedEventArgs e)
         {
             var cm = sender as ContextMenu;
-            var mi = cm.Items[2] as MenuItem;
+            var mi = cm?.Items[2] as MenuItem;
+            if (mi == null)
+                return;
 
             string[] extensions = { ".exe", ".bat", ".cmd" };
             var isExecutable = SelectedItem.IsFile && extensions.Any(ext => SelectedItem.FullPathAndFileName.EndsWith(ext));
