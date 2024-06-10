@@ -68,12 +68,13 @@ namespace EverythingToolbar
                     return;
 
                 _currentFilter = value;
+                Settings.Default.lastFilter = value.Name;
                 
                 lock (_lock)
                     SearchResults.Clear();
                 QueryBatch(append: false);
 
-                NotifyPropertyChanged();
+                NotifyPropertyChanged("CurrentFilter");
             }
         }
 
