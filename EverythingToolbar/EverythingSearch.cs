@@ -74,7 +74,7 @@ namespace EverythingToolbar
                     SearchResults.Clear();
                 QueryBatch(append: false);
 
-                NotifyPropertyChanged("CurrentFilter");
+                NotifyPropertyChanged();
             }
         }
 
