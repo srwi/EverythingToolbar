@@ -6,13 +6,13 @@
             BorderThickness="0, 0, 0, 1">
         <StackPanel Orientation="Horizontal">
             <TabControl x:Name="TabControl"
-                        SelectionChanged="OnTabItemSelected"
-                        ItemsSource="{Binding DefaultFilters}" />
+                        ItemsSource="{Binding DefaultFilters}"
+                        SelectedIndex="-1" />
 
             <ComboBox Name="ComboBox"
-                      SelectionChanged="OnComboBoxItemSelected"
                       ItemsSource="{Binding UserFilters}"
-                      DisplayMemberPath="Name" />
+                      DisplayMemberPath="Name"
+                      SelectedIndex="-1" />
         </StackPanel>
     </Border>
     
