@@ -160,7 +160,7 @@
     <value>Выбрать приложение</value>
   </data>
   <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>Не задано правил</value>
+    <value>Не заданы правила</value>
   </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Вставить</value>
@@ -484,9 +484,9 @@
     <value>Проверять обновления автоматически</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
-    <value>Select first result</value>
+    <value>Выберите первый результат</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>Double-click to open</value>
+    <value>Двойной щелчок - открыть</value>
   </data>
 </root>
