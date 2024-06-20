@@ -122,7 +122,7 @@ namespace EverythingToolbar.Helpers
             Process.Start("rundll32.exe", args);
         }
 
-        private static bool WindowsExplorerIsDefault()
+        public static bool WindowsExplorerIsDefault()
         {
             var folderShell = (string)Registry.ClassesRoot.OpenSubKey(@"Folder\shell")?.GetValue(null);
             if (folderShell != null && Registry.ClassesRoot.OpenSubKey(@"Folder\shell\" + folderShell + @"\command")?.GetValue(null) != null)

@@ -66,10 +66,23 @@ namespace EverythingToolbar.Data
         {
             try
             {
-                Process.Start(new ProcessStartInfo(FullPathAndFileName)
+                if (Directory.Exists(FullPathAndFileName) && ShellUtils.WindowsExplorerIsDefault())
                 {
-                    WorkingDirectory = Path
-                });
+                    // We need to open directories with explorer specifically. Otherwise executables with the same stem
+                    // might be executed instead due to how Process.Start prioritizes executables when resolving filenames.
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = "explorer.exe",
+                        Arguments = FullPathAndFileName
+                    });
+                }
+                else
+                {
+                    Process.Start(new ProcessStartInfo(FullPathAndFileName)
+                    {
+                        WorkingDirectory = Path
+                    });
+                }
                 EverythingSearch.IncrementRunCount(FullPathAndFileName);
             }
             catch (Exception e)
@@ -85,8 +98,7 @@ namespace EverythingToolbar.Data
             {
                 Process.Start(new ProcessStartInfo(FullPathAndFileName)
                 {
-                    Verb = "runas",
-                    UseShellExecute = true
+                    Verb = "runas"
                 });
                 EverythingSearch.IncrementRunCount(FullPathAndFileName);
             }
@@ -206,12 +218,12 @@ namespace EverythingToolbar.Data
             {
                 try
                 {
-                    IntPtr seer = NativeMethods.FindWindowEx(IntPtr.Zero, IntPtr.Zero, "SeerWindowClass", null);
+                    var seer = NativeMethods.FindWindowEx(IntPtr.Zero, IntPtr.Zero, "SeerWindowClass", null);
 
                     const int SEER_INVOKE_W32 = 5000;
                     const int WM_COPYDATA = 0x004A;
 
-                    NativeMethods.COPYDATASTRUCT cd = new NativeMethods.COPYDATASTRUCT
+                    var cd = new NativeMethods.COPYDATASTRUCT
                     {
                         cbData = (FullPathAndFileName.Length + 1) * 2,
                         lpData = Marshal.StringToHGlobalUni(FullPathAndFileName),
