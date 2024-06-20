@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace EverythingToolbar.Helpers
 {
@@ -13,7 +14,7 @@ namespace EverythingToolbar.Helpers
 
     public class TaskbarStateManager : INotifyPropertyChanged
     {
-        public static TaskbarStateManager Instance = new TaskbarStateManager();
+        public static readonly TaskbarStateManager Instance = new TaskbarStateManager();
 
         private TaskbarStateManager() { }
 
@@ -28,24 +29,13 @@ namespace EverythingToolbar.Helpers
             }
         }
 
-        private double _taskbarHeight;
-        public double TaskbarHeight
+        private Size _taskbarSize;
+        public Size TaskbarSize
         {
-            get => _taskbarHeight;
+            get => _taskbarSize;
             set
             {
-                _taskbarHeight = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        private double _taskbarWidth;
-        public double TaskbarWidth
-        {
-            get => _taskbarWidth;
-            set
-            {
-                _taskbarWidth = value;
+                _taskbarSize = value;
                 NotifyPropertyChanged();
             }
         }
@@ -63,7 +53,7 @@ namespace EverythingToolbar.Helpers
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

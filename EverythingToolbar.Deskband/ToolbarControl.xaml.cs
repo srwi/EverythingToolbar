@@ -1,7 +1,6 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interop;
 using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
@@ -16,7 +15,7 @@ namespace EverythingToolbar
         {
             InitializeComponent();
 
-            var behavior = new SearchWindowPlacement()
+            var behavior = new SearchWindowPlacement
             {
                 PlacementTarget = this
             };

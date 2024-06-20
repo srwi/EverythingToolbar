@@ -29,13 +29,14 @@ namespace CSDeskBand
                 EventDispatcher.Instance.FocusRequested += OnFocusRequested;
                 EventDispatcher.Instance.UnfocusRequested += OnUnfocusRequested;
                 TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
+                TaskbarInfo.TaskbarSizeChanged += OnTaskbarSizeChanged;
 
                 TaskbarStateManager.Instance.TaskbarEdge = (EverythingToolbar.Helpers.Edge)TaskbarInfo.Edge;
             }
             catch (Exception e)
             {
                 _logger.Error(e, "Unhandled exception");
-                if (MessageBox.Show(e.ToString() + "\n\n" + Resources.MessageBoxCopyException,
+                if (MessageBox.Show(e + "\n\n" + Resources.MessageBoxCopyException,
                     Resources.MessageBoxUnhandledExceptionTitle,
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Error) == MessageBoxResult.Yes)
@@ -58,6 +59,11 @@ namespace CSDeskBand
 		private void OnTaskbarEdgeChanged(object sender, TaskbarEdgeChangedEventArgs e)
         {
             TaskbarStateManager.Instance.TaskbarEdge = (EverythingToolbar.Helpers.Edge)e.Edge;
+        }
+
+        private void OnTaskbarSizeChanged(object sender, TaskbarSizeChangedEventArgs e)
+        {
+            TaskbarStateManager.Instance.TaskbarSize = new Size(e.Size.Width, e.Size.Height);
         }
 
         protected override void DeskbandOnClosed()
