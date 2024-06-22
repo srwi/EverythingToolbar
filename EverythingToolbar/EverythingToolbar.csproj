@@ -75,7 +75,6 @@
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\SearchResultsCountConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="Converters\DoubleToVisibilityConverter.cs" />
     <Compile Include="Data\Filter.cs" />
     <Compile Include="EverythingSearch.cs" />
     <Compile Include="Data\Rule.cs" />

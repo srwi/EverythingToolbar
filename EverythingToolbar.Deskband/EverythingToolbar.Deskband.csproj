@@ -52,6 +52,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\SearchControlVisibilityConverter.cs" />
     <Compile Include="CSDeskBand.cs" />
     <Compile Include="Deskband.cs" />
     <Compile Include="..\AssemblyInfo.cs" Link="Properties\AssemblyInfo.cs" />
