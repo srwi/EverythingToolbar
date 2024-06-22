@@ -34,7 +34,6 @@ namespace EverythingToolbar.Deskband.Converters
             if (autoHideState != IntPtr.Zero)
             {
                 _isTaskbarAutoHiding = ((int)autoHideState.ToInt64() & ABS_AUTOHIDE) == ABS_AUTOHIDE;
-                ToolbarLogger.GetLogger("").Info(_isTaskbarAutoHiding.ToString());
             }
         }
 
