@@ -127,40 +127,40 @@
     <value>숨기기</value>
   </data>
   <data name="ContextMenuQuit" xml:space="preserve">
-    <value>나가기</value>
+    <value>종료</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>설정 도우미 시작...</value>
+    <value>설정 도우미 실행...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>EverythingToolbar를 작업 표시줄에 고정하려면 아이콘을 오른쪽 클릭하여 '작업 표시줄에 고정'을 선택하세요.</value>
+    <value>EverythingToolbar를 작업 표시줄에 고정하려면 해당 아이콘을 마우스 오른쪽 버튼으로 클릭하고 '작업 표시줄에 고정'을 선택합니다.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
     <value>2. 작업 표시줄에 고정</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>작업 표시줄 아이콘을 업데이트하려면 탐색기를 다시 시작해야 합니다. 지금 탐색기를 다시 시작하시겠습니까?</value>
+    <value>작업 표시줄 아이콘을 업데이트하려면 탐색기를 다시 시작해야 합니다. 지금 다시 시작하시겠습니까?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>탐색기 다시 시작</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>기존 Windows 검색 아이콘을 숨길 수 있습니다.</value>
+    <value>선택적으로 원래 Windows 검색 아이콘을 숨길 수 있습니다.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
     <value>3. Windows 검색 숨기기</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>시스템 시작 시 EverythingToolbar를 자동으로 실행하는 것을 권장합니다.</value>
+    <value>시스템 시작 시 EverythingToolbar를 자동으로 시작하는 것이 좋습니다.</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. 자동 시작 설정</value>
+    <value>4. 자동 시작 구성</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar 설정 도우미</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>다음 중 사용할 작업 표시줄 아이콘을 선택하세요:</value>
+    <value>다음 작업 표시줄 아이콘 중 하나를 선택합니다:</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
     <value>1. 작업 표시줄 아이콘</value>
