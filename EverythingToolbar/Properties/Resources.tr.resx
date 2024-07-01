@@ -307,7 +307,7 @@
     <value>Arama Geçmişini etkinleştir</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
-    <value>Boş aramayı gizle</value>
+    <value>Boş arama'yı gizle</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
     <value>Büyük-Küçük Harfe Duyarlı</value>
