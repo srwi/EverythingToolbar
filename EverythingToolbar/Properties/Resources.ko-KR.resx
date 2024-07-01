@@ -304,7 +304,7 @@
     <value>애니메이션 비활성화</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
-    <value>검색 기록 활성화</value>
+    <value>검색 기록 사용함</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
     <value>빈 검색 숨기기</value>
@@ -334,10 +334,10 @@
     <value>규칙...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>인스턴스 이름 지정...</value>
+    <value>인스턴스 이름 설정...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
-    <value>빠른 토글 표시</value>
+    <value>빠른 전환 표시</value>
   </data>
   <data name="SettingsShowResultsCount" xml:space="preserve">
     <value>검색 결과 수 표시</value>
@@ -352,7 +352,7 @@
     <value>테마 동기화</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>썸네일 적용</value>
+    <value>썸네일 사용함</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Everything 필터 사용</value>
@@ -484,7 +484,7 @@
     <value>자동으로 업데이트 확인</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
-    <value>첫 번째 검색 결과 선택</value>
+    <value>첫 번째 결과 선택</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
     <value>두 번 클릭으로 열기</value>
