@@ -133,16 +133,16 @@
     <value>執行設定助理...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>將 EverythingToobar 釘選至工作列，右鍵點選圖示並選取「釘選到工作列」。</value>
+    <value>要將 EverythingToobar 釘選至工作列，請在圖示上點擊右鍵並選擇「釘選到工作列」。</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
     <value>2. 釘選到工作列</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>更新工作列圖示需要重新啟動檔案總管，您想要立即重新啟動嗎？</value>
+    <value>更新工作列圖示需要重啟檔案總管，您想要立即重新啟動嗎？</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>重新啟動檔案總管</value>
+    <value>重啟檔案總管</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
     <value>另外，原本的 Windows 搜尋圖示可以被隱藏。</value>
