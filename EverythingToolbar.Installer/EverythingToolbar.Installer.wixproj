@@ -7,9 +7,6 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <OutputName>EverythingToolbar</OutputName>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <SuppressIces>ICE80;ICE38;ICE64;ICE91</SuppressIces>
-  </PropertyGroup>
   <PropertyGroup>
     <DefineConstants>HarvestPath=..\EverythingToolbar.Launcher\bin\$(Configuration)</DefineConstants>
   </PropertyGroup>
@@ -28,9 +25,21 @@
   </ItemGroup>
   <Import Project="Sdk.targets" Sdk="WixToolset.Sdk" Version="5.0.1" />
   <Target Name="BeforeBuild">
-    <HeatDirectory Directory="..\EverythingToolbar.Launcher\bin\$(Configuration)" PreprocessorVariable="var.HarvestPath" OutputFile="HeatGeneratedFileList.wxs" ComponentGroupName="HeatGenerated" DirectoryRefId="APPLICATIONFOLDER" AutogenerateGuids="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" Transforms="HeatXsl.xslt" />
+    <HeatDirectory 
+      Directory="..\EverythingToolbar.Launcher\bin\$(Configuration)"
+      PreprocessorVariable="var.HarvestPath"
+      OutputFile="HeatGeneratedFileList.wxs"
+      ComponentGroupName="HeatGenerated"
+      DirectoryRefId="APPLICATIONFOLDER"
+      AutogenerateGuids="true"
+      ToolPath="$(WixToolPath)"
+      SuppressFragments="true"
+      SuppressRegistry="true"
+      SuppressRootDirectory="true"
+      Transforms="HeatXsl.xslt"
+    />
   </Target>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="xcopy $(SolutionDir)README.md $(SolutionDir)EverythingToolbar.Launcher\bin\Release /r /y&#xA;xcopy $(SolutionDir)LICENSE $(SolutionDir)EverythingToolbar.Launcher\bin\Release /r /y" />
+    <Exec Command="xcopy $(SolutionDir)README.md $(SolutionDir)EverythingToolbar.Launcher\bin\$(Configuration) /r /y&#xA;xcopy $(SolutionDir)LICENSE $(SolutionDir)EverythingToolbar.Launcher\bin\$(Configuration) /r /y" />
   </Target>
 </Project>
