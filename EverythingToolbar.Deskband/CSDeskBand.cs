@@ -1017,14 +1017,7 @@ namespace CSDeskBand
         /// </summary>
         public CSDeskBandWpf()
         {
-            ToolbarLogger.Initialize();
-            Logger.Info($"EverythingToolbar {Assembly.GetExecutingAssembly().GetName().Version} started. OS: {Environment.OSVersion}");
-            if (Settings.Default.OSBuildNumberOverride != 0)
-                Logger.Info($"OS build number override: {Settings.Default.OSBuildNumberOverride}");
-            AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
-            {
-             	Logger.Debug(e.Exception, "Unhandled first chance exception");
-            };
+            ToolbarLogger.Initialize("Deskband");
 
             Options.Title = RegistrationHelper.GetToolbarName(GetType());
 

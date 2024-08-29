@@ -1,4 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using System.Windows;
+using EverythingToolbar.Properties;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -10,7 +14,7 @@ namespace EverythingToolbar.Helpers
         private static readonly string DebugFlagFileName = Path.Combine(Utils.GetConfigDirectory(), "debug.txt");
         private static readonly LogFactory LogFactory = new LogFactory();
 
-        public static ILogger GetLogger(string name)
+        private static ILogger GetLogger(string name)
         {
             return LogFactory.GetLogger(name);
         }
@@ -25,7 +29,32 @@ namespace EverythingToolbar.Helpers
             return File.Exists(DebugFlagFileName) ? LogLevel.Debug : LogLevel.Info;
         }
 
-        public static void Initialize()
+        private static void LogVersionInformation(ILogger logger)
+        {
+            logger.Debug("Debug logging enabled.");
+            logger.Info($"EverythingToolbar {Assembly.GetExecutingAssembly().GetName().Version} started. OS: {Environment.OSVersion}");
+
+            if (Settings.Default.OSBuildNumberOverride != 0)
+                logger.Info($"OS build number override: {Settings.Default.OSBuildNumberOverride}");
+        }
+
+        private static void InitializeExceptionLoggers(ILogger logger)
+        {
+            AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
+            {
+                logger.Debug(e.Exception, "Unhandled first chance exception");
+            };
+            AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+            {
+                logger.Error((Exception)args.ExceptionObject, "Unhandled exception");
+            };
+            Application.Current.DispatcherUnhandledException += (sender, args) =>
+            {
+                logger.Error(args.Exception, "Unhandled exception on UI thread");
+            };
+        }
+
+        private static void ConfigureLogger()
         {
             var logfile = new FileTarget("logfile")
             {
@@ -42,7 +71,15 @@ namespace EverythingToolbar.Helpers
             var config = new LoggingConfiguration();
             config.LoggingRules.Add(fileRule);
             LogFactory.Configuration = config;
-            GetLogger("ToolbarLogger").Debug("Debug logging enabled.");
+        }
+
+        public static void Initialize(string name)
+        {
+            ConfigureLogger();
+
+            var logger = GetLogger(name);
+            LogVersionInformation(logger);
+            InitializeExceptionLoggers(logger);
         }
     }
 }
