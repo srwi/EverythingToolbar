@@ -12,13 +12,6 @@ namespace EverythingToolbar.Launcher
 {
     internal class Utils
     {
-        public static class WindowsVersion
-        {
-            public static Version Windows10 = new Version(10, 0, 10240);
-            public static Version Windows10Anniversary = new Version(10, 0, 14393);
-            public static Version Windows11 = new Version(10, 0, 22000);
-        }
-
         public static string GetTaskbarShortcutPath()
         {
             const string relativeTaskBarPath = @"Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar";
@@ -26,21 +19,28 @@ namespace EverythingToolbar.Launcher
 
             if (Directory.Exists(taskBarPath))
             {
-                var lnkFiles = Directory.GetFiles(taskBarPath, "*.lnk");
-                var shell = new Shell();
-                var thisExecutableName = Path.GetFileName(Process.GetCurrentProcess().MainModule.FileName);
-                foreach (var lnkFile in lnkFiles)
+                try
                 {
-                    var folder = shell.NameSpace(Path.GetDirectoryName(lnkFile));
-                    var folderItem = folder.ParseName(Path.GetFileName(lnkFile));
-                    if (folderItem != null && folderItem.IsLink)
+                    var lnkFiles = Directory.GetFiles(taskBarPath, "*.lnk");
+                    var shell = new Shell();
+                    var thisExecutableName = Path.GetFileName(Process.GetCurrentProcess().MainModule.FileName);
+                    foreach (var lnkFile in lnkFiles)
                     {
-                        var link = (ShellLinkObject)folderItem.GetLink;
-                        var linkFileName = Path.GetFileName(link.Path);
+                        var folder = shell.NameSpace(Path.GetDirectoryName(lnkFile));
+                        var folderItem = folder.ParseName(Path.GetFileName(lnkFile));
+                        if (folderItem != null && folderItem.IsLink)
+                        {
+                            var link = (ShellLinkObject)folderItem.GetLink;
+                            var linkFileName = Path.GetFileName(link.Path);
 
-                        if (linkFileName == thisExecutableName)
-                            return lnkFile;
+                            if (linkFileName == thisExecutableName)
+                                return lnkFile;
+                        }
                     }
+                }
+                catch (Exception e)
+                {
+                    ToolbarLogger.GetLogger<Utils>().Error(e, "Failed to scan taskbar icon links. Using default path...");
                 }
             }
 
