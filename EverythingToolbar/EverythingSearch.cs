@@ -244,7 +244,7 @@ namespace EverythingToolbar
 
                         lock (_lock)
                         {
-                            SearchResults.AddSilent(new SearchResult()
+                            SearchResults.AddSilent(new SearchResult
                             {
                                 HighlightedPath = highlightedPath,
                                 HighlightedFileName = highlightedFileName,

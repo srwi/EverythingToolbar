@@ -14,12 +14,12 @@ namespace EverythingToolbar.Converters
         {
             if (value is string input)
             {
-                TextBlock textBlock = new TextBlock
+                var textBlock = new TextBlock
                 {
                     TextTrimming = TextTrimming.CharacterEllipsis
                 };
-                string[] segments = input.Split('*');
-                for (int j = 0; j < segments.Length; j++)
+                var segments = input.Split('*');
+                for (var j = 0; j < segments.Length; j++)
                 {
                     if (j % 2 > 0)
                     {

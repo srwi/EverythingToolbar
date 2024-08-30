@@ -13,9 +13,9 @@ namespace EverythingToolbar.Converters
             if (value == null)
                 return "";
 
-            string formattedValue = ((int)value).ToString("N0", culture);
+            var formattedValue = ((int)value).ToString("N0", culture);
 
-            string suffix = (int)value == 1 ? Resources.SearchResult : Resources.SearchResults;
+            var suffix = (int)value == 1 ? Resources.SearchResult : Resources.SearchResults;
             return $"{formattedValue} {suffix}";
         }
 

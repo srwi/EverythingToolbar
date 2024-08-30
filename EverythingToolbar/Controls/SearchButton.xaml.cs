@@ -21,19 +21,19 @@ namespace EverythingToolbar.Controls
 
         private void OnSearchWindowDeactivated(object sender, EventArgs e)
         {
-            Border border = Template.FindName("OuterBorder", this) as Border;
+            var border = Template.FindName("OuterBorder", this) as Border;
             border.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
         }
 
         private void OnSearchWindowActivated(object sender, EventArgs e)
         {
-            Border border = Template.FindName("OuterBorder", this) as Border;
+            var border = Template.FindName("OuterBorder", this) as Border;
             border.Background = new SolidColorBrush(Color.FromArgb(64, 255, 255, 255));
         }
 
         private void UpdateTheme(Theme newTheme)
         {
-            Border border = Template.FindName("OuterBorder", this) as Border;
+            var border = Template.FindName("OuterBorder", this) as Border;
             if (newTheme == Theme.Light)
             {
                 Foreground = new SolidColorBrush(Colors.Black);

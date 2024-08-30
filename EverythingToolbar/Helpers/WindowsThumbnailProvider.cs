@@ -51,7 +51,7 @@ namespace EverythingToolbar.Helpers
             void GetDisplayName(SIGDN sigdnName, out IntPtr ppszName);
             void GetAttributes(uint sfgaoMask, out uint psfgaoAttribs);
             void Compare(IShellItem psi, uint hint, out int piOrder);
-        };
+        }
 
         internal enum SIGDN : uint
         {
@@ -83,7 +83,7 @@ namespace EverythingToolbar.Helpers
             AccessDenied = unchecked((int)0x80030005)
         }
 
-        [ComImport()]
+        [ComImport]
         [Guid("bcc18b79-ba16-442f-80c4-8a59c30c463b")]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         internal interface IShellItemImageFactory
@@ -103,7 +103,7 @@ namespace EverythingToolbar.Helpers
 
             public int Width { set { width = value; } }
             public int Height { set { height = value; } }
-        };
+        }
 
 
         public static BitmapSource GetThumbnail(string fileName, int width, int height)
@@ -129,7 +129,7 @@ namespace EverythingToolbar.Helpers
             else
                 to = ThumbnailOptions.None;
 
-            IntPtr hBitmap = GetHBitmap(Path.GetFullPath(fileName), width, height, to);
+            var hBitmap = GetHBitmap(Path.GetFullPath(fileName), width, height, to);
 
             try
             {
@@ -150,19 +150,19 @@ namespace EverythingToolbar.Helpers
 
         private static IntPtr GetHBitmap(string fileName, int width, int height, ThumbnailOptions options)
         {
-            Guid shellItem2Guid = new Guid(IShellItem2Guid);
-            int retCode = SHCreateItemFromParsingName(fileName, IntPtr.Zero, ref shellItem2Guid, out IShellItem nativeShellItem);
+            var shellItem2Guid = new Guid(IShellItem2Guid);
+            var retCode = SHCreateItemFromParsingName(fileName, IntPtr.Zero, ref shellItem2Guid, out var nativeShellItem);
 
             if (retCode != 0)
                 throw Marshal.GetExceptionForHR(retCode);
 
-            NativeSize nativeSize = new NativeSize
+            var nativeSize = new NativeSize
             {
                 Width = width,
                 Height = height
             };
 
-            HResult hr = ((IShellItemImageFactory)nativeShellItem).GetImage(nativeSize, options, out IntPtr hBitmap);
+            var hr = ((IShellItemImageFactory)nativeShellItem).GetImage(nativeSize, options, out var hBitmap);
 
             // if extracting image thumbnail and failed, extract shell icon
             if (options == ThumbnailOptions.ThumbnailOnly && hr == HResult.ExtractionFailed)

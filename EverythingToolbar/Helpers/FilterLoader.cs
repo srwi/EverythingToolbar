@@ -58,7 +58,7 @@ namespace EverythingToolbar.Helpers
             }
         }
         
-        public readonly ObservableCollection<Filter> DefaultUserFilters = new ObservableCollection<Filter>()
+        public readonly ObservableCollection<Filter> DefaultUserFilters = new ObservableCollection<Filter>
         {
             new Filter {
                 Name = Resources.UserFilterAudio,
@@ -253,7 +253,7 @@ namespace EverythingToolbar.Helpers
                         filter["Name"] = filter["Name"].Replace("PICTURE", Resources.UserFilterPicture);
                         filter["Name"] = filter["Name"].Replace("VIDEO", Resources.UserFilterVideo);
 
-                        filters.Add(new Filter()
+                        filters.Add(new Filter
                         {
                             Name = filter["Name"],
                             IsMatchCase = filter["Case"] == "1",

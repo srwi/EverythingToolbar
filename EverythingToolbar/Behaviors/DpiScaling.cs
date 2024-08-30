@@ -155,7 +155,7 @@ namespace EverythingToolbar.Behaviors
             }
 
             var child = VisualTreeHelper.GetChild(AssociatedObject, 0);
-            double renderScale = newDpi / InitialDpi;
+            var renderScale = newDpi / InitialDpi;
 
             var scaleTransform = Math.Abs(renderScale - 1) < 0.0001
                 ? Transform.Identity

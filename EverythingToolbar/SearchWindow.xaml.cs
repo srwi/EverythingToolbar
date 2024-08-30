@@ -63,7 +63,7 @@ namespace EverythingToolbar
         {
             if (e.Key >= Key.D0 && e.Key <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control)
             {
-                int index = e.Key == Key.D0 ? 9 : e.Key - Key.D1;
+                var index = e.Key == Key.D0 ? 9 : e.Key - Key.D1;
                 EverythingSearch.Instance.SelectFilterFromIndex(index);
             }
             else if (e.Key == Key.Escape)
@@ -245,7 +245,7 @@ namespace EverythingToolbar
                     fromThickness = new Thickness(0, 50, 0, -50);
                     break;
             }
-            ContentGrid.BeginAnimation(MarginProperty, new ThicknessAnimation()
+            ContentGrid.BeginAnimation(MarginProperty, new ThicknessAnimation
             {
                 From = fromThickness,
                 To = new Thickness(0),
@@ -348,7 +348,7 @@ namespace EverythingToolbar
                     property = TopProperty;
                     break;
             }
-            DoubleAnimation animation = new DoubleAnimation
+            var animation = new DoubleAnimation
             {
                 To = target,
                 Duration = TimeSpan.FromMilliseconds(30),
@@ -388,7 +388,7 @@ namespace EverythingToolbar
                     property = TopProperty;
                     break;
             }
-            DoubleAnimation animation = new DoubleAnimation
+            var animation = new DoubleAnimation
             {
                 From = from,
                 To = to,

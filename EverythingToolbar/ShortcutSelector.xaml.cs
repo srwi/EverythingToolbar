@@ -74,7 +74,7 @@ namespace EverythingToolbar
 
         private void UpdateTextBox()
         {
-            StringBuilder shortcutText = new StringBuilder();
+            var shortcutText = new StringBuilder();
             if ((Modifiers & ModifierKeys.Control) != 0)
             {
                 shortcutText.Append(Properties.Resources.KeyCtrl);

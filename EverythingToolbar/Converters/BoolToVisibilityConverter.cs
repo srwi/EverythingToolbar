@@ -10,7 +10,7 @@ namespace EverythingToolbar.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool invert = System.Convert.ToBoolean(parameter);
+            var invert = System.Convert.ToBoolean(parameter);
 
             if ((bool)value)
             {

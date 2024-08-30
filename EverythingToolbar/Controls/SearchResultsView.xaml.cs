@@ -59,10 +59,10 @@ namespace EverythingToolbar.Controls
                 Event = MouseMoveEvent,
                 Handler = new MouseEventHandler(OnListViewItemMouseMove)
             });
-            SearchResultsListView.ItemContainerStyle.Setters.Add(new Setter()
+            SearchResultsListView.ItemContainerStyle.Setters.Add(new Setter
             {
                 Property = ContextMenuProperty,
-                Value = new Binding() { Source = Resources["ListViewItemContextMenu"] }
+                Value = new Binding { Source = Resources["ListViewItemContextMenu"] }
             });
         }
 
@@ -370,7 +370,7 @@ namespace EverythingToolbar.Controls
             for (var i = rules.Count - 1; i >= 0; i--)
             {
                 var rule = rules[i];
-                var ruleMenuItem = new MenuItem() { Header = rule.Name, Tag = rule.Command };
+                var ruleMenuItem = new MenuItem { Header = rule.Name, Tag = rule.Command };
                 ruleMenuItem.Click += OpenWithRule;
                 mi.Items.Insert(0, ruleMenuItem);
             }

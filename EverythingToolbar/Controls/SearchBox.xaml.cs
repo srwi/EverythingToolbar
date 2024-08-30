@@ -13,7 +13,7 @@ namespace EverythingToolbar.Controls
     {
         public event EventHandler<TextChangedEventArgs> TextChanged;
 
-        private int LastCaretIndex = 0;
+        private int LastCaretIndex;
 
         public SearchBox()
         {
@@ -124,7 +124,7 @@ namespace EverythingToolbar.Controls
 
         private void SelectivelyIgnoreMouseButton(object sender, MouseButtonEventArgs e)
         {
-            TextBox textBox = (sender as TextBox);
+            var textBox = (sender as TextBox);
             if (textBox != null)
             {
                 if (!textBox.IsKeyboardFocusWithin)

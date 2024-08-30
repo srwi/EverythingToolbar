@@ -44,7 +44,7 @@ namespace EverythingToolbar.Helpers
 
         public static void ShowFileProperties(string path)
         {
-            SHELLEXECUTEINFO info = new SHELLEXECUTEINFO();
+            var info = new SHELLEXECUTEINFO();
             info.cbSize = Marshal.SizeOf(info);
             info.lpVerb = "properties";
             info.lpFile = path;
@@ -112,7 +112,7 @@ namespace EverythingToolbar.Helpers
                 IntPtr.Zero,
                 workingDirectory,
                 ref si,
-                out PROCESS_INFORMATION _);
+                out var _);
         }
 
         public static void OpenWithDialog(string path)

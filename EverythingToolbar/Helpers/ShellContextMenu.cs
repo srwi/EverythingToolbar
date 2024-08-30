@@ -38,7 +38,7 @@ namespace Peter
         /// <summary>Default constructor</summary>
         public ShellContextMenu()
         {
-            this.CreateHandle(new CreateParams());
+            CreateHandle(new CreateParams());
         }
         #endregion
 
@@ -57,7 +57,7 @@ namespace Peter
         /// <returns>true if it got the interfaces, otherwise false</returns>
         private bool GetContextMenuInterfaces(IShellFolder oParentFolder, IntPtr[] arrPIDLs, out IntPtr ctxMenuPtr)
         {
-            int nResult = oParentFolder.GetUIObjectOf(
+            var nResult = oParentFolder.GetUIObjectOf(
                 IntPtr.Zero,
                 (uint)arrPIDLs.Length,
                 arrPIDLs,
@@ -71,12 +71,10 @@ namespace Peter
 
                 return true;
             }
-            else
-            {
-                ctxMenuPtr = IntPtr.Zero;
-                _oContextMenu = null;
-                return false;
-            }
+
+            ctxMenuPtr = IntPtr.Zero;
+            _oContextMenu = null;
+            return false;
         }
         #endregion
 
@@ -125,7 +123,7 @@ namespace Peter
         #region InvokeCommand
         private void InvokeCommand(IContextMenu oContextMenu, uint nCmd, string strFolder, Point pointInvoke)
         {
-            CMINVOKECOMMANDINFOEX invoke = new CMINVOKECOMMANDINFOEX
+            var invoke = new CMINVOKECOMMANDINFOEX
             {
                 cbSize = cbInvokeCommand,
                 lpVerb = (IntPtr)(nCmd - CMD_FIRST),
@@ -192,7 +190,7 @@ namespace Peter
             if (null == _oDesktopFolder)
             {
                 // Get desktop IShellFolder
-                int nResult = SHGetDesktopFolder(out IntPtr pUnkownDesktopFolder);
+                var nResult = SHGetDesktopFolder(out var pUnkownDesktopFolder);
                 if (S_OK != nResult)
                 {
                     throw new ShellContextMenuException("Failed to get the desktop shell folder");
@@ -214,7 +212,7 @@ namespace Peter
         {
             if (null == _oParentFolder)
             {
-                IShellFolder oDesktopFolder = GetDesktopFolder();
+                var oDesktopFolder = GetDesktopFolder();
                 if (null == oDesktopFolder)
                 {
                     return null;
@@ -223,22 +221,22 @@ namespace Peter
                 // Get the PIDL for the folder file is in
                 uint pchEaten = 0;
                 SFGAO pdwAttributes = 0;
-                int nResult = oDesktopFolder.ParseDisplayName(IntPtr.Zero, IntPtr.Zero, folderName, ref pchEaten, out IntPtr pPIDL, ref pdwAttributes);
+                var nResult = oDesktopFolder.ParseDisplayName(IntPtr.Zero, IntPtr.Zero, folderName, ref pchEaten, out var pPIDL, ref pdwAttributes);
                 if (S_OK != nResult)
                 {
                     return null;
                 }
 
-                IntPtr pStrRet = Marshal.AllocCoTaskMem(MAX_PATH * 2 + 4);
+                var pStrRet = Marshal.AllocCoTaskMem(MAX_PATH * 2 + 4);
                 Marshal.WriteInt32(pStrRet, 0, 0);
                 _ = _oDesktopFolder.GetDisplayNameOf(pPIDL, SHGNO.FORPARSING, pStrRet);
-                StringBuilder strFolder = new StringBuilder(MAX_PATH);
+                var strFolder = new StringBuilder(MAX_PATH);
                 StrRetToBuf(pStrRet, pPIDL, strFolder, MAX_PATH);
                 Marshal.FreeCoTaskMem(pStrRet);
                 _strParentFolder = strFolder.ToString();
 
                 // Get the IShellFolder for folder
-                nResult = oDesktopFolder.BindToObject(pPIDL, IntPtr.Zero, ref IID_IShellFolder, out IntPtr pUnknownParentFolder);
+                nResult = oDesktopFolder.BindToObject(pPIDL, IntPtr.Zero, ref IID_IShellFolder, out var pUnknownParentFolder);
                 // Free the PIDL first
                 Marshal.FreeCoTaskMem(pPIDL);
                 if (S_OK != nResult)
@@ -265,21 +263,21 @@ namespace Peter
                 return null;
             }
 
-            IShellFolder oParentFolder = GetParentFolder(arrFI[0].DirectoryName);
+            var oParentFolder = GetParentFolder(arrFI[0].DirectoryName);
             if (null == oParentFolder)
             {
                 return null;
             }
 
-            IntPtr[] arrPIDLs = new IntPtr[arrFI.Length];
-            int n = 0;
-            foreach (FileInfo fi in arrFI)
+            var arrPIDLs = new IntPtr[arrFI.Length];
+            var n = 0;
+            foreach (var fi in arrFI)
             {
                 // Get the file relative to folder
                 uint pchEaten = 0;
                 SFGAO pdwAttributes = 0;
-                IntPtr pPIDL = IntPtr.Zero;
-                int nResult = oParentFolder.ParseDisplayName(IntPtr.Zero, IntPtr.Zero, fi.Name, ref pchEaten, out pPIDL, ref pdwAttributes);
+                var pPIDL = IntPtr.Zero;
+                var nResult = oParentFolder.ParseDisplayName(IntPtr.Zero, IntPtr.Zero, fi.Name, ref pchEaten, out pPIDL, ref pdwAttributes);
                 if (S_OK != nResult)
                 {
                     FreePIDLs(arrPIDLs);
@@ -304,21 +302,21 @@ namespace Peter
                 return null;
             }
 
-            IShellFolder oParentFolder = GetParentFolder(arrFI[0].Parent.FullName);
+            var oParentFolder = GetParentFolder(arrFI[0].Parent.FullName);
             if (null == oParentFolder)
             {
                 return null;
             }
 
-            IntPtr[] arrPIDLs = new IntPtr[arrFI.Length];
-            int n = 0;
-            foreach (DirectoryInfo fi in arrFI)
+            var arrPIDLs = new IntPtr[arrFI.Length];
+            var n = 0;
+            foreach (var fi in arrFI)
             {
                 // Get the file relative to folder
                 uint pchEaten = 0;
                 SFGAO pdwAttributes = 0;
-                IntPtr pPIDL = IntPtr.Zero;
-                int nResult = oParentFolder.ParseDisplayName(IntPtr.Zero, IntPtr.Zero, fi.Name, ref pchEaten, out pPIDL, ref pdwAttributes);
+                var pPIDL = IntPtr.Zero;
+                var nResult = oParentFolder.ParseDisplayName(IntPtr.Zero, IntPtr.Zero, fi.Name, ref pchEaten, out pPIDL, ref pdwAttributes);
                 if (S_OK != nResult)
                 {
                     FreePIDLs(arrPIDLs);
@@ -341,7 +339,7 @@ namespace Peter
         {
             if (null != arrPIDLs)
             {
-                for (int n = 0; n < arrPIDLs.Length; n++)
+                for (var n = 0; n < arrPIDLs.Length; n++)
                 {
                     if (arrPIDLs[n] != IntPtr.Zero)
                     {
@@ -365,7 +363,7 @@ namespace Peter
             // Release all resources first.
             ReleaseAll();
             _arrPIDLs = GetPIDLs(files);
-            this.ShowContextMenu(pointScreen);
+            ShowContextMenu(pointScreen);
         }
 
         /// <summary>
@@ -378,7 +376,7 @@ namespace Peter
             // Release all resources first.
             ReleaseAll();
             _arrPIDLs = GetPIDLs(dirs);
-            this.ShowContextMenu(pointScreen);
+            ShowContextMenu(pointScreen);
         }
 
         /// <summary>
@@ -424,12 +422,12 @@ namespace Peter
                 _oContextMenu2 = (IContextMenu2)Marshal.GetTypedObjectForIUnknown(iContextMenuPtr2, typeof(IContextMenu2));
                 _oContextMenu3 = (IContextMenu3)Marshal.GetTypedObjectForIUnknown(iContextMenuPtr3, typeof(IContextMenu3));
 
-                uint nSelected = TrackPopupMenuEx(
+                var nSelected = TrackPopupMenuEx(
                     pMenu,
                     TPM.RETURNCMD,
                     pointScreen.X,
                     pointScreen.Y,
-                    this.Handle,
+                    Handle,
                     IntPtr.Zero);
 
                 DestroyMenu(pMenu);
@@ -439,10 +437,6 @@ namespace Peter
                 {
                     InvokeCommand(_oContextMenu, nSelected, _strParentFolder, pointScreen);
                 }
-            }
-            catch
-            {
-                throw;
             }
             finally
             {
@@ -1161,7 +1155,7 @@ namespace Peter
 
             // Retrieves the display name for the specified file object or subfolder. 
             // Return value: error code, if any
-            [PreserveSig()]
+            [PreserveSig]
             Int32 GetDisplayNameOf(
                 IntPtr pidl,
                 SHGNO uFlags,
@@ -1182,13 +1176,13 @@ namespace Peter
         #endregion
 
         #region IContextMenu
-        [ComImport()]
+        [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [GuidAttribute("000214e4-0000-0000-c000-000000000046")]
         private interface IContextMenu
         {
             // Adds commands to a shortcut menu
-            [PreserveSig()]
+            [PreserveSig]
             Int32 QueryContextMenu(
                 IntPtr hmenu,
                 uint iMenu,
@@ -1197,14 +1191,14 @@ namespace Peter
                 CMF uFlags);
 
             // Carries out the command associated with a shortcut menu item
-            [PreserveSig()]
+            [PreserveSig]
             Int32 InvokeCommand(
                 ref CMINVOKECOMMANDINFOEX info);
 
             // Retrieves information about a shortcut menu command, 
             // including the help string and the language-independent, 
             // or canonical, name for the command
-            [PreserveSig()]
+            [PreserveSig]
             Int32 GetCommandString(
                 uint idcmd,
                 GCS uflags,
@@ -1219,7 +1213,7 @@ namespace Peter
         private interface IContextMenu2
         {
             // Adds commands to a shortcut menu
-            [PreserveSig()]
+            [PreserveSig]
             Int32 QueryContextMenu(
                 IntPtr hmenu,
                 uint iMenu,
@@ -1228,14 +1222,14 @@ namespace Peter
                 CMF uFlags);
 
             // Carries out the command associated with a shortcut menu item
-            [PreserveSig()]
+            [PreserveSig]
             Int32 InvokeCommand(
                 ref CMINVOKECOMMANDINFOEX info);
 
             // Retrieves information about a shortcut menu command, 
             // including the help string and the language-independent, 
             // or canonical, name for the command
-            [PreserveSig()]
+            [PreserveSig]
             Int32 GetCommandString(
                 uint idcmd,
                 GCS uflags,
@@ -1258,7 +1252,7 @@ namespace Peter
         private interface IContextMenu3
         {
             // Adds commands to a shortcut menu
-            [PreserveSig()]
+            [PreserveSig]
             Int32 QueryContextMenu(
                 IntPtr hmenu,
                 uint iMenu,
@@ -1267,14 +1261,14 @@ namespace Peter
                 CMF uFlags);
 
             // Carries out the command associated with a shortcut menu item
-            [PreserveSig()]
+            [PreserveSig]
             Int32 InvokeCommand(
                 ref CMINVOKECOMMANDINFOEX info);
 
             // Retrieves information about a shortcut menu command, 
             // including the help string and the language-independent, 
             // or canonical, name for the command
-            [PreserveSig()]
+            [PreserveSig]
             Int32 GetCommandString(
                 uint idcmd,
                 GCS uflags,
@@ -1331,7 +1325,7 @@ namespace Peter
 
     #region Enum HookType
     // Hook Types
-    public enum HookType : int
+    public enum HookType
     {
         WH_JOURNALRECORD = 0,
         WH_JOURNALPLAYBACK = 1,
@@ -1362,7 +1356,7 @@ namespace Peter
         // ************************************************************************
         // Internal properties
         protected IntPtr m_hhook = IntPtr.Zero;
-        protected HookProc m_filterFunc = null;
+        protected HookProc m_filterFunc;
         protected HookType m_hookType;
         // ************************************************************************
 
@@ -1385,7 +1379,7 @@ namespace Peter
         public LocalWindowsHook(HookType hook)
         {
             m_hookType = hook;
-            m_filterFunc = new HookProc(this.CoreHookProc);
+            m_filterFunc = CoreHookProc;
         }
         public LocalWindowsHook(HookType hook, HookProc func)
         {
@@ -1402,7 +1396,7 @@ namespace Peter
                 return CallNextHookEx(m_hhook, code, wParam, lParam);
 
             // Let clients determine what to do
-            HookEventArgs e = new HookEventArgs
+            var e = new HookEventArgs
             {
                 HookCode = code,
                 wParam = wParam,

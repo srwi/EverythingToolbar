@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
+using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,7 +17,6 @@ using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 using Clipboard = System.Windows.Clipboard;
 using DataObject = System.Windows.DataObject;
 using MessageBox = System.Windows.MessageBox;
-using System.Runtime.InteropServices;
 
 namespace EverythingToolbar.Data
 {

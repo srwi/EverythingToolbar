@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 using CSDeskBand.Interop;
-using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Deskband.Converters
 {

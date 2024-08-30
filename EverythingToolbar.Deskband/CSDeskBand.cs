@@ -16,7 +16,6 @@ using System.Windows.Media;
 using CSDeskBand.ContextMenu;
 using CSDeskBand.Interop;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
 using Microsoft.Win32;
 using NLog;
 using MSG = CSDeskBand.Interop.MSG;
@@ -38,7 +37,7 @@ namespace CSDeskBand
         private IntPtr _parentWindowHandle;
         private object _parentSite; // Has these interfaces: IInputObjectSite, IOleWindow, IOleCommandTarget, IBandSite
         private uint _id;
-        private uint _menutStartId = 0;
+        private uint _menutStartId;
         private Guid _deskbandCommandGroupId = new Guid("EB0FE172-1A3A-11D0-89B3-00A0C90A90AC"); // Command group id for deskband. Used for IOleCommandTarge.Exec
 
         /// <summary>
@@ -436,8 +435,8 @@ namespace CSDeskBand
         private int _maxVerticalWidth;
         private DeskBandSize _minVerticalSize;
         private string _title = "";
-        private bool _showTitle = false;
-        private bool _isFixed = false;
+        private bool _showTitle;
+        private bool _isFixed;
         private int _heightIncrement = 1;
         private bool _heightCanChange = true;
         private ICollection<DeskBandMenuItem> _contextMenuItems = new List<DeskBandMenuItem>();
@@ -1064,11 +1063,9 @@ namespace CSDeskBand
                         handled = true;
                         return new IntPtr((int)HitTestMessageResults.HTCLIENT);
                     }
-                    else
-                    {
-                        handled = true;
-                        return new IntPtr((int)HitTestMessageResults.HTTRANSPARENT);
-                    }
+
+                    handled = true;
+                    return new IntPtr((int)HitTestMessageResults.HTTRANSPARENT);
             }
 
             handled = false;
@@ -1441,14 +1438,14 @@ namespace CSDeskBand
 
                 if (GetToolbarRequestToShow(t))
                 {
-                    Console.WriteLine($"Request to show deskband.");
+                    Console.WriteLine("Request to show deskband.");
 
                     // https://www.pinvoke.net/default.aspx/Interfaces.ITrayDeskband
                     ITrayDeskband csdeskband = null;
                     try
                     {
-                        Type trayDeskbandType = Type.GetTypeFromCLSID(new Guid("E6442437-6C68-4f52-94DD-2CFED267EFB9"));
-                        Guid deskbandGuid = t.GUID;
+                        var trayDeskbandType = Type.GetTypeFromCLSID(new Guid("E6442437-6C68-4f52-94DD-2CFED267EFB9"));
+                        var deskbandGuid = t.GUID;
                         csdeskband = (ITrayDeskband)Activator.CreateInstance(trayDeskbandType);
                         if (csdeskband != null)
                         {
@@ -1458,7 +1455,7 @@ namespace CSDeskBand
                             {
                                 if (csdeskband.ShowDeskBand(ref deskbandGuid) != HRESULT.S_OK)
                                 {
-                                    Console.WriteLine($"Error while trying to show deskband.");
+                                    Console.WriteLine("Error while trying to show deskband.");
                                 }
 
                                 if (csdeskband.DeskBandRegistrationChanged() == HRESULT.S_OK)
@@ -1470,7 +1467,7 @@ namespace CSDeskBand
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine($"Error while trying to show deskband: {e.ToString()}");
+                        Console.WriteLine($"Error while trying to show deskband: {e}");
                     }
                     finally
                     {
@@ -1678,7 +1675,7 @@ namespace CSDeskBand
         /// </summary>
         internal void UpdateInfo()
         {
-            APPBARDATA data = new APPBARDATA
+            var data = new APPBARDATA
             {
                 hWnd = IntPtr.Zero,
                 cbSize = Marshal.SizeOf<APPBARDATA>()
@@ -2075,7 +2072,7 @@ namespace CSDeskBand.Interop
         DBID_SHOWONLY = 1,
         DBID_MAXIMIZEBAND = 2,
         DBID_PUSHCHEVRON = 3
-    };
+    }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct RECT
@@ -2216,7 +2213,7 @@ namespace CSDeskBand.Interop
 
         public static int MakeHResult(uint sev, uint facility, uint errorNo)
         {
-            uint result = sev << 31 | facility << 16 | errorNo;
+            var result = sev << 31 | facility << 16 | errorNo;
             return unchecked((int)result);
         }
     }
@@ -2548,7 +2545,7 @@ namespace CSDeskBand.ContextMenu
         /// <inheritdoc/>
         internal override void AddToMenu(IntPtr menu, uint itemPosition, ref uint itemId, Dictionary<uint, DeskBandMenuAction> callbacks)
         {
-            _menuiteminfo = new MENUITEMINFO()
+            _menuiteminfo = new MENUITEMINFO
             {
                 cbSize = Marshal.SizeOf<MENUITEMINFO>(),
                 fMask = MENUITEMINFO.MIIM.MIIM_TYPE,
@@ -2618,7 +2615,7 @@ namespace CSDeskBand.ContextMenu
         /// <inheritdoc/>
         internal override void AddToMenu(IntPtr menu, uint itemPosition, ref uint itemId, Dictionary<uint, DeskBandMenuAction> callbacks)
         {
-            _menuiteminfo = new MENUITEMINFO()
+            _menuiteminfo = new MENUITEMINFO
             {
                 cbSize = Marshal.SizeOf<MENUITEMINFO>(),
                 fMask = MENUITEMINFO.MIIM.MIIM_TYPE | MENUITEMINFO.MIIM.MIIM_STATE | MENUITEMINFO.MIIM.MIIM_ID,
@@ -2714,7 +2711,7 @@ namespace CSDeskBand.ContextMenu
                 item.AddToMenu(_menu, index++, ref itemId, callbacks);
             }
 
-            _menuiteminfo = new MENUITEMINFO()
+            _menuiteminfo = new MENUITEMINFO
             {
                 cbSize = Marshal.SizeOf<MENUITEMINFO>(),
                 fMask = MENUITEMINFO.MIIM.MIIM_SUBMENU | MENUITEMINFO.MIIM.MIIM_STRING | MENUITEMINFO.MIIM.MIIM_STATE,

@@ -9,6 +9,7 @@ using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using Microsoft.Xaml.Behaviors;
 using NLog;
+using Color = Windows.UI.Color;
 
 namespace EverythingToolbar.Behaviors
 {
@@ -57,7 +58,7 @@ namespace EverythingToolbar.Behaviors
             _currentResources = new ResourceDictionary();
 
             var systemThemeWatcher = new RegistryWatcher(SystemThemeRegistryEntry);
-            systemThemeWatcher.OnChangeValue += (newValue) =>
+            systemThemeWatcher.OnChangeValue += newValue =>
             {
                 Dispatcher.Invoke(() => {
                     ApplyTheme((int)newValue == 1);
@@ -133,7 +134,7 @@ namespace EverythingToolbar.Behaviors
             }
 
             // Notify resource change
-            ResourceChanged?.Invoke(this, new ResourcesChangedEventArgs()
+            ResourceChanged?.Invoke(this, new ResourcesChangedEventArgs
             {
                 NewResource = _currentResources,
                 NewTheme = isLightTheme ? Theme.Light : Theme.Dark
@@ -152,7 +153,7 @@ namespace EverythingToolbar.Behaviors
                 return;
             }
 
-            var resDict = new ResourceDictionary() { Source = new Uri(path) };
+            var resDict = new ResourceDictionary { Source = new Uri(path) };
             _currentResources.MergedDictionaries.Add(resDict);
         }
 
@@ -163,9 +164,9 @@ namespace EverythingToolbar.Behaviors
             _currentResources.MergedDictionaries.Add(resDict);
         }
 
-        private static SolidColorBrush GetBrush(Windows.UI.Color color)
+        private static SolidColorBrush GetBrush(Color color)
         {
-            return new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
+            return new SolidColorBrush(System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B));
         }
     }
 }

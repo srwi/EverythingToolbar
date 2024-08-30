@@ -29,7 +29,7 @@ namespace EverythingToolbar.Helpers
         public static readonly ShortcutManager Instance = new ShortcutManager();
 
         private static readonly ILogger _logger = ToolbarLogger.GetLogger<ShortcutManager>();
-        private WinEventDelegate winEventDelegate = null;
+        private WinEventDelegate winEventDelegate;
         private static readonly Dictionary<string, EventHandler<HotkeyEventArgs>> shortcuts = new Dictionary<string, EventHandler<HotkeyEventArgs>>();
         private static Action<object, HotkeyEventArgs> focusToolbarCallback;
         private static LowLevelKeyboardProc llKeyboardHookProc;
@@ -37,8 +37,8 @@ namespace EverythingToolbar.Helpers
         private static IntPtr winEventHookId = IntPtr.Zero;
         private static IntPtr searchAppHwnd = IntPtr.Zero;
         private static event EventHandler<WinKeyEventArgs> WinKeyEventHandler;
-        private static bool isException = false;
-        private static bool isNativeSearchActive = false;
+        private static bool isException;
+        private static bool isNativeSearchActive;
         private static string searchTermQueue = "";
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
@@ -104,8 +104,8 @@ namespace EverythingToolbar.Helpers
         {
             if (nCode >= 0)
             {
-                Keys vkCode = (Keys)Marshal.ReadInt32(lParam);
-                bool isDown = (int)wParam == WM_KEYDOWN || (int)wParam == WM_SYSKEYDOWN;
+                var vkCode = (Keys)Marshal.ReadInt32(lParam);
+                var isDown = (int)wParam == WM_KEYDOWN || (int)wParam == WM_SYSKEYDOWN;
                 switch (vkCode)
                 {
                     case Keys.Control:
@@ -145,7 +145,7 @@ namespace EverythingToolbar.Helpers
 
         public void HookStartMenu()
         {
-            winEventDelegate = new WinEventDelegate(WinEventProc);
+            winEventDelegate = WinEventProc;
             winEventHookId = SetWinEventHook(3, 3, IntPtr.Zero, winEventDelegate, 0, 0, 0);
         }
 
@@ -156,10 +156,10 @@ namespace EverythingToolbar.Helpers
 
         private void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
-            IntPtr hWnd = GetForegroundWindow();
-            GetWindowThreadProcessId(hWnd, out uint lpdwProcessId);
-            IntPtr hProcess = OpenProcess(0x0410, false, lpdwProcessId);
-            StringBuilder text = new StringBuilder(1000);
+            var hWnd = GetForegroundWindow();
+            GetWindowThreadProcessId(hWnd, out var lpdwProcessId);
+            var hProcess = OpenProcess(0x0410, false, lpdwProcessId);
+            var text = new StringBuilder(1000);
             GetModuleFileNameEx(hProcess, IntPtr.Zero, text, text.Capacity);
             CloseHandle(hProcess);
 
@@ -191,8 +191,8 @@ namespace EverythingToolbar.Helpers
         {
             if (nCode >= 0 && !isNativeSearchActive)
             {
-                uint virtualKeyCode = (uint)Marshal.ReadInt32(lParam);
-                bool isKeyDown = wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN;
+                var virtualKeyCode = (uint)Marshal.ReadInt32(lParam);
+                var isKeyDown = wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN;
 
                 if(Keyboard.IsKeyDown(Key.LWin) || Keyboard.IsKeyDown(Key.RWin))
                 {
@@ -206,13 +206,13 @@ namespace EverythingToolbar.Helpers
                 }
 
                 // Determine key string
-                byte[] keyboardState = new byte[255];
-                string keyString = "";
+                var keyboardState = new byte[255];
+                var keyString = "";
                 if (GetKeyboardState(keyboardState))
                 {
-                    uint scanCode = MapVirtualKey(virtualKeyCode, 0);
-                    IntPtr inputLocaleIdentifier = GetKeyboardLayout(0);
-                    StringBuilder keyStringbuilder = new StringBuilder();
+                    var scanCode = MapVirtualKey(virtualKeyCode, 0);
+                    var inputLocaleIdentifier = GetKeyboardLayout(0);
+                    var keyStringbuilder = new StringBuilder();
                     ToUnicodeEx(virtualKeyCode, scanCode, keyboardState, keyStringbuilder, 5, 0, inputLocaleIdentifier);
                     keyString = keyStringbuilder.ToString();
                     if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
@@ -231,12 +231,10 @@ namespace EverythingToolbar.Helpers
                         return CallNextHookEx(llKeyboardHookId, nCode, wParam, lParam);
                     }
                     // Send input to EverythingToolbar
-                    else
-                    {
-                        searchTermQueue += keyString.ToString();
-                        CloseStartMenu();
-                        return (IntPtr)1;
-                    }
+
+                    searchTermQueue += keyString;
+                    CloseStartMenu();
+                    return (IntPtr)1;
                 }
             }
 

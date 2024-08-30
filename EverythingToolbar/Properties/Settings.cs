@@ -9,7 +9,7 @@
     {
         public Settings()
         {
-            this.PropertyChanged += (s, e) => Default.Save();
+            PropertyChanged += (s, e) => Default.Save();
         }
     }
 }

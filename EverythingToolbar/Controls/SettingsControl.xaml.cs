@@ -19,9 +19,9 @@ namespace EverythingToolbar.Controls
             (SortByMenu.Items[Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
 
             // Preselect active datatemplate
-            for (int i = 0; i < ItemTemplateMenu.Items.Count; i++)
+            for (var i = 0; i < ItemTemplateMenu.Items.Count; i++)
             {
-                MenuItem menuItem = ItemTemplateMenu.Items[i] as MenuItem;
+                var menuItem = ItemTemplateMenu.Items[i] as MenuItem;
                 if (menuItem.Tag.ToString() == Settings.Default.itemTemplate)
                     menuItem.IsChecked = true;
                 else
@@ -58,13 +58,13 @@ namespace EverythingToolbar.Controls
         private void OpenShortcutWindow(object sender, RoutedEventArgs e)
         {
             SearchWindow.Instance.Hide();
-            ShortcutSelector shortcutSelector = new ShortcutSelector();
+            var shortcutSelector = new ShortcutSelector();
             if (shortcutSelector.ShowDialog().Value)
             {
                 if (shortcutSelector.Modifiers == ModifierKeys.Windows)
                 {
                     ShortcutManager.Instance.SetShortcut(shortcutSelector.Key, shortcutSelector.Modifiers);
-                    foreach (Process exe in Process.GetProcesses())
+                    foreach (var exe in Process.GetProcesses())
                     {
                         if (exe.ProcessName == "explorer")
                             exe.Kill();
@@ -89,7 +89,7 @@ namespace EverythingToolbar.Controls
         {
             var selectedItem = sender as MenuItem;
             var menu = selectedItem.Parent as MenuItem;
-            int selectedIndex = menu.Items.IndexOf(selectedItem);
+            var selectedIndex = menu.Items.IndexOf(selectedItem);
 
             (menu.Items[Settings.Default.sortBy - 1] as MenuItem).IsChecked = false;
             (menu.Items[selectedIndex] as MenuItem).IsChecked = false;
@@ -116,7 +116,7 @@ namespace EverythingToolbar.Controls
             var selectedItem = sender as MenuItem;
             var menu = selectedItem.Parent as MenuItem;
 
-            for (int i = 0; i < menu.Items.Count; i++)
+            for (var i = 0; i < menu.Items.Count; i++)
             {
                 var menuItem = menu.Items[i] as MenuItem;
                 if (menuItem == selectedItem)

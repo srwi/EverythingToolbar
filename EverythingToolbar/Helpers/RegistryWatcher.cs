@@ -84,12 +84,12 @@ namespace EverythingToolbar.Helpers
                 target.keyPath = WindowsIdentity.GetCurrent().User.Value + @"\" + target.keyPath;
             }
 
-            string qu = "SELECT * FROM RegistryValueChangeEvent WHERE " +
-                    $"Hive='{target.hive}' " +
-                    $"AND KeyPath='{EscapeBackticks(target.keyPath)}' " +
-                    $"AND ValueName='{target.valueName}'";
+            var qu = "SELECT * FROM RegistryValueChangeEvent WHERE " +
+                     $"Hive='{target.hive}' " +
+                     $"AND KeyPath='{EscapeBackticks(target.keyPath)}' " +
+                     $"AND ValueName='{target.valueName}'";
 
-            WqlEventQuery query = new WqlEventQuery(qu);
+            var query = new WqlEventQuery(qu);
             return new ManagementEventWatcher(query);
         }
 
