@@ -44,7 +44,7 @@
 		</DirectoryRef>
 
 		<DirectoryRef Id="ApplicationProgramsFolder">
-			<Component Id="ApplicationShortcut" Guid="6fcae307-2eda-4c3c-af77-2d12daa46762" Condition="WINDOWSBUILDNUMBER &gt;= 22000">
+			<Component Id="ApplicationShortcut" Guid="6fcae307-2eda-4c3c-af77-2d12daa46762" Condition="WINDOWSBUILDNUMBER &gt;= 22000" Bitness="always64">
 				<Shortcut Id="ApplicationStartMenuShortcut" Name="EverythingToolbar" Description="Everything integration for the Windows taskbar." Target="[#EverythingToolbar.Launcher.exe]" WorkingDirectory="INSTALLFOLDER" />
 				<RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall" />
 				<RegistryValue Root="HKCU" Key="Software\EverythingToolbar" Name="installed" Type="integer" Value="1" KeyPath="yes" />
@@ -75,11 +75,11 @@
 		<Property Id="WixShellExecTarget" Value="[#EverythingToolbar.Launcher.exe]" />
 		<CustomAction Id="LaunchApplication" DllEntry="WixShellExec" Impersonate="yes" BinaryRef="Wix4UtilCA_X86" />
 	
-			<StandardDirectory Id="ProgramFiles64Folder">
-				<Directory Id="APPLICATIONFOLDER" Name="EverythingToolbar" />
-			</StandardDirectory>
-			<StandardDirectory Id="ProgramMenuFolder">
-				<Directory Id="ApplicationProgramsFolder" Name="EverythingToolbar" />
-			</StandardDirectory>
-		</Package>
+		<StandardDirectory Id="ProgramFiles64Folder">
+			<Directory Id="APPLICATIONFOLDER" Name="EverythingToolbar" />
+		</StandardDirectory>
+		<StandardDirectory Id="ProgramMenuFolder">
+			<Directory Id="ApplicationProgramsFolder" Name="EverythingToolbar" />
+		</StandardDirectory>
+	</Package>
 </Wix>

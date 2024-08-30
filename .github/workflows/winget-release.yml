@@ -1,4 +1,4 @@
-name: Submit stable release to WinGet
+name: Publish WinGet release
 
 on:
   workflow_dispatch:
@@ -6,7 +6,6 @@ on:
     types: [released]
 
 jobs:
-
   winget:
     name: Publish release to WinGet
     runs-on: windows-latest

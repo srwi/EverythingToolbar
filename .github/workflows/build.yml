@@ -1,4 +1,4 @@
-name: build
+name: Build solution
 
 on: [push, pull_request]
 
@@ -6,17 +6,21 @@ jobs:
   build:
     runs-on: windows-2022
     steps:
-      - name: checkout
-        uses: actions/checkout@v1
-      - name: Disable assembly signing
-        run: |
-          ((Get-Content -path EverythingToolbar/EverythingToolbar.csproj -Raw) -replace '<SignAssembly>true</SignAssembly>','<SignAssembly>false</SignAssembly>') | Set-Content -Path EverythingToolbar/EverythingToolbar.csproj
-          ((Get-Content -path EverythingToolbar.Deskband/EverythingToolbar.Deskband.csproj -Raw) -replace '<SignAssembly>true</SignAssembly>','<SignAssembly>false</SignAssembly>') | Set-Content -Path EverythingToolbar.Deskband/EverythingToolbar.Deskband.csproj
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1.2
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
       - name: Install NuGet
         uses: nuget/setup-nuget@v1
-      - name: NuGet dependencies
+
+      - name: Restore NuGet dependencies
         run: nuget restore
-      - name: Build
+
+      - name: Decode certificate
+        shell: bash
+        run: echo ${{ secrets.PFX_CERTIFICATE_FILE }} | base64 --decode  > ./EverythingToolbar.snk
+
+      - name: Build all
         run: MSBuild $Env:GITHUB_WORKSPACE /p:Configuration=Release

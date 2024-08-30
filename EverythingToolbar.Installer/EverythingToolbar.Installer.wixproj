@@ -4,7 +4,11 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
   <PropertyGroup>
+    <InstallerPlatform>x64</InstallerPlatform>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <SolutionDir Condition=" '$(SolutionDir)' == '' ">..\</SolutionDir>
     <OutputName>EverythingToolbar</OutputName>
   </PropertyGroup>
   <PropertyGroup>
