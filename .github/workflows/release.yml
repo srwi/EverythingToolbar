@@ -42,7 +42,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${{ github.ref_name }}" \
-            "EverythingToolbar-${{ github.ref_name }}.msi#EverythingToolbar ${{ github.ref_name }} Installer (msi)" \
-            --draft \
+          gh release create "${{ github.ref_name }}" `
+            "EverythingToolbar-${{ github.ref_name }}.msi#EverythingToolbar ${{ github.ref_name }} Installer (msi)" `
+            --draft `
             --title "${{ github.ref_name }}"
