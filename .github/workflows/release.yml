@@ -6,7 +6,7 @@ on:
       - '*'
 
 jobs:
-  release:
+  build-release:
     runs-on: windows-2022
     steps:
       - name: Checkout code
@@ -32,8 +32,24 @@ jobs:
         shell: bash
         run: mv EverythingToolbar.Installer/bin/x64/Release/EverythingToolbar.msi EverythingToolbar-${{ github.ref_name }}.msi
 
+      - name: Generate SHA-256 checksum
+        shell: bash
+        run: sha256sum EverythingToolbar-${{ github.ref_name }}.msi > EverythingToolbar-${{ github.ref_name }}.sha256
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: EverythingToolbar ${{ github.ref_name }}
-          path: EverythingToolbar-${{ github.ref_name }}.msi
+          path: |
+            EverythingToolbar-${{ github.ref_name }}.msi
+            EverythingToolbar-${{ github.ref_name }}.sha256
+
+      - name: Create release draft
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ github.ref_name }}" `
+            "EverythingToolbar-${{ github.ref_name }}.msi" `
+            "EverythingToolbar-${{ github.ref_name }}.sha256" `
+            --draft `
+            --title "${{ github.ref_name }}"
