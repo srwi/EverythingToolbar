@@ -6,7 +6,7 @@ on:
       - '*'
 
 jobs:
-  release:
+  build-release:
     runs-on: windows-2022
     steps:
       - name: Checkout code
@@ -37,3 +37,12 @@ jobs:
         with:
           name: EverythingToolbar ${{ github.ref_name }}
           path: EverythingToolbar-${{ github.ref_name }}.msi
+
+      - name: Create release draft
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            "EverythingToolbar-${{ github.ref_name }}.msi#EverythingToolbar ${{ github.ref_name }} Installer (msi)" \
+            --draft \
+            --title "${{ github.ref_name }}"
