@@ -28,9 +28,15 @@ jobs:
       - name: Build all
         run: MSBuild $Env:GITHUB_WORKSPACE /p:Configuration=Release
 
-      - name: Rename msi
+      - name: Sign msi
         shell: bash
-        run: mv EverythingToolbar.Installer/bin/x64/Release/EverythingToolbar.msi EverythingToolbar-${{ github.ref_name }}.msi
+        run: |
+          osslsigncode sign \
+            -pkcs12 ./EverythingToolbar.snk \
+            -n "EverythingToolbar" \
+            -i https://github.com/srwi/EverythingToolbar \
+            -in EverythingToolbar.Installer/bin/x64/Release/EverythingToolbar.msi \
+            -out EverythingToolbar-${{ github.ref_name }}.msi
 
       - name: Generate SHA-256 checksum
         shell: bash
