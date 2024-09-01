@@ -148,7 +148,7 @@
     <value>İsteğe bağlı olarak Windows arama simgesi gizlenilebilir.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Windows aramayı gizle</value>
+    <value>3. Windows arama'yı gizle</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
     <value>EverythingToolbar'ın sistem ile otomatik olarak başlatılması önerilir.</value>

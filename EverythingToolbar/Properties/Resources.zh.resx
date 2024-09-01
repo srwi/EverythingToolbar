@@ -127,10 +127,10 @@
     <value>版本</value>
   </data>
   <data name="AboutWebsite" xml:space="preserve">
-    <value>網站</value>
+    <value>官方網站</value>
   </data>
   <data name="AboutWindowTitle" xml:space="preserve">
-    <value>關於  EverythingToolbar</value>
+    <value>關於 EverythingToolbar</value>
   </data>
   <data name="ContextMenuCopy" xml:space="preserve">
     <value>複製</value>
@@ -139,7 +139,7 @@
     <value>複製</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
-    <value>複製完整名稱至剪貼簿</value>
+    <value>複製完整檔名至剪貼簿</value>
   </data>
   <data name="ContextMenuCut" xml:space="preserve">
     <value>剪下</value>
@@ -166,13 +166,13 @@
     <value>貼上</value>
   </data>
   <data name="ContextMenuProperties" xml:space="preserve">
-    <value>屬性</value>
+    <value>內容</value>
   </data>
   <data name="ContextMenuRunAsAdmin" xml:space="preserve">
     <value>以管理員身份執行</value>
   </data>
   <data name="ContextMenuShowInEverything" xml:space="preserve">
-    <value>在Everything中顯示</value>
+    <value>在 Everything 中顯示</value>
   </data>
   <data name="DefaultFilterAll" xml:space="preserve">
     <value>全部</value>
@@ -187,25 +187,25 @@
     <value>緊湊</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>緊湊（詳細）</value>
+    <value>緊湊 (詳細)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
     <value>一般</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>一般（詳細）</value>
+    <value>一般 (詳細)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
-    <value>Alt</value>
+    <value>Alt 鍵</value>
   </data>
   <data name="KeyCtrl" xml:space="preserve">
-    <value>Ctrl</value>
+    <value>Ctrl 鍵</value>
   </data>
   <data name="KeyShift" xml:space="preserve">
-    <value>Shift</value>
+    <value>Shift 鍵</value>
   </data>
   <data name="KeyWin" xml:space="preserve">
-    <value>Win</value>
+    <value>Windows 鍵</value>
   </data>
   <data name="MessageBoxCopyException" xml:space="preserve">
     <value>是否要將異常內容復制到剪貼簿？</value>
@@ -214,7 +214,7 @@
     <value>錯誤</value>
   </data>
   <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
-    <value>複製檔案失敗</value>
+    <value>無法複製檔案</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>複製路徑失敗</value>
@@ -250,16 +250,16 @@
     <value>請選擇 Everything.exe...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>請選擇Filters.csv文件。默認情況下，它可以在%APPDATA%\Everything中找到。根據您的安裝設置，它的位置可能不同。</value>
+    <value>請選擇 Filters.csv文件。預設情況下，它可以在 %APPDATA%\Everything 中找到。依據您的安裝設定，存放位置可能不同。</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
-    <value>未找到Filters.csv</value>
+    <value>找不到 Filters.csv</value>
   </data>
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>發生未處理的異常</value>
   </data>
   <data name="RulesAutoApply" xml:space="preserve">
-    <value>根據條件自動應用規則</value>
+    <value>根據條件自動套用規則</value>
   </data>
   <data name="RulesCancel" xml:space="preserve">
     <value>取消</value>
@@ -268,25 +268,25 @@
     <value>命令</value>
   </data>
   <data name="RulesName" xml:space="preserve">
-    <value>名稱</value>
+    <value>檔名</value>
   </data>
   <data name="RulesRegularExpression" xml:space="preserve">
     <value>正規表示式</value>
   </data>
   <data name="RulesSave" xml:space="preserve">
-    <value>儲存</value>
+    <value>存檔</value>
   </data>
   <data name="RulesType" xml:space="preserve">
     <value>類型</value>
   </data>
   <data name="RulesWindowText" xml:space="preserve">
-    <value>在命令中使用%file%、%filename%和%path%作為佔位符。</value>
+    <value>在命令中使用 %file%、%filename% 和 %path% 作為佔位符。</value>
   </data>
   <data name="RulesWindowTitle" xml:space="preserve">
     <value>規則</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
-    <value>使用Everything 搜索</value>
+    <value>使用 Everything 搜索</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
     <value>目標</value>
@@ -295,13 +295,13 @@
     <value>目標</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
-    <value>關於  EverythingToolbar...</value>
+    <value>關於 EverythingToolbar</value>
   </data>
   <data name="SettingsChangeShortcut" xml:space="preserve">
-    <value>修改快捷鍵...</value>
+    <value>更改快捷鍵</value>
   </data>
   <data name="SettingsDisableAnimations" xml:space="preserve">
-    <value>停用動畫</value>
+    <value>禁用動畫效果</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>開啟搜尋記錄</value>
@@ -310,22 +310,22 @@
     <value>隱藏空的搜尋</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>匹配大小寫</value>
+    <value>符合大小寫</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
-    <value>匹配路徑</value>
+    <value>符合路徑</value>
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
-    <value>匹配整句</value>
+    <value>符合整句</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
-    <value>偏好</value>
+    <value>偏好設定</value>
   </data>
   <data name="SettingsRegularExpressions" xml:space="preserve">
     <value>正規表達式</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
-    <value>記住過濾器</value>
+    <value>儲存篩選條件</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
     <value>替換開始選單搜尋(實驗性)</value>
@@ -343,7 +343,7 @@
     <value>顯示結果計數</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
-    <value>排序方式</value>
+    <value>排序依</value>
   </data>
   <data name="SettingsTheme" xml:space="preserve">
     <value>佈景主題</value>
@@ -352,16 +352,16 @@
     <value>同步主題</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>更改預覽圖</value>
+    <value>更改快取縮圖</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
-    <value>使用Everything篩選器</value>
+    <value>使用 Everything 篩選器</value>
   </data>
   <data name="SettingsView" xml:space="preserve">
     <value>檢視</value>
   </data>
   <data name="ShortcutOK" xml:space="preserve">
-    <value>確認</value>
+    <value>確定</value>
   </data>
   <data name="ShortcutWindowTitle" xml:space="preserve">
     <value>設置快捷鍵...</value>
@@ -373,10 +373,10 @@
     <value>屬性 遞減</value>
   </data>
   <data name="SortByDateAccessedAscending" xml:space="preserve">
-    <value>訪問日期 遞增</value>
+    <value>存取日期 遞增</value>
   </data>
   <data name="SortByDateAccessedDescending" xml:space="preserve">
-    <value>訪問日期 遞減</value>
+    <value>存取日期 遞減</value>
   </data>
   <data name="SortByDateCreatedAscending" xml:space="preserve">
     <value>建立日期 遞增</value>
@@ -415,10 +415,10 @@
     <value>檔案列表檔案名稱 遞減</value>
   </data>
   <data name="SortByNameAscending" xml:space="preserve">
-    <value>名稱 遞增</value>
+    <value>檔名 遞增</value>
   </data>
   <data name="SortByNameDescending" xml:space="preserve">
-    <value>名稱 遞減</value>
+    <value>檔名 遞減</value>
   </data>
   <data name="SortByPathAscending" xml:space="preserve">
     <value>路徑 遞增</value>
@@ -433,10 +433,10 @@
     <value>執行次數 遞減</value>
   </data>
   <data name="SortBySizeAscending" xml:space="preserve">
-    <value>大小 遞升</value>
+    <value>大小 遞增</value>
   </data>
   <data name="SortBySizeDescending" xml:space="preserve">
-    <value>大小 遞降</value>
+    <value>大小 遞減</value>
   </data>
   <data name="SortByTypeNameAscending" xml:space="preserve">
     <value>類型名稱 遞增</value>
@@ -448,7 +448,7 @@
     <value>深色</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>明亮</value>
+    <value>淺色</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>音訊</value>
@@ -481,7 +481,7 @@
     <value>下載</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>自動偵測更新</value>
+    <value>自動檢查更新</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
     <value>選擇第一個結果</value>
