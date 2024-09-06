@@ -5,6 +5,7 @@ using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using IWshRuntimeLibrary;
 using Microsoft.Win32;
+using NLog;
 using Shell32;
 using File = System.IO.File;
 
@@ -12,6 +13,8 @@ namespace EverythingToolbar.Launcher
 {
     internal class Utils
     {
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<Utils>();
+
         public static string GetTaskbarShortcutPath()
         {
             const string relativeTaskBarPath = @"Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar";
@@ -40,7 +43,7 @@ namespace EverythingToolbar.Launcher
                 }
                 catch (Exception e)
                 {
-                    ToolbarLogger.GetLogger<Utils>().Error(e, "Failed to scan taskbar icon links. Using default path...");
+                    Logger.Error(e, "Failed to scan taskbar icon links. Using default path...");
                 }
             }
 
@@ -58,7 +61,7 @@ namespace EverythingToolbar.Launcher
             using (var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"))
             {
                 var taskbarAlignment = key?.GetValue("TaskbarAl");
-                ToolbarLogger.GetLogger<Utils>().Debug($"taskbarAlignment: {taskbarAlignment}");
+                Logger.Debug($"taskbarAlignment: {taskbarAlignment}");
                 var leftAligned = taskbarAlignment != null && (int)taskbarAlignment == 0;
                 return !leftAligned;
             }

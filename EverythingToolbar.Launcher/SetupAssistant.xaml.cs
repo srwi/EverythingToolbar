@@ -3,7 +3,9 @@ using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
+using NLog;
 using MessageBox = System.Windows.MessageBox;
 using RadioButton = System.Windows.Controls.RadioButton;
 
@@ -17,6 +19,7 @@ namespace EverythingToolbar.Launcher
         private int _unlockedPages = 1;
         private bool _iconHasChanged;
         private FileSystemWatcher _watcher;
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<SetupAssistant>();
 
         public SetupAssistant(NotifyIcon icon)
         {
@@ -26,7 +29,8 @@ namespace EverythingToolbar.Launcher
 
             AutostartCheckBox.IsChecked = Utils.GetAutostartState();
             HideWindowsSearchCheckBox.IsChecked = !Utils.GetWindowsSearchEnabledState();
-            CreateFileWatcher();
+
+            CreateFileWatcher(_taskbarShortcutPath);
             
             if (File.Exists(_taskbarShortcutPath))
             {
@@ -50,12 +54,26 @@ namespace EverythingToolbar.Launcher
             _iconHasChanged = false;
         }
 
-        private void CreateFileWatcher()
+        private void CreateFileWatcher(string taskbarShortcutPath)
         {
+            var pinnedIconsDir = Path.GetDirectoryName(taskbarShortcutPath);
+            var pinnedIconName = Path.GetFileName(taskbarShortcutPath);
+
+            try
+            {
+                // The directory might not exist on some systems (#523)
+                Directory.CreateDirectory(pinnedIconsDir);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                Logger.Error(e, "Failed to create pinned taskbar icons directory.");
+                return;
+            }
+
             _watcher = new FileSystemWatcher
             {
-                Path = Path.GetDirectoryName(_taskbarShortcutPath),
-                Filter = Path.GetFileName(_taskbarShortcutPath),
+                Path = pinnedIconsDir,
+                Filter = pinnedIconName,
                 NotifyFilter = NotifyFilters.FileName,
                 EnableRaisingEvents = true
             };
