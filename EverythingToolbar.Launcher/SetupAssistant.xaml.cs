@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
 using NLog;
 using MessageBox = System.Windows.MessageBox;
 using RadioButton = System.Windows.Controls.RadioButton;
@@ -47,7 +46,7 @@ namespace EverythingToolbar.Launcher
 
             foreach (RadioButton radio in IconRadioButtons.Children)
             {
-                if ((string)radio.Tag == Settings.Default.iconName)
+                if ((string)radio.Tag == ToolbarSettings.User.IconName)
                     radio.IsChecked = true;
             }
 
@@ -124,14 +123,14 @@ namespace EverythingToolbar.Launcher
                     Properties.Resources.SetupAssistantRestartExplorerDialogTitle, MessageBoxButton.YesNo) ==
                 MessageBoxResult.Yes)
             {
-                Utils.ChangeTaskbarPinIcon(Settings.Default.iconName);
+                Utils.ChangeTaskbarPinIcon(ToolbarSettings.User.IconName);
             }
         }
 
         private void OnIconRadioButtonChecked(object sender, RoutedEventArgs e)
         {
-            Settings.Default.iconName = ((RadioButton)sender).Tag as string;
-            Icon = new BitmapImage(new Uri("pack://application:,,,/" + Settings.Default.iconName));
+            ToolbarSettings.User.IconName = ((RadioButton)sender).Tag as string;
+            Icon = new BitmapImage(new Uri("pack://application:,,,/" + ToolbarSettings.User.IconName));
             _iconHasChanged = true;
 
             _unlockedPages = Math.Max(2, _unlockedPages);

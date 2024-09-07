@@ -8,7 +8,6 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
 using Microsoft.Xaml.Behaviors;
 using NHotkey;
 using Application = System.Windows.Application;
@@ -53,8 +52,8 @@ namespace EverythingToolbar.Launcher
                     new SetupAssistant(icon).Show();
 
                 if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
-                       (Key)Settings.Default.shortcutKey,
-                       (ModifierKeys)Settings.Default.shortcutModifiers,
+                       (Key)ToolbarSettings.User.ShortcutKey,
+                       (ModifierKeys)ToolbarSettings.User.ShortcutModifiers,
                        FocusSearchBox))
                 {
                     ShortcutManager.Instance.SetShortcut(Key.None, ModifierKeys.None);
@@ -65,7 +64,7 @@ namespace EverythingToolbar.Launcher
                 }
 
                 ShortcutManager.Instance.SetFocusCallback(FocusSearchBox);
-                if (Settings.Default.isReplaceStartMenuSearch)
+                if (ToolbarSettings.User.IsReplaceStartMenuSearch)
                     ShortcutManager.Instance.HookStartMenu();
 
                 SearchWindow.Instance.Hiding += OnSearchWindowHiding;
@@ -112,10 +111,10 @@ namespace EverythingToolbar.Launcher
         {
             var processPath = Process.GetCurrentProcess().MainModule?.FileName ?? string.Empty;
             
-            if (string.IsNullOrEmpty(Settings.Default.iconName))
+            if (string.IsNullOrEmpty(ToolbarSettings.User.IconName))
                 return Path.Combine(processPath, "..", "Icons", "Medium.ico");
             
-            return Path.Combine(processPath, "..", Settings.Default.iconName);
+            return Path.Combine(processPath, "..", ToolbarSettings.User.IconName);
         }
 
         [STAThread]

@@ -68,7 +68,7 @@ namespace EverythingToolbar
                     return;
 
                 _currentFilter = value;
-                Settings.Default.lastFilter = value.Name;
+                ToolbarSettings.User.LastFilter = value.Name;
                 
                 lock (_lock)
                     SearchResults.Clear();
@@ -101,7 +101,7 @@ namespace EverythingToolbar
 
         private EverythingSearch()
         {
-            Settings.Default.PropertyChanged += OnSettingChanged;
+            ToolbarSettings.User.PropertyChanged += OnSettingChanged;
             BindingOperations.EnableCollectionSynchronization(SearchResults, _lock);
         }
 
@@ -112,16 +112,16 @@ namespace EverythingToolbar
 
         private void OnSettingChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "isRegExEnabled")
+            if (e.PropertyName == nameof(ToolbarSettings.User.IsRegExEnabled))
                 CurrentFilter = FilterLoader.Instance.DefaultFilters[0];
 
-            if (e.PropertyName == "isMatchCase" ||
-                e.PropertyName == "isRegExEnabled" ||
-                e.PropertyName == "isMatchPath" ||
-                e.PropertyName == "isMatchWholeWord" ||
-                e.PropertyName == "isHideEmptySearchResults" ||
-                e.PropertyName == "sortBy" ||
-                e.PropertyName == "isThumbnailsEnabled")
+            if (e.PropertyName == nameof(ToolbarSettings.User.IsMatchCase) ||
+                e.PropertyName == nameof(ToolbarSettings.User.IsRegExEnabled) ||
+                e.PropertyName == nameof(ToolbarSettings.User.IsMatchPath) ||
+                e.PropertyName == nameof(ToolbarSettings.User.IsMatchWholeWord) ||
+                e.PropertyName == nameof(ToolbarSettings.User.IsHideEmptySearchResults) ||
+                e.PropertyName == nameof(ToolbarSettings.User.SortBy) ||
+                e.PropertyName == nameof(ToolbarSettings.User.IsThumbnailsEnabled))
             {
                 QueryBatch(append: false);
             }
@@ -129,7 +129,7 @@ namespace EverythingToolbar
 
         public bool Initialize()
         {
-            SetInstanceName(Settings.Default.instanceName);
+            SetInstanceName(ToolbarSettings.User.InstanceName);
             
             var major = Everything_GetMajorVersion();
             var minor = Everything_GetMinorVersion();
@@ -180,7 +180,7 @@ namespace EverythingToolbar
         {
             _cancellationTokenSource?.Cancel();
 
-            if (SearchTerm.Length == 0 && Settings.Default.isHideEmptySearchResults)
+            if (SearchTerm.Length == 0 && ToolbarSettings.User.IsHideEmptySearchResults)
             {
                 lock (_lock)
                 {
@@ -211,11 +211,11 @@ namespace EverythingToolbar
                     _logger.Debug("Searching: " + search);
                     Everything_SetSearchW(search);
                     Everything_SetRequestFlags(flags);
-                    Everything_SetSort((uint)Settings.Default.sortBy);
-                    Everything_SetMatchCase(Settings.Default.isMatchCase);
-                    Everything_SetMatchPath(Settings.Default.isMatchPath);
-                    Everything_SetMatchWholeWord(Settings.Default.isMatchWholeWord && !Settings.Default.isRegExEnabled);
-                    Everything_SetRegex(Settings.Default.isRegExEnabled);
+                    Everything_SetSort((uint)ToolbarSettings.User.SortBy);
+                    Everything_SetMatchCase(ToolbarSettings.User.IsMatchCase);
+                    Everything_SetMatchPath(ToolbarSettings.User.IsMatchPath);
+                    Everything_SetMatchWholeWord(ToolbarSettings.User.IsMatchWholeWord && !ToolbarSettings.User.IsRegExEnabled);
+                    Everything_SetRegex(ToolbarSettings.User.IsRegExEnabled);
                     Everything_SetMax(BATCH_SIZE);
                     lock (_lock)
                         Everything_SetOffset((uint)SearchResults.Count);
@@ -266,12 +266,12 @@ namespace EverythingToolbar
 
         public void Reset()
         {
-            if (Settings.Default.isEnableHistory)
+            if (ToolbarSettings.User.IsEnableHistory)
                 HistoryManager.Instance.AddToHistory(SearchTerm);
             else
                 SearchTerm = "";
 
-            if (!Settings.Default.isRememberFilter && CurrentFilter != FilterLoader.Instance.DefaultFilters[0])
+            if (!ToolbarSettings.User.IsRememberFilter && CurrentFilter != FilterLoader.Instance.DefaultFilters[0])
             {
                 CurrentFilter = FilterLoader.Instance.DefaultFilters[0];
                 return;
@@ -310,7 +310,7 @@ namespace EverythingToolbar
 
         public void OpenLastSearchInEverything(string highlightedFile = "")
         {
-            if(!File.Exists(Settings.Default.everythingPath))
+            if(!File.Exists(ToolbarSettings.User.EverythingPath))
             {
                 MessageBox.Show(Resources.MessageBoxSelectEverythingExe);
                 using (var openFileDialog = new OpenFileDialog())
@@ -321,7 +321,7 @@ namespace EverythingToolbar
 
                     if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        Settings.Default.everythingPath = openFileDialog.FileName;
+                        ToolbarSettings.User.EverythingPath = openFileDialog.FileName;
                     }
                     else
                     {
@@ -331,30 +331,30 @@ namespace EverythingToolbar
             }
 
             var args = "";
-            if (!string.IsNullOrEmpty(Settings.Default.instanceName)) args += " -instance \"" + Settings.Default.instanceName + "\"";
+            if (!string.IsNullOrEmpty(ToolbarSettings.User.InstanceName)) args += " -instance \"" + ToolbarSettings.User.InstanceName + "\"";
             if (!string.IsNullOrEmpty(highlightedFile)) args += " -select \"" + highlightedFile + "\"";
-            if (Settings.Default.sortBy <= 2) args += " -sort \"Name\"";
-            else if (Settings.Default.sortBy <= 4) args += " -sort \"Path\"";
-            else if (Settings.Default.sortBy <= 6) args += " -sort \"Size\"";
-            else if (Settings.Default.sortBy <= 8) args += " -sort \"Extension\"";
-            else if (Settings.Default.sortBy <= 10) args += " -sort \"Type name\"";
-            else if (Settings.Default.sortBy <= 12) args += " -sort \"Date created\"";
-            else if (Settings.Default.sortBy <= 14) args += " -sort \"Date modified\"";
-            else if (Settings.Default.sortBy <= 16) args += " -sort \"Attributes\"";
-            else if (Settings.Default.sortBy <= 18) args += " -sort \"File list highlightedFileName\"";
-            else if (Settings.Default.sortBy <= 20) args += " -sort \"Run count\"";
-            else if (Settings.Default.sortBy <= 22) args += " -sort \"Date recently changed\"";
-            else if (Settings.Default.sortBy <= 24) args += " -sort \"Date accessed\"";
-            else if (Settings.Default.sortBy <= 26) args += " -sort \"Date run\"";
-            args += Settings.Default.sortBy % 2 > 0 ? " -sort-ascending" : " -sort-descending";
-            args += Settings.Default.isMatchCase ? " -case" : " -nocase";
-            args += Settings.Default.isMatchPath ? " -matchpath" : " -nomatchpath";
-            args += Settings.Default.isMatchWholeWord && !Settings.Default.isRegExEnabled ? " -ww" : " -noww";
-            args += Settings.Default.isRegExEnabled ? " -regex" : " -noregex";
+            if (ToolbarSettings.User.SortBy <= 2) args += " -sort \"Name\"";
+            else if (ToolbarSettings.User.SortBy <= 4) args += " -sort \"Path\"";
+            else if (ToolbarSettings.User.SortBy <= 6) args += " -sort \"Size\"";
+            else if (ToolbarSettings.User.SortBy <= 8) args += " -sort \"Extension\"";
+            else if (ToolbarSettings.User.SortBy <= 10) args += " -sort \"Type name\"";
+            else if (ToolbarSettings.User.SortBy <= 12) args += " -sort \"Date created\"";
+            else if (ToolbarSettings.User.SortBy <= 14) args += " -sort \"Date modified\"";
+            else if (ToolbarSettings.User.SortBy <= 16) args += " -sort \"Attributes\"";
+            else if (ToolbarSettings.User.SortBy <= 18) args += " -sort \"File list highlightedFileName\"";
+            else if (ToolbarSettings.User.SortBy <= 20) args += " -sort \"Run count\"";
+            else if (ToolbarSettings.User.SortBy <= 22) args += " -sort \"Date recently changed\"";
+            else if (ToolbarSettings.User.SortBy <= 24) args += " -sort \"Date accessed\"";
+            else if (ToolbarSettings.User.SortBy <= 26) args += " -sort \"Date run\"";
+            args += ToolbarSettings.User.SortBy % 2 > 0 ? " -sort-ascending" : " -sort-descending";
+            args += ToolbarSettings.User.IsMatchCase ? " -case" : " -nocase";
+            args += ToolbarSettings.User.IsMatchPath ? " -matchpath" : " -nomatchpath";
+            args += ToolbarSettings.User.IsMatchWholeWord && !ToolbarSettings.User.IsRegExEnabled ? " -ww" : " -noww";
+            args += ToolbarSettings.User.IsRegExEnabled ? " -regex" : " -noregex";
             args += " -s \"" + BuildFinalSearchTerm().Replace("\"", "\"\"") + "\"";
 
             _logger.Debug("Showing in Everything with args: " + args);
-            Process.Start(Settings.Default.everythingPath, args);
+            Process.Start(ToolbarSettings.User.EverythingPath, args);
         }
 
         public static void IncrementRunCount(string path)

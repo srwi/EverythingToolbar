@@ -246,6 +246,7 @@
     </Compile>
     <Compile Include="Helpers\ToolbarLogger.cs" />
     <Compile Include="Helpers\WindowsThumbnailProvider.cs" />
+    <Compile Include="ToolbarSettings.cs" />
     <Page Include="About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -407,7 +408,6 @@
     </Content>
     <Compile Include="Data\SearchResult.cs" />
     <Compile Include="Converters\HighlightedTextConverter.cs" />
-    <Compile Include="Properties\Settings.cs" />
     <Compile Include="Controls\SettingsControl.xaml.cs">
       <DependentUpon>SettingsControl.xaml</DependentUpon>
     </Compile>
@@ -497,11 +497,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.af.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -645,12 +640,9 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\app.manifest" />
-    <None Include="Properties\Settings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Config.Net" Version="4.13.7" />
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.755" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="NHotkey.Wpf" Version="2.1.0" />

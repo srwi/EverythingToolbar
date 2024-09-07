@@ -1,6 +1,4 @@
-﻿using EverythingToolbar.Properties;
-
-namespace EverythingToolbar.Data
+﻿namespace EverythingToolbar.Data
 {
     public class Filter
     {
@@ -34,13 +32,13 @@ namespace EverythingToolbar.Data
                 return "";
 
             var modifiers = "";
-            if (IsMatchCase != Settings.Default.isMatchCase)
+            if (IsMatchCase != ToolbarSettings.User.IsMatchCase)
                 modifiers += IsMatchCase ? "case:" : "nocase:";
-            if (IsMatchWholeWord != Settings.Default.isMatchWholeWord)
+            if (IsMatchWholeWord != ToolbarSettings.User.IsMatchWholeWord)
                 modifiers += IsMatchWholeWord ? "ww:" : "noww:";
-            if (IsMatchPath != Settings.Default.isMatchPath)
+            if (IsMatchPath != ToolbarSettings.User.IsMatchPath)
                 modifiers += IsMatchPath ? "path:" : "nopath:";
-            if (IsRegExEnabled != Settings.Default.isRegExEnabled)
+            if (IsRegExEnabled != ToolbarSettings.User.IsRegExEnabled)
                 modifiers += IsRegExEnabled ? "regex:" : "noregex:";
 
             if (string.IsNullOrEmpty(modifiers))

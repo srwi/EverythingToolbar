@@ -10,7 +10,6 @@ using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
 using NLog;
 
 namespace EverythingToolbar.Controls
@@ -61,7 +60,7 @@ namespace EverythingToolbar.Controls
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (!Settings.Default.isUpdateNotificationsEnabled)
+            if (!ToolbarSettings.User.IsUpdateNotificationsEnabled)
                 return;
             
             var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
@@ -80,7 +79,7 @@ namespace EverythingToolbar.Controls
         {
             try
             {
-                return new Version(Settings.Default.skippedUpdate);
+                return new Version(ToolbarSettings.User.SkippedUpdate);
             }
             catch
             {
@@ -95,7 +94,7 @@ namespace EverythingToolbar.Controls
 
         private void OnSkipUpdateClicked(object sender, RoutedEventArgs e)
         {
-            Settings.Default.skippedUpdate = _latestVersion.ToString();
+            ToolbarSettings.User.SkippedUpdate = _latestVersion.ToString();
             Visibility = Visibility.Collapsed;
         }
 

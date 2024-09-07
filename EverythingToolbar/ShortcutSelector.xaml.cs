@@ -3,7 +3,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
 using NHotkey.Wpf;
 
 namespace EverythingToolbar
@@ -21,8 +20,8 @@ namespace EverythingToolbar
             ShortcutManager.Instance.UnhookStartMenu();
             HotkeyManager.Current.IsEnabled = false;
 
-            Modifiers = (ModifierKeys)Settings.Default.shortcutModifiers;
-            Key = (Key)Settings.Default.shortcutKey;
+            Modifiers = (ModifierKeys)ToolbarSettings.User.ShortcutModifiers;
+            Key = (Key)ToolbarSettings.User.ShortcutKey;
             UpdateTextBox();
         }
 
@@ -117,7 +116,7 @@ namespace EverythingToolbar
         {
             HotkeyManager.Current.IsEnabled = true;
             ShortcutManager.Instance.ReleaseKeyboard();
-            if (Settings.Default.isReplaceStartMenuSearch)
+            if (ToolbarSettings.User.IsReplaceStartMenuSearch)
             {
                 ShortcutManager.Instance.HookStartMenu();
             }

@@ -10,7 +10,6 @@ using System.Windows.Threading;
 using EverythingToolbar.Behaviors;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Controls
 {
@@ -105,7 +104,7 @@ namespace EverythingToolbar.Controls
             }
             else if (e.Key == Key.Up)
             {
-                if (SearchResultsListView.SelectedIndex == 0 && !Settings.Default.isAutoSelectFirstResult)
+                if (SearchResultsListView.SelectedIndex == 0 && !ToolbarSettings.User.IsAutoSelectFirstResult)
                 {
                     SearchResultsListView.SelectedIndex = -1;
                     EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
@@ -146,7 +145,7 @@ namespace EverythingToolbar.Controls
 
         private void AutoSelectFirstResult(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (!Settings.Default.isAutoSelectFirstResult)
+            if (!ToolbarSettings.User.IsAutoSelectFirstResult)
                 return;
 
             if (SearchResultsListView.SelectedItems.Count == 0 && !SearchResultsListView.Items.IsEmpty)
@@ -295,13 +294,13 @@ namespace EverythingToolbar.Controls
 
         private void SingleClickSearchResult(object sender, MouseEventArgs e)
         {
-            if (!Settings.Default.isDoubleClickToOpen)
+            if (!ToolbarSettings.User.IsDoubleClickToOpen)
                 Open();
         }
 
         private void DoubleClickSearchResult(object sender, MouseEventArgs e)
         {
-            if (Settings.Default.isDoubleClickToOpen)
+            if (ToolbarSettings.User.IsDoubleClickToOpen)
                 Open();
         }
 
@@ -424,7 +423,7 @@ namespace EverythingToolbar.Controls
 
         private void FocusSelectedItem()
         {
-            if (Settings.Default.isAutoSelectFirstResult)
+            if (ToolbarSettings.User.IsAutoSelectFirstResult)
                 return;
 
             var selectedItem = (ListViewItem)SearchResultsListView.ItemContainerGenerator.ContainerFromItem(SelectedItem);

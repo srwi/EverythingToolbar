@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Media;
 using Windows.UI.ViewManagement;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
 using Microsoft.Xaml.Behaviors;
 using NLog;
 using Color = Windows.UI.Color;
@@ -78,12 +77,12 @@ namespace EverythingToolbar.Behaviors
                 Logger.Info("Could not apply accent color automatically.");
             }
 
-            Settings.Default.PropertyChanged += OnSettingsChanged;
+            ToolbarSettings.User.PropertyChanged += OnSettingsChanged;
         }
 
         private void OnSettingsChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "itemTemplate")
+            if (e.PropertyName == nameof(ToolbarSettings.User.ItemTemplate))
             {
                 AutoApplyTheme();
             }
@@ -117,7 +116,7 @@ namespace EverythingToolbar.Behaviors
             AddResource(Path.Combine(themeLocation, themeFileName));
 
             // Apply ItemTemplate style
-            var dataTemplateLocation = Path.Combine(assemblyLocation, "ItemTemplates", Settings.Default.itemTemplate + ".xaml");
+            var dataTemplateLocation = Path.Combine(assemblyLocation, "ItemTemplates", ToolbarSettings.User.ItemTemplate + ".xaml");
             AddResource(dataTemplateLocation, fallbackPath: Path.Combine(assemblyLocation, "ItemTemplates", "Normal.xaml"));
 
             // Apply accent color

@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Input;
 using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
 using Microsoft.Xaml.Behaviors;
 using NHotkey;
 
@@ -29,8 +28,8 @@ namespace EverythingToolbar
             SearchWindow.Instance.Hiding += OnSearchWindowHiding;
 
             if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
-                   (Key)Settings.Default.shortcutKey,
-                   (ModifierKeys)Settings.Default.shortcutModifiers,
+                   (Key)ToolbarSettings.User.ShortcutKey,
+                   (ModifierKeys)ToolbarSettings.User.ShortcutModifiers,
                    FocusSearchBox))
             {
                 ShortcutManager.Instance.SetShortcut(Key.None, ModifierKeys.None);
@@ -41,7 +40,7 @@ namespace EverythingToolbar
             }
 
             ShortcutManager.Instance.SetFocusCallback(FocusSearchBox);
-            if (Settings.Default.isReplaceStartMenuSearch)
+            if (ToolbarSettings.User.IsReplaceStartMenuSearch)
                 ShortcutManager.Instance.HookStartMenu();
         }
 

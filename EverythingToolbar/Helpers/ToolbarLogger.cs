@@ -2,7 +2,6 @@
 using System.IO;
 using System.Reflection;
 using System.Windows;
-using EverythingToolbar.Properties;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -34,8 +33,8 @@ namespace EverythingToolbar.Helpers
             logger.Debug("Debug logging enabled.");
             logger.Info($"EverythingToolbar {Assembly.GetExecutingAssembly().GetName().Version} started. OS: {Environment.OSVersion}");
 
-            if (Settings.Default.OSBuildNumberOverride != 0)
-                logger.Info($"OS build number override: {Settings.Default.OSBuildNumberOverride}");
+            if (ToolbarSettings.User.OsBuildNumberOverride != 0)
+                logger.Info($"OS build number override: {ToolbarSettings.User.OsBuildNumberOverride}");
         }
 
         private static void InitializeExceptionLoggers(ILogger logger)

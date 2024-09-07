@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
 using Microsoft.Xaml.Behaviors;
 using Point = System.Drawing.Point;
 
@@ -95,7 +94,7 @@ namespace EverythingToolbar.Behaviors
 
         private Size GetTargetWindowSize()
         {
-            var windowSize = Settings.Default.popupSize;
+            var windowSize = new Size(ToolbarSettings.User.PopupWidth, ToolbarSettings.User.PopupHeight);
             windowSize.Width = Math.Max(windowSize.Width, AssociatedObject.MinWidth) / DpiScalingFactor;
             windowSize.Height = Math.Max(windowSize.Height, AssociatedObject.MinHeight) / DpiScalingFactor;
             return windowSize;

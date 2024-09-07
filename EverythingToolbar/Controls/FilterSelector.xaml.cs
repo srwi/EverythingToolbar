@@ -39,7 +39,7 @@ namespace EverythingToolbar.Controls
 
         private void OnCurrentFilterChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "CurrentFilter")
+            if (e.PropertyName == nameof(EverythingSearch.Instance.CurrentFilter))
             {
                 SelectCurrentFilter();
             }

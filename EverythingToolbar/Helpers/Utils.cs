@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Helpers
 {
@@ -14,8 +13,8 @@ namespace EverythingToolbar.Helpers
 
         public static Version GetWindowsVersion()
         {
-            if (Settings.Default.OSBuildNumberOverride != 0)
-                return new Version(10, 0, Settings.Default.OSBuildNumberOverride);
+            if (ToolbarSettings.User.OsBuildNumberOverride != 0)
+                return new Version(10, 0, ToolbarSettings.User.OsBuildNumberOverride);
 
             return Environment.OSVersion.Version;
         }

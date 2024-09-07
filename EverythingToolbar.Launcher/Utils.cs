@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
 using IWshRuntimeLibrary;
 using Microsoft.Win32;
 using NLog;
@@ -52,7 +51,7 @@ namespace EverythingToolbar.Launcher
 
         public static bool IsTaskbarCenterAligned()
         {
-            if (Settings.Default.isForceCenterAlignment)
+            if (ToolbarSettings.User.IsForceCenterAlignment)
                 return true;
 
             if (Helpers.Utils.GetWindowsVersion() < Helpers.Utils.WindowsVersion.Windows11)

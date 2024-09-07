@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
-using EverythingToolbar.Properties;
 using NLog;
 
 namespace EverythingToolbar.Helpers
@@ -27,15 +26,15 @@ namespace EverythingToolbar.Helpers
         {
             history = LoadHistory();
             currentIndex = history.Count;
-            currentHistorySize = Settings.Default.isEnableHistory ? MAX_HISTORY_SIZE : 0;
-            Settings.Default.PropertyChanged += OnSettingChanged;
+            currentHistorySize = ToolbarSettings.User.IsEnableHistory ? MAX_HISTORY_SIZE : 0;
+            ToolbarSettings.User.PropertyChanged += OnSettingChanged;
         }
 
         private void OnSettingChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "isEnableHistory")
+            if (e.PropertyName == nameof(ToolbarSettings.User.IsEnableHistory))
             {
-                if (Settings.Default.isEnableHistory)
+                if (ToolbarSettings.User.IsEnableHistory)
                 {
                     currentHistorySize = MAX_HISTORY_SIZE;
                 }

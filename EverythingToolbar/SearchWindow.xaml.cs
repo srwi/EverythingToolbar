@@ -4,7 +4,6 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Shell;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
 
 namespace EverythingToolbar
 {
@@ -19,12 +18,6 @@ namespace EverythingToolbar
         private SearchWindow()
         {
             InitializeComponent();
-
-            if (Settings.Default.isUpgradeRequired)
-            {
-                Settings.Default.Upgrade();
-                Settings.Default.isUpgradeRequired = false;
-            }
 
             if (Utils.GetWindowsVersion() < Utils.WindowsVersion.Windows11)
             {
@@ -102,8 +95,11 @@ namespace EverythingToolbar
 
         private void OnHidden(object sender, EventArgs e)
         {
-            if (Height != Settings.Default.popupSize.Height || Width != Settings.Default.popupSize.Width)
-                Settings.Default.popupSize = new Size(Width, Height);
+            if ((int)Height != ToolbarSettings.User.PopupHeight || (int)Width != ToolbarSettings.User.PopupWidth)
+            {
+                ToolbarSettings.User.PopupHeight = (int)Height;
+                ToolbarSettings.User.PopupWidth = (int)Width;
+            }
             
             // Push outside of screens to prevent flickering when showing
             BeginAnimation(TopProperty, new DoubleAnimation { To = 100000, Duration = TimeSpan.Zero });
@@ -217,7 +213,7 @@ namespace EverythingToolbar
             {
                 From = from,
                 To = to,
-                Duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.4),
+                Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.4),
                 EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut }
             });
 
@@ -225,7 +221,7 @@ namespace EverythingToolbar
             {
                 From = 0,
                 To = 1,
-                Duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.4),
+                Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.4),
                 EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut }
             });
 
@@ -249,7 +245,7 @@ namespace EverythingToolbar
             {
                 From = fromThickness,
                 To = new Thickness(0),
-                Duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.8),
+                Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.8),
                 EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut },
             });
         }
@@ -286,7 +282,7 @@ namespace EverythingToolbar
             {
                 From = from,
                 To = to,
-                Duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.2),
+                Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.2),
                 EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
             });
 
@@ -310,7 +306,7 @@ namespace EverythingToolbar
             {
                 From = fromThickness,
                 To = new Thickness(0),
-                Duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.4),
+                Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.4),
                 EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut }
             });
         }
@@ -392,7 +388,7 @@ namespace EverythingToolbar
             {
                 From = from,
                 To = to,
-                Duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.2),
+                Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.2),
                 EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseIn },
             };
             animation.Completed += OnHidden;
@@ -417,7 +413,7 @@ namespace EverythingToolbar
             ContentGrid.BeginAnimation(MarginProperty, new ThicknessAnimation
             {
                 To = toThickness,
-                Duration = Settings.Default.isAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.5),
+                Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.5),
                 EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseIn }
             });
         }

@@ -51,7 +51,7 @@ namespace EverythingToolbar.Helpers
         { 
             get
             {
-                if (Settings.Default.isRegExEnabled)
+                if (ToolbarSettings.User.IsRegExEnabled)
                     return new ObservableCollection<Filter>(_defaultFilters.Skip(0).Take(1));
                 
                 return _defaultFilters;
@@ -126,10 +126,10 @@ namespace EverythingToolbar.Helpers
         { 
             get
             {
-                if (Settings.Default.isRegExEnabled)
+                if (ToolbarSettings.User.IsRegExEnabled)
                     return new ObservableCollection<Filter>();
 
-                if (Settings.Default.isImportFilters)
+                if (ToolbarSettings.User.IsImportFilters)
                     return _userFiltersCache ?? LoadFilters();
 
                 return DefaultUserFilters;
@@ -143,15 +143,15 @@ namespace EverythingToolbar.Helpers
 
         private FilterLoader()
         {
-            if (Settings.Default.filtersPath == "")
-                Settings.Default.filtersPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            if (ToolbarSettings.User.FiltersPath == "")
+                ToolbarSettings.User.FiltersPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                                                                        "Everything",
                                                                        "Filters.csv");
-            Settings.Default.PropertyChanged += OnSettingsChanged;
+            ToolbarSettings.User.PropertyChanged += OnSettingsChanged;
 
             NotifyFiltersChanged();
             
-            if (Settings.Default.isImportFilters)
+            if (ToolbarSettings.User.IsImportFilters)
                 CreateFileWatcher();
         }
 
@@ -164,12 +164,12 @@ namespace EverythingToolbar.Helpers
         {
             switch (e.PropertyName)
             {
-                case "isRegExEnabled":
+                case nameof(ToolbarSettings.User.IsRegExEnabled):
                     NotifyFiltersChanged();
                     break;
-                case "isImportFilters":
+                case nameof(ToolbarSettings.User.IsImportFilters):
                 {
-                    if (Settings.Default.isImportFilters)
+                    if (ToolbarSettings.User.IsImportFilters)
                     {
                         CreateFileWatcher();
                     }
@@ -195,9 +195,9 @@ namespace EverythingToolbar.Helpers
         {
             var filters = new ObservableCollection<Filter>();
 
-            if (!File.Exists(Settings.Default.filtersPath))
+            if (!File.Exists(ToolbarSettings.User.FiltersPath))
             {
-                Logger.Info("Filters.csv could not be found at " + Settings.Default.filtersPath);
+                Logger.Info("Filters.csv could not be found at " + ToolbarSettings.User.FiltersPath);
 
                 MessageBox.Show(Resources.MessageBoxSelectFiltersCsv,
                                 Resources.MessageBoxSelectFiltersCsvTitle,
@@ -205,18 +205,18 @@ namespace EverythingToolbar.Helpers
                                 MessageBoxIcon.Information);
                 using (var openFileDialog = new OpenFileDialog())
                 {
-                    openFileDialog.InitialDirectory = Path.Combine(Settings.Default.filtersPath, "..");
+                    openFileDialog.InitialDirectory = Path.Combine(ToolbarSettings.User.FiltersPath, "..");
                     openFileDialog.Filter = "Filters.csv|Filters.csv|All files (*.*)|*.*";
                     openFileDialog.FilterIndex = 1;
 
                     if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        Settings.Default.filtersPath = openFileDialog.FileName;
+                        ToolbarSettings.User.FiltersPath = openFileDialog.FileName;
                         CreateFileWatcher();
                     }
                     else
                     {
-                        Settings.Default.isImportFilters = false;
+                        ToolbarSettings.User.IsImportFilters = false;
                         return DefaultUserFilters;
                     }
                 }
@@ -224,7 +224,7 @@ namespace EverythingToolbar.Helpers
 
             try
             {
-                using (var csvParser = new TextFieldParser(Settings.Default.filtersPath))
+                using (var csvParser = new TextFieldParser(ToolbarSettings.User.FiltersPath))
                 {
                     csvParser.CommentTokens = new[] { "#" };
                     csvParser.SetDelimiters(",");
@@ -286,13 +286,13 @@ namespace EverythingToolbar.Helpers
 
         private void CreateFileWatcher()
         {
-            if (!File.Exists(Settings.Default.filtersPath))
+            if (!File.Exists(ToolbarSettings.User.FiltersPath))
                 return;
 
             _watcher = new FileSystemWatcher
             {
-                Path = Path.GetDirectoryName(Settings.Default.filtersPath),
-                Filter = Path.GetFileName(Settings.Default.filtersPath),
+                Path = Path.GetDirectoryName(ToolbarSettings.User.FiltersPath),
+                Filter = Path.GetFileName(ToolbarSettings.User.FiltersPath),
                 NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite
             };
 
@@ -306,7 +306,7 @@ namespace EverythingToolbar.Helpers
 
         private void OnFileRenamed(object sender, RenamedEventArgs e)
         {
-            Settings.Default.filtersPath = e.FullPath;
+            ToolbarSettings.User.FiltersPath = e.FullPath;
             CreateFileWatcher();
             LoadFilters();
             NotifyFiltersChanged();
@@ -320,12 +320,12 @@ namespace EverythingToolbar.Helpers
 
         public Filter GetLastFilter()
         {
-            if (!Settings.Default.isRememberFilter)
+            if (!ToolbarSettings.User.IsRememberFilter)
                 return DefaultFilters[0];
             
             foreach (var filter in DefaultFilters.Union(UserFilters))
             {
-                if (filter.Name == Settings.Default.lastFilter)
+                if (filter.Name == ToolbarSettings.User.LastFilter)
                     return filter;
             }
 

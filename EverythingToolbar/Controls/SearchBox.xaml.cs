@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Controls
 {
@@ -24,7 +23,7 @@ namespace EverythingToolbar.Controls
 
             // IsEnabled property of matchWholeWord button needs to be handled
             // in code because DataTriggers are not compatible with DynamicResources as MenuItem styles
-            Settings.Default.PropertyChanged += OnSettingsChanged;
+            ToolbarSettings.User.PropertyChanged += OnSettingsChanged;
             EverythingSearch.Instance.PropertyChanged += OnSettingsChanged;
 
             EventDispatcher.Instance.SearchTermReplaced += (s, searchTerm) => { UpdateSearchTerm(searchTerm); };
@@ -53,7 +52,7 @@ namespace EverythingToolbar.Controls
                 UpdateSearchTerm(HistoryManager.Instance.GetNextItem());
                 e.Handled = true;
             }
-            else if ((e.Key == Key.Home || e.Key == Key.End) && Keyboard.Modifiers != ModifierKeys.Shift && Settings.Default.isAutoSelectFirstResult ||
+            else if ((e.Key == Key.Home || e.Key == Key.End) && Keyboard.Modifiers != ModifierKeys.Shift && ToolbarSettings.User.IsAutoSelectFirstResult ||
                 e.Key == Key.PageDown || e.Key == Key.PageUp ||
                 e.Key == Key.Up || e.Key == Key.Down ||
                 e.Key == Key.Escape || e.Key == Key.Enter ||
@@ -72,7 +71,7 @@ namespace EverythingToolbar.Controls
 
         private void OnSettingsChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "isShowQuickToggles")
+            if (e.PropertyName == nameof(ToolbarSettings.User.IsShowQuickToggles))
                 UpdateQuickTogglesVisibility();
         }
 
@@ -83,7 +82,7 @@ namespace EverythingToolbar.Controls
 
         private void UpdateQuickTogglesVisibility()
         {
-            if (Settings.Default.isShowQuickToggles && ActualWidth > 200)
+            if (ToolbarSettings.User.IsShowQuickToggles && ActualWidth > 200)
             {
                 QuickToggleButtons.Visibility = Visibility.Visible;
                 TextBox.Padding = new Thickness(37, 0, 130, 0);

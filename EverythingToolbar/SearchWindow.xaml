@@ -9,7 +9,6 @@
         xmlns:h="clr-namespace:EverythingToolbar.Helpers"
         xmlns:local="clr-namespace:EverythingToolbar"
         xmlns:controls="clr-namespace:EverythingToolbar.Controls"
-        xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         WindowStyle="None"
         MinWidth="600"
         MinHeight="300"
@@ -68,8 +67,8 @@
                         <Button Style="{DynamicResource TabBarButtonStyle}"
                                 Content="{Binding TotalResultsNumber, 
                                                   Converter={c:SearchResultsCountConverter}}"
-                                Visibility="{Binding Source={x:Static properties:Settings.Default},
-                                                     Path=isShowResultsCount,
+                                Visibility="{Binding Source={x:Static local:ToolbarSettings.User},
+                                                     Path=IsShowResultsCount,
                                                      Converter={c:BoolToVisibilityConverter}}"
                                 Click="OpenSearchInEverything" />
                     </Border>

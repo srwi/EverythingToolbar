@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Controls
 {
@@ -16,13 +15,13 @@ namespace EverythingToolbar.Controls
             InitializeComponent();
 
             // Preselect sorting method
-            (SortByMenu.Items[Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
+            (SortByMenu.Items[ToolbarSettings.User.SortBy - 1] as MenuItem).IsChecked = true;
 
             // Preselect active datatemplate
             for (var i = 0; i < ItemTemplateMenu.Items.Count; i++)
             {
                 var menuItem = ItemTemplateMenu.Items[i] as MenuItem;
-                if (menuItem.Tag.ToString() == Settings.Default.itemTemplate)
+                if (menuItem.Tag.ToString() == ToolbarSettings.User.ItemTemplate)
                     menuItem.IsChecked = true;
                 else
                     menuItem.IsChecked = false;
@@ -47,11 +46,11 @@ namespace EverythingToolbar.Controls
         {
             SearchWindow.Instance.Hide();
             var inputDialog = new InputDialog(Properties.Resources.SettingsSetInstanceName,
-                                              Settings.Default.instanceName);
+                                              ToolbarSettings.User.InstanceName);
             if (inputDialog.ShowDialog() == true)
             {
-                Settings.Default.instanceName = inputDialog.ResponseText;
-                EverythingSearch.Instance.SetInstanceName(Settings.Default.instanceName);
+                ToolbarSettings.User.InstanceName = inputDialog.ResponseText;
+                EverythingSearch.Instance.SetInstanceName(ToolbarSettings.User.InstanceName);
             }
         }
 
@@ -91,14 +90,14 @@ namespace EverythingToolbar.Controls
             var menu = selectedItem.Parent as MenuItem;
             var selectedIndex = menu.Items.IndexOf(selectedItem);
 
-            (menu.Items[Settings.Default.sortBy - 1] as MenuItem).IsChecked = false;
+            (menu.Items[ToolbarSettings.User.SortBy - 1] as MenuItem).IsChecked = false;
             (menu.Items[selectedIndex] as MenuItem).IsChecked = false;
 
             int[] fastSortExceptions = { 9, 10, 17, 18 };
             if (EverythingSearch.GetIsFastSort(selectedIndex + 1) ||
                 fastSortExceptions.Contains(selectedIndex + 1))
             {
-                Settings.Default.sortBy = selectedIndex + 1;
+                ToolbarSettings.User.SortBy = selectedIndex + 1;
             }
             else
             {
@@ -108,7 +107,7 @@ namespace EverythingToolbar.Controls
                                 MessageBoxImage.Asterisk);
             }
 
-            (menu.Items[Settings.Default.sortBy - 1] as MenuItem).IsChecked = true;
+            (menu.Items[ToolbarSettings.User.SortBy - 1] as MenuItem).IsChecked = true;
         }
 
         private void OnItemTemplateClicked(object sender, RoutedEventArgs e)
@@ -122,7 +121,7 @@ namespace EverythingToolbar.Controls
                 if (menuItem == selectedItem)
                 {
                     menuItem.IsChecked = true;
-                    Settings.Default.itemTemplate = selectedItem.Tag.ToString();
+                    ToolbarSettings.User.ItemTemplate = selectedItem.Tag.ToString();
                 }
                 else
                 {

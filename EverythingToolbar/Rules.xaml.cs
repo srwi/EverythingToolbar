@@ -9,7 +9,6 @@ using System.Xml;
 using System.Xml.Serialization;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
 
 namespace EverythingToolbar
 {
@@ -24,7 +23,7 @@ namespace EverythingToolbar
 
             _rules = LoadRules();
             dataGrid.ItemsSource = _rules;
-            autoApplyRulesCheckbox.IsChecked = Settings.Default.isAutoApplyRules;
+            autoApplyRulesCheckbox.IsChecked = ToolbarSettings.User.IsAutoApplyRules;
             UpdateUI();
         }
 
@@ -37,7 +36,7 @@ namespace EverythingToolbar
         {
             if(SaveRules(_rules, (bool)autoApplyRulesCheckbox.IsChecked))
             {
-                Settings.Default.isAutoApplyRules = (bool)autoApplyRulesCheckbox.IsChecked;
+                ToolbarSettings.User.IsAutoApplyRules = (bool)autoApplyRulesCheckbox.IsChecked;
                 Close();
             }
         }
@@ -166,7 +165,7 @@ namespace EverythingToolbar
             if (searchResult == null)
                 return false;
 
-            if (Settings.Default.isAutoApplyRules && string.IsNullOrEmpty(command))
+            if (ToolbarSettings.User.IsAutoApplyRules && string.IsNullOrEmpty(command))
             {
                 foreach (var r in LoadRules())
                 {
