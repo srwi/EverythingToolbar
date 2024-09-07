@@ -367,43 +367,43 @@
     <value>Tastenkürzel eingeben...</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Attributes</value>
+    <value>Attribute</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
-    <value>Date accessed</value>
+    <value>Letzter Zugriff am</value>
   </data>
   <data name="SortByDateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>Erstellt am</value>
   </data>
   <data name="SortByDateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>Geändert am</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
-    <value>Date recently changed</value>
+    <value>Kürzlich geändert</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
-    <value>Date run</value>
+    <value>Ausführungsdatum</value>
   </data>
   <data name="SortByExtension" xml:space="preserve">
-    <value>Extension</value>
+    <value>Erweiterung</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
-    <value>File list filename</value>
+    <value>Name der Dateiliste</value>
   </data>
   <data name="SortByName" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="SortByPath" xml:space="preserve">
-    <value>Path</value>
+    <value>Pfad</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
-    <value>Run count</value>
+    <value>Anzahl der Ausführungen</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
-    <value>Size</value>
+    <value>Größe</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
-    <value>Type name</value>
+    <value>Typ</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>Dunkel</value>
@@ -451,9 +451,9 @@
     <value>Doppelklick zum Öffnen</value>
   </data>
   <data name="SortDescending" xml:space="preserve">
-    <value>Descending</value>
+    <value>Absteigend</value>
   </data>
   <data name="SortAscending" xml:space="preserve">
-    <value>Ascending</value>
+    <value>Aufsteigend</value>
   </data>
 </root>
