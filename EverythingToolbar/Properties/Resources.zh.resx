@@ -366,83 +366,44 @@
   <data name="ShortcutWindowTitle" xml:space="preserve">
     <value>設置快捷鍵...</value>
   </data>
-  <data name="SortByAttributesAscending" xml:space="preserve">
-    <value>屬性 遞增</value>
+  <data name="SortByAttributes" xml:space="preserve">
+    <value>Attributes</value>
   </data>
-  <data name="SortByAttributesDescending" xml:space="preserve">
-    <value>屬性 遞減</value>
+  <data name="SortByDateAccessed" xml:space="preserve">
+    <value>Date accessed</value>
   </data>
-  <data name="SortByDateAccessedAscending" xml:space="preserve">
-    <value>存取日期 遞增</value>
+  <data name="SortByDateCreated" xml:space="preserve">
+    <value>Date created</value>
   </data>
-  <data name="SortByDateAccessedDescending" xml:space="preserve">
-    <value>存取日期 遞減</value>
+  <data name="SortByDateModified" xml:space="preserve">
+    <value>Date modified</value>
   </data>
-  <data name="SortByDateCreatedAscending" xml:space="preserve">
-    <value>建立日期 遞增</value>
+  <data name="SortByDateRecentlyChanged" xml:space="preserve">
+    <value>Date recently changed</value>
   </data>
-  <data name="SortByDateCreatedDescending" xml:space="preserve">
-    <value>建立日期 遞減</value>
+  <data name="SortByDateRun" xml:space="preserve">
+    <value>Date run</value>
   </data>
-  <data name="SortByDateModifiedAscending" xml:space="preserve">
-    <value>修改日期 遞增</value>
+  <data name="SortByExtension" xml:space="preserve">
+    <value>Extension</value>
   </data>
-  <data name="SortByDateModifiedDescending" xml:space="preserve">
-    <value>修改日期 遞減</value>
+  <data name="SortByFileListFilename" xml:space="preserve">
+    <value>File list filename</value>
   </data>
-  <data name="SortByDateRecentlyChangedAscending" xml:space="preserve">
-    <value>最近修改日期 遞增</value>
+  <data name="SortByName" xml:space="preserve">
+    <value>Name</value>
   </data>
-  <data name="SortByDateRecentlyChangedDescending" xml:space="preserve">
-    <value>最近修改日期 遞減</value>
+  <data name="SortByPath" xml:space="preserve">
+    <value>Path</value>
   </data>
-  <data name="SortByDateRunAscending" xml:space="preserve">
-    <value>執行日期 遞增</value>
+  <data name="SortByRunCount" xml:space="preserve">
+    <value>Run count</value>
   </data>
-  <data name="SortByDateRunDescending" xml:space="preserve">
-    <value>執行日期 遞減</value>
+  <data name="SortBySize" xml:space="preserve">
+    <value>Size</value>
   </data>
-  <data name="SortByExtensionAscending" xml:space="preserve">
-    <value>副檔名 遞增</value>
-  </data>
-  <data name="SortByExtensionDescending" xml:space="preserve">
-    <value>副檔名 遞減</value>
-  </data>
-  <data name="SortByFileListFilenameAscending" xml:space="preserve">
-    <value>檔案列表檔案名稱 遞增</value>
-  </data>
-  <data name="SortByFileListFilenameDescending" xml:space="preserve">
-    <value>檔案列表檔案名稱 遞減</value>
-  </data>
-  <data name="SortByNameAscending" xml:space="preserve">
-    <value>檔名 遞增</value>
-  </data>
-  <data name="SortByNameDescending" xml:space="preserve">
-    <value>檔名 遞減</value>
-  </data>
-  <data name="SortByPathAscending" xml:space="preserve">
-    <value>路徑 遞增</value>
-  </data>
-  <data name="SortByPathDescending" xml:space="preserve">
-    <value>路徑 遞減</value>
-  </data>
-  <data name="SortByRunCountAscending" xml:space="preserve">
-    <value>執行次數 遞增</value>
-  </data>
-  <data name="SortByRunCountDescending" xml:space="preserve">
-    <value>執行次數 遞減</value>
-  </data>
-  <data name="SortBySizeAscending" xml:space="preserve">
-    <value>大小 遞增</value>
-  </data>
-  <data name="SortBySizeDescending" xml:space="preserve">
-    <value>大小 遞減</value>
-  </data>
-  <data name="SortByTypeNameAscending" xml:space="preserve">
-    <value>類型名稱 遞增</value>
-  </data>
-  <data name="SortByTypeNameDescending" xml:space="preserve">
-    <value>類型名稱 遞減</value>
+  <data name="SortByTypeName" xml:space="preserve">
+    <value>Type name</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>深色</value>
@@ -488,5 +449,11 @@
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
     <value>雙擊開啟</value>
+  </data>
+  <data name="SortDescending" xml:space="preserve">
+    <value>Descending</value>
+  </data>
+  <data name="SortAscending" xml:space="preserve">
+    <value>Ascending</value>
   </data>
 </root>
