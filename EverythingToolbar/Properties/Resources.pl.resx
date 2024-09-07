@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -369,80 +369,41 @@
   <data name="SortByAttributesAscending" xml:space="preserve">
     <value>Atrybuty rosnąco</value>
   </data>
-  <data name="SortByAttributesDescending" xml:space="preserve">
-    <value>Atrybuty malejąco</value>
-  </data>
   <data name="SortByDateAccessedAscending" xml:space="preserve">
     <value>Data ostatniego dostępu rosnąco</value>
-  </data>
-  <data name="SortByDateAccessedDescending" xml:space="preserve">
-    <value>Data ostatniego dostępu malejąco</value>
   </data>
   <data name="SortByDateCreatedAscending" xml:space="preserve">
     <value>Data utworzenia rosnąco</value>
   </data>
-  <data name="SortByDateCreatedDescending" xml:space="preserve">
-    <value>Data utworzenia malejąco</value>
-  </data>
   <data name="SortByDateModifiedAscending" xml:space="preserve">
     <value>Data modyfikacji rosnąco</value>
-  </data>
-  <data name="SortByDateModifiedDescending" xml:space="preserve">
-    <value>Data modyfikacji malejąco</value>
   </data>
   <data name="SortByDateRecentlyChangedAscending" xml:space="preserve">
     <value>Ostatnio zmieniona data rosnąco</value>
   </data>
-  <data name="SortByDateRecentlyChangedDescending" xml:space="preserve">
-    <value>Ostatnio zmieniona data malejąco</value>
-  </data>
   <data name="SortByDateRunAscending" xml:space="preserve">
     <value>Data uruchomienia rosnąco</value>
-  </data>
-  <data name="SortByDateRunDescending" xml:space="preserve">
-    <value>Data uruchomienia malejąco</value>
   </data>
   <data name="SortByExtensionAscending" xml:space="preserve">
     <value>Rozszerzenie rosnąco</value>
   </data>
-  <data name="SortByExtensionDescending" xml:space="preserve">
-    <value>Rozszerzenie malejąco</value>
-  </data>
   <data name="SortByFileListFilenameAscending" xml:space="preserve">
     <value>Lista nazw pliku rosnąco</value>
-  </data>
-  <data name="SortByFileListFilenameDescending" xml:space="preserve">
-    <value>Lista nazw pliku malejąco</value>
   </data>
   <data name="SortByNameAscending" xml:space="preserve">
     <value>Nazwa rosnąco</value>
   </data>
-  <data name="SortByNameDescending" xml:space="preserve">
-    <value>Nazwa malejąco</value>
-  </data>
   <data name="SortByPathAscending" xml:space="preserve">
     <value>Ścieżka rosnąco</value>
-  </data>
-  <data name="SortByPathDescending" xml:space="preserve">
-    <value>Ścieżka malejąco</value>
   </data>
   <data name="SortByRunCountAscending" xml:space="preserve">
     <value>Ilość uruchomień rosnąco</value>
   </data>
-  <data name="SortByRunCountDescending" xml:space="preserve">
-    <value>Ilość uruchomień malejąco</value>
-  </data>
   <data name="SortBySizeAscending" xml:space="preserve">
     <value>Rozmiar rosnąco</value>
   </data>
-  <data name="SortBySizeDescending" xml:space="preserve">
-    <value>Rozmiar malejąco</value>
-  </data>
   <data name="SortByTypeNameAscending" xml:space="preserve">
     <value>Nazwa typu rosnąco</value>
-  </data>
-  <data name="SortByTypeNameDescending" xml:space="preserve">
-    <value>Nazwa typu malejąco</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>Ciemny</value>

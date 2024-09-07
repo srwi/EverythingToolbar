@@ -826,236 +826,137 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Attributes ascending.
+        ///   Looks up a localized string similar to Ascending.
         /// </summary>
-        public static string SortByAttributesAscending {
+        public static string SortAscending {
             get {
-                return ResourceManager.GetString("SortByAttributesAscending", resourceCulture);
+                return ResourceManager.GetString("SortAscending", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Attributes descending.
+        ///   Looks up a localized string similar to Attributes.
         /// </summary>
-        public static string SortByAttributesDescending {
+        public static string SortByAttributes {
             get {
-                return ResourceManager.GetString("SortByAttributesDescending", resourceCulture);
+                return ResourceManager.GetString("SortByAttributes", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date accessed ascending.
+        ///   Looks up a localized string similar to Date accessed.
         /// </summary>
-        public static string SortByDateAccessedAscending {
+        public static string SortByDateAccessed {
             get {
-                return ResourceManager.GetString("SortByDateAccessedAscending", resourceCulture);
+                return ResourceManager.GetString("SortByDateAccessed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date accessed descending.
+        ///   Looks up a localized string similar to Date created.
         /// </summary>
-        public static string SortByDateAccessedDescending {
+        public static string SortByDateCreated {
             get {
-                return ResourceManager.GetString("SortByDateAccessedDescending", resourceCulture);
+                return ResourceManager.GetString("SortByDateCreated", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date created ascending.
+        ///   Looks up a localized string similar to Date modified.
         /// </summary>
-        public static string SortByDateCreatedAscending {
+        public static string SortByDateModified {
             get {
-                return ResourceManager.GetString("SortByDateCreatedAscending", resourceCulture);
+                return ResourceManager.GetString("SortByDateModified", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date created descending.
+        ///   Looks up a localized string similar to Date recently changed.
         /// </summary>
-        public static string SortByDateCreatedDescending {
+        public static string SortByDateRecentlyChanged {
             get {
-                return ResourceManager.GetString("SortByDateCreatedDescending", resourceCulture);
+                return ResourceManager.GetString("SortByDateRecentlyChanged", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date modified ascending.
+        ///   Looks up a localized string similar to Date run.
         /// </summary>
-        public static string SortByDateModifiedAscending {
+        public static string SortByDateRun {
             get {
-                return ResourceManager.GetString("SortByDateModifiedAscending", resourceCulture);
+                return ResourceManager.GetString("SortByDateRun", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date modified descending.
+        ///   Looks up a localized string similar to Extension.
         /// </summary>
-        public static string SortByDateModifiedDescending {
+        public static string SortByExtension {
             get {
-                return ResourceManager.GetString("SortByDateModifiedDescending", resourceCulture);
+                return ResourceManager.GetString("SortByExtension", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date recently changed ascending.
+        ///   Looks up a localized string similar to File list filename.
         /// </summary>
-        public static string SortByDateRecentlyChangedAscending {
+        public static string SortByFileListFilename {
             get {
-                return ResourceManager.GetString("SortByDateRecentlyChangedAscending", resourceCulture);
+                return ResourceManager.GetString("SortByFileListFilename", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date recently changed descending.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
-        public static string SortByDateRecentlyChangedDescending {
+        public static string SortByName {
             get {
-                return ResourceManager.GetString("SortByDateRecentlyChangedDescending", resourceCulture);
+                return ResourceManager.GetString("SortByName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date run ascending.
+        ///   Looks up a localized string similar to Path.
         /// </summary>
-        public static string SortByDateRunAscending {
+        public static string SortByPath {
             get {
-                return ResourceManager.GetString("SortByDateRunAscending", resourceCulture);
+                return ResourceManager.GetString("SortByPath", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date run descending.
+        ///   Looks up a localized string similar to Run count.
         /// </summary>
-        public static string SortByDateRunDescending {
+        public static string SortByRunCount {
             get {
-                return ResourceManager.GetString("SortByDateRunDescending", resourceCulture);
+                return ResourceManager.GetString("SortByRunCount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Extension ascending.
+        ///   Looks up a localized string similar to Size.
         /// </summary>
-        public static string SortByExtensionAscending {
+        public static string SortBySize {
             get {
-                return ResourceManager.GetString("SortByExtensionAscending", resourceCulture);
+                return ResourceManager.GetString("SortBySize", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Extension descending.
+        ///   Looks up a localized string similar to Type name.
         /// </summary>
-        public static string SortByExtensionDescending {
+        public static string SortByTypeName {
             get {
-                return ResourceManager.GetString("SortByExtensionDescending", resourceCulture);
+                return ResourceManager.GetString("SortByTypeName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File list filename ascending.
+        ///   Looks up a localized string similar to Descending.
         /// </summary>
-        public static string SortByFileListFilenameAscending {
+        public static string SortDescending {
             get {
-                return ResourceManager.GetString("SortByFileListFilenameAscending", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File list filename descending.
-        /// </summary>
-        public static string SortByFileListFilenameDescending {
-            get {
-                return ResourceManager.GetString("SortByFileListFilenameDescending", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name ascending.
-        /// </summary>
-        public static string SortByNameAscending {
-            get {
-                return ResourceManager.GetString("SortByNameAscending", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name descending.
-        /// </summary>
-        public static string SortByNameDescending {
-            get {
-                return ResourceManager.GetString("SortByNameDescending", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Path ascending.
-        /// </summary>
-        public static string SortByPathAscending {
-            get {
-                return ResourceManager.GetString("SortByPathAscending", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Path descending.
-        /// </summary>
-        public static string SortByPathDescending {
-            get {
-                return ResourceManager.GetString("SortByPathDescending", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Run count ascending.
-        /// </summary>
-        public static string SortByRunCountAscending {
-            get {
-                return ResourceManager.GetString("SortByRunCountAscending", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Run count descending.
-        /// </summary>
-        public static string SortByRunCountDescending {
-            get {
-                return ResourceManager.GetString("SortByRunCountDescending", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Size ascending.
-        /// </summary>
-        public static string SortBySizeAscending {
-            get {
-                return ResourceManager.GetString("SortBySizeAscending", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Size descending.
-        /// </summary>
-        public static string SortBySizeDescending {
-            get {
-                return ResourceManager.GetString("SortBySizeDescending", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Type name ascending.
-        /// </summary>
-        public static string SortByTypeNameAscending {
-            get {
-                return ResourceManager.GetString("SortByTypeNameAscending", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Type name descending.
-        /// </summary>
-        public static string SortByTypeNameDescending {
-            get {
-                return ResourceManager.GetString("SortByTypeNameDescending", resourceCulture);
+                return ResourceManager.GetString("SortDescending", resourceCulture);
             }
         }
         

@@ -17,8 +17,11 @@ namespace EverythingToolbar
         [Option(DefaultValue = false)]
         bool IsMatchPath { get; set; }
 
-        [Option(DefaultValue = 26)]
+        [Option(DefaultValue = 12)]  // Default is date run
         int SortBy { get; set; }
+
+        [Option(DefaultValue = true)]
+        bool IsSortDescending { get; set; }
 
         [Option(DefaultValue = false)]
         bool IsMatchWholeWord { get; set; }
@@ -165,6 +168,19 @@ namespace EverythingToolbar
                 if (_settings.SortBy != value)
                 {
                     _settings.SortBy = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsSortDescending
+        {
+            get => _settings.IsSortDescending;
+            set
+            {
+                if (_settings.IsSortDescending != value)
+                {
+                    _settings.IsSortDescending = value;
                     OnPropertyChanged();
                 }
             }

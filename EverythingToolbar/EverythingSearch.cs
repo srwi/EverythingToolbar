@@ -121,6 +121,7 @@ namespace EverythingToolbar
                 e.PropertyName == nameof(ToolbarSettings.User.IsMatchWholeWord) ||
                 e.PropertyName == nameof(ToolbarSettings.User.IsHideEmptySearchResults) ||
                 e.PropertyName == nameof(ToolbarSettings.User.SortBy) ||
+                e.PropertyName == nameof(ToolbarSettings.User.IsSortDescending) ||
                 e.PropertyName == nameof(ToolbarSettings.User.IsThumbnailsEnabled))
             {
                 QueryBatch(append: false);
@@ -211,7 +212,7 @@ namespace EverythingToolbar
                     _logger.Debug("Searching: " + search);
                     Everything_SetSearchW(search);
                     Everything_SetRequestFlags(flags);
-                    Everything_SetSort((uint)ToolbarSettings.User.SortBy);
+                    Everything_SetSort(CalculateEverythingSortType(ToolbarSettings.User.SortBy, ToolbarSettings.User.IsSortDescending));
                     Everything_SetMatchCase(ToolbarSettings.User.IsMatchCase);
                     Everything_SetMatchPath(ToolbarSettings.User.IsMatchPath);
                     Everything_SetMatchWholeWord(ToolbarSettings.User.IsMatchWholeWord && !ToolbarSettings.User.IsRegExEnabled);
@@ -333,20 +334,20 @@ namespace EverythingToolbar
             var args = "";
             if (!string.IsNullOrEmpty(ToolbarSettings.User.InstanceName)) args += " -instance \"" + ToolbarSettings.User.InstanceName + "\"";
             if (!string.IsNullOrEmpty(highlightedFile)) args += " -select \"" + highlightedFile + "\"";
-            if (ToolbarSettings.User.SortBy <= 2) args += " -sort \"Name\"";
-            else if (ToolbarSettings.User.SortBy <= 4) args += " -sort \"Path\"";
-            else if (ToolbarSettings.User.SortBy <= 6) args += " -sort \"Size\"";
-            else if (ToolbarSettings.User.SortBy <= 8) args += " -sort \"Extension\"";
-            else if (ToolbarSettings.User.SortBy <= 10) args += " -sort \"Type name\"";
-            else if (ToolbarSettings.User.SortBy <= 12) args += " -sort \"Date created\"";
-            else if (ToolbarSettings.User.SortBy <= 14) args += " -sort \"Date modified\"";
-            else if (ToolbarSettings.User.SortBy <= 16) args += " -sort \"Attributes\"";
-            else if (ToolbarSettings.User.SortBy <= 18) args += " -sort \"File list highlightedFileName\"";
-            else if (ToolbarSettings.User.SortBy <= 20) args += " -sort \"Run count\"";
-            else if (ToolbarSettings.User.SortBy <= 22) args += " -sort \"Date recently changed\"";
-            else if (ToolbarSettings.User.SortBy <= 24) args += " -sort \"Date accessed\"";
-            else if (ToolbarSettings.User.SortBy <= 26) args += " -sort \"Date run\"";
-            args += ToolbarSettings.User.SortBy % 2 > 0 ? " -sort-ascending" : " -sort-descending";
+            if (ToolbarSettings.User.SortBy == 0) args += " -sort \"Name\"";
+            else if (ToolbarSettings.User.SortBy == 1) args += " -sort \"Path\"";
+            else if (ToolbarSettings.User.SortBy == 2) args += " -sort \"Size\"";
+            else if (ToolbarSettings.User.SortBy == 3) args += " -sort \"Extension\"";
+            else if (ToolbarSettings.User.SortBy == 4) args += " -sort \"Type name\"";
+            else if (ToolbarSettings.User.SortBy == 5) args += " -sort \"Date created\"";
+            else if (ToolbarSettings.User.SortBy == 6) args += " -sort \"Date modified\"";
+            else if (ToolbarSettings.User.SortBy == 7) args += " -sort \"Attributes\"";
+            else if (ToolbarSettings.User.SortBy == 8) args += " -sort \"File list highlightedFileName\"";
+            else if (ToolbarSettings.User.SortBy == 9) args += " -sort \"Run count\"";
+            else if (ToolbarSettings.User.SortBy == 10) args += " -sort \"Date recently changed\"";
+            else if (ToolbarSettings.User.SortBy == 11) args += " -sort \"Date accessed\"";
+            else if (ToolbarSettings.User.SortBy == 12) args += " -sort \"Date run\"";
+            args += ToolbarSettings.User.IsSortDescending ? " -sort-descending" : " -sort-ascending";
             args += ToolbarSettings.User.IsMatchCase ? " -case" : " -nocase";
             args += ToolbarSettings.User.IsMatchPath ? " -matchpath" : " -nomatchpath";
             args += ToolbarSettings.User.IsMatchWholeWord && !ToolbarSettings.User.IsRegExEnabled ? " -ww" : " -noww";
@@ -362,9 +363,17 @@ namespace EverythingToolbar
             Everything_IncRunCountFromFileName(path);
         }
 
-        public static bool GetIsFastSort(int sortBy)
+        private static uint CalculateEverythingSortType(int sortBy, bool descending)
         {
-            return Everything_IsFastSort((uint)sortBy);
+            var descendingOffset = descending ? 1 : 0;
+            var sortType = sortBy * 2 + descendingOffset + 1;
+            return (uint)sortType;
+        }
+
+        public static bool GetIsFastSort(int sortBy, bool descending)
+        {
+            var everythingSortType = CalculateEverythingSortType(sortBy, descending);
+            return Everything_IsFastSort(everythingSortType);
         }
 
         private void HandleError(ErrorCode code)

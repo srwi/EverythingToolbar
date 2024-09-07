@@ -14,18 +14,8 @@ namespace EverythingToolbar.Controls
         {
             InitializeComponent();
 
-            // Preselect sorting method
-            (SortByMenu.Items[ToolbarSettings.User.SortBy - 1] as MenuItem).IsChecked = true;
-
-            // Preselect active datatemplate
-            for (var i = 0; i < ItemTemplateMenu.Items.Count; i++)
-            {
-                var menuItem = ItemTemplateMenu.Items[i] as MenuItem;
-                if (menuItem.Tag.ToString() == ToolbarSettings.User.ItemTemplate)
-                    menuItem.IsChecked = true;
-                else
-                    menuItem.IsChecked = false;
-            }
+            SelectSortType();
+            SelectItemTemplate();
         }
 
         private void OpenAboutWindow(object sender, RoutedEventArgs e)
@@ -86,48 +76,71 @@ namespace EverythingToolbar.Controls
 
         private void OnSortByClicked(object sender, RoutedEventArgs e)
         {
-            var selectedItem = sender as MenuItem;
-            var menu = selectedItem.Parent as MenuItem;
-            var selectedIndex = menu.Items.IndexOf(selectedItem);
+            if (!(sender is MenuItem selectedItem)) return;
+            var selectedIndex = SortByMenu.Items.IndexOf(selectedItem);
 
-            (menu.Items[ToolbarSettings.User.SortBy - 1] as MenuItem).IsChecked = false;
-            (menu.Items[selectedIndex] as MenuItem).IsChecked = false;
-
-            int[] fastSortExceptions = { 9, 10, 17, 18 };
-            if (EverythingSearch.GetIsFastSort(selectedIndex + 1) ||
-                fastSortExceptions.Contains(selectedIndex + 1))
+            int[] fastSortExceptions = { 4, 8 };
+            if (EverythingSearch.GetIsFastSort(selectedIndex, ToolbarSettings.User.IsSortDescending) ||
+                fastSortExceptions.Contains(selectedIndex))
             {
-                ToolbarSettings.User.SortBy = selectedIndex + 1;
+                ToolbarSettings.User.SortBy = selectedIndex;
             }
             else
             {
                 MessageBox.Show(Properties.Resources.MessageBoxFastSortUnavailable,
-                                Properties.Resources.MessageBoxFastSortUnavailableTitle,
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Asterisk);
+                    Properties.Resources.MessageBoxFastSortUnavailableTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Asterisk);
             }
 
-            (menu.Items[ToolbarSettings.User.SortBy - 1] as MenuItem).IsChecked = true;
+            SelectSortType();
+        }
+
+        private void OnSortAscendingClicked(object sender, RoutedEventArgs e)
+        {
+            ToolbarSettings.User.IsSortDescending = false;
+            SelectSortType();
+        }
+
+        private void OnSortDescendingClicked(object sender, RoutedEventArgs e)
+        {
+            ToolbarSettings.User.IsSortDescending = true;
+            SelectSortType();
+        }
+
+        private void SelectSortType()
+        {
+            foreach (var item in SortByMenu.Items)
+            {
+                if (item is MenuItem menuItem)
+                    menuItem.IsChecked = false;
+            }
+
+            if (SortByMenu.Items[ToolbarSettings.User.SortBy] is MenuItem sortByMenuItem)
+                sortByMenuItem.IsChecked = true;
+
+            if (ToolbarSettings.User.IsSortDescending)
+                SortDescendingMenuItem.IsChecked = true;
+            else
+                SortAscendingMenuItem.IsChecked = true;
+        }
+
+        private void SelectItemTemplate()
+        {
+            foreach (MenuItem menuItem in ItemTemplateMenu.Items)
+            {
+                var selectedItemTemplate = menuItem.Tag.ToString();
+                menuItem.IsChecked = selectedItemTemplate == ToolbarSettings.User.ItemTemplate;
+            }
         }
 
         private void OnItemTemplateClicked(object sender, RoutedEventArgs e)
         {
-            var selectedItem = sender as MenuItem;
-            var menu = selectedItem.Parent as MenuItem;
+            if (!(sender is MenuItem selectedItem)) return;
 
-            for (var i = 0; i < menu.Items.Count; i++)
-            {
-                var menuItem = menu.Items[i] as MenuItem;
-                if (menuItem == selectedItem)
-                {
-                    menuItem.IsChecked = true;
-                    ToolbarSettings.User.ItemTemplate = selectedItem.Tag.ToString();
-                }
-                else
-                {
-                    menuItem.IsChecked = false;
-                }
-            }
+            ToolbarSettings.User.ItemTemplate = selectedItem.Tag.ToString();
+
+            SelectItemTemplate();
         }
 
         private void OnClick(object sender, RoutedEventArgs e)
