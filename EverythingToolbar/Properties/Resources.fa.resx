@@ -366,83 +366,44 @@
   <data name="ShortcutWindowTitle" xml:space="preserve">
     <value>وارد کردن میانبر...</value>
   </data>
-  <data name="SortByAttributesAscending" xml:space="preserve">
-    <value>ویژگی‌ها به صورت افزاینده</value>
+  <data name="SortByAttributes" xml:space="preserve">
+    <value>Attributes</value>
   </data>
-  <data name="SortByAttributesDescending" xml:space="preserve">
-    <value>ویژگی‌ها به صورت واژگون</value>
+  <data name="SortByDateAccessed" xml:space="preserve">
+    <value>Date accessed</value>
   </data>
-  <data name="SortByDateAccessedAscending" xml:space="preserve">
-    <value>Date accessed ascending</value>
+  <data name="SortByDateCreated" xml:space="preserve">
+    <value>Date created</value>
   </data>
-  <data name="SortByDateAccessedDescending" xml:space="preserve">
-    <value>Date accessed descending</value>
+  <data name="SortByDateModified" xml:space="preserve">
+    <value>Date modified</value>
   </data>
-  <data name="SortByDateCreatedAscending" xml:space="preserve">
-    <value>Date created ascending</value>
+  <data name="SortByDateRecentlyChanged" xml:space="preserve">
+    <value>Date recently changed</value>
   </data>
-  <data name="SortByDateCreatedDescending" xml:space="preserve">
-    <value>Date created descending</value>
+  <data name="SortByDateRun" xml:space="preserve">
+    <value>Date run</value>
   </data>
-  <data name="SortByDateModifiedAscending" xml:space="preserve">
-    <value>Date modified ascending</value>
+  <data name="SortByExtension" xml:space="preserve">
+    <value>Extension</value>
   </data>
-  <data name="SortByDateModifiedDescending" xml:space="preserve">
-    <value>Date modified descending</value>
+  <data name="SortByFileListFilename" xml:space="preserve">
+    <value>File list filename</value>
   </data>
-  <data name="SortByDateRecentlyChangedAscending" xml:space="preserve">
-    <value>Date recently changed ascending</value>
+  <data name="SortByName" xml:space="preserve">
+    <value>Name</value>
   </data>
-  <data name="SortByDateRecentlyChangedDescending" xml:space="preserve">
-    <value>Date recently changed descending</value>
+  <data name="SortByPath" xml:space="preserve">
+    <value>Path</value>
   </data>
-  <data name="SortByDateRunAscending" xml:space="preserve">
-    <value>Date run ascending</value>
+  <data name="SortByRunCount" xml:space="preserve">
+    <value>Run count</value>
   </data>
-  <data name="SortByDateRunDescending" xml:space="preserve">
-    <value>Date run descending</value>
+  <data name="SortBySize" xml:space="preserve">
+    <value>Size</value>
   </data>
-  <data name="SortByExtensionAscending" xml:space="preserve">
-    <value>Extension ascending</value>
-  </data>
-  <data name="SortByExtensionDescending" xml:space="preserve">
-    <value>Extension descending</value>
-  </data>
-  <data name="SortByFileListFilenameAscending" xml:space="preserve">
-    <value>File list filename ascending</value>
-  </data>
-  <data name="SortByFileListFilenameDescending" xml:space="preserve">
-    <value>File list filename descending</value>
-  </data>
-  <data name="SortByNameAscending" xml:space="preserve">
-    <value>نام به صورت واژگون</value>
-  </data>
-  <data name="SortByNameDescending" xml:space="preserve">
-    <value>نام‌ به صورت واژگون</value>
-  </data>
-  <data name="SortByPathAscending" xml:space="preserve">
-    <value>مسیر به صورت افزاینده</value>
-  </data>
-  <data name="SortByPathDescending" xml:space="preserve">
-    <value>مسیر به صورت واژگون</value>
-  </data>
-  <data name="SortByRunCountAscending" xml:space="preserve">
-    <value>تعداد اجرا به صورت افزاینده</value>
-  </data>
-  <data name="SortByRunCountDescending" xml:space="preserve">
-    <value>تعداد اجرا به صورت واژگون</value>
-  </data>
-  <data name="SortBySizeAscending" xml:space="preserve">
-    <value>حجم به صورت افزاینده</value>
-  </data>
-  <data name="SortBySizeDescending" xml:space="preserve">
-    <value>حجم به صورت واژگون</value>
-  </data>
-  <data name="SortByTypeNameAscending" xml:space="preserve">
-    <value>تایپ نام به صورت افزاینده</value>
-  </data>
-  <data name="SortByTypeNameDescending" xml:space="preserve">
-    <value>تایپ نام به صورت واژگون</value>
+  <data name="SortByTypeName" xml:space="preserve">
+    <value>Type name</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>پوسته شب</value>
@@ -488,5 +449,11 @@
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
     <value>Double-click to open</value>
+  </data>
+  <data name="SortDescending" xml:space="preserve">
+    <value>Descending</value>
+  </data>
+  <data name="SortAscending" xml:space="preserve">
+    <value>Ascending</value>
   </data>
 </root>
