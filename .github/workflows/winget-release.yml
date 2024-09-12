@@ -9,12 +9,23 @@ jobs:
   winget:
     name: Publish release to WinGet
     runs-on: windows-latest
-    steps:
-      - name: Submit installer to Windows Package Manager Community Repository
+    steps:  
+      - name: Get WinGet create tool
+        run: iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
+
+      - name: Get GitHub releases
         run: |
-          $gitToken = "${{ secrets.WINGET_PAT }}"
-          $github = Invoke-RestMethod -uri "https://api.github.com/repos/srwi/EverythingToolbar/releases"
-          $targetRelease = $github | Where-Object { $_.prerelease -eq $false } | Select -First 1
-          $installerUrl = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match "EverythingToolbar.*msi" | Select -ExpandProperty browser_download_url
-          iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
-          .\wingetcreate.exe update stnkl.EverythingToolbar -s -v $targetRelease.tag_name -u $installerUrl -t $gitToken
+          $wingetToken = "${{ secrets.WINGET_PAT }}"
+          $releases = Invoke-RestMethod -uri "https://api.github.com/repos/srwi/EverythingToolbar/releases"
+
+      - name: Submit release to WinGet (stable channel)
+        run: |
+          $stableRelease = $releases | Where-Object { $_.prerelease -eq $false } | Select -First 1
+          $installerUrl = $stableRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match "EverythingToolbar.*msi" | Select -ExpandProperty browser_download_url
+          .\wingetcreate.exe update stnkl.EverythingToolbar -s -v $stableRelease.tag_name -u $installerUrl -t $wingetToken
+
+      - name: Submit release to WinGet (beta channel)
+        run: |
+          $latestRelease = $releases | Select -First 1
+          $installerUrl = $latestRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match "EverythingToolbar.*msi" | Select -ExpandProperty browser_download_url
+          .\wingetcreate.exe update stnkl.EverythingToolbar.Beta -s -v $latestRelease.tag_name -u $installerUrl -t $wingetToken
