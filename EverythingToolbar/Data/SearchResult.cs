@@ -73,7 +73,7 @@ namespace EverythingToolbar.Data
                     Process.Start(new ProcessStartInfo
                     {
                         FileName = "explorer.exe",
-                        Arguments = FullPathAndFileName
+                        Arguments = "\"" + FullPathAndFileName + "\""
                     });
                 }
                 else
