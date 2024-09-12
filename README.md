@@ -67,7 +67,7 @@ EverythingToolbar is compatible with both Windows 10 and Windows 11 and works we
 - Install EverythingToolbar using one of the following methods
   - Download the installer for [EverythingToolbar](https://github.com/srwi/EverythingToolbar/releases)
   - [Chocolatey](https://chocolatey.org/): `choco install everythingtoolbar`
-  - [winget](https://github.com/microsoft/winget-cli/): `winget install everythingtoolbar`
+  - [winget](https://github.com/microsoft/winget-cli/): `winget install stnkl.everythingtoolbar`
   - [Manual installation](https://github.com/srwi/EverythingToolbar/wiki/Installation-per-user-(experimental)) without admin privileges (not recommended)
 - **Note:** For Everything 1.5a the instance name `1.5a` must be set in the EverythingToolbar settings ([screenshot](https://github.com/srwi/EverythingToolbar/assets/17520641/c8e6f9ad-9f33-4ad9-92c1-788b5f7f438a)).
 
