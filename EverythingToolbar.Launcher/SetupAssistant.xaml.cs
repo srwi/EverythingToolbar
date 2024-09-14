@@ -28,6 +28,7 @@ namespace EverythingToolbar.Launcher
 
             AutostartCheckBox.IsChecked = Utils.GetAutostartState();
             HideWindowsSearchCheckBox.IsChecked = !Utils.GetWindowsSearchEnabledState();
+            TrayIconCheckBox.IsChecked = ToolbarSettings.User.IsTrayIconEnabled;
 
             CreateFileWatcher(_taskbarShortcutPath);
             
@@ -51,6 +52,10 @@ namespace EverythingToolbar.Launcher
             }
 
             _iconHasChanged = false;
+            
+            // Bring to front
+            Topmost = true;
+            Topmost = false;
         }
 
         private void CreateFileWatcher(string taskbarShortcutPath)
@@ -101,6 +106,31 @@ namespace EverythingToolbar.Launcher
             Utils.SetAutostartState(AutostartCheckBox.IsChecked != null && (bool)AutostartCheckBox.IsChecked);
         }
 
+        private void TrayIconChanged(object sender, RoutedEventArgs e)
+        {
+            ToolbarSettings.User.IsTrayIconEnabled = TrayIconCheckBox.IsChecked != null && (bool)TrayIconCheckBox.IsChecked;
+        }
+
+        private void OnClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (_unlockedPages == TotalPages)
+                return;
+
+            var disableSetupAssistant = MessageBox.Show(
+                Properties.Resources.SetupAssistantDisableWarningText,
+                Properties.Resources.SetupAssistantDisableWarningTitle,
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Exclamation
+            ) == MessageBoxResult.Yes;
+            if (disableSetupAssistant)
+            {
+                ToolbarSettings.User.IsSetupAssistantDisabled = disableSetupAssistant;
+                // Ensuring the user can access the setup assistant
+                ToolbarSettings.User.IsTrayIconEnabled = disableSetupAssistant;
+            }
+            e.Cancel = !disableSetupAssistant;
+        }
+
         private void OnCloseClicked(object sender, RoutedEventArgs e)
         {
             Close();
@@ -108,7 +138,7 @@ namespace EverythingToolbar.Launcher
 
         private void OnClosed(object sender, EventArgs e)
         {
-            _icon.Visible = true;
+            _icon.Visible = ToolbarSettings.User.IsTrayIconEnabled;
 
             if (_watcher != null)
             {

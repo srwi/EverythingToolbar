@@ -92,6 +92,12 @@ namespace EverythingToolbar
         [Option(DefaultValue = true)]
         bool IsUpdateNotificationsEnabled { get; set; }
 
+        [Option(DefaultValue = false)]
+        bool IsSetupAssistantDisabled { get; set; }
+
+        [Option(DefaultValue = false)]
+        bool IsTrayIconEnabled { get; set; }
+
         [Option(DefaultValue = true)]
         bool IsAutoSelectFirstResult { get; set; }
 
@@ -480,6 +486,32 @@ namespace EverythingToolbar
                 if (_settings.IsUpdateNotificationsEnabled != value)
                 {
                     _settings.IsUpdateNotificationsEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsSetupAssistantDisabled
+        {
+            get => _settings.IsSetupAssistantDisabled;
+            set
+            {
+                if (_settings.IsSetupAssistantDisabled != value)
+                {
+                    _settings.IsSetupAssistantDisabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsTrayIconEnabled
+        {
+            get => _settings.IsTrayIconEnabled;
+            set
+            {
+                if (_settings.IsTrayIconEnabled != value)
+                {
+                    _settings.IsTrayIconEnabled = value;
                     OnPropertyChanged();
                 }
             }

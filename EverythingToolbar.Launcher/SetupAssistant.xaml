@@ -5,11 +5,12 @@
         xmlns:b="clr-namespace:EverythingToolbar.Behaviors;assembly=EverythingToolbar"
         xmlns:properties="clr-namespace:EverythingToolbar.Launcher.Properties"
         WindowStartupLocation="CenterScreen"
-        Height="410"
+        Height="450"
         Background="Transparent"
         WindowStyle="ToolWindow"
         Title="{x:Static properties:Resources.SetupAssistantTitle}"
         Closed="OnClosed"
+        Closing="OnClosing"
         Foreground="White"
         Width="575">
 
@@ -201,6 +202,25 @@
                                       Content="{x:Static properties:Resources.CheckboxEnable}"
                                       Checked="AutostartChanged"
                                       Unchecked="AutostartChanged" />
+                        </StackPanel>
+                    </Border>
+                    <TextBlock FontSize="14"
+                               Text="{x:Static properties:Resources.SetupAssistantFifthStepTitle}"
+                               FontWeight="Medium"
+                               Margin="0, 20, 0, 10" />
+                    <Border BorderBrush="#771D1D1D"
+                            BorderThickness="1"
+                            Background="#0cffffff"
+                            CornerRadius="4"
+                            Padding="10">
+                        <StackPanel>
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="{x:Static properties:Resources.SetupAssistantFifthStepText}" />
+                            <CheckBox x:Name="TrayIconCheckBox"
+                                      Foreground="White"
+                                      Content="{x:Static properties:Resources.CheckboxEnable}"
+                                      Checked="TrayIconChanged"
+                                      Unchecked="TrayIconChanged" />
                         </StackPanel>
                     </Border>
                 </StackPanel>

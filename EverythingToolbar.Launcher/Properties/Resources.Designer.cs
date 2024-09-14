@@ -106,6 +106,42 @@ namespace EverythingToolbar.Launcher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar..
+        /// </summary>
+        public static string SetupAssistantDisableWarningText {
+            get {
+                return ResourceManager.GetString("SetupAssistantDisableWarningText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit Setup Assistant.
+        /// </summary>
+        public static string SetupAssistantDisableWarningTitle {
+            get {
+                return ResourceManager.GetString("SetupAssistantDisableWarningTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By enabling the system tray icon you can quit the EverythingToolbar background process at any time. Without it, EverythingToolbar can always be quit via the task manager..
+        /// </summary>
+        public static string SetupAssistantFifthStepText {
+            get {
+                return ResourceManager.GetString("SetupAssistantFifthStepText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5. Configure system tray icon.
+        /// </summary>
+        public static string SetupAssistantFifthStepTitle {
+            get {
+                return ResourceManager.GetString("SetupAssistantFifthStepTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select one of the following taskbar icons:.
         /// </summary>
         public static string SetupAssistantFirstStepText {

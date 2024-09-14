@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Shell;
 using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
 using NHotkey;
@@ -19,16 +20,21 @@ namespace EverythingToolbar.Launcher
 {
     internal static class Launcher
     {
-        private const string EventName = "EverythingToolbarToggleEvent";
+        private const string ToggleEventName = "EverythingToolbarToggleEvent";
+        private const string StartSetupAssistantEventName = "StartSetupAssistantEvent";
         private const string MutexName = "EverythingToolbar.Launcher";
         private static bool _searchWindowRecentlyClosed;
         private static Timer _searchWindowRecentlyClosedTimer;
+        private static NotifyIcon notifyIcon;
 
         private class LauncherWindow : Window
         {
             public LauncherWindow(NotifyIcon icon)
             {
                 ToolbarLogger.Initialize("Launcher");
+
+                notifyIcon = icon;
+                SetupJumpList();
 
                 _searchWindowRecentlyClosedTimer = new Timer(500);
                 _searchWindowRecentlyClosedTimer.AutoReset = false;
@@ -48,7 +54,7 @@ namespace EverythingToolbar.Launcher
 
                 StartToggleListener();
 
-                if (!File.Exists(Utils.GetTaskbarShortcutPath()))
+                if (!ToolbarSettings.User.IsSetupAssistantDisabled && !File.Exists(Utils.GetTaskbarShortcutPath()))
                     new SetupAssistant(icon).Show();
 
                 if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
@@ -70,6 +76,19 @@ namespace EverythingToolbar.Launcher
                 SearchWindow.Instance.Hiding += OnSearchWindowHiding;
             }
 
+            private void SetupJumpList()
+            {
+                JumpList jumpList = new JumpList();
+                jumpList.JumpItems.Add(new JumpTask
+                {
+                    Title = Properties.Resources.ContextMenuRunSetupAssistant,
+                    Description = Properties.Resources.ContextMenuRunSetupAssistant,
+                    ApplicationPath = System.Reflection.Assembly.GetEntryAssembly().Location,
+                    Arguments = "--run-setup-assistant"
+                });
+                JumpList.SetJumpList(Application.Current, jumpList);
+            }
+
             private static void OnSearchWindowHiding(object sender, EventArgs e)
             {
                 _searchWindowRecentlyClosed = true;
@@ -85,11 +104,20 @@ namespace EverythingToolbar.Launcher
             {
                 Task.Factory.StartNew(() =>
                 {
-                    var wh = new EventWaitHandle(false, EventResetMode.AutoReset, EventName);
+                    var wh = new EventWaitHandle(false, EventResetMode.AutoReset, ToggleEventName);
                     while (true)
                     {
                         wh.WaitOne();
                         ToggleWindow();
+                    }
+                });
+                Task.Factory.StartNew(() =>
+                {
+                    var wh = new EventWaitHandle(false, EventResetMode.AutoReset, StartSetupAssistantEventName);
+                    while (true)
+                    {
+                        wh.WaitOne();
+                        OpenSetupAssistant();
                     }
                 });
             }
@@ -105,6 +133,14 @@ namespace EverythingToolbar.Launcher
                     SearchWindow.Instance.Toggle();
                 });
             }
+
+            private void OpenSetupAssistant()
+            {
+                Dispatcher?.Invoke(() =>
+                {
+                    new SetupAssistant(notifyIcon).Show();
+                });
+            }
         }
 
         private static string GetIconPath()
@@ -118,7 +154,7 @@ namespace EverythingToolbar.Launcher
         }
 
         [STAThread]
-        private static void Main()
+        private static void Main(string[] args)
         {
             using (new Mutex(false, MutexName, out var createdNew))
             {
@@ -128,11 +164,11 @@ namespace EverythingToolbar.Launcher
                     {
                         var app = new Application();
                         trayIcon.Icon = Icon.ExtractAssociatedIcon(GetIconPath());
-                        trayIcon.ContextMenu = new ContextMenu(new [] {
+                        trayIcon.ContextMenu = new ContextMenu(new[] {
                             new MenuItem(Resources.ContextMenuRunSetupAssistant, (s, e) => { new SetupAssistant(trayIcon).Show(); }),
                             new MenuItem(Resources.ContextMenuQuit, (s, e) => { app.Shutdown(); })
                         });
-                        trayIcon.Visible = true;
+                        trayIcon.Visible = ToolbarSettings.User.IsTrayIconEnabled;
                         app.Run(new LauncherWindow(trayIcon));
                     }
                 }
@@ -140,7 +176,14 @@ namespace EverythingToolbar.Launcher
                 {
                     try
                     {
-                        EventWaitHandle.OpenExisting(EventName).Set();
+                        if (args.Length > 0 && args[0] == "--run-setup-assistant")
+                        {
+                            EventWaitHandle.OpenExisting(StartSetupAssistantEventName).Set();
+                        }
+                        else
+                        {
+                            EventWaitHandle.OpenExisting(ToggleEventName).Set();
+                        }
                     }
                     catch (Exception ex)
                     {
