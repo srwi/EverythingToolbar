@@ -56,7 +56,12 @@ namespace EverythingToolbar.Controls
                 e.Key == Key.PageDown || e.Key == Key.PageUp ||
                 e.Key == Key.Up || e.Key == Key.Down ||
                 e.Key == Key.Escape || e.Key == Key.Enter ||
-                (e.Key >= Key.D0 && e.Key <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control))
+                (((e.Key >= Key.D0 && e.Key <= Key.D9) || 
+                  e.Key == Key.I ||
+                  e.Key == Key.B ||
+                  e.Key == Key.U ||
+                  e.Key == Key.R
+                 ) && Keyboard.Modifiers == ModifierKeys.Control))
             {
                 EventDispatcher.Instance.InvokeGlobalKeyEvent(this, e);
                 e.Handled = true;
