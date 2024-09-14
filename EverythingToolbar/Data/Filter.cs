@@ -3,13 +3,13 @@
     public class Filter
     {
         public string Name { get; set; }
-        public string Icon { get; set; }
-        public bool IsMatchCase { get; set; }
-        public bool IsMatchWholeWord { get; set; }
-        public bool IsMatchPath { get; set; }
-        public bool IsRegExEnabled { get; set; }
-        public string Search { get; set; }
-        public string Macro { get; set; }
+        public string Icon { get; set; } = "";
+        public string Search { get; set; } = "";
+        public string Macro { get; set; } = "";
+        public bool IsMatchCase { get; set; } = false;
+        public bool IsMatchWholeWord { get; set; } = false;
+        public bool IsMatchPath { get; set; } = false;
+        public bool IsRegExEnabled { get; set; } = false;
 
         public override bool Equals(object obj)
         {
@@ -24,6 +24,16 @@
         public override int GetHashCode()
         {
             return Name.GetHashCode();
+        }
+
+        public void Reset()
+        {
+            IsMatchCase = false;
+            IsMatchWholeWord = false;
+            IsMatchPath = false;
+            IsRegExEnabled = false;
+            Search = "";
+            Macro = "";
         }
 
         public string GetSearchPrefix()

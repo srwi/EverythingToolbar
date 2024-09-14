@@ -112,8 +112,11 @@ namespace EverythingToolbar
 
         private void OnSettingChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ToolbarSettings.User.IsRegExEnabled))
+            if (e.PropertyName == nameof(ToolbarSettings.User.IsRegExEnabled) ||
+                e.PropertyName == nameof(ToolbarSettings.User.IsImportFilters))
+            {
                 CurrentFilter = FilterLoader.Instance.DefaultFilters[0];
+            }
 
             if (e.PropertyName == nameof(ToolbarSettings.User.IsMatchCase) ||
                 e.PropertyName == nameof(ToolbarSettings.User.IsRegExEnabled) ||
@@ -122,7 +125,8 @@ namespace EverythingToolbar
                 e.PropertyName == nameof(ToolbarSettings.User.IsHideEmptySearchResults) ||
                 e.PropertyName == nameof(ToolbarSettings.User.SortBy) ||
                 e.PropertyName == nameof(ToolbarSettings.User.IsSortDescending) ||
-                e.PropertyName == nameof(ToolbarSettings.User.IsThumbnailsEnabled))
+                e.PropertyName == nameof(ToolbarSettings.User.IsThumbnailsEnabled) ||
+                e.PropertyName == nameof(ToolbarSettings.User.IsImportFilters))
             {
                 QueryBatch(append: false);
             }
