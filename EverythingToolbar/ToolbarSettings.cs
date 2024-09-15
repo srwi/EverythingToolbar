@@ -109,6 +109,9 @@ namespace EverythingToolbar
 
         [Option(DefaultValue = 0)]
         int OsBuildNumberOverride { get; set; }
+
+        [Option(DefaultValue = "")]
+        string ThemeOverride { get; set; }
     }
 
     public sealed class ToolbarSettingsWrapper : INotifyPropertyChanged
@@ -564,6 +567,19 @@ namespace EverythingToolbar
                 if (_settings.OsBuildNumberOverride != value)
                 {
                     _settings.OsBuildNumberOverride = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string ThemeOverride
+        {
+            get => _settings.ThemeOverride;
+            set
+            {
+                if (_settings.ThemeOverride != value)
+                {
+                    _settings.ThemeOverride = value;
                     OnPropertyChanged();
                 }
             }
