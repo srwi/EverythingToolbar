@@ -60,7 +60,6 @@ namespace EverythingToolbar.Launcher
             using (var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"))
             {
                 var taskbarAlignment = key?.GetValue("TaskbarAl");
-                Logger.Debug($"taskbarAlignment: {taskbarAlignment}");
                 var leftAligned = taskbarAlignment != null && (int)taskbarAlignment == 0;
                 return !leftAligned;
             }
@@ -77,9 +76,16 @@ namespace EverythingToolbar.Launcher
 
         public static void SetWindowsSearchEnabledState(bool enabled)
         {
-            using (var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Search", true))
+            using (var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Search", RegistryKeyPermissionCheck.ReadWriteSubTree))
             {
-                key?.SetValue("SearchboxTaskbarMode", enabled ? 1 : 0);
+                try
+                {
+                    key?.SetValue("SearchboxTaskbarMode", enabled ? 1 : 0);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e, "Failed to set taskbar search icon mode.");
+                }
             }
         }
 
@@ -93,12 +99,19 @@ namespace EverythingToolbar.Launcher
 
         public static void SetAutostartState(bool enabled)
         {
-            using (var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true))
+            using (var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", RegistryKeyPermissionCheck.ReadWriteSubTree))
             {
-                if (enabled)
-                    key?.SetValue("EverythingToolbar", "\"" + Process.GetCurrentProcess().MainModule.FileName + "\"");
-                else
-                    key?.DeleteValue("EverythingToolbar", false);
+                try
+                {
+                    if (enabled)
+                        key?.SetValue("EverythingToolbar", "\"" + Process.GetCurrentProcess().MainModule.FileName + "\"");
+                    else
+                        key?.DeleteValue("EverythingToolbar", false);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e, "Failed to set autostart state.");
+                }
             }
         }
 
