@@ -166,13 +166,13 @@
     <value>1. タスクバーアイコン</value>
   </data>
   <data name="SetupAssistantFifthStepText" xml:space="preserve">
-    <value>By enabling the system tray icon you can quit the EverythingToolbar background process at any time. Without it, EverythingToolbar can always be quit via the task manager.</value>
+    <value>システムトレイアイコンを有効にすると、いつでもEverythingToolbarのバックグラウンドプロセスを終了することができます。このアイコンを使用しない場合、EverythingToolbarは常にタスクマネージャーから終了させることができます。</value>
   </data>
   <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
     <value>5. Configure system tray icon</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+    <value>本当にセットアップアシスタントを終了しますか？ EverythingToolbar はキーボードショートカットを使用してのみアクセスできます。 システムトレイアイコンから再度セットアップアシスタントにアクセスして、検索アイコンをタスクバーに固定することができます。</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
     <value>Exit Setup Assistant</value>
