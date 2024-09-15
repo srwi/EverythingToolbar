@@ -367,7 +367,7 @@
     <value>ショートカットを入力...</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Attributes</value>
+    <value>属性</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
     <value>Date accessed</value>
@@ -400,7 +400,7 @@
     <value>Run count</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
-    <value>Size</value>
+    <value>サイズ</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
     <value>Type name</value>
@@ -451,7 +451,7 @@
     <value>ダブルクリックで開く</value>
   </data>
   <data name="SortDescending" xml:space="preserve">
-    <value>Descending</value>
+    <value>降順</value>
   </data>
   <data name="SortAscending" xml:space="preserve">
     <value>Ascending</value>
