@@ -11,8 +11,9 @@
     <Grid>
         <TextBox Name="TextBox"
                  Tag="{x:Static properties:Resources.TextBoxWatermark}"
-                 Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding SearchTerm, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                  CaretBrush="{DynamicResource TextBoxForegroundActive}"
+                 TextChanged="OnTextChanged"
                  GotKeyboardFocus="OnGotKeyboardFocus"
                  LostKeyboardFocus="OnLostKeyboardFocus"
                  PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"

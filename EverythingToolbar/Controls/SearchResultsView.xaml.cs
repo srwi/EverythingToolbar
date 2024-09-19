@@ -104,7 +104,8 @@ namespace EverythingToolbar.Controls
             }
             else if (e.Key == Key.Up)
             {
-                if (SearchResultsListView.SelectedIndex == 0 && !ToolbarSettings.User.IsAutoSelectFirstResult)
+                if (SearchResultsListView.SelectedIndex == 0 &&
+                    (!ToolbarSettings.User.IsAutoSelectFirstResult || !ToolbarSettings.User.IsSearchAsYouType))
                 {
                     SearchResultsListView.SelectedIndex = -1;
                     EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
@@ -149,7 +150,7 @@ namespace EverythingToolbar.Controls
                 return;
 
             if (SearchResultsListView.SelectedItems.Count == 0 && !SearchResultsListView.Items.IsEmpty)
-                SearchResultsListView.SelectedIndex = 0;
+                SelectNthSearchResult(0);
         }
 
         private void OnScrollChanged(object sender, ScrollChangedEventArgs e)
@@ -199,7 +200,9 @@ namespace EverythingToolbar.Controls
 
             SearchResultsListView.SelectedIndex = n;
             SearchResultsListView.ScrollIntoView(SelectedItem);
-            FocusSelectedItem();
+            
+            if (!ToolbarSettings.User.IsAutoSelectFirstResult || !ToolbarSettings.User.IsSearchAsYouType)
+                FocusSelectedItem();
         }
 
         private int? GetPageSize()
@@ -423,9 +426,6 @@ namespace EverythingToolbar.Controls
 
         private void FocusSelectedItem()
         {
-            if (ToolbarSettings.User.IsAutoSelectFirstResult)
-                return;
-
             var selectedItem = (ListViewItem)SearchResultsListView.ItemContainerGenerator.ContainerFromItem(SelectedItem);
             if (selectedItem != null)
                 Keyboard.Focus(selectedItem);

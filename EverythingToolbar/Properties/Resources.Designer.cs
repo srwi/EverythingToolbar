@@ -718,6 +718,15 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search as you type.
+        /// </summary>
+        public static string SettingsSearchAsYouType {
+            get {
+                return ResourceManager.GetString("SettingsSearchAsYouType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select first result.
         /// </summary>
         public static string SettingsSelectFirstResult {

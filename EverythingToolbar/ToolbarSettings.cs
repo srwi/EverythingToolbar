@@ -101,6 +101,9 @@ namespace EverythingToolbar
         [Option(DefaultValue = true)]
         bool IsAutoSelectFirstResult { get; set; }
 
+        [Option(DefaultValue = true)]
+        bool IsSearchAsYouType { get; set; }
+
         [Option(DefaultValue = false)]
         bool IsForceCenterAlignment { get; set; }
 
@@ -528,6 +531,19 @@ namespace EverythingToolbar
                 if (_settings.IsAutoSelectFirstResult != value)
                 {
                     _settings.IsAutoSelectFirstResult = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsSearchAsYouType
+        {
+            get => _settings.IsSearchAsYouType;
+            set
+            {
+                if (_settings.IsSearchAsYouType != value)
+                {
+                    _settings.IsSearchAsYouType = value;
                     OnPropertyChanged();
                 }
             }

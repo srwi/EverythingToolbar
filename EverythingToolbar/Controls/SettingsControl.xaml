@@ -124,6 +124,9 @@
                           Header="{x:Static properties:Resources.SettingsSelectFirstResult}"
                           IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsAutoSelectFirstResult, Mode=TwoWay}" />
                 <MenuItem IsCheckable="True"
+                          Header="{x:Static properties:Resources.SettingsSearchAsYouType}"
+                          IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsSearchAsYouType, Mode=TwoWay}" />
+                <MenuItem IsCheckable="True"
                           Header="{x:Static properties:Resources.SettingsDoubleClickToOpen}"
                           IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsDoubleClickToOpen, Mode=TwoWay}" />
                 <MenuItem IsCheckable="True"

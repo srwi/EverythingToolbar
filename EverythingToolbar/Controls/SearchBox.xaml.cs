@@ -10,8 +10,6 @@ namespace EverythingToolbar.Controls
 {
     public partial class SearchBox : UserControl
     {
-        public event EventHandler<TextChangedEventArgs> TextChanged;
-
         private int LastCaretIndex;
 
         public SearchBox()
@@ -21,16 +19,21 @@ namespace EverythingToolbar.Controls
             DataContext = EverythingSearch.Instance;
             InputMethod.SetPreferredImeState(this, InputMethodState.DoNotCare);
 
-            // IsEnabled property of matchWholeWord button needs to be handled
-            // in code because DataTriggers are not compatible with DynamicResources as MenuItem styles
+            // IsEnabled property of matchWholeWord button needs to be handled in code
+            // because DataTriggers are not compatible with DynamicResources as MenuItem styles
             ToolbarSettings.User.PropertyChanged += OnSettingsChanged;
             EverythingSearch.Instance.PropertyChanged += OnSettingsChanged;
 
             EventDispatcher.Instance.SearchTermReplaced += (s, searchTerm) => { UpdateSearchTerm(searchTerm); };
             EventDispatcher.Instance.SearchBoxFocusRequested += OnFocusRequested;
+        }
 
-            // Forward TextBox.TextChanged to SearchBox.TextChanged
-            TextBox.TextChanged += (s, e) => TextChanged?.Invoke(s, e);
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (ToolbarSettings.User.IsSearchAsYouType)
+            {
+                EverythingSearch.Instance.SearchTerm = TextBox.Text;
+            }
         }
 
         private void OnFocusRequested(object sender, EventArgs e)
@@ -50,6 +53,11 @@ namespace EverythingToolbar.Controls
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Down)
             {
                 UpdateSearchTerm(HistoryManager.Instance.GetNextItem());
+                e.Handled = true;
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.None && e.Key == Key.Enter && !ToolbarSettings.User.IsSearchAsYouType)
+            {
+                EverythingSearch.Instance.SearchTerm = TextBox.Text;
                 e.Handled = true;
             }
             else if ((e.Key == Key.Home || e.Key == Key.End) && Keyboard.Modifiers != ModifierKeys.Shift && ToolbarSettings.User.IsAutoSelectFirstResult ||
