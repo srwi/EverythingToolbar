@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -205,47 +206,41 @@ namespace EverythingToolbar.Helpers
                         if (header == null || fields == null)
                             continue;
                         
-                        var filter = header.Zip(fields, (h, f) => new { h, f }).ToDictionary(x => x.h, x => x.f);
+                        var filterDict = header
+                            .Zip(fields, (h, f) => new { h, f })
+                            .ToDictionary(x => x.h, x => x.f);
+                        var filter = parseFilterFromDict(filterDict);
 
-                        if (filter["Name"] == "EVERYTHING")
+                        if (filter.Name == "EVERYTHING")
                         {
-                            _defaultFilters[0].IsMatchCase = filter["Case"] == "1";
-                            _defaultFilters[0].IsMatchWholeWord = filter["Whole Word"] == "1";
-                            _defaultFilters[0].IsMatchPath = filter["Path"] == "1";
-                            _defaultFilters[0].IsRegExEnabled = filter["Regex"] == "1";
-                            _defaultFilters[0].Search = filter["Search"];
-                            _defaultFilters[0].Macro = filter["Macro"];
-                            continue;
+                            _defaultFilters[0].IsMatchCase = filter.IsMatchCase;
+                            _defaultFilters[0].IsMatchWholeWord = filter.IsMatchWholeWord;
+                            _defaultFilters[0].IsMatchPath = filter.IsMatchPath;
+                            _defaultFilters[0].IsRegExEnabled = filter.IsRegExEnabled;
+                            _defaultFilters[0].Search = filter.Search;
+                            _defaultFilters[0].Macro = filter.Macro;
                         }
-                        if (filter["Name"] == "FOLDER")
+                        else if (filter.Name == "FOLDER")
                         {
-                            _defaultFilters[2].IsMatchCase = filter["Case"] == "1";
-                            _defaultFilters[2].IsMatchWholeWord = filter["Whole Word"] == "1";
-                            _defaultFilters[2].IsMatchPath = filter["Path"] == "1";
-                            _defaultFilters[2].IsRegExEnabled = filter["Regex"] == "1";
-                            _defaultFilters[2].Search = filter["Search"];
-                            _defaultFilters[2].Macro = filter["Macro"];
-                            continue;
+                            _defaultFilters[2].IsMatchCase = filter.IsMatchCase;
+                            _defaultFilters[2].IsMatchWholeWord = filter.IsMatchWholeWord;
+                            _defaultFilters[2].IsMatchPath = filter.IsMatchPath;
+                            _defaultFilters[2].IsRegExEnabled = filter.IsRegExEnabled;
+                            _defaultFilters[2].Search = filter.Search;
+                            _defaultFilters[2].Macro = filter.Macro;
                         }
-
-                        // Everything's default filters are uppercase
-                        filter["Name"] = filter["Name"].Replace("AUDIO", Resources.UserFilterAudio);
-                        filter["Name"] = filter["Name"].Replace("COMPRESSED", Resources.UserFilterCompressed);
-                        filter["Name"] = filter["Name"].Replace("DOCUMENT", Resources.UserFilterDocument);
-                        filter["Name"] = filter["Name"].Replace("EXECUTABLE", Resources.UserFilterExecutable);
-                        filter["Name"] = filter["Name"].Replace("PICTURE", Resources.UserFilterPicture);
-                        filter["Name"] = filter["Name"].Replace("VIDEO", Resources.UserFilterVideo);
-
-                        filters.Add(new Filter
+                        else
                         {
-                            Name = filter["Name"],
-                            IsMatchCase = filter["Case"] == "1",
-                            IsMatchWholeWord = filter["Whole Word"] == "1",
-                            IsMatchPath = filter["Path"] == "1",
-                            IsRegExEnabled = filter["Regex"] == "1",
-                            Search = filter["Search"],
-                            Macro = filter["Macro"]
-                        });
+                            // Everything's default filters are uppercase
+                            filter.Name = filter.Name
+                                .Replace("AUDIO", Resources.UserFilterAudio)
+                                .Replace("COMPRESSED", Resources.UserFilterCompressed)
+                                .Replace("DOCUMENT", Resources.UserFilterDocument)
+                                .Replace("EXECUTABLE", Resources.UserFilterExecutable)
+                                .Replace("PICTURE", Resources.UserFilterPicture)
+                                .Replace("VIDEO", Resources.UserFilterVideo);
+                            filters.Add(filter);
+                        }
                     }
                 }
                 _userFiltersCache = filters;
@@ -255,6 +250,20 @@ namespace EverythingToolbar.Helpers
                 Logger.Error(e, "Parsing Filters.csv failed.");
             }
 
+        }
+
+        private Filter parseFilterFromDict(Dictionary<string, string> dict)
+        {
+            return new Filter
+            {
+                Name = dict["Name"],
+                IsMatchCase = dict["Case"] == "1",
+                IsMatchWholeWord = dict["Whole Word"] == "1",
+                IsMatchPath = dict["Path"] == "1",
+                IsRegExEnabled = dict["Regex"] == "1",
+                Search = dict["Search"],
+                Macro = dict["Macro"]
+            };
         }
 
         private void StopFileWatcher()
