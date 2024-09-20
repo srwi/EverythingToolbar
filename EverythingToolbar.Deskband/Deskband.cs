@@ -23,8 +23,8 @@ namespace CSDeskBand
             {
                 ToolbarControl = new ToolbarControl();
 
-                Options.MinHorizontalSize = new Size(18, 30);
-                Options.MinVerticalSize = new Size(30, 40);
+                Options.MinHorizontalSize = new Size(24, 30);
+                Options.MinVerticalSize = new Size(24, 30);
 
                 EventDispatcher.Instance.FocusRequested += OnFocusRequested;
                 EventDispatcher.Instance.UnfocusRequested += OnUnfocusRequested;
