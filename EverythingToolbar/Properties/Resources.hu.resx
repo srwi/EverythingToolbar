@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutLicense" xml:space="preserve">
-    <value>Licenc</value>
+    <value>Licensz</value>
   </data>
   <data name="AboutOK" xml:space="preserve">
     <value>OK</value>
@@ -367,43 +367,43 @@
     <value>Gyorsbill. beáll.</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Attributes</value>
+    <value>Kat ide EvrythingToolbar fordításához</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
-    <value>Date accessed</value>
+    <value>Hozzáférés ideje</value>
   </data>
   <data name="SortByDateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>Létehozás dátuma</value>
   </data>
   <data name="SortByDateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>Módosítás dátuma</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
-    <value>Date recently changed</value>
+    <value>Utolsó módósítás dátuma</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
-    <value>Date run</value>
+    <value>Futtatás dátuma</value>
   </data>
   <data name="SortByExtension" xml:space="preserve">
-    <value>Extension</value>
+    <value>Kiterjesztés</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
-    <value>File list filename</value>
+    <value>File lista neve</value>
   </data>
   <data name="SortByName" xml:space="preserve">
-    <value>Name</value>
+    <value>Név</value>
   </data>
   <data name="SortByPath" xml:space="preserve">
-    <value>Path</value>
+    <value>Elérési út</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
-    <value>Run count</value>
+    <value>Futás számláló</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
-    <value>Size</value>
+    <value>Méret</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
-    <value>Type name</value>
+    <value>Tipus</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>Sötét</value>
@@ -433,27 +433,30 @@
     <value>Videó</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Update available:</value>
+    <value>Frissítés elérhető:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Skip</value>
+    <value>Kihagyás</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
-    <value>Download</value>
+    <value>Letöltés</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>Check for updates automatically</value>
+    <value>Frissítések autómatikus keresése</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
-    <value>Select first result</value>
+    <value>Első eredmény választása</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>Double-click to open</value>
+    <value>Dupla kattintás a megnyitáshoz</value>
   </data>
   <data name="SortDescending" xml:space="preserve">
-    <value>Descending</value>
+    <value>Csökkenő</value>
   </data>
   <data name="SortAscending" xml:space="preserve">
-    <value>Ascending</value>
+    <value>Növekvő</value>
+  </data>
+  <data name="SettingsSearchAsYouType" xml:space="preserve">
+    <value>Search as you type</value>
   </data>
 </root>

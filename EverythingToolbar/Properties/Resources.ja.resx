@@ -367,43 +367,43 @@
     <value>ショートカットを入力...</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Attributes</value>
+    <value>属性</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
-    <value>Date accessed</value>
+    <value>アクセス日時</value>
   </data>
   <data name="SortByDateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>作成日時</value>
   </data>
   <data name="SortByDateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>変更日時</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
     <value>Date recently changed</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
-    <value>Date run</value>
+    <value>実行日時</value>
   </data>
   <data name="SortByExtension" xml:space="preserve">
-    <value>Extension</value>
+    <value>拡大</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
     <value>File list filename</value>
   </data>
   <data name="SortByName" xml:space="preserve">
-    <value>Name</value>
+    <value>ファイル名</value>
   </data>
   <data name="SortByPath" xml:space="preserve">
-    <value>Path</value>
+    <value>ファイルパス</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
-    <value>Run count</value>
+    <value>実行回数</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
-    <value>Size</value>
+    <value>サイズ</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
-    <value>Type name</value>
+    <value>タイプ名</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>ダーク</value>
@@ -451,9 +451,12 @@
     <value>ダブルクリックで開く</value>
   </data>
   <data name="SortDescending" xml:space="preserve">
-    <value>Descending</value>
+    <value>降順</value>
   </data>
   <data name="SortAscending" xml:space="preserve">
     <value>Ascending</value>
+  </data>
+  <data name="SettingsSearchAsYouType" xml:space="preserve">
+    <value>Search as you type</value>
   </data>
 </root>

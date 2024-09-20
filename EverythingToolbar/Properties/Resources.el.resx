@@ -456,4 +456,7 @@
   <data name="SortAscending" xml:space="preserve">
     <value>Ascending</value>
   </data>
+  <data name="SettingsSearchAsYouType" xml:space="preserve">
+    <value>Search as you type</value>
+  </data>
 </root>

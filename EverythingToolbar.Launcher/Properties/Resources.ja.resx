@@ -165,4 +165,16 @@
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
     <value>1. タスクバーアイコン</value>
   </data>
+  <data name="SetupAssistantFifthStepText" xml:space="preserve">
+    <value>システムトレイアイコンを有効にすると、いつでもEverythingToolbarのバックグラウンドプロセスを終了することができます。このアイコンを使用しない場合、EverythingToolbarは常にタスクマネージャーから終了させることができます。</value>
+  </data>
+  <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
+    <value>5. システムトレイアイコン設定</value>
+  </data>
+  <data name="SetupAssistantDisableWarningText" xml:space="preserve">
+    <value>本当にセットアップアシスタントを終了しますか？ EverythingToolbar はキーボードショートカットを使用してのみアクセスできます。 システムトレイアイコンから再度セットアップアシスタントにアクセスして、検索アイコンをタスクバーに固定することができます。</value>
+  </data>
+  <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
+    <value>セットアップアシスタントを終了する</value>
+  </data>
 </root>
