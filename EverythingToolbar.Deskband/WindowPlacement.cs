@@ -70,23 +70,23 @@ namespace EverythingToolbar.Behaviors
                 case Edge.Top:
                     // In case of auto-hiding taskbar the working area is not affected by the taskbar.
                     // Therefore the taskbar size needs to be handled separately.
-                    var topDockedHeight = Math.Max(workingArea.Top, (int)taskbarSize.Height);
-                    var bottomDockedHeight = Math.Min(workingArea.Bottom, screenBounds.Bottom - (int)taskbarSize.Height);
+                    var topDockPos = Math.Max(workingArea.Top, screenBounds.Top + (int)taskbarSize.Height);
+                    var bottomDockPos = Math.Min(workingArea.Bottom, screenBounds.Bottom - (int)taskbarSize.Height);
 
                     windowPosition.Right = Math.Min(placementTarget.Left + (int)windowSize.Width, workingArea.Right - margin);
                     windowPosition.Left = Math.Max(workingArea.Left + margin, windowPosition.Right - (int)windowSize.Width);
-                    windowPosition.Top = Math.Max(topDockedHeight + margin, placementTarget.Top - margin - (int)windowSize.Height);
-                    windowPosition.Bottom = Math.Min(bottomDockedHeight - margin, placementTarget.Bottom + margin + (int)windowSize.Height);
+                    windowPosition.Top = Math.Max(topDockPos + margin, placementTarget.Top - margin - (int)windowSize.Height);
+                    windowPosition.Bottom = Math.Min(bottomDockPos - margin, placementTarget.Bottom + margin + (int)windowSize.Height);
                     break;
                 case Edge.Left:
                 case Edge.Right:
-                    var leftDockedWidth = Math.Max(workingArea.Left, (int)taskbarSize.Width);
-                    var rightDockedWidth = Math.Min(workingArea.Right, screenBounds.Right - (int)taskbarSize.Width);
+                    var leftDockPos = Math.Max(workingArea.Left, screenBounds.Left + (int)taskbarSize.Width);
+                    var rightDockPos = Math.Min(workingArea.Right, screenBounds.Right - (int)taskbarSize.Width);
 
                     windowPosition.Bottom = Math.Min(placementTarget.Top + (int)windowSize.Height, workingArea.Bottom - margin);
                     windowPosition.Top = Math.Max(workingArea.Top + margin, windowPosition.Bottom - (int)windowSize.Height);
-                    windowPosition.Left = Math.Max(leftDockedWidth + margin, placementTarget.Left - margin - (int)windowSize.Width);
-                    windowPosition.Right = Math.Min(rightDockedWidth - margin, placementTarget.Right + margin + (int)windowSize.Width);
+                    windowPosition.Left = Math.Max(leftDockPos + margin, placementTarget.Left - margin - (int)windowSize.Width);
+                    windowPosition.Right = Math.Min(rightDockPos - margin, placementTarget.Right + margin + (int)windowSize.Width);
                     break;
             }
             return windowPosition;
