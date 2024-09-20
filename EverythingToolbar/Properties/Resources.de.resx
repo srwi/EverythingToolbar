@@ -457,6 +457,6 @@
     <value>Aufsteigend</value>
   </data>
   <data name="SettingsSearchAsYouType" xml:space="preserve">
-    <value>Search as you type</value>
+    <value>Suche bereits bei Eingabe starten</value>
   </data>
 </root>
