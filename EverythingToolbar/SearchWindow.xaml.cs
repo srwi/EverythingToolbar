@@ -59,22 +59,6 @@ namespace EverythingToolbar
                 var index = e.Key == Key.D0 ? 9 : e.Key - Key.D1;
                 EverythingSearch.Instance.SelectFilterFromIndex(index);
             }
-            else if (e.Key == Key.I && Keyboard.Modifiers == ModifierKeys.Control)
-            {
-                ToolbarSettings.User.IsMatchCase = !ToolbarSettings.User.IsMatchCase;
-            }
-            else if (e.Key == Key.B && Keyboard.Modifiers == ModifierKeys.Control)
-            {
-                ToolbarSettings.User.IsMatchWholeWord = !ToolbarSettings.User.IsMatchWholeWord;
-            }
-            else if (e.Key == Key.U && Keyboard.Modifiers == ModifierKeys.Control)
-            {
-                ToolbarSettings.User.IsMatchPath = !ToolbarSettings.User.IsMatchPath;
-            }
-            else if (e.Key == Key.R && Keyboard.Modifiers == ModifierKeys.Control)
-            {
-                ToolbarSettings.User.IsRegExEnabled = !ToolbarSettings.User.IsRegExEnabled;
-            }
             else if (e.Key == Key.Escape)
             {
                 Instance.Hide();
