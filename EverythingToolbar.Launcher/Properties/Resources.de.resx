@@ -166,15 +166,15 @@
     <value>1. Taskbar-Symbol</value>
   </data>
   <data name="SetupAssistantFifthStepText" xml:space="preserve">
-    <value>By enabling the system tray icon you can quit the EverythingToolbar background process at any time. Without it, EverythingToolbar can always be quit via the task manager.</value>
+    <value>Durch Aktivieren des Benachrichtigungsfeldsymbols können Sie den Hintergrundprozess von EverythingToolbar jederzeit beenden. Ohne das Symbol kann EverythingToolbar weiterhin über den Task-Manager beendet werden.</value>
   </data>
   <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
-    <value>5. Configure system tray icon</value>
+    <value>5. Benachrichtigungsfeldsymbol konfigurieren</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+    <value>Möchten Sie den Einrichtungsassistenten wirklich beenden? EverythingToolbar wird dann nur noch über die Tastenkombination zugänglich sein. Sie können den Einrichtungsassistenten erneut über das Benachrichtigungsfeldsymbol aufrufen, um das Suchsymbol an die Taskleiste zu heften.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>Exit Setup Assistant</value>
+    <value>Einrichtungsassistenten schließen</value>
   </data>
 </root>
