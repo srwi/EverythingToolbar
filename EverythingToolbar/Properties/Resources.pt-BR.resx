@@ -310,7 +310,7 @@
     <value>Ocultar buscas sem resultados</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>Diferenciar Maiúsculas</value>
+    <value>Diferenciar maiúsculas de minúsculas</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
     <value>Corresponder Caminho</value>
@@ -367,43 +367,43 @@
     <value>Inserir atalho...</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Attributes</value>
+    <value>Atributos</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
-    <value>Date accessed</value>
+    <value>Data de acesso</value>
   </data>
   <data name="SortByDateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>Data de criação</value>
   </data>
   <data name="SortByDateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>Data de modificação</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
-    <value>Date recently changed</value>
+    <value>Data de alteração recente</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
-    <value>Date run</value>
+    <value>Data de execução</value>
   </data>
   <data name="SortByExtension" xml:space="preserve">
-    <value>Extension</value>
+    <value>Extensão</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
-    <value>File list filename</value>
+    <value>Nome do arquivo da lista de arquivos</value>
   </data>
   <data name="SortByName" xml:space="preserve">
-    <value>Name</value>
+    <value>Nome</value>
   </data>
   <data name="SortByPath" xml:space="preserve">
-    <value>Path</value>
+    <value>Caminho</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
-    <value>Run count</value>
+    <value>Contagem de execuções</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
-    <value>Size</value>
+    <value>Tamanho</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
-    <value>Type name</value>
+    <value>Nome do tipo</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>Escuro</value>
@@ -436,7 +436,7 @@
     <value>Atualização Disponível:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Pular</value>
+    <value>Ignorar</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
     <value>Baixar</value>
@@ -445,18 +445,18 @@
     <value>Procurar atualizações automaticamente</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
-    <value>Selecionar primeiro resultado</value>
+    <value>Selecionar o primeiro resultado</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>Duplo clique para abrir</value>
+    <value>Clique duas vezes para abrir</value>
   </data>
   <data name="SortDescending" xml:space="preserve">
-    <value>Descending</value>
+    <value>Decrescente</value>
   </data>
   <data name="SortAscending" xml:space="preserve">
-    <value>Ascending</value>
+    <value>Crescente</value>
   </data>
   <data name="SettingsSearchAsYouType" xml:space="preserve">
-    <value>Search as you type</value>
+    <value>Pesquisar enquanto digita</value>
   </data>
 </root>
