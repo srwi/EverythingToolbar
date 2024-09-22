@@ -367,16 +367,16 @@
     <value>Entrer le raccourci...</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Attributes</value>
+    <value>Attributs</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
-    <value>Date accessed</value>
+    <value>Date d'accès</value>
   </data>
   <data name="SortByDateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>Date de création</value>
   </data>
   <data name="SortByDateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>Date de modification</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
     <value>Date recently changed</value>
