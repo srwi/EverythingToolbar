@@ -343,7 +343,7 @@
     <value>Afficher le nombre de résultats</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
-    <value>Filtrer par</value>
+    <value>Trier par</value>
   </data>
   <data name="SettingsTheme" xml:space="preserve">
     <value>Thème</value>
