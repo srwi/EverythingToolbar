@@ -15,6 +15,7 @@
         Width="575">
 
     <i:Interaction.Behaviors>
+        <b:FlowDirectionAwareness />
         <b:MicaWindow />
     </i:Interaction.Behaviors>
 
@@ -239,13 +240,17 @@
                     Click="OnCloseClicked"
                     Content="{x:Static properties:Resources.ButtonClose}" />
             <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="PaginationLabel" />
-            <Button Grid.Column="2" Style="{StaticResource ButtonStyle}" Content="&#xe76b;"
-                    Click="OnPreviousPageClicked" Margin="0, 0, 3, 0"
+            <Button Grid.Column="2"
+                    Style="{StaticResource ButtonStyle}" Content="&#xe76b;"
                     FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                    Click="OnPreviousPageClicked" Margin="0, 0, 3, 0"
                     Name="PreviousButton" />
-            <Button Grid.Column="3" Style="{StaticResource ButtonStyle}" Content="&#xe76c;" Click="OnNextPageClicked"
+            <Button Grid.Column="3"
                     Margin="3, 0, 0, 0"
-                    FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Name="NextButton" />
+                    Style="{StaticResource ButtonStyle}" Content="&#xe76c;"
+                    FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                    Click="OnNextPageClicked"
+                    Name="NextButton" />
         </Grid>
     </Grid>
 

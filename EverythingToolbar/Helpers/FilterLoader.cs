@@ -20,16 +20,16 @@ namespace EverythingToolbar.Helpers
         {
             new Filter {
                 Name = Resources.DefaultFilterAll,
-                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE71D  " : ""
+                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE71D" : ""
             },
             new Filter {
                 Name = Resources.DefaultFilterFile,
-                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE7C3  " : "",
+                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE7C3" : "",
                 Search = "file:"
             },
             new Filter {
                 Name = Resources.DefaultFilterFolder,
-                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE8B7  " : "",
+                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE8B7" : "",
                 Search = "folder:"
             }
         };

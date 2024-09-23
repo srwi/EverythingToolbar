@@ -9,6 +9,7 @@
         Height="330"
         Width="380">
     <i:Interaction.Behaviors>
+        <b:FlowDirectionAwareness />
         <b:DpiScaling />
     </i:Interaction.Behaviors>
 

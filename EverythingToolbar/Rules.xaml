@@ -16,6 +16,7 @@
         Width="400">
     
     <i:Interaction.Behaviors>
+        <b:FlowDirectionAwareness />
         <b:DpiScaling />
     </i:Interaction.Behaviors>
 

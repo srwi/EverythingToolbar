@@ -66,6 +66,7 @@
     <Compile Include="About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Behaviors\FlowDirectionAwareness.cs" />
     <Compile Include="Behaviors\ThemeAwareness.cs" />
     <Compile Include="Controls\UpdateBanner.xaml.cs">
       <DependentUpon>UpdateBanner.xaml</DependentUpon>

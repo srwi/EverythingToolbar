@@ -21,7 +21,7 @@
                                        Text="{Binding Icon}"
                                        FontSize="10pt"
                                        Foreground="{DynamicResource TabForeground}"
-                                       Margin="-3, 0, 0, 0"
+                                       Margin="-3, 0, 10, 0"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center" />
                             <TextBlock x:Name="ContentSite"

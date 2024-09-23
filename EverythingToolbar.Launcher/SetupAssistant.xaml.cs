@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using EverythingToolbar.Helpers;
 using NLog;
+using FlowDirection = System.Windows.FlowDirection;
 using MessageBox = System.Windows.MessageBox;
 using RadioButton = System.Windows.Controls.RadioButton;
 
@@ -44,6 +45,8 @@ namespace EverythingToolbar.Launcher
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             _icon.Visible = false;
+
+            UpdatePaginationToFlowDirection();
 
             foreach (RadioButton radio in IconRadioButtons.Children)
             {
@@ -178,6 +181,14 @@ namespace EverythingToolbar.Launcher
             PreviousButton.IsEnabled = PaginationTabControl.SelectedIndex > 0;
             NextButton.IsEnabled = PaginationTabControl.SelectedIndex < _unlockedPages - 1;
             PaginationLabel.Text = $"{PaginationTabControl.SelectedIndex + 1} / {TotalPages}";
+        }
+
+        private void UpdatePaginationToFlowDirection()
+        {
+            if (FlowDirection == FlowDirection.RightToLeft)
+            {
+                (NextButton.Content, PreviousButton.Content) = (PreviousButton.Content, NextButton.Content);
+            }
         }
 
         private void OnNextPageClicked(object sender, RoutedEventArgs e)

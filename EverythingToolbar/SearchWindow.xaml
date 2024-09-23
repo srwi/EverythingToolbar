@@ -24,6 +24,7 @@
         d:DesignHeight="500">
 
     <i:Interaction.Behaviors>
+        <b:FlowDirectionAwareness />
         <b:DpiScaling />
         <b:MicaWindow MicaWindowStyle="TransientWindow" CaptionHeight="0" />
         <b:ThemeAwareness />
