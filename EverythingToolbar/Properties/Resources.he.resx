@@ -370,31 +370,31 @@
     <value>תכונות</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
-    <value>Date accessed</value>
+    <value>תאריך גישה</value>
   </data>
   <data name="SortByDateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>תאריך יצירה</value>
   </data>
   <data name="SortByDateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>תאריך שינוי אחרון</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
-    <value>Date recently changed</value>
+    <value>תאריך שינוי אחרון</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
-    <value>Date run</value>
+    <value>תאריך הרצה</value>
   </data>
   <data name="SortByExtension" xml:space="preserve">
-    <value>Extension</value>
+    <value>הרחבה</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
     <value>File list filename</value>
   </data>
   <data name="SortByName" xml:space="preserve">
-    <value>Name</value>
+    <value>שם</value>
   </data>
   <data name="SortByPath" xml:space="preserve">
-    <value>Path</value>
+    <value>נתיב</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
     <value>Run count</value>
@@ -442,7 +442,7 @@
     <value>הורד</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>Check for updates automatically</value>
+    <value>בדוק אם יש עדכונים באופן אוטומטי</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
     <value>Select first result</value>
