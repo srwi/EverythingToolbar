@@ -367,7 +367,7 @@
     <value>הגדר צירוף מקשים...</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Attributes</value>
+    <value>תכונות</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
     <value>Date accessed</value>
@@ -400,7 +400,7 @@
     <value>Run count</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
-    <value>Size</value>
+    <value>גודל</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
     <value>Type name</value>
@@ -433,13 +433,13 @@
     <value>וידאו</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Update available:</value>
+    <value>עדכון זמין:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Skip</value>
+    <value>דלג</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
-    <value>Download</value>
+    <value>הורד</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
     <value>Check for updates automatically</value>
