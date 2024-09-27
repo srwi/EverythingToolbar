@@ -151,7 +151,7 @@
     <value>Caminho aberto</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
-    <value>Show more options</value>
+    <value>Mais opções</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
     <value>Abrir com...</value>
@@ -193,7 +193,7 @@
     <value>Normal</value>
   </data>
   <data name="ItemTemplateNormalDetailed" xml:space="preserve">
-    <value>Normal (detailed)</value>
+    <value>Normal (detalhado)</value>
   </data>
   <data name="KeyAlt" xml:space="preserve">
     <value>Alt</value>
