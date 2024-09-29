@@ -343,7 +343,7 @@
     <value>Afficher le nombre de résultats</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
-    <value>Filtrer par</value>
+    <value>Trier par</value>
   </data>
   <data name="SettingsTheme" xml:space="preserve">
     <value>Thème</value>
@@ -367,43 +367,43 @@
     <value>Entrer le raccourci...</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Attributes</value>
+    <value>Attributs</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
-    <value>Date accessed</value>
+    <value>Date d'accès</value>
   </data>
   <data name="SortByDateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>Date de création</value>
   </data>
   <data name="SortByDateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>Date de modification</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
-    <value>Date recently changed</value>
+    <value>Date de modification récente</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
-    <value>Date run</value>
+    <value>Date d'exécution</value>
   </data>
   <data name="SortByExtension" xml:space="preserve">
     <value>Extension</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
-    <value>File list filename</value>
+    <value>Nom du fichier de la liste</value>
   </data>
   <data name="SortByName" xml:space="preserve">
-    <value>Name</value>
+    <value>Nom</value>
   </data>
   <data name="SortByPath" xml:space="preserve">
-    <value>Path</value>
+    <value>Chemin d'accès</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
-    <value>Run count</value>
+    <value>Nombre d'exécutions</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
-    <value>Size</value>
+    <value>Taille</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
-    <value>Type name</value>
+    <value>Nom du type</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>Sombre</value>
@@ -451,12 +451,12 @@
     <value>Double-cliquer pour ouvrir</value>
   </data>
   <data name="SortDescending" xml:space="preserve">
-    <value>Descending</value>
+    <value>Décroissant</value>
   </data>
   <data name="SortAscending" xml:space="preserve">
-    <value>Ascending</value>
+    <value>Croissant</value>
   </data>
   <data name="SettingsSearchAsYouType" xml:space="preserve">
-    <value>Search as you type</value>
+    <value>Rechercher à chaque caractère tapé</value>
   </data>
 </root>

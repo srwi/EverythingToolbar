@@ -118,63 +118,63 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClose" xml:space="preserve">
-    <value>Close</value>
+    <value>סגור</value>
   </data>
   <data name="CheckboxEnable" xml:space="preserve">
-    <value>Enable</value>
+    <value>פעיל</value>
   </data>
   <data name="CheckboxHide" xml:space="preserve">
-    <value>Hide</value>
+    <value>הסתר</value>
   </data>
   <data name="ContextMenuQuit" xml:space="preserve">
-    <value>Quit</value>
+    <value>צא</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Run setup assistant...</value>
+    <value>הפעל את מסייע ההגדרה...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
+    <value>כדי להצמיד את EverythingToolbar לשורת המשימות, לחץ לחיצה ימנית על הסמל שלו ובחר 'הצמד לשורת המשימות'.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Pin to taskbar</value>
+    <value>2. הצמד לשורת המשימות</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
+    <value>נדרשת הפעלה מחדש של סייר הקבצים כדי לעדכן את סמל שורת המשימות. האם תרצה להפעיל אותו מחדש עכשיו?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>Restart explorer</value>
+    <value>הפעל מחדש את סייר הקבצים</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>לחלופין, ניתן להסתיר את סמל החיפוש המקורי של Windows.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Hide Windows search</value>
+    <value>3. הסתר את החיפוש של Windows</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
+    <value>מומלץ להפעיל את EverythingToolbar באופן אוטומטי בעת הפעלת המערכת.</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. Configure autostart</value>
+    <value>4. הגדר הפעלה אוטומטית</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>EverythingToolbar Setup Assistant</value>
+    <value>מסייע ההגדרה של EverythingToolbar</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>Select one of the following taskbar icons:</value>
+    <value>בחר אחד מסמלי שורת המשימות הבאים:</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Taskbar icon</value>
+    <value>1. סמל שורת המשימות</value>
   </data>
   <data name="SetupAssistantFifthStepText" xml:space="preserve">
-    <value>By enabling the system tray icon you can quit the EverythingToolbar background process at any time. Without it, EverythingToolbar can always be quit via the task manager.</value>
+    <value>על ידי הפעלת סמל מגש המערכת תוכל לצאת מתהליך הרקע של EverythingToolbar בכל עת. בלעדיו, תמיד ניתן לסגור את EverythingToolbar דרך מנהל המשימות.</value>
   </data>
   <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
-    <value>5. Configure system tray icon</value>
+    <value>5. הגדר את סמל מגש המערכת</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+    <value>האם אתה בטוח שברצונך לצאת ממסייע ההגדרה? סרגל הכלים יהיה נגיש רק באמצעות קיצור המקלדת. תוכל לגשת שוב אל מסייע ההגדרה דרך סמל מגש המערכת כדי להצמיד את סמל החיפוש לשורת המשימות.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>Exit Setup Assistant</value>
+    <value>צא ממסייע ההגדרה</value>
   </data>
 </root>
