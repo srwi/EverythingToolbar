@@ -16,6 +16,8 @@
                 Value="10, 2" />
         <Setter Property="CaretBrush"
                 Value="{DynamicResource TextBoxForegroundActive}" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
@@ -24,8 +26,7 @@
                             BorderBrush="{DynamicResource TextBoxBorder}"
                             Background="{DynamicResource TextBoxBackground}"
                             CornerRadius="{DynamicResource TextBoxCornerRadius}">
-                        <Grid x:Name="TextBoxGrid"
-                              SnapsToDevicePixels="True">
+                        <Grid x:Name="TextBoxGrid">
                             <TextBlock x:Name="TextBoxWatermark"
                                        Text="{TemplateBinding Tag}"
                                        VerticalAlignment="Center"
@@ -49,13 +50,10 @@
                                     Value="{DynamicResource TextBoxBackgroundHover}" />
                             <Setter Property="BorderThickness"
                                     TargetName="TextBoxBorder"
-                                    Value="2" />
+                                    Value="1" />
                             <Setter Property="BorderBrush"
                                     TargetName="TextBoxBorder"
                                     Value="{DynamicResource TextBoxBorderHover}" />
-                            <Setter Property="Margin"
-                                    TargetName="TextBoxGrid"
-                                    Value="-1" />
                             <Setter Property="Foreground"
                                     TargetName="TextBoxWatermark"
                                     Value="{DynamicResource TextBoxWatermarkForegroundHover}" />
@@ -71,9 +69,6 @@
                             <Setter Property="BorderBrush"
                                     TargetName="TextBoxBorder"
                                     Value="{DynamicResource TextBoxBorderActive}" />
-                            <Setter Property="Margin"
-                                    TargetName="TextBoxGrid"
-                                    Value="-1" />
                             <Setter Property="Foreground"
                                     TargetName="TextBoxWatermark"
                                     Value="{DynamicResource TextBoxWatermarkForegroundActive}" />
