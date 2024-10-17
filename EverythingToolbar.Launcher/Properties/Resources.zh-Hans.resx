@@ -166,15 +166,15 @@
     <value>1. 任务栏图标</value>
   </data>
   <data name="SetupAssistantFifthStepText" xml:space="preserve">
-    <value>By enabling the system tray icon you can quit the EverythingToolbar background process at any time. Without it, EverythingToolbar can always be quit via the task manager.</value>
+    <value>启用系统托盘图标后，您可以随时退出 EverythingToolbar 后台进程。您总是可以通过任务管理器退出 EverythingToolbar。</value>
   </data>
   <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
-    <value>5. Configure system tray icon</value>
+    <value>5. 配置系统托盘图标</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+    <value>您确定要退出设置助手吗？EverythingToolbar 将只能使用键盘快捷键访问。 您可通过系统托盘再次访问设置助手，以在任务栏中显示搜索图标。</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>Exit Setup Assistant</value>
+    <value>退出设置助手</value>
   </data>
 </root>
