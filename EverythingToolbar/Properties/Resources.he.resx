@@ -397,7 +397,7 @@
     <value>נתיב</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
-    <value>Run count</value>
+    <value>ספירת הפעלות</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
     <value>גודל</value>
