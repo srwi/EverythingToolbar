@@ -367,40 +367,40 @@
     <value>Inserisci collegamento...</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Attributes</value>
+    <value>Attributi</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
-    <value>Date accessed</value>
+    <value>Data di accesso</value>
   </data>
   <data name="SortByDateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>Data creazione</value>
   </data>
   <data name="SortByDateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>Data modifica</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
     <value>Date recently changed</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
-    <value>Date run</value>
+    <value>Data di esecuzione</value>
   </data>
   <data name="SortByExtension" xml:space="preserve">
-    <value>Extension</value>
+    <value>Estensione</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
     <value>File list filename</value>
   </data>
   <data name="SortByName" xml:space="preserve">
-    <value>Name</value>
+    <value>Nome</value>
   </data>
   <data name="SortByPath" xml:space="preserve">
-    <value>Path</value>
+    <value>Percorso</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
     <value>Run count</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
-    <value>Size</value>
+    <value>Dimensione</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
     <value>Type name</value>
@@ -451,12 +451,12 @@
     <value>Doppio click per aprire</value>
   </data>
   <data name="SortDescending" xml:space="preserve">
-    <value>Descending</value>
+    <value>Decrescente</value>
   </data>
   <data name="SortAscending" xml:space="preserve">
-    <value>Ascending</value>
+    <value>Crescente</value>
   </data>
   <data name="SettingsSearchAsYouType" xml:space="preserve">
-    <value>Search as you type</value>
+    <value>Durante la ricerca</value>
   </data>
 </root>
