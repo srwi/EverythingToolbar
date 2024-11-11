@@ -379,7 +379,7 @@
     <value>Data modifica</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
-    <value>Date recently changed</value>
+    <value>Data modificata di recente</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
     <value>Data di esecuzione</value>
@@ -388,7 +388,7 @@
     <value>Estensione</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
-    <value>File list filename</value>
+    <value>Nome del file di Elenco file</value>
   </data>
   <data name="SortByName" xml:space="preserve">
     <value>Nome</value>
@@ -397,13 +397,13 @@
     <value>Percorso</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
-    <value>Run count</value>
+    <value>Conta eseguiti</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
     <value>Dimensione</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
-    <value>Type name</value>
+    <value>Tipo nome</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>Scuro</value>
