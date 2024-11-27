@@ -130,7 +130,7 @@
     <value>退出</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>运行设置助手……</value>
+    <value>运行设置助手...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
     <value>右键单击 EverythingToolbar 任务栏图标并选择“固定到任务栏”以固定到任务栏。</value>
@@ -145,7 +145,7 @@
     <value>重启资源管理器</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>可选择将原来的 Windows 搜索图标隐藏。</value>
+    <value>可选择隐藏原有的 Windows 搜索图标。</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
     <value>3. 隐藏 Windows 搜索</value>
