@@ -130,7 +130,7 @@
     <value>Honlap</value>
   </data>
   <data name="AboutWindowTitle" xml:space="preserve">
-    <value>EverythingToolbar-ról</value>
+    <value>EverythingToolbarról</value>
   </data>
   <data name="ContextMenuCopy" xml:space="preserve">
     <value>Másolás</value>
@@ -238,7 +238,7 @@
     <value>Ezen rendezési mód használatához engedélyezni kell a gyors rendezést. Ez az Everything beállításokban megtehető.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
-    <value>Gyors rendezsé nincs engedélyezve</value>
+    <value>Gyors rendezés nincs engedélyezve</value>
   </data>
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>Legalább egy alapértelmezett kifejezés érvénytelen.</value>
@@ -457,6 +457,6 @@
     <value>Növekvő</value>
   </data>
   <data name="SettingsSearchAsYouType" xml:space="preserve">
-    <value>Search as you type</value>
+    <value>Keresés gépelés közben</value>
   </data>
 </root>

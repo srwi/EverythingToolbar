@@ -397,13 +397,13 @@
     <value>נתיב</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
-    <value>Run count</value>
+    <value>ספירת הפעלות</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
     <value>גודל</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
-    <value>Type name</value>
+    <value>שם סוג</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>כהה</value>
@@ -445,7 +445,7 @@
     <value>בדוק אם יש עדכונים באופן אוטומטי</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
-    <value>Select first result</value>
+    <value>בחר תוצאה ראשונה</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
     <value>לחץ פעמיים כדי לפתוח</value>

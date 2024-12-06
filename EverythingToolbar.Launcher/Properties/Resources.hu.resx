@@ -154,7 +154,7 @@
     <value>Ajánlott az EverythingToolbar automatikus elindítása a rendszerrel.</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. Auto. start konfigurálás</value>
+    <value>4. Automatikus indítás beállítása</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar Beállítás Asszisztens</value>
@@ -166,15 +166,15 @@
     <value>1. Tálca ikon</value>
   </data>
   <data name="SetupAssistantFifthStepText" xml:space="preserve">
-    <value>By enabling the system tray icon you can quit the EverythingToolbar background process at any time. Without it, EverythingToolbar can always be quit via the task manager.</value>
+    <value>A tálca ikon engedélyezésével bármikor kiléphet az EverythingToolbar háttérfolyamatából. Enélkül az EverythingToolbar mindig kiléphet a feladatkezelőn keresztül.</value>
   </data>
   <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
-    <value>5. Configure system tray icon</value>
+    <value>5. A tálca ikonjának konfigurálása</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+    <value>Biztos, hogy ki akar lépni a beállítási asszisztensből? Az EverythingToolbar csak a billentyűparancs segítségével lesz elérhető. A beállítási asszisztenst újra elérheti a tálca ikonján keresztül, hogy a keresés ikonját a tálcára tűzhesse.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>Exit Setup Assistant</value>
+    <value>Kilépés a Beállítási asszisztensből</value>
   </data>
 </root>

@@ -379,7 +379,7 @@
     <value>変更日時</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
-    <value>Date recently changed</value>
+    <value>更新日時</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
     <value>実行日時</value>
@@ -388,7 +388,7 @@
     <value>拡大</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
-    <value>File list filename</value>
+    <value>ファイルの名前</value>
   </data>
   <data name="SortByName" xml:space="preserve">
     <value>ファイル名</value>
@@ -454,9 +454,9 @@
     <value>降順</value>
   </data>
   <data name="SortAscending" xml:space="preserve">
-    <value>Ascending</value>
+    <value>昇順</value>
   </data>
   <data name="SettingsSearchAsYouType" xml:space="preserve">
-    <value>Search as you type</value>
+    <value>入力して検索</value>
   </data>
 </root>

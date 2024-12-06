@@ -166,15 +166,15 @@
     <value>Icona barra delle applicazioni</value>
   </data>
   <data name="SetupAssistantFifthStepText" xml:space="preserve">
-    <value>By enabling the system tray icon you can quit the EverythingToolbar background process at any time. Without it, EverythingToolbar can always be quit via the task manager.</value>
+    <value>Abilitando l'icona della barra delle applicazioni puoi chiudere il processo in background di EverythingToolbar in qualsiasi momento. Senza di essa, EverythingToolbar può sempre essere chiuso tramite il task manager.</value>
   </data>
   <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
-    <value>5. Configure system tray icon</value>
+    <value>5. Configurare l'icona della barra delle applicazioni</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+    <value>Sei sicuro di voler uscire dall'assistente di configurazione? EverythingToolbar sarà accessibile solo usando la scorciatoia da tastiera. È possibile accedere nuovamente all'assistente di configurazione tramite l'icona della barra delle applicazioni per fissare l'icona di ricerca alla barra delle applicazioni.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>Exit Setup Assistant</value>
+    <value>Esci Dall'Assistente di Configurazione</value>
   </data>
 </root>
