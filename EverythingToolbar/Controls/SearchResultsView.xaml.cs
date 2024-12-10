@@ -38,31 +38,38 @@ namespace EverythingToolbar.Controls
 
         private void RegisterItemContainerStyleProperties(object sender, ResourcesChangedEventArgs e)
         {
-            SearchResultsListView.ItemContainerStyle.Setters.Add(new EventSetter
+            if (SearchResultsListView.ItemContainerStyle == null)
+            {
+                SearchResultsListView.ItemContainerStyle = new Style(typeof(ListViewItem));
+            }
+
+            var newStyle = new Style(typeof(ListViewItem), SearchResultsListView.ItemContainerStyle);
+            newStyle.Setters.Add(new EventSetter
             {
                 Event = PreviewMouseLeftButtonUpEvent,
                 Handler = new MouseButtonEventHandler(SingleClickSearchResult)
             });
-            SearchResultsListView.ItemContainerStyle.Setters.Add(new EventSetter
+            newStyle.Setters.Add(new EventSetter
             {
                 Event = PreviewMouseDoubleClickEvent,
                 Handler = new MouseButtonEventHandler(DoubleClickSearchResult)
             });
-            SearchResultsListView.ItemContainerStyle.Setters.Add(new EventSetter
+            newStyle.Setters.Add(new EventSetter
             {
                 Event = PreviewMouseDownEvent,
                 Handler = new MouseButtonEventHandler(OnListViewItemMouseDown)
             });
-            SearchResultsListView.ItemContainerStyle.Setters.Add(new EventSetter
+            newStyle.Setters.Add(new EventSetter
             {
                 Event = MouseMoveEvent,
                 Handler = new MouseEventHandler(OnListViewItemMouseMove)
             });
-            SearchResultsListView.ItemContainerStyle.Setters.Add(new Setter
+            newStyle.Setters.Add(new Setter
             {
                 Property = ContextMenuProperty,
                 Value = new Binding { Source = Resources["ListViewItemContextMenu"] }
             });
+            SearchResultsListView.ItemContainerStyle = newStyle;
         }
 
         private void OnKeyPressed(object sender, KeyEventArgs e)
