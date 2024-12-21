@@ -367,19 +367,19 @@
     <value>Kısayol gir...</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Attributes</value>
+    <value>Özellikler</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
-    <value>Date accessed</value>
+    <value>Erişim tarihi</value>
   </data>
   <data name="SortByDateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>Oluşturulma tarihi</value>
   </data>
   <data name="SortByDateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>Değiştirilme tarihi</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
-    <value>Date recently changed</value>
+    <value>Yakın zamanda değiştirilenler</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
     <value>Date run</value>
