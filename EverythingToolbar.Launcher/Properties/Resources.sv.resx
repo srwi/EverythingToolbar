@@ -166,15 +166,15 @@
     <value>1. Aktivitetsfältsikonen</value>
   </data>
   <data name="SetupAssistantFifthStepText" xml:space="preserve">
-    <value>By enabling the system tray icon you can quit the EverythingToolbar background process at any time. Without it, EverythingToolbar can always be quit via the task manager.</value>
+    <value>Genom att aktivera ikonen för systemfältet kan du avsluta EverythingToolbar bakgrundsprocess när som helst. Utan den kan EverythingToolbar alltid avslutas via uppgiftshanteraren.</value>
   </data>
   <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
-    <value>5. Configure system tray icon</value>
+    <value>5. Konfigurera systemfältsikonen</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+    <value>Är du säker på att du vill avsluta installationsassistenten? EverythingToolbar kommer endast att vara tillgänglig med hjälp av kortkommandot. Du kan komma åt installationsassistenten igen via systemfältsikonen för att fästa sökikonen i aktivitetsfältet.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>Exit Setup Assistant</value>
+    <value>Avsluta installationsassistenten</value>
   </data>
 </root>
