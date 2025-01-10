@@ -334,7 +334,7 @@
     <value>Κανόνες...</value>
   </data>
   <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>Set instance name...</value>
+    <value>Ορισμός ονόματος εμφάνισης...</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>Εμφάνιση γρήγορων ρυθμίσεων</value>
@@ -349,10 +349,10 @@
     <value>Θέμα</value>
   </data>
   <data name="SettingsThemeAuto" xml:space="preserve">
-    <value>Sync theme</value>
+    <value>Συγχρονισμός θέματος</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>Enable thumbnails</value>
+    <value>Ενεργοποίηση επισκόπησης</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Χρήση φίλτρων Everything</value>
@@ -367,16 +367,16 @@
     <value>Εισάγετε συντόμευση...</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Attributes</value>
+    <value>Ιδιότητες</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
-    <value>Date accessed</value>
+    <value>Ημερομηνία πρόσβασης</value>
   </data>
   <data name="SortByDateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>Ημερομηνία Δημιουργίας</value>
   </data>
   <data name="SortByDateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>Ημερομηνία τροποποίησης</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
     <value>Date recently changed</value>
