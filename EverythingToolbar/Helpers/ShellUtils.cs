@@ -125,11 +125,16 @@ namespace EverythingToolbar.Helpers
         public static bool WindowsExplorerIsDefault()
         {
             var folderShell = (string)Registry.ClassesRoot.OpenSubKey(@"Folder\shell")?.GetValue(null);
+            var directoryShell = (string)Registry.ClassesRoot.OpenSubKey(@"Directory\shell")?.GetValue(null);
+
+            // Some third party file managers (e.g. Q-Dir, One Commander) create their own shell entries for folders/directories
             if (folderShell != null && Registry.ClassesRoot.OpenSubKey(@"Folder\shell\" + folderShell + @"\command")?.GetValue(null) != null)
                 return false;
-            
-            var directoryShell = (string)Registry.ClassesRoot.OpenSubKey(@"Directory\shell")?.GetValue(null);
             if (directoryShell != null && Registry.ClassesRoot.OpenSubKey(@"Directory\shell\" + directoryShell + @"\command")?.GetValue(null) != null)
+                return false;
+
+            // Some other file managers (e.g. Files) will directly override the system "open" command
+            if (folderShell == null && Registry.ClassesRoot.OpenSubKey(@"Folder\shell\open\command")?.GetValue("").ToString().ToLower().EndsWith(@"\explorer.exe") == false)
                 return false;
 
             return true;
