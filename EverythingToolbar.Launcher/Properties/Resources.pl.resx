@@ -166,15 +166,15 @@
     <value>1. Ikona na pasku zadań</value>
   </data>
   <data name="SetupAssistantFifthStepText" xml:space="preserve">
-    <value>By enabling the system tray icon you can quit the EverythingToolbar background process at any time. Without it, EverythingToolbar can always be quit via the task manager.</value>
+    <value>Poprzez włączenie ikony zasobnika systemowego, możesz w każdej chwili wyłączyć działający w tle EverythingToolbar. Bez tego, zawsze możesz zamknąć EverythingToolbar przy pomocy menedżera zadań.</value>
   </data>
   <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
-    <value>5. Configure system tray icon</value>
+    <value>5. Konfiguruj ikonę zasobnika systemu</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+    <value>Czy na pewno chcesz opuścić asystenta konfiguracji? EverythingToolbar będzie dostępny tylko przy użyciu skrótu klawiaturowego. Możesz ponownie uzyskać dostęp do asystenta konfiguracji za pomocą ikony w zasobniku systemowym, aby przypiąć ikonę wyszukiwania do paska zadań.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>Exit Setup Assistant</value>
+    <value>Zamknij asystenta konfiguracji</value>
   </data>
 </root>
