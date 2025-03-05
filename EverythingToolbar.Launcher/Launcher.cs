@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
-using System.Windows.Input;
 using System.Windows.Shell;
 using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
@@ -25,7 +24,7 @@ namespace EverythingToolbar.Launcher
         private const string MutexName = "EverythingToolbar.Launcher";
         private static bool _searchWindowRecentlyClosed;
         private static Timer _searchWindowRecentlyClosedTimer;
-        private static NotifyIcon notifyIcon;
+        private static NotifyIcon _notifyIcon;
 
         private class LauncherWindow : Window
         {
@@ -33,7 +32,7 @@ namespace EverythingToolbar.Launcher
             {
                 ToolbarLogger.Initialize("Launcher");
 
-                notifyIcon = icon;
+                _notifyIcon = icon;
                 SetupJumpList();
 
                 _searchWindowRecentlyClosedTimer = new Timer(500);
@@ -57,17 +56,7 @@ namespace EverythingToolbar.Launcher
                 if (!ToolbarSettings.User.IsSetupAssistantDisabled && !File.Exists(Utils.GetTaskbarShortcutPath()))
                     new SetupAssistant(icon).Show();
 
-                if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
-                       (Key)ToolbarSettings.User.ShortcutKey,
-                       (ModifierKeys)ToolbarSettings.User.ShortcutModifiers,
-                       FocusSearchBox))
-                {
-                    ShortcutManager.Instance.SetShortcut(Key.None, ModifierKeys.None);
-                    MessageBox.Show(EverythingToolbar.Properties.Resources.MessageBoxFailedToRegisterHotkey,
-                        EverythingToolbar.Properties.Resources.MessageBoxErrorTitle,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error);
-                }
+                ShortcutManager.Instance.Initialize(FocusSearchBox);
 
                 StartMenuIntegration.Instance.SetFocusCallback(FocusSearchBox);
                 if (ToolbarSettings.User.IsReplaceStartMenuSearch)
@@ -138,7 +127,7 @@ namespace EverythingToolbar.Launcher
             {
                 Dispatcher?.Invoke(() =>
                 {
-                    new SetupAssistant(notifyIcon).Show();
+                    new SetupAssistant(_notifyIcon).Show();
                 });
             }
         }

@@ -27,17 +27,7 @@ namespace EverythingToolbar
             SearchBox.LostKeyboardFocus += OnSearchBoxLostKeyboardFocus;
             SearchWindow.Instance.Hiding += OnSearchWindowHiding;
 
-            if (!ShortcutManager.Instance.AddOrReplace("FocusSearchBox",
-                   (Key)ToolbarSettings.User.ShortcutKey,
-                   (ModifierKeys)ToolbarSettings.User.ShortcutModifiers,
-                   FocusSearchBox))
-            {
-                ShortcutManager.Instance.SetShortcut(Key.None, ModifierKeys.None);
-                MessageBox.Show(Properties.Resources.MessageBoxFailedToRegisterHotkey,
-                    Properties.Resources.MessageBoxErrorTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
-            }
+            ShortcutManager.Instance.Initialize(FocusSearchBox);
 
             StartMenuIntegration.Instance.SetFocusCallback(FocusSearchBox);
             if (ToolbarSettings.User.IsReplaceStartMenuSearch)

@@ -47,12 +47,13 @@ namespace EverythingToolbar.Controls
         private void OpenShortcutWindow(object sender, RoutedEventArgs e)
         {
             SearchWindow.Instance.Hide();
+
             var shortcutSelector = new ShortcutSelector();
             if (shortcutSelector.ShowDialog().Value)
             {
                 if (shortcutSelector.Modifiers == ModifierKeys.Windows)
                 {
-                    ShortcutManager.Instance.SetShortcut(shortcutSelector.Key, shortcutSelector.Modifiers);
+                    // Windows Explorer reserves many shortcuts with the Windows key. Therefore, we kill it.
                     foreach (var exe in Process.GetProcesses())
                     {
                         if (exe.ProcessName == "explorer")
@@ -60,17 +61,7 @@ namespace EverythingToolbar.Controls
                     }
                 }
 
-                if (ShortcutManager.Instance.AddOrReplace("FocusSearchBox", shortcutSelector.Key, shortcutSelector.Modifiers))
-                {
-                    ShortcutManager.Instance.SetShortcut(shortcutSelector.Key, shortcutSelector.Modifiers);
-                }
-                else
-                {
-                    MessageBox.Show(Properties.Resources.MessageBoxFailedToRegisterHotkey,
-                        Properties.Resources.MessageBoxErrorTitle,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error);
-                }
+                ShortcutManager.Instance.TryUpdateShortcut(shortcutSelector.Key, shortcutSelector.Modifiers);
             }
         }
 
