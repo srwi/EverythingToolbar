@@ -69,9 +69,9 @@ namespace EverythingToolbar.Launcher
                         MessageBoxImage.Error);
                 }
 
-                ShortcutManager.Instance.SetFocusCallback(FocusSearchBox);
+                StartMenuIntegration.Instance.SetFocusCallback(FocusSearchBox);
                 if (ToolbarSettings.User.IsReplaceStartMenuSearch)
-                    ShortcutManager.Instance.HookStartMenu();
+                    StartMenuIntegration.Instance.HookStartMenu();
 
                 SearchWindow.Instance.Hiding += OnSearchWindowHiding;
             }

@@ -17,7 +17,7 @@ namespace EverythingToolbar
         {
             InitializeComponent();
 
-            ShortcutManager.Instance.UnhookStartMenu();
+            StartMenuIntegration.Instance.UnhookStartMenu();
             HotkeyManager.Current.IsEnabled = false;
 
             Modifiers = (ModifierKeys)ToolbarSettings.User.ShortcutModifiers;
@@ -25,7 +25,7 @@ namespace EverythingToolbar
             UpdateTextBox();
         }
 
-        private void OnKeyPressedReleased(object sender, ShortcutManager.WinKeyEventArgs e)
+        private void OnKeyPressedReleased(object sender, StartMenuIntegration.WinKeyEventArgs e)
         {
             switch (e.Key)
             {
@@ -63,12 +63,12 @@ namespace EverythingToolbar
 
         private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            ShortcutManager.Instance.CaptureKeyboard(OnKeyPressedReleased);
+            StartMenuIntegration.Instance.CaptureKeyboard(OnKeyPressedReleased);
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            ShortcutManager.Instance.ReleaseKeyboard();
+            StartMenuIntegration.Instance.ReleaseKeyboard();
         }
 
         private void UpdateTextBox()
@@ -115,10 +115,10 @@ namespace EverythingToolbar
         private void OnClosed(object sender, EventArgs e)
         {
             HotkeyManager.Current.IsEnabled = true;
-            ShortcutManager.Instance.ReleaseKeyboard();
+            StartMenuIntegration.Instance.ReleaseKeyboard();
             if (ToolbarSettings.User.IsReplaceStartMenuSearch)
             {
-                ShortcutManager.Instance.HookStartMenu();
+                StartMenuIntegration.Instance.HookStartMenu();
             }
         }
     }
