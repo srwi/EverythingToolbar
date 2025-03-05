@@ -8,10 +8,8 @@ using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Controls
 {
-    public partial class SearchBox : UserControl
+    public partial class SearchBox
     {
-        private int LastCaretIndex;
-
         public SearchBox()
         {
             InitializeComponent();
@@ -107,16 +105,15 @@ namespace EverythingToolbar.Controls
             }
         }
 
-        public new void Focus()
+        private new void Focus()
         {
-            NativeMethods.SetForegroundWindow(((HwndSource)PresentationSource.FromVisual(this)).Handle);
+            if (PresentationSource.FromVisual(this) is HwndSource hwnd)
+            {
+                NativeMethods.SetForegroundWindow(hwnd.Handle);
+            }
+
             TextBox.Focus();
             Keyboard.Focus(TextBox);
-        }
-
-        public void RestoreCaretIndex()
-        {
-            TextBox.CaretIndex = Math.Min(LastCaretIndex, TextBox.Text.Length);
         }
 
         private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -126,8 +123,6 @@ namespace EverythingToolbar.Controls
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            LastCaretIndex = TextBox.CaretIndex;
-
             if (e.NewFocus == null)  // New focus outside application
             {
                 SearchWindow.Instance.Hide();
@@ -136,14 +131,10 @@ namespace EverythingToolbar.Controls
 
         private void SelectivelyIgnoreMouseButton(object sender, MouseButtonEventArgs e)
         {
-            var textBox = (sender as TextBox);
-            if (textBox != null)
+            if (sender is TextBox textBox && !textBox.IsKeyboardFocusWithin)
             {
-                if (!textBox.IsKeyboardFocusWithin)
-                {
-                    e.Handled = true;
-                    textBox.Focus();
-                }
+                e.Handled = true;
+                textBox.Focus();
             }
         }
 

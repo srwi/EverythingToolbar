@@ -5,12 +5,15 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
+using NLog;
 using Point = System.Drawing.Point;
 
 namespace EverythingToolbar.Behaviors
 {
     internal class SearchWindowPlacement : Behavior<SearchWindow>
     {
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<SearchWindowPlacement>();
+
         // Using a dependency property for binding is not required since the placement target will not change
         public FrameworkElement PlacementTarget;
 
@@ -102,8 +105,13 @@ namespace EverythingToolbar.Behaviors
 
         private double GetScalingFactor()
         {
-            var hwnd = ((HwndSource)PresentationSource.FromVisual(PlacementTarget)).Handle;
-            return 96.0 / GetDpiForWindow(hwnd);
+            if (!(PresentationSource.FromVisual(AssociatedObject) is HwndSource hwndSource))
+            {
+                Logger.Error("Failed to get display scaling factor. This may result in incorrect window placement.");
+                return 1.0;
+            }
+
+            return 96.0 / GetDpiForWindow(hwndSource.Handle);
         }
 
         private int GetMargin()

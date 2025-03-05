@@ -66,8 +66,10 @@ namespace EverythingToolbar.Behaviors
         {
             base.OnDetaching();
             AssociatedObject.Loaded -= AssociatedObjectOnLoaded;
-            var hwndSource = PresentationSource.FromVisual(AssociatedObject) as HwndSource;
-            hwndSource.RemoveHook(HwndSourceHook);
+            if (PresentationSource.FromVisual(AssociatedObject) is HwndSource hwndSource)
+            {
+                hwndSource.RemoveHook(HwndSourceHook);
+            }
         }
 
         private static double GetParentWindowDpi(Visual visual)
@@ -93,8 +95,10 @@ namespace EverythingToolbar.Behaviors
 
         private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs e)
         {
-            var hwndSource = PresentationSource.FromVisual(AssociatedObject) as HwndSource;
-            hwndSource.AddHook(HwndSourceHook);
+            if (PresentationSource.FromVisual(AssociatedObject) is HwndSource hwndSource)
+            {
+                hwndSource.AddHook(HwndSourceHook);
+            }
 
             InitialDpi = VisualTreeHelper.GetDpi(AssociatedObject).PixelsPerInchY;
             CurrentDpi = InitialDpi;

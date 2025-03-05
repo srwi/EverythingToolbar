@@ -7,12 +7,15 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
+using NLog;
 using Size = System.Windows.Size;
 
 namespace EverythingToolbar.Launcher
 {
     internal class SearchWindowPlacement : Behavior<SearchWindow>
     {
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<SearchWindowPlacement>();
+
         protected override void OnAttached()
         {
             // Start with window outside of screen area to prevent flickering when loading for the first time
@@ -158,10 +161,13 @@ namespace EverythingToolbar.Launcher
 
         private double GetScalingFactor()
         {
-            // Converting from wpf-size requires division by scaling factor;
-            // Converting to wpf-size requires multiplication with scaling factor
-            var hwnd = ((HwndSource)PresentationSource.FromVisual(AssociatedObject)).Handle;
-            return 96.0 / GetDpiForWindow(hwnd);
+            if (!(PresentationSource.FromVisual(AssociatedObject) is HwndSource hwndSource))
+            {
+                Logger.Error("Failed to get display scaling factor. This may result in incorrect window placement.");
+                return 1.0;
+            }
+
+            return 96.0 / GetDpiForWindow(hwndSource.Handle);
         }
 
         private int GetMargin()
