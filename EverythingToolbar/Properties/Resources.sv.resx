@@ -367,43 +367,43 @@
     <value>Ange genväg...</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Attributes</value>
+    <value>Attribut</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
-    <value>Date accessed</value>
+    <value>Senast använd</value>
   </data>
   <data name="SortByDateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>Skapad</value>
   </data>
   <data name="SortByDateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>Senast ändrad</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
-    <value>Date recently changed</value>
+    <value>Datum nyligen ändrat</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
-    <value>Date run</value>
+    <value>Senast kört</value>
   </data>
   <data name="SortByExtension" xml:space="preserve">
-    <value>Extension</value>
+    <value>Filändelse</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
-    <value>File list filename</value>
+    <value>Filnamn för fillista</value>
   </data>
   <data name="SortByName" xml:space="preserve">
-    <value>Name</value>
+    <value>Namn</value>
   </data>
   <data name="SortByPath" xml:space="preserve">
-    <value>Path</value>
+    <value>Sökväg</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
-    <value>Run count</value>
+    <value>Antal körningar</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
-    <value>Size</value>
+    <value>Storlek</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
-    <value>Type name</value>
+    <value>Typnamn</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>Mörk</value>
@@ -445,18 +445,18 @@
     <value>Sök efter uppdateringar automatiskt</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
-    <value>Select first result</value>
+    <value>Välj första resultatet</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>Double-click to open</value>
+    <value>Dubbelklicka för att öppna</value>
   </data>
   <data name="SortDescending" xml:space="preserve">
-    <value>Descending</value>
+    <value>Fallande</value>
   </data>
   <data name="SortAscending" xml:space="preserve">
-    <value>Ascending</value>
+    <value>Stigande</value>
   </data>
   <data name="SettingsSearchAsYouType" xml:space="preserve">
-    <value>Search as you type</value>
+    <value>Sök när du skriver</value>
   </data>
 </root>
