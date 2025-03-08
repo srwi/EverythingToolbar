@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using EverythingToolbar.Helpers;
 using NHotkey.Wpf;
 
 namespace EverythingToolbar
@@ -27,7 +28,7 @@ namespace EverythingToolbar
         {
             InitializeComponent();
 
-            Helpers.StartMenuIntegration.Instance.Disable();
+            StartMenuIntegration.Instance.Disable();
             HotkeyManager.Current.IsEnabled = false;
 
             Modifiers = (ModifierKeys)ToolbarSettings.User.ShortcutModifiers;
@@ -179,7 +180,7 @@ namespace EverythingToolbar
             ReleaseKeyboard();
             if (ToolbarSettings.User.IsReplaceStartMenuSearch)
             {
-                Helpers.StartMenuIntegration.Instance.Enable();
+                StartMenuIntegration.Instance.Enable();
             }
         }
 
