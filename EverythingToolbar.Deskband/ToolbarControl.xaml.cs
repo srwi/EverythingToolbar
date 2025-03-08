@@ -29,9 +29,9 @@ namespace EverythingToolbar
 
             ShortcutManager.Instance.Initialize(FocusSearchBox);
 
-            StartMenuIntegration.Instance.SetFocusCallback(FocusSearchBox);
+            StartMenuIntegration.Instance.SetFocusToolbarCallback(FocusSearchBox);
             if (ToolbarSettings.User.IsReplaceStartMenuSearch)
-                StartMenuIntegration.Instance.HookStartMenu();
+                StartMenuIntegration.Instance.Enable();
         }
 
         private void OnSearchWindowHiding(object sender, EventArgs e)

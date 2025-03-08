@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows.Forms;
 using System.Windows.Input;
 using NHotkey;
 
@@ -12,19 +11,22 @@ namespace EverythingToolbar.Helpers
     {
         public static readonly StartMenuIntegration Instance = new StartMenuIntegration();
 
-        private WinEventDelegate winEventDelegate;
-        private static Action<object, HotkeyEventArgs> focusToolbarCallback;
-        private static LowLevelKeyboardProc llKeyboardHookProc;
-        private static IntPtr llKeyboardHookId = IntPtr.Zero;
-        private static IntPtr winEventHookId = IntPtr.Zero;
-        private static IntPtr searchAppHwnd = IntPtr.Zero;
-        private static event EventHandler<WinKeyEventArgs> WinKeyEventHandler;
-        private static bool isException;
-        private static bool isNativeSearchActive;
-        private static string searchTermQueue = "";
-        private const int WH_KEYBOARD_LL = 13;
-        private const int WM_KEYDOWN = 0x0100;
-        private const int WM_SYSKEYDOWN = 0x0104;
+        private static WinEventDelegate _focusedWindowChangedCallback;
+        private static LowLevelKeyboardProc _llKeyboardHookCallback;
+        private static Action<object, HotkeyEventArgs> _focusToolbarCallback;
+
+        private static IntPtr _llKeyboardHookId = IntPtr.Zero;
+        private static IntPtr _focusedWindowChangedHookId = IntPtr.Zero;
+
+        private static IntPtr _searchAppHwnd = IntPtr.Zero;
+
+        private static bool _isException;
+        private static bool _isNativeSearchActive;
+        private static string _searchTermQueue = "";
+
+        private const int WhKeyboardLl = 13;
+        private const int WmKeydown = 0x0100;
+        private const int WmSyskeydown = 0x0104;
 
         private StartMenuIntegration()
         {
@@ -36,134 +38,83 @@ namespace EverythingToolbar.Helpers
             if (e.PropertyName == nameof(ToolbarSettings.User.IsReplaceStartMenuSearch))
             {
                 if (ToolbarSettings.User.IsReplaceStartMenuSearch)
-                    HookStartMenu();
+                    Enable();
                 else
-                    UnhookStartMenu();
+                    Disable();
             }
         }
 
-        public void CaptureKeyboard(EventHandler<WinKeyEventArgs> callback)
+        public void Enable()
         {
-            ReleaseKeyboard();
-            WinKeyEventHandler += callback;
-            llKeyboardHookProc = WinKeyHookCallback;
-            llKeyboardHookId = SetWindowsHookEx(WH_KEYBOARD_LL, llKeyboardHookProc, (IntPtr)0, 0);
+            _focusedWindowChangedCallback = OnFocusedWindowChanged;
+            _focusedWindowChangedHookId = SetWinEventHook(3, 3, IntPtr.Zero, _focusedWindowChangedCallback, 0, 0, 0);
         }
 
-        public bool ReleaseKeyboard()
+        public void Disable()
         {
-            WinKeyEventHandler = null;
-            return UnhookWindowsHookEx(llKeyboardHookId);
+            UnhookWinEvent(_focusedWindowChangedHookId);
         }
 
-        public static IntPtr WinKeyHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        public void SetFocusToolbarCallback(Action<object, HotkeyEventArgs> callback)
         {
-            if (nCode >= 0)
-            {
-                var vkCode = (Keys)Marshal.ReadInt32(lParam);
-                var isDown = (int)wParam == WM_KEYDOWN || (int)wParam == WM_SYSKEYDOWN;
-                switch (vkCode)
-                {
-                    case Keys.Control:
-                    case Keys.ControlKey:
-                    case Keys.LControlKey:
-                    case Keys.RControlKey:
-                        WinKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LeftCtrl));
-                        break;
-                    case Keys.Shift:
-                    case Keys.ShiftKey:
-                    case Keys.LShiftKey:
-                    case Keys.RShiftKey:
-                        WinKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LeftShift));
-                        break;
-                    case Keys.Alt:
-                        WinKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LeftAlt));
-                        break;
-                    case Keys.LWin:
-                    case Keys.RWin:
-                        WinKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LWin));
-                        break;
-                    default:
-                        WinKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, KeyInterop.KeyFromVirtualKey((int)vkCode)));
-                        break;
-                }
-
-                return (IntPtr)1;
-            }
-
-            return CallNextHookEx(llKeyboardHookId, nCode, wParam, lParam);
+            _focusToolbarCallback = callback;
         }
 
-        public void HookStartMenu()
+        private void OnFocusedWindowChanged(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
-            winEventDelegate = FocusedWindowChangedEvent;
-            winEventHookId = SetWinEventHook(3, 3, IntPtr.Zero, winEventDelegate, 0, 0, 0);
-        }
-
-        public void UnhookStartMenu()
-        {
-            UnhookWinEvent(winEventHookId);
-        }
-
-        public void SetFocusCallback(Action<object, HotkeyEventArgs> callback)
-        {
-            focusToolbarCallback = callback;
-        }
-
-        private void FocusedWindowChangedEvent(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
-        {
-            GetForegroundWindowAndProcess(out IntPtr foregroundHwnd, out String foregroundProcessName);
+            GetForegroundWindowAndProcess(out var foregroundHwnd, out var foregroundProcessName);
 
             if (foregroundProcessName.EndsWith("SearchApp.exe") ||
                 foregroundProcessName.EndsWith("SearchUI.exe") ||
                 foregroundProcessName.EndsWith("SearchHost.exe"))
             {
-                searchAppHwnd = foregroundHwnd;
-                searchTermQueue = "";
+                _searchAppHwnd = foregroundHwnd;
+                _searchTermQueue = "";
                 HookStartMenuInput();
             }
             else
             {
-                if (searchAppHwnd != IntPtr.Zero && !string.IsNullOrEmpty(searchTermQueue))
+                if (_searchAppHwnd != IntPtr.Zero && !string.IsNullOrEmpty(_searchTermQueue))
                 {
-                    searchAppHwnd = IntPtr.Zero;
-                    focusToolbarCallback?.Invoke(null, null);
+                    _searchAppHwnd = IntPtr.Zero;
+                    _focusToolbarCallback?.Invoke(null, null);
                     SearchWindow.Instance.Show();
-                    EventDispatcher.Instance.InvokeSearchTermReplaced(this, searchTermQueue);
-                    searchTermQueue = "";
+                    EventDispatcher.Instance.InvokeSearchTermReplaced(this, _searchTermQueue);
+                    _searchTermQueue = "";
                 }
-                isException = false;
-                isNativeSearchActive = false;
-                UnhookWindowsHookEx(llKeyboardHookId);
+                _isException = false;
+                _isNativeSearchActive = false;
+
+                UnhookStartMenuInput();
             }
         }
 
-        private static void GetForegroundWindowAndProcess(out IntPtr foregroundHwnd, out String foregroundProcessName)
+        private static void GetForegroundWindowAndProcess(out IntPtr foregroundHwnd, out string foregroundProcessName)
         {
             foregroundHwnd = GetForegroundWindow();
-            GetWindowThreadProcessId(foregroundHwnd, out var lpdwProcessId);
-            var foregroundProcess = OpenProcess(0x0410, false, lpdwProcessId);
+            GetWindowThreadProcessId(foregroundHwnd, out var processId);
+            var processHandle = OpenProcess(0x0410, false, processId);
             var processNameBuilder = new StringBuilder(1000);
-            GetModuleFileNameEx(foregroundProcess, IntPtr.Zero, processNameBuilder, processNameBuilder.Capacity);
-            CloseHandle(foregroundProcess);
+            GetModuleFileNameEx(processHandle, IntPtr.Zero, processNameBuilder, processNameBuilder.Capacity);
+            CloseHandle(processHandle);
             foregroundProcessName = processNameBuilder.ToString();
         }
 
-        public static IntPtr StartMenuKeyboardHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        private static IntPtr StartMenuKeyboardHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0 && !isNativeSearchActive)
+            if (nCode >= 0 && !_isNativeSearchActive)
             {
                 var virtualKeyCode = (uint)Marshal.ReadInt32(lParam);
-                var isKeyDown = wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN;
+                var isKeyDown = wParam == (IntPtr)WmKeydown || wParam == (IntPtr)WmSyskeydown;
 
                 if(Keyboard.IsKeyDown(Key.LWin) || Keyboard.IsKeyDown(Key.RWin))
                 {
-                    return CallNextHookEx(llKeyboardHookId, nCode, wParam, lParam);
+                    return CallNextHookEx(_llKeyboardHookId, nCode, wParam, lParam);
                 }
                 // Check for exception keys (VK_LCONTROL, VK_RCONTROL, VK_LMENU)
                 if (virtualKeyCode == 0xA2 || virtualKeyCode == 0xA3 || virtualKeyCode == 0xA4)
                 {
-                    isException = isKeyDown;
+                    _isException = isKeyDown;
                     return (IntPtr)1;
                 }
 
@@ -187,52 +138,47 @@ namespace EverythingToolbar.Helpers
                      char.IsSymbol(keyString, 0)))
                 {
                     // Send input to native search app
-                    if (isException)
+                    if (_isException)
                     {
-                        isNativeSearchActive = true;
-                        return CallNextHookEx(llKeyboardHookId, nCode, wParam, lParam);
+                        _isNativeSearchActive = true;
+                        return CallNextHookEx(_llKeyboardHookId, nCode, wParam, lParam);
                     }
-                    // Send input to EverythingToolbar
 
-                    searchTermQueue += keyString;
+                    // Send input to EverythingToolbar
+                    _searchTermQueue += keyString;
+
                     CloseStartMenu();
+
                     return (IntPtr)1;
                 }
             }
 
-            return CallNextHookEx(llKeyboardHookId, nCode, wParam, lParam);
+            return CallNextHookEx(_llKeyboardHookId, nCode, wParam, lParam);
         }
 
-        public static void CloseStartMenu()
+        private static void CloseStartMenu()
         {
-            if (searchAppHwnd != IntPtr.Zero)
+            if (_searchAppHwnd != IntPtr.Zero)
             {
-                PostMessage(searchAppHwnd, 0x0010, 0, 0);
+                PostMessage(_searchAppHwnd, 0x0010, 0, 0);
             }
         }
 
-        public void HookStartMenuInput()
+        private void HookStartMenuInput()
         {
-            UnhookWindowsHookEx(llKeyboardHookId);
-            llKeyboardHookProc = StartMenuKeyboardHookCallback;
-            llKeyboardHookId = SetWindowsHookEx(WH_KEYBOARD_LL, llKeyboardHookProc, IntPtr.Zero, 0);
+            UnhookStartMenuInput();
+            _llKeyboardHookCallback = StartMenuKeyboardHookCallback;
+            _llKeyboardHookId = SetWindowsHookEx(WhKeyboardLl, _llKeyboardHookCallback, IntPtr.Zero, 0);
+        }
+
+        private void UnhookStartMenuInput()
+        {
+            UnhookWindowsHookEx(_llKeyboardHookId);
         }
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
         private delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
-
-        public class WinKeyEventArgs : EventArgs
-        {
-            public WinKeyEventArgs(bool isDown, Key key)
-            {
-                Key = key;
-                IsDown = isDown;
-            }
-
-            public bool IsDown { get; set; }
-            public Key Key { get; set; }
-        }
 
         [DllImport("kernel32.dll")]
         static extern IntPtr OpenProcess(uint dwDesiredAccess, bool bInheritHandle, uint dwProcessId);
