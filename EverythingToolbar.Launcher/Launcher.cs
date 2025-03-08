@@ -58,7 +58,6 @@ namespace EverythingToolbar.Launcher
 
                 ShortcutManager.Instance.Initialize(FocusSearchBox);
 
-                StartMenuIntegration.Instance.SetFocusToolbarCallback(FocusSearchBox);
                 if (ToolbarSettings.User.IsReplaceStartMenuSearch)
                     StartMenuIntegration.Instance.Enable();
 

@@ -107,7 +107,7 @@ namespace EverythingToolbar.Controls
 
         private new void Focus()
         {
-            if (PresentationSource.FromVisual(this) is HwndSource hwnd)
+            if (PresentationSource.FromVisual(TextBox) is HwndSource hwnd)
             {
                 NativeMethods.ForciblySetForegroundWindow(hwnd.Handle);
             }
@@ -119,6 +119,20 @@ namespace EverythingToolbar.Controls
         private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             TextBox.SelectAll();
+
+            if (TextBox.IsLoaded)
+            {
+                Focus();
+                StartMenuIntegration.Instance.ReplayRecordedInputs();
+            }
+            else
+            {
+                TextBox.Loaded += (s, args) =>
+                {
+                    Focus();
+                    StartMenuIntegration.Instance.ReplayRecordedInputs();
+                };
+            }
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)

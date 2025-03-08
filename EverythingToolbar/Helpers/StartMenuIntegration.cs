@@ -1,32 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Input;
-using NHotkey;
 
 namespace EverythingToolbar.Helpers
 {
     public class StartMenuIntegration
     {
         public static readonly StartMenuIntegration Instance = new StartMenuIntegration();
+        private static readonly List<INPUT> RecordedInputs = new List<INPUT>();
 
         private static WinEventDelegate _focusedWindowChangedCallback;
-        private static LowLevelKeyboardProc _llKeyboardHookCallback;
-        private static Action<object, HotkeyEventArgs> _focusToolbarCallback;
-
-        private static IntPtr _llKeyboardHookId = IntPtr.Zero;
+        private static LowLevelKeyboardProc _startMenuKeyboardHookCallback;
         private static IntPtr _focusedWindowChangedHookId = IntPtr.Zero;
+        private static IntPtr _startMenuKeyboardHookId = IntPtr.Zero;
 
         private static IntPtr _searchAppHwnd = IntPtr.Zero;
 
         private static bool _isException;
         private static bool _isNativeSearchActive;
-        private static string _searchTermQueue = "";
+        private static bool _isInterceptingKeys;
 
         private const int WhKeyboardLl = 13;
         private const int WmKeydown = 0x0100;
         private const int WmSyskeydown = 0x0104;
+        private const int InputKeyboard = 1;
+        private const uint KeyeventfKeyup = 0x0002;
 
         private StartMenuIntegration()
         {
@@ -55,11 +56,6 @@ namespace EverythingToolbar.Helpers
             UnhookWinEvent(_focusedWindowChangedHookId);
         }
 
-        public void SetFocusToolbarCallback(Action<object, HotkeyEventArgs> callback)
-        {
-            _focusToolbarCallback = callback;
-        }
-
         private void OnFocusedWindowChanged(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
             GetForegroundWindowAndProcess(out var foregroundHwnd, out var foregroundProcessName);
@@ -69,23 +65,18 @@ namespace EverythingToolbar.Helpers
                 foregroundProcessName.EndsWith("SearchHost.exe"))
             {
                 _searchAppHwnd = foregroundHwnd;
-                _searchTermQueue = "";
                 HookStartMenuInput();
             }
             else
             {
-                if (_searchAppHwnd != IntPtr.Zero && !string.IsNullOrEmpty(_searchTermQueue))
+                if (_searchAppHwnd != IntPtr.Zero && _isInterceptingKeys)
                 {
                     _searchAppHwnd = IntPtr.Zero;
-                    _focusToolbarCallback?.Invoke(null, null);
                     SearchWindow.Instance.Show();
-                    EventDispatcher.Instance.InvokeSearchTermReplaced(this, _searchTermQueue);
-                    _searchTermQueue = "";
+                    // TODO: Add safety timer that stops interception after a certain time
                 }
                 _isException = false;
                 _isNativeSearchActive = false;
-
-                UnhookStartMenuInput();
             }
         }
 
@@ -107,10 +98,12 @@ namespace EverythingToolbar.Helpers
                 var virtualKeyCode = (uint)Marshal.ReadInt32(lParam);
                 var isKeyDown = wParam == (IntPtr)WmKeydown || wParam == (IntPtr)WmSyskeydown;
 
+                // We never want to block the Windows key
                 if(Keyboard.IsKeyDown(Key.LWin) || Keyboard.IsKeyDown(Key.RWin))
                 {
-                    return CallNextHookEx(_llKeyboardHookId, nCode, wParam, lParam);
+                    return CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
                 }
+
                 // Check for exception keys (VK_LCONTROL, VK_RCONTROL, VK_LMENU)
                 if (virtualKeyCode == 0xA2 || virtualKeyCode == 0xA3 || virtualKeyCode == 0xA4)
                 {
@@ -118,42 +111,47 @@ namespace EverythingToolbar.Helpers
                     return (IntPtr)1;
                 }
 
-                // Determine key string
-                var keyboardState = new byte[255];
-                var keyString = "";
-                if (GetKeyboardState(keyboardState))
-                {
-                    var scanCode = MapVirtualKey(virtualKeyCode, 0);
-                    var inputLocaleIdentifier = GetKeyboardLayout(0);
-                    var keyStringbuilder = new StringBuilder();
-                    ToUnicodeEx(virtualKeyCode, scanCode, keyboardState, keyStringbuilder, 5, 0, inputLocaleIdentifier);
-                    keyString = keyStringbuilder.ToString();
-                    if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
-                        keyString = keyString.ToUpper();
-                }
 
-                if (keyString.Length > 0 && isKeyDown &&
-                    (char.IsLetterOrDigit(keyString, 0) ||
-                     char.IsPunctuation(keyString, 0) ||
-                     char.IsSymbol(keyString, 0)))
+                if (_isException)
                 {
                     // Send input to native search app
-                    if (_isException)
+                    _isNativeSearchActive = true;
+                    return CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
+                }
+                else
+                {
+                    // Queue keypress for replay in EverythingToolbar
+                    RecordedInputs.Add(new INPUT
                     {
-                        _isNativeSearchActive = true;
-                        return CallNextHookEx(_llKeyboardHookId, nCode, wParam, lParam);
-                    }
+                        type = InputKeyboard,
+                        u = new InputUnion
+                        {
+                            ki = new KEYBDINPUT
+                            {
+                                wVk = (ushort)virtualKeyCode,
+                                dwFlags = isKeyDown ? 0 : KeyeventfKeyup
+                            }
+                        }
+                    });
 
-                    // Send input to EverythingToolbar
-                    _searchTermQueue += keyString;
-
+                    _isInterceptingKeys = true;
                     CloseStartMenu();
-
                     return (IntPtr)1;
                 }
             }
 
-            return CallNextHookEx(_llKeyboardHookId, nCode, wParam, lParam);
+            return CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
+        }
+
+        public void ReplayRecordedInputs()
+        {
+            UnhookStartMenuInput();
+
+            foreach (var input in RecordedInputs)
+            {
+                keybd_event((byte)input.u.ki.wVk, (byte)input.u.ki.wScan, input.u.ki.dwFlags, input.u.ki.dwExtraInfo);
+            }
+            RecordedInputs.Clear();
         }
 
         private static void CloseStartMenu()
@@ -167,13 +165,14 @@ namespace EverythingToolbar.Helpers
         private void HookStartMenuInput()
         {
             UnhookStartMenuInput();
-            _llKeyboardHookCallback = StartMenuKeyboardHookCallback;
-            _llKeyboardHookId = SetWindowsHookEx(WhKeyboardLl, _llKeyboardHookCallback, IntPtr.Zero, 0);
+            _startMenuKeyboardHookCallback = StartMenuKeyboardHookCallback;
+            _startMenuKeyboardHookId = SetWindowsHookEx(WhKeyboardLl, _startMenuKeyboardHookCallback, IntPtr.Zero, 0);
         }
 
         private void UnhookStartMenuInput()
         {
-            UnhookWindowsHookEx(_llKeyboardHookId);
+            _isInterceptingKeys = false;
+            UnhookWindowsHookEx(_startMenuKeyboardHookId);
         }
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
@@ -211,19 +210,34 @@ namespace EverythingToolbar.Helpers
         [DllImport("user32.Dll")]
         static extern int PostMessage(IntPtr hWnd, UInt32 msg, int wParam, int lParam);
 
-        [DllImport("user32.dll")]
-        static extern bool GetKeyboardState(byte[] lpKeyState);
-
-        [DllImport("user32.dll")]
-        static extern uint MapVirtualKey(uint uCode, uint uMapType);
-
-        [DllImport("user32.dll")]
-        static extern IntPtr GetKeyboardLayout(uint idThread);
-
-        [DllImport("user32.dll")]
-        static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState, [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
-
         [DllImport("psapi.dll")]
         static extern uint GetModuleFileNameEx(IntPtr hWnd, IntPtr hModule, StringBuilder lpFileName, int nSize);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, IntPtr dwExtraInfo);
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct INPUT
+        {
+            public int type;
+            public InputUnion u;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        private struct InputUnion
+        {
+            [FieldOffset(0)]
+            public KEYBDINPUT ki;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct KEYBDINPUT
+        {
+            public ushort wVk;
+            public ushort wScan;
+            public uint dwFlags;
+            public uint time;
+            public IntPtr dwExtraInfo;
+        }
     }
 }
