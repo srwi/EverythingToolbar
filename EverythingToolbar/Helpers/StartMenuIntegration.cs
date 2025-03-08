@@ -10,7 +10,7 @@ namespace EverythingToolbar.Helpers
     public class StartMenuIntegration
     {
         public static readonly StartMenuIntegration Instance = new StartMenuIntegration();
-        private static readonly List<INPUT> RecordedInputs = new List<INPUT>();
+        private static readonly Queue<INPUT> RecordedInputs = new Queue<INPUT>();
 
         private static WinEventDelegate _focusedWindowChangedCallback;
         private static LowLevelKeyboardProc _startMenuKeyboardHookCallback;
@@ -18,8 +18,6 @@ namespace EverythingToolbar.Helpers
         private static IntPtr _startMenuKeyboardHookId = IntPtr.Zero;
 
         private static IntPtr _searchAppHwnd = IntPtr.Zero;
-
-        private static bool _isException;
         private static bool _isNativeSearchActive;
         private static bool _isInterceptingKeys;
 
@@ -75,7 +73,6 @@ namespace EverythingToolbar.Helpers
                     SearchWindow.Instance.Show();
                     // TODO: Add safety timer that stops interception after a certain time
                 }
-                _isException = false;
                 _isNativeSearchActive = false;
             }
         }
@@ -104,40 +101,31 @@ namespace EverythingToolbar.Helpers
                     return CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
                 }
 
-                // Check for exception keys (VK_LCONTROL, VK_RCONTROL, VK_LMENU)
-                if (virtualKeyCode == 0xA2 || virtualKeyCode == 0xA3 || virtualKeyCode == 0xA4)
+                // Check for exception key (LALT)
+                if (virtualKeyCode == 0xA4)
                 {
-                    _isException = isKeyDown;
-                    return (IntPtr)1;
-                }
-
-
-                if (_isException)
-                {
-                    // Send input to native search app
                     _isNativeSearchActive = true;
                     return CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
                 }
-                else
-                {
-                    // Queue keypress for replay in EverythingToolbar
-                    RecordedInputs.Add(new INPUT
-                    {
-                        type = InputKeyboard,
-                        u = new InputUnion
-                        {
-                            ki = new KEYBDINPUT
-                            {
-                                wVk = (ushort)virtualKeyCode,
-                                dwFlags = isKeyDown ? 0 : KeyeventfKeyup
-                            }
-                        }
-                    });
 
-                    _isInterceptingKeys = true;
-                    CloseStartMenu();
-                    return (IntPtr)1;
-                }
+                // Queue keypress for replay in EverythingToolbar
+                RecordedInputs.Enqueue(new INPUT
+                {
+                    type = InputKeyboard,
+                    u = new InputUnion
+                    {
+                        ki = new KEYBDINPUT
+                        {
+                            wVk = (ushort)virtualKeyCode,
+                            dwFlags = isKeyDown ? 0 : KeyeventfKeyup
+                        }
+                    }
+                });
+
+                ToolbarLogger.GetLogger<StartMenuIntegration>().Info("Logged keypress: " + virtualKeyCode);
+                _isInterceptingKeys = true;
+                CloseStartMenu();
+                return (IntPtr)1;
             }
 
             return CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
@@ -147,11 +135,11 @@ namespace EverythingToolbar.Helpers
         {
             UnhookStartMenuInput();
 
-            foreach (var input in RecordedInputs)
+            while (RecordedInputs.Count > 0)
             {
+                var input = RecordedInputs.Dequeue();
                 keybd_event((byte)input.u.ki.wVk, (byte)input.u.ki.wScan, input.u.ki.dwFlags, input.u.ki.dwExtraInfo);
             }
-            RecordedInputs.Clear();
         }
 
         private static void CloseStartMenu()
