@@ -109,7 +109,7 @@ namespace EverythingToolbar.Controls
         {
             if (PresentationSource.FromVisual(this) is HwndSource hwnd)
             {
-                NativeMethods.SetForegroundWindow(hwnd.Handle);
+                NativeMethods.ForciblySetForegroundWindow(hwnd.Handle);
             }
 
             TextBox.Focus();

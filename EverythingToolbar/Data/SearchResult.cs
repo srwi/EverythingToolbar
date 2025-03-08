@@ -223,7 +223,7 @@ namespace EverythingToolbar.Data
                     const int SEER_INVOKE_W32 = 5000;
                     const int WM_COPYDATA = 0x004A;
 
-                    var cd = new NativeMethods.COPYDATASTRUCT
+                    var cd = new NativeMethods.Copydatastruct
                     {
                         cbData = (FullPathAndFileName.Length + 1) * 2,
                         lpData = Marshal.StringToHGlobalUni(FullPathAndFileName),

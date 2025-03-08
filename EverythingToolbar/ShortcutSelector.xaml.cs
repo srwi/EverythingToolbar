@@ -4,7 +4,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using EverythingToolbar.Helpers;
 using NHotkey.Wpf;
 
 namespace EverythingToolbar
@@ -24,12 +23,11 @@ namespace EverythingToolbar
         private const int WmKeydown = 0x0100;
         private const int WmSyskeydown = 0x0104;
 
-
         public ShortcutSelector()
         {
             InitializeComponent();
 
-            StartMenuIntegration.Instance.Disable();
+            Helpers.StartMenuIntegration.Instance.Disable();
             HotkeyManager.Current.IsEnabled = false;
 
             Modifiers = (ModifierKeys)ToolbarSettings.User.ShortcutModifiers;
@@ -181,7 +179,7 @@ namespace EverythingToolbar
             ReleaseKeyboard();
             if (ToolbarSettings.User.IsReplaceStartMenuSearch)
             {
-                StartMenuIntegration.Instance.Enable();
+                Helpers.StartMenuIntegration.Instance.Enable();
             }
         }
 
