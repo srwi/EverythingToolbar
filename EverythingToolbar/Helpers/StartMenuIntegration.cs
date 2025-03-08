@@ -67,9 +67,8 @@ namespace EverythingToolbar.Helpers
             }
             else
             {
-                if (_searchAppHwnd != IntPtr.Zero && _isInterceptingKeys)
+                if (_isInterceptingKeys)
                 {
-                    _searchAppHwnd = IntPtr.Zero;
                     SearchWindow.Instance.Show();
                     // TODO: Add safety timer that stops interception after a certain time
                 }
@@ -109,6 +108,7 @@ namespace EverythingToolbar.Helpers
                 }
 
                 // Queue keypress for replay in EverythingToolbar
+                _isInterceptingKeys = true;
                 RecordedInputs.Enqueue(new INPUT
                 {
                     type = InputKeyboard,
@@ -123,8 +123,9 @@ namespace EverythingToolbar.Helpers
                 });
 
                 ToolbarLogger.GetLogger<StartMenuIntegration>().Info("Logged keypress: " + virtualKeyCode);
-                _isInterceptingKeys = true;
+
                 CloseStartMenu();
+
                 return (IntPtr)1;
             }
 
@@ -147,6 +148,7 @@ namespace EverythingToolbar.Helpers
             if (_searchAppHwnd != IntPtr.Zero)
             {
                 PostMessage(_searchAppHwnd, 0x0010, 0, 0);
+                _searchAppHwnd = IntPtr.Zero;
             }
         }
 
@@ -159,8 +161,8 @@ namespace EverythingToolbar.Helpers
 
         private void UnhookStartMenuInput()
         {
-            _isInterceptingKeys = false;
             UnhookWindowsHookEx(_startMenuKeyboardHookId);
+            _isInterceptingKeys = false;
         }
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
