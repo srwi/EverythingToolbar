@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace EverythingToolbar.Helpers
@@ -69,8 +70,16 @@ namespace EverythingToolbar.Helpers
             {
                 if (_isInterceptingKeys)
                 {
-                    SearchWindow.Instance.Show();
-                    // TODO: Add safety timer that stops interception after a certain time
+                    _isInterceptingKeys = false;
+                    TriggerSearchWindow();
+
+                    Task.Run(async () =>
+                    {
+                        // In case something goes wrong we make sure the hook is removed
+                        await Task.Delay(2000);
+                        RecordedInputs.Clear();
+                        UnhookStartMenuInput();
+                    });
                 }
                 _isNativeSearchActive = false;
             }
@@ -87,7 +96,7 @@ namespace EverythingToolbar.Helpers
             foregroundProcessName = processNameBuilder.ToString();
         }
 
-        private static IntPtr StartMenuKeyboardHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        private IntPtr StartMenuKeyboardHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && !_isNativeSearchActive)
             {
@@ -100,7 +109,7 @@ namespace EverythingToolbar.Helpers
                     return CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
                 }
 
-                // Check for exception key (LALT)
+                // Check for exception key (LALT)  // TODO: fixme: Not registering ALT key
                 if (virtualKeyCode == 0xA4)
                 {
                     _isNativeSearchActive = true;
@@ -122,8 +131,6 @@ namespace EverythingToolbar.Helpers
                     }
                 });
 
-                ToolbarLogger.GetLogger<StartMenuIntegration>().Info("Logged keypress: " + virtualKeyCode);
-
                 CloseStartMenu();
 
                 return (IntPtr)1;
@@ -132,7 +139,34 @@ namespace EverythingToolbar.Helpers
             return CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
         }
 
-        public void ReplayRecordedInputs()
+        private void OnSearchBoxGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            SearchWindow.Instance.SearchBox.GotKeyboardFocus -= OnSearchBoxGotKeyboardFocus;
+
+            if (SearchWindow.Instance.SearchBox.TextBox.IsLoaded)
+            {
+                SearchWindow.Instance.SearchBox.Focus();
+                ReplayRecordedInputs();
+                UnhookStartMenuInput();
+            }
+            else
+            {
+                SearchWindow.Instance.SearchBox.TextBox.Loaded += (s, args) =>
+                {
+                    SearchWindow.Instance.SearchBox.Focus();
+                    ReplayRecordedInputs();
+                    UnhookStartMenuInput();
+                };
+            }
+        }
+
+        private void TriggerSearchWindow()
+        {
+            SearchWindow.Instance.SearchBox.GotKeyboardFocus += OnSearchBoxGotKeyboardFocus;
+            SearchWindow.Instance.Show();
+        }
+
+        private void ReplayRecordedInputs()
         {
             UnhookStartMenuInput();
 
@@ -148,6 +182,7 @@ namespace EverythingToolbar.Helpers
             if (_searchAppHwnd != IntPtr.Zero)
             {
                 PostMessage(_searchAppHwnd, 0x0010, 0, 0);
+                NativeMethods.FocusTaskbarWindow();
                 _searchAppHwnd = IntPtr.Zero;
             }
         }
@@ -162,7 +197,7 @@ namespace EverythingToolbar.Helpers
         private void UnhookStartMenuInput()
         {
             UnhookWindowsHookEx(_startMenuKeyboardHookId);
-            _isInterceptingKeys = false;
+            _startMenuKeyboardHookId = IntPtr.Zero;
         }
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);

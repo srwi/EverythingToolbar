@@ -61,8 +61,8 @@ namespace EverythingToolbar
             }
             else if (e.Key == Key.Escape)
             {
-                Instance.Hide();
                 Keyboard.ClearFocus();
+                NativeMethods.FocusTaskbarWindow();
             }
             else if (e.Key == Key.Tab)
             {

@@ -5,6 +5,15 @@ namespace EverythingToolbar.Helpers
 {
     public class NativeMethods
     {
+        public static void FocusTaskbarWindow()
+        {
+            var taskbarHandle = FindWindow("Shell_TrayWnd", null);
+            if (taskbarHandle != IntPtr.Zero)
+            {
+                ForciblySetForegroundWindow(taskbarHandle);
+            }
+        }
+
         public static void ForciblySetForegroundWindow(IntPtr handle)
         {
             var foregroundWindow = GetForegroundWindow();
@@ -32,6 +41,9 @@ namespace EverythingToolbar.Helpers
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className, string windowTitle);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
         [DllImport("user32.dll")]
         public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, ref Copydatastruct lParam);
