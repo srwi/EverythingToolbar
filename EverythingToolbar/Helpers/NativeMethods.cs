@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using NLog;
 
 namespace EverythingToolbar.Helpers
 {
     public class NativeMethods
     {
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<NativeMethods>();
+
         public static void FocusTaskbarWindow()
         {
             var taskbarHandle = FindWindow("Shell_TrayWnd", null);
@@ -16,20 +19,22 @@ namespace EverythingToolbar.Helpers
 
         public static void ForciblySetForegroundWindow(IntPtr handle)
         {
+            var success = SetForegroundWindow(handle);
+            if (success)
+                return;
+
+            Logger.Debug("SetForegroundWindow failed, trying to force window to front...");
+
             var foregroundWindow = GetForegroundWindow();
             var foregroundThreadId = GetWindowThreadProcessId(foregroundWindow, out _);
             var currentThreadId = GetCurrentThreadId();
 
-            if (foregroundThreadId != currentThreadId)
-            {
-                AttachThreadInput(foregroundThreadId, currentThreadId, true);
-                SetForegroundWindow(handle);
-                AttachThreadInput(foregroundThreadId, currentThreadId, false);
-            }
-            else
-            {
-                SetForegroundWindow(handle);
-            }
+            if (foregroundThreadId == currentThreadId)
+                return;
+
+            AttachThreadInput(foregroundThreadId, currentThreadId, true);
+            SetForegroundWindow(handle);
+            AttachThreadInput(foregroundThreadId, currentThreadId, false);
         }
 
         [DllImport("user32.dll")]
