@@ -105,7 +105,7 @@ namespace EverythingToolbar.Behaviors
 
         private double GetScalingFactor()
         {
-            if (!(PresentationSource.FromVisual(AssociatedObject) is HwndSource hwndSource))
+            if (!(PresentationSource.FromVisual(PlacementTarget) is HwndSource hwndSource))
             {
                 Logger.Error("Failed to get display scaling factor. This may result in incorrect window placement.");
                 return 1.0;

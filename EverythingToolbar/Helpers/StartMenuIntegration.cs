@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NLog;
 
 namespace EverythingToolbar.Helpers
 {
@@ -12,6 +13,7 @@ namespace EverythingToolbar.Helpers
     {
         public static readonly StartMenuIntegration Instance = new StartMenuIntegration();
         private static readonly Queue<INPUT> RecordedInputs = new Queue<INPUT>();
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<StartMenuIntegration>();
 
         private static WinEventDelegate _focusedWindowChangedCallback;
         private static LowLevelKeyboardProc _startMenuKeyboardHookCallback;
@@ -23,10 +25,10 @@ namespace EverythingToolbar.Helpers
         private static bool _isInterceptingKeys;
 
         private const int WhKeyboardLl = 13;
-        private const int WmKeydown = 0x0100;
-        private const int WmSyskeydown = 0x0104;
+        private const int WmKeyDown = 0x0100;
+        private const int WmSyskeyDown = 0x0104;
         private const int InputKeyboard = 1;
-        private const uint KeyeventfKeyup = 0x0002;
+        private const uint KeyeventFKeyup = 0x0002;
 
         private StartMenuIntegration()
         {
@@ -58,6 +60,7 @@ namespace EverythingToolbar.Helpers
         private void OnFocusedWindowChanged(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
             GetForegroundWindowAndProcess(out var foregroundHwnd, out var foregroundProcessName);
+            Logger.Debug($"Foreground process: {foregroundProcessName}");
 
             if (foregroundProcessName.EndsWith("SearchApp.exe") ||
                 foregroundProcessName.EndsWith("SearchUI.exe") ||
@@ -81,6 +84,10 @@ namespace EverythingToolbar.Helpers
                         UnhookStartMenuInput();
                     });
                 }
+                else
+                {
+                    UnhookStartMenuInput();
+                }
                 _isNativeSearchActive = false;
             }
         }
@@ -101,7 +108,7 @@ namespace EverythingToolbar.Helpers
             if (nCode >= 0 && !_isNativeSearchActive)
             {
                 var virtualKeyCode = (uint)Marshal.ReadInt32(lParam);
-                var isKeyDown = wParam == (IntPtr)WmKeydown || wParam == (IntPtr)WmSyskeydown;
+                var isKeyDown = wParam == (IntPtr)WmKeyDown || wParam == (IntPtr)WmSyskeyDown;
 
                 // We never want to block the Windows key
                 if(Keyboard.IsKeyDown(Key.LWin) || Keyboard.IsKeyDown(Key.RWin))
@@ -109,7 +116,7 @@ namespace EverythingToolbar.Helpers
                     return CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
                 }
 
-                // Check for exception key (LALT)  // TODO: fixme: Not registering ALT key
+                // Check for exception key (LALT)
                 if (virtualKeyCode == 0xA4)
                 {
                     _isNativeSearchActive = true;
@@ -126,7 +133,7 @@ namespace EverythingToolbar.Helpers
                         ki = new KEYBDINPUT
                         {
                             wVk = (ushort)virtualKeyCode,
-                            dwFlags = isKeyDown ? 0 : KeyeventfKeyup
+                            dwFlags = isKeyDown ? 0 : KeyeventFKeyup
                         }
                     }
                 });
