@@ -17,10 +17,13 @@ namespace EverythingToolbar.Helpers
 
         public void Initialize(EventHandler<HotkeyEventArgs> handler)
         {
-            TrySetShortcut(
-                (Key)ToolbarSettings.User.ShortcutKey,
-                (ModifierKeys)ToolbarSettings.User.ShortcutModifiers,
-                handler);
+            var shortcutKey = (Key)ToolbarSettings.User.ShortcutKey;
+            var shortcutModifiers = (ModifierKeys)ToolbarSettings.User.ShortcutModifiers;
+
+            if (shortcutKey == Key.None && shortcutModifiers == ModifierKeys.None)
+                return;
+
+            TrySetShortcut(shortcutKey, shortcutModifiers, handler);
         }
 
         private void TrySetShortcut(Key key, ModifierKeys modifiers, EventHandler<HotkeyEventArgs> handler)
