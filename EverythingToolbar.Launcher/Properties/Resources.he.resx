@@ -127,54 +127,54 @@
     <value>הסתרה</value>
   </data>
   <data name="ContextMenuQuit" xml:space="preserve">
-    <value>צא</value>
+    <value>יציאה</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>הפעל את מסייע ההגדרה...</value>
+    <value>הפעלת מסייע ההגדרה...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>כדי להצמיד את EverythingToolbar לשורת המשימות, לחץ לחיצה ימנית על הסמל שלו ובחר 'הצמד לשורת המשימות'.</value>
+    <value>כדי להצמיד את EverythingToolbar לשורת המשימות, לחצו לחיצה ימנית על הסמל של היישום ובחרו 'הצמד לשורת המשימות'.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. הצמד לשורת המשימות</value>
+    <value>2. הצמדה לשורת המשימות</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>נדרשת הפעלה מחדש של סייר הקבצים כדי לעדכן את סמל שורת המשימות. האם תרצה להפעיל אותו מחדש עכשיו?</value>
+    <value>נדרשת הפעלה מחדש של סייר הקבצים כדי לעדכן את סמל שורת המשימות. האם תרצו להפעיל את הסייר קבצים מחדש עכשיו?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>הפעל מחדש את סייר הקבצים</value>
+    <value>הפעלה מחדש של סייר הקבצים</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
     <value>לחלופין, ניתן להסתיר את סמל החיפוש המקורי של Windows.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. הסתר את החיפוש של Windows</value>
+    <value>3. הסתרת סמל החיפוש המקורי של Windows</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
     <value>מומלץ להפעיל את EverythingToolbar באופן אוטומטי בעת הפעלת המערכת.</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. הגדר הפעלה אוטומטית</value>
+    <value>4. הגדרת הפעלה אוטומטית</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>מסייע ההגדרה של EverythingToolbar</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>בחר אחד מסמלי שורת המשימות הבאים:</value>
+    <value>בחרו את אחד מסמלי שורת המשימות הבאים:</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
     <value>1. סמל שורת המשימות</value>
   </data>
   <data name="SetupAssistantFifthStepText" xml:space="preserve">
-    <value>על ידי הפעלת סמל מגש המערכת תוכל לצאת מתהליך הרקע של EverythingToolbar בכל עת. בלעדיו, תמיד ניתן לסגור את EverythingToolbar דרך מנהל המשימות.</value>
+    <value>הפעלת סמליל מגש המערכת תסייע לכם לצאת מתהליך הרקע של EverythingToolbar בכל עת בקלות. אם תשביתו את הסמליל תוכלו לסגור את EverythingToolbar דרך מנהל המשימות.</value>
   </data>
   <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
-    <value>5. הגדר את סמל מגש המערכת</value>
+    <value>5. הגדרת סמליל מגש המערכת</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>האם אתה בטוח שברצונך לצאת ממסייע ההגדרה? סרגל הכלים יהיה נגיש רק באמצעות קיצור המקלדת. תוכל לגשת שוב אל מסייע ההגדרה דרך סמל מגש המערכת כדי להצמיד את סמל החיפוש לשורת המשימות.</value>
+    <value>האם אתם רוצים לצאת ממסייע ההגדרה? סרגל הכלים יהיה נגיש רק באמצעות קיצור המקלדת. תוכלו לגשת שוב אל מסייע ההגדרה דרך סמליל מגש המערכת בכדי להצמיד את סמל החיפוש לשורת המשימות.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>צא ממסייע ההגדרה</value>
+    <value>יציאה ממסייע ההגדרה</value>
   </data>
 </root>
