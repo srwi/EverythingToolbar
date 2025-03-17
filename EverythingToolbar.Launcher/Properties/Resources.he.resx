@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClose" xml:space="preserve">
-    <value>סגור</value>
+    <value>סגירה</value>
   </data>
   <data name="CheckboxEnable" xml:space="preserve">
-    <value>פעיל</value>
+    <value>מופעל</value>
   </data>
   <data name="CheckboxHide" xml:space="preserve">
-    <value>הסתר</value>
+    <value>הסתרה</value>
   </data>
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>צא</value>
