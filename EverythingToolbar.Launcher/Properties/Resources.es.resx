@@ -166,13 +166,13 @@
     <value>1. Icono de la barra de tareas</value>
   </data>
   <data name="SetupAssistantFifthStepText" xml:space="preserve">
-    <value>By enabling the system tray icon you can quit the EverythingToolbar background process at any time. Without it, EverythingToolbar can always be quit via the task manager.</value>
+    <value>Al habilitar el icono de la bandeja del sistema se puede salir del proceso en segundo plano de EverythingToolbar en cualquier momento. En caso contrario, siempre se puede salir de EverythingToolbar a través del administrador de tareas.</value>
   </data>
   <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
     <value>5. Configurar icono de la bandeja del sistema</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+    <value>¿Está seguro de que desea salir del asistente de configuración? Solo se podrá acceder a EverythingToolbar mediante el atajo de teclado. Se puede acceder de nuevo al asistente de configuración a través del icono de la bandeja del sistema para anclar el icono de búsqueda a la barra de tareas.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
     <value>Salir del asistente de configuración</value>
