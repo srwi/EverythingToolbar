@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shell;
@@ -124,9 +125,7 @@ namespace EverythingToolbar
             ShowActivated = TaskbarStateManager.Instance.IsIcon;
             base.Show();
 
-            // Bring to top and immediately behind taskbar
-            Topmost = true;
-            Topmost = false;
+            SetTopmostBelowTaskbar();
 
             Showing?.Invoke(this, EventArgs.Empty);
         }
@@ -288,8 +287,8 @@ namespace EverythingToolbar
             {
                 From = from,
                 To = to,
-                Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.2),
-                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+                Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.25),
+                EasingFunction = new PowerEase { EasingMode = EasingMode.EaseOut, Power = 5 }
             });
 
             var fromThickness = new Thickness(0);
@@ -312,16 +311,13 @@ namespace EverythingToolbar
             {
                 From = fromThickness,
                 To = new Thickness(0),
-                Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.4),
-                EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut }
+                Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.3),
+                EasingFunction = new PowerEase { EasingMode = EasingMode.EaseOut, Power = 5 }
             });
         }
 
         private void AnimateHideWin10(Edge taskbarEdge)
         {
-            Topmost = true;
-            Topmost = false;
-
             BeginAnimation(OpacityProperty, new DoubleAnimation
             {
                 From = 1,
@@ -361,9 +357,6 @@ namespace EverythingToolbar
 
         private void AnimateHideWin11(Edge taskbarEdge)
         {
-            Topmost = true;
-            Topmost = false;
-
             DependencyProperty property = null;
             double from = 0;
             double to = 0;
@@ -394,8 +387,8 @@ namespace EverythingToolbar
             {
                 From = from,
                 To = to,
-                Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.2),
-                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseIn },
+                Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.25),
+                EasingFunction = new PowerEase { EasingMode = EasingMode.EaseIn, Power = 6 },
             };
             animation.Completed += OnHidden;
             BeginAnimation(property, animation);
@@ -416,7 +409,7 @@ namespace EverythingToolbar
                     toThickness = new Thickness(-50, 0, 50, 0);
                     break;
             }
-            BeginAnimation(MarginProperty, new ThicknessAnimation
+            ContentGrid.BeginAnimation(MarginProperty, new ThicknessAnimation
             {
                 To = toThickness,
                 Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.5),
@@ -438,6 +431,31 @@ namespace EverythingToolbar
         {
             if (_dwmFlushOnRender)
                 NativeMethods.DwmFlush();
+        }
+
+        private void SetTopmostBelowTaskbar()
+        {
+            const int hwndTopmost = -1;
+            const int swpNoactivate = 0x0010;
+            const int swpShowwindow = 0x0040;
+            const int swpNomove = 0x0002;
+            const int swpNosize = 0x0001;
+
+            var hwnd = new WindowInteropHelper(this).Handle;
+            var taskbarHwnd = NativeMethods.FindWindow("Shell_TrayWnd", null);
+
+            if (taskbarHwnd != IntPtr.Zero)
+            {
+                // Set window above other windows but below the taskbar
+                NativeMethods.SetWindowPos(hwnd, taskbarHwnd, 0, 0, 0, 0,
+                    swpNomove | swpNosize | swpNoactivate | swpShowwindow);
+            }
+            else
+            {
+                // Regular topmost
+                NativeMethods.SetWindowPos(hwnd, (IntPtr)hwndTopmost, 0, 0, 0, 0,
+                    swpNomove | swpNosize | swpNoactivate | swpShowwindow);
+            }
         }
     }
 }
