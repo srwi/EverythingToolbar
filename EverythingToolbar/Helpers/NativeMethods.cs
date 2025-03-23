@@ -62,6 +62,9 @@ namespace EverythingToolbar.Helpers
         [DllImport("kernel32.dll")]
         private static extern uint GetCurrentThreadId();
 
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmFlush();
+
         [StructLayout(LayoutKind.Sequential)]
         public struct Copydatastruct
         {

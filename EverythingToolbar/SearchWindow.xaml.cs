@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shell;
 using EverythingToolbar.Helpers;
@@ -13,7 +14,9 @@ namespace EverythingToolbar
         public event EventHandler<EventArgs> Hiding;
         public event EventHandler<EventArgs> Showing;
 
-        private static readonly int DropShadowBlurRadius = 12;
+        private const int DropShadowBlurRadius = 12;
+
+        private bool _dwmFlushOnRender;
 
         private SearchWindow()
         {
@@ -32,6 +35,7 @@ namespace EverythingToolbar
                 };
             }
 
+            CompositionTarget.Rendering += OnCompositionTargetRendering;
             EventDispatcher.Instance.GlobalKeyEvent += OnPreviewKeyDown;
             PreviewKeyDown += OnPreviewKeyDown;
         }
@@ -106,6 +110,8 @@ namespace EverythingToolbar
             BeginAnimation(LeftProperty, new DoubleAnimation { To = 100000, Duration = TimeSpan.Zero });
 
             base.Hide();
+
+            _dwmFlushOnRender = false;
             
             EverythingSearch.Instance.Reset();
         }
@@ -246,7 +252,7 @@ namespace EverythingToolbar
                 From = fromThickness,
                 To = new Thickness(0),
                 Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.8),
-                EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut },
+                EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut }
             });
         }
 
@@ -410,7 +416,7 @@ namespace EverythingToolbar
                     toThickness = new Thickness(-50, 0, 50, 0);
                     break;
             }
-            ContentGrid.BeginAnimation(MarginProperty, new ThicknessAnimation
+            BeginAnimation(MarginProperty, new ThicknessAnimation
             {
                 To = toThickness,
                 Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.5),
@@ -420,10 +426,18 @@ namespace EverythingToolbar
 
         public void AnimateHide(Edge taskbarEdge)
         {
+            _dwmFlushOnRender = true;
+
             if (Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
                 AnimateHideWin11(taskbarEdge);
             else
                 AnimateHideWin10(taskbarEdge);
+        }
+
+        private void OnCompositionTargetRendering(object sender, EventArgs e)
+        {
+            if (_dwmFlushOnRender)
+                NativeMethods.DwmFlush();
         }
     }
 }
