@@ -392,29 +392,6 @@ namespace EverythingToolbar
             };
             animation.Completed += OnHidden;
             BeginAnimation(property, animation);
-
-            var toThickness = new Thickness(0);
-            switch (taskbarEdge)
-            {
-                case Edge.Top:
-                    toThickness = new Thickness(0, -50, 0, 50);
-                    break;
-                case Edge.Right:
-                    toThickness = new Thickness(50, 0, -50, 0);
-                    break;
-                case Edge.Bottom:
-                    toThickness = new Thickness(0, 50, 0, -50);
-                    break;
-                case Edge.Left:
-                    toThickness = new Thickness(-50, 0, 50, 0);
-                    break;
-            }
-            ContentGrid.BeginAnimation(MarginProperty, new ThicknessAnimation
-            {
-                To = toThickness,
-                Duration = ToolbarSettings.User.IsAnimationsDisabled ? TimeSpan.Zero : TimeSpan.FromSeconds(0.5),
-                EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseIn }
-            });
         }
 
         public void AnimateHide(Edge taskbarEdge)

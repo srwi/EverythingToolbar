@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -8,8 +10,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Data;
 using System.Windows.Forms;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
@@ -19,6 +19,245 @@ using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 namespace EverythingToolbar
 {
+    public interface IItemsProvider<T>
+    {
+        int FetchCount();
+        IList<T> FetchRange(int startIndex, int count);
+    }
+
+    public sealed class VirtualizingCollection<T> : IList<T>, IList
+    {
+        private int _count = -1;
+
+        public VirtualizingCollection(IItemsProvider<T> itemsProvider, int pageSize, int pageTimeout)
+        {
+            ItemsProvider = itemsProvider;
+            PageSize = pageSize;
+            PageTimeout = pageTimeout;
+        }
+
+        public VirtualizingCollection(IItemsProvider<T> itemsProvider, int pageSize)
+        {
+            ItemsProvider = itemsProvider;
+            PageSize = pageSize;
+        }
+
+        public VirtualizingCollection(IItemsProvider<T> itemsProvider)
+        {
+            ItemsProvider = itemsProvider;
+        }
+
+
+        private IItemsProvider<T> ItemsProvider { get; }
+
+        private int PageSize { get; } = 100;
+
+        private long PageTimeout { get; } = 10000;
+
+
+        public int Count
+        {
+            get
+            {
+                if (_count == -1)
+                {
+                    LoadCount();
+                }
+                return _count;
+            }
+            private set => _count = value;
+        }
+
+        public T this[int index]
+        {
+            get
+            {
+                // determine which page and offset within page
+                int pageIndex = index / PageSize;
+                int pageOffset = index % PageSize;
+
+                // request primary page
+                RequestPage(pageIndex);
+
+                // if accessing upper 50% then request next page
+                if ( pageOffset > PageSize/2 && pageIndex < Count / PageSize)
+                    RequestPage(pageIndex + 1);
+
+                // if accessing lower 50% then request prev page
+                if (pageOffset < PageSize/2 && pageIndex > 0)
+                    RequestPage(pageIndex - 1);
+
+                // remove stale pages
+                CleanUpPages();
+
+                // defensive check in case of async load
+                if (_pages[pageIndex] == null)
+                    return default(T);
+
+                // return requested item
+                return _pages[pageIndex][pageOffset];
+            }
+            set => throw new NotSupportedException();
+        }
+
+        object IList.this[int index]
+        {
+            get => this[index];
+            set => throw new NotSupportedException();
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                yield return this[i];
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public void Add(T item)
+        {
+            throw new NotSupportedException();
+        }
+
+        int IList.Add(object value)
+        {
+            throw new NotSupportedException();
+        }
+
+        bool IList.Contains(object value)
+        {
+            return Contains((T)value);
+        }
+
+        public bool Contains(T item)
+        {
+            return false;
+        }
+
+        public void Clear()
+        {
+            throw new NotSupportedException();
+        }
+
+        int IList.IndexOf(object value)
+        {
+            return IndexOf((T) value);
+        }
+
+        public int IndexOf(T item)
+        {
+            return -1;
+        }
+
+        public void Insert(int index, T item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList.Insert(int index, object value)
+        {
+            Insert(index, (T)value);
+        }
+
+        public void RemoveAt(int index)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList.Remove(object value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public bool Remove(T item)
+        {
+            throw new NotSupportedException();
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            throw new NotSupportedException();
+        }
+
+        void ICollection.CopyTo(Array array, int index)
+        {
+            throw new NotSupportedException();
+        }
+
+        public object SyncRoot => this;
+
+        public bool IsSynchronized => false;
+
+        public bool IsReadOnly => true;
+
+        public bool IsFixedSize => false;
+
+        private readonly Dictionary<int, IList<T>> _pages = new Dictionary<int, IList<T>>();
+        private readonly Dictionary<int, DateTime> _pageTouchTimes = new Dictionary<int, DateTime>();
+
+        private void CleanUpPages()
+        {
+            List<int> keys = new List<int>(_pageTouchTimes.Keys);
+            foreach (int key in keys)
+            {
+                // page 0 is a special case, since WPF ItemsControl access the first item frequently
+                if ( key != 0 && (DateTime.Now - _pageTouchTimes[key]).TotalMilliseconds > PageTimeout )
+                {
+                    _pages.Remove(key);
+                    _pageTouchTimes.Remove(key);
+                    Trace.WriteLine("Removed Page: " + key);
+                }
+            }
+        }
+
+        private void PopulatePage(int pageIndex, IList<T> page)
+        {
+            Trace.WriteLine("Page populated: "+pageIndex);
+            if ( _pages.ContainsKey(pageIndex) )
+                _pages[pageIndex] = page;
+        }
+
+        private void RequestPage(int pageIndex)
+        {
+            if (!_pages.ContainsKey(pageIndex))
+            {
+                _pages.Add(pageIndex, null);
+                _pageTouchTimes.Add(pageIndex, DateTime.Now);
+                Trace.WriteLine("Added page: " + pageIndex);
+                LoadPage(pageIndex);
+            }
+            else
+            {
+                _pageTouchTimes[pageIndex] = DateTime.Now;
+            }
+        }
+
+        private void LoadCount()
+        {
+            Count = FetchCount();
+        }
+
+        private void LoadPage(int pageIndex)
+        {
+            PopulatePage(pageIndex, FetchPage(pageIndex));
+        }
+
+        private IList<T> FetchPage(int pageIndex)
+        {
+            return ItemsProvider.FetchRange(pageIndex*PageSize, PageSize);
+        }
+
+        private int FetchCount()
+        {
+            return ItemsProvider.FetchCount();
+        }
+    }
+
     public class SearchResultsCollection<T> : ObservableCollection<T>
     {
         public void AddSilent(T item)
@@ -39,7 +278,7 @@ namespace EverythingToolbar
         }
     }
 
-    public class EverythingSearch : INotifyPropertyChanged
+    public class EverythingSearch : INotifyPropertyChanged, IItemsProvider<SearchResult>
     {
         private string _searchTerm = "";
         public string SearchTerm
@@ -51,9 +290,7 @@ namespace EverythingToolbar
                     return;
 
                 _searchTerm = value;
-
-                QueryBatch(append: false);
-
+                // QueryBatch(append: false);
                 NotifyPropertyChanged();
             }
         }
@@ -69,11 +306,7 @@ namespace EverythingToolbar
 
                 _currentFilter = value;
                 ToolbarSettings.User.LastFilter = value.Name;
-                
-                lock (_lock)
-                    SearchResults.Clear();
-                QueryBatch(append: false);
-
+                // QueryBatch(append: false);
                 NotifyPropertyChanged();
             }
         }
@@ -90,8 +323,7 @@ namespace EverythingToolbar
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public readonly SearchResultsCollection<SearchResult> SearchResults = new SearchResultsCollection<SearchResult>();
+        public VirtualizingCollection<SearchResult> SearchResults { get; private set; }
 
         public static readonly EverythingSearch Instance = new EverythingSearch();
 
@@ -102,7 +334,7 @@ namespace EverythingToolbar
         private EverythingSearch()
         {
             ToolbarSettings.User.PropertyChanged += OnSettingChanged;
-            BindingOperations.EnableCollectionSynchronization(SearchResults, _lock);
+            SearchResults = new VirtualizingCollection<SearchResult>(this, (int)BATCH_SIZE);
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -128,7 +360,8 @@ namespace EverythingToolbar
                 e.PropertyName == nameof(ToolbarSettings.User.IsThumbnailsEnabled) ||
                 e.PropertyName == nameof(ToolbarSettings.User.IsImportFilters))
             {
-                QueryBatch(append: false);
+                // QueryBatch(append: false);
+                NotifyPropertyChanged();
             }
         }
 
@@ -181,94 +414,6 @@ namespace EverythingToolbar
             return CurrentFilter.GetSearchPrefix() + ExpandDefaultMacros(SearchTerm);
         }
 
-        public void QueryBatch(bool append)
-        {
-            _cancellationTokenSource?.Cancel();
-
-            if (SearchTerm.Length == 0 && ToolbarSettings.User.IsHideEmptySearchResults)
-            {
-                lock (_lock)
-                {
-                    SearchResults.Clear();
-                    TotalResultsNumber = null;
-                }
-                return;
-            }
-
-            _cancellationTokenSource = new CancellationTokenSource();
-            var cancellationToken = _cancellationTokenSource.Token;
-
-            Task.Run(() =>
-            {
-                try
-                {
-                    lock (_lock)
-                    {
-                        if (!append)
-                            SearchResults.ClearSilent();
-                    }
-
-                    const uint flags = EVERYTHING_FULL_PATH_AND_FILE_NAME | EVERYTHING_HIGHLIGHTED_PATH |
-                                       EVERYTHING_HIGHLIGHTED_FILE_NAME | EVERYTHING_REQUEST_SIZE |
-                                       EVERYTHING_REQUEST_DATE_MODIFIED;
-
-                    var search = BuildFinalSearchTerm();
-                    _logger.Debug("Searching: " + search);
-                    Everything_SetSearchW(search);
-                    Everything_SetRequestFlags(flags);
-                    Everything_SetSort(CalculateEverythingSortType(ToolbarSettings.User.SortBy, ToolbarSettings.User.IsSortDescending));
-                    Everything_SetMatchCase(ToolbarSettings.User.IsMatchCase);
-                    Everything_SetMatchPath(ToolbarSettings.User.IsMatchPath);
-                    Everything_SetMatchWholeWord(ToolbarSettings.User.IsMatchWholeWord && !ToolbarSettings.User.IsRegExEnabled);
-                    Everything_SetRegex(ToolbarSettings.User.IsRegExEnabled);
-                    Everything_SetMax(BATCH_SIZE);
-                    lock (_lock)
-                        Everything_SetOffset((uint)SearchResults.Count);
-
-                    if (!Everything_QueryW(true))
-                    {
-                        HandleError((ErrorCode)Everything_GetLastError());
-                        return;
-                    }
-
-                    var batchResultsCount = Everything_GetNumResults();
-                    lock (_lock)
-                        TotalResultsNumber = (int)Everything_GetTotResults();
-
-                    for (uint i = 0; i < batchResultsCount; i++)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-
-                        var highlightedPath = Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i));
-                        var highlightedFileName = Marshal.PtrToStringUni(Everything_GetResultHighlightedFileName(i));
-                        var isFile = Everything_IsFileResult(i);
-                        var fullPathAndFilename = new StringBuilder(4096);
-                        Everything_GetResultFullPathNameW(i, fullPathAndFilename, 4096);
-                        Everything_GetResultSize(i, out var fileSize);
-                        Everything_GetResultDateModified(i, out var dateModified);
-
-                        lock (_lock)
-                        {
-                            SearchResults.AddSilent(new SearchResult
-                            {
-                                HighlightedPath = highlightedPath,
-                                HighlightedFileName = highlightedFileName,
-                                FullPathAndFileName = fullPathAndFilename.ToString(),
-                                IsFile = isFile,
-                                DateModified = dateModified,
-                                FileSize = fileSize
-                            });
-                        }
-                    }
-                    
-                    if (!append || batchResultsCount > 0)
-                        lock (_lock)
-                            SearchResults.NotifyCollectionChanged();
-                }
-                catch (OperationCanceledException) { }
-            }, cancellationToken);
-        }
-
         public void Reset()
         {
             if (ToolbarSettings.User.IsEnableHistory)
@@ -282,7 +427,8 @@ namespace EverythingToolbar
                 return;
             }
 
-            QueryBatch(append: false);
+            // QueryBatch(append: false);
+            NotifyPropertyChanged();
         }
 
         public void CycleFilters(int offset = 1)
@@ -483,5 +629,76 @@ namespace EverythingToolbar
         private static extern bool Everything_GetResultSize(UInt32 nIndex, out long lpFileSize);
         [DllImport("Everything64.dll")]
         private static extern bool Everything_GetResultDateModified(UInt32 nIndex, out FILETIME lpFileTime);
+
+        public int FetchCount()
+        {
+            var search = BuildFinalSearchTerm();
+            Everything_SetSearchW(search);
+            Everything_SetRequestFlags(EVERYTHING_REQUEST_SIZE | EVERYTHING_REQUEST_DATE_MODIFIED);
+            Everything_SetSort(CalculateEverythingSortType(ToolbarSettings.User.SortBy, ToolbarSettings.User.IsSortDescending));
+            Everything_SetMatchCase(ToolbarSettings.User.IsMatchCase);
+            Everything_SetMatchPath(ToolbarSettings.User.IsMatchPath);
+            Everything_SetMatchWholeWord(ToolbarSettings.User.IsMatchWholeWord && !ToolbarSettings.User.IsRegExEnabled);
+            Everything_SetRegex(ToolbarSettings.User.IsRegExEnabled);
+            Everything_SetMax(BATCH_SIZE);
+            Everything_SetOffset(0);
+
+            if (!Everything_QueryW(true))
+            {
+                HandleError((ErrorCode)Everything_GetLastError());
+                return 0;
+            }
+
+            return (int)Everything_GetTotResults();
+        }
+
+        public IList<SearchResult> FetchRange(int startIndex, int count)
+        {
+            var search = BuildFinalSearchTerm();
+            Everything_SetSearchW(search);
+            const uint flags = EVERYTHING_FULL_PATH_AND_FILE_NAME | EVERYTHING_HIGHLIGHTED_PATH |
+                               EVERYTHING_HIGHLIGHTED_FILE_NAME | EVERYTHING_REQUEST_SIZE |
+                               EVERYTHING_REQUEST_DATE_MODIFIED;
+            Everything_SetRequestFlags(flags);
+            Everything_SetSort(CalculateEverythingSortType(ToolbarSettings.User.SortBy, ToolbarSettings.User.IsSortDescending));
+            Everything_SetMatchCase(ToolbarSettings.User.IsMatchCase);
+            Everything_SetMatchPath(ToolbarSettings.User.IsMatchPath);
+            Everything_SetMatchWholeWord(ToolbarSettings.User.IsMatchWholeWord && !ToolbarSettings.User.IsRegExEnabled);
+            Everything_SetRegex(ToolbarSettings.User.IsRegExEnabled);
+            Everything_SetMax((uint)count);
+            Everything_SetOffset((uint)startIndex);
+
+            if (!Everything_QueryW(true))
+            {
+                HandleError((ErrorCode)Everything_GetLastError());
+                return new List<SearchResult>();
+            }
+
+            var results = new List<SearchResult>();
+            var batchResultsCount = Everything_GetNumResults();
+
+            for (uint i = 0; i < batchResultsCount; i++)
+            {
+                var highlightedPath = Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i));
+                var highlightedFileName = Marshal.PtrToStringUni(Everything_GetResultHighlightedFileName(i));
+                var isFile = Everything_IsFileResult(i);
+                var fullPathAndFilename = new StringBuilder(4096);
+                Everything_GetResultFullPathNameW(i, fullPathAndFilename, 4096);
+                Everything_GetResultSize(i, out var fileSize);
+                Everything_GetResultDateModified(i, out var dateModified);
+
+                results.Add(new SearchResult
+                {
+                    HighlightedPath = highlightedPath,
+                    HighlightedFileName = highlightedFileName,
+                    FullPathAndFileName = fullPathAndFilename.ToString(),
+                    IsFile = isFile,
+                    DateModified = dateModified,
+                    FileSize = fileSize
+                });
+            }
+
+            return results;
+        }
     }
 }

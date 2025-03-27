@@ -178,14 +178,14 @@ namespace EverythingToolbar.Controls
 
         private void OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            if (e.VerticalChange <= 0)
-                return;
-            
-            if (e.VerticalOffset > e.ExtentHeight - 2 * e.ViewportHeight)
-            {
-                EverythingSearch.Instance.QueryBatch(append: true);
-                ScrollToVerticalOffset(e.VerticalOffset);
-            }
+            // if (e.VerticalChange <= 0)
+            //     return;
+            //
+            // if (e.VerticalOffset > e.ExtentHeight - 2 * e.ViewportHeight)
+            // {
+            //     EverythingSearch.Instance.QueryBatch(append: true);
+            //     ScrollToVerticalOffset(e.VerticalOffset);
+            // }
         }
 
         private void ScrollToVerticalOffset(double verticalOffset)

@@ -67,6 +67,7 @@
               ScrollViewer.ScrollChanged="OnScrollChanged"
               ScrollViewer.VerticalScrollBarVisibility="Visible"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+              VirtualizingPanel.IsVirtualizing="True"
               VirtualizingPanel.CacheLengthUnit="Page"
               VirtualizingPanel.CacheLength="1"
               VirtualizingPanel.VirtualizationMode="Recycling"

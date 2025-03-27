@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -20,10 +21,10 @@ namespace EverythingToolbar.Helpers
         InCacheOnly = 0x10,
     }
 
-    // Based on: https://stackoverflow.com/questions/21751747/extract-thumbnail-for-any-file-in-windows
     public class WindowsThumbnailProvider
     {
         private const string IShellItem2Guid = "7E9FB0D3-919F-4307-AB2E-9B1860310C93";
+        private static readonly ConcurrentDictionary<string, BitmapSource> ThumbnailCache = new ConcurrentDictionary<string, BitmapSource>();
 
         [DllImport("shell32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         internal static extern int SHCreateItemFromParsingName(
@@ -42,8 +43,8 @@ namespace EverythingToolbar.Helpers
         internal interface IShellItem
         {
             void BindToHandler(IntPtr pbc,
-                [MarshalAs(UnmanagedType.LPStruct)]Guid bhid,
-                [MarshalAs(UnmanagedType.LPStruct)]Guid riid,
+                [MarshalAs(UnmanagedType.LPStruct)] Guid bhid,
+                [MarshalAs(UnmanagedType.LPStruct)] Guid riid,
                 out IntPtr ppv);
 
             void GetParent(out IShellItem ppsi);
@@ -89,9 +90,9 @@ namespace EverythingToolbar.Helpers
         {
             [PreserveSig]
             HResult GetImage(
-            [In, MarshalAs(UnmanagedType.Struct)] NativeSize size,
-            [In] ThumbnailOptions flags,
-            [Out] out IntPtr phbm);
+                [In, MarshalAs(UnmanagedType.Struct)] NativeSize size,
+                [In] ThumbnailOptions flags,
+                [Out] out IntPtr phbm);
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -100,14 +101,20 @@ namespace EverythingToolbar.Helpers
             private int width;
             private int height;
 
-            public int Width { set { width = value; } }
-            public int Height { set { height = value; } }
-        }
+            public int Width
+            {
+                set { width = value; }
+            }
 
+            public int Height
+            {
+                set { height = value; }
+            }
+        }
 
         public static BitmapSource GetThumbnail(string fileName, int width, int height)
         {
-            string[] ImageExtensions =
+            string[] imageExtensions =
             {
                 ".png",
                 ".jpg",
@@ -119,16 +126,26 @@ namespace EverythingToolbar.Helpers
             };
 
             var extension = Path.GetExtension(fileName).ToLower();
+            var isDirectory = Directory.Exists(fileName);
 
-            ThumbnailOptions to;
-            if (Directory.Exists(fileName) || !ToolbarSettings.User.IsThumbnailsEnabled)
-                to = ThumbnailOptions.IconOnly;
-            else if (ImageExtensions.Contains(extension) && File.Exists(fileName))
-                to = ThumbnailOptions.ThumbnailOnly;
+            ThumbnailOptions options;
+
+            if (isDirectory || !ToolbarSettings.User.IsThumbnailsEnabled)
+                options = ThumbnailOptions.IconOnly;
+            else if (imageExtensions.Contains(extension) && File.Exists(fileName))
+                options = ThumbnailOptions.ThumbnailOnly;
             else
-                to = ThumbnailOptions.None;
+                options = ThumbnailOptions.None;
 
-            var hBitmap = GetHBitmap(Path.GetFullPath(fileName), width, height, to);
+            var cacheKey = $"{extension}_{width}_{height}_{options}";
+
+            // Check if the thumbnail is already in the cache
+            if (ThumbnailCache.TryGetValue(cacheKey, out var cachedImage))
+            {
+                return cachedImage;
+            }
+
+            var hBitmap = GetHBitmap(Path.GetFullPath(fileName), width, height, options);
 
             try
             {
@@ -138,6 +155,10 @@ namespace EverythingToolbar.Helpers
                     Int32Rect.Empty,
                     BitmapSizeOptions.FromEmptyOptions());
                 image.Freeze();
+
+                // Cache the image
+                ThumbnailCache[cacheKey] = (BitmapSource)image;
+
                 return (BitmapSource)image;
             }
             finally
@@ -163,7 +184,7 @@ namespace EverythingToolbar.Helpers
 
             var hr = ((IShellItemImageFactory)nativeShellItem).GetImage(nativeSize, options, out var hBitmap);
 
-            // if extracting image thumbnail and failed, extract shell icon
+            // If extracting image thumbnail and failed, extract shell icon
             if (options == ThumbnailOptions.ThumbnailOnly && hr == HResult.ExtractionFailed)
             {
                 hr = ((IShellItemImageFactory)nativeShellItem).GetImage(nativeSize, ThumbnailOptions.IconOnly, out hBitmap);
