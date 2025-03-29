@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
+using EverythingToolbar.Search;
 using Microsoft.Xaml.Behaviors;
 using NHotkey;
 
@@ -25,6 +26,7 @@ namespace EverythingToolbar
             // Focus an invisible text box to prevent Windows from randomly focusing the search box
             // and causing visual distraction
             SearchBox.LostKeyboardFocus += OnSearchBoxLostKeyboardFocus;
+            SearchBox.SearchTermChanged += (s, e) => SearchState.Instance.SearchTerm = e.NewSearchTerm;
             SearchWindow.Instance.Hiding += OnSearchWindowHiding;
 
             ShortcutManager.Instance.Initialize(FocusSearchBox);

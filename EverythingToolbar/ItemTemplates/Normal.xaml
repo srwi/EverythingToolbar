@@ -9,7 +9,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding Icon, IsAsync=True}"
+            <Image Source="{Binding Icon, IsAsync=False}"
                    Width="16"
                    Height="16"
                    Margin="0, 5, 0, 0" />
@@ -24,7 +24,7 @@
                        Margin="10, 5, 10, 6"
                        FontSize="10pt"
                        Foreground="{DynamicResource SearchResultDateModified}"
-                       Text="{Binding HumanReadableDateModified, IsAsync=True}" />
+                       Text="{Binding HumanReadableDateModified, IsAsync=False}" />
         </Grid>
     </DataTemplate>
     

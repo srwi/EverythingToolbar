@@ -18,7 +18,6 @@
         LostKeyboardFocus="OnLostKeyboardFocus"
         Loaded="OnLoaded"
         UseLayoutRounding="True"
-        DataContext="{Binding Source={x:Static local:EverythingSearch.Instance}}"
         mc:Ignorable="d"
         d:DesignWidth="500"
         d:DesignHeight="500">
@@ -60,8 +59,9 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <controls:FilterSelector />
+                    <controls:FilterSelector  x:Name="FilterSelector"/>
 
+                    <!-- TODO: Bind Search results count -->
                     <Border Visibility="{Binding TotalResultsNumber,
                                                  Converter={c:NullToVisibilityConverter}}"
                             Grid.Column="1">
@@ -83,6 +83,7 @@
                                             Grid.Row="{DynamicResource SearchResultsViewGridRow}" />
 
                 <controls:SearchBox x:Name="SearchBox"
+                                    SearchTermChanged="OnSearchTermChanged"
                                     TabIndex="999"
                                     Grid.Row="{DynamicResource SearchBoxGridRow}"
                                     Height="40"

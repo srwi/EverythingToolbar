@@ -1,15 +1,16 @@
 using System;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using EverythingToolbar.Behaviors;
-using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
+using EverythingToolbar.Search;
+using SearchResult = EverythingToolbar.Data.SearchResult;
 
 namespace EverythingToolbar.Controls
 {
@@ -17,23 +18,104 @@ namespace EverythingToolbar.Controls
     {
         private SearchResult SelectedItem => SearchResultsListView.SelectedItem as SearchResult;
         private Point _dragStart;
+        private const int PageSize = 100;
+        private AsyncVirtualizingCollection<SearchResult> _searchResultsCollection;
+        private bool _isScrollBarDragging = false;
 
         public SearchResultsView()
         {
             InitializeComponent();
 
-            SearchResultsListView.ItemsSource = EverythingSearch.Instance.SearchResults;
-            ((INotifyCollectionChanged)SearchResultsListView.Items).CollectionChanged += AutoSelectFirstResult;
+            // TODO: SearachResultsView should subscribe to different events like changing filter or search term (search box) and
+            // update the search results provider accordingly.
+            SearchState.Instance.PropertyChanged += (s, e) =>
+            {
+                UpdateSearchResultsProvider(SearchState.Instance);
+            };
 
             EventDispatcher.Instance.GlobalKeyEvent += OnKeyPressed;
             SearchResultsListView.PreviewKeyDown += OnKeyPressed;
 
-            // Mouse events and context menu must be added to the ItemContainerStyle each time it gets updated
             Loaded += (s, e) =>
             {
+                UpdateSearchResultsProvider(SearchState.Instance);
+
+                // Mouse events and context menu must be added to the ItemContainerStyle each time it gets updated
                 RegisterItemContainerStyleProperties(null, null);
                 ThemeAwareness.ResourceChanged += RegisterItemContainerStyleProperties;
+                AutoSelectFirstResult();
+                
+                // Attach to scrollbar drag events after the control is loaded
+                AttachToScrollViewer();
             };
+        }
+
+        private void UpdateSearchResultsProvider(SearchState searchState)
+        {
+            var searchResultsProvider = new SearchResultProvider(searchState);
+            _searchResultsCollection = new AsyncVirtualizingCollection<SearchResult>(searchResultsProvider, PageSize);
+            SearchResultsListView.ItemsSource = _searchResultsCollection;
+        }
+
+        private void AttachToScrollViewer()
+        {
+            var scrollViewer = GetScrollViewer();
+            if (scrollViewer == null)
+                return;
+
+            var verticalScrollBar = FindVisualChild<ScrollBar>(scrollViewer, s => s.Orientation == Orientation.Vertical);
+            if (verticalScrollBar != null)
+            {
+                verticalScrollBar.PreviewMouseLeftButtonDown += ScrollBar_PreviewMouseLeftButtonDown;
+                verticalScrollBar.PreviewMouseLeftButtonUp += ScrollBar_PreviewMouseLeftButtonUp;
+                verticalScrollBar.MouseLeave += ScrollBar_MouseLeave;
+            }
+        }
+
+        private void ScrollBar_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_searchResultsCollection != null)
+            {
+                _isScrollBarDragging = true;
+                _searchResultsCollection.IsAsync = false;
+            }
+        }
+
+        private void ScrollBar_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ResetScrollBarDragging();
+        }
+
+        private void ScrollBar_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ResetScrollBarDragging();
+        }
+
+        private void ResetScrollBarDragging()
+        {
+            if (_isScrollBarDragging && _searchResultsCollection != null)
+            {
+                _isScrollBarDragging = false;
+                _searchResultsCollection.IsAsync = true;
+            }
+        }
+
+        private static T FindVisualChild<T>(DependencyObject parent, Func<T, bool> condition = null) where T : DependencyObject
+        {
+            if (parent == null)
+                return null;
+
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T typedChild && (condition == null || condition(typedChild)))
+                    return typedChild;
+
+                var result = FindVisualChild<T>(child, condition);
+                if (result != null)
+                    return result;
+            }
+            return null;
         }
 
         private void RegisterItemContainerStyleProperties(object sender, ResourcesChangedEventArgs e)
@@ -88,7 +170,7 @@ namespace EverythingToolbar.Controls
                     return;
 
                 var path = ((SearchResult)SearchResultsListView.SelectedItem).FullPathAndFileName;
-                EverythingSearch.Instance.OpenLastSearchInEverything(path);
+                SearchResultProvider.OpenSearchInEverything(SearchState.Instance, filenameToHighlight: path);
             }
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Enter)
             {
@@ -167,7 +249,7 @@ namespace EverythingToolbar.Controls
             }
         }
 
-        private void AutoSelectFirstResult(object sender, NotifyCollectionChangedEventArgs e)
+        private void AutoSelectFirstResult()
         {
             if (!ToolbarSettings.User.IsAutoSelectFirstResult)
                 return;

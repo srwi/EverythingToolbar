@@ -26,7 +26,7 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>8.0</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
@@ -35,14 +35,11 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>8.0</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\EverythingToolbar.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
@@ -76,7 +73,6 @@
     <Compile Include="Converters\SearchResultsCountConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Data\Filter.cs" />
-    <Compile Include="EverythingSearch.cs" />
     <Compile Include="Data\Rule.cs" />
     <Compile Include="Controls\FilterSelector.xaml.cs">
       <DependentUpon>FilterSelector.xaml</DependentUpon>
@@ -248,6 +244,11 @@
     </Compile>
     <Compile Include="Helpers\ToolbarLogger.cs" />
     <Compile Include="Helpers\WindowsThumbnailProvider.cs" />
+    <Compile Include="Search\AsyncVirtualizingCollection.cs" />
+    <Compile Include="Search\IItemsProvider.cs" />
+    <Compile Include="Search\SearchResultProvider.cs" />
+    <Compile Include="Search\SearchState.cs" />
+    <Compile Include="Search\VirtualizingCollection.cs" />
     <Compile Include="ToolbarSettings.cs" />
     <Page Include="About.xaml">
       <SubType>Designer</SubType>
@@ -649,6 +650,7 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="NHotkey.Wpf" Version="2.1.0" />
     <PackageReference Include="NLog" Version="5.1.1" />
+    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EverythingSDK\EverythingSDK.vcxproj">

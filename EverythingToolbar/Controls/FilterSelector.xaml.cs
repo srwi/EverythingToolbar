@@ -1,31 +1,35 @@
-﻿using System.ComponentModel;
+﻿using System;
 using System.Windows.Controls;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Controls
 {
+    public class FilterChangedEventArgs : EventArgs
+    {
+        public Filter NewFilter { get; set; }
+    }
+
     public partial class FilterSelector
     {
+        public event EventHandler<FilterChangedEventArgs> FilterChanged;
+
+        private Filter _selectedFilter = FilterLoader.Instance.GetLastFilter();
+
+        private int SelectedDefaultFilterIndex => FilterLoader.Instance.DefaultFilters.IndexOf(_selectedFilter);
+        private int SelectedUserFilterIndex => FilterLoader.Instance.UserFilters.IndexOf(_selectedFilter);
+
         public FilterSelector()
         {
             InitializeComponent();
             DataContext = FilterLoader.Instance;
+
             Loaded += (s, e) => {
+                // TODO: This can probably just be done in the constructor directly
                 SelectCurrentFilter();
-                EverythingSearch.Instance.PropertyChanged += OnCurrentFilterChanged;
             };
         }
 
-        public int SelectedDefaultFilterIndex
-        {
-            get => FilterLoader.Instance.DefaultFilters.IndexOf(EverythingSearch.Instance.CurrentFilter);
-        }
-
-        public int SelectedUserFilterIndex
-        {
-            get => FilterLoader.Instance.UserFilters.IndexOf(EverythingSearch.Instance.CurrentFilter);
-        }
         private void SelectCurrentFilter()
         {
             TabControl.SelectionChanged -= OnTabItemSelected;
@@ -37,12 +41,10 @@ namespace EverythingToolbar.Controls
             ComboBox.SelectionChanged += OnComboBoxItemSelected;
         }
 
-        private void OnCurrentFilterChanged(object sender, PropertyChangedEventArgs e)
+        private void OnCurrentFilterChanged(object sender, FilterChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(EverythingSearch.Instance.CurrentFilter))
-            {
-                SelectCurrentFilter();
-            }
+            // TODO: Probably here the event args should be used
+            SelectCurrentFilter();
         }
 
         private void OnTabItemSelected(object sender, SelectionChangedEventArgs e)
@@ -55,7 +57,7 @@ namespace EverythingToolbar.Controls
                 return;
             }
 
-            EverythingSearch.Instance.CurrentFilter = TabControl.SelectedItem as Filter;
+            _selectedFilter = TabControl.SelectedItem as Filter;
         }
 
         private void OnComboBoxItemSelected(object sender, SelectionChangedEventArgs e)
@@ -68,7 +70,7 @@ namespace EverythingToolbar.Controls
                 return;
             }
 
-            EverythingSearch.Instance.CurrentFilter = ComboBox.SelectedItem as Filter;
+            _selectedFilter = ComboBox.SelectedItem as Filter;
         }
     }
 }

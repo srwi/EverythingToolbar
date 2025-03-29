@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using EverythingToolbar.Helpers;
+using EverythingToolbar.Search;
 
 namespace EverythingToolbar.Controls
 {
@@ -40,7 +41,7 @@ namespace EverythingToolbar.Controls
             if (inputDialog.ShowDialog() == true)
             {
                 ToolbarSettings.User.InstanceName = inputDialog.ResponseText;
-                EverythingSearch.Instance.SetInstanceName(ToolbarSettings.User.InstanceName);
+                SearchResultProvider.SetInstanceName(ToolbarSettings.User.InstanceName);
             }
         }
 
@@ -71,7 +72,7 @@ namespace EverythingToolbar.Controls
             var selectedIndex = SortByMenu.Items.IndexOf(selectedItem);
 
             int[] fastSortExceptions = { 4, 8 };
-            if (EverythingSearch.GetIsFastSort(selectedIndex, ToolbarSettings.User.IsSortDescending) ||
+            if (SearchResultProvider.GetIsFastSort(selectedIndex, ToolbarSettings.User.IsSortDescending) ||
                 fastSortExceptions.Contains(selectedIndex))
             {
                 ToolbarSettings.User.SortBy = selectedIndex;

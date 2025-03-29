@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
+using EverythingToolbar.Search;
 using NLog;
 using Peter;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
@@ -83,7 +84,7 @@ namespace EverythingToolbar.Data
                         WorkingDirectory = Path
                     });
                 }
-                EverythingSearch.IncrementRunCount(FullPathAndFileName);
+                SearchResultProvider.IncrementRunCount(FullPathAndFileName);
             }
             catch (Exception e)
             {
@@ -100,7 +101,7 @@ namespace EverythingToolbar.Data
                 {
                     Verb = "runas"
                 });
-                EverythingSearch.IncrementRunCount(FullPathAndFileName);
+                SearchResultProvider.IncrementRunCount(FullPathAndFileName);
             }
             catch (Exception e)
             {
@@ -114,7 +115,7 @@ namespace EverythingToolbar.Data
             try
             {
                 ShellUtils.OpenParentFolderAndSelect(FullPathAndFileName);
-                EverythingSearch.IncrementRunCount(FullPathAndFileName);
+                SearchResultProvider.IncrementRunCount(FullPathAndFileName);
             }
             catch (Exception e)
             {
@@ -181,7 +182,7 @@ namespace EverythingToolbar.Data
 
         public void ShowInEverything()
         {
-            EverythingSearch.Instance.OpenLastSearchInEverything(FullPathAndFileName);
+            SearchResultProvider.OpenSearchInEverything(SearchState.Instance, filenameToHighlight: FullPathAndFileName);
         }
 
         public void PreviewInQuickLook()

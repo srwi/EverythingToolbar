@@ -5,7 +5,9 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shell;
+using EverythingToolbar.Controls;
 using EverythingToolbar.Helpers;
+using EverythingToolbar.Search;
 
 namespace EverythingToolbar
 {
@@ -41,10 +43,10 @@ namespace EverythingToolbar
             PreviewKeyDown += OnPreviewKeyDown;
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (EverythingSearch.Instance.Initialize())
-                EverythingSearch.Instance.Reset();
+            FilterSelector.FilterChanged += (s, e) => SearchState.Instance.Filter = e.NewFilter;
+            SearchBox.SearchTermChanged += (s, e) => SearchState.Instance.SearchTerm = e.NewSearchTerm;
         }
 
         private void OnActivated(object sender, EventArgs e)
@@ -62,7 +64,7 @@ namespace EverythingToolbar
             if (e.Key >= Key.D0 && e.Key <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control)
             {
                 var index = e.Key == Key.D0 ? 9 : e.Key - Key.D1;
-                EverythingSearch.Instance.SelectFilterFromIndex(index);
+                SearchState.Instance.SelectFilterFromIndex(index);
             }
             else if (e.Key == Key.Escape)
             {
@@ -72,7 +74,7 @@ namespace EverythingToolbar
             else if (e.Key == Key.Tab)
             {
                 var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
-                EverythingSearch.Instance.CycleFilters(offset);
+                SearchState.Instance.CycleFilters(offset);
                 e.Handled = true;
             }
         }
@@ -87,7 +89,7 @@ namespace EverythingToolbar
 
         private void OpenSearchInEverything(object sender, RoutedEventArgs e)
         {
-            EverythingSearch.Instance.OpenLastSearchInEverything();
+            SearchResultProvider.OpenSearchInEverything(SearchState.Instance);
         }
 
         public new void Hide()
@@ -114,7 +116,7 @@ namespace EverythingToolbar
 
             _dwmFlushOnRender = false;
             
-            EverythingSearch.Instance.Reset();
+            SearchState.Instance.Reset();
         }
 
         public new void Show()
@@ -433,6 +435,11 @@ namespace EverythingToolbar
                 NativeMethods.SetWindowPos(hwnd, (IntPtr)hwndTopmost, 0, 0, 0, 0,
                     swpNomove | swpNosize | swpNoactivate | swpShowwindow);
             }
+        }
+
+        private void OnSearchTermChanged(object sender, SearchTermChangedEventArgs e)
+        {
+            SearchState.Instance.SearchTerm = e.NewSearchTerm;
         }
     }
 }

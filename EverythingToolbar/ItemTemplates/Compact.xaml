@@ -9,10 +9,10 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding Icon, IsAsync=True}"
+            <Image Source="{Binding Icon, IsAsync=False}"
                    Width="16"
                    Height="16" />
-            <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, Mode=OneTime, IsAsync=True}"
+            <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, Mode=OneTime, IsAsync=False}"
                             Grid.Column="1"
                             FontSize="9pt"
                             Margin="2, 0"
@@ -21,7 +21,7 @@
                        FontSize="9pt"
                        Margin="2, 0"
                        Foreground="{DynamicResource SearchResultDateModified}"
-                       Text="{Binding HumanReadableDateModified, IsAsync=True}" />
+                       Text="{Binding HumanReadableDateModified, IsAsync=False}" />
         </Grid>
     </DataTemplate>
     

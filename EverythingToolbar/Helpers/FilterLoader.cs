@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Castle.Core.Internal;
 using EverythingToolbar.Data;
 using EverythingToolbar.Properties;
+using EverythingToolbar.Search;
 using Microsoft.VisualBasic.FileIO;
 using NLog;
 
@@ -300,14 +301,14 @@ namespace EverythingToolbar.Helpers
             CreateFileWatcher();
             LoadFilters();
             NotifyFiltersChanged();
-            EverythingSearch.Instance.Reset();
+            SearchState.Instance.Reset();
         }
 
         private void OnFileChanged(object source, FileSystemEventArgs e)
         {
             LoadFilters();
             NotifyFiltersChanged();
-            EverythingSearch.Instance.Reset();
+            SearchState.Instance.Reset();
         }
 
         public Filter GetLastFilter()

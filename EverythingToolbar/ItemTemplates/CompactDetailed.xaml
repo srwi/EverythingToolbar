@@ -11,15 +11,15 @@
                 <ColumnDefinition Width="62" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding Icon, IsAsync=True}"
+            <Image Source="{Binding Icon, IsAsync=False}"
                    Width="16"
                    Height="16" />
-            <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, Mode=OneTime, IsAsync=True}"
+            <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, Mode=OneTime, IsAsync=False}"
                             Grid.Column="1"
                             FontSize="9pt"
                             Margin="2, 0"
                             Foreground="{DynamicResource SearchResultFileName}" />
-            <ContentControl Content="{Binding HighlightedPath, Converter={c:HighlightedTextConverter}, Mode=OneTime, IsAsync=True}"
+            <ContentControl Content="{Binding HighlightedPath, Converter={c:HighlightedTextConverter}, Mode=OneTime, IsAsync=False}"
                             ToolTip="{Binding Path}"
                             Grid.Column="2"
                             FontSize="9pt"
@@ -30,12 +30,12 @@
                        Margin="2, 0"
                        Foreground="{DynamicResource SearchResultFileSize}"
                        TextAlignment="Right"
-                       Text="{Binding HumanReadableFileSize, IsAsync=True}" />
+                       Text="{Binding HumanReadableFileSize, IsAsync=False}" />
             <TextBlock Grid.Column="4"
                        FontSize="9pt"
                        Margin="2, 0"
                        Foreground="{DynamicResource SearchResultDateModified}"
-                       Text="{Binding HumanReadableDateModified, IsAsync=True}" />
+                       Text="{Binding HumanReadableDateModified, IsAsync=False}" />
         </Grid>
     </DataTemplate>
     
