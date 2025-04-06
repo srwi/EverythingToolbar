@@ -115,7 +115,7 @@ namespace EverythingToolbar.Search
             }
         }
 
-        private Filter _currentFilter = FilterLoader.Instance.GetLastFilter();
+        private Filter _currentFilter = FilterLoader.Instance.GetInitialFilter();
         public Filter Filter
         {
             get => _currentFilter;
@@ -142,10 +142,7 @@ namespace EverythingToolbar.Search
             else
                 SearchTerm = "";
 
-            if (!ToolbarSettings.User.IsRememberFilter && Filter.Equals(FilterLoader.Instance.DefaultFilters[0]))
-            {
-                Filter = FilterLoader.Instance.DefaultFilters[0];
-            }
+            Filter = FilterLoader.Instance.GetInitialFilter();
         }
 
         public void CycleFilters(int offset = 1)
@@ -178,7 +175,6 @@ namespace EverythingToolbar.Search
 
         private void OnSettingsChanged(object sender, PropertyChangedEventArgs e)
         {
-            // TODO: Instead of reacting to settings changes, the search state should manage the state and save it to settings
             switch (e.PropertyName)
             {
                 case nameof(ToolbarSettings.User.SortBy):

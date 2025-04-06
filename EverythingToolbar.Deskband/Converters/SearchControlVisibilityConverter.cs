@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
-using CSDeskBand.Interop;
 
 namespace EverythingToolbar.Deskband.Converters
 {

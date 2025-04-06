@@ -250,7 +250,7 @@ namespace EverythingToolbar.Search
         private readonly Dictionary<int, IList<T>> _pages = new Dictionary<int, IList<T>>();
         private readonly Dictionary<int, DateTime> _pageTouchTimes = new Dictionary<int, DateTime>();
 
-        public void CleanUpPages()
+        private void CleanUpPages()
         {
             var keys = new List<int>(_pageTouchTimes.Keys);
             foreach (var key in keys)

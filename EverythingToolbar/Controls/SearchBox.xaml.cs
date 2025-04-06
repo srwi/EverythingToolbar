@@ -5,24 +5,40 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Search;
 
 namespace EverythingToolbar.Controls
 {
-    public class SearchTermChangedEventArgs : EventArgs
-    {
-        public string NewSearchTerm { get; set; }
-    }
-
     public partial class SearchBox
     {
-        public event EventHandler<SearchTermChangedEventArgs> SearchTermChanged;
+        public static readonly DependencyProperty SearchTermProperty = DependencyProperty.Register(
+            nameof(SearchTerm),
+            typeof(string),
+            typeof(SearchBox),
+            new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSearchTermPropertyChanged));
+
+        public string SearchTerm
+        {
+            get => (string)GetValue(SearchTermProperty);
+            set => SetValue(SearchTermProperty, value);
+        }
+
+        private static void OnSearchTermPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is SearchBox searchBox && e.NewValue is string newValue)
+            {
+                if (searchBox.TextBox.Text == newValue)
+                    return;
+
+                searchBox.TextBox.Text = newValue;
+                searchBox.TextBox.CaretIndex = searchBox.TextBox.Text.Length;
+            }
+        }
+
+        private bool _isInternalTextChange;
 
         public SearchBox()
         {
             InitializeComponent();
-
-            DataContext = SearchState.Instance;
 
             InputMethod.SetPreferredImeState(this, InputMethodState.DoNotCare);
 
@@ -33,9 +49,12 @@ namespace EverythingToolbar.Controls
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            if (_isInternalTextChange)
+                return;
+
             if (ToolbarSettings.User.IsSearchAsYouType)
             {
-                SearchTermChanged?.Invoke(this, new SearchTermChangedEventArgs { NewSearchTerm = TextBox.Text });
+                SearchTerm = TextBox.Text;
             }
         }
 
@@ -60,7 +79,7 @@ namespace EverythingToolbar.Controls
             }
             else if (Keyboard.Modifiers == ModifierKeys.None && e.Key == Key.Enter && !ToolbarSettings.User.IsSearchAsYouType)
             {
-                SearchState.Instance.SearchTerm = TextBox.Text;
+                SearchTerm = TextBox.Text;
                 e.Handled = true;
             }
             else if ((e.Key == Key.Home || e.Key == Key.End) && Keyboard.Modifiers != ModifierKeys.Shift && ToolbarSettings.User.IsAutoSelectFirstResult ||
@@ -81,8 +100,11 @@ namespace EverythingToolbar.Controls
 
         private void UpdateSearchTerm(string newSearchTerm)
         {
+            _isInternalTextChange = true;
             TextBox.Text = newSearchTerm;
             TextBox.CaretIndex = TextBox.Text.Length;
+            SearchTerm = newSearchTerm;
+            _isInternalTextChange = false;
         }
 
         private void OnSettingsChanged(object sender, PropertyChangedEventArgs e)

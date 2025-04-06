@@ -1,8 +1,9 @@
-﻿<UserControl x:Class="EverythingToolbar.ToolbarControl"
+﻿<UserControl x:Class="EverythingToolbar.Deskband.ToolbarControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:b="clr-namespace:EverythingToolbar.Behaviors;assembly=EverythingToolbar"
+             xmlns:search="clr-namespace:EverythingToolbar.Search;assembly=EverythingToolbar"
              xmlns:controls="clr-namespace:EverythingToolbar.Controls;assembly=EverythingToolbar"
              xmlns:converters="clr-namespace:EverythingToolbar.Deskband.Converters"
              HorizontalAlignment="Stretch"
@@ -33,7 +34,8 @@
         <controls:SearchBox x:Name="SearchBox"
                             Visibility="{Binding Path=ActualWidth,
                                                  RelativeSource={RelativeSource Self},
-                                                 Converter={StaticResource SearchBoxDoubleToVisibilityConverter}}" />
+                                                 Converter={StaticResource SearchBoxDoubleToVisibilityConverter}}"
+                            SearchTerm="{Binding Source={x:Static search:SearchState.Instance}, Path=SearchTerm, Mode=TwoWay}" />
 
         <controls:SearchButton Visibility="{Binding Path=ActualWidth,
                                                     RelativeSource={RelativeSource Self},  

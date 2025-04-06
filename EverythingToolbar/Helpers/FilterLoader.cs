@@ -311,7 +311,7 @@ namespace EverythingToolbar.Helpers
             SearchState.Instance.Reset();
         }
 
-        public Filter GetLastFilter()
+        public Filter GetInitialFilter()
         {
             if (!ToolbarSettings.User.IsRememberFilter)
                 return DefaultFilters[0];

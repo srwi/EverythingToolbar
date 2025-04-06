@@ -8,7 +8,7 @@ using Microsoft.Xaml.Behaviors;
 using NLog;
 using Point = System.Drawing.Point;
 
-namespace EverythingToolbar.Behaviors
+namespace EverythingToolbar.Deskband
 {
     internal class SearchWindowPlacement : Behavior<SearchWindow>
     {
@@ -69,8 +69,8 @@ namespace EverythingToolbar.Behaviors
             var windowPosition = new RECT();
             switch (TaskbarStateManager.Instance.TaskbarEdge)
             {
-                case Edge.Bottom:
-                case Edge.Top:
+                case Helpers.Edge.Bottom:
+                case Helpers.Edge.Top:
                     // In case of auto-hiding taskbar the working area is not affected by the taskbar.
                     // Therefore the taskbar size needs to be handled separately.
                     var topDockPos = Math.Max(workingArea.Top, screenBounds.Top + (int)taskbarSize.Height);
@@ -81,8 +81,8 @@ namespace EverythingToolbar.Behaviors
                     windowPosition.Top = Math.Max(topDockPos + margin, placementTarget.Top - margin - (int)windowSize.Height);
                     windowPosition.Bottom = Math.Min(bottomDockPos - margin, placementTarget.Bottom + margin + (int)windowSize.Height);
                     break;
-                case Edge.Left:
-                case Edge.Right:
+                case Helpers.Edge.Left:
+                case Helpers.Edge.Right:
                     var leftDockPos = Math.Max(workingArea.Left, screenBounds.Left + (int)taskbarSize.Width);
                     var rightDockPos = Math.Min(workingArea.Right, screenBounds.Right - (int)taskbarSize.Width);
 

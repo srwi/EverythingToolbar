@@ -5,7 +5,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shell;
-using EverythingToolbar.Controls;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
 
@@ -41,12 +40,6 @@ namespace EverythingToolbar
             CompositionTarget.Rendering += OnCompositionTargetRendering;
             EventDispatcher.Instance.GlobalKeyEvent += OnPreviewKeyDown;
             PreviewKeyDown += OnPreviewKeyDown;
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            // TODO: Replace with binding
-            SearchBox.SearchTermChanged += (s, e) => SearchState.Instance.SearchTerm = e.NewSearchTerm;
         }
 
         private void OnActivated(object sender, EventArgs e)
@@ -435,11 +428,6 @@ namespace EverythingToolbar
                 NativeMethods.SetWindowPos(hwnd, (IntPtr)hwndTopmost, 0, 0, 0, 0,
                     swpNomove | swpNosize | swpNoactivate | swpShowwindow);
             }
-        }
-
-        private void OnSearchTermChanged(object sender, SearchTermChangedEventArgs e)
-        {
-            SearchState.Instance.SearchTerm = e.NewSearchTerm;
         }
     }
 }

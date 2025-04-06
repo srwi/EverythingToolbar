@@ -18,7 +18,6 @@
         UseLayoutRounding="True"
         Activated="OnActivated"
         LostKeyboardFocus="OnLostKeyboardFocus"
-        Loaded="OnLoaded"
         mc:Ignorable="d"
         d:DesignWidth="500"
         d:DesignHeight="500">
@@ -85,7 +84,7 @@
                                             Grid.Row="{DynamicResource SearchResultsViewGridRow}" />
 
                 <controls:SearchBox x:Name="SearchBox"
-                                    SearchTermChanged="OnSearchTermChanged"
+                                    SearchTerm="{Binding Source={x:Static search:SearchState.Instance}, Path=SearchTerm, Mode=TwoWay}"
                                     TabIndex="999"
                                     Grid.Row="{DynamicResource SearchBoxGridRow}"
                                     Height="40"

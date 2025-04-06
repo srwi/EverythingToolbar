@@ -11,7 +11,7 @@
     <Grid>
         <TextBox Name="TextBox"
                  Tag="{x:Static properties:Resources.TextBoxWatermark}"
-                 Text="{Binding SearchTerm, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=SearchTerm, Mode=OneWay}"
                  CaretBrush="{DynamicResource TextBoxForegroundActive}"
                  TextChanged="OnTextChanged"
                  GotKeyboardFocus="OnGotKeyboardFocus"

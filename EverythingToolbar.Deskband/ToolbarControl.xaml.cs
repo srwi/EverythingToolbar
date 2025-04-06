@@ -1,13 +1,11 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
-using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Search;
 using Microsoft.Xaml.Behaviors;
 using NHotkey;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Deskband
 {
     public partial class ToolbarControl
     {
@@ -22,11 +20,8 @@ namespace EverythingToolbar
             Interaction.GetBehaviors(SearchWindow.Instance).Add(behavior);
 
             SearchBox.GotKeyboardFocus += OnSearchBoxGotKeyboardFocus;
-
-            // Focus an invisible text box to prevent Windows from randomly focusing the search box
-            // and causing visual distraction
             SearchBox.LostKeyboardFocus += OnSearchBoxLostKeyboardFocus;
-            SearchBox.SearchTermChanged += (s, e) => SearchState.Instance.SearchTerm = e.NewSearchTerm;
+
             SearchWindow.Instance.Hiding += OnSearchWindowHiding;
 
             ShortcutManager.Instance.Initialize(FocusSearchBox);
@@ -46,6 +41,8 @@ namespace EverythingToolbar
 
             if (e.NewFocus == null)  // New focus outside application
             {
+                // Focus an invisible text box to prevent Windows from randomly focusing the search box
+                // and causing visual distraction
                 Keyboard.Focus(KeyboardFocusCapture);
             }
         }

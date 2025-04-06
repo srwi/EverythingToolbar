@@ -13,20 +13,13 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Interop;
 using System.Windows.Media;
-using CSDeskBand.ContextMenu;
-using CSDeskBand.Interop;
 using EverythingToolbar.Helpers;
 using Microsoft.Win32;
 using NLog;
-using MSG = CSDeskBand.Interop.MSG;
 
-#pragma warning disable 1591
-namespace CSDeskBand
+namespace EverythingToolbar.Deskband
 {
-    using static DESKBANDINFO.DBIF;
-    using static DESKBANDINFO.DBIM;
-    using static DESKBANDINFO.DBIMF;
-
+#pragma warning disable 1591
     /// <summary>
     /// Default implementation for icsdeskband
     /// </summary>
@@ -105,9 +98,9 @@ namespace CSDeskBand
             // Sizing information is requested whenever the taskbar changes size/orientation
             _id = dwBandID;
 
-            if (pdbi.dwMask.HasFlag(DBIM_MINSIZE))
+            if (pdbi.dwMask.HasFlag(DESKBANDINFO.DBIM.DBIM_MINSIZE))
             {
-                if (dwViewMode.HasFlag(DBIF_VIEWMODE_VERTICAL))
+                if (dwViewMode.HasFlag(DESKBANDINFO.DBIF.DBIF_VIEWMODE_VERTICAL))
                 {
                     pdbi.ptMinSize.Y = Options.MinVerticalSize.Width;
                     pdbi.ptMinSize.X = Options.MinVerticalSize.Height;
@@ -120,9 +113,9 @@ namespace CSDeskBand
             }
 
             // X is ignored
-            if (pdbi.dwMask.HasFlag(DBIM_MAXSIZE))
+            if (pdbi.dwMask.HasFlag(DESKBANDINFO.DBIM.DBIM_MAXSIZE))
             {
-                if (dwViewMode.HasFlag(DBIF_VIEWMODE_VERTICAL))
+                if (dwViewMode.HasFlag(DESKBANDINFO.DBIF.DBIF_VIEWMODE_VERTICAL))
                 {
                     pdbi.ptMaxSize.Y = Options.MaxVerticalWidth;
                     pdbi.ptMaxSize.X = 0;
@@ -135,15 +128,15 @@ namespace CSDeskBand
             }
 
             // x member is ignored
-            if (pdbi.dwMask.HasFlag(DBIM_INTEGRAL))
+            if (pdbi.dwMask.HasFlag(DESKBANDINFO.DBIM.DBIM_INTEGRAL))
             {
                 pdbi.ptIntegral.Y = Options.HeightIncrement;
                 pdbi.ptIntegral.X = 0;
             }
 
-            if (pdbi.dwMask.HasFlag(DBIM_ACTUAL))
+            if (pdbi.dwMask.HasFlag(DESKBANDINFO.DBIM.DBIM_ACTUAL))
             {
-                if (dwViewMode.HasFlag(DBIF_VIEWMODE_VERTICAL))
+                if (dwViewMode.HasFlag(DESKBANDINFO.DBIF.DBIF_VIEWMODE_VERTICAL))
                 {
                     pdbi.ptActual.Y = Options.VerticalSize.Width;
                     pdbi.ptActual.X = Options.VerticalSize.Height;
@@ -155,21 +148,21 @@ namespace CSDeskBand
                 }
             }
 
-            if (pdbi.dwMask.HasFlag(DBIM_TITLE))
+            if (pdbi.dwMask.HasFlag(DESKBANDINFO.DBIM.DBIM_TITLE))
             {
                 pdbi.wszTitle = Options.Title;
                 if (!Options.ShowTitle)
                 {
-                    pdbi.dwMask &= ~DBIM_TITLE;
+                    pdbi.dwMask &= ~DESKBANDINFO.DBIM.DBIM_TITLE;
                 }
             }
 
-            if (pdbi.dwMask.HasFlag(DBIM_MODEFLAGS))
+            if (pdbi.dwMask.HasFlag(DESKBANDINFO.DBIM.DBIM_MODEFLAGS))
             {
-                pdbi.dwModeFlags = DBIMF_NORMAL;
-                pdbi.dwModeFlags |= Options.IsFixed ? DBIMF_FIXED | DBIMF_NOGRIPPER : 0;
-                pdbi.dwModeFlags |= Options.HeightCanChange ? DBIMF_VARIABLEHEIGHT : 0;
-                pdbi.dwModeFlags &= ~DBIMF_BKCOLOR; // Don't use background color
+                pdbi.dwModeFlags = DESKBANDINFO.DBIMF.DBIMF_NORMAL;
+                pdbi.dwModeFlags |= Options.IsFixed ? DESKBANDINFO.DBIMF.DBIMF_FIXED | DESKBANDINFO.DBIMF.DBIMF_NOGRIPPER : 0;
+                pdbi.dwModeFlags |= Options.HeightCanChange ? DESKBANDINFO.DBIMF.DBIMF_VARIABLEHEIGHT : 0;
+                pdbi.dwModeFlags &= ~DESKBANDINFO.DBIMF.DBIMF_BKCOLOR; // Don't use background color
             }
 
             TaskbarInfo.UpdateInfo();
@@ -398,9 +391,7 @@ namespace CSDeskBand
             parent.Exec(ref _deskbandCommandGroupId, (uint)tagDESKBANDCID.DBID_BANDINFOCHANGED, 0, IntPtr.Zero, IntPtr.Zero);
         }
     }
-}
-namespace CSDeskBand
-{
+
     /// <summary>
     /// Options to configure the deskband
     /// </summary>
@@ -754,9 +745,7 @@ namespace CSDeskBand
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-}
-namespace CSDeskBand
-{
+
     /// <summary>
     /// Specifies registration configuration for a deskband.
     /// </summary>
@@ -779,7 +768,7 @@ namespace CSDeskBand
         /// </value>
         public bool ShowDeskBand { get; set; }
     }
-}
+
 #pragma warning disable 1591
 #if DESKBAND_WINFORMS
 namespace CSDeskBand
@@ -998,8 +987,6 @@ namespace CSDeskBand
 #endif
 #pragma warning disable 1591
 #if DESKBAND_WPF
-namespace CSDeskBand
-{
     /// <summary>
     /// Wpf implementation of <see cref="ICSDeskBand"/>
     /// The deskband should also have these attributes <see cref="ComVisibleAttribute"/>, <see cref="GuidAttribute"/>, <see cref="CSDeskBandRegistrationAttribute"/>.
@@ -1284,10 +1271,8 @@ namespace CSDeskBand
             RegistrationHelper.Unregister(t);
         }
     }
-}
+
 #endif
-namespace CSDeskBand
-{
     /// <summary>
     /// Size class that is independent of winforms or wpf.
     /// </summary>
@@ -1391,18 +1376,14 @@ namespace CSDeskBand
         }
 #endif
     }
-}
-namespace CSDeskBand
-{
+
     /// <summary>
     /// Deskband Interface
     /// </summary>
     public interface ICSDeskBand : IDeskBand2, IObjectWithSite, IContextMenu3, IPersistStream, IInputObject
     {
     }
-}
-namespace CSDeskBand
-{
+
     internal interface IDeskBandProvider
     {
         IntPtr Handle { get; }
@@ -1410,9 +1391,7 @@ namespace CSDeskBand
         Guid Guid { get; }
         bool HasFocus { get; set; }
     }
-}
-namespace CSDeskBand
-{
+
     /// <summary>
     /// Helper class to register deskband.
     /// </summary>
@@ -1530,9 +1509,7 @@ namespace CSDeskBand
             return t.GetCustomAttribute<CSDeskBandRegistrationAttribute>(true)?.ShowDeskBand ?? false;
         }
     }
-}
-namespace CSDeskBand
-{
+
     /// <summary>
     /// The orientation of the taskbar.
     /// </summary>
@@ -1629,7 +1606,7 @@ namespace CSDeskBand
         }
 
         /// <summary>
-        /// Gets the current <see cref="CSDeskBand.Edge"/> of the main taskbar.
+        /// Gets the current <see cref="EverythingToolbar.Deskband.Edge"/> of the main taskbar.
         /// </summary>
         /// <value>
         /// The current edge.
@@ -1650,7 +1627,7 @@ namespace CSDeskBand
         }
 
         /// <summary>
-        /// Gets the current <see cref="CSDeskBand.DeskBandSize"/> of the main taskbar.
+        /// Gets the current <see cref="DeskBandSize"/> of the main taskbar.
         /// </summary>
         /// <value>
         /// The current size.
@@ -1710,7 +1687,7 @@ namespace CSDeskBand
         public TaskbarOrientation Orientation { get; }
     }
 
-        /// <summary>
+    /// <summary>
     /// Provides data for a taskbar size change event.
     /// </summary>
     public sealed class TaskbarSizeChangedEventArgs : EventArgs
@@ -1751,12 +1728,10 @@ namespace CSDeskBand
         /// </summary>
         public Edge Edge { get; }
     }
-}
+
 // <autogenerated/>
-#region nativemethods
+    #region nativemethods
 #pragma warning disable 1591
-namespace CSDeskBand.Interop
-{
     [ComImport]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [Guid("4CF504B0-DE96-11D0-8B3F-00A0C911E8E5")]
@@ -1934,7 +1909,7 @@ namespace CSDeskBand.Interop
         int TranslateAcceleratorIO(ref MSG msg);
     }
 
-    //https://msdn.microsoft.com/en-us/library/windows/desktop/bb761789(v=vs.85).aspx
+//https://msdn.microsoft.com/en-us/library/windows/desktop/bb761789(v=vs.85).aspx
     [ComImport]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [Guid("F1DB8392-7331-11D0-8C99-00A0C92DBFE8")]
@@ -1944,7 +1919,7 @@ namespace CSDeskBand.Interop
         int OnFocusChangeIS([MarshalAs(UnmanagedType.IUnknown)] object punkObj, Int32 fSetFocus);
     }
 
-    //https://msdn.microsoft.com/en-us/library/windows/desktop/ms693765(v=vs.85).aspx
+//https://msdn.microsoft.com/en-us/library/windows/desktop/ms693765(v=vs.85).aspx
     [ComImport]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [Guid("FC4801A3-2BA9-11CF-A229-00AA003D7352")]
@@ -1957,7 +1932,7 @@ namespace CSDeskBand.Interop
         int GetSite(ref Guid riid, [MarshalAs(UnmanagedType.IUnknown)] out IntPtr ppvSite);
     }
 
-    //https://msdn.microsoft.com/en-us/library/windows/desktop/ms683797(v=vs.85).aspx
+//https://msdn.microsoft.com/en-us/library/windows/desktop/ms683797(v=vs.85).aspx
     [ComImport]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [Guid("b722bccb-4e68-101b-a2bc-00aa00404770")]
@@ -1970,7 +1945,7 @@ namespace CSDeskBand.Interop
         int Exec(ref Guid pguidCmdGroup, uint nCmdID, uint nCmdExecOpt, IntPtr pvaIn, [In, Out] IntPtr pvaOut);
     }
 
-    //https://msdn.microsoft.com/en-us/library/windows/desktop/ms680102(v=vs.85).aspx
+//https://msdn.microsoft.com/en-us/library/windows/desktop/ms680102(v=vs.85).aspx
     [ComImport]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [Guid("00000114-0000-0000-C000-000000000046")]
@@ -2516,10 +2491,9 @@ namespace CSDeskBand.Interop
         HTCLIENT = 1,
         HTTRANSPARENT = -1,
     }
-}
-#endregion
-namespace CSDeskBand.ContextMenu
-{
+
+    #endregion
+
     /// <summary>
     /// Base class for deskband menu items.
     /// </summary>
@@ -2733,5 +2707,6 @@ namespace CSDeskBand.ContextMenu
             }
         }
     }
-}
+
 #pragma warning restore 1591
+}

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows;
-using EverythingToolbar;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using NLog;
 
-namespace CSDeskBand
+namespace EverythingToolbar.Deskband
 {
     [ComVisible(true)]
     [Guid("9d39b79c-e03c-4757-b1b6-ecce843748f3")]
