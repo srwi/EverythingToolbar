@@ -35,7 +35,7 @@ namespace EverythingToolbar.Search
         public int SortBy
         {
             get => _sortBy;
-            set
+            private set
             {
                 if (_sortBy != value)
                 {
@@ -49,7 +49,7 @@ namespace EverythingToolbar.Search
         public bool IsSortDescending
         {
             get => _isSortDescending;
-            set
+            private set
             {
                 if (_isSortDescending != value)
                 {
@@ -63,7 +63,7 @@ namespace EverythingToolbar.Search
         public bool IsMatchCase
         {
             get => _isMatchCase;
-            set
+            private set
             {
                 if (_isMatchCase != value)
                 {
@@ -77,7 +77,7 @@ namespace EverythingToolbar.Search
         public bool IsMatchPath
         {
             get => _isMatchPath;
-            set
+            private set
             {
                 if (_isMatchPath != value)
                 {
@@ -91,7 +91,7 @@ namespace EverythingToolbar.Search
         public bool IsMatchWholeWord
         {
             get => _isMatchWholeWord;
-            set
+            private set
             {
                 if (_isMatchWholeWord != value)
                 {
@@ -105,7 +105,7 @@ namespace EverythingToolbar.Search
         public bool IsRegExEnabled
         {
             get => _isRegExEnabled;
-            set
+            private set
             {
                 if (_isRegExEnabled != value)
                 {
@@ -115,7 +115,20 @@ namespace EverythingToolbar.Search
             }
         }
 
-        public Filter Filter { get; set; } = FilterLoader.Instance.GetLastFilter();
+        private Filter _currentFilter = FilterLoader.Instance.GetLastFilter();
+        public Filter Filter
+        {
+            get => _currentFilter;
+            set
+            {
+                if (!_currentFilter.Equals(value))
+                {
+                    _currentFilter = value;
+                    ToolbarSettings.User.LastFilter = value.Name;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private SearchState()
         {
@@ -165,6 +178,7 @@ namespace EverythingToolbar.Search
 
         private void OnSettingsChanged(object sender, PropertyChangedEventArgs e)
         {
+            // TODO: Instead of reacting to settings changes, the search state should manage the state and save it to settings
             switch (e.PropertyName)
             {
                 case nameof(ToolbarSettings.User.SortBy):

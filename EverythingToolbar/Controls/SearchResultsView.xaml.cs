@@ -18,8 +18,8 @@ namespace EverythingToolbar.Controls
     {
         private SearchResult SelectedItem => SearchResultsListView.SelectedItem as SearchResult;
         private Point _dragStart;
-        private const int PageSize = 100;
-        private AsyncVirtualizingCollection<SearchResult> _searchResultsCollection;
+        private const int PageSize = 256;
+        private VirtualizingCollection<SearchResult> _searchResultsCollection;
         private bool _isScrollBarDragging = false;
 
         public SearchResultsView()
@@ -53,7 +53,7 @@ namespace EverythingToolbar.Controls
         private void UpdateSearchResultsProvider(SearchState searchState)
         {
             var searchResultsProvider = new SearchResultProvider(searchState);
-            _searchResultsCollection = new AsyncVirtualizingCollection<SearchResult>(searchResultsProvider, PageSize);
+            _searchResultsCollection = new VirtualizingCollection<SearchResult>(searchResultsProvider, PageSize);
             SearchResultsListView.ItemsSource = _searchResultsCollection;
         }
 
@@ -256,18 +256,6 @@ namespace EverythingToolbar.Controls
 
             if (SearchResultsListView.SelectedItems.Count == 0 && !SearchResultsListView.Items.IsEmpty)
                 SelectNthSearchResult(0);
-        }
-
-        private void OnScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            // if (e.VerticalChange <= 0)
-            //     return;
-            //
-            // if (e.VerticalOffset > e.ExtentHeight - 2 * e.ViewportHeight)
-            // {
-            //     EverythingSearch.Instance.QueryBatch(append: true);
-            //     ScrollToVerticalOffset(e.VerticalOffset);
-            // }
         }
 
         private void ScrollToVerticalOffset(double verticalOffset)

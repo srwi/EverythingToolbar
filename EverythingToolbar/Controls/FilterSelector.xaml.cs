@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
@@ -14,10 +15,42 @@ namespace EverythingToolbar.Controls
     {
         public event EventHandler<FilterChangedEventArgs> FilterChanged;
 
-        private Filter _selectedFilter = FilterLoader.Instance.GetLastFilter();
+        public static readonly DependencyProperty SelectedFilterProperty = 
+            DependencyProperty.Register(
+                nameof(SelectedFilter), 
+                typeof(Filter), 
+                typeof(FilterSelector), 
+                new PropertyMetadata(FilterLoader.Instance.GetLastFilter(), OnSelectedFilterChanged));
+
+        private static void OnSelectedFilterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is FilterSelector filterSelector && e.NewValue is Filter newFilter)
+            {
+                filterSelector.OnSelectedFilterChanged(newFilter);
+            }
+        }
+
+        private void OnSelectedFilterChanged(Filter newFilter)
+        {
+            // Make sure we don't infinitely recurse
+            if (_isInternalChange) return;
+
+            _selectedFilter = newFilter;
+            FilterChanged?.Invoke(this, new FilterChangedEventArgs { NewFilter = _selectedFilter });
+            SelectCurrentFilter();
+        }
+
+        public Filter SelectedFilter
+        {
+            get => (Filter)GetValue(SelectedFilterProperty);
+            set => SetValue(SelectedFilterProperty, value);
+        }
 
         private int SelectedDefaultFilterIndex => FilterLoader.Instance.DefaultFilters.IndexOf(_selectedFilter);
         private int SelectedUserFilterIndex => FilterLoader.Instance.UserFilters.IndexOf(_selectedFilter);
+
+        private Filter _selectedFilter = FilterLoader.Instance.GetLastFilter();
+        private bool _isInternalChange;
 
         public FilterSelector()
         {
@@ -25,7 +58,8 @@ namespace EverythingToolbar.Controls
             DataContext = FilterLoader.Instance;
 
             Loaded += (s, e) => {
-                // TODO: This can probably just be done in the constructor directly
+                // Set initial filter
+                _selectedFilter = SelectedFilter;
                 SelectCurrentFilter();
             };
         }
@@ -41,12 +75,6 @@ namespace EverythingToolbar.Controls
             ComboBox.SelectionChanged += OnComboBoxItemSelected;
         }
 
-        private void OnCurrentFilterChanged(object sender, FilterChangedEventArgs e)
-        {
-            // TODO: Probably here the event args should be used
-            SelectCurrentFilter();
-        }
-
         private void OnTabItemSelected(object sender, SelectionChangedEventArgs e)
         {
             if (TabControl.SelectedIndex < 0)
@@ -57,7 +85,12 @@ namespace EverythingToolbar.Controls
                 return;
             }
 
+            _isInternalChange = true;
             _selectedFilter = TabControl.SelectedItem as Filter;
+            SelectedFilter = _selectedFilter;
+            _isInternalChange = false;
+            
+            FilterChanged?.Invoke(this, new FilterChangedEventArgs { NewFilter = _selectedFilter });
         }
 
         private void OnComboBoxItemSelected(object sender, SelectionChangedEventArgs e)
@@ -70,7 +103,12 @@ namespace EverythingToolbar.Controls
                 return;
             }
 
+            _isInternalChange = true;
             _selectedFilter = ComboBox.SelectedItem as Filter;
+            SelectedFilter = _selectedFilter;
+            _isInternalChange = false;
+            
+            FilterChanged?.Invoke(this, new FilterChangedEventArgs { NewFilter = _selectedFilter });
         }
     }
 }

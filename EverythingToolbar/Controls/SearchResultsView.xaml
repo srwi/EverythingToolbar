@@ -64,13 +64,13 @@
               Background="{DynamicResource SearchResultsViewBackground}"
               ItemTemplate="{DynamicResource SearchResultsViewTemplate}"
               ItemContainerStyle="{DynamicResource ListViewItemStyle}"
-              ScrollViewer.ScrollChanged="OnScrollChanged"
               ScrollViewer.VerticalScrollBarVisibility="Visible"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
               VirtualizingPanel.IsVirtualizing="True"
               VirtualizingPanel.CacheLengthUnit="Page"
               VirtualizingPanel.CacheLength="1"
               VirtualizingPanel.VirtualizationMode="Recycling"
+              VirtualizingPanel.ScrollUnit="Item"
               FocusVisualStyle="{x:Null}" />
 
 </UserControl>

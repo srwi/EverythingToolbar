@@ -8,16 +8,17 @@
         xmlns:c="clr-namespace:EverythingToolbar.Converters"
         xmlns:h="clr-namespace:EverythingToolbar.Helpers"
         xmlns:local="clr-namespace:EverythingToolbar"
+        xmlns:search="clr-namespace:EverythingToolbar.Search"
         xmlns:controls="clr-namespace:EverythingToolbar.Controls"
         WindowStyle="None"
         MinWidth="600"
         MinHeight="300"
         Background="Transparent"
         ShowInTaskbar="False"
+        UseLayoutRounding="True"
         Activated="OnActivated"
         LostKeyboardFocus="OnLostKeyboardFocus"
         Loaded="OnLoaded"
-        UseLayoutRounding="True"
         mc:Ignorable="d"
         d:DesignWidth="500"
         d:DesignHeight="500">
@@ -59,7 +60,8 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <controls:FilterSelector  x:Name="FilterSelector"/>
+                    <controls:FilterSelector x:Name="FilterSelector" 
+                                             SelectedFilter="{Binding Source={x:Static search:SearchState.Instance}, Path=Filter, Mode=TwoWay}"/>
 
                     <!-- TODO: Bind Search results count -->
                     <Border Visibility="{Binding TotalResultsNumber,
