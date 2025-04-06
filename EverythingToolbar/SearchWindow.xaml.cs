@@ -45,7 +45,7 @@ namespace EverythingToolbar
 
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            FilterSelector.FilterChanged += (s, e) => SearchState.Instance.Filter = e.NewFilter;
+            // TODO: Replace with binding
             SearchBox.SearchTermChanged += (s, e) => SearchState.Instance.SearchTerm = e.NewSearchTerm;
         }
 
