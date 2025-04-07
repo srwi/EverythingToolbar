@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace EverythingToolbar.Search
@@ -34,7 +35,14 @@ namespace EverythingToolbar.Search
                 }
                 return _count;
             }
-            private set => _count = value;
+            private set
+            {
+                if (_count != value)
+                {
+                    _count = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         private SynchronizationContext SynchronizationContext { get; }
@@ -49,21 +57,16 @@ namespace EverythingToolbar.Search
                 if (_isAsync != value)
                 {
                     _isAsync = value;
-                    FirePropertyChanged("IsAsync");
+                    OnPropertyChanged();
                 }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(PropertyChangedEventArgs e)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, e);
-        }
-
-        private void FirePropertyChanged(string propertyName)
-        {
-            OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event NotifyCollectionChangedEventHandler CollectionChanged;

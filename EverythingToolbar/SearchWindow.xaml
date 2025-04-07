@@ -62,12 +62,9 @@
                     <controls:FilterSelector x:Name="FilterSelector" 
                                              SelectedFilter="{Binding Source={x:Static search:SearchState.Instance}, Path=Filter, Mode=TwoWay}"/>
 
-                    <!-- TODO: Bind Search results count -->
-                    <Border Visibility="{Binding TotalResultsNumber,
-                                                 Converter={c:NullToVisibilityConverter}}"
-                            Grid.Column="1">
+                    <Border Grid.Column="1">
                         <Button Style="{DynamicResource TabBarButtonStyle}"
-                                Content="{Binding TotalResultsNumber, 
+                                Content="{Binding ElementName=SearchResultsView, Path=TotalResultsCount, 
                                                   Converter={c:SearchResultsCountConverter}}"
                                 Visibility="{Binding Source={x:Static local:ToolbarSettings.User},
                                                      Path=IsShowResultsCount,

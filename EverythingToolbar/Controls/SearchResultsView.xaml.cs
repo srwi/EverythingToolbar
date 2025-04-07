@@ -16,6 +16,19 @@ namespace EverythingToolbar.Controls
 {
     public partial class SearchResultsView
     {
+        public static readonly DependencyProperty TotalResultsCountProperty =
+            DependencyProperty.Register(
+                nameof(TotalResultsCount),
+                typeof(int),
+                typeof(SearchResultsView),
+                new PropertyMetadata(0));
+
+        public int TotalResultsCount
+        {
+            get => (int)GetValue(TotalResultsCountProperty);
+            set => SetValue(TotalResultsCountProperty, value);
+        }
+
         private SearchResult SelectedItem => SearchResultsListView.SelectedItem as SearchResult;
         private Point _dragStart;
         private const int PageSize = 256;
@@ -54,6 +67,14 @@ namespace EverythingToolbar.Controls
         {
             var searchResultsProvider = new SearchResultProvider(searchState);
             _searchResultsCollection = new VirtualizingCollection<SearchResult>(searchResultsProvider, PageSize);
+            _searchResultsCollection.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == "Count")
+                {
+                    TotalResultsCount = _searchResultsCollection.Count;
+                }
+            };
+
             SearchResultsListView.ItemsSource = _searchResultsCollection;
         }
 
