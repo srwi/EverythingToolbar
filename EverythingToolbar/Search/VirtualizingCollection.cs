@@ -147,7 +147,11 @@ namespace EverythingToolbar.Search
                 if (_pages[pageIndex] == null)
                     return default;
 
-                return _pages[pageIndex][pageOffset];
+                var page = _pages[pageIndex];
+                if (page.Count > pageOffset)
+                    return page[pageOffset];
+
+                return default;
             }
             set => throw new NotSupportedException();
         }

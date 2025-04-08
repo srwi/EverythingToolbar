@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingToolbar", "Everyt
 		{BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD} = {BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD}
 	EndProjectSection
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "EverythingToolbar.Installer", "EverythingToolbar.Installer\EverythingToolbar.Installer.wixproj", "{3A32975A-714F-408F-828A-04F5119EC1AB}"
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "EverythingToolbar.Installer", "EverythingToolbar.Installer\EverythingToolbar.Installer.wixproj", "{61554892-9614-4556-80BE-FBAF271E4848}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469} = {C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}
 		{FC46FED2-0B98-497F-8F88-037A0780ACF2} = {FC46FED2-0B98-497F-8F88-037A0780ACF2}
@@ -36,12 +36,10 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}.Debug|x64.ActiveCfg = Debug|x64
 		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}.Debug|x64.Build.0 = Debug|x64
-		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}.Release|x64.ActiveCfg = Release|x64
-		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}.Release|x64.Build.0 = Release|x64
-		{3A32975A-714F-408F-828A-04F5119EC1AB}.Debug|x64.ActiveCfg = Debug|x64
-		{3A32975A-714F-408F-828A-04F5119EC1AB}.Debug|x64.Build.0 = Debug|x64
-		{3A32975A-714F-408F-828A-04F5119EC1AB}.Release|x64.ActiveCfg = Release|x64
-		{3A32975A-714F-408F-828A-04F5119EC1AB}.Release|x64.Build.0 = Release|x64
+		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}.Release|x64.ActiveCfg = Release|Any CPU
+		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}.Release|x64.Build.0 = Release|Any CPU
+		{61554892-9614-4556-80BE-FBAF271E4848}.Release|x64.ActiveCfg = Release|x64
+		{61554892-9614-4556-80BE-FBAF271E4848}.Release|x64.Build.0 = Release|x64
 		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Debug|x64.ActiveCfg = Debug|x64
 		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Debug|x64.Build.0 = Debug|x64
 		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Release|x64.ActiveCfg = Release|x64

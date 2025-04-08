@@ -72,7 +72,6 @@ namespace EverythingToolbar.Controls
                     TotalResultsCount = _searchResultsCollection.Count;
                 }
             };
-
             SearchResultsListView.ItemsSource = _searchResultsCollection;
         }
 
@@ -275,14 +274,6 @@ namespace EverythingToolbar.Controls
 
             if (SearchResultsListView.SelectedItems.Count == 0 && !SearchResultsListView.Items.IsEmpty)
                 SelectNthSearchResult(0);
-        }
-
-        private void ScrollToVerticalOffset(double verticalOffset)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                GetScrollViewer().ScrollToVerticalOffset(verticalOffset);
-            }, DispatcherPriority.ContextIdle);
         }
 
         private void SelectNextSearchResult()

@@ -11,7 +11,7 @@
                 <ColumnDefinition Width="62" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding Icon, IsAsync=False}"
+            <Image Source="{Binding Icon, IsAsync=True}"
                    Width="16"
                    Height="16" />
             <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, Mode=OneTime, IsAsync=False}"

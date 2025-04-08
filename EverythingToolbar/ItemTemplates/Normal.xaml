@@ -9,7 +9,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding Icon, IsAsync=False}"
+            <Image Source="{Binding Icon, IsAsync=True}"
                    Width="16"
                    Height="16"
                    Margin="0, 5, 0, 0" />

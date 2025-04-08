@@ -152,10 +152,19 @@ namespace EverythingToolbar.Launcher
                     {
                         var app = new Application();
                         trayIcon.Icon = Icon.ExtractAssociatedIcon(GetIconPath());
-                        trayIcon.ContextMenu = new ContextMenu(new[] {
-                            new MenuItem(Resources.ContextMenuRunSetupAssistant, (s, e) => { new SetupAssistant(trayIcon).Show(); }),
-                            new MenuItem(Resources.ContextMenuQuit, (s, e) => { app.Shutdown(); })
-                        });
+                        trayIcon.ContextMenuStrip = new ContextMenuStrip();
+                        var setupItem = new ToolStripMenuItem(
+                            "Setup Assistant", 
+                            null, 
+                            (s, e) => { new SetupAssistant(trayIcon).Show(); }
+                        );
+                        trayIcon.ContextMenuStrip.Items.Add(setupItem);
+                        var quitItem = new ToolStripMenuItem(
+                            "Quit", 
+                            null, 
+                            (s, e) => { app.Shutdown(); }
+                        );
+                        trayIcon.ContextMenuStrip.Items.Add(quitItem);
                         trayIcon.Visible = ToolbarSettings.User.IsTrayIconEnabled;
                         app.Run(new LauncherWindow(trayIcon));
                     }

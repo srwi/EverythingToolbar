@@ -139,7 +139,6 @@ namespace EverythingToolbar.Helpers
 
             var cacheKey = $"{extension}_{width}_{height}_{options}";
 
-            // Check if the thumbnail is already in the cache
             if (ThumbnailCache.TryGetValue(cacheKey, out var cachedImage))
             {
                 return cachedImage;
@@ -156,7 +155,6 @@ namespace EverythingToolbar.Helpers
                     BitmapSizeOptions.FromEmptyOptions());
                 image.Freeze();
 
-                // Cache the image
                 ThumbnailCache[cacheKey] = (BitmapSource)image;
 
                 return (BitmapSource)image;
