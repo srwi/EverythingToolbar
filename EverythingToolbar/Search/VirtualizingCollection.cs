@@ -21,7 +21,7 @@ namespace EverythingToolbar.Search
 
         private int PageSize { get; }
 
-        private const long PageTimeout = 60000;
+        private const long PageTimeout = 30_000;
 
         private int _count = -1;
         public int Count
@@ -136,11 +136,12 @@ namespace EverythingToolbar.Search
         {
             get
             {
+                CleanUpPages();
+
                 var pageIndex = index / PageSize;
                 var pageOffset = index % PageSize;
 
                 RequestPage(pageIndex);
-                CleanUpPages();
 
                 // Return default if async load is in progress
                 if (_pages[pageIndex] == null)

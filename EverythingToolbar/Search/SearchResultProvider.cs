@@ -17,10 +17,14 @@ namespace EverythingToolbar.Search
     {
         private readonly SearchState _searchState;
         private bool _firstPageQueried;
+        private static bool _initialized;
 
         public SearchResultProvider(SearchState searchState)
         {
             _searchState = searchState;
+
+            if (!_initialized)
+                _initialized = Initialize();
         }
 
         public int FetchCount(int pageSize = 0)
@@ -97,7 +101,7 @@ namespace EverythingToolbar.Search
             return results;
         }
 
-        public bool Initialize()
+        private static bool Initialize()
         {
             SetInstanceName(ToolbarSettings.User.InstanceName);
 
@@ -114,9 +118,8 @@ namespace EverythingToolbar.Search
             if (major == 0 && minor == 0 && revision == 0 && (ErrorCode)Everything_GetLastError() == ErrorCode.ErrorIpc)
             {
                 LogError((ErrorCode)Everything_GetLastError());
-                Logger.Error("Failed to get Everything version number. Is Everything running?");
+                Logger.Error("Failed to get Everything version number.");
             }
-            // TODO: Automatically set instance name for 1.5a
             else
             {
                 Logger.Error("Everything version {major}.{minor}.{revision} is not supported.", major, minor, revision);
@@ -166,7 +169,7 @@ namespace EverythingToolbar.Search
                     Logger.Error("Failed to allocate memory for the search query.");
                     break;
                 case ErrorCode.ErrorIpc:
-                    Logger.Error("IPC is not available. Is Everything (www.voidtools.com) running?");
+                    Logger.Error("IPC is not available. Is Everything running? If not, go to www.voidtools.com and download Everything.");
                     break;
                 case ErrorCode.ErrorRegisterClassEx:
                     Logger.Error("Failed to register the search query window class.");

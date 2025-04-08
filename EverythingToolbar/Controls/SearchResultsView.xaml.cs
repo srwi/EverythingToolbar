@@ -39,8 +39,6 @@ namespace EverythingToolbar.Controls
         {
             InitializeComponent();
 
-            // TODO: SearachResultsView should subscribe to different events like changing filter or search term (search box) and
-            // update the search results provider accordingly.
             SearchState.Instance.PropertyChanged += (s, e) =>
             {
                 UpdateSearchResultsProvider(SearchState.Instance);
