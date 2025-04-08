@@ -4,8 +4,8 @@ namespace EverythingToolbar.Search
 {
     public interface IItemsProvider<T>
     {
-        int FetchCount();
+        int FetchCount(int pageSize = 0);
 
-        IList<T> FetchRange(int startIndex, int count);
+        IList<T> FetchRange(int startIndex, int pageSize);
     }
 }

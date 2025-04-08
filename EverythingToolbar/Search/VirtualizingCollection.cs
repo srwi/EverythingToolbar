@@ -21,10 +21,9 @@ namespace EverythingToolbar.Search
 
         private int PageSize { get; }
 
-        private const long PageTimeout = 10000;
+        private const long PageTimeout = 60000;
 
         private int _count = -1;
-
         public int Count
         {
             get
@@ -48,7 +47,6 @@ namespace EverythingToolbar.Search
         private SynchronizationContext SynchronizationContext { get; }
 
         private bool _isAsync = true;
-        
         public bool IsAsync
         {
             get => _isAsync;
@@ -152,7 +150,7 @@ namespace EverythingToolbar.Search
             }
             set => throw new NotSupportedException();
         }
-        
+
         object IList.this[int index]
         {
             get => this[index];
@@ -249,7 +247,7 @@ namespace EverythingToolbar.Search
         public bool IsReadOnly => true;
 
         public bool IsFixedSize => false;
-        
+
         private readonly Dictionary<int, IList<T>> _pages = new Dictionary<int, IList<T>>();
         private readonly Dictionary<int, DateTime> _pageTouchTimes = new Dictionary<int, DateTime>();
 
@@ -289,12 +287,12 @@ namespace EverythingToolbar.Search
 
         private IList<T> FetchPage(int pageIndex)
         {
-            return ItemsProvider.FetchRange(pageIndex*PageSize, PageSize);
+            return ItemsProvider.FetchRange(pageIndex * PageSize, PageSize);
         }
 
         private int FetchCount()
         {
-            return ItemsProvider.FetchCount();
+            return ItemsProvider.FetchCount(PageSize);
         }
     }
 }

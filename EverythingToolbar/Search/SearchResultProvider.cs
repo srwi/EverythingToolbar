@@ -16,13 +16,14 @@ namespace EverythingToolbar.Search
     public class SearchResultProvider : IItemsProvider<SearchResult>
     {
         private readonly SearchState _searchState;
+        private bool _firstPageQueried;
 
         public SearchResultProvider(SearchState searchState)
         {
             _searchState = searchState;
         }
 
-        public int FetchCount()
+        public int FetchCount(int pageSize = 0)
         {
             var search = _searchState.Filter.GetSearchPrefix() + _searchState.SearchTerm;
             Everything_SetSearchW(search);
@@ -38,9 +39,8 @@ namespace EverythingToolbar.Search
             Everything_SetMatchWholeWord(_searchState.IsMatchWholeWord && !_searchState.IsRegExEnabled);
             Everything_SetRegex(_searchState.IsRegExEnabled);
 
-            // This is required to get the correct number of results.
-            // TODO: Prevent calling the same query again once the first slice is fetched. Otherwise every first query is executed twice.
-            Everything_SetMax(0);
+            // First query is required to get the correct number of results.
+            Everything_SetMax((uint)pageSize);
             Everything_SetOffset(0);
             if (!Everything_QueryW(true))
             {
@@ -49,29 +49,37 @@ namespace EverythingToolbar.Search
                 return 0;
             }
 
+            // We remember the first page query to avoid querying it again when actually fetching data
+            _firstPageQueried = true;
+
             return (int)Everything_GetTotResults();
         }
 
-        public IList<SearchResult> FetchRange(int startIndex, int count)
+        public IList<SearchResult> FetchRange(int startIndex, int pageSize)
         {
-            Everything_SetOffset((uint)startIndex);
-            Everything_SetMax((uint)count);
-
-            if (!Everything_QueryW(true))
+            // We can skip querying the first page again
+            if (!_firstPageQueried || startIndex > 0)
             {
-                var lastError = (ErrorCode)Everything_GetLastError();
-                LogError(lastError);
-                return new List<SearchResult>();
+                _firstPageQueried = false;
+                Everything_SetOffset((uint)startIndex);
+                Everything_SetMax((uint)pageSize);
+                if (!Everything_QueryW(true))
+                {
+                    var lastError = (ErrorCode)Everything_GetLastError();
+                    LogError(lastError);
+                    return new List<SearchResult>();
+                }
             }
 
+
             var results = new List<SearchResult>();
+            StringBuilder fullPathAndFilename = new StringBuilder(4096);
             for (uint i = 0; i < Everything_GetNumResults(); i++)
             {
                 var highlightedPath = Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i));
                 var highlightedFileName = Marshal.PtrToStringUni(Everything_GetResultHighlightedFileName(i));
                 var isFile = Everything_IsFileResult(i);
-                var fullPathAndFilename = new StringBuilder(4096);
-                Everything_GetResultFullPathNameW(i, fullPathAndFilename, 4096);
+                Everything_GetResultFullPathNameW(i, fullPathAndFilename.Clear(), 4096);
                 Everything_GetResultSize(i, out var fileSize);
                 Everything_GetResultDateModified(i, out var dateModified);
 
