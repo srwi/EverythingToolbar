@@ -6,7 +6,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
 using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
@@ -72,6 +71,7 @@ namespace EverythingToolbar.Controls
                     TotalResultsCount = _searchResultsCollection.Count;
                 }
             };
+
             SearchResultsListView.ItemsSource = _searchResultsCollection;
         }
 
