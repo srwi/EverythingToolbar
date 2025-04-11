@@ -367,43 +367,43 @@
     <value>Introducir acceso directo...</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Attributes</value>
+    <value>Atributos</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
-    <value>Date accessed</value>
+    <value>Fecha de acceso</value>
   </data>
   <data name="SortByDateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>Fecha de creación</value>
   </data>
   <data name="SortByDateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>Fecha de modificación</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
-    <value>Date recently changed</value>
+    <value>Fecha de cambio reciente</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
-    <value>Date run</value>
+    <value>Fecha de ejecución</value>
   </data>
   <data name="SortByExtension" xml:space="preserve">
-    <value>Extension</value>
+    <value>Extensión</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
-    <value>File list filename</value>
+    <value>Nombre del archivo de lista</value>
   </data>
   <data name="SortByName" xml:space="preserve">
-    <value>Name</value>
+    <value>Nombre</value>
   </data>
   <data name="SortByPath" xml:space="preserve">
-    <value>Path</value>
+    <value>Ruta</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
-    <value>Run count</value>
+    <value>Número de ejecuciones</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
-    <value>Size</value>
+    <value>Tamaño</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
-    <value>Type name</value>
+    <value>Escribir nombre</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>Oscuro</value>
@@ -451,12 +451,12 @@
     <value>Doble clic para abrir</value>
   </data>
   <data name="SortDescending" xml:space="preserve">
-    <value>Descending</value>
+    <value>Descendente</value>
   </data>
   <data name="SortAscending" xml:space="preserve">
-    <value>Ascending</value>
+    <value>Ascendente</value>
   </data>
   <data name="SettingsSearchAsYouType" xml:space="preserve">
-    <value>Search as you type</value>
+    <value>Buscar mientras se escribe</value>
   </data>
 </root>
