@@ -4,6 +4,7 @@
              xmlns:c="clr-namespace:EverythingToolbar.Converters"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+             xmlns:controls="clr-namespace:EverythingToolbar.Controls"
              xmlns:local="clr-namespace:EverythingToolbar"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              SizeChanged="OnSizeChanged">
@@ -11,7 +12,8 @@
     <Grid>
         <TextBox Name="TextBox"
                  Tag="{x:Static properties:Resources.TextBoxWatermark}"
-                 Text="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=SearchTerm, Mode=OneWay}"
+                 Text="{Binding Path=SearchTerm, Mode=OneWay}"
+                 DataContext="{Binding RelativeSource={RelativeSource AncestorType=controls:SearchBox}}"
                  CaretBrush="{DynamicResource TextBoxForegroundActive}"
                  TextChanged="OnTextChanged"
                  GotKeyboardFocus="OnGotKeyboardFocus"
