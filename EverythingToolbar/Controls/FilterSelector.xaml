@@ -8,12 +8,14 @@
         <StackPanel Orientation="Horizontal">
             <TabControl x:Name="TabControl"
                         ItemsSource="{Binding DefaultFilters}"
-                        SelectedIndex="-1" />
+                        SelectedIndex="-1"
+                        FocusVisualStyle="{x:Null}" />
 
             <ComboBox Name="ComboBox"
                       ItemsSource="{Binding UserFilters}"
                       DisplayMemberPath="Name"
-                      SelectedIndex="-1" />
+                      SelectedIndex="-1"
+                      FocusVisualStyle="{x:Null}" />
         </StackPanel>
     </Border>
 </UserControl>
