@@ -19,9 +19,6 @@ namespace EverythingToolbar.Deskband
             };
             Interaction.GetBehaviors(SearchWindow.Instance).Add(behavior);
 
-            SearchBox.GotKeyboardFocus += OnSearchBoxGotKeyboardFocus;
-            SearchBox.LostKeyboardFocus += OnSearchBoxLostKeyboardFocus;
-
             SearchWindow.Instance.Hiding += OnSearchWindowHiding;
 
             ShortcutManager.Instance.Initialize(FocusSearchBox);

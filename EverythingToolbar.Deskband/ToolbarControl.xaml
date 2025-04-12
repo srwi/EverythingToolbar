@@ -35,7 +35,9 @@
                             Visibility="{Binding Path=ActualWidth,
                                                  RelativeSource={RelativeSource Self},
                                                  Converter={StaticResource SearchBoxDoubleToVisibilityConverter}}"
-                            SearchTerm="{Binding Source={x:Static search:SearchState.Instance}, Path=SearchTerm, Mode=TwoWay}" />
+                            SearchTerm="{Binding Source={x:Static search:SearchState.Instance}, Path=SearchTerm, Mode=TwoWay}"
+                            GotKeyboardFocus="OnSearchBoxGotKeyboardFocus"
+                            LostKeyboardFocus="OnSearchBoxLostKeyboardFocus"/>
 
         <controls:SearchButton Visibility="{Binding Path=ActualWidth,
                                                     RelativeSource={RelativeSource Self},  
