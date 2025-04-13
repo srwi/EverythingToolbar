@@ -45,11 +45,11 @@ namespace EverythingToolbar
         private void OnActivated(object sender, EventArgs e)
         {
             if (TaskbarStateManager.Instance.IsIcon)
-            {
                 EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
-            }
 
             EventDispatcher.Instance.InvokeFocusRequested(this, EventArgs.Empty);
+
+            SetTopmostBelowTaskbar();
         }
 
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
