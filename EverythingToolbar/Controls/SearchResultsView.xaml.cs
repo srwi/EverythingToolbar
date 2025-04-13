@@ -138,10 +138,7 @@ namespace EverythingToolbar.Controls
 
         private void RegisterItemContainerStyleProperties(object sender, ResourcesChangedEventArgs e)
         {
-            if (SearchResultsListView.ItemContainerStyle == null)
-            {
-                SearchResultsListView.ItemContainerStyle = new Style(typeof(ListViewItem));
-            }
+            SearchResultsListView.ItemContainerStyle ??= new Style(typeof(ListViewItem));
 
             var newStyle = new Style(typeof(ListViewItem), SearchResultsListView.ItemContainerStyle);
             newStyle.Setters.Add(new EventSetter
@@ -181,6 +178,7 @@ namespace EverythingToolbar.Controls
             else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.Enter)
             {
                 RunAsAdmin(this, null);
+                SearchResultsListView.SelectedIndex = -1;
             }
             else if (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == Key.Enter)
             {
@@ -189,17 +187,24 @@ namespace EverythingToolbar.Controls
 
                 var path = ((SearchResult)SearchResultsListView.SelectedItem).FullPathAndFileName;
                 SearchResultProvider.OpenSearchInEverything(SearchState.Instance, filenameToHighlight: path);
+                SearchResultsListView.SelectedIndex = -1;
             }
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Enter)
             {
                 OpenFilePath(this, null);
+                SearchResultsListView.SelectedIndex = -1;
             }
             else if (e.Key == Key.Enter)
             {
                 if (SearchResultsListView.SelectedIndex >= 0)
+                {
                     OpenSelectedSearchResult();
+                    SearchResultsListView.SelectedIndex = -1;
+                }
                 else
+                {
                     SelectNextSearchResult();
+                }
             }
             else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.C)
             {
@@ -401,13 +406,13 @@ namespace EverythingToolbar.Controls
         private void SingleClickSearchResult(object sender, MouseEventArgs e)
         {
             if (!ToolbarSettings.User.IsDoubleClickToOpen)
-                Open();
+                OpenWithMouseClick();
         }
 
         private void DoubleClickSearchResult(object sender, MouseEventArgs e)
         {
             if (ToolbarSettings.User.IsDoubleClickToOpen)
-                Open();
+                OpenWithMouseClick();
         }
 
         private void Open(object sender, RoutedEventArgs e)
@@ -415,7 +420,7 @@ namespace EverythingToolbar.Controls
             OpenSelectedSearchResult();
         }
 
-        private void Open()
+        private void OpenWithMouseClick()
         {
             switch (Keyboard.Modifiers)
             {
@@ -431,8 +436,6 @@ namespace EverythingToolbar.Controls
                     SelectedItem?.ShowInEverything();
                     SearchWindow.Instance.Hide();
                     break;
-                case ModifierKeys.None:
-                case ModifierKeys.Windows:
                 default:
                     OpenSelectedSearchResult();
                     break;
