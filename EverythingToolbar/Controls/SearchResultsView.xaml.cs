@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -63,16 +64,18 @@ namespace EverythingToolbar.Controls
         private void UpdateSearchResultsProvider(SearchState searchState)
         {
             var searchResultsProvider = new SearchResultProvider(searchState);
+
             _searchResultsCollection = new VirtualizingCollection<SearchResult>(searchResultsProvider, PageSize);
-            _searchResultsCollection.PropertyChanged += (s, e) =>
+            SearchResultsListView.ItemsSource = _searchResultsCollection;
+            _searchResultsCollection.CollectionChanged += (sender, args) =>
             {
-                if (e.PropertyName == "Count")
+                if (args.Action == NotifyCollectionChangedAction.Reset && _searchResultsCollection.Count > 0)
                 {
                     TotalResultsCount = _searchResultsCollection.Count;
+                    AutoSelectFirstResult();
                 }
             };
 
-            SearchResultsListView.ItemsSource = _searchResultsCollection;
         }
 
         private void AttachToScrollViewer()
@@ -277,8 +280,7 @@ namespace EverythingToolbar.Controls
             if (!ToolbarSettings.User.IsAutoSelectFirstResult)
                 return;
 
-            if (SearchResultsListView.SelectedItems.Count == 0 && !SearchResultsListView.Items.IsEmpty)
-                SelectNthSearchResult(0);
+            SelectFirstSearchResult();
         }
 
         private void SelectNextSearchResult()
