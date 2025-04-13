@@ -81,6 +81,7 @@ namespace EverythingToolbar.Controls
             else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.Enter)
             {
                 RunAsAdmin(this, null);
+                SearchResultsListView.SelectedIndex = -1;
             }
             else if (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == Key.Enter)
             {
@@ -89,17 +90,24 @@ namespace EverythingToolbar.Controls
 
                 var path = ((SearchResult)SearchResultsListView.SelectedItem).FullPathAndFileName;
                 EverythingSearch.Instance.OpenLastSearchInEverything(path);
+                SearchResultsListView.SelectedIndex = -1;
             }
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Enter)
             {
                 OpenFilePath(this, null);
+                SearchResultsListView.SelectedIndex = -1;
             }
             else if (e.Key == Key.Enter)
             {
                 if (SearchResultsListView.SelectedIndex >= 0)
+                {
                     OpenSelectedSearchResult();
+                    SearchResultsListView.SelectedIndex = -1;
+                }
                 else
+                {
                     SelectNextSearchResult();
+                }
             }
             else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.C)
             {
@@ -180,7 +188,7 @@ namespace EverythingToolbar.Controls
         {
             if (e.VerticalChange <= 0)
                 return;
-            
+
             if (e.VerticalOffset > e.ExtentHeight - 2 * e.ViewportHeight)
             {
                 EverythingSearch.Instance.QueryBatch(append: true);
@@ -321,13 +329,13 @@ namespace EverythingToolbar.Controls
         private void SingleClickSearchResult(object sender, MouseEventArgs e)
         {
             if (!ToolbarSettings.User.IsDoubleClickToOpen)
-                Open();
+                OpenWithMouseClick();
         }
 
         private void DoubleClickSearchResult(object sender, MouseEventArgs e)
         {
             if (ToolbarSettings.User.IsDoubleClickToOpen)
-                Open();
+                OpenWithMouseClick();
         }
 
         private void Open(object sender, RoutedEventArgs e)
@@ -335,7 +343,7 @@ namespace EverythingToolbar.Controls
             OpenSelectedSearchResult();
         }
 
-        private void Open()
+        private void OpenWithMouseClick()
         {
             switch (Keyboard.Modifiers)
             {
