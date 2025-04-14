@@ -66,23 +66,17 @@ namespace EverythingToolbar.Data
         {
             try
             {
-                if (Directory.Exists(FullPathAndFileName) && ShellUtils.WindowsExplorerIsDefault())
+                var path = FullPathAndFileName;
+                if (Directory.Exists(FullPathAndFileName))
                 {
-                    // We need to open directories with explorer specifically. Otherwise executables with the same stem
+                    // We need to make sure directories end with a slash. Otherwise executables with the same stem
                     // might be executed instead due to how Process.Start prioritizes executables when resolving filenames.
-                    Process.Start(new ProcessStartInfo
-                    {
-                        FileName = "explorer.exe",
-                        Arguments = "\"" + FullPathAndFileName + "\""
-                    });
+                    path += "\\";
                 }
-                else
+                Process.Start(new ProcessStartInfo(path)
                 {
-                    Process.Start(new ProcessStartInfo(FullPathAndFileName)
-                    {
-                        WorkingDirectory = Path
-                    });
-                }
+                    WorkingDirectory = Path
+                });
                 EverythingSearch.IncrementRunCount(FullPathAndFileName);
             }
             catch (Exception e)

@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
-using Microsoft.Win32;
 using NLog;
 
 namespace EverythingToolbar.Helpers
@@ -122,58 +120,30 @@ namespace EverythingToolbar.Helpers
             Process.Start("rundll32.exe", args);
         }
 
-        public static bool WindowsExplorerIsDefault()
-        {
-            var folderShell = (string)Registry.ClassesRoot.OpenSubKey(@"Folder\shell")?.GetValue(null);
-            var directoryShell = (string)Registry.ClassesRoot.OpenSubKey(@"Directory\shell")?.GetValue(null);
+        [DllImport("shell32.dll", SetLastError = true)]
+        private static extern int SHOpenFolderAndSelectItems(IntPtr pidlFolder, uint cidl, [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] apidl, uint dwFlags);
 
-            // Some third party file managers (e.g. Q-Dir, One Commander) create their own shell entries for folders/directories
-            if (folderShell != null && Registry.ClassesRoot.OpenSubKey(@"Folder\shell\" + folderShell + @"\command")?.GetValue(null) != null)
-                return false;
-            if (directoryShell != null && Registry.ClassesRoot.OpenSubKey(@"Directory\shell\" + directoryShell + @"\command")?.GetValue(null) != null)
-                return false;
+        [DllImport("shell32.dll", SetLastError = true)]
+        private static extern void SHParseDisplayName([MarshalAs(UnmanagedType.LPWStr)] string name, IntPtr bindingContext, [Out] out IntPtr pidl, uint sfgaoIn, [Out] out uint psfgaoOut);
 
-            // Some other file managers (e.g. Files) will directly override the system "open" command
-            if (folderShell == null && Registry.ClassesRoot.OpenSubKey(@"Folder\shell\open\command")?.GetValue("").ToString().ToLower().EndsWith(@"\explorer.exe") == false)
-                return false;
-
-            return true;
-        }
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-        private static extern int GetShortPathName(
-            [MarshalAs(UnmanagedType.LPWStr)]
-            string path,
-            [MarshalAs(UnmanagedType.LPWStr)]
-            StringBuilder shortPath,
-            int shortPathLength
-        );
-
-        private static string GetShortPath(string path)
-        {
-            var shortPathBuilder = new StringBuilder(255);
-            var result = GetShortPathName(@"\\?\" + path, shortPathBuilder, shortPathBuilder.Capacity);
-            
-            if (result == 0)
-            {
-                Logger.Info($"Failed to get short path for '{path}'.");
-                return path;
-            }
-            
-            return shortPathBuilder.ToString();
-        }
-        
         public static void OpenParentFolderAndSelect(string path)
         {
-            if (WindowsExplorerIsDefault())
-            {
-                var shortPath = GetShortPath(path);
-                CreateProcessFromCommandLine($"explorer.exe /select,\"{shortPath}\"");
+            var parentFolder = Path.GetDirectoryName(path);
+            if (string.IsNullOrEmpty(parentFolder))
                 return;
-            }
-            
-            var parent = Path.GetDirectoryName(path) ?? path;
-            Process.Start(parent);
+
+            SHParseDisplayName(parentFolder, IntPtr.Zero, out var nativeFolder, 0, out _);
+            if (nativeFolder == IntPtr.Zero)
+                return;
+
+            var itemToSelect = Path.GetFileName(path);
+            SHParseDisplayName(Path.Combine(parentFolder, itemToSelect), IntPtr.Zero, out var nativeFile, 0, out _);
+
+            var fileArray = new[] { nativeFile == IntPtr.Zero ? nativeFolder : nativeFile };
+            SHOpenFolderAndSelectItems(nativeFolder, (uint)fileArray.Length, fileArray, 0);
+
+            Marshal.FreeCoTaskMem(nativeFolder);
+            if (nativeFile != IntPtr.Zero) Marshal.FreeCoTaskMem(nativeFile);
         }
     }
 }
