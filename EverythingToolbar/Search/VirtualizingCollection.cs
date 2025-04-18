@@ -8,6 +8,49 @@ using System.Threading;
 
 namespace EverythingToolbar.Search
 {
+    public enum Status
+    {
+        NoData,
+        HasValidData,
+        HasOutdatedData
+    }
+
+    public class Page<T>
+    {
+        private IList<T> _items;
+        public IList<T> Items
+        {
+            get
+            {
+                LastAccessed = DateTime.Now;
+                return _items;
+            }
+            set
+            {
+                _items = value;
+                Status = Status.HasValidData;
+            }
+        }
+        public DateTime LastAccessed { get; private set; }
+        public Status Status { get; private set; } = Status.NoData;
+
+        public void Invalidate()
+        {
+            if (Status == Status.HasValidData)
+            {
+                Status = Status.HasOutdatedData;
+            }
+        }
+
+        public void MarkAsValid()
+        {
+            if (Status == Status.HasOutdatedData)
+            {
+                Status = Status.HasValidData;
+            }
+        }
+    }
+
     public sealed class VirtualizingCollection<T> : IList<T>, IList, INotifyCollectionChanged, INotifyPropertyChanged
     {
         public VirtualizingCollection(IItemsProvider<T> itemsProvider, int pageSize)
@@ -17,11 +60,25 @@ namespace EverythingToolbar.Search
             SynchronizationContext = SynchronizationContext.Current;
         }
 
-        private IItemsProvider<T> ItemsProvider { get; }
+        private IItemsProvider<T> ItemsProvider { get; set; }
+
+        public void UpdateProvider(IItemsProvider<T> newProvider)
+        {
+            if (ItemsProvider == newProvider)
+                return;
+
+            ItemsProvider = newProvider;
+
+            foreach (var page in _pages.Values)
+            {
+                page.Invalidate();
+            }
+            LoadCount();
+        }
 
         private int PageSize { get; }
 
-        private const long PageTimeout = 30_000;
+        private const long PageTimeout = 60_000;
 
         private int _count = -1;
         public int Count
@@ -126,7 +183,7 @@ namespace EverythingToolbar.Search
         private void LoadPageCompleted(object args)
         {
             var pageIndex = (int)((object[]) args)[0];
-            var page = (IList<T>)((object[])args)[1];
+            var page = (Page<T>)((object[])args)[1];
 
             PopulatePage(pageIndex, page);
             FireCollectionReset();
@@ -141,15 +198,27 @@ namespace EverythingToolbar.Search
                 var pageIndex = index / PageSize;
                 var pageOffset = index % PageSize;
 
-                RequestPage(pageIndex);
+                if (!_pages.TryGetValue(pageIndex, out var page))
+                {
+                    RequestPage(pageIndex);
+                    return default;
+                }
 
-                // Return default if async load is in progress
-                if (_pages[pageIndex] == null)
+                if (page.Status == Status.HasOutdatedData)
+                {
+                    RequestPage(pageIndex);
+
+                    if (pageOffset < page.Items?.Count)
+                        return page.Items[pageOffset];
+
+                    return default;
+                }
+
+                if (page.Status == Status.NoData)
                     return default;
 
-                var page = _pages[pageIndex];
-                if (page.Count > pageOffset)
-                    return page[pageOffset];
+                if (pageOffset < page.Items.Count)
+                    return page.Items[pageOffset];
 
                 return default;
             }
@@ -253,46 +322,44 @@ namespace EverythingToolbar.Search
 
         public bool IsFixedSize => false;
 
-        private readonly Dictionary<int, IList<T>> _pages = new Dictionary<int, IList<T>>();
-        private readonly Dictionary<int, DateTime> _pageTouchTimes = new Dictionary<int, DateTime>();
+        private readonly Dictionary<int, Page<T>> _pages = new Dictionary<int, Page<T>>();
 
         private void CleanUpPages()
         {
-            var keys = new List<int>(_pageTouchTimes.Keys);
+            var keys = new List<int>(_pages.Keys);
             foreach (var key in keys)
             {
                 // Page 0 gets accessed frequently, so we don't remove it
-                if ( key != 0 && (DateTime.Now - _pageTouchTimes[key]).TotalMilliseconds > PageTimeout )
+                if (key != 0 && (DateTime.Now - _pages[key].LastAccessed).TotalMilliseconds > PageTimeout)
                 {
                     _pages.Remove(key);
-                    _pageTouchTimes.Remove(key);
                 }
             }
         }
 
-        private void PopulatePage(int pageIndex, IList<T> page)
+        private void PopulatePage(int pageIndex, Page<T> page)
         {
-            if ( _pages.ContainsKey(pageIndex) )
-                _pages[pageIndex] = page;
+            _pages[pageIndex] = page;
         }
 
         private void RequestPage(int pageIndex)
         {
             if (!_pages.ContainsKey(pageIndex))
             {
-                _pages.Add(pageIndex, null);
-                _pageTouchTimes.Add(pageIndex, DateTime.Now);
+                _pages.Add(pageIndex, new Page<T>());
                 LoadPage(pageIndex);
             }
-            else
+            else if (_pages[pageIndex].Status == Status.HasOutdatedData)
             {
-                _pageTouchTimes[pageIndex] = DateTime.Now;
+                _pages[pageIndex].MarkAsValid();  // We mark old data as valid until it's updated
+                LoadPage(pageIndex);
             }
         }
 
-        private IList<T> FetchPage(int pageIndex)
+        private Page<T> FetchPage(int pageIndex)
         {
-            return ItemsProvider.FetchRange(pageIndex * PageSize, PageSize);
+            var items = ItemsProvider.FetchRange(pageIndex * PageSize, PageSize);
+            return new Page<T> { Items = items };
         }
 
         private int FetchCount()

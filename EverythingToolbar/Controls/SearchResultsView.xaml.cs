@@ -49,7 +49,17 @@ namespace EverythingToolbar.Controls
 
             Loaded += (s, e) =>
             {
-                UpdateSearchResultsProvider(SearchState.Instance);
+                var searchProvider = new SearchResultProvider(SearchState.Instance);
+                _searchResultsCollection = new VirtualizingCollection<SearchResult>(searchProvider, PageSize);
+                _searchResultsCollection.CollectionChanged += (sender, args) =>
+                {
+                    if (args.Action == NotifyCollectionChangedAction.Reset)
+                    {
+                        TotalResultsCount = _searchResultsCollection.Count;
+                        AutoSelectFirstResult();
+                    }
+                };
+                SearchResultsListView.ItemsSource = _searchResultsCollection;
 
                 // Mouse events and context menu must be added to the ItemContainerStyle each time it gets updated
                 RegisterItemContainerStyleProperties(null, null);
@@ -64,18 +74,7 @@ namespace EverythingToolbar.Controls
         private void UpdateSearchResultsProvider(SearchState searchState)
         {
             var searchResultsProvider = new SearchResultProvider(searchState);
-
-            _searchResultsCollection = new VirtualizingCollection<SearchResult>(searchResultsProvider, PageSize);
-            SearchResultsListView.ItemsSource = _searchResultsCollection;
-            _searchResultsCollection.CollectionChanged += (sender, args) =>
-            {
-                if (args.Action == NotifyCollectionChangedAction.Reset && _searchResultsCollection.Count > 0)
-                {
-                    TotalResultsCount = _searchResultsCollection.Count;
-                    AutoSelectFirstResult();
-                }
-            };
-
+            _searchResultsCollection?.UpdateProvider(searchResultsProvider);
         }
 
         private void AttachToScrollViewer()

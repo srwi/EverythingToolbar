@@ -64,6 +64,7 @@
               Background="{DynamicResource SearchResultsViewBackground}"
               ItemTemplate="{DynamicResource SearchResultsViewTemplate}"
               ItemContainerStyle="{DynamicResource ListViewItemStyle}"
+              IsSynchronizedWithCurrentItem="True"
               ScrollViewer.VerticalScrollBarVisibility="Visible"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
               VirtualizingPanel.IsVirtualizing="True"
