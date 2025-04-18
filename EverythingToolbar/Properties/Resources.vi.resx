@@ -388,22 +388,22 @@
     <value>Đuôi tên tệp</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
-    <value>File list filename</value>
+    <value>Tên tệp danh sách tập tin</value>
   </data>
   <data name="SortByName" xml:space="preserve">
     <value>Tên</value>
   </data>
   <data name="SortByPath" xml:space="preserve">
-    <value>Path</value>
+    <value>Sao chép đường dẫn</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
-    <value>Run count</value>
+    <value>Số lần chạy</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
     <value>Kích cỡ</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
-    <value>Type name</value>
+    <value>Tên loại tệp</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>Tối</value>
@@ -433,7 +433,7 @@
     <value>Video</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Update available:</value>
+    <value>Có bản cập nhật:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
     <value>Bỏ qua</value>
@@ -448,7 +448,7 @@
     <value>Chọn kết quả đầu tiên</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>Double-click to open</value>
+    <value>Nhấp đúp để mở</value>
   </data>
   <data name="SortDescending" xml:space="preserve">
     <value>Giảm dần</value>
@@ -457,6 +457,6 @@
     <value>Tăng dần</value>
   </data>
   <data name="SettingsSearchAsYouType" xml:space="preserve">
-    <value>Search as you type</value>
+    <value>Tìm kiếm trong lúc nhập</value>
   </data>
 </root>
