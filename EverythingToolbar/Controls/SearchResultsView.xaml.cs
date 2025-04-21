@@ -30,10 +30,10 @@ namespace EverythingToolbar.Controls
         }
 
         private SearchResult SelectedItem => SearchResultsListView.SelectedItem as SearchResult;
-        private Point _dragStart;
         private const int PageSize = 256;
+        private Point _dragStart;
+        private bool _isScrollBarDragging;
         private VirtualizingCollection<SearchResult> _searchResultsCollection;
-        private bool _isScrollBarDragging = false;
 
         public SearchResultsView()
         {
@@ -79,17 +79,19 @@ namespace EverythingToolbar.Controls
 
         private void AttachToScrollViewer()
         {
-            var scrollViewer = GetScrollViewer();
+            var listViewBorder = VisualTreeHelper.GetChild(SearchResultsListView, 0) as Decorator;
+
+            var scrollViewer = listViewBorder?.Child as ScrollViewer;
             if (scrollViewer == null)
                 return;
 
             var verticalScrollBar = FindVisualChild<ScrollBar>(scrollViewer, s => s.Orientation == Orientation.Vertical);
-            if (verticalScrollBar != null)
-            {
-                verticalScrollBar.PreviewMouseLeftButtonDown += ScrollBar_PreviewMouseLeftButtonDown;
-                verticalScrollBar.PreviewMouseLeftButtonUp += ScrollBar_PreviewMouseLeftButtonUp;
-                verticalScrollBar.MouseLeave += ScrollBar_MouseLeave;
-            }
+            if (verticalScrollBar == null)
+                return;
+
+            verticalScrollBar.PreviewMouseLeftButtonDown += ScrollBar_PreviewMouseLeftButtonDown;
+            verticalScrollBar.PreviewMouseLeftButtonUp += ScrollBar_PreviewMouseLeftButtonUp;
+            verticalScrollBar.MouseLeave += ScrollBar_MouseLeave;
         }
 
         private void ScrollBar_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -131,7 +133,7 @@ namespace EverythingToolbar.Controls
                 if (child is T typedChild && (condition == null || condition(typedChild)))
                     return typedChild;
 
-                var result = FindVisualChild<T>(child, condition);
+                var result = FindVisualChild(child, condition);
                 if (result != null)
                     return result;
             }
@@ -187,8 +189,7 @@ namespace EverythingToolbar.Controls
                 if (SearchResultsListView.SelectedItem == null)
                     return;
 
-                var path = ((SearchResult)SearchResultsListView.SelectedItem).FullPathAndFileName;
-                SearchResultProvider.OpenSearchInEverything(SearchState.Instance, filenameToHighlight: path);
+                SearchResultProvider.OpenSearchInEverything(SearchState.Instance, SelectedItem.FullPathAndFileName);
                 SearchResultsListView.SelectedIndex = -1;
             }
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Enter)
@@ -236,25 +237,9 @@ namespace EverythingToolbar.Controls
                 SelectNextSearchResult();
                 e.Handled = true;
             }
-            else if (e.Key == Key.PageUp)
+            else if (e.Key == Key.PageUp || e.Key == Key.PageDown || e.Key == Key.Home || e.Key == Key.End)
             {
-                PageUp();
-                e.Handled = true;
-            }
-            else if (e.Key == Key.PageDown)
-            {
-                PageDown();
-                e.Handled = true;
-            }
-            else if (e.Key == Key.Home)
-            {
-                SelectFirstSearchResult();
-                e.Handled = true;
-            }
-            else if (e.Key == Key.End)
-            {
-                SelectLastSearchResult();
-                e.Handled = true;
+                e.Handled = ForwardKeyPressToControl(SearchResultsListView, e.Key);
             }
             else if (e.Key == Key.I && Keyboard.Modifiers == ModifierKeys.Control)
             {
@@ -279,7 +264,7 @@ namespace EverythingToolbar.Controls
             if (!ToolbarSettings.User.IsAutoSelectFirstResult)
                 return;
 
-            SelectFirstSearchResult();
+            SelectNthSearchResult(0);
         }
 
         private void SelectNextSearchResult()
@@ -290,16 +275,6 @@ namespace EverythingToolbar.Controls
         private void SelectPreviousSearchResult()
         {
             SelectNthSearchResult(SearchResultsListView.SelectedIndex - 1);
-        }
-
-        private void SelectFirstSearchResult()
-        {
-            SelectNthSearchResult(0);
-        }
-
-        private void SelectLastSearchResult()
-        {
-            SelectNthSearchResult(SearchResultsListView.Items.Count - 1);
         }
 
         private void SelectNthSearchResult(int n)
@@ -314,48 +289,20 @@ namespace EverythingToolbar.Controls
                 FocusSelectedItem();
         }
 
-        private int? GetPageSize()
+        private static bool ForwardKeyPressToControl(Control control, Key key)
         {
-            var item = SearchResultsListView.ItemContainerGenerator.ContainerFromIndex(SearchResultsListView.SelectedIndex) as ListViewItem;
-            if (item == null)
-                return null;
+            var presentationSource = PresentationSource.FromVisual(control);
+            if (presentationSource == null)
+                return false;
 
-            return (int)(SearchResultsListView.ActualHeight / item.ActualHeight);
-        }
-
-        private void PageUp()
-        {
-            if (SearchResultsListView.SelectedIndex < 0)
-                return;
-
-            var pageSize = GetPageSize();
-            if (pageSize == null)
-                return;
-
-            var stepSize = Math.Max(0, pageSize.Value - 1);
-            var newIndex = Math.Max(SearchResultsListView.SelectedIndex - stepSize, 0);
-            SearchResultsListView.SelectedIndex = newIndex;
-            SearchResultsListView.ScrollIntoView(SelectedItem);
-        }
-
-        private void PageDown()
-        {
-            if (SearchResultsListView.SelectedIndex < 0)
-                return;
-
-            var pageSize = GetPageSize();
-            if (pageSize == null)
-                return;
-
-            var stepSize = Math.Max(0, pageSize.Value - 1);
-            var newIndex = Math.Min(SearchResultsListView.SelectedIndex + stepSize, SearchResultsListView.Items.Count - 1);
-            SearchResultsListView.SelectedIndex = newIndex;
-            SearchResultsListView.ScrollIntoView(SelectedItem);
+            var args = new KeyEventArgs(Keyboard.PrimaryDevice, presentationSource, 0, key) { RoutedEvent = Keyboard.KeyDownEvent };
+            control.RaiseEvent(args);
+            return args.Handled;
         }
 
         private void OpenSelectedSearchResult()
         {
-            if (SearchResultsListView.SelectedIndex == -1)
+            if (SelectedItem == null)
                 return;
 
             if (!Rules.HandleRule(SelectedItem))
@@ -374,12 +321,6 @@ namespace EverythingToolbar.Controls
         {
             SelectedItem?.PreviewInQuickLook();
             SelectedItem?.PreviewInSeer();
-        }
-
-        private ScrollViewer GetScrollViewer()
-        {
-            var listViewBorder = VisualTreeHelper.GetChild(SearchResultsListView, 0) as Decorator;
-            return listViewBorder?.Child as ScrollViewer;
         }
 
         private void CopyPathToClipBoard(object sender, RoutedEventArgs e)
@@ -489,10 +430,10 @@ namespace EverythingToolbar.Controls
         {
             if (SearchResultsListView.SelectedItem == null)
                 return;
-            
-            var searchResult = SearchResultsListView.SelectedItem as SearchResult;
-            var command = (sender as MenuItem).Tag?.ToString() ?? "";
-            Rules.HandleRule(searchResult, command);
+
+            var menuItem = sender as MenuItem;
+            var command = menuItem?.Tag?.ToString() ?? "";
+            Rules.HandleRule(SelectedItem, command);
         }
 
         private void OnListViewItemMouseDown(object sender, MouseButtonEventArgs e)
@@ -502,16 +443,15 @@ namespace EverythingToolbar.Controls
 
         private void OnListViewItemMouseMove(object sender, MouseEventArgs e)
         {
+            if (e.LeftButton != MouseButtonState.Pressed || SelectedItem == null)
+                return;
+
             var diff = _dragStart - PointToScreen(Mouse.GetPosition(this));
 
-            if (e.LeftButton == MouseButtonState.Pressed &&
-                (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
-                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+            if (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
             {
-                if (SearchResultsListView.SelectedItems.Count == 0)
-                    return;
-
-                string[] files = { SelectedItem?.FullPathAndFileName };
+                string[] files = { SelectedItem.FullPathAndFileName };
                 var data = new DataObject(DataFormats.FileDrop, files);
                 data.SetData(DataFormats.Text, files[0]);
                 DragDrop.DoDragDrop(SearchResultsListView, data, DragDropEffects.All);

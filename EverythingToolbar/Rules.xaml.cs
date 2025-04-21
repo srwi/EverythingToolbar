@@ -160,7 +160,7 @@ namespace EverythingToolbar
             UpdateUI();
         }
 
-        public static bool HandleRule(SearchResult searchResult, string command="")
+        public static bool HandleRule(SearchResult searchResult, string command = "")
         {
             if (searchResult == null)
                 return false;

@@ -31,7 +31,7 @@ namespace EverythingToolbar.Search
                 Status = Status.HasValidData;
             }
         }
-        public DateTime LastAccessed { get; private set; }
+        public DateTime LastAccessed { get; private set; } = DateTime.Now;
         public Status Status { get; private set; } = Status.NoData;
 
         public void Invalidate()
@@ -169,6 +169,7 @@ namespace EverythingToolbar.Search
             }
             else
             {
+                Console.WriteLine("Loading page sync " + index);
                 PopulatePage(index, FetchPage(index));
             }
         }
@@ -176,6 +177,7 @@ namespace EverythingToolbar.Search
         private void LoadPageWork(object args)
         {
             var pageIndex = (int)args;
+            Console.WriteLine("Loading page async " + pageIndex);
             var page = FetchPage(pageIndex);
             SynchronizationContext.Send(LoadPageCompleted, new object[]{ pageIndex, page });
         }
@@ -193,7 +195,7 @@ namespace EverythingToolbar.Search
         {
             get
             {
-                CleanUpPages();
+                // CleanUpPages();
 
                 var pageIndex = index / PageSize;
                 var pageOffset = index % PageSize;
@@ -346,6 +348,7 @@ namespace EverythingToolbar.Search
         {
             if (!_pages.ContainsKey(pageIndex))
             {
+                Console.WriteLine("Doesnt contain key " + pageIndex);
                 _pages.Add(pageIndex, new Page<T>());
                 LoadPage(pageIndex);
             }
