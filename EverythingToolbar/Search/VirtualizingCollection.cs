@@ -20,18 +20,13 @@ namespace EverythingToolbar.Search
         private IList<T> _items;
         public IList<T> Items
         {
-            get
-            {
-                LastAccessed = DateTime.Now;
-                return _items;
-            }
+            get => _items;
             set
             {
                 _items = value;
                 Status = Status.HasValidData;
             }
         }
-        public DateTime LastAccessed { get; private set; } = DateTime.Now;
         public Status Status { get; private set; } = Status.NoData;
 
         public void Invalidate()
@@ -77,8 +72,6 @@ namespace EverythingToolbar.Search
         }
 
         private int PageSize { get; }
-
-        private const long PageTimeout = 60_000;
 
         private int _count = -1;
         public int Count
@@ -169,7 +162,6 @@ namespace EverythingToolbar.Search
             }
             else
             {
-                Console.WriteLine("Loading page sync " + index);
                 PopulatePage(index, FetchPage(index));
             }
         }
@@ -177,7 +169,6 @@ namespace EverythingToolbar.Search
         private void LoadPageWork(object args)
         {
             var pageIndex = (int)args;
-            Console.WriteLine("Loading page async " + pageIndex);
             var page = FetchPage(pageIndex);
             SynchronizationContext.Send(LoadPageCompleted, new object[]{ pageIndex, page });
         }
@@ -195,8 +186,6 @@ namespace EverythingToolbar.Search
         {
             get
             {
-                // CleanUpPages();
-
                 var pageIndex = index / PageSize;
                 var pageOffset = index % PageSize;
 
@@ -326,19 +315,6 @@ namespace EverythingToolbar.Search
 
         private readonly Dictionary<int, Page<T>> _pages = new Dictionary<int, Page<T>>();
 
-        private void CleanUpPages()
-        {
-            var keys = new List<int>(_pages.Keys);
-            foreach (var key in keys)
-            {
-                // Page 0 gets accessed frequently, so we don't remove it
-                if (key != 0 && (DateTime.Now - _pages[key].LastAccessed).TotalMilliseconds > PageTimeout)
-                {
-                    _pages.Remove(key);
-                }
-            }
-        }
-
         private void PopulatePage(int pageIndex, Page<T> page)
         {
             _pages[pageIndex] = page;
@@ -348,7 +324,6 @@ namespace EverythingToolbar.Search
         {
             if (!_pages.ContainsKey(pageIndex))
             {
-                Console.WriteLine("Doesnt contain key " + pageIndex);
                 _pages.Add(pageIndex, new Page<T>());
                 LoadPage(pageIndex);
             }

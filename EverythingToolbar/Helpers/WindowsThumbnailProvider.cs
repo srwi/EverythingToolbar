@@ -21,13 +21,13 @@ namespace EverythingToolbar.Helpers
         InCacheOnly = 0x10,
     }
 
-    public class WindowsThumbnailProvider
+    public static class WindowsThumbnailProvider
     {
-        private const string IShellItem2Guid = "7E9FB0D3-919F-4307-AB2E-9B1860310C93";
+        private const string ShellItem2Guid = "7E9FB0D3-919F-4307-AB2E-9B1860310C93";
         private static readonly ConcurrentDictionary<string, BitmapSource> ThumbnailCache = new ConcurrentDictionary<string, BitmapSource>();
 
         [DllImport("shell32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        internal static extern int SHCreateItemFromParsingName(
+        private static extern int SHCreateItemFromParsingName(
             [MarshalAs(UnmanagedType.LPWStr)] string path,
             IntPtr pbc,
             ref Guid riid,
@@ -35,7 +35,7 @@ namespace EverythingToolbar.Helpers
 
         [DllImport("gdi32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool DeleteObject(IntPtr hObject);
+        private static extern bool DeleteObject(IntPtr hObject);
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
@@ -48,12 +48,12 @@ namespace EverythingToolbar.Helpers
                 out IntPtr ppv);
 
             void GetParent(out IShellItem ppsi);
-            void GetDisplayName(SIGDN sigdnName, out IntPtr ppszName);
+            void GetDisplayName(Sigdn sigdnName, out IntPtr ppszName);
             void GetAttributes(uint sfgaoMask, out uint psfgaoAttribs);
             void Compare(IShellItem psi, uint hint, out int piOrder);
         }
 
-        internal enum SIGDN : uint
+        internal enum Sigdn : uint
         {
             NORMALDISPLAY = 0,
             PARENTRELATIVEPARSING = 0x80018001,
@@ -103,12 +103,12 @@ namespace EverythingToolbar.Helpers
 
             public int Width
             {
-                set { width = value; }
+                set => width = value;
             }
 
             public int Height
             {
-                set { height = value; }
+                set => height = value;
             }
         }
 
@@ -139,7 +139,7 @@ namespace EverythingToolbar.Helpers
 
             var cacheKey = $"{extension}_{width}_{height}_{options}";
 
-            if (ThumbnailCache.TryGetValue(cacheKey, out var cachedImage))
+            if (options != ThumbnailOptions.ThumbnailOnly && ThumbnailCache.TryGetValue(cacheKey, out var cachedImage))
             {
                 return cachedImage;
             }
@@ -168,7 +168,7 @@ namespace EverythingToolbar.Helpers
 
         private static IntPtr GetHBitmap(string fileName, int width, int height, ThumbnailOptions options)
         {
-            var shellItem2Guid = new Guid(IShellItem2Guid);
+            var shellItem2Guid = new Guid(ShellItem2Guid);
             var retCode = SHCreateItemFromParsingName(fileName, IntPtr.Zero, ref shellItem2Guid, out var nativeShellItem);
 
             if (retCode != 0)
