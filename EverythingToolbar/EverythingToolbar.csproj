@@ -253,6 +253,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Resource Include="Icons\PlaceholderIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="ItemTemplates\Compact.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

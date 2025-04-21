@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using EverythingToolbar.Search;
 using NLog;
 using Peter;
+using Application = System.Windows.Application;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 using Clipboard = System.Windows.Clipboard;
 using DataObject = System.Windows.DataObject;
@@ -21,7 +25,7 @@ using MessageBox = System.Windows.MessageBox;
 
 namespace EverythingToolbar.Data
 {
-    public class SearchResult
+    public class SearchResult : INotifyPropertyChanged
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<SearchResult>();
 
@@ -61,7 +65,57 @@ namespace EverythingToolbar.Data
             }
         }
 
-        public ImageSource Icon => WindowsThumbnailProvider.GetThumbnail(FullPathAndFileName, 16, 16);
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                if (_isLoading != value)
+                {
+                    _isLoading = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private static readonly ImageSource PlaceholderIcon = LoadPlaceholderIcon();
+
+        private ImageSource _icon;
+        public ImageSource Icon
+        {
+            get
+            {
+                if (_icon == null && !IsLoading)
+                {
+                    IsLoading = true;
+                    Task.Run(() =>
+                    {
+                        var loadedIcon = WindowsThumbnailProvider.GetThumbnail(FullPathAndFileName, 16, 16);
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _icon = loadedIcon;
+                            IsLoading = false;
+                            OnPropertyChanged();
+                        });
+                    });
+                }
+                return _icon ?? PlaceholderIcon;
+            }
+        }
+
+        private static ImageSource LoadPlaceholderIcon()
+        {
+            try
+            {
+                var uri = new Uri("pack://application:,,,/EverythingToolbar;component/Icons/PlaceholderIcon.ico");
+                return BitmapFrame.Create(uri);
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         public void Open()
         {
@@ -234,6 +288,13 @@ namespace EverythingToolbar.Data
                     Logger.Error(e, "Failed to open Seer preview.");
                 }
             });
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
