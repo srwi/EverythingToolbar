@@ -195,6 +195,10 @@ namespace EverythingToolbar.Search
                 case nameof(ToolbarSettings.User.IsRegExEnabled):
                     IsRegExEnabled = ToolbarSettings.User.IsRegExEnabled;
                     break;
+                case nameof(ToolbarSettings.User.IsHideEmptySearchResults):
+                    SearchTerm = "";
+                    OnPropertyChanged(nameof(SearchTerm));
+                    break;
             }
         }
 

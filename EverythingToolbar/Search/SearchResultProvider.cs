@@ -27,8 +27,11 @@ namespace EverythingToolbar.Search
                 _initialized = Initialize();
         }
 
-        public int FetchCount(int pageSize = 0)
+        public int FetchCount(int pageSize)
         {
+            if (ToolbarSettings.User.IsHideEmptySearchResults && string.IsNullOrEmpty(_searchState.SearchTerm))
+                return 0;
+
             var search = _searchState.Filter.GetSearchPrefix() + _searchState.SearchTerm;
             Everything_SetSearchW(search);
 
