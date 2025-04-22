@@ -295,8 +295,22 @@ namespace EverythingToolbar.Controls
             if (presentationSource == null)
                 return false;
 
+            // We want to be able to restore focus to the text box later
+            var currentFocus = Keyboard.FocusedElement;
+            var caretIndex = currentFocus is TextBox textBox ? textBox.CaretIndex : -1;
+
             var args = new KeyEventArgs(Keyboard.PrimaryDevice, presentationSource, 0, key) { RoutedEvent = Keyboard.KeyDownEvent };
             control.RaiseEvent(args);
+
+            // Restore focus to text box
+            if (ToolbarSettings.User.IsAutoSelectFirstResult &&
+                currentFocus is TextBox restoredTextBox &&
+                caretIndex >= 0)
+            {
+                currentFocus.Focus();
+                restoredTextBox.CaretIndex = Math.Min(caretIndex, restoredTextBox.Text.Length);
+            }
+
             return args.Handled;
         }
 
