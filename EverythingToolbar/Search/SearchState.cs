@@ -31,7 +31,7 @@ namespace EverythingToolbar.Search
             }
         }
 
-        private int _sortBy;
+        private int _sortBy = ToolbarSettings.User.SortBy;
         public int SortBy
         {
             get => _sortBy;
@@ -45,7 +45,7 @@ namespace EverythingToolbar.Search
             }
         }
 
-        private bool _isSortDescending;
+        private bool _isSortDescending = ToolbarSettings.User.IsSortDescending;
         public bool IsSortDescending
         {
             get => _isSortDescending;
@@ -59,7 +59,7 @@ namespace EverythingToolbar.Search
             }
         }
 
-        private bool _isMatchCase;
+        private bool _isMatchCase = ToolbarSettings.User.IsMatchCase;
         public bool IsMatchCase
         {
             get => _isMatchCase;
@@ -73,7 +73,7 @@ namespace EverythingToolbar.Search
             }
         }
 
-        private bool _isMatchPath;
+        private bool _isMatchPath = ToolbarSettings.User.IsMatchPath;
         public bool IsMatchPath
         {
             get => _isMatchPath;
@@ -87,7 +87,7 @@ namespace EverythingToolbar.Search
             }
         }
 
-        private bool _isMatchWholeWord;
+        private bool _isMatchWholeWord = ToolbarSettings.User.IsMatchWholeWord;
         public bool IsMatchWholeWord
         {
             get => _isMatchWholeWord;
@@ -101,7 +101,7 @@ namespace EverythingToolbar.Search
             }
         }
 
-        private bool _isRegExEnabled;
+        private bool _isRegExEnabled = ToolbarSettings.User.IsRegExEnabled;
         public bool IsRegExEnabled
         {
             get => _isRegExEnabled;
