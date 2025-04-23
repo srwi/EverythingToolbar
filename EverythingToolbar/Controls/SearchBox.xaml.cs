@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using EverythingToolbar.Helpers;
+using EverythingToolbar.Search;
 
 namespace EverythingToolbar.Controls
 {
@@ -94,6 +95,21 @@ namespace EverythingToolbar.Controls
                  ) && Keyboard.Modifiers == ModifierKeys.Control))
             {
                 EventDispatcher.Instance.InvokeGlobalKeyEvent(this, e);
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Tab)
+            {
+                // The down stroke of the Tab key is not always consistent. Therefore it's handled by the up stroke event.
+                e.Handled = true;
+            }
+        }
+
+        private void OnPreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Tab)
+            {
+                var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
+                SearchState.Instance.CycleFilters(offset);
                 e.Handled = true;
             }
         }

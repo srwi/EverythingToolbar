@@ -39,7 +39,6 @@ namespace EverythingToolbar
 
             CompositionTarget.Rendering += OnCompositionTargetRendering;
             EventDispatcher.Instance.GlobalKeyEvent += OnPreviewKeyDown;
-            PreviewKeyDown += OnPreviewKeyDown;
         }
 
         private void OnActivated(object sender, EventArgs e)
@@ -63,12 +62,6 @@ namespace EverythingToolbar
             {
                 Keyboard.ClearFocus();
                 NativeMethods.FocusTaskbarWindow();
-            }
-            else if (e.Key == Key.Tab)
-            {
-                var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
-                SearchState.Instance.CycleFilters(offset);
-                e.Handled = true;
             }
         }
 

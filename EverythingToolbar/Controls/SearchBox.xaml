@@ -19,7 +19,8 @@
                  GotKeyboardFocus="OnGotKeyboardFocus"
                  LostKeyboardFocus="OnLostKeyboardFocus"
                  PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"
-                 PreviewKeyDown="OnPreviewKeyDown">
+                 PreviewKeyDown="OnPreviewKeyDown"
+                 PreviewKeyUp="OnPreviewKeyUp">
             <TextBox.ContextMenu>
                 <ContextMenu>
                     <i:Interaction.Behaviors>
