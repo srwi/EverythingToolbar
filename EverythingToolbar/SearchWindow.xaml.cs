@@ -70,6 +70,10 @@ namespace EverythingToolbar
                 EverythingSearch.Instance.CycleFilters(offset);
                 e.Handled = true;
             }
+            else if (Keyboard.Modifiers == ModifierKeys.Alt && e.SystemKey == Key.Space)
+            {
+                e.Handled = true;
+            }
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
