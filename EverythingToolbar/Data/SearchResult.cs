@@ -11,13 +11,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using EverythingToolbar.Search;
 using NLog;
 using Peter;
-using Application = System.Windows.Application;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 using Clipboard = System.Windows.Clipboard;
 using DataObject = System.Windows.DataObject;
@@ -65,55 +63,16 @@ namespace EverythingToolbar.Data
             }
         }
 
-        private bool _isLoading;
-        public bool IsLoading
-        {
-            get => _isLoading;
-            set
-            {
-                if (_isLoading != value)
-                {
-                    _isLoading = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private static readonly ImageSource PlaceholderIcon = LoadPlaceholderIcon();
-
-        private ImageSource _icon;
+        private readonly AsyncIcon _icon = new AsyncIcon();
         public ImageSource Icon
         {
             get
             {
-                if (_icon == null && !IsLoading)
+                if (_icon.Icon == null)
                 {
-                    IsLoading = true;
-                    Task.Run(() =>
-                    {
-                        var loadedIcon = WindowsThumbnailProvider.GetThumbnail(FullPathAndFileName, 16, 16);
-                        Application.Current.Dispatcher.Invoke(() =>
-                        {
-                            _icon = loadedIcon;
-                            IsLoading = false;
-                            OnPropertyChanged();
-                        });
-                    });
+                    _icon.LoadIconAsync(FullPathAndFileName, () => OnPropertyChanged());
                 }
-                return _icon ?? PlaceholderIcon;
-            }
-        }
-
-        private static ImageSource LoadPlaceholderIcon()
-        {
-            try
-            {
-                var uri = new Uri("pack://application:,,,/EverythingToolbar;component/Icons/PlaceholderIcon.ico");
-                return BitmapFrame.Create(uri);
-            }
-            catch
-            {
-                return null;
+                return _icon.Icon;
             }
         }
 

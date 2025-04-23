@@ -72,6 +72,7 @@
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\SearchResultsCountConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Data\AsyncIcon.cs" />
     <Compile Include="Data\Filter.cs" />
     <Compile Include="Data\Rule.cs" />
     <Compile Include="Controls\FilterSelector.xaml.cs">
