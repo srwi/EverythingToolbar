@@ -63,6 +63,10 @@ namespace EverythingToolbar
                 Keyboard.ClearFocus();
                 NativeMethods.FocusTaskbarWindow();
             }
+            else if (Keyboard.Modifiers == ModifierKeys.Alt && e.SystemKey == Key.Space)
+            {
+                e.Handled = true;
+            }
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
