@@ -14,6 +14,7 @@
         MinHeight="300"
         Background="Transparent"
         ShowInTaskbar="False"
+        PreviewKeyDown="OnPreviewKeyDown"
         Activated="OnActivated"
         LostKeyboardFocus="OnLostKeyboardFocus"
         Loaded="OnLoaded"
@@ -66,7 +67,7 @@
                                                  Converter={c:NullToVisibilityConverter}}"
                             Grid.Column="1">
                         <Button Style="{DynamicResource TabBarButtonStyle}"
-                                Content="{Binding TotalResultsNumber, 
+                                Content="{Binding TotalResultsNumber,
                                                   Converter={c:SearchResultsCountConverter}}"
                                 Visibility="{Binding Source={x:Static local:ToolbarSettings.User},
                                                      Path=IsShowResultsCount,

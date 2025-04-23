@@ -33,7 +33,6 @@ namespace EverythingToolbar
             }
 
             EventDispatcher.Instance.GlobalKeyEvent += OnPreviewKeyDown;
-            PreviewKeyDown += OnPreviewKeyDown;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

@@ -72,6 +72,21 @@ namespace EverythingToolbar.Controls
                 EventDispatcher.Instance.InvokeGlobalKeyEvent(this, e);
                 e.Handled = true;
             }
+            else if (e.Key == Key.Tab)
+            {
+                // The down stroke of the Tab key is not always consistent. Therefore it's handled by the up stroke event.
+                e.Handled = true;
+            }
+        }
+
+        private void OnPreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Tab)
+            {
+                var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
+                EverythingSearch.Instance.CycleFilters(offset);
+                e.Handled = true;
+            }
         }
 
         private void UpdateSearchTerm(string newSearchTerm)
