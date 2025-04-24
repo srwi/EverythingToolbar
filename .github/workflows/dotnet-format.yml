@@ -2,7 +2,7 @@ name: .NET format
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "testing" ]
   pull_request:
     branches: [ "master" ]
 
