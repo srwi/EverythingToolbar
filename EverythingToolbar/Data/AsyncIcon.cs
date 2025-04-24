@@ -1,8 +1,8 @@
-﻿using System;
+﻿using EverythingToolbar.Helpers;
+using System;
 using System.Threading;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Data
 {

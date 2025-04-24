@@ -1,11 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using EverythingToolbar.Helpers;
+﻿using EverythingToolbar.Helpers;
 using IWshRuntimeLibrary;
 using Microsoft.Win32;
 using NLog;
 using Shell32;
+using System;
+using System.Diagnostics;
+using System.IO;
 using File = System.IO.File;
 
 namespace EverythingToolbar.Launcher

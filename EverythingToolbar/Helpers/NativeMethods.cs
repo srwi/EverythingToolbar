@@ -1,6 +1,6 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Runtime.InteropServices;
-using NLog;
 
 namespace EverythingToolbar.Helpers
 {

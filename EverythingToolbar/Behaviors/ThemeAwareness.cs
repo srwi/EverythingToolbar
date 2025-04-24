@@ -1,13 +1,13 @@
-﻿using System;
+﻿using EverythingToolbar.Helpers;
+using Microsoft.Xaml.Behaviors;
+using NLog;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
 using Windows.UI.ViewManagement;
-using EverythingToolbar.Helpers;
-using Microsoft.Xaml.Behaviors;
-using NLog;
 using Color = Windows.UI.Color;
 
 namespace EverythingToolbar.Behaviors
@@ -59,7 +59,8 @@ namespace EverythingToolbar.Behaviors
             var systemThemeWatcher = new RegistryWatcher(SystemThemeRegistryEntry);
             systemThemeWatcher.OnChangeValue += newValue =>
             {
-                Dispatcher.Invoke(() => {
+                Dispatcher.Invoke(() =>
+                {
                     var theme = GetThemeFromRegistryValue((int)newValue);
                     ApplyTheme(theme);
                 });
@@ -95,7 +96,8 @@ namespace EverythingToolbar.Behaviors
             {
                 return Theme.Light;
             }
-            else if (ToolbarSettings.User.ThemeOverride.ToLower() == "dark")
+
+            if (ToolbarSettings.User.ThemeOverride.ToLower() == "dark")
             {
                 return Theme.Dark;
             }

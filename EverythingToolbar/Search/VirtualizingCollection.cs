@@ -170,12 +170,12 @@ namespace EverythingToolbar.Search
         {
             var pageIndex = (int)args;
             var page = FetchPage(pageIndex);
-            SynchronizationContext.Send(LoadPageCompleted, new object[]{ pageIndex, page });
+            SynchronizationContext.Send(LoadPageCompleted, new object[] { pageIndex, page });
         }
 
         private void LoadPageCompleted(object args)
         {
-            var pageIndex = (int)((object[]) args)[0];
+            var pageIndex = (int)((object[])args)[0];
             var page = (Page<T>)((object[])args)[1];
 
             PopulatePage(pageIndex, page);
@@ -262,7 +262,7 @@ namespace EverythingToolbar.Search
 
         int IList.IndexOf(object value)
         {
-            return IndexOf((T) value);
+            return IndexOf((T)value);
         }
 
         public int IndexOf(T item)

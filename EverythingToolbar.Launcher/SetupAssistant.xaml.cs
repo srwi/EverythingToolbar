@@ -1,10 +1,11 @@
-﻿using System;
+﻿using EverythingToolbar.Helpers;
+using NLog;
+using System;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
-using EverythingToolbar.Helpers;
-using NLog;
 using FlowDirection = System.Windows.FlowDirection;
 using MessageBox = System.Windows.MessageBox;
 using RadioButton = System.Windows.Controls.RadioButton;
@@ -32,7 +33,7 @@ namespace EverythingToolbar.Launcher
             TrayIconCheckBox.IsChecked = ToolbarSettings.User.IsTrayIconEnabled;
 
             CreateFileWatcher(_taskbarShortcutPath);
-            
+
             if (File.Exists(_taskbarShortcutPath))
             {
                 _unlockedPages = Math.Max(3, _unlockedPages);
@@ -55,7 +56,7 @@ namespace EverythingToolbar.Launcher
             }
 
             _iconHasChanged = false;
-            
+
             // Bring to front
             Topmost = true;
             Topmost = false;
@@ -114,7 +115,7 @@ namespace EverythingToolbar.Launcher
             ToolbarSettings.User.IsTrayIconEnabled = TrayIconCheckBox.IsChecked != null && (bool)TrayIconCheckBox.IsChecked;
         }
 
-        private void OnClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void OnClosing(object sender, CancelEventArgs e)
         {
             if (_unlockedPages == TotalPages)
                 return;

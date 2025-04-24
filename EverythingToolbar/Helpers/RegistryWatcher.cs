@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using NLog;
+using System;
 using System.Management;
 using System.Security.Principal;
-using Microsoft.Win32;
-using NLog;
 
 namespace EverythingToolbar.Helpers
 {

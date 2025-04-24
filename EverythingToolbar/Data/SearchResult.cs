@@ -1,4 +1,9 @@
-﻿using System;
+﻿using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
+using EverythingToolbar.Search;
+using NLog;
+using Peter;
+using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -11,14 +16,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
-using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
-using EverythingToolbar.Search;
-using NLog;
-using Peter;
-using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 using Clipboard = System.Windows.Clipboard;
 using DataObject = System.Windows.DataObject;
+using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 using MessageBox = System.Windows.MessageBox;
 
 namespace EverythingToolbar.Data

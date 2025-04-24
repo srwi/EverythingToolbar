@@ -1,11 +1,11 @@
-﻿using System;
+﻿using EverythingToolbar.Helpers;
+using EverythingToolbar.Search;
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
-using EverythingToolbar.Helpers;
-using EverythingToolbar.Search;
 
 namespace EverythingToolbar.Controls
 {
@@ -87,7 +87,7 @@ namespace EverythingToolbar.Controls
                 e.Key == Key.PageDown || e.Key == Key.PageUp ||
                 e.Key == Key.Up || e.Key == Key.Down ||
                 e.Key == Key.Escape || e.Key == Key.Enter ||
-                (((e.Key >= Key.D0 && e.Key <= Key.D9) || 
+                (((e.Key >= Key.D0 && e.Key <= Key.D9) ||
                   e.Key == Key.I ||
                   e.Key == Key.B ||
                   e.Key == Key.U ||

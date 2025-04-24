@@ -1,11 +1,11 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using NLog;
 
 namespace EverythingToolbar.Helpers
 {
@@ -111,7 +111,7 @@ namespace EverythingToolbar.Helpers
                 var isKeyDown = wParam == (IntPtr)WmKeyDown || wParam == (IntPtr)WmSyskeyDown;
 
                 // We never want to block the Windows key
-                if(Keyboard.IsKeyDown(Key.LWin) || Keyboard.IsKeyDown(Key.RWin))
+                if (Keyboard.IsKeyDown(Key.LWin) || Keyboard.IsKeyDown(Key.RWin))
                 {
                     return CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
                 }

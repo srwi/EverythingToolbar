@@ -1,9 +1,9 @@
-﻿using System;
+﻿using EverythingToolbar.Behaviors;
+using EverythingToolbar.Helpers;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using EverythingToolbar.Behaviors;
-using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Controls
 {

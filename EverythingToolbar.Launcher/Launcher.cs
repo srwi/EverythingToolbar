@@ -1,15 +1,16 @@
+using EverythingToolbar.Helpers;
+using Microsoft.Xaml.Behaviors;
+using NHotkey;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Shell;
-using EverythingToolbar.Helpers;
-using Microsoft.Xaml.Behaviors;
-using NHotkey;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
 using Resources = EverythingToolbar.Launcher.Properties.Resources;
@@ -66,12 +67,12 @@ namespace EverythingToolbar.Launcher
 
             private void SetupJumpList()
             {
-                JumpList jumpList = new JumpList();
+                var jumpList = new JumpList();
                 jumpList.JumpItems.Add(new JumpTask
                 {
                     Title = Properties.Resources.ContextMenuRunSetupAssistant,
                     Description = Properties.Resources.ContextMenuRunSetupAssistant,
-                    ApplicationPath = System.Reflection.Assembly.GetEntryAssembly().Location,
+                    ApplicationPath = Assembly.GetEntryAssembly().Location,
                     Arguments = "--run-setup-assistant"
                 });
                 JumpList.SetJumpList(Application.Current, jumpList);
@@ -115,7 +116,7 @@ namespace EverythingToolbar.Launcher
                 // Prevent search window from reappearing after clicking the icon to close
                 if (_searchWindowRecentlyClosed)
                     return;
-                
+
                 Dispatcher?.Invoke(() =>
                 {
                     SearchWindow.Instance.Toggle();
@@ -134,10 +135,10 @@ namespace EverythingToolbar.Launcher
         private static string GetIconPath()
         {
             var processPath = Process.GetCurrentProcess().MainModule?.FileName ?? string.Empty;
-            
+
             if (string.IsNullOrEmpty(ToolbarSettings.User.IconName))
                 return Path.Combine(processPath, "..", "Icons", "Medium.ico");
-            
+
             return Path.Combine(processPath, "..", ToolbarSettings.User.IconName);
         }
 

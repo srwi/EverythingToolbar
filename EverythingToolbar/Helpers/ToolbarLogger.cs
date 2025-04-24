@@ -1,10 +1,10 @@
-﻿using System;
+﻿using NLog;
+using NLog.Config;
+using NLog.Targets;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Windows;
-using NLog;
-using NLog.Config;
-using NLog.Targets;
 
 namespace EverythingToolbar.Helpers
 {

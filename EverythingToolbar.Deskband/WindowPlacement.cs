@@ -1,11 +1,11 @@
-﻿using System;
+﻿using EverythingToolbar.Helpers;
+using Microsoft.Xaml.Behaviors;
+using NLog;
+using System;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
-using EverythingToolbar.Helpers;
-using Microsoft.Xaml.Behaviors;
-using NLog;
 using Point = System.Drawing.Point;
 
 namespace EverythingToolbar.Deskband
@@ -118,7 +118,7 @@ namespace EverythingToolbar.Deskband
         {
             if (Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
                 return (int)(12 / GetScalingFactor());
-            
+
             return 0;
         }
 

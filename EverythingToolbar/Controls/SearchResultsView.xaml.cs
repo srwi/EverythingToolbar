@@ -1,3 +1,6 @@
+using EverythingToolbar.Behaviors;
+using EverythingToolbar.Helpers;
+using EverythingToolbar.Search;
 using System;
 using System.Collections.Specialized;
 using System.Linq;
@@ -7,9 +10,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using EverythingToolbar.Behaviors;
-using EverythingToolbar.Helpers;
-using EverythingToolbar.Search;
 using SearchResult = EverythingToolbar.Data.SearchResult;
 
 namespace EverythingToolbar.Controls
@@ -65,7 +65,7 @@ namespace EverythingToolbar.Controls
                 RegisterItemContainerStyleProperties(null, null);
                 ThemeAwareness.ResourceChanged += RegisterItemContainerStyleProperties;
                 AutoSelectFirstResult();
-                
+
                 // Attach to scrollbar drag events after the control is loaded
                 AttachToScrollViewer();
             };
@@ -127,7 +127,7 @@ namespace EverythingToolbar.Controls
             if (parent == null)
                 return null;
 
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
             {
                 var child = VisualTreeHelper.GetChild(parent, i);
                 if (child is T typedChild && (condition == null || condition(typedChild)))
@@ -284,7 +284,7 @@ namespace EverythingToolbar.Controls
 
             SearchResultsListView.SelectedIndex = n;
             SearchResultsListView.ScrollIntoView(SelectedItem);
-            
+
             if (!ToolbarSettings.User.IsAutoSelectFirstResult || !ToolbarSettings.User.IsSearchAsYouType)
                 FocusSelectedItem();
         }

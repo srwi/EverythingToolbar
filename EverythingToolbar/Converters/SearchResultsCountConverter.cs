@@ -1,8 +1,8 @@
-﻿using System;
+﻿using EverythingToolbar.Properties;
+using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
-using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Converters
 {

@@ -1,4 +1,10 @@
-﻿using System;
+﻿using Castle.Core.Internal;
+using EverythingToolbar.Data;
+using EverythingToolbar.Properties;
+using EverythingToolbar.Search;
+using Microsoft.VisualBasic.FileIO;
+using NLog;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -6,12 +12,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
-using Castle.Core.Internal;
-using EverythingToolbar.Data;
-using EverythingToolbar.Properties;
-using EverythingToolbar.Search;
-using Microsoft.VisualBasic.FileIO;
-using NLog;
 
 namespace EverythingToolbar.Helpers
 {
@@ -35,16 +35,16 @@ namespace EverythingToolbar.Helpers
             }
         };
         public ObservableCollection<Filter> DefaultFilters
-        { 
+        {
             get
             {
                 if (ToolbarSettings.User.IsRegExEnabled)
                     return new ObservableCollection<Filter>(_defaultFilters.Skip(0).Take(1));
-                
+
                 return _defaultFilters;
             }
         }
-        
+
         public readonly ObservableCollection<Filter> DefaultUserFilters = new ObservableCollection<Filter>
         {
             new Filter {
@@ -89,7 +89,7 @@ namespace EverythingToolbar.Helpers
         };
         private ObservableCollection<Filter> _userFiltersCache;
         public ObservableCollection<Filter> UserFilters
-        { 
+        {
             get
             {
                 if (ToolbarSettings.User.IsRegExEnabled)
@@ -116,7 +116,7 @@ namespace EverythingToolbar.Helpers
             ToolbarSettings.User.PropertyChanged += OnSettingsChanged;
 
             NotifyFiltersChanged();
-            
+
             if (ToolbarSettings.User.IsImportFilters)
                 CreateFileWatcher();
         }
@@ -134,22 +134,22 @@ namespace EverythingToolbar.Helpers
                     NotifyFiltersChanged();
                     break;
                 case nameof(ToolbarSettings.User.IsImportFilters):
-                {
-                    if (ToolbarSettings.User.IsImportFilters)
                     {
-                        CreateFileWatcher();
+                        if (ToolbarSettings.User.IsImportFilters)
+                        {
+                            CreateFileWatcher();
+                        }
+                        else
+                        {
+                            StopFileWatcher();
+                            _userFiltersCache = null;
+                            foreach (var filter in DefaultFilters)
+                                filter.Reset();
+                        }
+
+                        NotifyFiltersChanged();
+                        break;
                     }
-                    else
-                    {
-                        StopFileWatcher();
-                        _userFiltersCache = null;
-                        foreach (var filter in DefaultFilters)
-                            filter.Reset();
-                    }
-                
-                    NotifyFiltersChanged();
-                    break;
-                }
             }
         }
 
@@ -206,7 +206,7 @@ namespace EverythingToolbar.Helpers
 
                         if (header == null || fields == null)
                             continue;
-                        
+
                         var filterDict = header
                             .Zip(fields, (h, f) => new { h, f })
                             .ToDictionary(x => x.h, x => x.f);
@@ -315,7 +315,7 @@ namespace EverythingToolbar.Helpers
         {
             if (!ToolbarSettings.User.IsRememberFilter)
                 return DefaultFilters[0];
-            
+
             foreach (var filter in DefaultFilters.Union(UserFilters))
             {
                 if (filter.Name == ToolbarSettings.User.LastFilter)

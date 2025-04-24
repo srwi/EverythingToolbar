@@ -1,11 +1,11 @@
-﻿using System;
+﻿using EverythingToolbar.Helpers;
+using Microsoft.Xaml.Behaviors;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
-using EverythingToolbar.Helpers;
-using Microsoft.Xaml.Behaviors;
 
 namespace EverythingToolbar.Behaviors
 {

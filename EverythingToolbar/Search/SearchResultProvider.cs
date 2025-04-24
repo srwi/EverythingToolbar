@@ -1,14 +1,14 @@
-﻿using System;
+﻿using EverythingToolbar.Data;
+using EverythingToolbar.Helpers;
+using EverythingToolbar.Properties;
+using NLog;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
-using EverythingToolbar.Data;
-using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
-using NLog;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 namespace EverythingToolbar.Search
@@ -80,7 +80,7 @@ namespace EverythingToolbar.Search
 
 
             var results = new List<SearchResult>();
-            StringBuilder fullPathAndFilename = new StringBuilder(4096);
+            var fullPathAndFilename = new StringBuilder(4096);
             for (uint i = 0; i < Everything_GetNumResults(); i++)
             {
                 var highlightedPath = Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i));
@@ -222,7 +222,7 @@ namespace EverythingToolbar.Search
 
         public static void OpenSearchInEverything(SearchState searchState, string filenameToHighlight = "")
         {
-            if(!File.Exists(ToolbarSettings.User.EverythingPath))
+            if (!File.Exists(ToolbarSettings.User.EverythingPath))
             {
                 MessageBox.Show(Resources.MessageBoxSelectEverythingExe);
                 using (var openFileDialog = new OpenFileDialog())

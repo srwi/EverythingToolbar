@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EverythingToolbar.Helpers;
+using NLog;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,8 +11,6 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using System.Windows;
-using EverythingToolbar.Helpers;
-using NLog;
 
 namespace EverythingToolbar.Controls
 {
@@ -20,7 +20,7 @@ namespace EverythingToolbar.Controls
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<UpdateBanner>();
         private static readonly string ApiUrl = "https://api.github.com/repos/srwi/EverythingToolbar/releases";
         private static readonly string LatestReleaseUrl = "https://github.com/srwi/EverythingToolbar/releases/latest";
-        
+
         public UpdateBanner()
         {
             InitializeComponent();
@@ -54,7 +54,7 @@ namespace EverythingToolbar.Controls
             {
                 Logger.Info("Failed to get latest release version.");
             }
-            
+
             return null;
         }
 
@@ -62,15 +62,15 @@ namespace EverythingToolbar.Controls
         {
             if (!ToolbarSettings.User.IsUpdateNotificationsEnabled)
                 return;
-            
+
             var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
             _latestVersion = await GetLatestStableReleaseVersion();
-            
+
             if (_latestVersion == null || _latestVersion == TryGetSkippedUpdate())
                 return;
             if (assemblyVersion == null || assemblyVersion.CompareTo(_latestVersion) >= 0)
                 return;
-            
+
             LatestVersionRun.Text = _latestVersion.ToString();
             Visibility = Visibility.Visible;
         }

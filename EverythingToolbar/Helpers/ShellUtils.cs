@@ -1,15 +1,15 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
-using NLog;
 
 namespace EverythingToolbar.Helpers
 {
     class ShellUtils
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<ShellUtils>();
-        
+
         private ShellUtils() { }
 
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]

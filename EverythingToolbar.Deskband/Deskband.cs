@@ -1,9 +1,9 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Windows;
-using EverythingToolbar.Helpers;
+﻿using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using NLog;
+using System;
+using System.Runtime.InteropServices;
+using System.Windows;
 
 namespace EverythingToolbar.Deskband
 {
@@ -30,7 +30,7 @@ namespace EverythingToolbar.Deskband
                 TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
                 TaskbarInfo.TaskbarSizeChanged += OnTaskbarSizeChanged;
 
-                TaskbarStateManager.Instance.TaskbarEdge = (EverythingToolbar.Helpers.Edge)TaskbarInfo.Edge;
+                TaskbarStateManager.Instance.TaskbarEdge = (Helpers.Edge)TaskbarInfo.Edge;
             }
             catch (Exception e)
             {
@@ -51,13 +51,13 @@ namespace EverythingToolbar.Deskband
         }
 
         private void OnFocusRequested(object sender, EventArgs e)
-		{
-            UpdateFocus(true);
-		}
-
-		private void OnTaskbarEdgeChanged(object sender, TaskbarEdgeChangedEventArgs e)
         {
-            TaskbarStateManager.Instance.TaskbarEdge = (EverythingToolbar.Helpers.Edge)e.Edge;
+            UpdateFocus(true);
+        }
+
+        private void OnTaskbarEdgeChanged(object sender, TaskbarEdgeChangedEventArgs e)
+        {
+            TaskbarStateManager.Instance.TaskbarEdge = (Helpers.Edge)e.Edge;
         }
 
         private void OnTaskbarSizeChanged(object sender, TaskbarSizeChangedEventArgs e)

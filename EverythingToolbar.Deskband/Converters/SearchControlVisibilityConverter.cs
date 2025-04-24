@@ -9,7 +9,7 @@ namespace EverythingToolbar.Deskband.Converters
 {
     public class SearchControlVisibilityConverter : MarkupExtension, IValueConverter
     {
-        public bool AlwaysVisibleWithAutoHidingTaskbar  { get; set; }
+        public bool AlwaysVisibleWithAutoHidingTaskbar { get; set; }
         public double VisibilityThreshold { get; set; }
 
         private static bool _isTaskbarAutoHiding;

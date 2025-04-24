@@ -1,6 +1,6 @@
-﻿using System.Globalization;
+﻿using Microsoft.Xaml.Behaviors;
+using System.Globalization;
 using System.Windows;
-using Microsoft.Xaml.Behaviors;
 
 namespace EverythingToolbar.Behaviors
 {

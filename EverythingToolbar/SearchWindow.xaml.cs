@@ -1,12 +1,12 @@
-﻿using System;
+﻿using EverythingToolbar.Helpers;
+using EverythingToolbar.Search;
+using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shell;
-using EverythingToolbar.Helpers;
-using EverythingToolbar.Search;
 
 namespace EverythingToolbar
 {
@@ -97,7 +97,7 @@ namespace EverythingToolbar
                 ToolbarSettings.User.PopupHeight = (int)Height;
                 ToolbarSettings.User.PopupWidth = (int)Width;
             }
-            
+
             // Push outside of screens to prevent flickering when showing
             BeginAnimation(TopProperty, new DoubleAnimation { To = 100000, Duration = TimeSpan.Zero });
             BeginAnimation(LeftProperty, new DoubleAnimation { To = 100000, Duration = TimeSpan.Zero });
@@ -105,7 +105,7 @@ namespace EverythingToolbar
             base.Hide();
 
             _dwmFlushOnRender = false;
-            
+
             SearchState.Instance.Reset();
         }
 
@@ -134,7 +134,7 @@ namespace EverythingToolbar
         {
             Width = width;
             Height = height;
-            
+
             var vertical = taskbarEdge == Edge.Left || taskbarEdge == Edge.Right;
             var animation = new DoubleAnimation
             {
@@ -148,7 +148,7 @@ namespace EverythingToolbar
                 else
                     AnimateShowWin10(left, top, width, height, taskbarEdge);
             };
-            
+
             BeginAnimation(vertical ? TopProperty : LeftProperty, animation);
         }
 
@@ -319,7 +319,7 @@ namespace EverythingToolbar
 
             double target = 0;
             DependencyProperty property = null;
-            switch(taskbarEdge)
+            switch (taskbarEdge)
             {
                 case Edge.Left:
                     target = RestoreBounds.Left - 150;

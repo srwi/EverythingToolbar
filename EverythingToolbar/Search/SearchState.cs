@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using EverythingToolbar.Data;
+﻿using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace EverythingToolbar.Search
 {

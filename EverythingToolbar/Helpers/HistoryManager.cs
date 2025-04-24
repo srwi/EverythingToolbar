@@ -1,11 +1,11 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
-using NLog;
 
 namespace EverythingToolbar.Helpers
 {

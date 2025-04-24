@@ -1,11 +1,11 @@
-﻿using System;
+﻿using EverythingToolbar.Helpers;
+using Microsoft.Xaml.Behaviors;
+using System;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
-using EverythingToolbar.Helpers;
-using Microsoft.Xaml.Behaviors;
 
 namespace EverythingToolbar.Behaviors
 {
@@ -19,7 +19,7 @@ namespace EverythingToolbar.Behaviors
             get => (MicaWindowStyleType)GetValue(MicaWindowStyleProperty);
             set => SetValue(MicaWindowStyleProperty, value);
         }
-        
+
         public static readonly DependencyProperty CaptionHeightProperty =
             DependencyProperty.Register(nameof(CaptionHeight), typeof(int), typeof(MicaWindow), new FrameworkPropertyMetadata(20));
 

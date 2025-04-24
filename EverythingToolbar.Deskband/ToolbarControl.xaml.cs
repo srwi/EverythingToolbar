@@ -1,9 +1,9 @@
-using System;
-using System.Windows;
-using System.Windows.Input;
 using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
 using NHotkey;
+using System;
+using System.Windows;
+using System.Windows.Input;
 
 namespace EverythingToolbar.Deskband
 {

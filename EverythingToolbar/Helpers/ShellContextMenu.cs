@@ -1073,7 +1073,7 @@ namespace Peter
             Int32 ParseDisplayName(
                 IntPtr hwnd,
                 IntPtr pbc,
-                [MarshalAs(UnmanagedType.LPWStr)] 
+                [MarshalAs(UnmanagedType.LPWStr)]
             string pszDisplayName,
                 ref uint pchEaten,
                 out IntPtr ppidl,
@@ -1168,7 +1168,7 @@ namespace Peter
             Int32 SetNameOf(
                 IntPtr hwnd,
                 IntPtr pidl,
-                [MarshalAs(UnmanagedType.LPWStr)] 
+                [MarshalAs(UnmanagedType.LPWStr)]
             string pszName,
                 SHGNO uFlags,
                 out IntPtr ppidlOut);
