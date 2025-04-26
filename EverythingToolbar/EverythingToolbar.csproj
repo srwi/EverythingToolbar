@@ -72,7 +72,6 @@
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\SearchResultsCountConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="Data\AsyncIcon.cs" />
     <Compile Include="Data\Filter.cs" />
     <Compile Include="Data\Rule.cs" />
     <Compile Include="Controls\FilterSelector.xaml.cs">
@@ -244,7 +243,7 @@
       <DependentUpon>SearchResultsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ToolbarLogger.cs" />
-    <Compile Include="Helpers\WindowsThumbnailProvider.cs" />
+    <Compile Include="Helpers\IconProvider.cs" />
     <Compile Include="Search\IItemsProvider.cs" />
     <Compile Include="Search\SearchResultProvider.cs" />
     <Compile Include="Search\SearchState.cs" />
@@ -254,9 +253,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Resource Include="Icons\PlaceholderIcon.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Content Include="ItemTemplates\Compact.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

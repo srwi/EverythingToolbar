@@ -13,7 +13,7 @@
                    Width="16"
                    Height="16"
                    Margin="0, 5, 0, 0" />
-            <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, Mode=OneTime, IsAsync=False}"
+            <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, Mode=OneTime}"
                             Grid.Column="1"
                             VerticalAlignment="Bottom"
                             Margin="0, 7, 0, 4"
@@ -24,7 +24,7 @@
                        Margin="10, 5, 10, 6"
                        FontSize="10pt"
                        Foreground="{DynamicResource SearchResultDateModified}"
-                       Text="{Binding HumanReadableDateModified, IsAsync=False}" />
+                       Text="{Binding HumanReadableDateModified}" />
         </Grid>
     </DataTemplate>
     

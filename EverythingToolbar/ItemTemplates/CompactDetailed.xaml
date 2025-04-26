@@ -14,12 +14,12 @@
             <Image Source="{Binding Icon}"
                    Width="16"
                    Height="16" />
-            <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, Mode=OneTime, IsAsync=False}"
+            <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, Mode=OneTime}"
                             Grid.Column="1"
                             FontSize="9pt"
                             Margin="2, 0"
                             Foreground="{DynamicResource SearchResultFileName}" />
-            <ContentControl Content="{Binding HighlightedPath, Converter={c:HighlightedTextConverter}, Mode=OneTime, IsAsync=False}"
+            <ContentControl Content="{Binding HighlightedPath, Converter={c:HighlightedTextConverter}, Mode=OneTime}"
                             ToolTip="{Binding Path}"
                             Grid.Column="2"
                             FontSize="9pt"
@@ -30,12 +30,12 @@
                        Margin="2, 0"
                        Foreground="{DynamicResource SearchResultFileSize}"
                        TextAlignment="Right"
-                       Text="{Binding HumanReadableFileSize, IsAsync=False}" />
+                       Text="{Binding HumanReadableFileSize}" />
             <TextBlock Grid.Column="4"
                        FontSize="9pt"
                        Margin="2, 0"
                        Foreground="{DynamicResource SearchResultDateModified}"
-                       Text="{Binding HumanReadableDateModified, IsAsync=False}" />
+                       Text="{Binding HumanReadableDateModified}" />
         </Grid>
     </DataTemplate>
     

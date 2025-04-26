@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
@@ -58,21 +59,52 @@ namespace EverythingToolbar.Data
         {
             get
             {
-                var dateModified = ((long)DateModified.dwHighDateTime << 32) | (uint)DateModified.dwLowDateTime;
+                long dateModified = ((long)DateModified.dwHighDateTime << 32) | (uint)DateModified.dwLowDateTime;
                 return DateTime.FromFileTime(dateModified).ToString("g");
             }
         }
 
-        private readonly AsyncIcon _icon = new AsyncIcon();
+        private ImageSource _icon;
         public ImageSource Icon
         {
             get
             {
-                if (_icon.Icon == null)
+                if (_icon != null)
+                    return _icon;
+
+                string[] imageExtensions =
                 {
-                    _icon.LoadIconAsync(FullPathAndFileName, () => OnPropertyChanged());
+                    ".png",
+                    ".jpg",
+                    ".jpeg",
+                    ".gif",
+                    ".bmp",
+                    ".tiff",
+                    ".ico"
+                };
+                string ext = System.IO.Path.GetExtension(FullPathAndFileName).ToLowerInvariant();
+                if (ToolbarSettings.User.IsThumbnailsEnabled && imageExtensions.Contains(ext) && File.Exists(FullPathAndFileName))
+                {
+                    _icon = IconProvider.GetImage(FullPathAndFileName);
+                    Task.Run(() =>
+                    {
+                        Icon = ThumbnailProvider.GetImage(FullPathAndFileName);
+                    });
                 }
-                return _icon.Icon;
+                else
+                {
+                    _icon = IconProvider.GetImage(FullPathAndFileName, source =>
+                    {
+                        Icon = source;
+                    });
+                }
+
+                return _icon;
+            }
+            set
+            {
+                _icon = value;
+                OnPropertyChanged();
             }
         }
 
