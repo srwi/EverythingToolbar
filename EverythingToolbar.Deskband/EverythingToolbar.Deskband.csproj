@@ -13,11 +13,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DefineConstants>TRACE;DEBUG;DESKBAND_WPF</DefineConstants>
-    <LangVersion>11.0</LangVersion>
+    <LangVersion>12</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineConstants>TRACE;DESKBAND_WPF</DefineConstants>
-    <LangVersion>11.0</LangVersion>
+    <LangVersion>12</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
