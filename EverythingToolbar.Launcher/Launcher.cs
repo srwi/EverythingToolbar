@@ -154,14 +154,14 @@ namespace EverythingToolbar.Launcher
                         trayIcon.Icon = Icon.ExtractAssociatedIcon(GetIconPath());
                         trayIcon.ContextMenuStrip = new ContextMenuStrip();
                         var setupItem = new ToolStripMenuItem(
-                            "Setup Assistant", 
-                            null, 
+                            "Setup Assistant",
+                            null,
                             (s, e) => { new SetupAssistant(trayIcon).Show(); }
                         );
                         trayIcon.ContextMenuStrip.Items.Add(setupItem);
                         var quitItem = new ToolStripMenuItem(
-                            "Quit", 
-                            null, 
+                            "Quit",
+                            null,
                             (s, e) => { app.Shutdown(); }
                         );
                         trayIcon.ContextMenuStrip.Items.Add(quitItem);

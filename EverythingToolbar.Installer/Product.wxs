@@ -1,13 +1,16 @@
-﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
-	<Package UpgradeCode="744f23c4-7adb-42fa-a781-ac940dc4b454" Version="!(bind.fileVersion.EverythingToolbarDll)" Language="1033" Name="EverythingToolbar" Manufacturer="Stephan Rumswinkel" InstallerVersion="300">
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+	 xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+	<Package UpgradeCode="744f23c4-7adb-42fa-a781-ac940dc4b454"
+			 Version="!(bind.fileVersion.EverythingToolbarDll)"
+			 Language="1033"
+			 Name="EverythingToolbar"
+			 Manufacturer="Stephan Rumswinkel"
+			 InstallerVersion="300">
 		<Media Id="1" Cabinet="myapplication.cab" EmbedCab="yes" />
 		<MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." AllowSameVersionUpgrades="yes" />
 
 		<Icon Id="icon.ico" SourceFile="..\EverythingToolbar.Launcher\Icons\Medium.ico" />
 		<Property Id="ARPPRODUCTICON" Value="icon.ico" />
-
-		<PropertyRef Id="NETFRAMEWORK45" />
-		<Launch Condition="Installed OR (NETFRAMEWORK45 AND NETFRAMEWORK45 &gt;= &quot;#80000&quot;)" Message="This application requires .NET 8.0 or later. Please install the .NET runtime and run this installer again." />
 
 		<Property Id="WINDOWSBUILDNUMBER" Secure="yes">
 			<RegistrySearch Id="BuildNumberSearch" Root="HKLM" Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion" Name="CurrentBuildNumber" Type="raw" />

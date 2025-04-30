@@ -17,10 +17,10 @@ namespace EverythingToolbar
         [Option(DefaultValue = false)]
         bool IsMatchPath { get; set; }
 
-        [Option(DefaultValue = 0)]
+        [Option(DefaultValue = 1)]
         int SortBy { get; set; }
 
-        [Option(DefaultValue = true)]
+        [Option(DefaultValue = false)]
         bool IsSortDescending { get; set; }
 
         [Option(DefaultValue = false)]
@@ -608,6 +608,6 @@ namespace EverythingToolbar
             .UseIniFile(Path.Combine(Utils.GetConfigDirectory(), "settings.ini"))
             .Build();
 
-        public static readonly ToolbarSettingsWrapper User = new ToolbarSettingsWrapper(UserSettings);
+        public static readonly ToolbarSettingsWrapper User = new(UserSettings);
     }
 }
