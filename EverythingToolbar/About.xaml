@@ -42,7 +42,7 @@
                          BorderThickness="0"
                          IsReadOnly="True"
                          Text="{Binding Text, Mode=OneWay}" />
-                <TextBlock>Copyright © 2024 Stephan Rumswinkel</TextBlock>
+                <TextBlock>Copyright © 2025 Stephan Rumswinkel</TextBlock>
                 <TextBlock>
                     <Run Text="{x:Static properties:Resources.AboutLicense}" />: MIT
                 </TextBlock>

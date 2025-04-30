@@ -17,7 +17,7 @@ namespace EverythingToolbar
         [Option(DefaultValue = false)]
         bool IsMatchPath { get; set; }
 
-        [Option(DefaultValue = 9)]  // Default is run count
+        [Option(DefaultValue = 0)]
         int SortBy { get; set; }
 
         [Option(DefaultValue = true)]
