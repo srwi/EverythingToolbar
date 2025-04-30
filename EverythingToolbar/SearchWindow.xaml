@@ -25,7 +25,6 @@
 
     <i:Interaction.Behaviors>
         <b:FlowDirectionAwareness />
-        <b:DpiScaling />
         <b:MicaWindow MicaWindowStyle="TransientWindow" CaptionHeight="0" />
         <b:ThemeAwareness />
     </i:Interaction.Behaviors>

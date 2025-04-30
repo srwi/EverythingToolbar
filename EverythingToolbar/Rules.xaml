@@ -17,7 +17,6 @@
     
     <i:Interaction.Behaviors>
         <b:FlowDirectionAwareness />
-        <b:DpiScaling />
     </i:Interaction.Behaviors>
 
     <Window.Resources>        

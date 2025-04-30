@@ -4,13 +4,11 @@
       xmlns:properties="clr-namespace:EverythingToolbar.Properties"
       xmlns:local="clr-namespace:EverythingToolbar"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-      xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
       xmlns:c="clr-namespace:EverythingToolbar.Converters">
 
     <Grid.ContextMenu>
         <ContextMenu>
             <i:Interaction.Behaviors>
-                <b:DpiScaling />
             </i:Interaction.Behaviors>
 
             <MenuItem IsCheckable="True"

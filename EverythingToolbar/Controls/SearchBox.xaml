@@ -1,6 +1,5 @@
 ﻿<UserControl x:Class="EverythingToolbar.Controls.SearchBox"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
              xmlns:c="clr-namespace:EverythingToolbar.Converters"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:properties="clr-namespace:EverythingToolbar.Properties"
@@ -24,7 +23,6 @@
             <TextBox.ContextMenu>
                 <ContextMenu>
                     <i:Interaction.Behaviors>
-                        <b:DpiScaling />
                     </i:Interaction.Behaviors>
 
                     <MenuItem Header="{x:Static properties:Resources.SettingsRegularExpressions}"
