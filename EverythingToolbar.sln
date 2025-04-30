@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingToolbar", "EverythingToolbar\EverythingToolbar.csproj", "{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingToolbar", "EverythingToolbar\EverythingToolbar.csproj", "{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD} = {BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD}
 	EndProjectSection
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "EverythingToolbar.Installer", "EverythingToolbar.Installer\EverythingToolbar.Installer.wixproj", "{3A32975A-714F-408F-828A-04F5119EC1AB}"
+Project("{B7DD6F7E-DEF8-4E67-B5B7-07EF123DB6F0}") = "EverythingToolbar.Installer", "EverythingToolbar.Installer\EverythingToolbar.Installer.wixproj", "{61554892-9614-4556-80BE-FBAF271E4848}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469} = {C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}
 		{FC46FED2-0B98-497F-8F88-037A0780ACF2} = {FC46FED2-0B98-497F-8F88-037A0780ACF2}
@@ -16,14 +16,14 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "EverythingToolbar.Installer
 		{C3F92B04-FFA3-40DE-A64A-00019C5A8852} = {C3F92B04-FFA3-40DE-A64A-00019C5A8852}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingToolbar.Launcher", "EverythingToolbar.Launcher\EverythingToolbar.Launcher.csproj", "{FC46FED2-0B98-497F-8F88-037A0780ACF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingToolbar.Launcher", "EverythingToolbar.Launcher\EverythingToolbar.Launcher.csproj", "{FC46FED2-0B98-497F-8F88-037A0780ACF2}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD} = {BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EverythingSDK", "EverythingSDK\EverythingSDK.vcxproj", "{BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingToolbar.Deskband", "EverythingToolbar.Deskband\EverythingToolbar.Deskband.csproj", "{C3F92B04-FFA3-40DE-A64A-00019C5A8852}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingToolbar.Deskband", "EverythingToolbar.Deskband\EverythingToolbar.Deskband.csproj", "{C3F92B04-FFA3-40DE-A64A-00019C5A8852}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD} = {BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD}
 	EndProjectSection
@@ -36,12 +36,12 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}.Debug|x64.ActiveCfg = Debug|x64
 		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}.Debug|x64.Build.0 = Debug|x64
-		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}.Release|x64.ActiveCfg = Release|x64
-		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}.Release|x64.Build.0 = Release|x64
-		{3A32975A-714F-408F-828A-04F5119EC1AB}.Debug|x64.ActiveCfg = Debug|x64
-		{3A32975A-714F-408F-828A-04F5119EC1AB}.Debug|x64.Build.0 = Debug|x64
-		{3A32975A-714F-408F-828A-04F5119EC1AB}.Release|x64.ActiveCfg = Release|x64
-		{3A32975A-714F-408F-828A-04F5119EC1AB}.Release|x64.Build.0 = Release|x64
+		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}.Release|x64.ActiveCfg = Release|Any CPU
+		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}.Release|x64.Build.0 = Release|Any CPU
+		{61554892-9614-4556-80BE-FBAF271E4848}.Debug|x64.ActiveCfg = Debug|x64
+		{61554892-9614-4556-80BE-FBAF271E4848}.Debug|x64.Build.0 = Debug|x64
+		{61554892-9614-4556-80BE-FBAF271E4848}.Release|x64.ActiveCfg = Release|x64
+		{61554892-9614-4556-80BE-FBAF271E4848}.Release|x64.Build.0 = Release|x64
 		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Debug|x64.ActiveCfg = Debug|x64
 		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Debug|x64.Build.0 = Debug|x64
 		{FC46FED2-0B98-497F-8F88-037A0780ACF2}.Release|x64.ActiveCfg = Release|x64

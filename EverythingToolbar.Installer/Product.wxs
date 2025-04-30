@@ -7,7 +7,7 @@
 		<Property Id="ARPPRODUCTICON" Value="icon.ico" />
 
 		<PropertyRef Id="NETFRAMEWORK45" />
-		<Launch Condition="Installed OR (NETFRAMEWORK45 AND NETFRAMEWORK45 &gt;= &quot;#460798&quot;)" Message="This application requires at least .NET Framework 4.7. Please install the .NET Framework and run this installer again." />
+		<Launch Condition="Installed OR (NETFRAMEWORK45 AND NETFRAMEWORK45 &gt;= &quot;#80000&quot;)" Message="This application requires .NET 8.0 or later. Please install the .NET runtime and run this installer again." />
 
 		<Property Id="WINDOWSBUILDNUMBER" Secure="yes">
 			<RegistrySearch Id="BuildNumberSearch" Root="HKLM" Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion" Name="CurrentBuildNumber" Type="raw" />
