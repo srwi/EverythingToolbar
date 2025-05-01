@@ -105,19 +105,19 @@ namespace EverythingToolbar
                     break;
             }
 
-            return (IntPtr)1;
+            return 1;
 
         }
 
-        private void CaptureKeyboard(EventHandler<WinKeyEventArgs> callback)
+        private static void CaptureKeyboard(EventHandler<WinKeyEventArgs> callback)
         {
             ReleaseKeyboard();
             WinKeyEventHandler += callback;
             _llKeyboardHookCallback = KeyboardHookCallback;
-            _llKeyboardHookId = SetWindowsHookEx(WhKeyboardLl, _llKeyboardHookCallback, (IntPtr)0, 0);
+            _llKeyboardHookId = SetWindowsHookEx(WhKeyboardLl, _llKeyboardHookCallback, 0, 0);
         }
 
-        private void ReleaseKeyboard()
+        private static void ReleaseKeyboard()
         {
             WinKeyEventHandler = null;
             UnhookWindowsHookEx(_llKeyboardHookId);
@@ -143,25 +143,25 @@ namespace EverythingToolbar
             if ((Modifiers & ModifierKeys.Windows) != 0)
             {
                 if (shortcutText.Length > 0)
-                    shortcutText.Append("+");
+                    shortcutText.Append('+');
                 shortcutText.Append(Properties.Resources.KeyWin);
             }
             if ((Modifiers & ModifierKeys.Alt) != 0)
             {
                 if (shortcutText.Length > 0)
-                    shortcutText.Append("+");
+                    shortcutText.Append('+');
                 shortcutText.Append(Properties.Resources.KeyAlt);
             }
             if ((Modifiers & ModifierKeys.Shift) != 0)
             {
                 if (shortcutText.Length > 0)
-                    shortcutText.Append("+");
+                    shortcutText.Append('+');
                 shortcutText.Append(Properties.Resources.KeyShift);
             }
             if (Key != Key.None)
             {
                 if (shortcutText.Length > 0)
-                    shortcutText.Append("+");
+                    shortcutText.Append('+');
                 shortcutText.Append(Key.ToString());
             }
 
@@ -186,26 +186,20 @@ namespace EverythingToolbar
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
-        public class WinKeyEventArgs : EventArgs
+        public class WinKeyEventArgs(bool isDown, Key key) : EventArgs
         {
-            public WinKeyEventArgs(bool isDown, Key key)
-            {
-                Key = key;
-                IsDown = isDown;
-            }
-
-            public bool IsDown { get; set; }
-            public Key Key { get; set; }
+            public bool IsDown { get; set; } = isDown;
+            public Key Key { get; set; } = key;
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+        private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool UnhookWindowsHookEx(IntPtr hhk);
+        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
     }
 }

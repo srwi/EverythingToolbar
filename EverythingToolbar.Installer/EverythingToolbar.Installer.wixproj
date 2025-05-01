@@ -12,7 +12,7 @@
     <OutputName>EverythingToolbar</OutputName>
   </PropertyGroup>
   <PropertyGroup>
-    <DefineConstants>HarvestPath=..\EverythingToolbar.Launcher\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.17763.0</DefineConstants>
+    <DefineConstants>HarvestPath=$(SolutionDir)EverythingToolbar.Launcher\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.17763.0\win-x64</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />
@@ -30,7 +30,7 @@
   <Import Project="Sdk.targets" Sdk="WixToolset.Sdk" Version="5.0.1" />
   <Target Name="BeforeBuild">
     <HeatDirectory 
-      Directory="..\EverythingToolbar.Launcher\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.17763.0"
+      Directory="$(SolutionDir)EverythingToolbar.Launcher\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.17763.0\win-x64"
       PreprocessorVariable="var.HarvestPath"
       OutputFile="HeatGeneratedFileList.wxs"
       ComponentGroupName="HeatGenerated"
@@ -39,7 +39,7 @@
       ToolPath="$(WixToolPath)"
       SuppressFragments="true"
       SuppressRegistry="true"
-      SuppressRootDirectory="true"
+      SuppressRootDirectory="false"
       Transforms="HeatXsl.xslt"
     />
   </Target>

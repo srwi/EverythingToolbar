@@ -152,7 +152,6 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Config.Net" Version="4.13.7" />
-        <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
         <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
         <PackageReference Include="NHotkey.Wpf" Version="2.1.0" />
