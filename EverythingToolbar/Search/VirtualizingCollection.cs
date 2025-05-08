@@ -137,13 +137,13 @@ namespace EverythingToolbar.Search
         {
             if (IsAsync)
             {
-                Count = 0;
+                Count = 0;  // TODO: hier schon auf 0 setzen? flackern?
                 _currentVersion = _providerVersion;
                 ItemsProvider.FetchCountAsync(PageSize, LoadCountCompleted);
             }
             else
             {
-                Count = ItemsProvider.FetchCount(PageSize);
+                // Count = ItemsProvider.FetchCount(PageSize);
             }
         }
 
@@ -160,30 +160,21 @@ namespace EverythingToolbar.Search
         {
             if (IsAsync)
             {
-                ThreadPool.QueueUserWorkItem(LoadPageWork, index);
+                _currentVersion = _providerVersion;
+                ItemsProvider.FetchRangeAsync(index * PageSize, PageSize, LoadPageCompleted);
             }
             else
             {
-                PopulatePage(index, FetchPage(index));
+                // PopulatePage(index, FetchPage(index));
             }
         }
 
-        private void LoadPageWork(object args)
+        private void LoadPageCompleted(int pageIndex, IList<T> items)
         {
-            var pageIndex = (int)args;
-            var currentVersion = _providerVersion;
-            var page = FetchPage(pageIndex);
-
-            if (currentVersion == _providerVersion)
-            {
-                SynchronizationContext.Send(LoadPageCompleted, new object[] { pageIndex, page });
-            }
-        }
-
-        private void LoadPageCompleted(object args)
-        {
-            var pageIndex = (int)((object[])args)[0];
-            var page = (Page<T>)((object[])args)[1];
+            if (_currentVersion != _providerVersion)
+                return;
+            
+            var page = new Page<T> { Items = items };
 
             PopulatePage(pageIndex, page);
             FireCollectionReset();

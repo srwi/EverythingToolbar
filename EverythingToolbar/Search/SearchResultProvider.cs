@@ -9,6 +9,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using System.Windows.Threading;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 namespace EverythingToolbar.Search
@@ -20,6 +21,8 @@ namespace EverythingToolbar.Search
         private static bool _initialized;
         private static IntPtr _responseWindowHandle;
         private static Action<int> _countCallback;
+        private static Action<int, IList<SearchResult>> _rangeCallback;
+        private static int _requestedPage;
 
         public SearchResultProvider(SearchState searchState)
         {
@@ -61,9 +64,53 @@ namespace EverythingToolbar.Search
         {
             if (Everything_IsQueryReply(msg, wParam, lParam, 0))
             {
+                var startTime = DateTime.Now;
                 var resultsCount = (int)Everything_GetTotResults();
-                _countCallback?.Invoke(resultsCount);
+                // _countCallback?.Invoke(resultsCount);
+
+                Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+                {
+                    _countCallback?.Invoke(resultsCount);
+                });
+                Console.WriteLine("Everything query took: " + (DateTime.Now - startTime).TotalMilliseconds + "ms");
 		
+                return 1;
+            }
+
+            if (Everything_IsQueryReply(msg, wParam, lParam, 1))
+            {
+                var startTime = DateTime.Now;
+                var results = new List<SearchResult>();
+                var fullPathAndFilename = new StringBuilder(4096);
+                for (uint i = 0; i < Everything_GetNumResults(); i++)
+                {
+                    var highlightedPath = Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i));
+                    var highlightedFileName = Marshal.PtrToStringUni(Everything_GetResultHighlightedFileName(i));
+                    var isFile = Everything_IsFileResult(i);
+                    Everything_GetResultFullPathNameW(i, fullPathAndFilename.Clear(), 4096);
+                    Everything_GetResultSize(i, out var fileSize);
+                    Everything_GetResultDateModified(i, out var dateModified);
+
+                    results.Add(new SearchResult
+                    {
+                        HighlightedPath = highlightedPath,
+                        HighlightedFileName = highlightedFileName,
+                        FullPathAndFileName = fullPathAndFilename.ToString(),
+                        IsFile = isFile,
+                        DateModified = dateModified,
+                        FileSize = fileSize
+                    });
+                }
+
+                // _rangeCallback?.Invoke(_requestedPage, results);  // TODO: ich glaube das aufrufen von ui aus diesem thread ist nicht gut und macht alles sehr langsam
+
+                Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+                {
+                    _rangeCallback?.Invoke(_requestedPage, results);
+                });
+                Console.WriteLine("getting results took: " + (DateTime.Now - startTime).TotalMilliseconds + "ms");
+
+
                 return 1;
             }
 
@@ -136,6 +183,7 @@ namespace EverythingToolbar.Search
             Everything_SetOffset(0);
             
             Everything_SetReplyWindow(_responseWindowHandle);
+            Everything_SetReplyID(0);
             
             if (!Everything_QueryW(false))
             {
@@ -145,9 +193,29 @@ namespace EverythingToolbar.Search
             }
         }
 
-        public void FetchRangeAsync(int startIndex, int pageSize, Action<IList<SearchResult>> callback = null)
+        public void FetchRangeAsync(int startIndex, int pageSize, Action<int, IList<SearchResult>> callback = null)
         {
+            _rangeCallback = callback;
             
+            // We can skip querying the first page again
+            if (!_firstPageQueried || startIndex > 0)
+            {
+                _firstPageQueried = false;
+                
+                Everything_SetReplyWindow(_responseWindowHandle);
+                Everything_SetReplyID(1);
+                
+                Everything_SetOffset((uint)startIndex);
+                Everything_SetMax((uint)pageSize);
+                
+                _requestedPage = startIndex / pageSize;
+                
+                if (!Everything_QueryW(false))
+                {
+                    var lastError = (ErrorCode)Everything_GetLastError();
+                    LogError(lastError);
+                }
+            }
         }
 
         public IList<SearchResult> FetchRange(int startIndex, int pageSize)

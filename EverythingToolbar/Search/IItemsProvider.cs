@@ -11,6 +11,6 @@ namespace EverythingToolbar.Search
 
         IList<T> FetchRange(int startIndex, int pageSize);
 
-        void FetchRangeAsync(int startIndex, int pageSize, Action<IList<T>> callback = null);
+        void FetchRangeAsync(int startIndex, int pageSize, Action<int, IList<T>> callback = null);
     }
 }
