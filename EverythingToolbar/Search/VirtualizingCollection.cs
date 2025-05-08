@@ -48,6 +48,10 @@ namespace EverythingToolbar.Search
 
     public sealed class VirtualizingCollection<T> : IList<T>, IList, INotifyCollectionChanged, INotifyPropertyChanged
     {
+        private readonly object _syncLock = new();
+        private int _providerVersion;
+        private int _currentVersion;
+
         public VirtualizingCollection(IItemsProvider<T> itemsProvider, int pageSize)
         {
             ItemsProvider = itemsProvider;
@@ -134,23 +138,21 @@ namespace EverythingToolbar.Search
             if (IsAsync)
             {
                 Count = 0;
-                ThreadPool.QueueUserWorkItem(LoadCountWork);
+                _currentVersion = _providerVersion;
+                ItemsProvider.FetchCountAsync(PageSize, LoadCountCompleted);
             }
             else
             {
-                Count = FetchCount();
+                Count = ItemsProvider.FetchCount(PageSize);
             }
         }
 
-        private void LoadCountWork(object args)
+        private void LoadCountCompleted(int count)
         {
-            var count = FetchCount();
-            SynchronizationContext.Send(LoadCountCompleted, count);
-        }
+            if (_currentVersion != _providerVersion)
+                return;
 
-        private void LoadCountCompleted(object args)
-        {
-            Count = (int)args;
+            Count = count;
             FireCollectionReset();
         }
 
@@ -169,8 +171,13 @@ namespace EverythingToolbar.Search
         private void LoadPageWork(object args)
         {
             var pageIndex = (int)args;
+            var currentVersion = _providerVersion;
             var page = FetchPage(pageIndex);
-            SynchronizationContext.Send(LoadPageCompleted, new object[] { pageIndex, page });
+
+            if (currentVersion == _providerVersion)
+            {
+                SynchronizationContext.Send(LoadPageCompleted, new object[] { pageIndex, page });
+            }
         }
 
         private void LoadPageCompleted(object args)
@@ -338,11 +345,6 @@ namespace EverythingToolbar.Search
         {
             var items = ItemsProvider.FetchRange(pageIndex * PageSize, PageSize);
             return new Page<T> { Items = items };
-        }
-
-        private int FetchCount()
-        {
-            return ItemsProvider.FetchCount(PageSize);
         }
     }
 }

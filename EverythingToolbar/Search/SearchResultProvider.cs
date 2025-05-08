@@ -18,6 +18,8 @@ namespace EverythingToolbar.Search
         private readonly SearchState _searchState;
         private bool _firstPageQueried;
         private static bool _initialized;
+        private static IntPtr _responseWindowHandle;
+        private static Action<int> _countCallback;
 
         public SearchResultProvider(SearchState searchState)
         {
@@ -25,6 +27,47 @@ namespace EverythingToolbar.Search
 
             if (!_initialized)
                 _initialized = Initialize();
+        }
+        
+        private static void InitializeAsyncResponseWindow()
+        {
+            if (_responseWindowHandle != IntPtr.Zero)
+                return;
+            
+            // Create a message-only window to receive IPC messages
+            _responseWindowHandle = MyNativeMethods.CreateWindowEx(
+                0,
+                "STATIC",
+                null,
+                0,
+                0, 0, 0, 0,
+                MyNativeMethods.HWND_MESSAGE,
+                IntPtr.Zero,
+                IntPtr.Zero,
+                IntPtr.Zero);
+
+            if (_responseWindowHandle != IntPtr.Zero)
+            {
+                MyNativeMethods.SetWindowLongPtr(_responseWindowHandle, MyNativeMethods.GWLP_WNDPROC,
+                    Marshal.GetFunctionPointerForDelegate<MyNativeMethods.WndProcDelegate>(HandleWindowMessage));
+            }
+            else
+            {
+                Logger.Error("Failed to create IPC response window.");
+            }
+        }
+
+        private static IntPtr HandleWindowMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
+        {
+            if (Everything_IsQueryReply(msg, wParam, lParam, 0))
+            {
+                var resultsCount = (int)Everything_GetTotResults();
+                _countCallback?.Invoke(resultsCount);
+		
+                return 1;
+            }
+
+            return MyNativeMethods.DefWindowProc(hWnd, msg, wParam, lParam);
         }
 
         public int FetchCount(int pageSize)
@@ -60,6 +103,51 @@ namespace EverythingToolbar.Search
             _firstPageQueried = true;
 
             return (int)Everything_GetTotResults();
+        }
+
+        public void FetchCountAsync(int pageSize = 0, Action<int> callback = null)
+        {
+            _countCallback = callback;
+            
+            if (ToolbarSettings.User.IsHideEmptySearchResults && string.IsNullOrEmpty(_searchState.SearchTerm))
+            {
+                _countCallback?.Invoke(0);
+                return;
+            }
+            
+            InitializeAsyncResponseWindow();
+
+            var search = _searchState.Filter.GetSearchPrefix() + _searchState.SearchTerm;
+            Everything_SetSearchW(search);
+
+            const Flags flags = Flags.FullPathAndFileName | Flags.HighlightedPath |
+                                Flags.HighlightedFileName | Flags.RequestSize |
+                                Flags.RequestDateModified;
+            Everything_SetRequestFlags((uint)flags);
+
+            SetSortType(_searchState.SortBy, _searchState.IsSortDescending);
+            Everything_SetMatchCase(_searchState.IsMatchCase);
+            Everything_SetMatchPath(_searchState.IsMatchPath);
+            Everything_SetMatchWholeWord(_searchState.IsMatchWholeWord && !_searchState.IsRegExEnabled);
+            Everything_SetRegex(_searchState.IsRegExEnabled);
+
+            // First query is required to get the correct number of results.
+            Everything_SetMax((uint)pageSize);
+            Everything_SetOffset(0);
+            
+            Everything_SetReplyWindow(_responseWindowHandle);
+            
+            if (!Everything_QueryW(false))
+            {
+                var lastError = (ErrorCode)Everything_GetLastError();
+                LogError(lastError);
+                _countCallback?.Invoke(0);
+            }
+        }
+
+        public void FetchRangeAsync(int startIndex, int pageSize, Action<IList<SearchResult>> callback = null)
+        {
+            
         }
 
         public IList<SearchResult> FetchRange(int startIndex, int pageSize)
@@ -320,5 +408,40 @@ namespace EverythingToolbar.Search
         private static extern bool Everything_GetResultSize(UInt32 nIndex, out long lpFileSize);
         [DllImport("Everything64.dll")]
         private static extern bool Everything_GetResultDateModified(UInt32 nIndex, out FILETIME lpFileTime);
+        [DllImport("Everything64.dll")]
+        private static extern void Everything_SetReplyWindow(IntPtr hwnd);
+        [DllImport("Everything64.dll")]
+        private static extern void Everything_SetReplyID(uint id);
+        [DllImport("Everything64.dll")]
+        private static extern bool Everything_IsQueryReply(uint message, IntPtr wParam, IntPtr lParam, long nId);
+    }
+
+    internal static class MyNativeMethods
+    {
+        public const int GWL_WNDPROC = -4;
+        public const int GWLP_WNDPROC = -4;
+        public static readonly IntPtr HWND_MESSAGE = new IntPtr(-3);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr CreateWindowEx(
+            uint dwExStyle,
+            [MarshalAs(UnmanagedType.LPStr)] string lpClassName,
+            [MarshalAs(UnmanagedType.LPStr)] string lpWindowName,
+            uint dwStyle,
+            int x, int y,
+            int nWidth, int nHeight,
+            IntPtr hWndParent,
+            IntPtr hMenu,
+            IntPtr hInstance,
+            IntPtr lpParam);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
+        public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr DefWindowProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam);
+
+        // Delegate for the window procedure
+        public delegate IntPtr WndProcDelegate(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
     }
 }

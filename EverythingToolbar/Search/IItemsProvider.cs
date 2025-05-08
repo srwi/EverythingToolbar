@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EverythingToolbar.Search
 {
@@ -6,6 +7,10 @@ namespace EverythingToolbar.Search
     {
         int FetchCount(int pageSize = 0);
 
+        void FetchCountAsync(int pageSize = 0, Action<int> callback = null);
+
         IList<T> FetchRange(int startIndex, int pageSize);
+
+        void FetchRangeAsync(int startIndex, int pageSize, Action<IList<T>> callback = null);
     }
 }
