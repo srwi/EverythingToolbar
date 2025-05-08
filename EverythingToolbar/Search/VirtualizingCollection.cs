@@ -48,7 +48,6 @@ namespace EverythingToolbar.Search
 
     public sealed class VirtualizingCollection<T> : IList<T>, IList, INotifyCollectionChanged, INotifyPropertyChanged
     {
-        private readonly object _syncLock = new();
         private int _providerVersion;
         private int _currentVersion;
 
@@ -67,6 +66,7 @@ namespace EverythingToolbar.Search
                 return;
 
             ItemsProvider = newProvider;
+            _providerVersion++;
 
             foreach (var page in _pages.Values)
             {

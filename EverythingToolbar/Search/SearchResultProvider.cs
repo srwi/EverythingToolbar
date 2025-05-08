@@ -64,22 +64,18 @@ namespace EverythingToolbar.Search
         {
             if (Everything_IsQueryReply(msg, wParam, lParam, 0))
             {
-                var startTime = DateTime.Now;
                 var resultsCount = (int)Everything_GetTotResults();
-                // _countCallback?.Invoke(resultsCount);
 
                 Dispatcher.CurrentDispatcher.BeginInvoke(() =>
                 {
                     _countCallback?.Invoke(resultsCount);
                 });
-                Console.WriteLine("Everything query took: " + (DateTime.Now - startTime).TotalMilliseconds + "ms");
 		
                 return 1;
             }
 
             if (Everything_IsQueryReply(msg, wParam, lParam, 1))
             {
-                var startTime = DateTime.Now;
                 var results = new List<SearchResult>();
                 var fullPathAndFilename = new StringBuilder(4096);
                 for (uint i = 0; i < Everything_GetNumResults(); i++)
@@ -102,14 +98,10 @@ namespace EverythingToolbar.Search
                     });
                 }
 
-                // _rangeCallback?.Invoke(_requestedPage, results);  // TODO: ich glaube das aufrufen von ui aus diesem thread ist nicht gut und macht alles sehr langsam
-
                 Dispatcher.CurrentDispatcher.BeginInvoke(() =>
                 {
                     _rangeCallback?.Invoke(_requestedPage, results);
                 });
-                Console.WriteLine("getting results took: " + (DateTime.Now - startTime).TotalMilliseconds + "ms");
-
 
                 return 1;
             }
