@@ -8,15 +8,23 @@ using System.Windows;
 namespace EverythingToolbar.Deskband
 {
     [ComVisible(true)]
+    [Guid("c51ca15b-2073-4239-a12b-468c7b62563e")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    public interface IServer
+    {
+        void Dummy();  // Dummy method to allow COM registration
+    }
+
+    [ComVisible(true)]
     [Guid("9d39b79c-e03c-4757-b1b6-ecce843748f3")]
     [CSDeskBandRegistration(Name = "EverythingToolbar")]
-    public class Deskband : CSDeskBandWpf
+    public class Server : CSDeskBandWpf, IServer
     {
-        private static readonly ILogger _logger = ToolbarLogger.GetLogger<Deskband>();
+        private static readonly ILogger _logger = ToolbarLogger.GetLogger<Server>();
         private static ToolbarControl ToolbarControl;
         protected override UIElement UIElement => ToolbarControl;
 
-        public Deskband()
+        public Server()
         {
             try
             {
@@ -44,6 +52,8 @@ namespace EverythingToolbar.Deskband
                 }
             }
         }
+
+        public void Dummy() { }
 
         private void OnUnfocusRequested(object sender, EventArgs e)
         {

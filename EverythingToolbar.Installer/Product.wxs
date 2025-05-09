@@ -22,21 +22,12 @@
 
 		<DirectoryRef Id="APPLICATIONFOLDER">
 			<Component Id="RegistryEntries" Guid="bbe654c6-1f51-4353-8c4b-7b79ecf31177" Bitness="always64">
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}" Value="Everything Toolbar" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\Implemented Categories" Value="" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\Implemented Categories\{00021492-0000-0000-c000-000000000046}" Value="" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\Implemented Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" Value="" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Value="mscoree.dll" Type="string" Action="write" />
+				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}" Value="EverythingToolbar" Type="string" Action="write" />
+				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Value="[APPLICATIONFOLDER]EverythingToolbar.Deskband.comhost.dll" Type="string" Action="write" />
 				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Name="ThreadingModel" Value="Both" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Name="Class" Value="CSDeskBand.Deskband" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Name="Assembly" Value="EverythingToolbar.Deskband, Version=!(bind.fileVersion.EverythingToolbarDll), Culture=neutral, PublicKeyToken=3b7d0980372ca18d" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Name="CodeBase" Value="file:///[APPLICATIONFOLDER]EverythingToolbar.Deskband.dll" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32\!(bind.fileVersion.EverythingToolbarDll)" Name="Class" Value="CSDeskBand.Deskband" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32\!(bind.fileVersion.EverythingToolbarDll)" Name="Assembly" Value="EverythingToolbar.Deskband, Version=!(bind.fileVersion.EverythingToolbarDll), Culture=neutral, PublicKeyToken=3b7d0980372ca18d" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32\!(bind.fileVersion.EverythingToolbarDll)" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32\!(bind.fileVersion.EverythingToolbarDll)" Name="CodeBase" Value="file:///[APPLICATIONFOLDER]EverythingToolbar.Deskband.dll" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\ProgId" Value="CSDeskBand.Deskband" Type="string" Action="write" />
+				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\ProgID" Value="EverythingToolbar.Deskband.Server" Type="string" Action="write" />
+				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\Implemented Categories" Value="" Type="string" Action="write" />
+				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\Implemented Categories\{00021492-0000-0000-C000-000000000046}" Value="" Type="string" Action="write" />
 			</Component>
 			<Component Id="EverythingToolbarAssembly" Guid="139bb06d-c8dc-4044-a2b7-037eab866497" Bitness="always64">
 				<File Id="EverythingToolbarDll" KeyPath="yes" Source="$(var.HarvestPath)\EverythingToolbar.dll" />

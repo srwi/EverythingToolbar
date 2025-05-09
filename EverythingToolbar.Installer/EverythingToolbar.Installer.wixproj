@@ -29,7 +29,7 @@
   </ItemGroup>
   <Import Project="Sdk.targets" Sdk="WixToolset.Sdk" Version="5.0.1" />
   <Target Name="BeforeBuild">
-    <HeatDirectory 
+    <HeatDirectory
       Directory="$(SolutionDir)EverythingToolbar.Launcher\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.17763.0\win-x64"
       PreprocessorVariable="var.HarvestPath"
       OutputFile="HeatGeneratedFileList.wxs"
@@ -39,7 +39,7 @@
       ToolPath="$(WixToolPath)"
       SuppressFragments="true"
       SuppressRegistry="true"
-      SuppressRootDirectory="false"
+      SuppressRootDirectory="true"
       Transforms="HeatXsl.xslt"
     />
   </Target>

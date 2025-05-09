@@ -7,6 +7,8 @@
     <UseWindowsForms>true</UseWindowsForms>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <EnableComHosting>true</EnableComHosting>
+    <GenerateComInterfaceMetadata>true</GenerateComInterfaceMetadata>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
