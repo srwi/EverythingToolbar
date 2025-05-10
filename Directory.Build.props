@@ -2,7 +2,7 @@
   <PropertyGroup>
     <FileVersion>1.6.0.0</FileVersion>
     <AssemblyVersion>1.6.0.0</AssemblyVersion>
-    <SelfContained>true</SelfContained>
+    <SelfContained>false</SelfContained>
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
   </PropertyGroup>
 </Project>

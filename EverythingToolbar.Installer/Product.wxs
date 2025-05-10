@@ -23,11 +23,13 @@
 		<DirectoryRef Id="APPLICATIONFOLDER">
 			<Component Id="RegistryEntries" Guid="bbe654c6-1f51-4353-8c4b-7b79ecf31177" Bitness="always64">
 				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}" Value="EverythingToolbar" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Value="[APPLICATIONFOLDER]EverythingToolbar.Deskband.comhost.dll" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InprocServer32" Name="ThreadingModel" Value="Both" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\ProgID" Value="EverythingToolbar.Deskband.Server" Type="string" Action="write" />
 				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\Implemented Categories" Value="" Type="string" Action="write" />
-				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\Implemented Categories\{00021492-0000-0000-C000-000000000046}" Value="" Type="string" Action="write" />
+				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\Implemented Categories\{00021492-0000-0000-c000-000000000046}" Value="" Type="string" Action="write" />
+				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InProcServer32" Value="[APPLICATIONFOLDER]EverythingToolbar.Deskband.comhost.dll" Type="string" Action="write" />
+				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\InProcServer32" Name="ThreadingModel" Value="Both" Type="string" Action="write" />
+				<RegistryValue Root="HKCR" Key="CLSID\{9D39B79C-E03C-4757-B1B6-ECCE843748F3}\ProgID" Value="EverythingToolbar.Deskband.Server" Type="string" Action="write" />
+				<RegistryValue Root="HKCR" Key="EverythingToolbar.Deskband.Server" Value="EverythingToolbar.Deskband.Server" Type="string" Action="write" />
+				<RegistryValue Root="HKCR" Key="EverythingToolbar.Deskband.Server\CLSID" Value="{9D39B79C-E03C-4757-B1B6-ECCE843748F3}" Type="string" Action="write" />
 			</Component>
 			<Component Id="EverythingToolbarAssembly" Guid="139bb06d-c8dc-4044-a2b7-037eab866497" Bitness="always64">
 				<File Id="EverythingToolbarDll" KeyPath="yes" Source="$(var.HarvestPath)\EverythingToolbar.dll" />
