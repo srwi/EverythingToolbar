@@ -28,20 +28,20 @@ jobs:
       - name: Build all
         run: MSBuild $Env:GITHUB_WORKSPACE /p:Configuration=Release
 
-      - name: Rename msi
+      - name: Rename installer bundle
         shell: bash
-        run: mv EverythingToolbar.Installer/bin/x64/Release/EverythingToolbar.msi EverythingToolbar-${{ github.ref_name }}.msi
+        run: mv Installer/Bundle/bin/x64/Release/Bundle.exe EverythingToolbar-${{ github.ref_name }}.exe
 
       - name: Generate SHA-256 checksum
         shell: bash
-        run: sha256sum EverythingToolbar-${{ github.ref_name }}.msi > EverythingToolbar-${{ github.ref_name }}.sha256
+        run: sha256sum EverythingToolbar-${{ github.ref_name }}.exe > EverythingToolbar-${{ github.ref_name }}.sha256
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: EverythingToolbar ${{ github.ref_name }}
           path: |
-            EverythingToolbar-${{ github.ref_name }}.msi
+            EverythingToolbar-${{ github.ref_name }}.exe
             EverythingToolbar-${{ github.ref_name }}.sha256
 
       - name: Create release draft
@@ -49,7 +49,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create "${{ github.ref_name }}" `
-            "EverythingToolbar-${{ github.ref_name }}.msi" `
+            "EverythingToolbar-${{ github.ref_name }}.exe" `
             "EverythingToolbar-${{ github.ref_name }}.sha256" `
             --draft `
             --title "${{ github.ref_name }}"

@@ -18,6 +18,9 @@ jobs:
       - name: Restore NuGet dependencies
         run: nuget restore
 
+      - name: Download .NET 8 Desktop Runtime
+        run: curl -L -o Installer\Bundle\windowsdesktop-runtime-8.0.15-win-x64.exe https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.15/windowsdesktop-runtime-8.0.15-win-x64.exe
+
       - name: Decode certificate
         shell: bash
         run: echo ${{ secrets.PFX_CERTIFICATE_FILE }} | base64 --decode  > ./EverythingToolbar.snk

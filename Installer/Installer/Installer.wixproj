@@ -22,7 +22,6 @@
     <Content Include="HeatXsl.xslt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="WixToolset.NetFx.wixext" Version="5.0.1" />
     <PackageReference Include="WixToolset.UI.wixext" Version="5.0.1" />
     <PackageReference Include="WixToolset.Util.wixext" Version="5.0.1" />
     <PackageReference Include="WixToolset.Heat" Version="5.0.1" />
@@ -34,7 +33,7 @@
       PreprocessorVariable="var.HarvestPath"
       OutputFile="HeatGeneratedFileList.wxs"
       ComponentGroupName="HeatGenerated"
-      DirectoryRefId="APPLICATIONFOLDER"
+      DirectoryRefId="INSTALLFOLDER"
       AutogenerateGuids="true"
       ToolPath="$(WixToolPath)"
       SuppressFragments="true"

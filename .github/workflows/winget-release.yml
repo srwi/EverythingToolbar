@@ -20,12 +20,12 @@ jobs:
         run: |
           $releases = Invoke-RestMethod -uri "https://api.github.com/repos/srwi/EverythingToolbar/releases"
           $stableRelease = $releases | Where-Object { $_.prerelease -eq $false } | Select -First 1
-          $installerUrl = $stableRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match "EverythingToolbar.*msi" | Select -ExpandProperty browser_download_url
+          $installerUrl = $stableRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match "EverythingToolbar.*exe" | Select -ExpandProperty browser_download_url
           .\wingetcreate.exe update stnkl.EverythingToolbar -s -v $stableRelease.tag_name -d $stableRelease.tag_name -u $installerUrl -t $env:WINGET_TOKEN
 
       - name: Submit release to WinGet (beta channel)
         run: |
           $releases = Invoke-RestMethod -uri "https://api.github.com/repos/srwi/EverythingToolbar/releases"
           $latestRelease = $releases | Select -First 1
-          $installerUrl = $latestRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match "EverythingToolbar.*msi" | Select -ExpandProperty browser_download_url
+          $installerUrl = $latestRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match "EverythingToolbar.*exe" | Select -ExpandProperty browser_download_url
           .\wingetcreate.exe update stnkl.EverythingToolbar.Beta -s -v $latestRelease.tag_name -d $latestRelease.tag_name -u $installerUrl -t $env:WINGET_TOKEN

@@ -1,0 +1,36 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:bal="http://wixtoolset.org/schemas/v4/wxs/bal" 
+     xmlns:nx="http://wixtoolset.org/schemas/v4/wxs/netfx">
+  <Bundle Name="!(bind.packageName.EverythingToolbarMsi)"
+          Manufacturer="!(bind.packageManufacturer.EverythingToolbarMsi)"
+          Version="!(bind.packageVersion.EverythingToolbarMsi)"
+          IconSourceFile="..\..\EverythingToolbar.Launcher\Icons\Medium.ico"
+          UpgradeCode="b39468f1-25f4-4450-b752-2d07e4c562c9">
+    <BootstrapperApplication>
+      <bal:WixStandardBootstrapperApplication LicenseUrl="https://github.com/srwi/EverythingToolbar/blob/master/LICENSE"
+                                              SuppressOptionsUI="yes"
+                                              SuppressRepair="yes"
+                                              ShowVersion="yes"
+                                              LogoFile="..\..\EverythingToolbar.Launcher\Icons\Medium.ico"
+                                              Theme="hyperlinkLargeLicense" />
+    </BootstrapperApplication>
+    <nx:DotNetCoreSearch RuntimeType="desktop"
+                         Platform="x64"
+                         MajorVersion="8"
+                         Variable="Net8DesktopRuntimeVersion" />
+    <Chain>
+      <ExePackage Id="Net8DesktopRuntime"
+                  DisplayName=".NET 8 Desktop Runtime"
+                  PerMachine="yes"
+                  Vital="yes"
+                  InstallArguments="/install /passive /norestart"
+                  UninstallArguments="/uninstall /passive /norestart /quiet"
+                  SourceFile="windowsdesktop-runtime-8.0.15-win-x64.exe"
+                  DetectCondition="Net8DesktopRuntimeVersion &gt;= v8.0.0" />
+      <MsiPackage Id="EverythingToolbarMsi"
+                  Vital="yes"
+                  SourceFile="..\Installer\bin\x64\Release\EverythingToolbar.msi"
+                  bal:DisplayInternalUICondition="WixBundleAction &lt;&gt; 4" /> <!--Only show for installation-->
+    </Chain>
+  </Bundle>
+</Wix>

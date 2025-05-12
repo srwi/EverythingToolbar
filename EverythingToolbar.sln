@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingToolbar", "Everyt
 		{BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD} = {BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD}
 	EndProjectSection
 EndProject
-Project("{B7DD6F7E-DEF8-4E67-B5B7-07EF123DB6F0}") = "EverythingToolbar.Installer", "EverythingToolbar.Installer\EverythingToolbar.Installer.wixproj", "{61554892-9614-4556-80BE-FBAF271E4848}"
+Project("{B7DD6F7E-DEF8-4E67-B5B7-07EF123DB6F0}") = "Installer", "Installer\Installer\Installer.wixproj", "{61554892-9614-4556-80BE-FBAF271E4848}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C8BB766A-D7BC-47F5-A0E7-D3225DD1F469} = {C8BB766A-D7BC-47F5-A0E7-D3225DD1F469}
 		{FC46FED2-0B98-497F-8F88-037A0780ACF2} = {FC46FED2-0B98-497F-8F88-037A0780ACF2}
@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingToolbar.Deskband"
 	ProjectSection(ProjectDependencies) = postProject
 		{BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD} = {BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD}
 	EndProjectSection
+EndProject
+Project("{B7DD6F7E-DEF8-4E67-B5B7-07EF123DB6F0}") = "InstallerBundle", "Installer\Bundle\InstallerBundle.wixproj", "{63DC6B86-7D13-490D-9F8E-E070880962ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +56,10 @@ Global
 		{C3F92B04-FFA3-40DE-A64A-00019C5A8852}.Debug|x64.Build.0 = Debug|x64
 		{C3F92B04-FFA3-40DE-A64A-00019C5A8852}.Release|x64.ActiveCfg = Release|x64
 		{C3F92B04-FFA3-40DE-A64A-00019C5A8852}.Release|x64.Build.0 = Release|x64
+		{63DC6B86-7D13-490D-9F8E-E070880962ED}.Debug|x64.ActiveCfg = Debug|x64
+		{63DC6B86-7D13-490D-9F8E-E070880962ED}.Debug|x64.Build.0 = Debug|x64
+		{63DC6B86-7D13-490D-9F8E-E070880962ED}.Release|x64.ActiveCfg = Release|x64
+		{63DC6B86-7D13-490D-9F8E-E070880962ED}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
