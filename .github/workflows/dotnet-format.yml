@@ -1,23 +1,20 @@
 name: .NET format
 
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+on: [push, pull_request]
 
 jobs:
   dotnet-format:
-
-    runs-on: ubuntu-latest
-
+    runs-on: windows-2022
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Format
-      run: dotnet format --verify-no-changes --verbosity diagnostic
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore -p:EnableWindowsTargeting=true
+
+      - name: Run dotnet format
+        run: dotnet format --verify-no-changes --verbosity diagnostic
