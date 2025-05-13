@@ -57,6 +57,8 @@ namespace EverythingToolbar.Search
             ItemsProvider = itemsProvider;
             PageSize = pageSize;
             SynchronizationContext = SynchronizationContext.Current;
+
+            LoadCount();
         }
 
         private IItemsProvider<T> ItemsProvider { get; set; }
@@ -78,17 +80,10 @@ namespace EverythingToolbar.Search
 
         private int PageSize { get; }
 
-        private int _count = -1;
+        private int _count;
         public int Count
         {
-            get
-            {
-                if (_count == -1)
-                {
-                    LoadCount();
-                }
-                return _count;
-            }
+            get => _count;
             private set
             {
                 if (_count != value)
@@ -140,7 +135,6 @@ namespace EverythingToolbar.Search
 
             if (IsAsync)
             {
-                Count = 0;
                 ItemsProvider.FetchCount(PageSize, isAsync: true).ContinueWith(task =>
                 {
                     if (_currentVersion != _providerVersion)

@@ -20,6 +20,7 @@ namespace EverythingToolbar.Search
         private static readonly object SyncLock = new();
         private readonly SearchState _searchState;
         private static bool _initialized;
+        private static bool _firstPageQueried;
         private static IntPtr _responseWindowHandle;
         private static TaskCompletionSource<int> _countCompletionSource;
         private static TaskCompletionSource<IList<SearchResult>> _rangeCompletionSource;
@@ -69,6 +70,9 @@ namespace EverythingToolbar.Search
             {
                 lock (SyncLock)
                 {
+                    // We remember the first page query to avoid querying it again when actually fetching data
+                    _firstPageQueried = true;
+
                     var resultsCount = (int)Everything_GetTotResults();
                     Dispatcher.CurrentDispatcher.BeginInvoke(() =>
                     {
@@ -143,7 +147,7 @@ namespace EverythingToolbar.Search
                 Everything_SetMatchWholeWord(_searchState.IsMatchWholeWord && !_searchState.IsRegExEnabled);
                 Everything_SetRegex(_searchState.IsRegExEnabled);
 
-                Everything_SetMax(0);
+                Everything_SetMax((uint)pageSize);
                 Everything_SetOffset(0);
 
                 if (!isAsync)
@@ -178,6 +182,14 @@ namespace EverythingToolbar.Search
         {
             lock (SyncLock)
             {
+                if (_firstPageQueried && startIndex == 0)
+                {
+                    // If the first page has already been queried, we can skip another query
+                    return Task.FromResult(GetResultsFromEverythingQuery());
+                }
+
+                _firstPageQueried = false;
+
                 // Search parameters (term, sort, flags, etc.) are assumed to be set by a preceding FetchCountAsync call.
                 Everything_SetOffset((uint)startIndex);
                 Everything_SetMax((uint)pageSize);
