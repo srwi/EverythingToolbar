@@ -137,7 +137,7 @@ namespace EverythingToolbar.Search
         private void LoadCount()
         {
             _currentVersion = _providerVersion;
-            
+
             if (IsAsync)
             {
                 Count = 0;
@@ -160,7 +160,7 @@ namespace EverythingToolbar.Search
         private void LoadPage(int index)
         {
             _currentVersion = _providerVersion;
-            
+
             if (IsAsync)
             {
                 ItemsProvider.FetchRange(index * PageSize, PageSize, isAsync: true).ContinueWith(task =>

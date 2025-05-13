@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -71,7 +70,7 @@ namespace EverythingToolbar.Launcher
                 {
                     Title = Properties.Resources.ContextMenuRunSetupAssistant,
                     Description = Properties.Resources.ContextMenuRunSetupAssistant,
-                    ApplicationPath = Assembly.GetEntryAssembly().Location,
+                    ApplicationPath = Environment.ProcessPath,
                     Arguments = "--run-setup-assistant"
                 });
                 JumpList.SetJumpList(Application.Current, jumpList);
