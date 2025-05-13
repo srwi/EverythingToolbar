@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
@@ -16,13 +17,12 @@ namespace EverythingToolbar.Search
 {
     public class SearchResultProvider : IItemsProvider<SearchResult>
     {
+        private static readonly object SyncLock = new();
         private readonly SearchState _searchState;
-        private bool _firstPageQueried;
         private static bool _initialized;
         private static IntPtr _responseWindowHandle;
-        private static Action<int> _countCallback;
-        private static Action<int, IList<SearchResult>> _rangeCallback;
-        private static int _requestedPage;
+        private static TaskCompletionSource<int> _countCompletionSource;
+        private static TaskCompletionSource<IList<SearchResult>> _rangeCompletionSource;
 
         public SearchResultProvider(SearchState searchState)
         {
@@ -31,28 +31,31 @@ namespace EverythingToolbar.Search
             if (!_initialized)
                 _initialized = Initialize();
         }
-        
+
         private static void InitializeAsyncResponseWindow()
         {
             if (_responseWindowHandle != IntPtr.Zero)
                 return;
-            
+
+            const int gwlpWndproc = -4;
+            const IntPtr hwndMessage = -3;
+
             // Create a message-only window to receive IPC messages
-            _responseWindowHandle = MyNativeMethods.CreateWindowEx(
+            _responseWindowHandle = NativeMethods.CreateWindowEx(
                 0,
                 "STATIC",
                 null,
                 0,
                 0, 0, 0, 0,
-                MyNativeMethods.HWND_MESSAGE,
+                hwndMessage,
                 IntPtr.Zero,
                 IntPtr.Zero,
                 IntPtr.Zero);
 
             if (_responseWindowHandle != IntPtr.Zero)
             {
-                MyNativeMethods.SetWindowLongPtr(_responseWindowHandle, MyNativeMethods.GWLP_WNDPROC,
-                    Marshal.GetFunctionPointerForDelegate<MyNativeMethods.WndProcDelegate>(HandleWindowMessage));
+                NativeMethods.SetWindowLongPtr(_responseWindowHandle, gwlpWndproc,
+                    Marshal.GetFunctionPointerForDelegate<NativeMethods.WndProcDelegate>(HandleWindowMessage));
             }
             else
             {
@@ -62,171 +65,37 @@ namespace EverythingToolbar.Search
 
         private static IntPtr HandleWindowMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
-            if (Everything_IsQueryReply(msg, wParam, lParam, 0))
+            if (Everything_IsQueryReply(msg, wParam, lParam, (uint)ReplyId.Count))
             {
-                var resultsCount = (int)Everything_GetTotResults();
-
-                Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+                lock (SyncLock)
                 {
-                    _countCallback?.Invoke(resultsCount);
-                });
-		
-                return 1;
-            }
-
-            if (Everything_IsQueryReply(msg, wParam, lParam, 1))
-            {
-                var results = new List<SearchResult>();
-                var fullPathAndFilename = new StringBuilder(4096);
-                for (uint i = 0; i < Everything_GetNumResults(); i++)
-                {
-                    var highlightedPath = Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i));
-                    var highlightedFileName = Marshal.PtrToStringUni(Everything_GetResultHighlightedFileName(i));
-                    var isFile = Everything_IsFileResult(i);
-                    Everything_GetResultFullPathNameW(i, fullPathAndFilename.Clear(), 4096);
-                    Everything_GetResultSize(i, out var fileSize);
-                    Everything_GetResultDateModified(i, out var dateModified);
-
-                    results.Add(new SearchResult
+                    var resultsCount = (int)Everything_GetTotResults();
+                    Dispatcher.CurrentDispatcher.BeginInvoke(() =>
                     {
-                        HighlightedPath = highlightedPath,
-                        HighlightedFileName = highlightedFileName,
-                        FullPathAndFileName = fullPathAndFilename.ToString(),
-                        IsFile = isFile,
-                        DateModified = dateModified,
-                        FileSize = fileSize
+                        _countCompletionSource?.TrySetResult(resultsCount);
                     });
-                }
-
-                Dispatcher.CurrentDispatcher.BeginInvoke(() =>
-                {
-                    _rangeCallback?.Invoke(_requestedPage, results);
-                });
-
-                return 1;
-            }
-
-            return MyNativeMethods.DefWindowProc(hWnd, msg, wParam, lParam);
-        }
-
-        public int FetchCount(int pageSize)
-        {
-            if (ToolbarSettings.User.IsHideEmptySearchResults && string.IsNullOrEmpty(_searchState.SearchTerm))
-                return 0;
-
-            var search = _searchState.Filter.GetSearchPrefix() + _searchState.SearchTerm;
-            Everything_SetSearchW(search);
-
-            const Flags flags = Flags.FullPathAndFileName | Flags.HighlightedPath |
-                               Flags.HighlightedFileName | Flags.RequestSize |
-                               Flags.RequestDateModified;
-            Everything_SetRequestFlags((uint)flags);
-
-            SetSortType(_searchState.SortBy, _searchState.IsSortDescending);
-            Everything_SetMatchCase(_searchState.IsMatchCase);
-            Everything_SetMatchPath(_searchState.IsMatchPath);
-            Everything_SetMatchWholeWord(_searchState.IsMatchWholeWord && !_searchState.IsRegExEnabled);
-            Everything_SetRegex(_searchState.IsRegExEnabled);
-
-            // First query is required to get the correct number of results.
-            Everything_SetMax((uint)pageSize);
-            Everything_SetOffset(0);
-            if (!Everything_QueryW(true))
-            {
-                var lastError = (ErrorCode)Everything_GetLastError();
-                LogError(lastError);
-                return 0;
-            }
-
-            // We remember the first page query to avoid querying it again when actually fetching data
-            _firstPageQueried = true;
-
-            return (int)Everything_GetTotResults();
-        }
-
-        public void FetchCountAsync(int pageSize = 0, Action<int> callback = null)
-        {
-            _countCallback = callback;
-            
-            if (ToolbarSettings.User.IsHideEmptySearchResults && string.IsNullOrEmpty(_searchState.SearchTerm))
-            {
-                _countCallback?.Invoke(0);
-                return;
-            }
-            
-            InitializeAsyncResponseWindow();
-
-            var search = _searchState.Filter.GetSearchPrefix() + _searchState.SearchTerm;
-            Everything_SetSearchW(search);
-
-            const Flags flags = Flags.FullPathAndFileName | Flags.HighlightedPath |
-                                Flags.HighlightedFileName | Flags.RequestSize |
-                                Flags.RequestDateModified;
-            Everything_SetRequestFlags((uint)flags);
-
-            SetSortType(_searchState.SortBy, _searchState.IsSortDescending);
-            Everything_SetMatchCase(_searchState.IsMatchCase);
-            Everything_SetMatchPath(_searchState.IsMatchPath);
-            Everything_SetMatchWholeWord(_searchState.IsMatchWholeWord && !_searchState.IsRegExEnabled);
-            Everything_SetRegex(_searchState.IsRegExEnabled);
-
-            // First query is required to get the correct number of results.
-            Everything_SetMax((uint)pageSize);
-            Everything_SetOffset(0);
-            
-            Everything_SetReplyWindow(_responseWindowHandle);
-            Everything_SetReplyID(0);
-            
-            if (!Everything_QueryW(false))
-            {
-                var lastError = (ErrorCode)Everything_GetLastError();
-                LogError(lastError);
-                _countCallback?.Invoke(0);
-            }
-        }
-
-        public void FetchRangeAsync(int startIndex, int pageSize, Action<int, IList<SearchResult>> callback = null)
-        {
-            _rangeCallback = callback;
-            
-            // We can skip querying the first page again
-            if (!_firstPageQueried || startIndex > 0)
-            {
-                _firstPageQueried = false;
-                
-                Everything_SetReplyWindow(_responseWindowHandle);
-                Everything_SetReplyID(1);
-                
-                Everything_SetOffset((uint)startIndex);
-                Everything_SetMax((uint)pageSize);
-                
-                _requestedPage = startIndex / pageSize;
-                
-                if (!Everything_QueryW(false))
-                {
-                    var lastError = (ErrorCode)Everything_GetLastError();
-                    LogError(lastError);
-                }
-            }
-        }
-
-        public IList<SearchResult> FetchRange(int startIndex, int pageSize)
-        {
-            // We can skip querying the first page again
-            if (!_firstPageQueried || startIndex > 0)
-            {
-                _firstPageQueried = false;
-                Everything_SetOffset((uint)startIndex);
-                Everything_SetMax((uint)pageSize);
-                if (!Everything_QueryW(true))
-                {
-                    var lastError = (ErrorCode)Everything_GetLastError();
-                    LogError(lastError);
-                    return new List<SearchResult>();
+                    return 1;
                 }
             }
 
+            if (Everything_IsQueryReply(msg, wParam, lParam, (uint)ReplyId.Range))
+            {
+                lock (SyncLock)
+                {
+                    IList<SearchResult> results = GetResultsFromEverythingQuery();
+                    Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+                    {
+                        _rangeCompletionSource?.TrySetResult(results);
+                    });
+                    return 1;
+                }
+            }
 
+            return NativeMethods.DefWindowProc(hWnd, msg, wParam, lParam);
+        }
+
+        private static IList<SearchResult> GetResultsFromEverythingQuery()
+        {
             var results = new List<SearchResult>();
             var fullPathAndFilename = new StringBuilder(4096);
             for (uint i = 0; i < Everything_GetNumResults(); i++)
@@ -248,8 +117,97 @@ namespace EverythingToolbar.Search
                     FileSize = fileSize
                 });
             }
-
             return results;
+        }
+
+        public Task<int> FetchCount(int pageSize = 0, bool isAsync = true)
+        {
+            lock (SyncLock)
+            {
+                if (ToolbarSettings.User.IsHideEmptySearchResults && string.IsNullOrEmpty(_searchState.SearchTerm))
+                {
+                    return Task.FromResult(0);
+                }
+
+                var search = _searchState.Filter.GetSearchPrefix() + _searchState.SearchTerm;
+                Everything_SetSearchW(search);
+
+                const Flags flags = Flags.FullPathAndFileName | Flags.HighlightedPath |
+                                    Flags.HighlightedFileName | Flags.RequestSize |
+                                    Flags.RequestDateModified;
+                Everything_SetRequestFlags((uint)flags);
+
+                SetSortType(_searchState.SortBy, _searchState.IsSortDescending);
+                Everything_SetMatchCase(_searchState.IsMatchCase);
+                Everything_SetMatchPath(_searchState.IsMatchPath);
+                Everything_SetMatchWholeWord(_searchState.IsMatchWholeWord && !_searchState.IsRegExEnabled);
+                Everything_SetRegex(_searchState.IsRegExEnabled);
+
+                Everything_SetMax(0);
+                Everything_SetOffset(0);
+
+                if (!isAsync)
+                {
+                    if (!Everything_QueryW(true))
+                    {
+                        var lastError = (ErrorCode)Everything_GetLastError();
+                        LogError(lastError);
+                        return Task.FromResult(0);
+                    }
+                    return Task.FromResult((int)Everything_GetTotResults());
+                }
+                else
+                {
+                    InitializeAsyncResponseWindow();
+                    _countCompletionSource = new TaskCompletionSource<int>();
+                    Everything_SetReplyWindow(_responseWindowHandle);
+                    Everything_SetReplyID((uint)ReplyId.Count);
+
+                    if (!Everything_QueryW(false))
+                    {
+                        var lastError = (ErrorCode)Everything_GetLastError();
+                        LogError(lastError);
+                        _countCompletionSource.TrySetResult(0);
+                    }
+                    return _countCompletionSource.Task;
+                }
+            }
+        }
+
+        public Task<IList<SearchResult>> FetchRange(int startIndex, int pageSize, bool isAsync = true)
+        {
+            lock (SyncLock)
+            {
+                // Search parameters (term, sort, flags, etc.) are assumed to be set by a preceding FetchCountAsync call.
+                Everything_SetOffset((uint)startIndex);
+                Everything_SetMax((uint)pageSize);
+
+                if (!isAsync)
+                {
+                    if (!Everything_QueryW(true))
+                    {
+                        var lastError = (ErrorCode)Everything_GetLastError();
+                        LogError(lastError);
+                        return Task.FromResult<IList<SearchResult>>(new List<SearchResult>());
+                    }
+                    return Task.FromResult(GetResultsFromEverythingQuery());
+                }
+                else
+                {
+                    InitializeAsyncResponseWindow();
+                    _rangeCompletionSource = new TaskCompletionSource<IList<SearchResult>>();
+                    Everything_SetReplyWindow(_responseWindowHandle);
+                    Everything_SetReplyID((uint)ReplyId.Range);
+
+                    if (!Everything_QueryW(false))
+                    {
+                        var lastError = (ErrorCode)Everything_GetLastError();
+                        LogError(lastError);
+                        _rangeCompletionSource.TrySetResult(new List<SearchResult>());
+                    }
+                    return _rangeCompletionSource.Task;
+                }
+            }
         }
 
         private static bool Initialize()
@@ -373,20 +331,19 @@ namespace EverythingToolbar.Search
             if (!File.Exists(ToolbarSettings.User.EverythingPath))
             {
                 MessageBox.Show(Resources.MessageBoxSelectEverythingExe);
-                using (var openFileDialog = new OpenFileDialog())
-                {
-                    openFileDialog.InitialDirectory = "c:\\";
-                    openFileDialog.Filter = "Everything.exe|Everything.exe|All files (*.*)|*.*";
-                    openFileDialog.FilterIndex = 1;
 
-                    if (openFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        ToolbarSettings.User.EverythingPath = openFileDialog.FileName;
-                    }
-                    else
-                    {
-                        return;
-                    }
+                using var openFileDialog = new OpenFileDialog();
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "Everything.exe|Everything.exe|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    ToolbarSettings.User.EverythingPath = openFileDialog.FileName;
+                }
+                else
+                {
+                    return;
                 }
             }
 
@@ -416,6 +373,12 @@ namespace EverythingToolbar.Search
 
             Logger.Debug("Showing in Everything with args: " + args);
             Process.Start(ToolbarSettings.User.EverythingPath, args);
+        }
+
+        private enum ReplyId : uint
+        {
+            Count = 0,
+            Range = 1
         }
 
         [DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
@@ -474,34 +437,5 @@ namespace EverythingToolbar.Search
         private static extern void Everything_SetReplyID(uint id);
         [DllImport("Everything64.dll")]
         private static extern bool Everything_IsQueryReply(uint message, IntPtr wParam, IntPtr lParam, long nId);
-    }
-
-    internal static class MyNativeMethods
-    {
-        public const int GWL_WNDPROC = -4;
-        public const int GWLP_WNDPROC = -4;
-        public static readonly IntPtr HWND_MESSAGE = new IntPtr(-3);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr CreateWindowEx(
-            uint dwExStyle,
-            [MarshalAs(UnmanagedType.LPStr)] string lpClassName,
-            [MarshalAs(UnmanagedType.LPStr)] string lpWindowName,
-            uint dwStyle,
-            int x, int y,
-            int nWidth, int nHeight,
-            IntPtr hWndParent,
-            IntPtr hMenu,
-            IntPtr hInstance,
-            IntPtr lpParam);
-
-        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
-        public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr DefWindowProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam);
-
-        // Delegate for the window procedure
-        public delegate IntPtr WndProcDelegate(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
     }
 }

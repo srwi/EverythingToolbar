@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace EverythingToolbar.Search
 {
@@ -135,49 +136,50 @@ namespace EverythingToolbar.Search
 
         private void LoadCount()
         {
+            _currentVersion = _providerVersion;
+            
             if (IsAsync)
             {
-                Count = 0;  // TODO: hier schon auf 0 setzen? flackern?
-                _currentVersion = _providerVersion;
-                ItemsProvider.FetchCountAsync(PageSize, LoadCountCompleted);
+                Count = 0;
+                ItemsProvider.FetchCount(PageSize, isAsync: true).ContinueWith(task =>
+                {
+                    if (_currentVersion != _providerVersion)
+                        return;
+
+                    Count = task.Result;
+                    FireCollectionReset();
+                }, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
             }
             else
             {
-                // Count = ItemsProvider.FetchCount(PageSize);
+                Count = ItemsProvider.FetchCount(PageSize, isAsync: false).GetAwaiter().GetResult();
+                FireCollectionReset();
             }
-        }
-
-        private void LoadCountCompleted(int count)
-        {
-            if (_currentVersion != _providerVersion)
-                return;
-
-            Count = count;
-            FireCollectionReset();
         }
 
         private void LoadPage(int index)
         {
+            _currentVersion = _providerVersion;
+            
             if (IsAsync)
             {
-                _currentVersion = _providerVersion;
-                ItemsProvider.FetchRangeAsync(index * PageSize, PageSize, LoadPageCompleted);
+                ItemsProvider.FetchRange(index * PageSize, PageSize, isAsync: true).ContinueWith(task =>
+                {
+                    if (_currentVersion != _providerVersion)
+                        return;
+
+                    var pageItems = task.Result;
+                    var page = new Page<T> { Items = pageItems };
+                    PopulatePage(index, page);
+                    FireCollectionReset();
+                }, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
             }
             else
             {
-                // PopulatePage(index, FetchPage(index));
+                var items = ItemsProvider.FetchRange(index * PageSize, PageSize, isAsync: false).GetAwaiter().GetResult();
+                PopulatePage(index, new Page<T> { Items = items });
+                FireCollectionReset();
             }
-        }
-
-        private void LoadPageCompleted(int pageIndex, IList<T> items)
-        {
-            if (_currentVersion != _providerVersion)
-                return;
-            
-            var page = new Page<T> { Items = items };
-
-            PopulatePage(pageIndex, page);
-            FireCollectionReset();
         }
 
         public T this[int index]
@@ -330,12 +332,6 @@ namespace EverythingToolbar.Search
                 _pages[pageIndex].MarkAsValid();  // We mark old data as valid until it's updated
                 LoadPage(pageIndex);
             }
-        }
-
-        private Page<T> FetchPage(int pageIndex)
-        {
-            var items = ItemsProvider.FetchRange(pageIndex * PageSize, PageSize);
-            return new Page<T> { Items = items };
         }
     }
 }

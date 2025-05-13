@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EverythingToolbar.Search
 {
     public interface IItemsProvider<T>
     {
-        int FetchCount(int pageSize = 0);
+        Task<int> FetchCount(int pageSize = 0, bool isAsync = true);
 
-        void FetchCountAsync(int pageSize = 0, Action<int> callback = null);
-
-        IList<T> FetchRange(int startIndex, int pageSize);
-
-        void FetchRangeAsync(int startIndex, int pageSize, Action<int, IList<T>> callback = null);
+        Task<IList<T>> FetchRange(int startIndex, int pageSize, bool isAsync = true);
     }
 }
