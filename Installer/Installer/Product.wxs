@@ -9,7 +9,7 @@
     <Media Id="1" Cabinet="myapplication.cab" EmbedCab="yes" />
     <MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A later version of EverythingToolbar is already installed. Setup will now exit." AllowSameVersionUpgrades="yes" />
 
-    <Icon Id="icon.ico" SourceFile="..\EverythingToolbar.Launcher\Icons\Medium.ico" />
+    <Icon Id="icon.ico" SourceFile="..\..\EverythingToolbar.Launcher\Icons\Medium.ico" />
     <Property Id="ARPPRODUCTICON" Value="icon.ico" />
     
     <Property Id="ARPNOREPAIR" Value="yes" Secure="yes" />

@@ -89,7 +89,10 @@ namespace EverythingToolbar.Controls
 
         private void OnDownloadClicked(object sender, RoutedEventArgs e)
         {
-            Process.Start(LatestReleaseUrl);
+            Process.Start(new ProcessStartInfo(LatestReleaseUrl)
+            {
+                UseShellExecute = true
+            });
         }
 
         private void OnSkipUpdateClicked(object sender, RoutedEventArgs e)

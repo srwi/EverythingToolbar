@@ -148,7 +148,7 @@ namespace EverythingToolbar.Helpers
 
         private static ImageSource GetIconByPath(string path)
         {
-            Shfileinfo shfi = new Shfileinfo();
+            Shfileinfo shfi = new();
             const uint flags = ShgfiIcon | ShgfiSmallicon;
             SHGetFileInfo(path, 0, ref shfi, (uint)Marshal.SizeOf(shfi), flags);
 
@@ -166,7 +166,8 @@ namespace EverythingToolbar.Helpers
             }
             finally
             {
-                DestroyIcon(shfi.hIcon);
+                if (shfi.hIcon != IntPtr.Zero)
+                    DestroyIcon(shfi.hIcon);
             }
         }
 
@@ -180,7 +181,7 @@ namespace EverythingToolbar.Helpers
 
         private static int GetIconIndex(string path, bool useFilename)
         {
-            Shfileinfo shfi = new Shfileinfo();
+            Shfileinfo shfi = new();
             uint flags = ShgfiSysiconindex | ShgfiSmallicon;
             uint fileAttributes = 0;
             if (useFilename)

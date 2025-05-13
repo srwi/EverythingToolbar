@@ -121,7 +121,8 @@ namespace EverythingToolbar.Data
                 }
                 Process.Start(new ProcessStartInfo(path)
                 {
-                    WorkingDirectory = Path
+                    WorkingDirectory = Path,
+                    UseShellExecute = true
                 });
                 SearchResultProvider.IncrementRunCount(FullPathAndFileName);
             }
@@ -138,7 +139,8 @@ namespace EverythingToolbar.Data
             {
                 Process.Start(new ProcessStartInfo(FullPathAndFileName)
                 {
-                    Verb = "runas"
+                    Verb = "runas",
+                    UseShellExecute = true
                 });
                 SearchResultProvider.IncrementRunCount(FullPathAndFileName);
             }
