@@ -43,10 +43,10 @@ namespace EverythingToolbar.Helpers
         {
             try
             {
-                Guid shellItemImageFactoryGuid = new Guid("BCC18B79-BA16-442F-80C4-8A59C30C463B");
+                Guid shellItemImageFactoryGuid = new("BCC18B79-BA16-442F-80C4-8A59C30C463B");
                 SHCreateItemFromParsingName(filePath, IntPtr.Zero, shellItemImageFactoryGuid, out IShellItemImageFactory imageFactory);
 
-                Size size = new Size { cx = 32, cy = 32 };
+                Size size = new() { cx = 32, cy = 32 };
                 imageFactory.GetImage(size, SiigbfResizetofit, out IntPtr hBitmap);
 
                 try
@@ -76,10 +76,10 @@ namespace EverythingToolbar.Helpers
 
     public static class IconProvider
     {
-        private static readonly ConcurrentDictionary<int, ImageSource> IconIndexCache = new ConcurrentDictionary<int, ImageSource>();
-        private static readonly ConcurrentDictionary<string, ImageSource> ExtensionCache = new ConcurrentDictionary<string, ImageSource>();
+        private static readonly ConcurrentDictionary<int, ImageSource> IconIndexCache = new();
+        private static readonly ConcurrentDictionary<string, ImageSource> ExtensionCache = new();
 
-        [StructLayout(LayoutKind.Sequential)]
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         private struct Shfileinfo
         {
             public IntPtr hIcon;
@@ -166,8 +166,7 @@ namespace EverythingToolbar.Helpers
             }
             finally
             {
-                if (shfi.hIcon != IntPtr.Zero)
-                    DestroyIcon(shfi.hIcon);
+                DestroyIcon(shfi.hIcon);
             }
         }
 

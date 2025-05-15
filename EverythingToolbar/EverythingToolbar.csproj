@@ -176,10 +176,9 @@
             PostBuildMacros;
         </PostBuildEventDependsOn>
     </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <NoWarn>1701;1702;CA1416</NoWarn>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <NoWarn>1701;1702;CA1416</NoWarn>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+        <DefineConstants>TRACE;DEBUG</DefineConstants>
     </PropertyGroup>
 </Project>
