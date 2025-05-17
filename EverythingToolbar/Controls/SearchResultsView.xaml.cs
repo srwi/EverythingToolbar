@@ -33,6 +33,7 @@ namespace EverythingToolbar.Controls
         private const int PageSize = 256;
         private Point _dragStart;
         private bool _isScrollBarDragging;
+        private bool _showFirstResult = true;
         private VirtualizingCollection<SearchResult> _searchResultsCollection;
 
         public SearchResultsView()
@@ -56,7 +57,12 @@ namespace EverythingToolbar.Controls
                     if (args.Action == NotifyCollectionChangedAction.Reset)
                     {
                         TotalResultsCount = _searchResultsCollection.Count;
+                        if (_showFirstResult)
+                        {
+                            _showFirstResult = false;
                         AutoSelectFirstResult();
+                            FindVisualChild<ScrollViewer>(this)?.ScrollToTop();
+                        }
                     }
                 };
                 SearchResultsListView.ItemsSource = _searchResultsCollection;
@@ -65,13 +71,14 @@ namespace EverythingToolbar.Controls
                 RegisterItemContainerStyleProperties(null, null);
                 AutoSelectFirstResult();
 
-                // Attach to scrollbar drag events after the control is loaded
                 AttachToScrollViewer();
             };
         }
 
         private void UpdateSearchResultsProvider(SearchState searchState)
         {
+            _showFirstResult = true;
+
             var searchResultsProvider = new SearchResultProvider(searchState);
             _searchResultsCollection?.UpdateProvider(searchResultsProvider);
         }
@@ -282,10 +289,14 @@ namespace EverythingToolbar.Controls
                 return;
 
             SearchResultsListView.SelectedIndex = n;
+            Dispatcher.Invoke(() =>
+            {
+                if (SelectedItem != null)
             SearchResultsListView.ScrollIntoView(SelectedItem);
 
             if (!ToolbarSettings.User.IsAutoSelectFirstResult || !ToolbarSettings.User.IsSearchAsYouType)
                 FocusSelectedItem();
+            });
         }
 
         private static bool ForwardKeyPressToControl(Control control, Key key)
@@ -395,6 +406,7 @@ namespace EverythingToolbar.Controls
                     OpenSelectedSearchResult();
                     break;
             }
+            SearchResultsListView.SelectedIndex = -1;
         }
 
         private void RunAsAdmin(object sender, RoutedEventArgs e)
