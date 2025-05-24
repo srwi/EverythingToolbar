@@ -28,9 +28,9 @@ namespace EverythingToolbar.Data
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<SearchResult>();
 
-        public bool IsFile { get; set; }
+        public bool IsFile { get; init; }
 
-        public string FullPathAndFileName { get; set; }
+        public string FullPathAndFileName { get; init; }
 
         public string Path => System.IO.Path.GetDirectoryName(FullPathAndFileName);
 
@@ -40,9 +40,9 @@ namespace EverythingToolbar.Data
 
         public string HighlightedFileName { get; set; }
 
-        public long FileSize { get; set; }
+        public long FileSize { get; init; }
 
-        public FILETIME DateModified { get; set; }
+        public FILETIME DateModified { get; init; }
 
         public string HumanReadableFileSize
         {

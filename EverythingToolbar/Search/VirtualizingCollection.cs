@@ -3,80 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace EverythingToolbar.Search
 {
-    public enum Status
-    {
-        NoData,
-        HasValidData,
-        HasOutdatedData
-    }
-
-    public class Page<T>
-    {
-        private IList<T> _items;
-        public IList<T> Items
-        {
-            get => _items;
-            set
-            {
-                _items = value;
-                Status = Status.HasValidData;
-            }
-        }
-        public Status Status { get; private set; } = Status.NoData;
-
-        public void Invalidate()
-        {
-            if (Status == Status.HasValidData)
-            {
-                Status = Status.HasOutdatedData;
-            }
-        }
-
-        public void MarkAsValid()
-        {
-            if (Status == Status.HasOutdatedData)
-            {
-                Status = Status.HasValidData;
-            }
-        }
-    }
-
     public sealed class VirtualizingCollection<T> : IList<T>, IList, INotifyCollectionChanged, INotifyPropertyChanged
     {
-        private int _providerVersion;
-        private int _currentVersion;
-
         public VirtualizingCollection(IItemsProvider<T> itemsProvider, int pageSize)
         {
             ItemsProvider = itemsProvider;
             PageSize = pageSize;
-            SynchronizationContext = SynchronizationContext.Current;
 
             LoadCount();
         }
 
-        private IItemsProvider<T> ItemsProvider { get; set; }
-
-        public void UpdateProvider(IItemsProvider<T> newProvider)
-        {
-            if (ItemsProvider == newProvider)
-                return;
-
-            ItemsProvider = newProvider;
-            _providerVersion++;
-
-            foreach (var page in _pages.Values)
-            {
-                page.Invalidate();
-            }
-            LoadCount();
-        }
+        private int _providerVersion;
 
         private int PageSize { get; }
 
@@ -86,15 +30,11 @@ namespace EverythingToolbar.Search
             get => _count;
             private set
             {
-                if (_count != value)
-                {
-                    _count = value;
-                    OnPropertyChanged();
-                }
+                _count = value;
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                OnPropertyChanged();
             }
         }
-
-        private SynchronizationContext SynchronizationContext { get; }
 
         private bool _isAsync = true;
         public bool IsAsync
@@ -102,115 +42,165 @@ namespace EverythingToolbar.Search
             get => _isAsync;
             set
             {
-                if (_isAsync != value)
-                {
-                    _isAsync = value;
-                    OnPropertyChanged();
-                }
+                _isAsync = value;
+                OnPropertyChanged();
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private IItemsProvider<T> ItemsProvider { get; set; }
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public void UpdateProvider(IItemsProvider<T> newProvider)
+        {
+            if (ItemsProvider == newProvider)
+                return;
+
+            _pages = new Dictionary<int, List<T>?>();
+
+            ItemsProvider = newProvider;
+            _providerVersion++;
+
+            LoadCount();
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
+        public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
         private void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             CollectionChanged?.Invoke(this, e);
         }
 
-        private void FireCollectionReset()
-        {
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-        }
-
         private void LoadCount()
         {
-            _currentVersion = _providerVersion;
+            var currentProviderVersion = _providerVersion;
 
             if (IsAsync)
             {
                 ItemsProvider.FetchCount(PageSize, isAsync: true).ContinueWith(task =>
                 {
-                    if (_currentVersion != _providerVersion)
+                    if (currentProviderVersion != _providerVersion || task.IsCanceled)
                         return;
 
                     Count = task.Result;
-                    FireCollectionReset();
                 }, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
             }
             else
             {
                 Count = ItemsProvider.FetchCount(PageSize, isAsync: false).GetAwaiter().GetResult();
-                FireCollectionReset();
             }
         }
 
-        private void LoadPage(int index)
+        private List<T> LoadPage(int index)
         {
-            _currentVersion = _providerVersion;
+            var items = ItemsProvider.FetchRange(index * PageSize, PageSize, isAsync: false).GetAwaiter().GetResult();
+            var page = new List<T>(items);
+            return page;
+        }
 
-            if (IsAsync)
+        private void LoadPageAsync(int index)
+        {
+            var currentProviderVersion = _providerVersion;
+
+            ItemsProvider.FetchRange(index * PageSize, PageSize, isAsync: true).ContinueWith(task =>
             {
-                ItemsProvider.FetchRange(index * PageSize, PageSize, isAsync: true).ContinueWith(task =>
+                if (task.IsCanceled)
                 {
-                    if (_currentVersion != _providerVersion)
-                        return;
+                    _pages.Remove(index);  // Page needs to be loaded again in the future
+                    return;
+                }
 
-                    var pageItems = task.Result;
-                    var page = new Page<T> { Items = pageItems };
-                    PopulatePage(index, page);
-                    FireCollectionReset();
-                }, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
-            }
-            else
-            {
-                var items = ItemsProvider.FetchRange(index * PageSize, PageSize, isAsync: false).GetAwaiter().GetResult();
-                PopulatePage(index, new Page<T> { Items = items });
-                FireCollectionReset();
-            }
+                if (currentProviderVersion != _providerVersion)
+                    return;
+
+                IList<T> newItems = task.Result;
+                _pages[index] = newItems.ToList();
+
+                try
+                {
+                    for (int i = 0; i < newItems.Count; i++)
+                    {
+                        var itemIndex = index * PageSize + i;
+
+                        if (_displayedItems.TryGetValue(itemIndex, out var oldItem))
+                        {
+                            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, newItems[i], oldItem, itemIndex));
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    // For various internal reasons, the collection changed event can throw exceptions.
+                    // Whenever this happens, we reset the collection to recover from the error.
+                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                }
+            }, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public T this[int index]
         {
             get
             {
-                var pageIndex = index / PageSize;
-                var pageOffset = index % PageSize;
+                var item = GetItemAtIndex(index);
 
-                if (!_pages.TryGetValue(pageIndex, out var page))
-                {
-                    RequestPage(pageIndex);
-                    return default;
-                }
-
-                if (page.Status == Status.HasOutdatedData)
-                {
-                    RequestPage(pageIndex);
-
-                    if (pageOffset < page.Items?.Count)
-                        return page.Items[pageOffset];
-
-                    return default;
-                }
-
-                if (page.Status == Status.NoData)
-                    return default;
-
-                if (pageOffset < page.Items.Count)
-                    return page.Items[pageOffset];
-
-                return default;
+                _displayedItems[index] = item;
+                return item;
             }
             set => throw new NotSupportedException();
         }
 
-        object IList.this[int index]
+        private T GetItemAtIndex(int index)
+        {
+            var pageIndex = index / PageSize;
+            var pageOffset = index % PageSize;
+
+            if (_pages.TryGetValue(pageIndex, out var page))
+            {
+                if (page != null && pageOffset < page.Count)
+                {
+                    return page[pageOffset];
+                }
+
+                // Page is null (is currently loading)
+                if (_displayedItems.TryGetValue(index, out var displayedItem))
+                {
+                    return displayedItem;
+                }
+
+                return default!;
+            }
+
+            if (IsAsync)
+            {
+                _pages[pageIndex] = null;  // Mark page as loading
+
+                LoadPageAsync(pageIndex);
+
+                // Return the old item and let the async operation update it later
+                if (_displayedItems.TryGetValue(index, out var displayedItem))
+                    return displayedItem;
+
+                return default!;
+            }
+            else
+            {
+                var loadedPage = LoadPage(pageIndex);
+                _pages[pageIndex] = loadedPage;
+                if (pageOffset < loadedPage.Count)
+                {
+                    return loadedPage[pageOffset];
+                }
+
+                return default!;
+            }
+        }
+
+        object? IList.this[int index]
         {
             get => this[index];
             set => throw new NotSupportedException();
@@ -218,10 +208,8 @@ namespace EverythingToolbar.Search
 
         public IEnumerator<T> GetEnumerator()
         {
-            for (var i = 0; i < Count; i++)
-            {
-                yield return this[i];
-            }
+            // We return an empty enumerator to prevent WPF internals from iterating through the collection.
+            return Enumerable.Empty<T>().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -234,14 +222,14 @@ namespace EverythingToolbar.Search
             throw new NotSupportedException();
         }
 
-        int IList.Add(object value)
+        int IList.Add(object? value)
         {
             throw new NotSupportedException();
         }
 
-        bool IList.Contains(object value)
+        bool IList.Contains(object? value)
         {
-            return Contains((T)value);
+            return Contains((T)value!);
         }
 
         public bool Contains(T item)
@@ -254,14 +242,16 @@ namespace EverythingToolbar.Search
             throw new NotSupportedException();
         }
 
-        int IList.IndexOf(object value)
+        int IList.IndexOf(object? value)
         {
-            return IndexOf((T)value);
+            return IndexOf((T)value!);
         }
 
         public int IndexOf(T item)
         {
-            return -1;
+            // We want to prevent WPF internals from searching for an item by iterating through the collection.
+            // Returning -1 would trigger a full collection scan, but returning 0 is sufficient to prevent that.
+            return 0;
         }
 
         public void Insert(int index, T item)
@@ -269,9 +259,9 @@ namespace EverythingToolbar.Search
             throw new NotSupportedException();
         }
 
-        void IList.Insert(int index, object value)
+        void IList.Insert(int index, object? value)
         {
-            Insert(index, (T)value);
+            Insert(index, (T)value!);
         }
 
         public void RemoveAt(int index)
@@ -279,7 +269,7 @@ namespace EverythingToolbar.Search
             throw new NotSupportedException();
         }
 
-        void IList.Remove(object value)
+        void IList.Remove(object? value)
         {
             throw new NotSupportedException();
         }
@@ -307,25 +297,7 @@ namespace EverythingToolbar.Search
 
         public bool IsFixedSize => false;
 
-        private readonly Dictionary<int, Page<T>> _pages = new Dictionary<int, Page<T>>();
-
-        private void PopulatePage(int pageIndex, Page<T> page)
-        {
-            _pages[pageIndex] = page;
-        }
-
-        private void RequestPage(int pageIndex)
-        {
-            if (!_pages.ContainsKey(pageIndex))
-            {
-                _pages.Add(pageIndex, new Page<T>());
-                LoadPage(pageIndex);
-            }
-            else if (_pages[pageIndex].Status == Status.HasOutdatedData)
-            {
-                _pages[pageIndex].MarkAsValid();  // We mark old data as valid until it's updated
-                LoadPage(pageIndex);
-            }
-        }
+        private Dictionary<int, List<T>?> _pages = new();
+        private readonly Dictionary<int, T> _displayedItems = new();
     }
 }

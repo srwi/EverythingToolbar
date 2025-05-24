@@ -10,6 +10,7 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <EnableComHosting>true</EnableComHosting>
     <GenerateComInterfaceMetadata>true</GenerateComInterfaceMetadata>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>Always</RunPostBuildEvent>

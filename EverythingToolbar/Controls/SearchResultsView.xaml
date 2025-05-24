@@ -7,7 +7,8 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              d:DesignWidth="300"
-             d:DesignHeight="300">
+             d:DesignHeight="300"
+             Loaded="OnLoaded">
     <UserControl.Resources>
         <ResourceDictionary>
 
@@ -29,8 +30,6 @@
                 <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWith}"
                           Loaded="OnOpenWithMenuLoaded"
                           Icon="&#xE7AC;">
-                    <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWithNoRules}"
-                              IsEnabled="False" />
                     <Separator />
                     <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWithChooseApp}"
                               Click="OpenWith" />
@@ -62,15 +61,16 @@
               Background="{DynamicResource SearchResultsViewBackground}"
               ItemTemplate="{DynamicResource SearchResultsViewTemplate}"
               ItemContainerStyle="{DynamicResource ListViewItemStyle}"
+              IsTextSearchEnabled="False"
               IsSynchronizedWithCurrentItem="True"
-              ScrollViewer.VerticalScrollBarVisibility="Visible"
-              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-              ScrollViewer.PanningMode="VerticalOnly"
               VirtualizingPanel.IsVirtualizing="True"
               VirtualizingPanel.CacheLengthUnit="Page"
               VirtualizingPanel.CacheLength="1"
               VirtualizingPanel.VirtualizationMode="Recycling"
               VirtualizingPanel.ScrollUnit="Item"
+              ScrollViewer.VerticalScrollBarVisibility="Visible"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+              ScrollViewer.PanningMode="VerticalOnly"
               FocusVisualStyle="{x:Null}" />
 
 </UserControl>

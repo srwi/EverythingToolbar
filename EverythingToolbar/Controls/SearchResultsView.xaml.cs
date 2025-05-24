@@ -1,7 +1,8 @@
-using EverythingToolbar.Behaviors;
+using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
@@ -29,58 +30,61 @@ namespace EverythingToolbar.Controls
             set => SetValue(TotalResultsCountProperty, value);
         }
 
-        private SearchResult SelectedItem => SearchResultsListView.SelectedItem as SearchResult;
-        private const int PageSize = 256;
+        private SearchResult? SelectedItem => SearchResultsListView.SelectedItem as SearchResult;
+        private const int PageSize = 100;
         private Point _dragStart;
         private bool _isScrollBarDragging;
-        private bool _showFirstResult = true;
-        private VirtualizingCollection<SearchResult> _searchResultsCollection;
+        private VirtualizingCollection<SearchResult>? _searchResultsCollection;
 
         public SearchResultsView()
         {
             InitializeComponent();
 
-            SearchState.Instance.PropertyChanged += (s, e) =>
-            {
-                UpdateSearchResultsProvider(SearchState.Instance);
-            };
-
+            SearchState.Instance.PropertyChanged += (_, _) => UpdateSearchResultsProvider(SearchState.Instance);
             EventDispatcher.Instance.GlobalKeyEvent += OnKeyPressed;
             SearchResultsListView.PreviewKeyDown += OnKeyPressed;
+        }
 
-            Loaded += (s, e) =>
-            {
-                var searchProvider = new SearchResultProvider(SearchState.Instance);
-                _searchResultsCollection = new VirtualizingCollection<SearchResult>(searchProvider, PageSize);
-                _searchResultsCollection.CollectionChanged += (sender, args) =>
-                {
-                    if (args.Action == NotifyCollectionChangedAction.Reset)
-                    {
-                        TotalResultsCount = _searchResultsCollection.Count;
-                        if (_showFirstResult)
-                        {
-                            _showFirstResult = false;
-                        AutoSelectFirstResult();
-                            FindVisualChild<ScrollViewer>(this)?.ScrollToTop();
-                        }
-                    }
-                };
-                SearchResultsListView.ItemsSource = _searchResultsCollection;
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            UpdateSearchResultsProvider(SearchState.Instance);
 
-                // Mouse events and context menu must be added to the ItemContainerStyle each time it gets updated
-                RegisterItemContainerStyleProperties(null, null);
-                AutoSelectFirstResult();
+            // Mouse events and context menu must be added to the ItemContainerStyle each time it gets updated
+            RegisterItemContainerStyleProperties();
 
-                AttachToScrollViewer();
-            };
+            AutoSelectFirstResult();
+            AttachToScrollViewer();
         }
 
         private void UpdateSearchResultsProvider(SearchState searchState)
         {
-            _showFirstResult = true;
+            if (ToolbarSettings.User.IsHideEmptySearchResults && string.IsNullOrEmpty(searchState.SearchTerm))
+            {
+                SearchResultsListView.ItemsSource = null;
+                TotalResultsCount = 0;
+                return;
+            }
 
-            var searchResultsProvider = new SearchResultProvider(searchState);
-            _searchResultsCollection?.UpdateProvider(searchResultsProvider);
+            SearchResultProvider newProvider = new(searchState);
+
+            if (_searchResultsCollection == null)
+            {
+                _searchResultsCollection = new VirtualizingCollection<SearchResult>(newProvider, PageSize);
+                _searchResultsCollection.CollectionChanged += (_, args) =>
+                {
+                    if (args.Action == NotifyCollectionChangedAction.Reset)
+                    {
+                        TotalResultsCount = _searchResultsCollection.Count;
+                        Dispatcher.BeginInvoke(AutoSelectFirstResult);
+                    }
+                };
+            }
+            else
+            {
+                _searchResultsCollection?.UpdateProvider(newProvider);
+            }
+
+            SearchResultsListView.ItemsSource = _searchResultsCollection;
         }
 
         private void AttachToScrollViewer()
@@ -128,11 +132,8 @@ namespace EverythingToolbar.Controls
             }
         }
 
-        private static T FindVisualChild<T>(DependencyObject parent, Func<T, bool> condition = null) where T : DependencyObject
+        private static T? FindVisualChild<T>(DependencyObject parent, Func<T, bool>? condition = null) where T : DependencyObject
         {
-            if (parent == null)
-                return null;
-
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
             {
                 var child = VisualTreeHelper.GetChild(parent, i);
@@ -146,7 +147,7 @@ namespace EverythingToolbar.Controls
             return null;
         }
 
-        private void RegisterItemContainerStyleProperties(object sender, ResourcesChangedEventArgs e)
+        private void RegisterItemContainerStyleProperties()
         {
             SearchResultsListView.ItemContainerStyle ??= new Style(typeof(ListViewItem));
 
@@ -187,12 +188,12 @@ namespace EverythingToolbar.Controls
             }
             else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.Enter)
             {
-                RunAsAdmin(this, null);
+                RunAsAdmin(this, new RoutedEventArgs());
                 SearchResultsListView.SelectedIndex = -1;
             }
             else if (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == Key.Enter)
             {
-                if (SearchResultsListView.SelectedItem == null)
+                if (SelectedItem == null)
                     return;
 
                 SearchResultProvider.OpenSearchInEverything(SearchState.Instance, SelectedItem.FullPathAndFileName);
@@ -200,7 +201,7 @@ namespace EverythingToolbar.Controls
             }
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Enter)
             {
-                OpenFilePath(this, null);
+                OpenFilePath(this, new RoutedEventArgs());
                 SearchResultsListView.SelectedIndex = -1;
             }
             else if (e.Key == Key.Enter)
@@ -289,14 +290,11 @@ namespace EverythingToolbar.Controls
                 return;
 
             SearchResultsListView.SelectedIndex = n;
-            Dispatcher.Invoke(() =>
-            {
-                if (SelectedItem != null)
-            SearchResultsListView.ScrollIntoView(SelectedItem);
+            if (SelectedItem != null)
+                SearchResultsListView.ScrollIntoView(SelectedItem);
 
             if (!ToolbarSettings.User.IsAutoSelectFirstResult || !ToolbarSettings.User.IsSearchAsYouType)
                 FocusSelectedItem();
-            });
         }
 
         private static bool ForwardKeyPressToControl(Control control, Key key)
@@ -428,32 +426,35 @@ namespace EverythingToolbar.Controls
 
         private void OnOpenWithMenuLoaded(object sender, RoutedEventArgs e)
         {
-            var mi = sender as MenuItem;
-            if (mi == null)
+            if (sender is not MenuItem menuItem)
                 return;
 
-            while (mi.Items.Count > 3)
-                mi.Items.RemoveAt(0);
+            while (menuItem.Items.Count > 2)
+                menuItem.Items.RemoveAt(0);
 
-            var rules = Rules.LoadRules();
+            List<Rule> rules = Rules.LoadRules();
 
-            if (rules.Count > 0)
-                (mi.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
-            else
-                (mi.Items[0] as MenuItem).Visibility = Visibility.Visible;
-
-            for (var i = rules.Count - 1; i >= 0; i--)
+            if (rules.Count == 0)
             {
-                var rule = rules[i];
-                var ruleMenuItem = new MenuItem { Header = rule.Name, Tag = rule.Command };
+                menuItem.Items.Insert(0, new MenuItem
+                {
+                    Header = Properties.Resources.ContextMenuOpenWithNoRules,
+                    IsEnabled = false
+                });
+                return;
+            }
+
+            for (int i = 0; i < rules.Count; i++)
+            {
+                MenuItem ruleMenuItem = new() { Header = rules[i].Name, Tag = rules[i].Command };
                 ruleMenuItem.Click += OpenWithRule;
-                mi.Items.Insert(0, ruleMenuItem);
+                menuItem.Items.Insert(i, ruleMenuItem);
             }
         }
 
         private void OpenWithRule(object sender, RoutedEventArgs e)
         {
-            if (SearchResultsListView.SelectedItem == null)
+            if (SelectedItem == null)
                 return;
 
             var menuItem = sender as MenuItem;
@@ -476,7 +477,7 @@ namespace EverythingToolbar.Controls
             if (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
                 Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
             {
-                string[] files = { SelectedItem.FullPathAndFileName };
+                string[] files = [SelectedItem.FullPathAndFileName];
                 var data = new DataObject(DataFormats.FileDrop, files);
                 data.SetData(DataFormats.Text, files[0]);
                 DragDrop.DoDragDrop(SearchResultsListView, data, DragDropEffects.All);
@@ -485,12 +486,15 @@ namespace EverythingToolbar.Controls
 
         private void OnContextMenuOpened(object sender, RoutedEventArgs e)
         {
+            if (SelectedItem == null)
+                return;
+
             var cm = sender as ContextMenu;
             var mi = cm?.Items[2] as MenuItem;
             if (mi == null)
                 return;
 
-            string[] extensions = { ".exe", ".bat", ".cmd" };
+            string[] extensions = [".exe", ".bat", ".cmd"];
             var isExecutable = SelectedItem.IsFile && extensions.Any(ext => SelectedItem.FullPathAndFileName.EndsWith(ext));
 
             mi.Visibility = isExecutable ? Visibility.Visible : Visibility.Collapsed;

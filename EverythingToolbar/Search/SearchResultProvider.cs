@@ -17,13 +17,43 @@ namespace EverythingToolbar.Search
 {
     public class SearchResultProvider : IItemsProvider<SearchResult>
     {
-        private static readonly object SyncLock = new();
+        private class QueryQueueItem
+        {
+            public QueryType Type { get; }
+            public int StartIndex { get; }
+            public TaskCompletionSource<int> CountCompletionSource { get; } = null!;
+            public TaskCompletionSource<IList<SearchResult>> RangeCompletionSource { get; } = null!;
+
+            public QueryQueueItem(TaskCompletionSource<int> completionSource)
+            {
+                Type = QueryType.Count;
+                CountCompletionSource = completionSource;
+            }
+
+            public QueryQueueItem(TaskCompletionSource<IList<SearchResult>> completionSource, int startIndex)
+            {
+                Type = QueryType.Range;
+                StartIndex = startIndex;
+                RangeCompletionSource = completionSource;
+            }
+
+            public void Cancel()
+            {
+                if (Type == QueryType.Count)
+                    CountCompletionSource.TrySetCanceled();
+                else
+                    RangeCompletionSource.TrySetCanceled();
+            }
+        }
+
         private readonly SearchState _searchState;
-        private static bool _initialized;
-        private static bool _firstPageQueried;
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<SearchResultProvider>();
+        private static readonly object SyncLock = new();
+        private static readonly Queue<QueryQueueItem> QueryQueue = new();
+        private static QueryQueueItem? _currentQuery;
         private static IntPtr _responseWindowHandle;
-        private static TaskCompletionSource<int> _countCompletionSource;
-        private static TaskCompletionSource<IList<SearchResult>> _rangeCompletionSource;
+        private static bool _initialized;
+        private static bool _firstPageAvailable;
 
         public SearchResultProvider(SearchState searchState)
         {
@@ -35,62 +65,127 @@ namespace EverythingToolbar.Search
 
         private static void InitializeAsyncResponseWindow()
         {
-            if (_responseWindowHandle != IntPtr.Zero)
-                return;
-
-            const int gwlpWndproc = -4;
-            const IntPtr hwndMessage = -3;
-
-            // Create a message-only window to receive IPC messages
-            _responseWindowHandle = NativeMethods.CreateWindowEx(
-                0,
-                "STATIC",
-                null,
-                0,
-                0, 0, 0, 0,
-                hwndMessage,
-                IntPtr.Zero,
-                IntPtr.Zero,
-                IntPtr.Zero);
-
-            if (_responseWindowHandle != IntPtr.Zero)
+            if (_responseWindowHandle == IntPtr.Zero)
             {
-                NativeMethods.SetWindowLongPtr(_responseWindowHandle, gwlpWndproc,
-                    Marshal.GetFunctionPointerForDelegate<NativeMethods.WndProcDelegate>(HandleWindowMessage));
+                const int gwlpWndproc = -4;
+                const IntPtr hwndMessage = -3;
+
+                // Create a message-only window to receive IPC messages
+                _responseWindowHandle = NativeMethods.CreateWindowEx(
+                    0,
+                    "STATIC",
+                    null!,
+                    0,
+                    0, 0, 0, 0,
+                    hwndMessage,
+                    IntPtr.Zero,
+                    IntPtr.Zero,
+                    IntPtr.Zero);
+
+                if (_responseWindowHandle != IntPtr.Zero)
+                {
+                    NativeMethods.SetWindowLongPtr(_responseWindowHandle, gwlpWndproc,
+                        Marshal.GetFunctionPointerForDelegate<NativeMethods.WndProcDelegate>(HandleWindowMessage));
+                }
+                else
+                {
+                    Logger.Error("Failed to create IPC response window.");
+                    return;
+                }
             }
-            else
+
+            Everything_SetReplyWindow(_responseWindowHandle);
+        }
+
+        private void ClearQueryQueue()
+        {
+            if (_currentQuery != null)
             {
-                Logger.Error("Failed to create IPC response window.");
+                _currentQuery.Cancel();
+                _currentQuery = null;
+            }
+
+            while (QueryQueue.Count > 0)
+            {
+                QueryQueue.Dequeue().Cancel();
+            }
+        }
+
+        private static void ProcessNextQuery()
+        {
+            lock (SyncLock)
+            {
+                if (_currentQuery != null || QueryQueue.Count == 0)
+                    return;
+
+                _currentQuery = QueryQueue.Dequeue();
+
+                switch (_currentQuery.Type)
+                {
+                    case QueryType.Count:
+                        Everything_SetOffset(0);
+                        Everything_SetReplyID((uint)QueryType.Count);
+                        break;
+                    case QueryType.Range:
+                        Everything_SetOffset((uint)_currentQuery.StartIndex);
+                        Everything_SetReplyID((uint)QueryType.Range);
+                        break;
+                }
+
+                if (!Query(isAsync: true))
+                {
+                    if (_currentQuery.Type == QueryType.Count)
+                        _currentQuery.CountCompletionSource.TrySetResult(0);
+                    else
+                        _currentQuery.RangeCompletionSource.TrySetResult(new List<SearchResult>());
+
+                    _currentQuery = null;
+
+                    // Try to process the next query in queue
+                    Dispatcher.CurrentDispatcher.BeginInvoke(ProcessNextQuery);
+                }
             }
         }
 
         private static IntPtr HandleWindowMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
-            if (Everything_IsQueryReply(msg, wParam, lParam, (uint)ReplyId.Count))
+            lock (SyncLock)
             {
-                lock (SyncLock)
+                if (Everything_IsQueryReply(msg, wParam, lParam, (uint)QueryType.Count))
                 {
                     // We remember the first page query to avoid querying it again when actually fetching data
-                    _firstPageQueried = true;
+                    _firstPageAvailable = true;
 
                     var resultsCount = (int)Everything_GetTotResults();
-                    Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+
+                    if (_currentQuery?.Type == QueryType.Count)
                     {
-                        _countCompletionSource?.TrySetResult(resultsCount);
-                    });
+                        var completionSource = _currentQuery.CountCompletionSource;
+                        _currentQuery = null;
+
+                        Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+                        {
+                            completionSource.TrySetResult(resultsCount);
+                            ProcessNextQuery();
+                        });
+                    }
                     return 1;
                 }
-            }
 
-            if (Everything_IsQueryReply(msg, wParam, lParam, (uint)ReplyId.Range))
-            {
-                lock (SyncLock)
+                if (Everything_IsQueryReply(msg, wParam, lParam, (uint)QueryType.Range))
                 {
                     IList<SearchResult> results = GetResultsFromEverythingQuery();
-                    Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+                    if (_currentQuery?.Type == QueryType.Range)
                     {
-                        _rangeCompletionSource?.TrySetResult(results);
-                    });
+                        var completionSource = _currentQuery.RangeCompletionSource;
+                        _currentQuery = null;
+
+                        Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+                        {
+                            completionSource.TrySetResult(results);
+                            ProcessNextQuery();
+                        });
+                    }
                     return 1;
                 }
             }
@@ -110,11 +205,10 @@ namespace EverythingToolbar.Search
                 Everything_GetResultFullPathNameW(i, fullPathAndFilename.Clear(), 4096);
                 Everything_GetResultSize(i, out var fileSize);
                 Everything_GetResultDateModified(i, out var dateModified);
-
                 results.Add(new SearchResult
                 {
-                    HighlightedPath = highlightedPath,
-                    HighlightedFileName = highlightedFileName,
+                    HighlightedPath = highlightedPath ?? "<invalid>",
+                    HighlightedFileName = highlightedFileName ?? "<invalid>",
                     FullPathAndFileName = fullPathAndFilename.ToString(),
                     IsFile = isFile,
                     DateModified = dateModified,
@@ -124,167 +218,100 @@ namespace EverythingToolbar.Search
             return results;
         }
 
-        public Task<int> FetchCount(int pageSize = 0, bool isAsync = true)
+        public Task<int> FetchCount(int pageSize, bool isAsync)
         {
             lock (SyncLock)
             {
-                if (ToolbarSettings.User.IsHideEmptySearchResults && string.IsNullOrEmpty(_searchState.SearchTerm))
-                {
-                    return Task.FromResult(0);
-                }
-
                 var search = _searchState.Filter.GetSearchPrefix() + _searchState.SearchTerm;
                 Everything_SetSearchW(search);
-
-                const Flags flags = Flags.FullPathAndFileName | Flags.HighlightedPath |
-                                    Flags.HighlightedFileName | Flags.RequestSize |
-                                    Flags.RequestDateModified;
-                Everything_SetRequestFlags((uint)flags);
-
+                Everything_SetRequestFlags((uint)(Flags.FullPathAndFileName | Flags.HighlightedPath |
+                                                  Flags.HighlightedFileName | Flags.RequestSize |
+                                                  Flags.RequestDateModified));
                 SetSortType(_searchState.SortBy, _searchState.IsSortDescending);
                 Everything_SetMatchCase(_searchState.IsMatchCase);
                 Everything_SetMatchPath(_searchState.IsMatchPath);
-                Everything_SetMatchWholeWord(_searchState.IsMatchWholeWord && !_searchState.IsRegExEnabled);
+                Everything_SetMatchWholeWord(_searchState is { IsMatchWholeWord: true, IsRegExEnabled: false });
                 Everything_SetRegex(_searchState.IsRegExEnabled);
-
                 Everything_SetMax((uint)pageSize);
-                Everything_SetOffset(0);
 
-                if (!isAsync)
+                // Clear all existing queries since we're starting a new search
+                ClearQueryQueue();
+
+                if (isAsync)
                 {
-                    if (!Everything_QueryW(true))
-                    {
-                        var lastError = (ErrorCode)Everything_GetLastError();
-                        LogError(lastError);
-                        return Task.FromResult(0);
-                    }
-                    return Task.FromResult((int)Everything_GetTotResults());
+                    var countCompletionSource = new TaskCompletionSource<int>();
+                    var countQuery = new QueryQueueItem(countCompletionSource);
+
+                    QueryQueue.Enqueue(countQuery);
+                    Dispatcher.CurrentDispatcher.BeginInvoke(ProcessNextQuery);
+
+                    return countCompletionSource.Task;
                 }
                 else
                 {
-                    InitializeAsyncResponseWindow();
-                    _countCompletionSource = new TaskCompletionSource<int>();
-                    Everything_SetReplyWindow(_responseWindowHandle);
-                    Everything_SetReplyID((uint)ReplyId.Count);
+                    Everything_SetOffset(0);
 
-                    if (!Everything_QueryW(false))
-                    {
-                        var lastError = (ErrorCode)Everything_GetLastError();
-                        LogError(lastError);
-                        _countCompletionSource.TrySetResult(0);
-                    }
-                    return _countCompletionSource.Task;
+                    if (!Query(isAsync: false))
+                        return Task.FromResult(0);
+
+                    return Task.FromResult((int)Everything_GetTotResults());
                 }
             }
         }
 
-        public Task<IList<SearchResult>> FetchRange(int startIndex, int pageSize, bool isAsync = true)
+        public Task<IList<SearchResult>> FetchRange(int startIndex, int pageSize, bool isAsync)
         {
             lock (SyncLock)
             {
-                if (_firstPageQueried && startIndex == 0)
+                if (_firstPageAvailable && startIndex == 0)
                 {
-                    // If the first page has already been queried, we can skip another query
+                    // If the first page has already been queried, we can return the results directly
                     return Task.FromResult(GetResultsFromEverythingQuery());
                 }
 
-                _firstPageQueried = false;
-
-                // Search parameters (term, sort, flags, etc.) are assumed to be set by a preceding FetchCountAsync call.
-                Everything_SetOffset((uint)startIndex);
-                Everything_SetMax((uint)pageSize);
-
-                if (!isAsync)
+                if (isAsync)
                 {
-                    if (!Everything_QueryW(true))
-                    {
-                        var lastError = (ErrorCode)Everything_GetLastError();
-                        LogError(lastError);
-                        return Task.FromResult<IList<SearchResult>>(new List<SearchResult>());
-                    }
-                    return Task.FromResult(GetResultsFromEverythingQuery());
+                    var rangeCompletionSource = new TaskCompletionSource<IList<SearchResult>>();
+                    var rangeQuery = new QueryQueueItem(rangeCompletionSource, startIndex);
+
+                    QueryQueue.Enqueue(rangeQuery);
+                    Dispatcher.CurrentDispatcher.BeginInvoke(ProcessNextQuery);
+
+                    return rangeCompletionSource.Task;
                 }
                 else
                 {
-                    InitializeAsyncResponseWindow();
-                    _rangeCompletionSource = new TaskCompletionSource<IList<SearchResult>>();
-                    Everything_SetReplyWindow(_responseWindowHandle);
-                    Everything_SetReplyID((uint)ReplyId.Range);
+                    Everything_SetOffset((uint)startIndex);
 
-                    if (!Everything_QueryW(false))
-                    {
-                        var lastError = (ErrorCode)Everything_GetLastError();
-                        LogError(lastError);
-                        _rangeCompletionSource.TrySetResult(new List<SearchResult>());
-                    }
-                    return _rangeCompletionSource.Task;
+                    if (!Query(isAsync: false))
+                        return Task.FromResult<IList<SearchResult>>(new List<SearchResult>());
+
+                    return Task.FromResult(GetResultsFromEverythingQuery());
                 }
             }
         }
 
-        private static bool Initialize()
+        private static bool Query(bool isAsync)
         {
-            SetInstanceName(ToolbarSettings.User.InstanceName);
+            if (isAsync)
+                InitializeAsyncResponseWindow();
 
-            var major = Everything_GetMajorVersion();
-            var minor = Everything_GetMinorVersion();
-            var revision = Everything_GetRevision();
+            _firstPageAvailable = false;
 
-            if (major > 1 || (major == 1 && minor > 4) || (major == 1 && minor == 4 && revision >= 1))
+            if (!Everything_QueryW(!isAsync))
             {
-                Logger.Info("Everything version: {major}.{minor}.{revision}", major, minor, revision);
-                return true;
+                LogLastError();
+                return false;
             }
 
-            if (major == 0 && minor == 0 && revision == 0 && (ErrorCode)Everything_GetLastError() == ErrorCode.ErrorIpc)
-            {
-                LogError((ErrorCode)Everything_GetLastError());
-                Logger.Error("Failed to get Everything version number.");
-            }
-            else
-            {
-                Logger.Error("Everything version {major}.{minor}.{revision} is not supported.", major, minor, revision);
-            }
-
-            return false;
+            return true;
         }
 
-        public static void SetInstanceName(string name)
+        private static void LogLastError()
         {
-            if (name != string.Empty)
-                Logger.Info("Setting Everything instance name: " + name);
+            ErrorCode lastError = (ErrorCode)Everything_GetLastError();
 
-            Everything_SetInstanceName(name);
-        }
-
-        private static readonly ILogger Logger = ToolbarLogger.GetLogger<SearchResultProvider>();
-
-        [Flags]
-        private enum Flags : uint
-        {
-            FullPathAndFileName = 0x00000004,
-            HighlightedFileName = 0x00002000,
-            HighlightedPath = 0x00004000,
-            RequestSize = 0x00000010,
-            RequestDateModified = 0x00000040
-        }
-
-        [Flags]
-        private enum ErrorCode
-        {
-            Ok,
-            ErrorMemory,
-            ErrorIpc,
-            ErrorRegisterClassEx,
-            ErrorCreateWindow,
-            ErrorCreateThread,
-            ErrorInvalidIndex,
-            ErrorInvalidCall
-        }
-
-        private static void LogError(ErrorCode code)
-        {
-            switch (code)
+            switch (lastError)
             {
                 case ErrorCode.ErrorMemory:
                     Logger.Error("Failed to allocate memory for the search query.");
@@ -310,8 +337,66 @@ namespace EverythingToolbar.Search
                 case ErrorCode.Ok:
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(code), code, null);
+                    throw new ArgumentOutOfRangeException(nameof(lastError), lastError, "Got invalid Everything error code.");
             }
+        }
+
+        private static bool Initialize()
+        {
+            SetInstanceName(ToolbarSettings.User.InstanceName);
+
+            var major = Everything_GetMajorVersion();
+            var minor = Everything_GetMinorVersion();
+            var revision = Everything_GetRevision();
+
+            if (major > 1 || (major == 1 && minor > 4) || (major == 1 && minor == 4 && revision >= 1))
+            {
+                Logger.Info("Everything version: {major}.{minor}.{revision}", major, minor, revision);
+                return true;
+            }
+
+            if (major == 0 && minor == 0 && revision == 0 && (ErrorCode)Everything_GetLastError() == ErrorCode.ErrorIpc)
+            {
+                LogLastError();
+                Logger.Error("Failed to get Everything version number.");
+            }
+            else
+            {
+                Logger.Error("Everything version {major}.{minor}.{revision} is not supported.", major, minor, revision);
+            }
+
+            return false;
+        }
+
+        public static void SetInstanceName(string name)
+        {
+            if (name != string.Empty)
+                Logger.Info("Setting Everything instance name: " + name);
+
+            Everything_SetInstanceName(name);
+        }
+
+        [Flags]
+        private enum Flags : uint
+        {
+            FullPathAndFileName = 0x00000004,
+            HighlightedFileName = 0x00002000,
+            HighlightedPath = 0x00004000,
+            RequestSize = 0x00000010,
+            RequestDateModified = 0x00000040
+        }
+
+        [Flags]
+        private enum ErrorCode
+        {
+            Ok,
+            ErrorMemory,
+            ErrorIpc,
+            ErrorRegisterClassEx,
+            ErrorCreateWindow,
+            ErrorCreateThread,
+            ErrorInvalidIndex,
+            ErrorInvalidCall
         }
 
         public static void IncrementRunCount(string path)
@@ -387,7 +472,7 @@ namespace EverythingToolbar.Search
             Process.Start(ToolbarSettings.User.EverythingPath, args);
         }
 
-        private enum ReplyId : uint
+        private enum QueryType : uint
         {
             Count = 0,
             Range = 1
