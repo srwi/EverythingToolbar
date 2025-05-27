@@ -433,7 +433,7 @@
     <value>Vídeo</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Atualização Disponível:</value>
+    <value>Atualização disponível:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
     <value>Ignorar</value>
@@ -442,7 +442,7 @@
     <value>Baixar</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>Procurar atualizações automaticamente</value>
+    <value>Verificar atualizações automaticamente</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
     <value>Selecionar o primeiro resultado</value>
