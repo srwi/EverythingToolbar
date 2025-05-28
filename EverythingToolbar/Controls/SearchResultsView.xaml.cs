@@ -32,7 +32,6 @@ namespace EverythingToolbar.Controls
             Loaded += (s, e) =>
             {
                 RegisterItemContainerStyleProperties(null, null);
-                ThemeAwareness.ResourceChanged += RegisterItemContainerStyleProperties;
             };
         }
 
@@ -231,7 +230,7 @@ namespace EverythingToolbar.Controls
 
             SearchResultsListView.SelectedIndex = n;
             SearchResultsListView.ScrollIntoView(SelectedItem);
-            
+
             if (!ToolbarSettings.User.IsAutoSelectFirstResult || !ToolbarSettings.User.IsSearchAsYouType)
                 FocusSelectedItem();
         }
@@ -413,7 +412,7 @@ namespace EverythingToolbar.Controls
         {
             if (SearchResultsListView.SelectedItem == null)
                 return;
-            
+
             var searchResult = SearchResultsListView.SelectedItem as SearchResult;
             var command = (sender as MenuItem).Tag?.ToString() ?? "";
             Rules.HandleRule(searchResult, command);
