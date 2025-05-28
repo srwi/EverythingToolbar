@@ -118,63 +118,63 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClose" xml:space="preserve">
-    <value>Close</value>
+    <value>Đóng</value>
   </data>
   <data name="CheckboxEnable" xml:space="preserve">
-    <value>Enable</value>
+    <value>Bật</value>
   </data>
   <data name="CheckboxHide" xml:space="preserve">
-    <value>Hide</value>
+    <value>Ẩn</value>
   </data>
   <data name="ContextMenuQuit" xml:space="preserve">
-    <value>Quit</value>
+    <value>Thoát</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Run setup assistant...</value>
+    <value>Chạy trình trợ giúp thiết lập...</value>
   </data>
   <data name="SetupAssistantSecondStepText" xml:space="preserve">
-    <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
+    <value>Để ghim EverythingToolbar vào thanh tác vụ, hãy nhấp chuột phải vào biểu tượng và chọn 'Ghim vào thanh tác vụ'.</value>
   </data>
   <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Pin to taskbar</value>
+    <value>2. Ghim vào thanh tác vụ</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
+    <value>Cần khởi động lại File Explorer để cập nhật biểu tượng trên thanh tác vụ. Bạn có muốn khởi động lại ngay bây giờ không?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>Restart explorer</value>
+    <value>Khởi động lại File Explorer</value>
   </data>
   <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>Optionally the original Windows search icon can be hidden.</value>
+    <value>Nếu muốn bạn cũng có thể ẩn biểu tượng tìm kiếm mặc định của Windows.</value>
   </data>
   <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Hide Windows search</value>
+    <value>3. Ẩn menu Tìm Kiếm của Windows</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>It is recommended to start EverythingToolbar automatically on system startup.</value>
+    <value>Bạn nên thiết lập EverythingToolbar tự khởi động cùng hệ thống.</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. Configure autostart</value>
+    <value>4. Cấu hình tự khởi động cùng hệ thống</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>EverythingToolbar Setup Assistant</value>
+    <value>Trình trợ giúp thiết lập EverythingToolbar</value>
   </data>
   <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>Select one of the following taskbar icons:</value>
+    <value>Chọn một trong các biểu tượng thanh tác vụ sau:</value>
   </data>
   <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Taskbar icon</value>
+    <value>1. Biểu tượng thanh tác vụ</value>
   </data>
   <data name="SetupAssistantFifthStepText" xml:space="preserve">
-    <value>By enabling the system tray icon you can quit the EverythingToolbar background process at any time. Without it, EverythingToolbar can always be quit via the task manager.</value>
+    <value>Bằng cách bật biểu tượng ở khay hệ thống, bạn có thể thoát tiến trình chạy nền của EverythingToolbar bất cứ lúc nào. Nếu không bật, bạn vẫn có thể thoát EverythingToolbar qua Trình quản lý tác vụ.</value>
   </data>
   <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
-    <value>5. Configure system tray icon</value>
+    <value>5. Cấu hình biểu tượng khay hệ thống</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+    <value>Bạn có chắc chắn muốn thoát trình trợ giúp thiết lập không? EverythingToolbar sẽ chỉ có thể truy cập bằng phím tắt. Bạn có thể mở lại trình trợ giúp thiết lập qua biểu tượng khay hệ thống để ghim biểu tượng tìm kiếm vào thanh tác vụ.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>Exit Setup Assistant</value>
+    <value>Thoát trình trợ giúp thiết lập</value>
   </data>
 </root>
