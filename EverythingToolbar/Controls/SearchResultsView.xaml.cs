@@ -63,7 +63,6 @@ namespace EverythingToolbar.Controls
 
                 // Mouse events and context menu must be added to the ItemContainerStyle each time it gets updated
                 RegisterItemContainerStyleProperties(null, null);
-                ThemeAwareness.ResourceChanged += RegisterItemContainerStyleProperties;
                 AutoSelectFirstResult();
 
                 // Attach to scrollbar drag events after the control is loaded
