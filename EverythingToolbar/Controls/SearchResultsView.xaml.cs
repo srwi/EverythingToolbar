@@ -35,6 +35,10 @@ namespace EverythingToolbar.Controls
         private bool _isScrollBarDragging;
         private VirtualizingCollection<SearchResult> _searchResultsCollection;
 
+        private bool _suppressSingleClickOpen = false;
+        private DateTime _lastClickTime = DateTime.MinValue;
+        private const int DoubleClickThresholdMs = 300;
+
         public SearchResultsView()
         {
             InitializeComponent();
@@ -361,14 +365,45 @@ namespace EverythingToolbar.Controls
 
         private void SingleClickSearchResult(object sender, MouseEventArgs e)
         {
+            // Only handle left button
+            if (e is MouseButtonEventArgs mbe && mbe.ChangedButton != MouseButton.Left)
+                return;
+
+            // If double-click-to-open is enabled, suppress single click if a double click is detected
+            if (ToolbarSettings.User.IsDoubleClickToOpen)
+            {
+                if (_suppressSingleClickOpen)
+                {
+                    _suppressSingleClickOpen = false;
+                    return;
+                }
+                // Debounce: if two clicks are close enough, treat as double click
+                var now = DateTime.Now;
+                if ((now - _lastClickTime).TotalMilliseconds < DoubleClickThresholdMs)
+                {
+                    _suppressSingleClickOpen = true;
+                    return;
+                }
+                _lastClickTime = now;
+            }
+
             if (!ToolbarSettings.User.IsDoubleClickToOpen)
+            {
                 OpenWithMouseClick();
+            }
         }
 
         private void DoubleClickSearchResult(object sender, MouseEventArgs e)
         {
+            // Only handle left button
+            if (e is MouseButtonEventArgs mbe && mbe.ChangedButton != MouseButton.Left)
+                return;
+
             if (ToolbarSettings.User.IsDoubleClickToOpen)
+            {
+                _suppressSingleClickOpen = true;
                 OpenWithMouseClick();
+            }
         }
 
         private void Open(object sender, RoutedEventArgs e)
