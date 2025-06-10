@@ -11,6 +11,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using SearchResult = EverythingToolbar.Data.SearchResult;
 
 namespace EverythingToolbar.Controls
@@ -31,7 +32,7 @@ namespace EverythingToolbar.Controls
         }
 
         private SearchResult? SelectedItem => SearchResultsListView.SelectedItem as SearchResult;
-        private const int PageSize = 100;
+        private const int PageSize = 256;
         private Point _dragStart;
         private bool _isScrollBarDragging;
         private VirtualizingCollection<SearchResult>? _searchResultsCollection;
@@ -297,7 +298,7 @@ namespace EverythingToolbar.Controls
                 FocusSelectedItem();
         }
 
-        private static bool ForwardKeyPressToControl(Control control, Key key)
+        private bool ForwardKeyPressToControl(Control control, Key key)
         {
             var presentationSource = PresentationSource.FromVisual(control);
             if (presentationSource == null)
@@ -315,8 +316,11 @@ namespace EverythingToolbar.Controls
                 currentFocus is TextBox restoredTextBox &&
                 caretIndex >= 0)
             {
-                currentFocus.Focus();
-                restoredTextBox.CaretIndex = Math.Min(caretIndex, restoredTextBox.Text.Length);
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    currentFocus.Focus();
+                    restoredTextBox.CaretIndex = Math.Min(caretIndex, restoredTextBox.Text.Length);
+                }), DispatcherPriority.Send);
             }
 
             return args.Handled;
