@@ -64,7 +64,7 @@ namespace EverythingToolbar.Controls
                     }
                 }
 
-                ShortcutManager.TryUpdateShortcut(shortcutSelector.Key, shortcutSelector.Modifiers);
+                ShortcutManager.TrySetShortcut(shortcutSelector.Key, shortcutSelector.Modifiers);
             }
         }
 
