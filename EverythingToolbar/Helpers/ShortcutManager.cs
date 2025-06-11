@@ -10,13 +10,11 @@ namespace EverythingToolbar.Helpers
 {
     public class ShortcutManager
     {
-        public static readonly ShortcutManager Instance = new ShortcutManager();
-        private static readonly ILogger Logger = ToolbarLogger.GetLogger<ShortcutManager>();
-
-        private static EventHandler<HotkeyEventArgs> _shortcut;
         private const string HotkeyName = "EverythingToolbarHotkey";
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<ShortcutManager>();
+        private static EventHandler<HotkeyEventArgs>? _shortcut;
 
-        public void Initialize(EventHandler<HotkeyEventArgs> handler)
+        public static void Initialize(EventHandler<HotkeyEventArgs> handler)
         {
             var shortcutKey = (Key)ToolbarSettings.User.ShortcutKey;
             var shortcutModifiers = (ModifierKeys)ToolbarSettings.User.ShortcutModifiers;
@@ -27,7 +25,7 @@ namespace EverythingToolbar.Helpers
             TrySetShortcut(shortcutKey, shortcutModifiers, handler);
         }
 
-        private void TrySetShortcut(Key key, ModifierKeys modifiers, EventHandler<HotkeyEventArgs> handler)
+        private static void TrySetShortcut(Key key, ModifierKeys modifiers, EventHandler<HotkeyEventArgs> handler)
         {
             try
             {
@@ -49,12 +47,15 @@ namespace EverythingToolbar.Helpers
             }
         }
 
-        public void TryUpdateShortcut(Key key, ModifierKeys modifiers)
+        public static void TryUpdateShortcut(Key key, ModifierKeys modifiers)
         {
+            if (_shortcut == null)
+                return;
+
             TrySetShortcut(key, modifiers, _shortcut);
         }
 
-        private void UpdateSettings(Key key, ModifierKeys mods)
+        public static void UpdateSettings(Key key, ModifierKeys mods)
         {
             ToolbarSettings.User.ShortcutKey = (int)key;
             ToolbarSettings.User.ShortcutModifiers = (int)mods;

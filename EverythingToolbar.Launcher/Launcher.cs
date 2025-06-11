@@ -55,7 +55,7 @@ namespace EverythingToolbar.Launcher
                 if (!ToolbarSettings.User.IsSetupAssistantDisabled && !File.Exists(Utils.GetTaskbarShortcutPath()))
                     new SetupAssistant(icon).Show();
 
-                ShortcutManager.Instance.Initialize(FocusSearchBox);
+                ShortcutManager.Initialize(FocusSearchBox);
 
                 if (ToolbarSettings.User.IsReplaceStartMenuSearch)
                     StartMenuIntegration.Instance.Enable();

@@ -54,7 +54,9 @@ namespace EverythingToolbar.Controls
             {
                 if (shortcutSelector.Modifiers == ModifierKeys.Windows)
                 {
-                    // Windows Explorer reserves many shortcuts with the Windows key. Therefore, we kill it.
+                    // Windows Explorer reserves many shortcuts with the Windows key. Therefore, we need to update the settings,
+                    // kill explorer (and the deskband) and let the initialize routine set the shortcut before explorer has time to do so.
+                    ShortcutManager.UpdateSettings(shortcutSelector.Key, shortcutSelector.Modifiers);
                     foreach (var exe in Process.GetProcesses())
                     {
                         if (exe.ProcessName == "explorer")
@@ -62,7 +64,7 @@ namespace EverythingToolbar.Controls
                     }
                 }
 
-                ShortcutManager.Instance.TryUpdateShortcut(shortcutSelector.Key, shortcutSelector.Modifiers);
+                ShortcutManager.TryUpdateShortcut(shortcutSelector.Key, shortcutSelector.Modifiers);
             }
         }
 
