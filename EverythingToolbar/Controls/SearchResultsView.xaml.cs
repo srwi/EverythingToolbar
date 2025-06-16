@@ -36,6 +36,8 @@ namespace EverythingToolbar.Controls
         private Point _dragStart;
         private bool _isScrollBarDragging;
         private VirtualizingCollection<SearchResult>? _searchResultsCollection;
+        private readonly DispatcherTimer _busyIndicatorTimer;
+        private const int BusyIndicatorDelayMilliseconds = 2000;
 
         public SearchResultsView()
         {
@@ -44,6 +46,12 @@ namespace EverythingToolbar.Controls
             SearchState.Instance.PropertyChanged += (_, _) => UpdateSearchResultsProvider(SearchState.Instance);
             EventDispatcher.Instance.GlobalKeyEvent += OnKeyPressed;
             SearchResultsListView.PreviewKeyDown += OnKeyPressed;
+
+            _busyIndicatorTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(BusyIndicatorDelayMilliseconds)
+            };
+            _busyIndicatorTimer.Tick += BusyIndicatorTimerElapsed;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -79,6 +87,13 @@ namespace EverythingToolbar.Controls
                         Dispatcher.BeginInvoke(AutoSelectFirstResult);
                     }
                 };
+                _searchResultsCollection.PropertyChanged += (_, args) =>
+                {
+                    if (args.PropertyName == nameof(VirtualizingCollection<SearchResult>.IsBusy))
+                    {
+                        OnCollectionIsBusyChanged();
+                    }
+                };
             }
             else
             {
@@ -86,6 +101,34 @@ namespace EverythingToolbar.Controls
             }
 
             SearchResultsListView.ItemsSource = _searchResultsCollection;
+        }
+
+        private void OnCollectionIsBusyChanged()
+        {
+            if (_searchResultsCollection is { IsBusy: true })
+            {
+                if (!_busyIndicatorTimer.IsEnabled)
+                {
+                    _busyIndicatorTimer.Start();
+                }
+            }
+            else
+            {
+                _busyIndicatorTimer.Stop();
+                SpinnerOverlay.Visibility = Visibility.Collapsed;
+                SearchResultsListView.Opacity = 1.0;
+            }
+        }
+
+        private void BusyIndicatorTimerElapsed(object? sender, EventArgs e)
+        {
+            _busyIndicatorTimer.Stop();
+
+            if (_searchResultsCollection is not { IsBusy: true })
+                return;
+
+            SpinnerOverlay.Visibility = Visibility.Visible;
+            SearchResultsListView.Opacity = 0.3;
         }
 
         private void AttachToScrollViewer()

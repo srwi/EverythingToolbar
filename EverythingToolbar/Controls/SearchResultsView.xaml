@@ -11,7 +11,6 @@
              Loaded="OnLoaded">
     <UserControl.Resources>
         <ResourceDictionary>
-
             <ContextMenu x:Key="ListViewItemContextMenu"
                          Opened="OnContextMenuOpened">
                 <i:Interaction.Behaviors>
@@ -54,23 +53,53 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <ListView Name="SearchResultsListView"
-              SelectionMode="Single"
-              BorderThickness="0"
-              HorizontalContentAlignment="Stretch"
-              Background="{DynamicResource SearchResultsViewBackground}"
-              ItemTemplate="{DynamicResource SearchResultsViewTemplate}"
-              ItemContainerStyle="{DynamicResource ListViewItemStyle}"
-              IsTextSearchEnabled="False"
-              IsSynchronizedWithCurrentItem="True"
-              VirtualizingPanel.IsVirtualizing="True"
-              VirtualizingPanel.CacheLengthUnit="Page"
-              VirtualizingPanel.CacheLength="1"
-              VirtualizingPanel.VirtualizationMode="Recycling"
-              VirtualizingPanel.ScrollUnit="Item"
-              ScrollViewer.VerticalScrollBarVisibility="Visible"
-              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-              ScrollViewer.PanningMode="VerticalOnly"
-              FocusVisualStyle="{x:Null}" />
-
+    <Grid>
+        <ListView Name="SearchResultsListView"
+                  SelectionMode="Single"
+                  BorderThickness="0"
+                  HorizontalContentAlignment="Stretch"
+                  Background="{DynamicResource SearchResultsViewBackground}"
+                  ItemTemplate="{DynamicResource SearchResultsViewTemplate}"
+                  ItemContainerStyle="{DynamicResource ListViewItemStyle}"
+                  IsTextSearchEnabled="False"
+                  IsSynchronizedWithCurrentItem="True"
+                  VirtualizingPanel.IsVirtualizing="True"
+                  VirtualizingPanel.CacheLengthUnit="Page"
+                  VirtualizingPanel.CacheLength="1"
+                  VirtualizingPanel.VirtualizationMode="Recycling"
+                  VirtualizingPanel.ScrollUnit="Item"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  ScrollViewer.PanningMode="VerticalOnly"
+                  FocusVisualStyle="{x:Null}">
+        </ListView>
+        <Grid x:Name="SpinnerOverlay"
+              Visibility="Collapsed"
+              IsHitTestVisible="False"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center">
+            <Viewbox Height="30" Width="30" Stretch="Fill">
+                <Path Stretch="Fill" Stroke="{DynamicResource SearchResultsViewSpinner}" StrokeThickness="8" Fill="Transparent" Data="M 50,10 A 40,40 0 1 1 90.45,29.55" RenderTransformOrigin="0.5,0.5">
+                    <Path.RenderTransform>
+                        <RotateTransform/>
+                    </Path.RenderTransform>
+                    <Path.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=SpinnerOverlay, Path=Visibility}" Value="Visible">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="360" Duration="0:0:1" RepeatBehavior="Forever" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
+            </Viewbox>
+        </Grid>
+    </Grid>
 </UserControl>

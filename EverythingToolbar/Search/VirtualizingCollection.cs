@@ -14,8 +14,10 @@ namespace EverythingToolbar.Search
     {
         public VirtualizingCollection(IItemsProvider<T> itemsProvider, int pageSize)
         {
-            ItemsProvider = itemsProvider;
             PageSize = pageSize;
+            
+            ItemsProvider = itemsProvider;
+            ItemsProvider.PropertyChanged += OnItemsProviderPropertyChanged;
 
             LoadCount();
         }
@@ -49,6 +51,8 @@ namespace EverythingToolbar.Search
 
         private IItemsProvider<T> ItemsProvider { get; set; }
 
+        public bool IsBusy => ItemsProvider.IsBusy;
+
         public void UpdateProvider(IItemsProvider<T> newProvider)
         {
             if (ItemsProvider == newProvider)
@@ -56,10 +60,21 @@ namespace EverythingToolbar.Search
 
             _pages = new Dictionary<int, List<T>?>();
 
+            ItemsProvider.PropertyChanged -= OnItemsProviderPropertyChanged;
             ItemsProvider = newProvider;
+            ItemsProvider.PropertyChanged += OnItemsProviderPropertyChanged;
+
             _providerVersion++;
 
             LoadCount();
+        }
+
+        private void OnItemsProviderPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(IsBusy))
+            {
+                OnPropertyChanged(nameof(IsBusy));
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -118,12 +133,12 @@ namespace EverythingToolbar.Search
                 if (currentProviderVersion != _providerVersion)
                     return;
 
-                IList<T> newItems = task.Result;
-                _pages[index] = newItems.ToList();
+                List<T>? newItems = task.Result as List<T>;
+                _pages[index] = newItems;
 
                 try
                 {
-                    for (int i = 0; i < newItems.Count; i++)
+                    for (int i = 0; i < newItems?.Count; i++)
                     {
                         var itemIndex = index * PageSize + i;
 

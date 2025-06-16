@@ -4,6 +4,7 @@ using EverythingToolbar.Properties;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -15,7 +16,7 @@ using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 namespace EverythingToolbar.Search
 {
-    public class SearchResultProvider : IItemsProvider<SearchResult>
+    public class SearchResultProvider : IItemsProvider<SearchResult>, INotifyPropertyChanged
     {
         private class QueryQueueItem
         {
@@ -54,6 +55,20 @@ namespace EverythingToolbar.Search
         private static IntPtr _responseWindowHandle;
         private static bool _initialized;
         private static bool _firstPageAvailable;
+
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            private set
+            {
+                if (_isBusy != value)
+                {
+                    _isBusy = value;
+                    OnPropertyChanged(nameof(IsBusy));
+                }
+            }
+        }
 
         public SearchResultProvider(SearchState searchState)
         {
@@ -239,22 +254,28 @@ namespace EverythingToolbar.Search
 
                 if (isAsync)
                 {
+                    IsBusy = true;
                     var countCompletionSource = new TaskCompletionSource<int>();
                     var countQuery = new QueryQueueItem(countCompletionSource);
 
                     QueryQueue.Enqueue(countQuery);
                     Dispatcher.CurrentDispatcher.BeginInvoke(ProcessNextQuery);
 
+                    countCompletionSource.Task.ContinueWith(_ => IsBusy = false, TaskScheduler.FromCurrentSynchronizationContext());
+
                     return countCompletionSource.Task;
                 }
                 else
                 {
+                    IsBusy = true;
                     Everything_SetOffset(0);
 
-                    if (!Query(isAsync: false))
-                        return Task.FromResult(0);
+                    int result = 0;
+                    if (Query(isAsync: false))
+                        result = (int)Everything_GetTotResults();
 
-                    return Task.FromResult((int)Everything_GetTotResults());
+                    IsBusy = false;
+                    return Task.FromResult(result);
                 }
             }
         }
@@ -265,28 +286,35 @@ namespace EverythingToolbar.Search
             {
                 if (_firstPageAvailable && startIndex == 0)
                 {
-                    // If the first page has already been queried, we can return the results directly
                     return Task.FromResult(GetResultsFromEverythingQuery());
                 }
 
                 if (isAsync)
                 {
+                    IsBusy = true;
                     var rangeCompletionSource = new TaskCompletionSource<IList<SearchResult>>();
                     var rangeQuery = new QueryQueueItem(rangeCompletionSource, startIndex);
 
                     QueryQueue.Enqueue(rangeQuery);
                     Dispatcher.CurrentDispatcher.BeginInvoke(ProcessNextQuery);
 
+                    rangeCompletionSource.Task.ContinueWith(_ => IsBusy = false, TaskScheduler.FromCurrentSynchronizationContext());
+
                     return rangeCompletionSource.Task;
                 }
                 else
                 {
+                    IsBusy = true;
                     Everything_SetOffset((uint)startIndex);
 
-                    if (!Query(isAsync: false))
-                        return Task.FromResult<IList<SearchResult>>(new List<SearchResult>());
+                    IList<SearchResult> result;
+                    if (Query(isAsync: false))
+                        result = GetResultsFromEverythingQuery();
+                    else
+                        result = new List<SearchResult>();
 
-                    return Task.FromResult(GetResultsFromEverythingQuery());
+                    IsBusy = false;
+                    return Task.FromResult(result);
                 }
             }
         }
@@ -470,6 +498,12 @@ namespace EverythingToolbar.Search
 
             Logger.Debug("Showing in Everything with args: " + args);
             Process.Start(ToolbarSettings.User.EverythingPath, args);
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private enum QueryType : uint
