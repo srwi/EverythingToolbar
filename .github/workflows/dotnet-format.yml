@@ -6,6 +6,9 @@ jobs:
   dotnet-format:
     runs-on: windows-2022
     steps:
+      - name: Use CRLF line endings
+        run: git config --global core.autocrlf true
+           
       - uses: actions/checkout@v3
 
       - name: Setup .NET

@@ -15,7 +15,7 @@ namespace EverythingToolbar.Search
         public VirtualizingCollection(IItemsProvider<T> itemsProvider, int pageSize)
         {
             PageSize = pageSize;
-            
+
             ItemsProvider = itemsProvider;
             ItemsProvider.PropertyChanged += OnItemsProviderPropertyChanged;
 
