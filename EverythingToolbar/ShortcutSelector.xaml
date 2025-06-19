@@ -1,34 +1,28 @@
-﻿<Window x:Class="EverythingToolbar.ShortcutSelector"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
-        mc:Ignorable="d"
-        Title="{x:Static properties:Resources.ShortcutWindowTitle}"
-        Closed="OnClosed"
-        Height="80"
-        Width="300"
-        ResizeMode="NoResize">
+﻿<Page x:Class="EverythingToolbar.ShortcutSelector"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:behaviors="clr-namespace:EverythingToolbar.Behaviors"
+      Unloaded="OnClosed"> <!--What's the event for navigating away from a page?-->
     
-    <i:Interaction.Behaviors>
-        <b:FlowDirectionAwareness />
-    </i:Interaction.Behaviors>
-
+    <b:Interaction.Behaviors>
+        <behaviors:WpfUiBehavior />
+    </b:Interaction.Behaviors>
+    
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
-        <TextBox Name="ShortcutTextBox"
+        <ui:TextBox Name="ShortcutTextBox"
                  GotKeyboardFocus="OnGotKeyboardFocus"
                  LostKeyboardFocus="OnLostKeyboardFocus" />
-        <Button Margin="10, 0, 0, 0"
+        <ui:Button Margin="10, 0, 0, 0"
                 Content="{x:Static properties:Resources.ShortcutOK}"
                 Grid.Column="1"
                 Click="OnOkClicked" />
     </Grid>
     
-</Window>
+</Page>

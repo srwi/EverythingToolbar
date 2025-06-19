@@ -2,6 +2,7 @@
 using Microsoft.Xaml.Behaviors;
 using NLog;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
@@ -20,7 +21,6 @@ namespace EverythingToolbar.Behaviors
 
     public class ResourcesChangedEventArgs : EventArgs
     {
-        public ResourceDictionary NewResource { get; set; }
         public Theme NewTheme { get; set; }
     }
 
@@ -28,9 +28,9 @@ namespace EverythingToolbar.Behaviors
     {
         public static event EventHandler<ResourcesChangedEventArgs> ResourceChanged;
 
-        private static ResourceDictionary _currentResources;
-        private static UISettings _settings;
-        private static readonly RegistryEntry SystemThemeRegistryEntry = new RegistryEntry("HKEY_CURRENT_USER", @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme");
+        private readonly List<ResourceDictionary> _addedDictionaries = new();
+        private UISettings _settings;
+        private static readonly RegistryEntry SystemThemeRegistryEntry = new("HKEY_CURRENT_USER", @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme");
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<ThemeAwareness>();
 
         protected override void OnAttached()
@@ -38,24 +38,19 @@ namespace EverythingToolbar.Behaviors
             base.OnAttached();
             if (AssociatedObject.IsLoaded)
             {
-                AssociatedObjectOnLoaded(null, null);
+                AutoApplyTheme();
             }
             else
             {
-                AssociatedObject.Loaded += AssociatedObjectOnLoaded;
+                AssociatedObject.Loaded += (_, _) =>
+                {
+                    AutoApplyTheme();
+                };
             }
-        }
-
-        private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs _)
-        {
-            ResourceChanged += (s, e) => { AssociatedObject.Resources = e.NewResource; };
-            AutoApplyTheme();
         }
 
         public ThemeAwareness()
         {
-            _currentResources = new ResourceDictionary();
-
             var systemThemeWatcher = new RegistryWatcher(SystemThemeRegistryEntry);
             systemThemeWatcher.OnChangeValue += newValue =>
             {
@@ -114,7 +109,11 @@ namespace EverythingToolbar.Behaviors
 
         private void ApplyTheme(Theme theme)
         {
-            _currentResources.Clear();
+            foreach (var dict in _addedDictionaries)
+            {
+                AssociatedObject.Resources.MergedDictionaries.Remove(dict);
+            }
+            _addedDictionaries.Clear();
 
             var assemblyLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
@@ -153,12 +152,11 @@ namespace EverythingToolbar.Behaviors
             // Notify resource change
             ResourceChanged?.Invoke(this, new ResourcesChangedEventArgs
             {
-                NewResource = _currentResources,
                 NewTheme = theme
             });
         }
 
-        private static void AddResource(string path, string fallbackPath = null)
+        private void AddResource(string path, string fallbackPath = null)
         {
             if (!File.Exists(path))
             {
@@ -171,14 +169,16 @@ namespace EverythingToolbar.Behaviors
             }
 
             var resDict = new ResourceDictionary { Source = new Uri(path) };
-            _currentResources.MergedDictionaries.Add(resDict);
+            AssociatedObject.Resources.MergedDictionaries.Add(resDict);
+            _addedDictionaries.Add(resDict);
         }
 
         private void SetAccentColor(SolidColorBrush brush)
         {
             var resDict = new ResourceDictionary();
             resDict.Add("AccentColor", brush);
-            _currentResources.MergedDictionaries.Add(resDict);
+            AssociatedObject.Resources.MergedDictionaries.Add(resDict);
+            _addedDictionaries.Add(resDict);
         }
 
         private static SolidColorBrush GetBrush(Color color)

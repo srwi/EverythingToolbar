@@ -149,6 +149,8 @@
             <MenuItem Header="{x:Static properties:Resources.SettingsAbout}"
                       Click="OpenAboutWindow"
                       Icon="&#xE946;" />
+            <MenuItem Header="Settings..."
+                      Click="OpenSettingsWindow" />
         </ContextMenu>
     </Grid.ContextMenu>
 

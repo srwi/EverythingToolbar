@@ -21,9 +21,16 @@ namespace EverythingToolbar.Controls
 
         private void OpenAboutWindow(object sender, RoutedEventArgs e)
         {
+            // SearchWindow.Instance.Hide();
+            // Window about = new About();
+            // about.Show();
+        }
+
+        private void OpenSettingsWindow(object sender, RoutedEventArgs e)
+        {
             SearchWindow.Instance.Hide();
-            Window about = new About();
-            about.Show();
+            Window settings = new SettingsWindow();
+            settings.Show();
         }
 
         private void OpenRulesWindow(object sender, RoutedEventArgs e)
@@ -49,23 +56,23 @@ namespace EverythingToolbar.Controls
         {
             SearchWindow.Instance.Hide();
 
-            var shortcutSelector = new ShortcutSelector();
-            if (shortcutSelector.ShowDialog().Value)
-            {
-                if (shortcutSelector.Modifiers == ModifierKeys.Windows)
-                {
-                    // Windows Explorer reserves many shortcuts with the Windows key. Therefore, we need to update the settings,
-                    // kill explorer (and the deskband) and let the initialize routine set the shortcut before explorer has time to do so.
-                    ShortcutManager.UpdateSettings(shortcutSelector.Key, shortcutSelector.Modifiers);
-                    foreach (var exe in Process.GetProcesses())
-                    {
-                        if (exe.ProcessName == "explorer")
-                            exe.Kill();
-                    }
-                }
-
-                ShortcutManager.TrySetShortcut(shortcutSelector.Key, shortcutSelector.Modifiers);
-            }
+            // var shortcutSelector = new ShortcutSelector();
+            // if (shortcutSelector.ShowDialog().Value)
+            // {
+            //     if (shortcutSelector.Modifiers == ModifierKeys.Windows)
+            //     {
+            //         // Windows Explorer reserves many shortcuts with the Windows key. Therefore, we need to update the settings,
+            //         // kill explorer (and the deskband) and let the initialize routine set the shortcut before explorer has time to do so.
+            //         ShortcutManager.UpdateSettings(shortcutSelector.Key, shortcutSelector.Modifiers);
+            //         foreach (var exe in Process.GetProcesses())
+            //         {
+            //             if (exe.ProcessName == "explorer")
+            //                 exe.Kill();
+            //         }
+            //     }
+            //
+            //     ShortcutManager.TrySetShortcut(shortcutSelector.Key, shortcutSelector.Modifiers);
+            // }
         }
 
         private void OnSortByClicked(object sender, RoutedEventArgs e)

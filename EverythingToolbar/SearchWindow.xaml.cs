@@ -26,7 +26,7 @@ namespace EverythingToolbar
 
             if (Utils.GetWindowsVersion() < Utils.WindowsVersion.Windows11)
             {
-                AllowsTransparency = true;
+                // AllowsTransparency = true;
                 Loaded += (s, e) =>
                 {
                     WindowChrome.SetWindowChrome(this, new WindowChrome

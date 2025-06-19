@@ -1,0 +1,46 @@
+﻿<ui:FluentWindow x:Class="EverythingToolbar.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:local="clr-namespace:EverythingToolbar"
+        xmlns:behaviors="clr-namespace:EverythingToolbar.Behaviors"
+        mc:Ignorable="d"
+        WindowStyle="ToolWindow"
+        WindowBackdropType="Acrylic"
+        ExtendsContentIntoTitleBar="True"
+        WindowCornerPreference="Round"
+        WindowStartupLocation="CenterScreen"
+        Title="SettingsWindow" Height="450" Width="800">
+    
+    <i:Interaction.Behaviors>
+        <behaviors:WpfUiBehavior />
+        <behaviors:ThemeAwareness />
+    </i:Interaction.Behaviors>
+
+    <ui:NavigationView
+        MinHeight="300"
+        Margin="10"
+        IsBackButtonVisible="Collapsed"
+        IsPaneToggleVisible="True"
+        PaneTitle="Settings">
+        <ui:NavigationView.MenuItems>
+            <ui:NavigationViewItem
+                Content="Home"
+                Icon="{ui:SymbolIcon Home24}"
+                TargetPageType="{x:Type local:About}" />
+            <ui:NavigationViewItem
+                Content="Rules"
+                Icon="{ui:SymbolIcon Library24}"
+                TargetPageType="{x:Type local:ShortcutSelector}" />
+        </ui:NavigationView.MenuItems>
+        <ui:NavigationView.FooterMenuItems>
+            <ui:NavigationViewItem
+                Content="Report problem"
+                Icon="{ui:SymbolIcon Settings24}" />
+        </ui:NavigationView.FooterMenuItems>
+    </ui:NavigationView>
+
+</ui:FluentWindow>

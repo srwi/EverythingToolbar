@@ -58,6 +58,9 @@ namespace EverythingToolbar.Behaviors
 
         private void OnMicaWindowLoaded(object sender, RoutedEventArgs e)
         {
+            AssociatedObject.WindowStyle = WindowStyle.None;
+            AssociatedObject.Background = Brushes.Transparent;
+            
             var presentationSource = PresentationSource.FromVisual((Visual)sender);
             if (presentationSource != null) presentationSource.ContentRendered += OnMicaWindowContentRendered;
 

@@ -159,6 +159,7 @@
         <PackageReference Include="NLog" Version="5.1.1" />
         <PackageReference Include="System.Management" Version="9.0.4" />
         <PackageReference Include="WindowsAPICodePackShell" Version="8.0.8" />
+        <PackageReference Include="WPF-UI" Version="4.0.3" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\EverythingSDK\EverythingSDK.vcxproj" />

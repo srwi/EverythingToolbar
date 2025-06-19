@@ -170,8 +170,7 @@ namespace EverythingToolbar
 
         private void OnOkClicked(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
-            Close();
+            // TODO: Save shortcut change
         }
 
         private void OnClosed(object sender, EventArgs e)
