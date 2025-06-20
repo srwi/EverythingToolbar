@@ -3,213 +3,211 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
-      xmlns:behaviors="clr-namespace:EverythingToolbar.Behaviors">
+      xmlns:behaviors="clr-namespace:EverythingToolbar.Behaviors"
+      ScrollViewer.CanContentScroll="False">
     
     <b:Interaction.Behaviors>
         <behaviors:WpfUiBehavior />
     </b:Interaction.Behaviors>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-
-        <Border
-            Grid.Row="0"
-            Height="200"
-            CornerRadius="8">
-            <Border.Background>
-                <ImageBrush
-                    ImageSource="pack://application:,,,/EverythingToolbar.Launcher;component/Images/AboutBannerBackground.png"
-                    RenderOptions.BitmapScalingMode="HighQuality"
-                    Stretch="UniformToFill" />
-            </Border.Background>
-            <Border CornerRadius="8">
-                <Border.Background>
-                    <RadialGradientBrush>
-                        <GradientStop Offset="0" Color="#1F000000" />
-                        <GradientStop Offset="1" Color="#4F000000" />
-                    </RadialGradientBrush>
-                </Border.Background>
-                <Grid>
-                    <StackPanel
-                        Margin="48,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Background="Transparent">
-                        <ui:TextBlock
-                            FontTypography="Title"
-                            Foreground="#FFFFFF"
-                            Text="EverythingToolbar" />
-                        <ui:TextBlock
-                            FontTypography="Subtitle"
-                            Foreground="#B7FFFFFF"
-                            Text="Everything integration for the Windows taskbar." />
-                        <ui:TextBlock
-                            FontTypography="BodyStrong"
-                            Foreground="#B7FFFFFF"
-                            Text="Version X.X.X.X" />
-                    </StackPanel>
-                </Grid>
-            </Border>
-        </Border>
-
-        <Grid Grid.Row="1" Margin="0,24,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+    <ScrollViewer>
+                  
+        <Grid Margin="50">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <ui:CardAction
+            <Border
                 Grid.Row="0"
-                Grid.Column="0"
-                Margin="0,0,4,0"
-                Padding="0"
-                VerticalAlignment="Stretch"
-                IsChevronVisible="False">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                Height="200"
+                CornerRadius="8">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/EverythingToolbar;component/Images/AboutBannerBackground.png"
+                        RenderOptions.BitmapScalingMode="HighQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <Border CornerRadius="8">
+                    <Border.Background>
+                        <RadialGradientBrush>
+                            <GradientStop Offset="0" Color="#1F000000" />
+                            <GradientStop Offset="1" Color="#4F000000" />
+                        </RadialGradientBrush>
+                    </Border.Background>
+                    <Grid>
+                        <StackPanel
+                            Margin="48,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Background="Transparent">
+                            <ui:TextBlock
+                                FontTypography="Title"
+                                Foreground="#FFFFFF"
+                                Text="EverythingToolbar" />
+                            <ui:TextBlock
+                                FontTypography="Subtitle"
+                                Foreground="#B7FFFFFF"
+                                Text="Everything integration for the Windows taskbar." />
+                            <ui:TextBlock
+                                FontTypography="BodyStrong"
+                                Foreground="#B7FFFFFF"
+                                Text="Version X.X.X.X" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Border>
 
-                    <Image
-                        Width="60"
-                        Margin="24,0,0,0"
-                        Source="pack://application:,,,/EverythingToolbar.Launcher;component/Images/WinUIGallery/TextBox.png" />
+            <Grid Grid.Row="1" Margin="0,24,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-                    <StackPanel
-                        Grid.Column="1"
-                        Margin="24"
-                        VerticalAlignment="Center">
-                        <ui:TextBlock
-                            Margin="0"
-                            FontTypography="BodyStrong"
-                            Text="Basic input"
-                            TextWrapping="WrapWithOverflow" />
-                        <ui:TextBlock
-                            Appearance="Secondary"
-                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                            Text="Buttons, CheckBoxes, Sliders..."
-                            TextWrapping="WrapWithOverflow" />
-                    </StackPanel>
-                </Grid>
-            </ui:CardAction>
+                <ui:CardAction
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="0,0,4,0"
+                    Padding="0"
+                    VerticalAlignment="Stretch"
+                    IsChevronVisible="False">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-            <ui:CardAction
-                Grid.Row="0"
-                Grid.Column="1"
-                Margin="4,0,4,0"
-                Padding="0"
-                VerticalAlignment="Stretch"
-                IsChevronVisible="False">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                        <Image
+                            Width="60"
+                            Margin="24,0,0,0"
+                            Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/ScratchPad.png" />
 
-                    <Image
-                        Width="60"
-                        Margin="24,0,0,0"
-                        Source="pack://application:,,,/EverythingToolbar.Launcher;component/Images/WinUIGallery/TextBox.png" />
+                        <StackPanel
+                            Grid.Column="1"
+                            Margin="24"
+                            VerticalAlignment="Center">
+                            <ui:TextBlock
+                                Margin="0"
+                                FontTypography="BodyStrong"
+                                Text="General"
+                                TextWrapping="WrapWithOverflow" />
+                            <ui:TextBlock
+                                Appearance="Secondary"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Text="Search, UI, Behavior"
+                                TextWrapping="WrapWithOverflow" />
+                        </StackPanel>
+                    </Grid>
+                </ui:CardAction>
 
-                    <StackPanel
-                        Grid.Column="1"
-                        Margin="24"
-                        VerticalAlignment="Center">
-                        <ui:TextBlock
-                            Margin="0"
-                            FontTypography="BodyStrong"
-                            Text="Dialogs &amp; Flyouts"
-                            TextWrapping="WrapWithOverflow" />
-                        <ui:TextBlock
-                            Appearance="Secondary"
-                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                            Text="Contextual notifications."
-                            TextWrapping="WrapWithOverflow" />
-                    </StackPanel>
-                </Grid>
-            </ui:CardAction>
+                <ui:CardAction
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="4,0,4,0"
+                    Padding="0"
+                    VerticalAlignment="Stretch"
+                    IsChevronVisible="False">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-            <ui:CardAction
-                Grid.Row="0"
-                Grid.Column="2"
-                Margin="4,0,4,0"
-                Padding="0"
-                VerticalAlignment="Stretch"
-                IsChevronVisible="False">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                        <Image
+                            Width="60"
+                            Margin="24,0,0,0"
+                            Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/TabView.png" />
 
-                    <Image
-                        Width="60"
-                        Margin="24,0,0,0"
-                        Source="pack://application:,,,/EverythingToolbar.Launcher;component/Images/WinUIGallery/TextBox.png" />
+                        <StackPanel
+                            Grid.Column="1"
+                            Margin="24"
+                            VerticalAlignment="Center">
+                            <ui:TextBlock
+                                Margin="0"
+                                FontTypography="BodyStrong"
+                                Text="Rules"
+                                TextWrapping="WrapWithOverflow" />
+                            <ui:TextBlock
+                                Appearance="Secondary"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Text="Open with custom applications"
+                                TextWrapping="WrapWithOverflow" />
+                        </StackPanel>
+                    </Grid>
+                </ui:CardAction>
 
-                    <StackPanel
-                        Grid.Column="1"
-                        Margin="24"
-                        VerticalAlignment="Center">
-                        <ui:TextBlock
-                            Margin="0"
-                            FontTypography="BodyStrong"
-                            Text="Navigation"
-                            TextWrapping="WrapWithOverflow" />
-                        <ui:TextBlock
-                            Appearance="Secondary"
-                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                            Text="Managing the displayed pages."
-                            TextWrapping="WrapWithOverflow" />
-                    </StackPanel>
-                </Grid>
-            </ui:CardAction>
+                <ui:CardAction
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Margin="4,0,4,0"
+                    Padding="0"
+                    VerticalAlignment="Stretch"
+                    IsChevronVisible="False">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image
+                            Width="60"
+                            Margin="24,0,0,0"
+                            Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/TextBox.png" />
+
+                        <StackPanel
+                            Grid.Column="1"
+                            Margin="24"
+                            VerticalAlignment="Center">
+                            <ui:TextBlock
+                                Margin="0"
+                                FontTypography="BodyStrong"
+                                Text="Shortcuts"
+                                TextWrapping="WrapWithOverflow" />
+                            <ui:TextBlock
+                                Appearance="Secondary"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Text="Quick access keys"
+                                TextWrapping="WrapWithOverflow" />
+                        </StackPanel>
+                    </Grid>
+                </ui:CardAction>
+            </Grid>
+
+            <StackPanel Grid.Row="2" Margin="0,24,0,0">
+                <TextBlock
+                    FontSize="18"
+                    FontWeight="DemiBold"
+                    Text="Links" />
+                <ui:HyperlinkButton
+                    Margin="8,8,0,0"
+                    Padding="4"
+                    Content="Frequently Asked Questions"
+                    NavigateUri="https://github.com/srwi/EverythingToolbar/wiki/FAQ"
+                    ToolTip="https://github.com/srwi/EverythingToolbar/wiki/FAQ" />
+                <ui:HyperlinkButton
+                    Margin="8,0,0,0"
+                    Padding="4"
+                    Content="Source Code (GitHub)"
+                    NavigateUri="https://github.com/srwi/EverythingToolbar"
+                    ToolTip="https://github.com/srwi/EverythingToolbar" />
+                <ui:HyperlinkButton
+                    Margin="8,0,0,0"
+                    Padding="4"
+                    Content="Star on GitHub"
+                    NavigateUri="https://github.com/srwi/EverythingToolbar"
+                    ToolTip="https://github.com/srwi/EverythingToolbar" />
+                <ui:HyperlinkButton
+                    Margin="8,0,0,0"
+                    Padding="4"
+                    Content="Make a donation"
+                    NavigateUri="https://paypal.me/rumswinkel"
+                    ToolTip="https://paypal.me/rumswinkel" />
+            </StackPanel>
         </Grid>
-
-        <StackPanel Grid.Row="2" Margin="0,24,0,0">
-            <TextBlock
-                FontSize="18"
-                FontWeight="DemiBold"
-                Text="Learn more" />
-            <ui:HyperlinkButton
-                Margin="8,8,0,0"
-                Padding="4"
-                Content="Documentation"
-                NavigateUri="https://wpfui.lepo.co/"
-                ToolTip="https://wpfui.lepo.co/" />
-            <ui:HyperlinkButton
-                Margin="8,0,0,0"
-                Padding="4"
-                Content="Microsoft Store"
-                NavigateUri="https://apps.microsoft.com/store/detail/wpf-ui/9N9LKV8R9VGM"
-                ToolTip="https://apps.microsoft.com/store/detail/wpf-ui/9N9LKV8R9VGM" />
-            <ui:HyperlinkButton
-                Margin="8,0,0,0"
-                Padding="4"
-                Content="GitHub"
-                NavigateUri="https://github.com/lepoco/wpfui"
-                ToolTip="https://github.com/lepoco/wpfui" />
-            <ui:HyperlinkButton
-                Margin="8,0,0,0"
-                Padding="4"
-                Content="NuGet"
-                NavigateUri="https://www.nuget.org/packages/wpf-ui/"
-                ToolTip="https://www.nuget.org/packages/wpf-ui/" />
-            <ui:HyperlinkButton
-                Margin="8,0,0,0"
-                Padding="4"
-                Content="Visual Studio Marketplace"
-                NavigateUri="https://marketplace.visualstudio.com/items?itemName=lepo.wpf-ui"
-                ToolTip="https://marketplace.visualstudio.com/items?itemName=lepo.wpf-ui" />
-        </StackPanel>
-    </Grid>
+    </ScrollViewer>
 </Page>

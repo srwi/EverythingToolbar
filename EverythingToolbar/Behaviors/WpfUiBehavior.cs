@@ -2,6 +2,7 @@ using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
 using System.Collections.Generic;
 using System.Windows;
+using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Markup;
 
@@ -41,19 +42,26 @@ namespace EverythingToolbar.Behaviors
 
         private void ApplyTheme(Theme theme)
         {
-            foreach (var dict in _addedDictionaries)
-            {
-                AssociatedObject.Resources.MergedDictionaries.Remove(dict);
-            }
+            // TODO: UiApplication benutzen sorgt dafür dass deskband nicht crasht, aber lädt themes ncht korrekt
+            // hier lesen vielleicht? https://github.com/lepoco/wpfui/issues/837#issuecomment-1828308304
             
-            _addedDictionaries.Clear();
-            _addedDictionaries.Add(new ThemesDictionary { Theme = theme == Theme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark });
-            _addedDictionaries.Add(new ControlsDictionary());
+            // foreach (var dict in _addedDictionaries)
+            // {
+            //     UiApplication.Current.Resources.MergedDictionaries.Remove(dict);
+            // }
+            //
+            // _addedDictionaries.Clear();
+            // _addedDictionaries.Add(new ThemesDictionary { Theme = theme == Theme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark });
+            // _addedDictionaries.Add(new ControlsDictionary());
+            //
+            // foreach (var dict in _addedDictionaries)
+            // {
+            //     UiApplication.Current.Resources.MergedDictionaries.Add(dict);
+            // }
             
-            foreach (var dict in _addedDictionaries)
-            {
-                AssociatedObject.Resources.MergedDictionaries.Add(dict);
-            }
+            ApplicationThemeManager.Apply(theme == Theme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark);
+            ApplicationThemeManager.Apply(AssociatedObject);
+            
         }
 
         private void AutoApplyTheme()

@@ -8,39 +8,57 @@
         xmlns:local="clr-namespace:EverythingToolbar"
         xmlns:behaviors="clr-namespace:EverythingToolbar.Behaviors"
         mc:Ignorable="d"
-        WindowStyle="ToolWindow"
         WindowBackdropType="Acrylic"
         ExtendsContentIntoTitleBar="True"
         WindowCornerPreference="Round"
         WindowStartupLocation="CenterScreen"
-        Title="SettingsWindow" Height="450" Width="800">
+        Height="600"
+        Width="1100"
+        Title="Settings">
     
     <i:Interaction.Behaviors>
         <behaviors:WpfUiBehavior />
         <behaviors:ThemeAwareness />
     </i:Interaction.Behaviors>
+    
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <ui:TitleBar
+            Grid.Row="0"
+            Title="EverythingToolbar"
+            CloseWindowByDoubleClickOnIcon="True">
+            <ui:TitleBar.Icon>
+                <ui:ImageIcon Source="pack://application:,,,/EverythingToolbar;component/Images/AppIcon.ico" />
+            </ui:TitleBar.Icon>
+        </ui:TitleBar>
 
-    <ui:NavigationView
-        MinHeight="300"
-        Margin="10"
-        IsBackButtonVisible="Collapsed"
-        IsPaneToggleVisible="True"
-        PaneTitle="Settings">
-        <ui:NavigationView.MenuItems>
-            <ui:NavigationViewItem
-                Content="Home"
-                Icon="{ui:SymbolIcon Home24}"
-                TargetPageType="{x:Type local:About}" />
-            <ui:NavigationViewItem
-                Content="Rules"
-                Icon="{ui:SymbolIcon Library24}"
-                TargetPageType="{x:Type local:ShortcutSelector}" />
-        </ui:NavigationView.MenuItems>
-        <ui:NavigationView.FooterMenuItems>
-            <ui:NavigationViewItem
-                Content="Report problem"
-                Icon="{ui:SymbolIcon Settings24}" />
-        </ui:NavigationView.FooterMenuItems>
-    </ui:NavigationView>
-
+        <ui:NavigationView
+            Grid.Row="1"
+            MinHeight="300"
+            IsBackButtonVisible="Collapsed"
+            IsPaneToggleVisible="True"
+            PaneTitle="Settings">
+            <ui:NavigationView.MenuItems>
+                <ui:NavigationViewItem
+                    Content="Home"
+                    Icon="{ui:SymbolIcon Home24}"
+                    TargetPageType="{x:Type local:About}" />
+                <ui:NavigationViewItem
+                    Content="Rules"
+                    Icon="{ui:SymbolIcon Library24}"
+                    TargetPageType="{x:Type local:ShortcutSelector}" />
+            </ui:NavigationView.MenuItems>
+            <ui:NavigationView.FooterMenuItems>
+                <ui:NavigationViewItem
+                    Content="Report problem"
+                    Icon="{ui:SymbolIcon Settings24}" />
+            </ui:NavigationView.FooterMenuItems>
+        </ui:NavigationView>
+        
+    </Grid>
 </ui:FluentWindow>

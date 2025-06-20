@@ -44,7 +44,7 @@
     <PackageReference Include="NLog" Version="5.1.1" />
   </ItemGroup>
   <PropertyGroup>
-    <PreBuildEvent>taskkill /f /im explorer.exe 2&gt;nul &amp;set errorlevel=0
+    <PreBuildEvent>$(SolutionDir)tools\stop_explorer.cmd
 xcopy $(SolutionDir)EverythingSDK\x64\$(Configuration)\Everything64.dll $(TargetDir) /r /y
 Exit 0</PreBuildEvent>
   </PropertyGroup>
