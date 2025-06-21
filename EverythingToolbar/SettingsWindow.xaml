@@ -12,6 +12,8 @@
         ExtendsContentIntoTitleBar="True"
         WindowCornerPreference="Round"
         WindowStartupLocation="CenterScreen"
+        ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+        ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
         Height="600"
         Width="1100"
         Title="Settings">
@@ -50,6 +52,10 @@
                     TargetPageType="{x:Type local:About}" />
                 <ui:NavigationViewItem
                     Content="Rules"
+                    Icon="{ui:SymbolIcon Library24}"
+                    TargetPageType="{x:Type local:Rules}" />
+                <ui:NavigationViewItem
+                    Content="Shortcuts"
                     Icon="{ui:SymbolIcon Library24}"
                     TargetPageType="{x:Type local:ShortcutSelector}" />
             </ui:NavigationView.MenuItems>

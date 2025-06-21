@@ -1,7 +1,5 @@
-﻿using EverythingToolbar.Helpers;
-using EverythingToolbar.Search;
+﻿using EverythingToolbar.Search;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,9 +33,9 @@ namespace EverythingToolbar.Controls
 
         private void OpenRulesWindow(object sender, RoutedEventArgs e)
         {
-            SearchWindow.Instance.Hide();
-            Window rules = new Rules();
-            rules.Show();
+            // SearchWindow.Instance.Hide();
+            // Window rules = new Rules();
+            // rules.Show();
         }
 
         private void OpenInstanceNameDialog(object sender, RoutedEventArgs e)

@@ -22,22 +22,22 @@ namespace EverythingToolbar
             InitializeComponent();
 
             _rules = LoadRules();
-            dataGrid.ItemsSource = _rules;
-            autoApplyRulesCheckbox.IsChecked = ToolbarSettings.User.IsAutoApplyRules;
-            UpdateUI();
+            DataGrid.ItemsSource = _rules;
+            AutoApplyRulesCheckbox.IsChecked = ToolbarSettings.User.IsAutoApplyRules;
+            UpdateUi();
         }
 
         private void Cancel(object sender, RoutedEventArgs e)
         {
-            Close();
+            // Close();
         }
 
         private void Save(object sender, RoutedEventArgs e)
         {
-            if (SaveRules(_rules, (bool)autoApplyRulesCheckbox.IsChecked))
+            if (SaveRules(_rules, (bool)AutoApplyRulesCheckbox.IsChecked))
             {
-                ToolbarSettings.User.IsAutoApplyRules = (bool)autoApplyRulesCheckbox.IsChecked;
-                Close();
+                ToolbarSettings.User.IsAutoApplyRules = (bool)AutoApplyRulesCheckbox.IsChecked;
+                // Close();
             }
         }
 
@@ -88,21 +88,21 @@ namespace EverythingToolbar
         {
             _rules.Insert(_rules.Count, new Rule { Name = "", Type = FileType.Any, Expression = "", Command = "" });
             RefreshList();
-            dataGrid.SelectedIndex = _rules.Count - 1;
+            DataGrid.SelectedIndex = _rules.Count - 1;
         }
 
         private void DeleteSelected(object sender, RoutedEventArgs e)
         {
-            var selectedIndex = dataGrid.SelectedIndex;
+            var selectedIndex = DataGrid.SelectedIndex;
             _rules.RemoveAt(selectedIndex);
             RefreshList();
             if (_rules.Count > selectedIndex)
             {
-                dataGrid.SelectedIndex = selectedIndex;
+                DataGrid.SelectedIndex = selectedIndex;
             }
             else if (_rules.Count > 0)
             {
-                dataGrid.SelectedIndex = _rules.Count - 1;
+                DataGrid.SelectedIndex = _rules.Count - 1;
             }
         }
 
@@ -118,46 +118,50 @@ namespace EverythingToolbar
 
         private void MoveItem(int delta)
         {
-            var selectedIndex = dataGrid.SelectedIndex;
-            var item = dataGrid.SelectedItem as Rule;
+            var selectedIndex = DataGrid.SelectedIndex;
+            var item = DataGrid.SelectedItem as Rule;
             _rules.RemoveAt(selectedIndex);
             _rules.Insert(selectedIndex + delta, item);
             RefreshList();
-            dataGrid.SelectedIndex = selectedIndex + delta;
+            DataGrid.SelectedIndex = selectedIndex + delta;
         }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnGridSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UpdateUI();
+            UpdateUi();
         }
 
         private void RefreshList()
         {
-            dataGrid.ItemsSource = null;
-            dataGrid.ItemsSource = _rules;
+            DataGrid.ItemsSource = null;
+            DataGrid.ItemsSource = _rules;
         }
 
-        private void UpdateUI()
+        private void UpdateUi()
         {
-            DeleteButton.IsEnabled = dataGrid.SelectedIndex >= 0;
-            MoveDownButton.IsEnabled = dataGrid.SelectedIndex + 1 < _rules.Count && dataGrid.SelectedIndex >= 0;
-            MoveUpButton.IsEnabled = dataGrid.SelectedIndex > 0;
+            DeleteButton.IsEnabled = DataGrid.SelectedIndex >= 0;
+            MoveDownButton.IsEnabled = DataGrid.SelectedIndex + 1 < _rules.Count && DataGrid.SelectedIndex >= 0;
+            MoveUpButton.IsEnabled = DataGrid.SelectedIndex > 0;
 
-            if ((bool)autoApplyRulesCheckbox.IsChecked)
+            var typeColumn = DataGrid.Columns.FirstOrDefault(c => c.Header.ToString() == Properties.Resources.RulesType);
+            if (typeColumn is null)
+                return;
+
+            if ((bool)AutoApplyRulesCheckbox.IsChecked)
             {
-                TypeColumn.Visibility = Visibility.Visible;
+                typeColumn.Visibility = Visibility.Visible;
                 ExpressionColumn.Visibility = Visibility.Visible;
             }
             else
             {
-                TypeColumn.Visibility = Visibility.Collapsed;
+                typeColumn.Visibility = Visibility.Collapsed;
                 ExpressionColumn.Visibility = Visibility.Collapsed;
             }
         }
 
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
-            UpdateUI();
+            UpdateUi();
         }
 
         public static bool HandleRule(SearchResult searchResult, string command = "")

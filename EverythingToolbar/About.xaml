@@ -179,7 +179,7 @@
             </Grid>
 
             <StackPanel Grid.Row="2" Margin="0,24,0,0">
-                <TextBlock
+                <ui:TextBlock
                     FontSize="18"
                     FontWeight="DemiBold"
                     Text="Links" />
