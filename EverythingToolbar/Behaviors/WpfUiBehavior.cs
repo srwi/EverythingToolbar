@@ -2,9 +2,7 @@ using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
 using System.Collections.Generic;
 using System.Windows;
-using Wpf.Ui;
 using Wpf.Ui.Appearance;
-using Wpf.Ui.Markup;
 
 namespace EverythingToolbar.Behaviors
 {

@@ -4,6 +4,7 @@
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:behaviors="clr-namespace:EverythingToolbar.Behaviors"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       ScrollViewer.CanContentScroll="False">
     
     <b:Interaction.Behaviors>
@@ -11,8 +12,7 @@
     </b:Interaction.Behaviors>
 
     <ScrollViewer>
-                  
-        <Grid Margin="50">
+        <Grid Margin="40">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />

@@ -7,6 +7,7 @@
         xmlns:data="clr-namespace:EverythingToolbar.Data"
         xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
         Title="{x:Static properties:Resources.RulesWindowTitle}"
         ScrollViewer.CanContentScroll="False">
     
@@ -63,129 +64,134 @@
     </Page.Resources>
 
     <ScrollViewer>
+        <StackPanel Margin="40">
+            <ui:TextBlock FontTypography="Title"
+                          Text="{x:Static properties:Resources.RulesWindowTitle}"
+                          Margin="0, 0, 0, 20"/>
+            <Border
+                Padding="16"
+                Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1, 1, 1, 0"
+                CornerRadius="8, 8, 0, 0">
+                <CheckBox Name="AutoApplyRulesCheckbox"
+                          Click="CheckBox_Click"
+                          Content="{x:Static properties:Resources.RulesAutoApply}"/>
+            </Border>
+            <Border
+                Padding="16"
+                Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="0, 0, 8, 8">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-        <Border
-            Margin="50"
-            Padding="16"
-            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-            BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="8">
+                    <ui:DataGrid x:Name="DataGrid"
+                                 Grid.Column="0"
+                                 Margin="0, 0, 0, 10"
+                                 AutoGenerateColumns="False"
+                                 CanUserSortColumns="False"
+                                 CanUserAddRows="False"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Stretch"
+                                 HorizontalScrollBarVisibility="Disabled"
+                                 RowBackground="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                 AlternatingRowBackground="Transparent"
+                                 SelectionChanged="OnGridSelectionChanged">
+                        <ui:DataGrid.Columns>
+                            <DataGridTextColumn Width="1.5*"
+                                                Header="{x:Static properties:Resources.RulesName}"
+                                                Binding="{Binding Name}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Name}"
+                                                         Value="">
+                                                <Setter Property="Background"
+                                                        Value="{DynamicResource ErrorBackgroundBrush}" />
+                                                <Setter Property="Height"
+                                                        Value="37" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTemplateColumn Header="{x:Static properties:Resources.RulesType}" Width="1*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox
+                                            ItemsSource="{Binding Source={StaticResource FileTypeEnum}, Mode=OneWay}"
+                                            SelectedItem="{Binding Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            IsEditable="False"
+                                            Background="Transparent"
+                                            BorderThickness="0"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn x:Name="ExpressionColumn"
+                                                Width="2.5*"
+                                                Header="{x:Static properties:Resources.RulesRegularExpression}"
+                                                Binding="{Binding Expression}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ExpressionValid}"
+                                                         Value="False">
+                                                <Setter Property="Background"
+                                                        Value="{DynamicResource ErrorBackgroundBrush}" />
+                                                <Setter Property="Height"
+                                                        Value="37" />
+                                                <Setter Property="Padding"
+                                                        Value="0, 8, 0, 0" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Width="2*"
+                                                Header="{x:Static properties:Resources.RulesCommand}"
+                                                Binding="{Binding Command}" />
+                        </ui:DataGrid.Columns>
+                    </ui:DataGrid>
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="20, 0, 0, 0">
+                        <ui:Button Icon="{ui:SymbolIcon Add12}"
+                                   Margin="0, 0, 0, 10"
+                                   Height="37"
+                                   Click="AddItem" />
+                        <ui:Button Name="DeleteButton"
+                                Icon="{ui:SymbolIcon Subtract12}"
+                                Margin="0, 0, 0, 10"
+                                Height="37"
+                                Click="DeleteSelected" />
+                        <ui:Button Name="MoveUpButton"
+                                Icon="{ui:SymbolIcon ArrowUp12}"
+                                Margin="0, 0, 0, 10"
+                                Height="37"
+                                Click="MoveUpSelected" />
+                        <ui:Button Name="MoveDownButton"
+                                Icon="{ui:SymbolIcon ArrowDown12}"
+                                Margin="0, 0, 0, 10"
+                                Height="37"
+                                Click="MoveDownSelected" />
+                    </StackPanel>
 
-                <StackPanel Grid.ColumnSpan="2" Margin="10">
-                    <TextBlock Margin="0, 0, 0, 10"
-                               TextWrapping="Wrap"
+                    <ui:InfoBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" IsOpen="True" IsClosable="False"
                                HorizontalAlignment="Stretch"
                                VerticalAlignment="Stretch"
-                               Text="{x:Static properties:Resources.RulesWindowText}" />
-
-                    <CheckBox Name="AutoApplyRulesCheckbox"
-                              Click="CheckBox_Click"
-                              Content="{x:Static properties:Resources.RulesAutoApply}"/>
-                </StackPanel>
-
-                <ui:DataGrid x:Name="DataGrid"
-                             Grid.Column="0"
-                             Grid.Row="1"
-                             AutoGenerateColumns="False"
-                             CanUserSortColumns="False"
-                             CanUserAddRows="False"
-                             HorizontalAlignment="Stretch"
-                             VerticalAlignment="Stretch"
-                             HorizontalScrollBarVisibility="Disabled"
-                             RowBackground="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                             SelectionChanged="OnGridSelectionChanged">
-                    <ui:DataGrid.Columns>
-                        <DataGridTextColumn Width="1.5*"
-                                            Header="{x:Static properties:Resources.RulesName}"
-                                            Binding="{Binding Name}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Name}"
-                                                     Value="">
-                                            <Setter Property="Background"
-                                                    Value="{DynamicResource ErrorBackgroundBrush}" />
-                                            <Setter Property="Height"
-                                                    Value="37" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTemplateColumn Header="{x:Static properties:Resources.RulesType}" Width="1*">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ComboBox
-                                        ItemsSource="{Binding Source={StaticResource FileTypeEnum}, Mode=OneWay}"
-                                        SelectedItem="{Binding Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        IsEditable="False"
-                                        Background="Transparent"
-                                        BorderThickness="0"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn x:Name="ExpressionColumn"
-                                            Width="2.5*"
-                                            Header="{x:Static properties:Resources.RulesRegularExpression}"
-                                            Binding="{Binding Expression}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ExpressionValid}"
-                                                     Value="False">
-                                            <Setter Property="Background"
-                                                    Value="{DynamicResource ErrorBackgroundBrush}" />
-                                            <Setter Property="Height"
-                                                    Value="37" />
-                                            <Setter Property="Padding"
-                                                    Value="0, 8, 0, 0" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Width="2*"
-                                            Header="{x:Static properties:Resources.RulesCommand}"
-                                            Binding="{Binding Command}" />
-                    </ui:DataGrid.Columns>
-                </ui:DataGrid>
-
-                <StackPanel Grid.Row="1"
-                            Grid.Column="1"
-                            Margin="20, 0, 0, 0">
-                    <ui:Button Icon="{ui:SymbolIcon Add12}"
-                               Margin="0, 0, 0, 10"
-                               Height="37"
-                               Click="AddItem" />
-                    <ui:Button Name="DeleteButton"
-                            Icon="{ui:SymbolIcon Subtract12}"
-                            Margin="0, 0, 0, 10"
-                            Height="37"
-                            Click="DeleteSelected" />
-                    <ui:Button Name="MoveUpButton"
-                            Icon="{ui:SymbolIcon ArrowUp12}"
-                            Margin="0, 0, 0, 10"
-                            Height="37"
-                            Click="MoveUpSelected" />
-                    <ui:Button Name="MoveDownButton"
-                            Icon="{ui:SymbolIcon ArrowDown12}"
-                            Margin="0, 0, 0, 10"
-                            Height="37"
-                            Click="MoveDownSelected" />
-                </StackPanel>
-            </Grid>
-        </Border>
-
+                               Message="{x:Static properties:Resources.RulesWindowText}" />
+                </Grid>
+            </Border>
+        </StackPanel>
     </ScrollViewer>
 </Page>

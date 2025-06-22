@@ -8,13 +8,13 @@
         xmlns:local="clr-namespace:EverythingToolbar"
         xmlns:behaviors="clr-namespace:EverythingToolbar.Behaviors"
         mc:Ignorable="d"
-        WindowBackdropType="Acrylic"
+        WindowBackdropType="Mica"
         ExtendsContentIntoTitleBar="True"
         WindowCornerPreference="Round"
         WindowStartupLocation="CenterScreen"
-        ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
-        ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-        Height="600"
+        Background="{DynamicResource ApplicationBackgroundBrush}"
+        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+        Height="650"
         Width="1100"
         Title="Settings">
     
@@ -41,6 +41,7 @@
 
         <ui:NavigationView
             Grid.Row="1"
+
             MinHeight="300"
             IsBackButtonVisible="Collapsed"
             IsPaneToggleVisible="True"
@@ -51,18 +52,22 @@
                     Icon="{ui:SymbolIcon Home24}"
                     TargetPageType="{x:Type local:About}" />
                 <ui:NavigationViewItem
-                    Content="Rules"
-                    Icon="{ui:SymbolIcon Library24}"
+                    Content="General"
+                    Icon="{ui:SymbolIcon SearchSettings20}"
+                    TargetPageType="{x:Type local:General}" />
+                <ui:NavigationViewItem
+                    Content="Custom Actions"
+                    Icon="{ui:SymbolIcon Open24}"
                     TargetPageType="{x:Type local:Rules}" />
                 <ui:NavigationViewItem
                     Content="Shortcuts"
-                    Icon="{ui:SymbolIcon Library24}"
+                    Icon="{ui:SymbolIcon Keyboard24}"
                     TargetPageType="{x:Type local:ShortcutSelector}" />
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.FooterMenuItems>
                 <ui:NavigationViewItem
-                    Content="Report problem"
-                    Icon="{ui:SymbolIcon Settings24}" />
+                    Content="Report a problem"
+                    Icon="{ui:SymbolIcon Bug24}" />
             </ui:NavigationView.FooterMenuItems>
         </ui:NavigationView>
         
