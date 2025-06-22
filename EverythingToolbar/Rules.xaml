@@ -67,7 +67,7 @@
         <StackPanel Margin="40">
             <ui:TextBlock FontTypography="Title"
                           Text="{x:Static properties:Resources.RulesWindowTitle}"
-                          Margin="0, 0, 0, 20"/>
+                          Margin="0, 0, 0, 25"/>
             <Border
                 Padding="16"
                 Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
