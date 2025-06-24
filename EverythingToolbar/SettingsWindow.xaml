@@ -14,7 +14,7 @@
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource ApplicationBackgroundBrush}"
         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-        Height="650"
+        Height="620"
         Width="1100"
         Title="Settings">
     

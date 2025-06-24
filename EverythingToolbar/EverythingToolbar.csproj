@@ -186,6 +186,24 @@
       <Resource Include="Images\WinUIGallery\TextBox.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
+      <Resource Include="Images\WinUIGallery\FilePicker.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Images\WinUIGallery\InfoBadge.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Images\WinUIGallery\ListView.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Images\WinUIGallery\MenuBar.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Images\WinUIGallery\Shape.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Images\WinUIGallery\StandardUICommand.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
     <Target Name="PostBuildMacros">
         <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">

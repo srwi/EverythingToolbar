@@ -165,7 +165,7 @@ namespace EverythingToolbar.Launcher
                         );
                         trayIcon.ContextMenuStrip.Items.Add(quitItem);
                         trayIcon.Visible = ToolbarSettings.User.IsTrayIconEnabled;
-                        app.Run(new SettingsWindow());
+                        app.Run(new LauncherWindow(trayIcon));
                     }
                 }
                 else

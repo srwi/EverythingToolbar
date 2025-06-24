@@ -9,7 +9,9 @@
         xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
         Title="{x:Static properties:Resources.RulesWindowTitle}"
-        ScrollViewer.CanContentScroll="False">
+        ScrollViewer.CanContentScroll="False"
+        Loaded="OnLoaded"
+        Unloaded="OnUnloaded">
     
     <i:Interaction.Behaviors>
         <b:WpfUiBehavior />

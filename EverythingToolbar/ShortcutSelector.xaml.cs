@@ -1,6 +1,7 @@
 ﻿using EverythingToolbar.Helpers;
 using NHotkey.Wpf;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
@@ -27,13 +28,6 @@ namespace EverythingToolbar
         public ShortcutSelector()
         {
             InitializeComponent();
-
-            StartMenuIntegration.Instance.Disable();
-            HotkeyManager.Current.IsEnabled = false;
-
-            Modifiers = (ModifierKeys)ToolbarSettings.User.ShortcutModifiers;
-            Key = (Key)ToolbarSettings.User.ShortcutKey;
-            UpdateTextBox();
         }
 
         private void OnKeyPressedReleased(object sender, WinKeyEventArgs e)
@@ -168,19 +162,41 @@ namespace EverythingToolbar
             ShortcutTextBox.Text = shortcutText.ToString();
         }
 
-        private void OnOkClicked(object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            // TODO: Save shortcut change
+            StartMenuIntegration.Instance.Disable();
+            HotkeyManager.Current.IsEnabled = false;
+
+            Modifiers = (ModifierKeys)ToolbarSettings.User.ShortcutModifiers;
+            Key = (Key)ToolbarSettings.User.ShortcutKey;
+            UpdateTextBox();
         }
 
-        private void OnClosed(object sender, EventArgs e)
+        private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             HotkeyManager.Current.IsEnabled = true;
             ReleaseKeyboard();
             if (ToolbarSettings.User.IsReplaceStartMenuSearch)
-            {
                 StartMenuIntegration.Instance.Enable();
+
+            ApplyShortcut();
+        }
+
+        private void ApplyShortcut()
+        {
+            if (Modifiers == ModifierKeys.Windows)
+            {
+                // Windows Explorer reserves many shortcuts with the Windows key. Therefore, we need to update the settings,
+                // kill explorer (and the deskband) and let the initialize routine set the shortcut before explorer has time to do so.
+                ShortcutManager.UpdateSettings(Key, Modifiers);
+                foreach (var exe in Process.GetProcesses())
+                {
+                    if (exe.ProcessName == "explorer")
+                        exe.Kill();
+                }
             }
+
+            ShortcutManager.TrySetShortcut(Key, Modifiers);
         }
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);

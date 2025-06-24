@@ -85,23 +85,15 @@
                         <Image
                             Width="60"
                             Margin="24,0,0,0"
-                            Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/ScratchPad.png" />
+                            Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/IconElement.png" />
 
-                        <StackPanel
+                        <ui:TextBlock
                             Grid.Column="1"
                             Margin="24"
-                            VerticalAlignment="Center">
-                            <ui:TextBlock
-                                Margin="0"
-                                FontTypography="BodyStrong"
-                                Text="General"
-                                TextWrapping="WrapWithOverflow" />
-                            <ui:TextBlock
-                                Appearance="Secondary"
-                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                Text="Search, UI, Behavior"
-                                TextWrapping="WrapWithOverflow" />
-                        </StackPanel>
+                            VerticalAlignment="Center"
+                            FontTypography="BodyStrong"
+                            Text="General Settings"
+                            TextWrapping="WrapWithOverflow" />
                     </Grid>
                 </ui:CardAction>
 
@@ -121,23 +113,15 @@
                         <Image
                             Width="60"
                             Margin="24,0,0,0"
-                            Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/TabView.png" />
+                            Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/Shape.png" />
 
-                        <StackPanel
+                        <ui:TextBlock
                             Grid.Column="1"
                             Margin="24"
-                            VerticalAlignment="Center">
-                            <ui:TextBlock
-                                Margin="0"
-                                FontTypography="BodyStrong"
-                                Text="Rules"
-                                TextWrapping="WrapWithOverflow" />
-                            <ui:TextBlock
-                                Appearance="Secondary"
-                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                Text="Open with custom applications"
-                                TextWrapping="WrapWithOverflow" />
-                        </StackPanel>
+                            VerticalAlignment="Center"
+                            FontTypography="BodyStrong"
+                            Text="Custom Actions"
+                            TextWrapping="WrapWithOverflow" />
                     </Grid>
                 </ui:CardAction>
 
@@ -157,23 +141,15 @@
                         <Image
                             Width="60"
                             Margin="24,0,0,0"
-                            Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/TextBox.png" />
+                            Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/InfoBadge.png" />
 
-                        <StackPanel
+                        <ui:TextBlock
                             Grid.Column="1"
                             Margin="24"
-                            VerticalAlignment="Center">
-                            <ui:TextBlock
-                                Margin="0"
-                                FontTypography="BodyStrong"
-                                Text="Shortcuts"
-                                TextWrapping="WrapWithOverflow" />
-                            <ui:TextBlock
-                                Appearance="Secondary"
-                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                Text="Quick access keys"
-                                TextWrapping="WrapWithOverflow" />
-                        </StackPanel>
+                            VerticalAlignment="Center"
+                            FontTypography="BodyStrong"
+                            Text="Keyboard Shortcuts"
+                            TextWrapping="WrapWithOverflow" />
                     </Grid>
                 </ui:CardAction>
             </Grid>

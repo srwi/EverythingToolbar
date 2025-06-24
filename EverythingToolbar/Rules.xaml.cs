@@ -20,24 +20,21 @@ namespace EverythingToolbar
         public Rules()
         {
             InitializeComponent();
+        }
 
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
             _rules = LoadRules();
             DataGrid.ItemsSource = _rules;
             AutoApplyRulesCheckbox.IsChecked = ToolbarSettings.User.IsAutoApplyRules;
             UpdateUi();
         }
 
-        private void Cancel(object sender, RoutedEventArgs e)
-        {
-            // Close();
-        }
-
-        private void Save(object sender, RoutedEventArgs e)
+        private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             if (SaveRules(_rules, (bool)AutoApplyRulesCheckbox.IsChecked))
             {
                 ToolbarSettings.User.IsAutoApplyRules = (bool)AutoApplyRulesCheckbox.IsChecked;
-                // Close();
             }
         }
 

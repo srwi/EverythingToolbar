@@ -6,8 +6,9 @@
       xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       ScrollViewer.CanContentScroll="False"
-      Unloaded="OnClosed"> <!--What's the event for navigating away from a page?-->
-    
+      Loaded="OnLoaded"
+      Unloaded="OnUnloaded">
+
     <i:Interaction.Behaviors>
         <b:WpfUiBehavior />
     </i:Interaction.Behaviors>
@@ -54,7 +55,7 @@
                         </StackPanel>
                     </Grid>
                     <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="Navigate search history (if enabled)" />
+                        <ui:TextBlock VerticalAlignment="Center" Text="Navigate search history (if enabled)" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Ctrl" />
                             <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
@@ -64,13 +65,13 @@
                         </StackPanel>
                     </Grid>
                     <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="Open" />
+                        <ui:TextBlock VerticalAlignment="Center" Text="Open" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Enter" />
                         </StackPanel>
                     </Grid>
                     <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="Open path" />
+                        <ui:TextBlock VerticalAlignment="Center" Text="Open path" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Ctrl" />
                             <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
@@ -80,7 +81,7 @@
                         </StackPanel>
                     </Grid>
                     <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="Open in Everything" />
+                        <ui:TextBlock VerticalAlignment="Center" Text="Open in Everything" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Shift" />
                             <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
@@ -90,7 +91,7 @@
                         </StackPanel>
                     </Grid>
                     <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="Copy full path to clipboard" />
+                        <ui:TextBlock VerticalAlignment="Center" Text="Copy full path to clipboard" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Ctrl" />
                             <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
@@ -100,7 +101,7 @@
                         </StackPanel>
                     </Grid>
                     <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="File properties" />
+                        <ui:TextBlock VerticalAlignment="Center" Text="File properties" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Alt" />
                             <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
@@ -110,7 +111,7 @@
                         </StackPanel>
                     </Grid>
                     <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="Run as admin" />
+                        <ui:TextBlock VerticalAlignment="Center" Text="Run as admin" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Ctrl" />
                             <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
@@ -120,7 +121,7 @@
                         </StackPanel>
                     </Grid>
                     <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="Cycle through filters" />
+                        <ui:TextBlock VerticalAlignment="Center" Text="Cycle through filters" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Tab" />
                             <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="/" />
@@ -128,7 +129,7 @@
                         </StackPanel>
                     </Grid>
                     <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="Select filter" />
+                        <ui:TextBlock VerticalAlignment="Center" Text="Select filter" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Ctrl" />
                             <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
@@ -136,13 +137,13 @@
                         </StackPanel>
                     </Grid>
                     <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="Preview file in QuickLook" />
+                        <ui:TextBlock VerticalAlignment="Center" Text="Preview file in QuickLook" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Space" />
                         </StackPanel>
                     </Grid>
                     <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="Focus search box (customizable)" />
+                        <ui:TextBlock VerticalAlignment="Center" Text="Focus search box (customizable)" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Win" />
                             <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
