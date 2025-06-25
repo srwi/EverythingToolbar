@@ -1,4 +1,4 @@
-﻿<Page x:Class="EverythingToolbar.About"
+﻿<Page x:Class="EverythingToolbar.Settings.About"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
@@ -45,14 +45,17 @@
                             <ui:TextBlock
                                 FontTypography="Title"
                                 Foreground="#FFFFFF"
+                                Margin="0,0,0,1"
                                 Text="EverythingToolbar" />
                             <ui:TextBlock
                                 FontTypography="Subtitle"
                                 Foreground="#B7FFFFFF"
+                                Margin="0,0,0,5"
                                 Text="Everything integration for the Windows taskbar." />
                             <ui:TextBlock
+                                Name="VersionTextBlock"
                                 FontTypography="BodyStrong"
-                                Foreground="#B7FFFFFF"
+                                Foreground="#99FFFFFF"
                                 Text="Version X.X.X.X" />
                         </StackPanel>
                     </Grid>

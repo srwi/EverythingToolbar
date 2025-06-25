@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Settings
 {
     public partial class ShortcutSelector
     {

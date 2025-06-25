@@ -150,6 +150,41 @@
         <Content Include="ItemTemplates\NormalDetailed.xaml">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <Page Update="Settings\About.xaml">
+          <Generator>MSBuild:Compile</Generator>
+          <XamlRuntime>Wpf</XamlRuntime>
+          <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Settings\Search.xaml">
+          <Generator>MSBuild:Compile</Generator>
+          <XamlRuntime>Wpf</XamlRuntime>
+          <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Settings\SettingsWindow.xaml">
+          <Generator>MSBuild:Compile</Generator>
+          <XamlRuntime>Wpf</XamlRuntime>
+          <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Settings\ShortcutSelector.xaml">
+          <Generator>MSBuild:Compile</Generator>
+          <XamlRuntime>Wpf</XamlRuntime>
+          <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Settings\Rules.xaml">
+          <Generator>MSBuild:Compile</Generator>
+          <XamlRuntime>Wpf</XamlRuntime>
+          <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Settings\UserInterface.xaml">
+          <Generator>MSBuild:Compile</Generator>
+          <XamlRuntime>Wpf</XamlRuntime>
+          <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Settings\Advanced.xaml">
+          <Generator>MSBuild:Compile</Generator>
+          <XamlRuntime>Wpf</XamlRuntime>
+          <SubType>Designer</SubType>
+        </Page>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Config.Net" Version="4.13.7" />

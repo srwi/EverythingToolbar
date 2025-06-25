@@ -10,7 +10,7 @@ using System.Windows.Controls;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.Settings
 {
     public partial class Rules
     {

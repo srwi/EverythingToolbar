@@ -1,6 +1,7 @@
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
+using EverythingToolbar.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;

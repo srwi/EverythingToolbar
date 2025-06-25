@@ -1,0 +1,84 @@
+﻿<Page x:Class="EverythingToolbar.Settings.UserInterface"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
+      xmlns:local="clr-namespace:EverythingToolbar"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      ScrollViewer.CanContentScroll="False">
+
+    <i:Interaction.Behaviors>
+        <b:WpfUiBehavior />
+    </i:Interaction.Behaviors>
+
+    <ScrollViewer>
+        <StackPanel Margin="40">
+            <ui:TextBlock FontTypography="Title"
+                          Text="User Interface"
+                          Margin="0, 0, 0, 25"/>
+            <ui:TextBlock FontTypography="BodyStrong"
+                          Text="Appearance"
+                          Margin="0, 0, 0, 7"/>
+            <Border Padding="16"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1,1,1,0"
+                    CornerRadius="8,8,0,0">
+                <Grid>
+                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsView}" VerticalAlignment="Center" />
+                    <ComboBox HorizontalAlignment="Right"
+                              ItemsSource="{Binding ItemTemplates}"
+                              DisplayMemberPath="Key"
+                              SelectedValuePath="Value"
+                              SelectedValue="{Binding Source={x:Static local:ToolbarSettings.User}, Path=ItemTemplate, Mode=TwoWay}" />
+                </Grid>
+            </Border>
+            <Border Padding="16"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1,1,1,0"
+                    CornerRadius="0,0,0,0">
+                <Grid>
+                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsThumbnailsEnabled}" VerticalAlignment="Center" />
+                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsThumbnailsEnabled, Mode=TwoWay}" HorizontalAlignment="Right" />
+                </Grid>
+            </Border>
+            <Border Padding="16"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1,1,1,0"
+                    CornerRadius="0">
+                <Grid>
+                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsShowResultsCount}" VerticalAlignment="Center" />
+                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsShowResultsCount, Mode=TwoWay}" HorizontalAlignment="Right" />
+                </Grid>
+            </Border>
+            <Border Padding="16"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1,1,1,1"
+                    CornerRadius="0,0,8,8">
+                <Grid>
+                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsShowQuickToggles}" VerticalAlignment="Center" />
+                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsShowQuickToggles, Mode=TwoWay}" HorizontalAlignment="Right" />
+                </Grid>
+            </Border>
+
+            <ui:TextBlock FontTypography="BodyStrong"
+                          Text="Other"
+                          Margin="0, 25, 0, 7"/>
+            <Border Padding="16"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1,1,1,1"
+                    CornerRadius="8,8,8,8">
+                <Grid>
+                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsDisableAnimations}" VerticalAlignment="Center" />
+                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsAnimationsDisabled, Mode=TwoWay}" HorizontalAlignment="Right" />
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

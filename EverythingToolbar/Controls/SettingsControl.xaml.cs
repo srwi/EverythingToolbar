@@ -1,4 +1,5 @@
 ﻿using EverythingToolbar.Search;
+using EverythingToolbar.Settings;
 using System;
 using System.Linq;
 using System.Windows;
@@ -14,14 +15,6 @@ namespace EverythingToolbar.Controls
             InitializeComponent();
 
             SelectSortType();
-            SelectItemTemplate();
-        }
-
-        private void OpenAboutWindow(object sender, RoutedEventArgs e)
-        {
-            // SearchWindow.Instance.Hide();
-            // Window about = new About();
-            // about.Show();
         }
 
         private void OpenSettingsWindow(object sender, RoutedEventArgs e)
@@ -29,48 +22,6 @@ namespace EverythingToolbar.Controls
             SearchWindow.Instance.Hide();
             Window settings = new SettingsWindow();
             settings.Show();
-        }
-
-        private void OpenRulesWindow(object sender, RoutedEventArgs e)
-        {
-            // SearchWindow.Instance.Hide();
-            // Window rules = new Rules();
-            // rules.Show();
-        }
-
-        private void OpenInstanceNameDialog(object sender, RoutedEventArgs e)
-        {
-            SearchWindow.Instance.Hide();
-            var inputDialog = new InputDialog(Properties.Resources.SettingsSetInstanceName,
-                                              ToolbarSettings.User.InstanceName);
-            if (inputDialog.ShowDialog() == true)
-            {
-                ToolbarSettings.User.InstanceName = inputDialog.ResponseText;
-                SearchResultProvider.SetInstanceName(ToolbarSettings.User.InstanceName);
-            }
-        }
-
-        private void OpenShortcutWindow(object sender, RoutedEventArgs e)
-        {
-            SearchWindow.Instance.Hide();
-
-            // var shortcutSelector = new ShortcutSelector();
-            // if (shortcutSelector.ShowDialog().Value)
-            // {
-            //     if (shortcutSelector.Modifiers == ModifierKeys.Windows)
-            //     {
-            //         // Windows Explorer reserves many shortcuts with the Windows key. Therefore, we need to update the settings,
-            //         // kill explorer (and the deskband) and let the initialize routine set the shortcut before explorer has time to do so.
-            //         ShortcutManager.UpdateSettings(shortcutSelector.Key, shortcutSelector.Modifiers);
-            //         foreach (var exe in Process.GetProcesses())
-            //         {
-            //             if (exe.ProcessName == "explorer")
-            //                 exe.Kill();
-            //         }
-            //     }
-            //
-            //     ShortcutManager.TrySetShortcut(shortcutSelector.Key, shortcutSelector.Modifiers);
-            // }
         }
 
         private void OnSortByClicked(object sender, RoutedEventArgs e)
@@ -122,24 +73,6 @@ namespace EverythingToolbar.Controls
                 SortDescendingMenuItem.IsChecked = true;
             else
                 SortAscendingMenuItem.IsChecked = true;
-        }
-
-        private void SelectItemTemplate()
-        {
-            foreach (MenuItem menuItem in ItemTemplateMenu.Items)
-            {
-                var selectedItemTemplate = menuItem.Tag.ToString();
-                menuItem.IsChecked = selectedItemTemplate == ToolbarSettings.User.ItemTemplate;
-            }
-        }
-
-        private void OnItemTemplateClicked(object sender, RoutedEventArgs e)
-        {
-            if (!(sender is MenuItem selectedItem)) return;
-
-            ToolbarSettings.User.ItemTemplate = selectedItem.Tag.ToString();
-
-            SelectItemTemplate();
         }
 
         private void OnClick(object sender, RoutedEventArgs e)

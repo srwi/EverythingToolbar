@@ -1,11 +1,11 @@
-﻿<ui:FluentWindow x:Class="EverythingToolbar.SettingsWindow"
+﻿<ui:FluentWindow x:Class="EverythingToolbar.Settings.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:local="clr-namespace:EverythingToolbar"
+        xmlns:settings="clr-namespace:EverythingToolbar.Settings"
         xmlns:behaviors="clr-namespace:EverythingToolbar.Behaviors"
         mc:Ignorable="d"
         WindowBackdropType="Mica"
@@ -40,8 +40,8 @@
         </ui:TitleBar>
 
         <ui:NavigationView
+            Name="ThisNavigationView"
             Grid.Row="1"
-
             MinHeight="300"
             IsBackButtonVisible="Collapsed"
             IsPaneToggleVisible="True"
@@ -50,24 +50,33 @@
                 <ui:NavigationViewItem
                     Content="Home"
                     Icon="{ui:SymbolIcon Home24}"
-                    TargetPageType="{x:Type local:About}" />
+                    TargetPageType="{x:Type settings:About}" />
                 <ui:NavigationViewItem
-                    Content="General"
+                    Content="Search"
                     Icon="{ui:SymbolIcon SearchSettings20}"
-                    TargetPageType="{x:Type local:General}" />
+                    TargetPageType="{x:Type settings:Search}" />
+                <ui:NavigationViewItem
+                    Content="User Interface"
+                    Icon="{ui:SymbolIcon WindowSettings20}"
+                    TargetPageType="{x:Type settings:UserInterface}" />
                 <ui:NavigationViewItem
                     Content="Custom Actions"
                     Icon="{ui:SymbolIcon Open24}"
-                    TargetPageType="{x:Type local:Rules}" />
+                    TargetPageType="{x:Type settings:Rules}" />
                 <ui:NavigationViewItem
                     Content="Shortcuts"
                     Icon="{ui:SymbolIcon Keyboard24}"
-                    TargetPageType="{x:Type local:ShortcutSelector}" />
+                    TargetPageType="{x:Type settings:ShortcutSelector}" />
+                <ui:NavigationViewItem
+                    Content="Advanced"
+                    Icon="{ui:SymbolIcon Warning24}"
+                    TargetPageType="{x:Type settings:Advanced}" />
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.FooterMenuItems>
                 <ui:NavigationViewItem
                     Content="Report a problem"
-                    Icon="{ui:SymbolIcon Bug24}" />
+                    Icon="{ui:SymbolIcon Bug24}"
+                    Click="OnReportABugClicked"/>
             </ui:NavigationView.FooterMenuItems>
         </ui:NavigationView>
         

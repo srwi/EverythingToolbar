@@ -26,7 +26,7 @@ namespace EverythingToolbar.Controls
             InitializeComponent();
         }
 
-        private static async Task<Version> GetLatestStableReleaseVersion()
+        private static async Task<Version?> GetLatestStableReleaseVersion()
         {
             try
             {
@@ -40,9 +40,9 @@ namespace EverythingToolbar.Controls
                     {
                         var jsonStream = await response.Content.ReadAsStreamAsync();
                         var serializer = new DataContractJsonSerializer(typeof(List<Release>));
-                        var releases = (List<Release>)serializer.ReadObject(jsonStream);
-                        var stableReleases = releases.Where(r => !r.Prerelease).ToList();
-                        var latestStableRelease = stableReleases.FirstOrDefault();
+                        var releases = serializer.ReadObject(jsonStream) as List<Release>;
+                        var stableReleases = releases?.Where(r => !r.Prerelease).ToList();
+                        var latestStableRelease = stableReleases?.FirstOrDefault();
                         if (latestStableRelease != null)
                         {
                             return new Version(latestStableRelease.TagName);
@@ -63,19 +63,17 @@ namespace EverythingToolbar.Controls
             if (!ToolbarSettings.User.IsUpdateNotificationsEnabled)
                 return;
 
-            var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
-            _latestVersion = await GetLatestStableReleaseVersion();
+            var latestVersion = await CheckForUpdateAsync();
 
-            if (_latestVersion == null || _latestVersion == TryGetSkippedUpdate())
-                return;
-            if (assemblyVersion == null || assemblyVersion.CompareTo(_latestVersion) >= 0)
+            if (latestVersion == null || latestVersion == TryGetSkippedUpdate())
                 return;
 
+            _latestVersion = latestVersion;
             LatestVersionRun.Text = _latestVersion.ToString();
             Visibility = Visibility.Visible;
         }
 
-        private static Version TryGetSkippedUpdate()
+        private static Version? TryGetSkippedUpdate()
         {
             try
             {
@@ -99,6 +97,19 @@ namespace EverythingToolbar.Controls
         {
             ToolbarSettings.User.SkippedUpdate = _latestVersion.ToString();
             Visibility = Visibility.Collapsed;
+        }
+
+        public static async Task<Version?> CheckForUpdateAsync()
+        {
+            var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
+            var latestVersion = await GetLatestStableReleaseVersion();
+
+            if (latestVersion == null)
+                return null;
+            if (assemblyVersion == null || assemblyVersion.CompareTo(latestVersion) >= 0)
+                return null;
+
+            return latestVersion;
         }
 
         [DataContract]

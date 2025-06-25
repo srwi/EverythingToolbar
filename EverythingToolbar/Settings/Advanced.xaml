@@ -1,0 +1,86 @@
+﻿<Page x:Class="EverythingToolbar.Settings.Advanced"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:c="clr-namespace:EverythingToolbar.Converters"
+      xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
+      xmlns:local="clr-namespace:EverythingToolbar"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      ScrollViewer.CanContentScroll="False"
+      Unloaded="OnUnloaded">
+
+    <i:Interaction.Behaviors>
+        <b:WpfUiBehavior />
+    </i:Interaction.Behaviors>
+
+    <ScrollViewer>
+        <StackPanel Margin="40">
+            <ui:TextBlock FontTypography="Title"
+                          Text="Advanced"
+                          Margin="0, 0, 0, 0" />
+            <ui:TextBlock FontTypography="BodyStrong"
+                          Text="Updates"
+                          Margin="0, 25, 0, 7" />
+            <Border Padding="16"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1,1,1,0"
+                    CornerRadius="8,8,0,0">
+                <Grid>
+                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsCheckForUpdates}" VerticalAlignment="Center" />
+                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsUpdateNotificationsEnabled, Mode=TwoWay}" HorizontalAlignment="Right" />
+                </Grid>
+            </Border>
+            <Border Padding="16"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1,1,1,1"
+                    CornerRadius="0,0,8,8">
+                <Grid>
+                    <ui:TextBlock Text="Check for updates manually" VerticalAlignment="Center" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <ui:ProgressRing IsIndeterminate="True" Width="24" Height="24" Margin="0,0,8,0"
+                                         Visibility="{Binding IsCheckingForUpdates, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}}" />
+                        <ui:Button Content="Check now"
+                                   Click="OnCheckForUpdatesClicked"
+                                   Visibility="{Binding IsUpdateAvailable, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}, ConverterParameter=true}" />
+                        <ui:Button Content="Download latest version"
+                                   Click="OnDownloadUpdateClicked"
+                                   Visibility="{Binding IsUpdateAvailable, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <ui:TextBlock FontTypography="BodyStrong"
+                          Text="Named Instance"
+                          Margin="0, 25, 0, 7" />
+            <Border Padding="16"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1,1,1,1"
+                    CornerRadius="8,8,8,8">
+                <Grid>
+                    <ui:TextBlock Text="Everything instance name" VerticalAlignment="Center" />
+                    <ui:TextBox Text="{Binding Source={x:Static local:ToolbarSettings.User}, Path=InstanceName, Mode=TwoWay}"
+                                HorizontalAlignment="Right"
+                                Width="200"
+                                PlaceholderText="Default instance" />
+                </Grid>
+            </Border>
+            <ui:TextBlock FontTypography="BodyStrong"
+                          Text="Other"
+                          Margin="0, 25, 0, 7"/>
+            <Border Padding="16"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1,1,1,1"
+                    CornerRadius="8,8,8,8">
+                <Grid>
+                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsReplaceStartMenuSearch}" VerticalAlignment="Center" />
+                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsReplaceStartMenuSearch, Mode=TwoWay}" HorizontalAlignment="Right" />
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
