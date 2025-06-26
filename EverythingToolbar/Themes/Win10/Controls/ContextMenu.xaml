@@ -1,9 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Sys="clr-namespace:System;assembly=mscorlib">
 
     <Thickness x:Key="ContextMenuMenuItemMargin" />
     <CornerRadius x:Key="ContextMenuMenuItemCornerRadius" />
     <CornerRadius x:Key="ContextMenuCornerRadius" />
+    <Sys:Double x:Key="ContextMenuDropShadowRadius">0</Sys:Double>
+    <Thickness x:Key="ContextMenuDropShadowMargin" />
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../../Styles/ContextMenu.xaml" />
