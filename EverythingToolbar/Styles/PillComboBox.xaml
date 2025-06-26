@@ -55,23 +55,35 @@
                                           ClickMode="Press" />
                             <Popup Name="Popup"
                                    Placement="Bottom"
+                                   VerticalOffset="{DynamicResource ContextMenuDropShadowRadius}"
                                    IsOpen="{TemplateBinding IsDropDownOpen}"
                                    AllowsTransparency="True"
                                    PopupAnimation="None">
                                 <Grid Name="DropDown"
                                       MinWidth="{TemplateBinding ActualWidth}"
-                                      MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                      MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                      Margin="{DynamicResource ContextMenuDropShadowMargin}">
+                                    <Grid.RenderTransform>
+                                        <TranslateTransform />
+                                    </Grid.RenderTransform>
+                                    <Grid.Effect>
+                                        <DropShadowEffect Color="Black"
+                                            BlurRadius="{DynamicResource ContextMenuDropShadowRadius}"
+                                            ShadowDepth="0"
+                                            Opacity="0.3" />
+                                    </Grid.Effect>
                                     <Border x:Name="DropDownBorder"
                                             Background="{DynamicResource ContextMenuBackground}"
                                             BorderBrush="{DynamicResource ContextMenuBorder}"
                                             BorderThickness="1"
                                             CornerRadius="8"
-                                            SnapsToDevicePixels="True" />
-                                    <ScrollViewer>
-                                        <StackPanel IsItemsHost="True"
-                                                    Margin="4"
-                                                    KeyboardNavigation.DirectionalNavigation="Contained" />
-                                    </ScrollViewer>
+                                            SnapsToDevicePixels="True">
+                                        <ScrollViewer>
+                                            <StackPanel IsItemsHost="True"
+                                                        Margin="4"
+                                                        KeyboardNavigation.DirectionalNavigation="Contained" />
+                                        </ScrollViewer>
+                                    </Border>
                                 </Grid>
                             </Popup>
                         </Grid>
@@ -125,6 +137,24 @@
                             <Setter Property="Visibility"
                                     Value="Hidden" />
                         </DataTrigger>
+                        <Trigger SourceName="Popup" Property="IsOpen" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="DropDown"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                            From="-90"
+                                            To="0"
+                                            Duration="00:00:00.167">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CircleEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
