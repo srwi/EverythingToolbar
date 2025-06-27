@@ -133,46 +133,46 @@
     <value>אודות EverythingToolbar</value>
   </data>
   <data name="ContextMenuCopy" xml:space="preserve">
-    <value>העתקה</value>
+    <value>העתק</value>
   </data>
   <data name="ContextMenuCopyFile" xml:space="preserve">
-    <value>העתקה</value>
+    <value>העתק</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
-    <value>העתקת שם מלא ללוח</value>
+    <value>העתק שם מלא ללוח</value>
   </data>
   <data name="ContextMenuCut" xml:space="preserve">
-    <value>גזירה</value>
+    <value>גזור</value>
   </data>
   <data name="ContextMenuOpen" xml:space="preserve">
-    <value>פתיחה</value>
+    <value>פתח</value>
   </data>
   <data name="ContextMenuOpenPath" xml:space="preserve">
-    <value>פתיחת נתיב התיקיה</value>
+    <value>פתח את נתיב התיקיה</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
-    <value>הצגת אפשרויות נוספות</value>
+    <value>הצג אפשרויות נוספות</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
-    <value>פתיחה באמצעות...</value>
+    <value>פתח באמצעות...</value>
   </data>
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
-    <value>בחירת יישום</value>
+    <value>בחר/י יישום</value>
   </data>
   <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>לא הוגדרו כללי</value>
+    <value>כללים לא הוגדרו</value>
   </data>
   <data name="ContextMenuPaste" xml:space="preserve">
-    <value>הדבקה</value>
+    <value>הדבק</value>
   </data>
   <data name="ContextMenuProperties" xml:space="preserve">
     <value>מאפיינים</value>
   </data>
   <data name="ContextMenuRunAsAdmin" xml:space="preserve">
-    <value>הפעלה כמנהל</value>
+    <value>הפעל כמנהל</value>
   </data>
   <data name="ContextMenuShowInEverything" xml:space="preserve">
-    <value>הצגה ב-Everything</value>
+    <value>הצג ב-Everything</value>
   </data>
   <data name="DefaultFilterAll" xml:space="preserve">
     <value>הכל</value>
@@ -208,7 +208,7 @@
     <value>Win</value>
   </data>
   <data name="MessageBoxCopyException" xml:space="preserve">
-    <value>האם אתם מעוניינים להעתיק את התוכן החריג ללוח?</value>
+    <value>האם אתה מעוניין להעתיק את התוכן החריג ללוח?</value>
   </data>
   <data name="MessageBoxErrorTitle" xml:space="preserve">
     <value>שגיאה</value>
