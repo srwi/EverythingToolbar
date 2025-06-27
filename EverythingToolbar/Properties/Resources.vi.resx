@@ -364,46 +364,46 @@
     <value>OK</value>
   </data>
   <data name="ShortcutWindowTitle" xml:space="preserve">
-    <value>Nhập lối tắt...</value>
+    <value>Enter shortcut...</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Thuộc tính</value>
+    <value>Attributes</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
-    <value>Ngày truy cập</value>
+    <value>Date accessed</value>
   </data>
   <data name="SortByDateCreated" xml:space="preserve">
-    <value>Ngày tạo</value>
+    <value>Date created</value>
   </data>
   <data name="SortByDateModified" xml:space="preserve">
-    <value>Ngày chỉnh sửa</value>
+    <value>Date modified</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
-    <value>Ngày thay đổi gần đây</value>
+    <value>Date recently changed</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
-    <value>Ngày chạy</value>
+    <value>Date run</value>
   </data>
   <data name="SortByExtension" xml:space="preserve">
-    <value>Đuôi tên tệp</value>
+    <value>Extension</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
-    <value>Tên tệp danh sách tập tin</value>
+    <value>File list filename</value>
   </data>
   <data name="SortByName" xml:space="preserve">
-    <value>Tên</value>
+    <value>Name</value>
   </data>
   <data name="SortByPath" xml:space="preserve">
-    <value>Sao chép đường dẫn</value>
+    <value>Path</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
-    <value>Số lần chạy</value>
+    <value>Run count</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
-    <value>Kích cỡ</value>
+    <value>Size</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
-    <value>Tên loại tệp</value>
+    <value>Type name</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>Tối</value>
@@ -415,48 +415,48 @@
     <value>Âm thanh</value>
   </data>
   <data name="UserFilterCompressed" xml:space="preserve">
-    <value>Tệp nén</value>
+    <value>Compressed</value>
   </data>
   <data name="UserFilterDocument" xml:space="preserve">
-    <value>Tài liệu</value>
+    <value>Document</value>
   </data>
   <data name="UserFilterExecutable" xml:space="preserve">
-    <value>Phần mềm</value>
+    <value>Executable</value>
   </data>
   <data name="UserFilterPicture" xml:space="preserve">
-    <value>Hình ảnh</value>
+    <value>Picture</value>
   </data>
   <data name="UserFilterPlaceholder" xml:space="preserve">
-    <value>Thêm</value>
+    <value>More</value>
   </data>
   <data name="UserFilterVideo" xml:space="preserve">
     <value>Video</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Có bản cập nhật:</value>
+    <value>Update available:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Bỏ qua</value>
+    <value>Skip</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
-    <value>Tải về</value>
+    <value>Download</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>Tự động kiểm tra bản cập nhật mới</value>
+    <value>Check for updates automatically</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
-    <value>Chọn kết quả đầu tiên</value>
+    <value>Select first result</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>Nhấp đúp để mở</value>
+    <value>Double-click to open</value>
   </data>
   <data name="SortDescending" xml:space="preserve">
-    <value>Giảm dần</value>
+    <value>Descending</value>
   </data>
   <data name="SortAscending" xml:space="preserve">
-    <value>Tăng dần</value>
+    <value>Ascending</value>
   </data>
   <data name="SettingsSearchAsYouType" xml:space="preserve">
-    <value>Tìm kiếm trong lúc nhập</value>
+    <value>Search as you type</value>
   </data>
 </root>
