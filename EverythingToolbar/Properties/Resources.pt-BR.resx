@@ -286,7 +286,7 @@
     <value>Regras</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
-    <value>Pesquisar com o Everything</value>
+    <value>Buscar com o Everything</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
     <value>objeto</value>
@@ -433,7 +433,7 @@
     <value>Vídeo</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
-    <value>Atualização disponível:</value>
+    <value>Atualização Disponível:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
     <value>Ignorar</value>
@@ -442,7 +442,7 @@
     <value>Baixar</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
-    <value>Verificar atualizações automaticamente</value>
+    <value>Procurar atualizações automaticamente</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
     <value>Selecionar o primeiro resultado</value>
