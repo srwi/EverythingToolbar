@@ -151,7 +151,7 @@
     <value>3. إخفاء بحث Windows</value>
   </data>
   <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>يفضل تفعيل تشغيل EverythingToolbar تلقائيًا عند تشغيل النظام.</value>
+    <value>يفضل بدء EverythingToolbar تلقائيًا عند بدء تشغيل النظام.</value>
   </data>
   <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
     <value>4. تكوين التشغيل التلقائي</value>
@@ -166,15 +166,15 @@
     <value>1. تعيين أيقونة شريط المهام</value>
   </data>
   <data name="SetupAssistantFifthStepText" xml:space="preserve">
-    <value>بتفعيل أيقونة شريط المهام، يمكنك إغلاق عمليات EverythingToolbar الخلفية في أي وقت. بدونها، يمكنك إغلاق EverythingToolbar دائمًا عبر مدير المهام.</value>
+    <value>By enabling the system tray icon you can quit the EverythingToolbar background process at any time. Without it, EverythingToolbar can always be quit via the task manager.</value>
   </data>
   <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
-    <value>5. إعداد رمز شريط المهام</value>
+    <value>5. Configure system tray icon</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>هل أنت متأكد من رغبتك في الخروج من مساعد الإعداد؟ لن تتمكن من الوصول إلى شريط أدوات EverythingToolbar إلا باستخدام اختصار لوحة المفاتيح. يمكنك الوصول إلى مساعد الإعداد مجددًا عبر أيقونة شريط المهام لتثبيت أيقونة البحث على شريط المهام.</value>
+    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>الخروج من مساعد الإعداد</value>
+    <value>Exit Setup Assistant</value>
   </data>
 </root>
