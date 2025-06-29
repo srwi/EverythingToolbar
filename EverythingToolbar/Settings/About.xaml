@@ -78,7 +78,8 @@
                     Margin="0,0,4,0"
                     Padding="0"
                     VerticalAlignment="Stretch"
-                    IsChevronVisible="False">
+                    IsChevronVisible="False"
+                    Click="OnGeneralSettingsClicked">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -106,7 +107,8 @@
                     Margin="4,0,4,0"
                     Padding="0"
                     VerticalAlignment="Stretch"
-                    IsChevronVisible="False">
+                    IsChevronVisible="False"
+                    Click="OnCustomActionsClicked">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -134,7 +136,8 @@
                     Margin="4,0,4,0"
                     Padding="0"
                     VerticalAlignment="Stretch"
-                    IsChevronVisible="False">
+                    IsChevronVisible="False"
+                    Click="OnKeyboardShortcutsClicked">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
