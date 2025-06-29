@@ -27,7 +27,10 @@
                     BorderThickness="1,1,1,0"
                     CornerRadius="8,8,0,0">
                 <Grid>
-                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsView}" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsView}" />
+                        <ui:TextBlock Text="Choose the layout for search results" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <ComboBox HorizontalAlignment="Right"
                               ItemsSource="{Binding ItemTemplates}"
                               DisplayMemberPath="Key"
@@ -41,7 +44,10 @@
                     BorderThickness="1,1,1,0"
                     CornerRadius="0,0,0,0">
                 <Grid>
-                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsThumbnailsEnabled}" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsThumbnailsEnabled}" />
+                        <ui:TextBlock Text="Show thumbnails for supported file types" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsThumbnailsEnabled, Mode=TwoWay}" HorizontalAlignment="Right" />
                 </Grid>
             </Border>
@@ -51,7 +57,10 @@
                     BorderThickness="1,1,1,0"
                     CornerRadius="0">
                 <Grid>
-                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsShowResultsCount}" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsShowResultsCount}" />
+                        <ui:TextBlock Text="Display the number of search results" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsShowResultsCount, Mode=TwoWay}" HorizontalAlignment="Right" />
                 </Grid>
             </Border>
@@ -61,7 +70,10 @@
                     BorderThickness="1,1,1,1"
                     CornerRadius="0,0,8,8">
                 <Grid>
-                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsShowQuickToggles}" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsShowQuickToggles}" />
+                        <ui:TextBlock Text="Show quick toggle buttons for filters and settings" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsShowQuickToggles, Mode=TwoWay}" HorizontalAlignment="Right" />
                 </Grid>
             </Border>
@@ -75,7 +87,10 @@
                     BorderThickness="1,1,1,1"
                     CornerRadius="8,8,8,8">
                 <Grid>
-                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsDisableAnimations}" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsDisableAnimations}" />
+                        <ui:TextBlock Text="Disable UI animations for improved performance" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsAnimationsDisabled, Mode=TwoWay}" HorizontalAlignment="Right" />
                 </Grid>
             </Border>

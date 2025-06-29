@@ -27,7 +27,10 @@
                     BorderThickness="1,1,1,0"
                     CornerRadius="8,8,0,0">
                 <Grid>
-                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsHideEmptyResults}" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsHideEmptyResults}" />
+                        <ui:TextBlock Text="Hide results when search term is empty" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsHideEmptySearchResults, Mode=TwoWay}" HorizontalAlignment="Right" />
                 </Grid>
             </Border>
@@ -37,7 +40,10 @@
                     BorderThickness="1,1,1,0"
                     CornerRadius="0">
                 <Grid>
-                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsSearchAsYouType}" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsSearchAsYouType}" />
+                        <ui:TextBlock Text="Start searching as you type, without pressing Enter" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsSearchAsYouType, Mode=TwoWay}" HorizontalAlignment="Right" />
                 </Grid>
             </Border>
@@ -47,7 +53,10 @@
                     BorderThickness="1,1,1,0"
                     CornerRadius="0">
                 <Grid>
-                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsSelectFirstResult}" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsSelectFirstResult}" />
+                        <ui:TextBlock Text="Automatically select the first result" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsAutoSelectFirstResult, Mode=TwoWay}" HorizontalAlignment="Right" />
                 </Grid>
             </Border>
@@ -57,7 +66,10 @@
                     BorderThickness="1,1,1,1"
                     CornerRadius="0, 0, 8, 8">
                 <Grid>
-                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsDoubleClickToOpen}" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsDoubleClickToOpen}" />
+                        <ui:TextBlock Text="Require double-click to open results" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsDoubleClickToOpen, Mode=TwoWay}" HorizontalAlignment="Right" />
                 </Grid>
             </Border>
@@ -71,7 +83,10 @@
                     BorderThickness="1, 1, 1, 0"
                     CornerRadius="8, 8, 0, 0">
                 <Grid>
-                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsEnableHistory}" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsEnableHistory}" />
+                        <ui:TextBlock Text="Save previous search terms for quick access" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsEnableHistory, Mode=TwoWay}" HorizontalAlignment="Right" />
                 </Grid>
             </Border>
@@ -95,7 +110,10 @@
                     BorderThickness="1,1,1,0"
                     CornerRadius="8,8,0,0">
                 <Grid>
-                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsUseEverythingFilters}" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsUseEverythingFilters}" />
+                        <ui:TextBlock Text="Enable Everything's custom filters in the toolbar" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsImportFilters, Mode=TwoWay}" HorizontalAlignment="Right" />
                 </Grid>
             </Border>
@@ -105,7 +123,10 @@
                     BorderThickness="1,1,1,1"
                     CornerRadius="0,0,8,8">
                 <Grid>
-                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsRememberFilter}" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsRememberFilter}" />
+                        <ui:TextBlock Text="Remember the last used filter for future searches" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsRememberFilter, Mode=TwoWay}" HorizontalAlignment="Right" />
                 </Grid>
             </Border>

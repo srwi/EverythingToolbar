@@ -29,7 +29,10 @@
                     BorderThickness="1,1,1,0"
                     CornerRadius="8,8,0,0">
                 <Grid>
-                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsCheckForUpdates}" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsCheckForUpdates}" />
+                        <ui:TextBlock Text="Notify when a new version is available" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsUpdateNotificationsEnabled, Mode=TwoWay}" HorizontalAlignment="Right" />
                 </Grid>
             </Border>
@@ -39,7 +42,10 @@
                     BorderThickness="1,1,1,1"
                     CornerRadius="0,0,8,8">
                 <Grid>
-                    <ui:TextBlock Text="Check for updates manually" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="Check for updates manually" />
+                        <ui:TextBlock Text="Manually check for new versions of EverythingToolbar" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <ui:ProgressRing IsIndeterminate="True" Width="24" Height="24" Margin="0,0,8,0"
                                          Visibility="{Binding IsCheckingForUpdates, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}}" />
@@ -61,7 +67,10 @@
                     BorderThickness="1,1,1,1"
                     CornerRadius="8,8,8,8">
                 <Grid>
-                    <ui:TextBlock Text="Everything instance name" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="Everything instance name" />
+                        <ui:TextBlock Text="Set the name of the Everything instance to connect to" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <ui:TextBox Text="{Binding Source={x:Static local:ToolbarSettings.User}, Path=InstanceName, Mode=TwoWay}"
                                 HorizontalAlignment="Right"
                                 Width="200"
@@ -77,7 +86,10 @@
                     BorderThickness="1,1,1,1"
                     CornerRadius="8,8,8,8">
                 <Grid>
-                    <ui:TextBlock Text="{x:Static properties:Resources.SettingsReplaceStartMenuSearch}" VerticalAlignment="Center" />
+                    <StackPanel VerticalAlignment="Center">
+                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsReplaceStartMenuSearch}" />
+                        <ui:TextBlock Text="Replace the default Windows Start menu search with EverythingToolbar" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
+                    </StackPanel>
                     <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsReplaceStartMenuSearch, Mode=TwoWay}" HorizontalAlignment="Right" />
                 </Grid>
             </Border>
