@@ -13,7 +13,41 @@
         <b:WpfUiBehavior />
     </i:Interaction.Behaviors>
 
-    <ScrollViewer>
+    <Page.Resources>
+        <Style x:Key="StaticShortcutButtonStyle" TargetType="ui:Button">
+            <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
+            <Setter Property="BorderThickness" Value="1,1,1,3" />
+            <Setter Property="Padding" Value="4, 2" />
+            <Setter Property="Margin" Value="3, 2" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="MinWidth" Value="24" />
+            <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            Margin="{TemplateBinding Margin}"
+                            MinWidth="{TemplateBinding MinWidth}"
+                            CornerRadius="6">
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                RecognizesAccessKey="True"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+        <ScrollViewer>
         <StackPanel Margin="40">
             <ui:TextBlock FontTypography="Title"
                           Text="Shortcuts"
@@ -49,107 +83,105 @@
                     <Grid>
                         <ui:TextBlock VerticalAlignment="Center" Text="Navigate search results" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="↑" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="/" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="↓" />
+                            <ui:Button Content="↑" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="/" />
+                            <ui:Button Content="↓" Style="{StaticResource StaticShortcutButtonStyle}" />
                         </StackPanel>
                     </Grid>
                     <Grid>
                         <ui:TextBlock VerticalAlignment="Center" Text="Navigate search history (if enabled)" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Ctrl" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="↑" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="/" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="↓" />
+                            <ui:Button Content="Ctrl" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                            <ui:Button Content="↑" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="/" />
+                            <ui:Button Content="↓" Style="{StaticResource StaticShortcutButtonStyle}" />
                         </StackPanel>
                     </Grid>
                     <Grid>
                         <ui:TextBlock VerticalAlignment="Center" Text="Open" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Enter" />
+                            <ui:Button Content="Enter" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="/" />
+                            <ui:Button Content="Click" Style="{StaticResource StaticShortcutButtonStyle}" />
                         </StackPanel>
                     </Grid>
                     <Grid>
                         <ui:TextBlock VerticalAlignment="Center" Text="Open path" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Ctrl" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Enter" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="/" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Click" />
+                            <ui:Button Content="Ctrl" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                            <ui:Button Content="Enter" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="/" />
+                            <ui:Button Content="Click" Style="{StaticResource StaticShortcutButtonStyle}" />
                         </StackPanel>
                     </Grid>
                     <Grid>
                         <ui:TextBlock VerticalAlignment="Center" Text="Open in Everything" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Shift" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Enter" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="/" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Click" />
-                        </StackPanel>
-                    </Grid>
-                    <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Text="Copy full path to clipboard" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Ctrl" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Shift" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="C" />
-                        </StackPanel>
-                    </Grid>
-                    <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Text="File properties" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Alt" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Enter" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="/" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Click" />
+                            <ui:Button Content="Shift" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                            <ui:Button Content="Enter" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="/" />
+                            <ui:Button Content="Click" Style="{StaticResource StaticShortcutButtonStyle}" />
                         </StackPanel>
                     </Grid>
                     <Grid>
                         <ui:TextBlock VerticalAlignment="Center" Text="Run as admin" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Ctrl" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Shift" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Enter" />
+                            <ui:Button Content="Ctrl" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                            <ui:Button Content="Shift" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                            <ui:Button Content="Enter" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="/" />
+                            <ui:Button Content="Click" Style="{StaticResource StaticShortcutButtonStyle}" />
+                        </StackPanel>
+                    </Grid>
+                    <Grid>
+                        <ui:TextBlock VerticalAlignment="Center" Text="File properties" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <ui:Button Content="Alt" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                            <ui:Button Content="Enter" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="/" />
+                            <ui:Button Content="Click" Style="{StaticResource StaticShortcutButtonStyle}" />
+                        </StackPanel>
+                    </Grid>
+                    <Grid>
+                        <ui:TextBlock VerticalAlignment="Center" Text="Copy full path to clipboard" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <ui:Button Content="Ctrl" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                            <ui:Button Content="Shift" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                            <ui:Button Content="C" Style="{StaticResource StaticShortcutButtonStyle}" />
                         </StackPanel>
                     </Grid>
                     <Grid>
                         <ui:TextBlock VerticalAlignment="Center" Text="Cycle through filters" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Tab" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="/" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Shift+Tab" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="(" />
+                            <ui:Button Content="Shift" Style="{StaticResource StaticShortcutButtonStyle}" Margin="1" />
+                            <ui:TextBlock VerticalAlignment="Center" Text=")" Margin="0, 0, 5, 0" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                            <ui:Button Content="Tab" Style="{StaticResource StaticShortcutButtonStyle}" />
                         </StackPanel>
                     </Grid>
                     <Grid>
                         <ui:TextBlock VerticalAlignment="Center" Text="Select filter" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Ctrl" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="0-9" />
+                            <ui:Button Content="Ctrl" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                            <ui:Button Content="0" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            <ui:TextBlock VerticalAlignment="Center" Text="-" />
+                            <ui:Button Content="9" Style="{StaticResource StaticShortcutButtonStyle}" />
                         </StackPanel>
                     </Grid>
                     <Grid>
                         <ui:TextBlock VerticalAlignment="Center" Text="Preview file in QuickLook" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Space" />
-                        </StackPanel>
-                    </Grid>
-                    <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Text="Focus search box (customizable)" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Win" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="Alt" />
-                            <ui:TextBlock VerticalAlignment="Center" Margin="5, 0" Text="+" />
-                            <ui:TextBox IsEnabled="False" IsHitTestVisible="False" Text="S" />
+                            <ui:Button Content="Space" Style="{StaticResource StaticShortcutButtonStyle}" />
                         </StackPanel>
                     </Grid>
                 </StackPanel>
