@@ -4,6 +4,7 @@
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
+      xmlns:controls="clr-namespace:EverythingToolbar.Controls"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       ScrollViewer.CanContentScroll="False"
       Loaded="OnLoaded"
@@ -62,10 +63,14 @@
                 BorderThickness="1, 1, 1, 1"
                 CornerRadius="8, 8, 8, 8">
                 <Grid>
-                    <ui:TextBlock VerticalAlignment="Center" Text="Open search window" />
-                    <ui:TextBox Name="ShortcutTextBox"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ui:TextBlock Text="Open search window" VerticalAlignment="Center" TextWrapping="Wrap" />
+                    <ui:TextBox Grid.Column="1"
+                                Name="ShortcutTextBox"
                                 Width="150"
-                                HorizontalAlignment="Right"
                                 GotKeyboardFocus="OnGotKeyboardFocus"
                                 LostKeyboardFocus="OnLostKeyboardFocus" />
                 </Grid>
@@ -80,110 +85,121 @@
                 BorderThickness="1, 1, 1, 1"
                 CornerRadius="8, 8, 8, 8">
                 <StackPanel>
-                    <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Text="Navigate search results" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:Button Content="↑" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="/" />
-                            <ui:Button Content="↓" Style="{StaticResource StaticShortcutButtonStyle}" />
-                        </StackPanel>
-                    </Grid>
-                    <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Text="Navigate search history (if enabled)" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:Button Content="Ctrl" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
-                            <ui:Button Content="↑" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="/" />
-                            <ui:Button Content="↓" Style="{StaticResource StaticShortcutButtonStyle}" />
-                        </StackPanel>
-                    </Grid>
-                    <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Text="Open" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:Button Content="Enter" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="/" />
-                            <ui:Button Content="Click" Style="{StaticResource StaticShortcutButtonStyle}" />
-                        </StackPanel>
-                    </Grid>
-                    <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Text="Open path" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:Button Content="Ctrl" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
-                            <ui:Button Content="Enter" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="/" />
-                            <ui:Button Content="Click" Style="{StaticResource StaticShortcutButtonStyle}" />
-                        </StackPanel>
-                    </Grid>
-                    <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Text="Open in Everything" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:Button Content="Shift" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
-                            <ui:Button Content="Enter" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="/" />
-                            <ui:Button Content="Click" Style="{StaticResource StaticShortcutButtonStyle}" />
-                        </StackPanel>
-                    </Grid>
-                    <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Text="Run as admin" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:Button Content="Ctrl" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
-                            <ui:Button Content="Shift" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
-                            <ui:Button Content="Enter" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="/" />
-                            <ui:Button Content="Click" Style="{StaticResource StaticShortcutButtonStyle}" />
-                        </StackPanel>
-                    </Grid>
-                    <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Text="File properties" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:Button Content="Alt" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
-                            <ui:Button Content="Enter" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="/" />
-                            <ui:Button Content="Click" Style="{StaticResource StaticShortcutButtonStyle}" />
-                        </StackPanel>
-                    </Grid>
-                    <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Text="Copy full path to clipboard" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:Button Content="Ctrl" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
-                            <ui:Button Content="Shift" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
-                            <ui:Button Content="C" Style="{StaticResource StaticShortcutButtonStyle}" />
-                        </StackPanel>
-                    </Grid>
-                    <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Text="Cycle through filters" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:TextBlock VerticalAlignment="Center" Text="(" />
-                            <ui:Button Content="Shift" Style="{StaticResource StaticShortcutButtonStyle}" Margin="1" />
-                            <ui:TextBlock VerticalAlignment="Center" Text=")" Margin="0, 0, 5, 0" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
-                            <ui:Button Content="Tab" Style="{StaticResource StaticShortcutButtonStyle}" />
-                        </StackPanel>
-                    </Grid>
-                    <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Text="Select filter" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:Button Content="Ctrl" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="+" />
-                            <ui:Button Content="0" Style="{StaticResource StaticShortcutButtonStyle}" />
-                            <ui:TextBlock VerticalAlignment="Center" Text="-" />
-                            <ui:Button Content="9" Style="{StaticResource StaticShortcutButtonStyle}" />
-                        </StackPanel>
-                    </Grid>
-                    <Grid>
-                        <ui:TextBlock VerticalAlignment="Center" Text="Preview file in QuickLook" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:Button Content="Space" Style="{StaticResource StaticShortcutButtonStyle}" />
-                        </StackPanel>
-                    </Grid>
+                    <controls:SettingItem Title="Navigate search results">
+                        <controls:SettingItem.SettingContent>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:Button Content="↑" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="/" />
+                                <ui:Button Content="↓" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            </StackPanel>
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                    <controls:SettingItem Title="Navigate search history (if enabled)">
+                        <controls:SettingItem.SettingContent>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:Button Content="Ctrl" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                                <ui:Button Content="↑" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="/" />
+                                <ui:Button Content="↓" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            </StackPanel>
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                    <controls:SettingItem Title="Open">
+                        <controls:SettingItem.SettingContent>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:Button Content="Enter" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="/" />
+                                <ui:Button Content="Click" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            </StackPanel>
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                    <controls:SettingItem Title="Open path">
+                        <controls:SettingItem.SettingContent>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:Button Content="Ctrl" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                                <ui:Button Content="Enter" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="/" />
+                                <ui:Button Content="Click" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            </StackPanel>
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                    <controls:SettingItem Title="Open in Everything">
+                        <controls:SettingItem.SettingContent>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:Button Content="Shift" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                                <ui:Button Content="Enter" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="/" />
+                                <ui:Button Content="Click" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            </StackPanel>
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                    <controls:SettingItem Title="Run as admin">
+                        <controls:SettingItem.SettingContent>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:Button Content="Ctrl" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                                <ui:Button Content="Shift" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                                <ui:Button Content="Enter" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="/" />
+                                <ui:Button Content="Click" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            </StackPanel>
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                    <controls:SettingItem Title="File properties">
+                        <controls:SettingItem.SettingContent>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:Button Content="Alt" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                                <ui:Button Content="Enter" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="/" />
+                                <ui:Button Content="Click" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            </StackPanel>
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                    <controls:SettingItem Title="Copy full path to clipboard">
+                        <controls:SettingItem.SettingContent>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:Button Content="Ctrl" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                                <ui:Button Content="Shift" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                                <ui:Button Content="C" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            </StackPanel>
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                    <controls:SettingItem Title="Cycle through filters">
+                        <controls:SettingItem.SettingContent>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:TextBlock VerticalAlignment="Center" Text="(" />
+                                <ui:Button Content="Shift" Style="{StaticResource StaticShortcutButtonStyle}" Margin="1" />
+                                <ui:TextBlock VerticalAlignment="Center" Text=")" Margin="0, 0, 5, 0" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                                <ui:Button Content="Tab" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            </StackPanel>
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                    <controls:SettingItem Title="Select filter">
+                        <controls:SettingItem.SettingContent>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:Button Content="Ctrl" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="+" />
+                                <ui:Button Content="0" Style="{StaticResource StaticShortcutButtonStyle}" />
+                                <ui:TextBlock VerticalAlignment="Center" Text="-" />
+                                <ui:Button Content="9" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            </StackPanel>
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                    <controls:SettingItem Title="Preview file in QuickLook">
+                        <controls:SettingItem.SettingContent>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:Button Content="Space" Style="{StaticResource StaticShortcutButtonStyle}" />
+                            </StackPanel>
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
                 </StackPanel>
             </Border>
         </StackPanel>

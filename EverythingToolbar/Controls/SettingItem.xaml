@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="EverythingToolbar.Controls.SettingItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             x:Name="Root">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackPanel VerticalAlignment="Center">
+            <ui:TextBlock Text="{Binding Title, ElementName=Root}"
+                          TextWrapping="Wrap" />
+            <ui:TextBlock Text="{Binding HelpText, ElementName=Root}"
+                          Foreground="{DynamicResource TextFillColorDisabledBrush}">
+                <ui:TextBlock.Style>
+                    <Style TargetType="ui:TextBlock">
+                        <Setter Property="TextWrapping" Value="Wrap"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding HelpText, ElementName=Root}" Value="">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ui:TextBlock.Style>
+            </ui:TextBlock>
+        </StackPanel>
+        <ContentPresenter Grid.Column="1"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Center"
+                          Content="{Binding SettingContent, ElementName=Root}" />
+    </Grid>
+</UserControl>

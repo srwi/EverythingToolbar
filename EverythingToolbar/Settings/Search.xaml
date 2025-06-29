@@ -6,6 +6,7 @@
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
       xmlns:local="clr-namespace:EverythingToolbar"
+      xmlns:controls="clr-namespace:EverythingToolbar.Controls"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       ScrollViewer.CanContentScroll="False">
 
@@ -26,52 +27,48 @@
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,0"
                     CornerRadius="8,8,0,0">
-                <Grid>
-                    <StackPanel VerticalAlignment="Center">
-                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsHideEmptyResults}" />
-                        <ui:TextBlock Text="Hide results when search term is empty" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
-                    </StackPanel>
-                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsHideEmptySearchResults, Mode=TwoWay}" HorizontalAlignment="Right" />
-                </Grid>
+                <controls:SettingItem Title="{x:Static properties:Resources.SettingsHideEmptyResults}"
+                                      HelpText="Hide results when search term is empty">
+                    <controls:SettingItem.SettingContent>
+                        <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsHideEmptySearchResults, Mode=TwoWay}" />
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
             </Border>
             <Border Padding="16"
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,0"
                     CornerRadius="0">
-                <Grid>
-                    <StackPanel VerticalAlignment="Center">
-                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsSearchAsYouType}" />
-                        <ui:TextBlock Text="Start searching as you type, without pressing Enter" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
-                    </StackPanel>
-                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsSearchAsYouType, Mode=TwoWay}" HorizontalAlignment="Right" />
-                </Grid>
+                <controls:SettingItem Title="{x:Static properties:Resources.SettingsSearchAsYouType}"
+                                      HelpText="Start searching as you type, without pressing Enter">
+                    <controls:SettingItem.SettingContent>
+                        <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsSearchAsYouType, Mode=TwoWay}" />
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
             </Border>
             <Border Padding="16"
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,0"
                     CornerRadius="0">
-                <Grid>
-                    <StackPanel VerticalAlignment="Center">
-                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsSelectFirstResult}" />
-                        <ui:TextBlock Text="Automatically select the first result" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
-                    </StackPanel>
-                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsAutoSelectFirstResult, Mode=TwoWay}" HorizontalAlignment="Right" />
-                </Grid>
+                <controls:SettingItem Title="{x:Static properties:Resources.SettingsSelectFirstResult}"
+                                      HelpText="Automatically select the first result">
+                    <controls:SettingItem.SettingContent>
+                        <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsAutoSelectFirstResult, Mode=TwoWay}" />
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
             </Border>
             <Border Padding="16"
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,1"
                     CornerRadius="0, 0, 8, 8">
-                <Grid>
-                    <StackPanel VerticalAlignment="Center">
-                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsDoubleClickToOpen}" />
-                        <ui:TextBlock Text="Require double-click to open results" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
-                    </StackPanel>
-                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsDoubleClickToOpen, Mode=TwoWay}" HorizontalAlignment="Right" />
-                </Grid>
+                <controls:SettingItem Title="{x:Static properties:Resources.SettingsDoubleClickToOpen}"
+                                      HelpText="Require double-click to open results">
+                    <controls:SettingItem.SettingContent>
+                        <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsDoubleClickToOpen, Mode=TwoWay}" />
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
             </Border>
 
             <ui:TextBlock FontTypography="BodyStrong"
@@ -82,23 +79,24 @@
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1, 1, 1, 0"
                     CornerRadius="8, 8, 0, 0">
-                <Grid>
-                    <StackPanel VerticalAlignment="Center">
-                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsEnableHistory}" />
-                        <ui:TextBlock Text="Save previous search terms for quick access" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
-                    </StackPanel>
-                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsEnableHistory, Mode=TwoWay}" HorizontalAlignment="Right" />
-                </Grid>
+                <controls:SettingItem Title="{x:Static properties:Resources.SettingsEnableHistory}"
+                                      HelpText="Save previous search terms for quick access">
+                    <controls:SettingItem.SettingContent>
+                        <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsEnableHistory, Mode=TwoWay}" />
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
             </Border>
             <Border Padding="16"
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,1"
                     CornerRadius="0,0,8,8">
-                <Grid>
-                    <ui:TextBlock Text="Clear search history" VerticalAlignment="Center" />
-                    <ui:Button Content="Clear now" HorizontalAlignment="Right" Click="OnClearHistoryClicked" />
-                </Grid>
+                <controls:SettingItem Title="Clear search history"
+                                      HelpText="Remove all saved search terms">
+                    <controls:SettingItem.SettingContent>
+                        <ui:Button Content="Clear now" HorizontalAlignment="Right" Click="OnClearHistoryClicked" />
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
             </Border>
 
             <ui:TextBlock FontTypography="BodyStrong"
@@ -109,26 +107,24 @@
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,0"
                     CornerRadius="8,8,0,0">
-                <Grid>
-                    <StackPanel VerticalAlignment="Center">
-                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsUseEverythingFilters}" />
-                        <ui:TextBlock Text="Enable Everything's custom filters in the toolbar" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
-                    </StackPanel>
-                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsImportFilters, Mode=TwoWay}" HorizontalAlignment="Right" />
-                </Grid>
+                <controls:SettingItem Title="{x:Static properties:Resources.SettingsUseEverythingFilters}"
+                                      HelpText="Enable Everything's custom filters in the toolbar">
+                    <controls:SettingItem.SettingContent>
+                        <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsImportFilters, Mode=TwoWay}" />
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
             </Border>
             <Border Padding="16"
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,1"
                     CornerRadius="0,0,8,8">
-                <Grid>
-                    <StackPanel VerticalAlignment="Center">
-                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsRememberFilter}" />
-                        <ui:TextBlock Text="Remember the last used filter for future searches" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
-                    </StackPanel>
-                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsRememberFilter, Mode=TwoWay}" HorizontalAlignment="Right" />
-                </Grid>
+                <controls:SettingItem Title="{x:Static properties:Resources.SettingsRememberFilter}"
+                                      HelpText="Remember the last used filter for future searches">
+                    <controls:SettingItem.SettingContent>
+                        <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsRememberFilter, Mode=TwoWay}" />
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
             </Border>
         </StackPanel>
     </ScrollViewer>

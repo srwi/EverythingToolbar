@@ -7,6 +7,7 @@
       xmlns:c="clr-namespace:EverythingToolbar.Converters"
       xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
       xmlns:local="clr-namespace:EverythingToolbar"
+      xmlns:controls="clr-namespace:EverythingToolbar.Controls"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       ScrollViewer.CanContentScroll="False"
       Unloaded="OnUnloaded">
@@ -28,35 +29,33 @@
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,0"
                     CornerRadius="8,8,0,0">
-                <Grid>
-                    <StackPanel VerticalAlignment="Center">
-                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsCheckForUpdates}" />
-                        <ui:TextBlock Text="Notify when a new version is available" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
-                    </StackPanel>
-                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsUpdateNotificationsEnabled, Mode=TwoWay}" HorizontalAlignment="Right" />
-                </Grid>
+                <controls:SettingItem Title="{x:Static properties:Resources.SettingsCheckForUpdates}"
+                                      HelpText="Notify when a new version is available">
+                    <controls:SettingItem.SettingContent>
+                        <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsUpdateNotificationsEnabled, Mode=TwoWay}" />
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
             </Border>
             <Border Padding="16"
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,1"
                     CornerRadius="0,0,8,8">
-                <Grid>
-                    <StackPanel VerticalAlignment="Center">
-                        <ui:TextBlock Text="Check for updates manually" />
-                        <ui:TextBlock Text="Manually check for new versions of EverythingToolbar" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <ui:ProgressRing IsIndeterminate="True" Width="24" Height="24" Margin="0,0,8,0"
-                                         Visibility="{Binding IsCheckingForUpdates, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}}" />
-                        <ui:Button Content="Check now"
-                                   Click="OnCheckForUpdatesClicked"
-                                   Visibility="{Binding IsUpdateAvailable, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}, ConverterParameter=true}" />
-                        <ui:Button Content="Download latest version"
-                                   Click="OnDownloadUpdateClicked"
-                                   Visibility="{Binding IsUpdateAvailable, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}}" />
-                    </StackPanel>
-                </Grid>
+                <controls:SettingItem Title="Check for updates manually"
+                                      HelpText="Manually check for new versions of EverythingToolbar">
+                    <controls:SettingItem.SettingContent>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <ui:ProgressRing IsIndeterminate="True" Width="24" Height="24" Margin="0,0,8,0"
+                                             Visibility="{Binding IsCheckingForUpdates, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}}" />
+                            <ui:Button Content="Check now"
+                                       Click="OnCheckForUpdatesClicked"
+                                       Visibility="{Binding IsUpdateAvailable, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}, ConverterParameter=true}" />
+                            <ui:Button Content="Download latest version"
+                                       Click="OnDownloadUpdateClicked"
+                                       Visibility="{Binding IsUpdateAvailable, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}}" />
+                        </StackPanel>
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
             </Border>
             <ui:TextBlock FontTypography="BodyStrong"
                           Text="Named Instance"
@@ -66,16 +65,15 @@
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,1"
                     CornerRadius="8,8,8,8">
-                <Grid>
-                    <StackPanel VerticalAlignment="Center">
-                        <ui:TextBlock Text="Everything instance name" />
-                        <ui:TextBlock Text="Set the name of the Everything instance to connect to" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
-                    </StackPanel>
-                    <ui:TextBox Text="{Binding Source={x:Static local:ToolbarSettings.User}, Path=InstanceName, Mode=TwoWay}"
-                                HorizontalAlignment="Right"
-                                Width="200"
-                                PlaceholderText="Default instance" />
-                </Grid>
+                <controls:SettingItem Title="Everything instance name"
+                                      HelpText="Set the name of the Everything instance to connect to">
+                    <controls:SettingItem.SettingContent>
+                        <ui:TextBox Text="{Binding Source={x:Static local:ToolbarSettings.User}, Path=InstanceName, Mode=TwoWay}"
+                                    HorizontalAlignment="Right"
+                                    Width="200"
+                                    PlaceholderText="Default instance" />
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
             </Border>
             <ui:TextBlock FontTypography="BodyStrong"
                           Text="Other"
@@ -85,13 +83,12 @@
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,1"
                     CornerRadius="8,8,8,8">
-                <Grid>
-                    <StackPanel VerticalAlignment="Center">
-                        <ui:TextBlock Text="{x:Static properties:Resources.SettingsReplaceStartMenuSearch}" />
-                        <ui:TextBlock Text="Replace the default Windows Start menu search with EverythingToolbar" Foreground="{DynamicResource TextFillColorDisabledBrush}" />
-                    </StackPanel>
-                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsReplaceStartMenuSearch, Mode=TwoWay}" HorizontalAlignment="Right" />
-                </Grid>
+                <controls:SettingItem Title="{x:Static properties:Resources.SettingsReplaceStartMenuSearch}"
+                                      HelpText="Replace the default Windows Start menu search with EverythingToolbar">
+                    <controls:SettingItem.SettingContent>
+                        <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsReplaceStartMenuSearch, Mode=TwoWay}" />
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
             </Border>
         </StackPanel>
     </ScrollViewer>
