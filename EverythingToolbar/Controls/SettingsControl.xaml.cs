@@ -1,10 +1,9 @@
 ﻿using EverythingToolbar.Search;
 using EverythingToolbar.Settings;
-using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+using System.Windows.Controls.Primitives;
 
 namespace EverythingToolbar.Controls
 {
@@ -26,10 +25,12 @@ namespace EverythingToolbar.Controls
 
         private void OnSortByClicked(object sender, RoutedEventArgs e)
         {
-            if (!(sender is MenuItem selectedItem)) return;
-            var selectedIndex = SortByMenu.Items.IndexOf(selectedItem);
+            if (sender is not MenuItem selectedItem)
+                return;
 
-            int[] fastSortExceptions = { 4, 8 };
+            int selectedIndex = SortByMenu.Items.IndexOf(selectedItem);
+
+            int[] fastSortExceptions = [4, 8];
             if (SearchResultProvider.GetIsFastSort(selectedIndex, ToolbarSettings.User.IsSortDescending) ||
                 fastSortExceptions.Contains(selectedIndex))
             {
@@ -75,20 +76,17 @@ namespace EverythingToolbar.Controls
                 SortAscendingMenuItem.IsChecked = true;
         }
 
-        private void OnClick(object sender, RoutedEventArgs e)
+        private void OpenButtonContextMenu(object sender, RoutedEventArgs e)
         {
-            e.Handled = true;
+            if (sender is not Button button)
+                return;
 
-            // Simulate right mouse button click to open context menu
-            var mouseDownEvent =
-                new MouseButtonEventArgs(Mouse.PrimaryDevice,
-                    Environment.TickCount,
-                    MouseButton.Right)
-                {
-                    RoutedEvent = Mouse.MouseUpEvent,
-                    Source = this,
-                };
-            InputManager.Current.ProcessInput(mouseDownEvent);
+            if (button.ContextMenu is not { } contextMenu)
+                return;
+
+            contextMenu.PlacementTarget = button;
+            contextMenu.Placement = PlacementMode.Bottom;
+            contextMenu.IsOpen = true;
         }
     }
 }

@@ -31,7 +31,8 @@
                           Icon="&#xE7AC;">
                     <Separator />
                     <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWithChooseApp}"
-                              Click="OpenWith" />
+                              Click="OpenWith"
+                              Icon="&#xE7AC;" />
                 </MenuItem>
                 <MenuItem Header="{x:Static properties:Resources.ContextMenuShowInEverything}"
                           Click="ShowInEverything"
@@ -43,7 +44,8 @@
                           Click="CopyFile"
                           Icon="&#xE8C8;" />
                 <MenuItem Header="{x:Static properties:Resources.ContextMenuProperties}"
-                          Click="ShowFileProperties" />
+                          Click="ShowFileProperties"
+                          Icon="&#xE946;" />
                 <Separator />
                 <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWinContext}"
                           Click="ShowFileWindowsContextMenu"
@@ -71,8 +73,7 @@
                   ScrollViewer.VerticalScrollBarVisibility="Visible"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   ScrollViewer.PanningMode="VerticalOnly"
-                  FocusVisualStyle="{x:Null}">
-        </ListView>
+                  FocusVisualStyle="{x:Null}" />
         <Grid x:Name="SpinnerOverlay"
               Visibility="Collapsed"
               IsHitTestVisible="False"

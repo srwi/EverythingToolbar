@@ -62,10 +62,10 @@
                                       StrokeThickness="0.8"
                                       Data="M0,0 L6,6 L0,12" />
                             </Grid>
-                            <Popup IsOpen="{Binding Path=IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                            <Popup x:Name="SubMenuPopup"
+                                   IsOpen="{Binding Path=IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
                                    Placement="Right"
-                                   AllowsTransparency="True"
-                                   x:Name="SubMenuPopup">
+                                   AllowsTransparency="True">
                                 <Border x:Name="SubMenuBorder"
                                         Background="{DynamicResource ContextMenuBackground}"
                                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -77,7 +77,10 @@
                                         <TranslateTransform />
                                     </Border.RenderTransform>
                                     <Border.Effect>
-                                        <DropShadowEffect Color="Black" BlurRadius="{DynamicResource ContextMenuDropShadowRadius}" ShadowDepth="0" Opacity="0.3" />
+                                        <DropShadowEffect Color="Black"
+                                                          BlurRadius="{DynamicResource ContextMenuDropShadowRadius}"
+                                                          ShadowDepth="0"
+                                                          Opacity="0.3" />
                                     </Border.Effect>
                                     <Grid x:Name="SubMenu" Grid.IsSharedSizeScope="True">
                                         <StackPanel IsItemsHost="True"

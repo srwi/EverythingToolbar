@@ -1,7 +1,6 @@
 ﻿<UserControl x:Class="EverythingToolbar.Controls.SearchBox"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:c="clr-namespace:EverythingToolbar.Converters"
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:properties="clr-namespace:EverythingToolbar.Properties"
              xmlns:controls="clr-namespace:EverythingToolbar.Controls"
              xmlns:local="clr-namespace:EverythingToolbar"
@@ -22,9 +21,6 @@
                  PreviewKeyUp="OnPreviewKeyUp">
             <TextBox.ContextMenu>
                 <ContextMenu>
-                    <i:Interaction.Behaviors>
-                    </i:Interaction.Behaviors>
-
                     <MenuItem Header="{x:Static properties:Resources.SettingsRegularExpressions}"
                               IsCheckable="True"
                               IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsRegExEnabled, Mode=TwoWay}" />
@@ -68,7 +64,6 @@
                           ToolTip="{x:Static properties:Resources.SettingsMatchWholeWord}"
                           IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsMatchWholeWord}"
                           IsEnabled="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={c:NotConverter}}"
-                          Name="IsMatchWholeWordButton"
                           Margin="1">
                 <TextBlock TextDecorations="Underline,OverLine"
                            Text="Abl"
