@@ -19,7 +19,7 @@ namespace EverythingToolbar.Settings
                                         : $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}");
         }
 
-        private void OnGeneralSettingsClicked(object sender, RoutedEventArgs e)
+        private void OnSearchSettingsClicked(object sender, RoutedEventArgs e)
         {
             NavigateToPage(typeof(Search));
         }
@@ -29,9 +29,9 @@ namespace EverythingToolbar.Settings
             NavigateToPage(typeof(Rules));
         }
 
-        private void OnKeyboardShortcutsClicked(object sender, RoutedEventArgs e)
+        private void OnUserInterfaceSettingsClicked(object sender, RoutedEventArgs e)
         {
-            NavigateToPage(typeof(ShortcutSelector));
+            NavigateToPage(typeof(UserInterface));
         }
 
         private void NavigateToPage(Type pageType)

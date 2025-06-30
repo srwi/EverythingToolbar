@@ -79,7 +79,7 @@
                     Padding="0"
                     VerticalAlignment="Stretch"
                     IsChevronVisible="False"
-                    Click="OnGeneralSettingsClicked">
+                    Click="OnSearchSettingsClicked">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -96,7 +96,7 @@
                             Margin="24"
                             VerticalAlignment="Center"
                             FontTypography="BodyStrong"
-                            Text="General Settings"
+                            Text="Search settings"
                             TextWrapping="WrapWithOverflow" />
                     </Grid>
                 </ui:CardAction>
@@ -104,6 +104,35 @@
                 <ui:CardAction
                     Grid.Row="0"
                     Grid.Column="1"
+                    Margin="4,0,4,0"
+                    Padding="0"
+                    VerticalAlignment="Stretch"
+                    IsChevronVisible="False"
+                    Click="OnUserInterfaceSettingsClicked">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image
+                            Width="60"
+                            Margin="24,0,0,0"
+                            Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/MenuFlyout.png" />
+
+                        <ui:TextBlock
+                            Grid.Column="1"
+                            Margin="24"
+                            VerticalAlignment="Center"
+                            FontTypography="BodyStrong"
+                            Text="User interface"
+                            TextWrapping="WrapWithOverflow" />
+                    </Grid>
+                </ui:CardAction>
+
+                <ui:CardAction
+                    Grid.Row="0"
+                    Grid.Column="2"
                     Margin="4,0,4,0"
                     Padding="0"
                     VerticalAlignment="Stretch"
@@ -118,43 +147,14 @@
                         <Image
                             Width="60"
                             Margin="24,0,0,0"
-                            Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/Shape.png" />
+                            Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/FilePicker.png" />
 
                         <ui:TextBlock
                             Grid.Column="1"
                             Margin="24"
                             VerticalAlignment="Center"
                             FontTypography="BodyStrong"
-                            Text="Custom Actions"
-                            TextWrapping="WrapWithOverflow" />
-                    </Grid>
-                </ui:CardAction>
-
-                <ui:CardAction
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    Margin="4,0,4,0"
-                    Padding="0"
-                    VerticalAlignment="Stretch"
-                    IsChevronVisible="False"
-                    Click="OnKeyboardShortcutsClicked">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Image
-                            Width="60"
-                            Margin="24,0,0,0"
-                            Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/InfoBadge.png" />
-
-                        <ui:TextBlock
-                            Grid.Column="1"
-                            Margin="24"
-                            VerticalAlignment="Center"
-                            FontTypography="BodyStrong"
-                            Text="Keyboard Shortcuts"
+                            Text="Custom actions"
                             TextWrapping="WrapWithOverflow" />
                     </Grid>
                 </ui:CardAction>

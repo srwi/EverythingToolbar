@@ -209,35 +209,14 @@
       <Resource Include="Images\PinToTaskbar.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
-      <Resource Include="Images\WinUIGallery\IconElement.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Images\WinUIGallery\ScratchPad.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Images\WinUIGallery\TabView.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Images\WinUIGallery\TextBox.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Resource>
       <Resource Include="Images\WinUIGallery\FilePicker.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
-      <Resource Include="Images\WinUIGallery\InfoBadge.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Resource Include="Images\WinUIGallery\MenuFlyout.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
-      <Resource Include="Images\WinUIGallery\ListView.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Images\WinUIGallery\MenuBar.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Images\WinUIGallery\Shape.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Images\WinUIGallery\StandardUICommand.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Resource Include="Images\WinUIGallery\IconElement.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
     </ItemGroup>
     <Target Name="PostBuildMacros">
