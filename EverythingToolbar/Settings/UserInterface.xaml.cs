@@ -32,13 +32,15 @@ namespace EverythingToolbar.Settings
         public UserInterfaceViewModel()
         {
             BitmapImage imageSource = new(new Uri("pack://application:,,,/EverythingToolbar;component/Images/AppIcon.ico"));
-            SampleSearchResult = new SearchResult {
+            SampleSearchResult = new SearchResult
+            {
                 HighlightedPath = @"C:\Program Files\EverythingToolbar\Everything*Toolbar*.exe",
                 HighlightedFileName = "Everything*Toolbar*",
                 IsFile = true,
                 FileSize = 12345678,
                 Icon = imageSource,
-                DateModified = new FILETIME {
+                DateModified = new FILETIME
+                {
                     dwHighDateTime = DateTimeToFileTime(DateTime.Now).dwHighDateTime,
                     dwLowDateTime = DateTimeToFileTime(DateTime.Now).dwLowDateTime
                 },

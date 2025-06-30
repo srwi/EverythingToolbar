@@ -8,7 +8,7 @@ namespace EverythingToolbar.Behaviors
     public class WpfUiBehavior : Behavior<FrameworkElement>
     {
         private static readonly RegistryEntry SystemThemeRegistryEntry = new("HKEY_CURRENT_USER", @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme");
-        
+
         public WpfUiBehavior()
         {
             if (AssociatedObject is not Window)
@@ -25,11 +25,11 @@ namespace EverythingToolbar.Behaviors
                 });
             };
         }
-        
+
         protected override void OnAttached()
         {
             base.OnAttached();
-            
+
             if (AssociatedObject.IsLoaded)
                 AutoApplyTheme();
             else
