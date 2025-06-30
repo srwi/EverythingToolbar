@@ -10,25 +10,28 @@ body:
         required: true
       - label: I have searched all [open and closed issues](https://github.com/srwi/EverythingToolbar/issues?q=) for the same bug report without success.
         required: true
-- type: input
+- id: version
+  type: input
   attributes:
     label: EverythingToolbar Version
     description: What version of EverythingToolbar are you using?
-    placeholder: "e.g. 0.7.4"
+    placeholder: "e.g. 1.5.0"
   validations:
     required: true
-- type: input
+- id: et_version
+  type: input
   attributes:
     label: Everything Version
     description: What version of Everything are you using?
     placeholder: "e.g. 1.4.1.1024 (x64)"
   validations:
     required: true
-- type: input
+- id: windows_version
+  type: input
   attributes:
     label: Windows Version
     description: What Windows version are you using? Click Start button > Settings > System > About.
-    placeholder: "e.g. Windows 10 version 1909"
+    placeholder: "e.g. Windows 11 24H2"
   validations:
     required: true
 - type: textarea

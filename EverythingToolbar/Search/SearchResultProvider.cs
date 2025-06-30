@@ -373,27 +373,33 @@ namespace EverythingToolbar.Search
         {
             SetInstanceName(ToolbarSettings.User.InstanceName);
 
-            var major = Everything_GetMajorVersion();
-            var minor = Everything_GetMinorVersion();
-            var revision = Everything_GetRevision();
+            Version version = GetEverythingVersion();
 
-            if (major > 1 || (major == 1 && minor > 4) || (major == 1 && minor == 4 && revision >= 1))
+            if (version.Major > 1 || version is { Major: 1, Minor: > 4 } || version is { Major: 1, Minor: 4, Build: >= 1 })
             {
-                Logger.Info("Everything version: {major}.{minor}.{revision}", major, minor, revision);
+                Logger.Info("Everything version: {major}.{minor}.{build}", version.Major, version.Minor, version.Build);
                 return true;
             }
 
-            if (major == 0 && minor == 0 && revision == 0 && (ErrorCode)Everything_GetLastError() == ErrorCode.ErrorIpc)
+            if (version is { Major: 0, Minor: 0, Build: 0 } && (ErrorCode)Everything_GetLastError() == ErrorCode.ErrorIpc)
             {
                 LogLastError();
                 Logger.Error("Failed to get Everything version number.");
             }
             else
             {
-                Logger.Error("Everything version {major}.{minor}.{revision} is not supported.", major, minor, revision);
+                Logger.Error("Everything version {major}.{minor}.{build} is not supported.", version.Major, version.Minor, version.Build);
             }
 
             return false;
+        }
+
+        public static Version GetEverythingVersion()
+        {
+            uint major = Everything_GetMajorVersion();
+            uint minor = Everything_GetMinorVersion();
+            uint revision = Everything_GetRevision();
+            return new Version((int)major, (int)minor, (int)revision);
         }
 
         public static void SetInstanceName(string name)

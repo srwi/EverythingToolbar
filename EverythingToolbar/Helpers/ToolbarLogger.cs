@@ -39,11 +39,11 @@ namespace EverythingToolbar.Helpers
 
         private static void InitializeExceptionLoggers(ILogger logger)
         {
-            AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
+            AppDomain.CurrentDomain.FirstChanceException += (_, e) =>
             {
                 logger.Debug(e.Exception, "Unhandled first chance exception");
             };
-            AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+            AppDomain.CurrentDomain.UnhandledException += (_, args) =>
             {
                 logger.Error((Exception)args.ExceptionObject, "Unhandled exception");
             };
@@ -51,7 +51,7 @@ namespace EverythingToolbar.Helpers
             if (Application.Current != null)
             {
                 // Not applicable for deskband
-                Application.Current.DispatcherUnhandledException += (sender, args) =>
+                Application.Current.DispatcherUnhandledException += (_, args) =>
                 {
                     logger.Error(args.Exception, "Unhandled exception on UI thread");
                 };
