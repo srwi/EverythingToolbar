@@ -78,23 +78,15 @@
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1, 1, 1, 0"
-                    CornerRadius="8, 8, 0, 0">
+                    CornerRadius="8, 8, 8, 8">
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsEnableHistory}"
                                       HelpText="Save previous search terms for quick access">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsEnableHistory, Mode=TwoWay}" />
-                    </controls:SettingItem.SettingContent>
-                </controls:SettingItem>
-            </Border>
-            <Border Padding="16"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1,1,1,1"
-                    CornerRadius="0,0,8,8">
-                <controls:SettingItem Title="Clear search history"
-                                      HelpText="Remove all saved search terms">
-                    <controls:SettingItem.SettingContent>
-                        <ui:Button Content="Clear now" HorizontalAlignment="Right" Click="OnClearHistoryClicked" />
+                        <StackPanel Orientation="Horizontal">
+                            <ui:Button Content="Clear now" HorizontalAlignment="Right" Click="OnClearHistoryClicked" />
+                            <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsEnableHistory, Mode=TwoWay}"
+                                             Margin="15, 0, 0, 0"/>
+                        </StackPanel>
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>

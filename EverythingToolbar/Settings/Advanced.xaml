@@ -28,34 +28,29 @@
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,0"
-                    CornerRadius="8,8,0,0">
-                <controls:SettingItem Title="{x:Static properties:Resources.SettingsCheckForUpdates}"
-                                      HelpText="Notify when a new version is available">
-                    <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsUpdateNotificationsEnabled, Mode=TwoWay}" />
-                    </controls:SettingItem.SettingContent>
-                </controls:SettingItem>
-            </Border>
-            <Border Padding="16"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1,1,1,1"
-                    CornerRadius="0,0,8,8">
-                <controls:SettingItem Title="Check for updates manually"
-                                      HelpText="Manually check for new versions of EverythingToolbar">
-                    <controls:SettingItem.SettingContent>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ui:ProgressRing IsIndeterminate="True" Width="24" Height="24" Margin="0,0,8,0"
-                                             Visibility="{Binding IsCheckingForUpdates, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}}" />
-                            <ui:Button Content="Check now"
-                                       Click="OnCheckForUpdatesClicked"
-                                       Visibility="{Binding IsUpdateAvailable, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}, ConverterParameter=true}" />
-                            <ui:Button Content="Download latest version"
-                                       Click="OnDownloadUpdateClicked"
-                                       Visibility="{Binding IsUpdateAvailable, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}}" />
-                        </StackPanel>
-                    </controls:SettingItem.SettingContent>
-                </controls:SettingItem>
+                    CornerRadius="8,8,8,8">
+                <StackPanel>
+                    <controls:SettingItem Title="{x:Static properties:Resources.SettingsCheckForUpdates}"
+                                          HelpText="Notify when a new version is available">
+                        <controls:SettingItem.SettingContent>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <ui:ProgressRing IsIndeterminate="True" Width="24" Height="24" Margin="0,0,15,0"
+                                                 Visibility="{Binding CheckingForUpdatesVisible, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}}" />
+                                <ui:Button Content="Check now"
+                                           Click="OnCheckForUpdatesClicked"
+                                           Visibility="{Binding DownloadUpdateButtonVisible, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}, ConverterParameter=true}" />
+                                <ui:Button Content="Download latest version"
+                                           Click="OnDownloadUpdateClicked"
+                                           Visibility="{Binding DownloadUpdateButtonVisible, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}}" />
+                                <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsUpdateNotificationsEnabled, Mode=TwoWay}"
+                                                 Margin="15, 0, 0, 0" />
+                            </StackPanel>
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                    <ui:InfoBar Name="NoUpdatesInfoBar"
+                                Message="You are already using the latest version."
+                                IsOpen="{Binding NoUpdatesBannerOpen, RelativeSource={RelativeSource AncestorType=Page}, Mode=TwoWay}" />
+                </StackPanel>
             </Border>
             <ui:TextBlock FontTypography="BodyStrong"
                           Text="Named Instance"

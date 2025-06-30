@@ -1,5 +1,6 @@
 ﻿using EverythingToolbar.Controls;
 using EverythingToolbar.Search;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -9,22 +10,37 @@ namespace EverythingToolbar.Settings
 {
     public partial class Advanced : INotifyPropertyChanged
     {
-        private bool _isCheckingForUpdates;
-        private bool _isUpdateAvailable;
+        private bool _downloadUpdateButtonVisible;
+        private bool _checkingForUpdatesVisible;
+        private bool _noUpdatesBannerOpen;
         private string _latestVersionUrl;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public bool IsCheckingForUpdates
+        public bool CheckingForUpdatesVisible
         {
-            get => _isCheckingForUpdates;
-            set { _isCheckingForUpdates = value; OnPropertyChanged(); }
+            get => _checkingForUpdatesVisible;
+            set { _checkingForUpdatesVisible = value; OnPropertyChanged(); }
         }
 
-        public bool IsUpdateAvailable
+        public bool DownloadUpdateButtonVisible
         {
-            get => _isUpdateAvailable;
-            set { _isUpdateAvailable = value; OnPropertyChanged(); }
+            get => _downloadUpdateButtonVisible;
+            set { _downloadUpdateButtonVisible = value; OnPropertyChanged(); }
+        }
+
+        public bool NoUpdatesBannerOpen
+        {
+            get => _noUpdatesBannerOpen;
+            set
+            {
+                // Setting the margin should be done using a style and trigger, but it's currently
+                // hard to do while WPF UI styles are loaded as dynamic resources.
+                NoUpdatesInfoBar.Margin = value ? new Thickness(0, 15, 0, 0) : new Thickness(0);
+
+                _noUpdatesBannerOpen = value;
+                OnPropertyChanged();
+            }
         }
 
         public Advanced()
@@ -40,20 +56,30 @@ namespace EverythingToolbar.Settings
 
         private async void OnCheckForUpdatesClicked(object sender, RoutedEventArgs e)
         {
-            IsCheckingForUpdates = true;
-            IsUpdateAvailable = false;
+            try
+            {
+                CheckingForUpdatesVisible = true;
+                NoUpdatesBannerOpen = false;
+                DownloadUpdateButtonVisible = false;
 
-            var latestVersion = await UpdateBanner.CheckForUpdateAsync();
-            IsCheckingForUpdates = false;
-            if (latestVersion != null)
-            {
-                // Placeholder: set a dummy URL for now
-                _latestVersionUrl = "https://example.com/download";
-                IsUpdateAvailable = true;
+                Version? latestVersion = await UpdateBanner.CheckForUpdateAsync();
+                CheckingForUpdatesVisible = false;
+
+                if (latestVersion != null)
+                {
+                    _latestVersionUrl = "https://github.com/srwi/EverythingToolbar/releases/latest";
+                    DownloadUpdateButtonVisible = true;
+                }
+                else
+                {
+                    NoUpdatesBannerOpen = true;
+                }
             }
-            else
+            catch
             {
-                MessageBox.Show("You are already using the latest version.");
+                CheckingForUpdatesVisible = false;
+                NoUpdatesBannerOpen = false;
+                DownloadUpdateButtonVisible = false;
             }
         }
 
