@@ -27,16 +27,29 @@
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,0"
                     CornerRadius="8,8,0,0">
-                <controls:SettingItem Title="{x:Static properties:Resources.SettingsView}"
-                                      HelpText="Choose the layout for search results">
-                    <controls:SettingItem.SettingContent>
-                        <ComboBox HorizontalAlignment="Right"
-                                  ItemsSource="{Binding ItemTemplates}"
-                                  DisplayMemberPath="Key"
-                                  SelectedValuePath="Value"
-                                  SelectedValue="{Binding Source={x:Static local:ToolbarSettings.User}, Path=ItemTemplate, Mode=TwoWay}" />
-                    </controls:SettingItem.SettingContent>
-                </controls:SettingItem>
+                <StackPanel>
+                    <controls:SettingItem Title="{x:Static properties:Resources.SettingsView}"
+                                          HelpText="Choose the layout for search results">
+                        <controls:SettingItem.SettingContent>
+                            <ComboBox HorizontalAlignment="Right"
+                                      ItemsSource="{Binding ItemTemplates}"
+                                      DisplayMemberPath="Key"
+                                      SelectedValuePath="Value"
+                                      SelectedValue="{Binding Source={x:Static local:ToolbarSettings.User}, Path=ItemTemplate, Mode=TwoWay}" />
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                    <Border Margin="0,17,0,0"
+                            Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
+                            BorderBrush="{ui:ThemeResource ControlStrokeColorDefaultBrush}"
+                            BorderThickness="1"
+                            CornerRadius="4">
+                        <i:Interaction.Behaviors>
+                            <b:ThemeAwareness />
+                        </i:Interaction.Behaviors>
+                        <ContentControl Content="{Binding SampleSearchResult}" FontSize="15"
+                                        ContentTemplate="{DynamicResource SearchResultsViewTemplate}" />
+                    </Border>
+                </StackPanel>
             </Border>
             <Border Padding="16"
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"

@@ -17,19 +17,17 @@
                    Width="16"
                    Height="16"
                    Margin="0, 5, 0, 0" />
-            <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, Mode=OneTime}"
+            <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, ConverterParameter=12, Mode=OneTime}"
                             Grid.Column="1"
                             VerticalAlignment="Bottom"
                             Margin="0, 7, 0, 4"
-                            FontSize="12pt"
                             Foreground="{DynamicResource SearchResultFileName}" />
-            <ContentControl Content="{Binding HighlightedPath, Converter={c:HighlightedTextConverter}, Mode=OneTime}"
+            <ContentControl Content="{Binding HighlightedPath, Converter={c:HighlightedTextConverter}, ConverterParameter=10, Mode=OneTime}"
                             ToolTip="{Binding Path}"
                             Grid.Column="1"
                             Grid.Row="1"
                             VerticalAlignment="Top"
                             Margin="0, 0, 0, 4"
-                            FontSize="10pt"
                             Foreground="{DynamicResource SearchResultPath}" />
             <TextBlock Grid.Column="2"
                        VerticalAlignment="Bottom"
