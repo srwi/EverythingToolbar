@@ -187,7 +187,7 @@
     <value>Compacto</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>Compact (detailed)</value>
+    <value>Compacto (com detalhes)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
     <value>Normal</value>
@@ -235,25 +235,25 @@
     <value>Falha ao executar o comando</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
-    <value>To utilize this sorting method it has to have fast sorting enabled. It can be enabled in your Everything settings.</value>
+    <value>Para utilizar este método de ordenação precisa ter a classificação rápida habilitada. Pode ser ativado em suas configurações de tudo.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
-    <value>Fast sorting not enabled</value>
+    <value>A classificação rápida não está ativada</value>
   </data>
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
-    <value>At least one regular expression is invalid.</value>
+    <value>Pelo menos uma expressão regular está inválida.</value>
   </data>
   <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Rule names cannot be empty.</value>
+    <value>Os Nomes das regras não podem estar vazias.</value>
   </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
-    <value>Please select Everything.exe...</value>
+    <value>Por favor, Selecione Everything.exe...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>Please select the Filters.csv file. By default it can be found in %APPDATA%\Everything. Its location might be different depending on your installation. If the file does not exist for you that means you didn't perform any changes to Everything's default filters.</value>
+    <value>Por favor, selecione o arquivo Filters.csv. Por padrão pode ser encontrado em %APPDATA%\Everything. Sua localização pode ser diferente, dependendo de sua instalação. Se o arquivo não existir para você, isso significa que você não realizou nenhuma alteração nos filtros padrão de tudo.</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
-    <value>Filters.csv not found</value>
+    <value>Filtros.csv não encontrado</value>
   </data>
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Unhandled exception occured</value>
@@ -262,13 +262,13 @@
     <value>Automatically apply rules based on condition</value>
   </data>
   <data name="RulesCancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Cancelar</value>
   </data>
   <data name="RulesCommand" xml:space="preserve">
-    <value>Command</value>
+    <value>Comando</value>
   </data>
   <data name="RulesName" xml:space="preserve">
-    <value>Name</value>
+    <value>Nome</value>
   </data>
   <data name="RulesRegularExpression" xml:space="preserve">
     <value>Regular Expression</value>
@@ -283,7 +283,7 @@
     <value>Use %file%, %filename% and %path% as placeholders in commands.</value>
   </data>
   <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Rules</value>
+    <value>Regras</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Search with Everything</value>
