@@ -148,7 +148,7 @@
     <value>إفتح</value>
   </data>
   <data name="ContextMenuOpenPath" xml:space="preserve">
-    <value>إفتح المسار</value>
+    <value>فتح المسار</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
     <value>إظهار خيارات أكثر</value>
@@ -367,43 +367,43 @@
     <value>أدخل الاختصار...</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Attributes</value>
+    <value>الخصائص</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
-    <value>Date accessed</value>
+    <value>تاريخ الوصول</value>
   </data>
   <data name="SortByDateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>تاريخ الإنشاء</value>
   </data>
   <data name="SortByDateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>تاريخ التعديل</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
-    <value>Date recently changed</value>
+    <value>تاريخ آخر تغيير</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
-    <value>Date run</value>
+    <value>تاريخ التشغيل</value>
   </data>
   <data name="SortByExtension" xml:space="preserve">
-    <value>Extension</value>
+    <value>الإضافات</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
-    <value>File list filename</value>
+    <value>اسم مِلَفّ قائمة الملفات</value>
   </data>
   <data name="SortByName" xml:space="preserve">
-    <value>Name</value>
+    <value>الاسم</value>
   </data>
   <data name="SortByPath" xml:space="preserve">
-    <value>Path</value>
+    <value>المسار</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
-    <value>Run count</value>
+    <value>عدد التشغيلات</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
-    <value>Size</value>
+    <value>الحجم</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
-    <value>Type name</value>
+    <value>اسم النوع</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>مظلم</value>
@@ -451,12 +451,12 @@
     <value>النقر المزدوج للفتح</value>
   </data>
   <data name="SortDescending" xml:space="preserve">
-    <value>Descending</value>
+    <value>تنازليًا</value>
   </data>
   <data name="SortAscending" xml:space="preserve">
-    <value>Ascending</value>
+    <value>تصاعديًا</value>
   </data>
   <data name="SettingsSearchAsYouType" xml:space="preserve">
-    <value>Search as you type</value>
+    <value>البحث خلال الكتابة</value>
   </data>
 </root>
