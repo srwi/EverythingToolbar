@@ -375,7 +375,7 @@ namespace EverythingToolbar.Controls
             if (SelectedItem == null)
                 return;
 
-            if (!Rules.HandleRule(SelectedItem))
+            if (!CustomActions.HandleAction(SelectedItem))
                 SelectedItem?.Open();
 
             SearchWindow.Instance.Hide();
@@ -480,34 +480,34 @@ namespace EverythingToolbar.Controls
             while (menuItem.Items.Count > 2)
                 menuItem.Items.RemoveAt(0);
 
-            List<Rule> rules = Rules.LoadRules();
+            List<Rule> actions = CustomActions.LoadCustomActions();
 
-            if (rules.Count == 0)
+            if (actions.Count == 0)
             {
                 menuItem.Items.Insert(0, new MenuItem
                 {
-                    Header = Properties.Resources.ContextMenuOpenWithNoRules,
+                    Header = Properties.Resources.ContextMenuOpenWithNoCustomActions,
                     IsEnabled = false
                 });
                 return;
             }
 
-            for (int i = 0; i < rules.Count; i++)
+            for (int i = 0; i < actions.Count; i++)
             {
-                MenuItem ruleMenuItem = new() { Header = rules[i].Name, Tag = rules[i].Command };
-                ruleMenuItem.Click += OpenWithRule;
-                menuItem.Items.Insert(i, ruleMenuItem);
+                MenuItem actionMenuItem = new() { Header = actions[i].Name, Tag = actions[i].Command };
+                actionMenuItem.Click += OpenWithCustomAction;
+                menuItem.Items.Insert(i, actionMenuItem);
             }
         }
 
-        private void OpenWithRule(object sender, RoutedEventArgs e)
+        private void OpenWithCustomAction(object sender, RoutedEventArgs e)
         {
             if (SelectedItem == null)
                 return;
 
             var menuItem = sender as MenuItem;
             var command = menuItem?.Tag?.ToString() ?? "";
-            Rules.HandleRule(SelectedItem, command);
+            CustomActions.HandleAction(SelectedItem, command);
         }
 
         private void OnListViewItemMouseDown(object sender, MouseButtonEventArgs e)

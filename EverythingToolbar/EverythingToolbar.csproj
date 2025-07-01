@@ -170,7 +170,7 @@
           <XamlRuntime>Wpf</XamlRuntime>
           <SubType>Designer</SubType>
         </Page>
-        <Page Update="Settings\Rules.xaml">
+        <Page Update="Settings\CustomActions.xaml">
           <Generator>MSBuild:Compile</Generator>
           <XamlRuntime>Wpf</XamlRuntime>
           <SubType>Designer</SubType>

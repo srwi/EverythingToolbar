@@ -26,7 +26,7 @@ namespace EverythingToolbar.Settings
 
         private void OnCustomActionsClicked(object sender, RoutedEventArgs e)
         {
-            NavigateToPage(typeof(Rules));
+            NavigateToPage(typeof(CustomActions));
         }
 
         private void OnUserInterfaceSettingsClicked(object sender, RoutedEventArgs e)

@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>Scegli l'applicazione</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>Nessuna regola definita</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Incolla</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>Almeno una espressione regolare non è valida.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>I nomi delle regole non possono essere vuoti.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Seleziona Everything.exe...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Si è verificata un'eccezione non gestita</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>Applica automaticamente le regole in base alla condizione</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>Comando</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>Nome</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>Espressione regolare</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>Scrivi</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>Usa %file%, %filename% e %path% come segnaposto nei comandi.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Regole</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Cerca con Everything</value>

@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>Επιλέξτε εφαρμογή</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>Δεν έχουν οριστεί κανόνες</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Επικόλληση</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>Τουλάχιστον μία κανονική έκφραση δεν είναι έγκυρη.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Τα ονόματα των κανόνων δεν μπορούν να είναι κενά.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Παρακαλώ επιλέξτε το Everything.exe...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Παρουσιάστηκε εξαίρεση χωρίς χειρισμό</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>Αυτόματη εφαρμογή κανόνων με βάση την κατάσταση</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>Εντολή</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>Όνομα</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>Κανονική Έκφραση</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>Τύπος</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>Χρησιμοποίησε %file%, %filename% και %path% ως σύμβολα κράτησης θέσης στις εντολές.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Κανόνες</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Αναζήτηση με το Everything</value>

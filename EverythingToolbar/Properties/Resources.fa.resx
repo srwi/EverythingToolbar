@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>انتخاب نرم‌افزار</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>قانونی تعریف نشده است</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>جای‌گذاری</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>حداقل یک عبارت منظم نامعتبر است.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>نام نمی‌تواند خالی باشد.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>لطفاً "Everything.exe" را انتخاب کنید...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>خطای غیر منتظره‌ای رخ داده است</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>به صورت خودکار قوانین را بر اساس شرایط انجام دهید</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>دستور</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>نام</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>عبارت منظم</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>نوع</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>از %filename%, %file% و %path% به عنوان متغیرهایی در دستورها استفاده کنید.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>قوانین</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>چستجو با "Everything"</value>

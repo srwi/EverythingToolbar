@@ -1,4 +1,4 @@
-﻿<Page x:Class="EverythingToolbar.Settings.Rules"
+﻿<Page x:Class="EverythingToolbar.Settings.CustomActions"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
@@ -8,7 +8,6 @@
       xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
       xmlns:properties="clr-namespace:EverythingToolbar.Properties"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Title="{x:Static properties:Resources.RulesWindowTitle}"
       ScrollViewer.CanContentScroll="False"
       Loaded="OnLoaded"
       Unloaded="OnUnloaded">
@@ -68,7 +67,7 @@
     <ScrollViewer>
         <StackPanel Margin="40">
             <ui:TextBlock FontTypography="Title"
-                          Text="{x:Static properties:Resources.RulesWindowTitle}"
+                          Text="{x:Static properties:Resources.SettingsCustomActions}"
                           Margin="0, 0, 0, 25"/>
             <Border
                 Padding="16"
@@ -76,9 +75,9 @@
                 BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1, 1, 1, 0"
                 CornerRadius="8, 8, 0, 0">
-                <CheckBox Name="AutoApplyRulesCheckbox"
+                <CheckBox Name="AutoApplyCustomActionsCheckbox"
                           Click="CheckBox_Click"
-                          Content="{x:Static properties:Resources.RulesAutoApply}"/>
+                          Content="{x:Static properties:Resources.CustomActionsAutoApply}"/>
             </Border>
             <Border
                 Padding="16"
@@ -110,7 +109,7 @@
                                  SelectionChanged="OnGridSelectionChanged">
                         <ui:DataGrid.Columns>
                             <DataGridTextColumn Width="1.5*"
-                                                Header="{x:Static properties:Resources.RulesName}"
+                                                Header="{x:Static properties:Resources.CustomActionsName}"
                                                 Binding="{Binding Name}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -126,7 +125,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTemplateColumn Header="{x:Static properties:Resources.RulesType}" Width="1*">
+                            <DataGridTemplateColumn Header="{x:Static properties:Resources.CustomActionsType}" Width="1*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <ComboBox
@@ -140,7 +139,7 @@
                             </DataGridTemplateColumn>
                             <DataGridTextColumn x:Name="ExpressionColumn"
                                                 Width="2.5*"
-                                                Header="{x:Static properties:Resources.RulesRegularExpression}"
+                                                Header="{x:Static properties:Resources.CustomActionsRegularExpression}"
                                                 Binding="{Binding Expression}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -159,7 +158,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Width="2*"
-                                                Header="{x:Static properties:Resources.RulesCommand}"
+                                                Header="{x:Static properties:Resources.CustomActionsCommand}"
                                                 Binding="{Binding Command}" />
                         </ui:DataGrid.Columns>
                     </ui:DataGrid>
@@ -191,7 +190,7 @@
                     <ui:InfoBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" IsOpen="True" IsClosable="False"
                                HorizontalAlignment="Stretch"
                                VerticalAlignment="Stretch"
-                               Message="{x:Static properties:Resources.RulesWindowText}" />
+                               Message="{x:Static properties:Resources.CustomActionsHelpText}" />
                 </Grid>
             </Border>
         </StackPanel>

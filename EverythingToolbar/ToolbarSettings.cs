@@ -39,7 +39,7 @@ namespace EverythingToolbar
         string ItemTemplate { get; set; }
 
         [Option(DefaultValue = false)]
-        bool IsAutoApplyRules { get; set; }
+        bool IsAutoApplyCustomActions { get; set; }
 
         [Option(DefaultValue = "")]
         string FiltersPath { get; set; }
@@ -263,14 +263,14 @@ namespace EverythingToolbar
             }
         }
 
-        public bool IsAutoApplyRules
+        public bool IsAutoApplyCustomActions
         {
-            get => _settings.IsAutoApplyRules;
+            get => _settings.IsAutoApplyCustomActions;
             set
             {
-                if (_settings.IsAutoApplyRules != value)
+                if (_settings.IsAutoApplyCustomActions != value)
                 {
-                    _settings.IsAutoApplyRules = value;
+                    _settings.IsAutoApplyCustomActions = value;
                     OnPropertyChanged();
                 }
             }

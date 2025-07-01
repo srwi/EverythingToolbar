@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>ئەپ تاللاش</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>ھېچقانداق قائىدە بېكىتىلمىگەن</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>چاپلاش</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>كەم دېگەندە بىر مۇنتىزىم ئىپادە ئۈنۈمسىز.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>قائىدە نامى قۇرۇق بولسا بولمايدۇ.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Everything.exe تاللاڭ...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>بىرتەرەپ قىلىنمىغان نورمالسىزلىق كۆرۈلدى</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>شەرت ئاساسىدا قائىدىلەرنى ئاپتوماتىك قوللىنىش</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>بۇيرۇق</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>نامى</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>مۇنتىزىم ئىپادە</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>تىپى</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>بۇيرۇقلاردا %file%، %filename% ۋە %path% لەرنى تولدۇرۇلما قىلىپ ئىشلىتىش.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>قائىدىلەر</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Everything بىلەن ئىزدەش</value>

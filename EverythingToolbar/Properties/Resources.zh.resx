@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>選擇應用程式</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>沒有任何規則</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>貼上</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>至少有一個規則表達式無效。</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>規則名稱不能為空。</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>請選擇 Everything.exe...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>發生未處理的異常</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>根據條件自動套用規則</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>命令</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>檔名</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>正規表示式</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>類型</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>在命令中使用 %file%、%filename% 和 %path% 作為佔位符。</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>規則</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>使用 Everything 搜索</value>

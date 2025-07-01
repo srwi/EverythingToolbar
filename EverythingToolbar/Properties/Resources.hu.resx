@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>Alkalmazás választása</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>Nincs szabály megadva</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Beillesztés</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>Legalább egy alapértelmezett kifejezés érvénytelen.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>A szabály neveket nem lehet üresen hagyni.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Kérem válassza az Everything.exe-t...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Váratlan kivétel történt</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>Szabályok automatikus alkalmazása kondíció alapján</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>Parancs</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>Név</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>Reguláris kifejezés</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>Típus</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>Használja a %file%, %filename% és %path% helyőrzőt a parancsokban.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Szabályok</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Keresés az Everything-el</value>

@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>Chọn ứng dụng</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>Không có quy tắc được xác định</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Dán</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>Ít nhất một cú pháp không hợp pháp.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Tên quy tắc không được để trống.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Vui lòng chọn Everything.exe...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Ngoại lệ ngoài ý muốn đã xảy ra</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>Tự động áp dụng các quy tắc dựa trên điều kiện</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>Lệnh</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>Tên</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>Cú pháp thường dùng</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>Kiểu</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>Dùng %file%, %filename% và %path% làm khung giữ chỗ trong các lệnh.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Quy tắc</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Tìm kiếm bằng Everything</value>

@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>اختر تطبيق</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>لا توجد قواعد محددة</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>لصق</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>عبارة عادية واحدة على الأقل غير صحيحة.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>قوانين الأسماء يجب أن لا تكون فارغة.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>الرجاء تحديد Everything.exe...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>حدث استثناء غير معالج</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>تطبيق القواعد تلقائياً بناءً على الشرط</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>أمر</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>الإسم</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>تعبير عادي</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>نوع</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>استخدم %file%و %filename% و %path% كعناصر النائبة في الأوامر.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>القواعد</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>بحث باستخدام Everything</value>

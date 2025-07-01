@@ -12,38 +12,38 @@ using System.Xml.Serialization;
 
 namespace EverythingToolbar.Settings
 {
-    public partial class Rules
+    public partial class CustomActions
     {
-        private static List<Rule> _rules = new List<Rule>();
-        private static string RulesPath => Path.Combine(Utils.GetConfigDirectory(), "rules.xml");
+        private static List<Rule> _actions = new();
+        private static string CustomActionsPath => Path.Combine(Utils.GetConfigDirectory(), "rules.xml");  // TODO: Rename to actions.xml and add compatibility handling
 
-        public Rules()
+        public CustomActions()
         {
             InitializeComponent();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _rules = LoadRules();
-            DataGrid.ItemsSource = _rules;
-            AutoApplyRulesCheckbox.IsChecked = ToolbarSettings.User.IsAutoApplyRules;
+            _actions = LoadCustomActions();
+            DataGrid.ItemsSource = _actions;
+            AutoApplyCustomActionsCheckbox.IsChecked = ToolbarSettings.User.IsAutoApplyCustomActions;
             UpdateUi();
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            if (SaveRules(_rules, (bool)AutoApplyRulesCheckbox.IsChecked))
+            if (SaveCustomActions(_actions, (bool)AutoApplyCustomActionsCheckbox.IsChecked))
             {
-                ToolbarSettings.User.IsAutoApplyRules = (bool)AutoApplyRulesCheckbox.IsChecked;
+                ToolbarSettings.User.IsAutoApplyCustomActions = (bool)AutoApplyCustomActionsCheckbox.IsChecked;
             }
         }
 
-        public static List<Rule> LoadRules()
+        public static List<Rule> LoadCustomActions()
         {
-            if (File.Exists(RulesPath))
+            if (File.Exists(CustomActionsPath))
             {
-                var serializer = new XmlSerializer(_rules.GetType());
-                using (var reader = XmlReader.Create(RulesPath))
+                var serializer = new XmlSerializer(_actions.GetType());
+                using (var reader = XmlReader.Create(CustomActionsPath))
                 {
                     return (List<Rule>)serializer.Deserialize(reader);
                 }
@@ -52,17 +52,17 @@ namespace EverythingToolbar.Settings
             return new List<Rule>();
         }
 
-        public static bool SaveRules(List<Rule> newRules, bool isAutoApplyRules)
+        public static bool SaveCustomActions(List<Rule> newActions, bool isAutoApplyCustomActions)
         {
-            if (newRules.Any(r => string.IsNullOrEmpty(r.Name)))
+            if (newActions.Any(r => string.IsNullOrEmpty(r.Name)))
             {
-                MessageBox.Show(Properties.Resources.MessageBoxRuleNameEmpty,
+                MessageBox.Show(Properties.Resources.MessageBoxCustomActionsNameEmpty,
                                 Properties.Resources.MessageBoxErrorTitle,
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Error);
                 return false;
             }
-            if (isAutoApplyRules && newRules.Any(r => !r.ExpressionValid))
+            if (isAutoApplyCustomActions && newActions.Any(r => !r.ExpressionValid))
             {
                 MessageBox.Show(Properties.Resources.MessageBoxRegExInvalid,
                                 Properties.Resources.MessageBoxErrorTitle,
@@ -71,11 +71,11 @@ namespace EverythingToolbar.Settings
                 return false;
             }
 
-            Directory.CreateDirectory(Path.GetDirectoryName(RulesPath));
-            var serializer = new XmlSerializer(newRules.GetType());
-            using (var writer = XmlWriter.Create(RulesPath))
+            Directory.CreateDirectory(Path.GetDirectoryName(CustomActionsPath));
+            var serializer = new XmlSerializer(newActions.GetType());
+            using (var writer = XmlWriter.Create(CustomActionsPath))
             {
-                serializer.Serialize(writer, newRules);
+                serializer.Serialize(writer, newActions);
             }
 
             return true;
@@ -83,23 +83,23 @@ namespace EverythingToolbar.Settings
 
         private void AddItem(object sender, RoutedEventArgs e)
         {
-            _rules.Insert(_rules.Count, new Rule { Name = "", Type = FileType.Any, Expression = "", Command = "" });
+            _actions.Insert(_actions.Count, new Rule { Name = "", Type = FileType.Any, Expression = "", Command = "" });
             RefreshList();
-            DataGrid.SelectedIndex = _rules.Count - 1;
+            DataGrid.SelectedIndex = _actions.Count - 1;
         }
 
         private void DeleteSelected(object sender, RoutedEventArgs e)
         {
             var selectedIndex = DataGrid.SelectedIndex;
-            _rules.RemoveAt(selectedIndex);
+            _actions.RemoveAt(selectedIndex);
             RefreshList();
-            if (_rules.Count > selectedIndex)
+            if (_actions.Count > selectedIndex)
             {
                 DataGrid.SelectedIndex = selectedIndex;
             }
-            else if (_rules.Count > 0)
+            else if (_actions.Count > 0)
             {
-                DataGrid.SelectedIndex = _rules.Count - 1;
+                DataGrid.SelectedIndex = _actions.Count - 1;
             }
         }
 
@@ -117,8 +117,8 @@ namespace EverythingToolbar.Settings
         {
             var selectedIndex = DataGrid.SelectedIndex;
             var item = DataGrid.SelectedItem as Rule;
-            _rules.RemoveAt(selectedIndex);
-            _rules.Insert(selectedIndex + delta, item);
+            _actions.RemoveAt(selectedIndex);
+            _actions.Insert(selectedIndex + delta, item);
             RefreshList();
             DataGrid.SelectedIndex = selectedIndex + delta;
         }
@@ -131,20 +131,20 @@ namespace EverythingToolbar.Settings
         private void RefreshList()
         {
             DataGrid.ItemsSource = null;
-            DataGrid.ItemsSource = _rules;
+            DataGrid.ItemsSource = _actions;
         }
 
         private void UpdateUi()
         {
             DeleteButton.IsEnabled = DataGrid.SelectedIndex >= 0;
-            MoveDownButton.IsEnabled = DataGrid.SelectedIndex + 1 < _rules.Count && DataGrid.SelectedIndex >= 0;
+            MoveDownButton.IsEnabled = DataGrid.SelectedIndex + 1 < _actions.Count && DataGrid.SelectedIndex >= 0;
             MoveUpButton.IsEnabled = DataGrid.SelectedIndex > 0;
 
-            var typeColumn = DataGrid.Columns.FirstOrDefault(c => c.Header.ToString() == Properties.Resources.RulesType);
+            var typeColumn = DataGrid.Columns.FirstOrDefault(c => c.Header.ToString() == Properties.Resources.CustomActionsType);
             if (typeColumn is null)
                 return;
 
-            if ((bool)AutoApplyRulesCheckbox.IsChecked)
+            if ((bool)AutoApplyCustomActionsCheckbox.IsChecked)
             {
                 typeColumn.Visibility = Visibility.Visible;
                 ExpressionColumn.Visibility = Visibility.Visible;
@@ -161,14 +161,14 @@ namespace EverythingToolbar.Settings
             UpdateUi();
         }
 
-        public static bool HandleRule(SearchResult searchResult, string command = "")
+        public static bool HandleAction(SearchResult searchResult, string command = "")
         {
             if (searchResult == null)
                 return false;
 
-            if (ToolbarSettings.User.IsAutoApplyRules && string.IsNullOrEmpty(command))
+            if (ToolbarSettings.User.IsAutoApplyCustomActions && string.IsNullOrEmpty(command))
             {
-                foreach (var r in LoadRules())
+                foreach (var r in LoadCustomActions())
                 {
                     var regexCond = !string.IsNullOrEmpty(r.Expression) && Regex.IsMatch(searchResult.FullPathAndFileName, r.Expression);
                     var typeCond = searchResult.IsFile && r.Type != FileType.Folder || !searchResult.IsFile && r.Type != FileType.File;

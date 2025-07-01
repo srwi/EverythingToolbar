@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>Выбрать приложение</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>Не заданы правила</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Вставить</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>Одно из регулярных выражений указано неверно</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Названия правил не могут быть пустыми.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Выберите файл Everything.exe...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Произошло необработанное исключение</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>Автоматически применять правила в заисимости от условия</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>Команда</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>Название</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>Регулярное выражение</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>Тип</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>Используйте шаблоны %file%, %filename% и %path% в командах.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Правила</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Найти с помощью Everything</value>

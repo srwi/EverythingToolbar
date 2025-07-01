@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>בחירת יישום</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>לא הוגדרו כללי</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>הדבקה</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>לפחות אחד מהביטויים הרגולריים אינו תקף.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>לא ניתן להשאיר את שם הכלל ריק.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>נא לבחור את Everything.exe...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>אירעה שגיאה לא צפויה</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>החל באופן אוטומטי כללים בהתאם למצב</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>פקודה</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>שם</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>ביטוי רגיל</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>סוּג</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>השתמש ב- %file%, %filename% ו-%path% כתחליף מיקום הנוכחי בפקודות.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>כללים</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>חפש באמצעות Everything</value>

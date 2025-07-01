@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>Alege aplicație</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>Nicio regulă definită</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Lipire</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>Înregistrare hotkey nereușită. Ar putea fi folosită de către altă aplicație.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Rulare a comenzii nereușită</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Pentru a putea utiliza această metodă de sortare trebuie să aibă sortare rapidă activată. Poate fi activată în setările Everything.</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Numele regulii nu poate fi goală.</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>Vă rugăm să selectați Everything.exe...</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>Fișierul Filters.csv nu a fost găsit.</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>A avut loc o excepție necontrolată</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>Aplică reguli în mod automat în funcție de condiție</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>Comandă</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>Nume</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Expresie Regulată</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Salvare</value>

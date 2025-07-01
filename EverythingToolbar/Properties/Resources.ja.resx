@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>アプリを選択</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>ルールが定義されていません</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>貼り付け</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>少なくともひとつ以上の正規表現が無効です。</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>ルールの名前は空にできません。</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Everything.exe を選択...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>ハンドルされていない例外が発生しました</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>条件に応じて自動的にルールを適用する</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>コマンド</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>名前</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>正規表現</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>タイプ</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>コマンドのプレースホルダーとして %file%、%filename% または %path% を使用します。</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>ルール</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Everything で検索</value>

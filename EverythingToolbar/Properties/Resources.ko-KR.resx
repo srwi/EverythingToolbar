@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>앱 선택</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>규칙이 정의되지 않았습니다</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>붙여넣기</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>적어도 하나의 정규식이 유효하지 않습니다.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>규칙의 이름은 비워질 수 없습니다.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Everything.exe를 선택해주세요...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>처리되지 않은 예외 발생</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>조건에 따른 규칙 자동 적용</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>명령</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>이름</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>정규식</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>종류</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>명령에서 %파일%, %파일명%, %경로% 를 자리 지시자로 사용해주세요.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>규칙들</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Everything으로 검색</value>

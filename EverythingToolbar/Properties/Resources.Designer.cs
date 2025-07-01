@@ -187,11 +187,11 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No rules defined.
+        ///   Looks up a localized string similar to No actions defined.
         /// </summary>
-        public static string ContextMenuOpenWithNoRules {
+        public static string ContextMenuOpenWithNoCustomActions {
             get {
-                return ResourceManager.GetString("ContextMenuOpenWithNoRules", resourceCulture);
+                return ResourceManager.GetString("ContextMenuOpenWithNoCustomActions", resourceCulture);
             }
         }
         
@@ -439,11 +439,11 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rule names cannot be empty..
+        ///   Looks up a localized string similar to A custom action name cannot be empty..
         /// </summary>
-        public static string MessageBoxRuleNameEmpty {
+        public static string MessageBoxCustomActionsNameEmpty {
             get {
-                return ResourceManager.GetString("MessageBoxRuleNameEmpty", resourceCulture);
+                return ResourceManager.GetString("MessageBoxCustomActionsNameEmpty", resourceCulture);
             }
         }
         
@@ -484,83 +484,56 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Automatically apply rules based on condition.
+        ///   Looks up a localized string similar to Automatically apply actions based on type and regular expression.
         /// </summary>
-        public static string RulesAutoApply {
+        public static string CustomActionsAutoApply {
             get {
-                return ResourceManager.GetString("RulesAutoApply", resourceCulture);
+                return ResourceManager.GetString("CustomActionsAutoApply", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cancel.
-        /// </summary>
-        public static string RulesCancel {
-            get {
-                return ResourceManager.GetString("RulesCancel", resourceCulture);
-            }
-        }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Command.
         /// </summary>
-        public static string RulesCommand {
+        public static string CustomActionsCommand {
             get {
-                return ResourceManager.GetString("RulesCommand", resourceCulture);
+                return ResourceManager.GetString("CustomActionsCommand", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        public static string RulesName {
-            get {
-                return ResourceManager.GetString("RulesName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Regular Expression.
-        /// </summary>
-        public static string RulesRegularExpression {
-            get {
-                return ResourceManager.GetString("RulesRegularExpression", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save.
-        /// </summary>
-        public static string RulesSave {
-            get {
-                return ResourceManager.GetString("RulesSave", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Type.
-        /// </summary>
-        public static string RulesType {
-            get {
-                return ResourceManager.GetString("RulesType", resourceCulture);
-            }
-        }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Use %file%, %filename% and %path% as placeholders in commands..
         /// </summary>
-        public static string RulesWindowText {
+        public static string CustomActionsHelpText {
             get {
-                return ResourceManager.GetString("RulesWindowText", resourceCulture);
+                return ResourceManager.GetString("CustomActionsHelpText", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Rules.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
-        public static string RulesWindowTitle {
+        public static string CustomActionsName {
             get {
-                return ResourceManager.GetString("RulesWindowTitle", resourceCulture);
+                return ResourceManager.GetString("CustomActionsName", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Regular Expression.
+        /// </summary>
+        public static string CustomActionsRegularExpression {
+            get {
+                return ResourceManager.GetString("CustomActionsRegularExpression", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string CustomActionsType {
+            get {
+                return ResourceManager.GetString("CustomActionsType", resourceCulture);
             }
         }
         
@@ -705,15 +678,6 @@ namespace EverythingToolbar.Properties {
         public static string SettingsReplaceStartMenuSearch {
             get {
                 return ResourceManager.GetString("SettingsReplaceStartMenuSearch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rules....
-        /// </summary>
-        public static string SettingsRules {
-            get {
-                return ResourceManager.GetString("SettingsRules", resourceCulture);
             }
         }
         

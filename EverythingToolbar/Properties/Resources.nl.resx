@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>Kies app</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>Geen regels gedefinieerd</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Plakken</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>Minstens één reguliere expressie is ongeldig.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Regelnamen mogen niet leeg zijn.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Selecteer Everything.exe...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Er is een onverwerkte uitzondering opgetreden</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>Pas automatisch regels toe op basis van conditie</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>Opdracht</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>Naam</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>Reguliere Expressie</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>Soort</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>Gebruik %file%, %filename% en %path% als placeholder in de opdracht.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Regels</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Zoeken met Everything</value>

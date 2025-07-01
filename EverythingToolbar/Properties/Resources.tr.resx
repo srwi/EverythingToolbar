@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>Uygulama seç</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>Hiçbir kural tanımlanmadı</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Yapıştır</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>En az bir düzenli ifade geçersiz.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Kural ismi boş olamaz.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Lütfen Everything.exe'yi seçiniz...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Beklenmeyen bir hata oluştu</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>Duruma göre kuralları otomatik uygula</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>Komut</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>İsim</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>Düzenli ifade</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>Tür</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>Komutlarda yer tutucu olarak %file%, %filename% ve %path% kullanın.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Kurallar</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Her şeyi ara</value>

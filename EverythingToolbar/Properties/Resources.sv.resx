@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>Välj program</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>Inga definierade regler</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Klistra in</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>Minst ett reguljärt uttryck är ogiltigt.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Regelnamn får inte vara tomt.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Vänligen välj Everything.exe...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Ohanterat undantag påträffades</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>Tillämpa regler automatiskt baserat på villkor</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>Kommando</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>Namn</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>Reguljära uttryck</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>Typ</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>Använd %file%, %filename% och %path% som variabler i kommandon.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Regler</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Sök med Everything</value>

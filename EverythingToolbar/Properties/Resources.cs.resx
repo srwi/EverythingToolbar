@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>Zvolit aplikaci</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>Nebyla definována žádná pravidla</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Vložit</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>Alespoň jeden regulární výraz je neplatný.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Název pravidel nemůže být prázdný.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Prosím vyberte Everything.exe...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Došlo k neošetřené výjimce</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>Automaticky použít pravidla na základě podmínky</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>Příkaz</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>Název</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>Regulární výraz</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>Typ</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>Použijte %file%, %filename% a %path% jako zástupné symboly v příkazech.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Pravidla</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Hledat pomocí Everything</value>

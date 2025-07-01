@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>Andere App auswählen</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>Keine Regeln definiert</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Einfügen</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>Mindestens ein regulärer Ausdruck ist nicht gültig.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Regelnamen dürfen nicht leer sein.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Everything.exe wählen...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Unbehandelte Ausnahme eingetreten</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>Regeln automatisch anhand von Bedingungen anwenden</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>Befehl</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>Regulärer Ausdruck</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>Typ</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>Nutzen Sie %file%, %filename% und %path% als Platzhalter für Befehle.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Regeln</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Suchen mit Everything</value>

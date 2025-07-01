@@ -63,7 +63,7 @@
                 <ui:NavigationViewItem
                     Content="{x:Static properties:Resources.SettingsCustomActions}"
                     Icon="{ui:SymbolIcon Open24}"
-                    TargetPageType="{x:Type settings:Rules}" />
+                    TargetPageType="{x:Type settings:CustomActions}" />
                 <ui:NavigationViewItem
                     Content="{x:Static properties:Resources.SettingsShortcuts}"
                     Icon="{ui:SymbolIcon Keyboard24}"

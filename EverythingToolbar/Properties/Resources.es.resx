@@ -147,9 +147,6 @@
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>Elegir aplicación</value>
   </data>
-  <data name="ContextMenuOpenWithNoRules" xml:space="preserve">
-    <value>Sin reglas definidas</value>
-  </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Pegar</value>
   </data>
@@ -231,9 +228,6 @@
   <data name="MessageBoxRegExInvalid" xml:space="preserve">
     <value>Al menos una expresión regular no es válida.</value>
   </data>
-  <data name="MessageBoxRuleNameEmpty" xml:space="preserve">
-    <value>Los nombres de reglas no pueden estar vacíos.</value>
-  </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
     <value>Por favor seleccione Everything.exe...</value>
   </data>
@@ -246,26 +240,20 @@
   <data name="MessageBoxUnhandledExceptionTitle" xml:space="preserve">
     <value>Ha ocurrido una excepción inesperada</value>
   </data>
-  <data name="RulesAutoApply" xml:space="preserve">
-    <value>Aplicar reglas automáticamente en base a la condición</value>
-  </data>
-  <data name="RulesCommand" xml:space="preserve">
+  <data name="CustomActionsCommand" xml:space="preserve">
     <value>Comando</value>
   </data>
-  <data name="RulesName" xml:space="preserve">
+  <data name="CustomActionsName" xml:space="preserve">
     <value>Nombre</value>
   </data>
-  <data name="RulesRegularExpression" xml:space="preserve">
+  <data name="CustomActionsRegularExpression" xml:space="preserve">
     <value>Expresión regular</value>
   </data>
-  <data name="RulesType" xml:space="preserve">
+  <data name="CustomActionsType" xml:space="preserve">
     <value>Tipo</value>
   </data>
-  <data name="RulesWindowText" xml:space="preserve">
+  <data name="CustomActionsHelpText" xml:space="preserve">
     <value>Utilice %file%, %filename% y %path% como marcadores de posición en los comandos.</value>
-  </data>
-  <data name="RulesWindowTitle" xml:space="preserve">
-    <value>Reglas</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Buscar con Everything</value>
