@@ -7,6 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:settings="clr-namespace:EverythingToolbar.Settings"
         xmlns:behaviors="clr-namespace:EverythingToolbar.Behaviors"
+        xmlns:properties="clr-namespace:EverythingToolbar.Properties"
         mc:Ignorable="d"
         WindowBackdropType="Mica"
         ExtendsContentIntoTitleBar="True"
@@ -16,7 +17,7 @@
         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
         Height="620"
         Width="1100"
-        Title="Settings">
+        Title="{x:Static properties:Resources.SettingsPreferences}">
     
     <i:Interaction.Behaviors>
         <behaviors:WpfUiBehavior />
@@ -45,36 +46,36 @@
             MinHeight="300"
             IsBackButtonVisible="Collapsed"
             IsPaneToggleVisible="True"
-            PaneTitle="Settings">
+            PaneTitle="{x:Static properties:Resources.SettingsPreferences}">
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem
-                    Content="Home"
+                    Content="{x:Static properties:Resources.SettingsHome}"
                     Icon="{ui:SymbolIcon Home24}"
                     TargetPageType="{x:Type settings:About}" />
                 <ui:NavigationViewItem
-                    Content="Search"
+                    Content="{x:Static properties:Resources.SettingsSearch}"
                     Icon="{ui:SymbolIcon SearchSettings20}"
                     TargetPageType="{x:Type settings:Search}" />
                 <ui:NavigationViewItem
-                    Content="User Interface"
+                    Content="{x:Static properties:Resources.SettingsUserInterface}"
                     Icon="{ui:SymbolIcon WindowSettings20}"
                     TargetPageType="{x:Type settings:UserInterface}" />
                 <ui:NavigationViewItem
-                    Content="Custom Actions"
+                    Content="{x:Static properties:Resources.SettingsCustomActions}"
                     Icon="{ui:SymbolIcon Open24}"
                     TargetPageType="{x:Type settings:Rules}" />
                 <ui:NavigationViewItem
-                    Content="Shortcuts"
+                    Content="{x:Static properties:Resources.SettingsShortcuts}"
                     Icon="{ui:SymbolIcon Keyboard24}"
-                    TargetPageType="{x:Type settings:ShortcutSelector}" />
+                    TargetPageType="{x:Type settings:Shortcuts}" />
                 <ui:NavigationViewItem
-                    Content="Advanced"
+                    Content="{x:Static properties:Resources.SettingsAdvanced}"
                     Icon="{ui:SymbolIcon Warning24}"
                     TargetPageType="{x:Type settings:Advanced}" />
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.FooterMenuItems>
                 <ui:NavigationViewItem
-                    Content="Report a problem"
+                    Content="{x:Static properties:Resources.SettingsReportProblem}"
                     Icon="{ui:SymbolIcon Bug24}"
                     Click="OnReportABugClicked"/>
             </ui:NavigationView.FooterMenuItems>

@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,20 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutLicense" xml:space="preserve">
-    <value>Licencja</value>
-  </data>
-  <data name="AboutOK" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="AboutVersion" xml:space="preserve">
     <value>Wersja</value>
-  </data>
-  <data name="AboutWebsite" xml:space="preserve">
-    <value>Strona internetowa</value>
-  </data>
-  <data name="AboutWindowTitle" xml:space="preserve">
-    <value>O EverythingToolbar</value>
   </data>
   <data name="ContextMenuCopy" xml:space="preserve">
     <value>Kopiuj</value>
@@ -261,9 +249,6 @@
   <data name="RulesAutoApply" xml:space="preserve">
     <value>Stosuj reguły automatycznie na podstawie warunku</value>
   </data>
-  <data name="RulesCancel" xml:space="preserve">
-    <value>Anuluj</value>
-  </data>
   <data name="RulesCommand" xml:space="preserve">
     <value>Komenda</value>
   </data>
@@ -272,9 +257,6 @@
   </data>
   <data name="RulesRegularExpression" xml:space="preserve">
     <value>Wyrażenie regularne</value>
-  </data>
-  <data name="RulesSave" xml:space="preserve">
-    <value>Zapisz</value>
   </data>
   <data name="RulesType" xml:space="preserve">
     <value>Typ</value>
@@ -293,12 +275,6 @@
   </data>
   <data name="SearchResults" xml:space="preserve">
     <value>obiekty</value>
-  </data>
-  <data name="SettingsAbout" xml:space="preserve">
-    <value>O EverythingToolbar...</value>
-  </data>
-  <data name="SettingsChangeShortcut" xml:space="preserve">
-    <value>Zmień skrót klawiszowy...</value>
   </data>
   <data name="SettingsDisableAnimations" xml:space="preserve">
     <value>Wyłącz animacje</value>
@@ -330,12 +306,6 @@
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
     <value>Zastąp wyszukiwanie w menu Start (eksperymentalne)</value>
   </data>
-  <data name="SettingsRules" xml:space="preserve">
-    <value>Reguły...</value>
-  </data>
-  <data name="SettingsSetInstanceName" xml:space="preserve">
-    <value>Ustaw nazwę instancji...</value>
-  </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>Pokaż szybkie przełączniki</value>
   </data>
@@ -345,12 +315,6 @@
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Sortuj według</value>
   </data>
-  <data name="SettingsTheme" xml:space="preserve">
-    <value>Motyw</value>
-  </data>
-  <data name="SettingsThemeAuto" xml:space="preserve">
-    <value>Synchronizuj motyw</value>
-  </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>Włącz miniatury</value>
   </data>
@@ -359,12 +323,6 @@
   </data>
   <data name="SettingsView" xml:space="preserve">
     <value>Widok</value>
-  </data>
-  <data name="ShortcutOK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="ShortcutWindowTitle" xml:space="preserve">
-    <value>Wprowadź skrót klawiszowy...</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
     <value>Atrybuty</value>
@@ -404,12 +362,6 @@
   </data>
   <data name="SortByTypeName" xml:space="preserve">
     <value>Typ</value>
-  </data>
-  <data name="ThemeDark" xml:space="preserve">
-    <value>Ciemny</value>
-  </data>
-  <data name="ThemeLight" xml:space="preserve">
-    <value>Jasny</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>Dźwięki</value>
@@ -458,5 +410,8 @@
   </data>
   <data name="SettingsSearchAsYouType" xml:space="preserve">
     <value>Wyszukuj podczas pisania</value>
+  </data>
+  <data name="MessageBoxOk" xml:space="preserve">
+    <value>OK</value>
   </data>
 </root>

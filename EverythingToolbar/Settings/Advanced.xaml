@@ -19,10 +19,10 @@
     <ScrollViewer>
         <StackPanel Margin="40">
             <ui:TextBlock FontTypography="Title"
-                          Text="Advanced"
+                          Text="{x:Static properties:Resources.SettingsAdvanced}"
                           Margin="0, 0, 0, 0" />
             <ui:TextBlock FontTypography="BodyStrong"
-                          Text="Updates"
+                          Text="{x:Static properties:Resources.SettingsUpdates}"
                           Margin="0, 25, 0, 7" />
             <Border Padding="16"
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -31,15 +31,15 @@
                     CornerRadius="8,8,8,8">
                 <StackPanel>
                     <controls:SettingItem Title="{x:Static properties:Resources.SettingsCheckForUpdates}"
-                                          HelpText="Notify when a new version is available">
+                                          HelpText="{x:Static properties:Resources.SettingsUpdatesHelp}">
                         <controls:SettingItem.SettingContent>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <ui:ProgressRing IsIndeterminate="True" Width="24" Height="24" Margin="0,0,15,0"
                                                  Visibility="{Binding CheckingForUpdatesVisible, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}}" />
-                                <ui:Button Content="Check now"
+                                <ui:Button Content="{x:Static properties:Resources.SettingsCheckNow}"
                                            Click="OnCheckForUpdatesClicked"
                                            Visibility="{Binding DownloadUpdateButtonVisible, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}, ConverterParameter=true}" />
-                                <ui:Button Content="Download latest version"
+                                <ui:Button Content="{x:Static properties:Resources.SettingsDownloadLatestVersion}"
                                            Click="OnDownloadUpdateClicked"
                                            Visibility="{Binding DownloadUpdateButtonVisible, RelativeSource={RelativeSource AncestorType=Page}, Converter={c:BoolToVisibilityConverter}}" />
                                 <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsUpdateNotificationsEnabled, Mode=TwoWay}"
@@ -48,30 +48,30 @@
                         </controls:SettingItem.SettingContent>
                     </controls:SettingItem>
                     <ui:InfoBar Name="NoUpdatesInfoBar"
-                                Message="You are already using the latest version."
+                                Message="{x:Static properties:Resources.SettingsLatestVersionMessage}"
                                 IsOpen="{Binding NoUpdatesBannerOpen, RelativeSource={RelativeSource AncestorType=Page}, Mode=TwoWay}" />
                 </StackPanel>
             </Border>
             <ui:TextBlock FontTypography="BodyStrong"
-                          Text="Named Instance"
+                          Text="{x:Static properties:Resources.SettingsNamedInstance}"
                           Margin="0, 25, 0, 7" />
             <Border Padding="16"
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,1"
                     CornerRadius="8,8,8,8">
-                <controls:SettingItem Title="Everything instance name"
-                                      HelpText="Set the name of the Everything instance to connect to">
+                <controls:SettingItem Title="{x:Static properties:Resources.SettingsInstanceName}"
+                                      HelpText="{x:Static properties:Resources.SettingsInstanceNameHelp}">
                     <controls:SettingItem.SettingContent>
                         <ui:TextBox Text="{Binding Source={x:Static local:ToolbarSettings.User}, Path=InstanceName, Mode=TwoWay}"
                                     HorizontalAlignment="Right"
                                     Width="200"
-                                    PlaceholderText="Default instance" />
+                                    PlaceholderText="{x:Static properties:Resources.SettingsDefaultInstance}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
             <ui:TextBlock FontTypography="BodyStrong"
-                          Text="Other"
+                          Text="{x:Static properties:Resources.SettingsOther}"
                           Margin="0, 25, 0, 7"/>
             <Border Padding="16"
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -79,7 +79,7 @@
                     BorderThickness="1,1,1,1"
                     CornerRadius="8,8,8,8">
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsReplaceStartMenuSearch}"
-                                      HelpText="Replace the default Windows Start menu search with EverythingToolbar">
+                                      HelpText="{x:Static properties:Resources.SettingsReplaceStartMenuHelp}">
                     <controls:SettingItem.SettingContent>
                         <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsReplaceStartMenuSearch, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>

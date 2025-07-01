@@ -17,10 +17,10 @@
     <ScrollViewer>
         <StackPanel Margin="40">
             <ui:TextBlock FontTypography="Title"
-                          Text="User Interface"
+                          Text="{x:Static properties:Resources.SettingsUserInterface}"
                           Margin="0, 0, 0, 25"/>
             <ui:TextBlock FontTypography="BodyStrong"
-                          Text="Appearance"
+                          Text="{x:Static properties:Resources.SettingsAppearance}"
                           Margin="0, 0, 0, 7"/>
             <Border Padding="16"
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -29,7 +29,7 @@
                     CornerRadius="8,8,0,0">
                 <StackPanel>
                     <controls:SettingItem Title="{x:Static properties:Resources.SettingsView}"
-                                          HelpText="Choose the layout for search results">
+                                          HelpText="{x:Static properties:Resources.SettingsViewLayoutHelp}">
                         <controls:SettingItem.SettingContent>
                             <ComboBox HorizontalAlignment="Right"
                                       ItemsSource="{Binding ItemTemplates}"
@@ -57,7 +57,7 @@
                     BorderThickness="1,1,1,0"
                     CornerRadius="0,0,0,0">
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsThumbnailsEnabled}"
-                                      HelpText="Show thumbnails for supported file types">
+                                      HelpText="{x:Static properties:Resources.SettingsThumbnailsHelp}">
                     <controls:SettingItem.SettingContent>
                         <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsThumbnailsEnabled, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
@@ -69,7 +69,7 @@
                     BorderThickness="1,1,1,0"
                     CornerRadius="0">
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsShowResultsCount}"
-                                      HelpText="Display the number of search results">
+                                      HelpText="{x:Static properties:Resources.SettingsResultsCountHelp}">
                     <controls:SettingItem.SettingContent>
                         <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsShowResultsCount, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
@@ -81,7 +81,7 @@
                     BorderThickness="1,1,1,1"
                     CornerRadius="0,0,8,8">
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsShowQuickToggles}"
-                                      HelpText="Show quick toggle buttons for filters and settings">
+                                      HelpText="{x:Static properties:Resources.SettingsQuickTogglesHelp}">
                     <controls:SettingItem.SettingContent>
                         <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsShowQuickToggles, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
@@ -89,7 +89,7 @@
             </Border>
 
             <ui:TextBlock FontTypography="BodyStrong"
-                          Text="Other"
+                          Text="{x:Static properties:Resources.SettingsOther}"
                           Margin="0, 25, 0, 7"/>
             <Border Padding="16"
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -97,7 +97,7 @@
                     BorderThickness="1,1,1,1"
                     CornerRadius="8,8,8,8">
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsDisableAnimations}"
-                                      HelpText="Disable UI animations for improved performance">
+                                      HelpText="{x:Static properties:Resources.SettingsAnimationsHelp}">
                     <controls:SettingItem.SettingContent>
                         <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsAnimationsDisabled, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>

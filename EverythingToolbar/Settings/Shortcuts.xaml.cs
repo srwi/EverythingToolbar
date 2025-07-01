@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace EverythingToolbar.Settings
 {
-    public partial class ShortcutSelector
+    public partial class Shortcuts
     {
         public Key Key { get; private set; }
         public ModifierKeys Modifiers { get; private set; }
@@ -25,7 +25,7 @@ namespace EverythingToolbar.Settings
         private const int WmKeydown = 0x0100;
         private const int WmSyskeydown = 0x0104;
 
-        public ShortcutSelector()
+        public Shortcuts()
         {
             InitializeComponent();
         }

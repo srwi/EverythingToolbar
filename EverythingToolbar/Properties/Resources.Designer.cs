@@ -819,9 +819,9 @@ namespace EverythingToolbar.Properties {
         /// <summary>
         ///   Looks up a localized string similar to OK.
         /// </summary>
-        public static string ShortcutOK {
+        public static string MessageBoxOk {
             get {
-                return ResourceManager.GetString("ShortcutOK", resourceCulture);
+                return ResourceManager.GetString("MessageBoxOk", resourceCulture);
             }
         }
         
@@ -1083,6 +1083,537 @@ namespace EverythingToolbar.Properties {
         public static string UserFilterVideo {
             get {
                 return ResourceManager.GetString("UserFilterVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom actions.
+        /// </summary>
+        public static string AboutCustomActions {
+            get {
+                return ResourceManager.GetString("AboutCustomActions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Everything integration for the Windows taskbar..
+        /// </summary>
+        public static string AboutDescription {
+            get {
+                return ResourceManager.GetString("AboutDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make a donation.
+        /// </summary>
+        public static string AboutDonation {
+            get {
+                return ResourceManager.GetString("AboutDonation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequently Asked Questions.
+        /// </summary>
+        public static string AboutFAQ {
+            get {
+                return ResourceManager.GetString("AboutFAQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Links.
+        /// </summary>
+        public static string AboutLinks {
+            get {
+                return ResourceManager.GetString("AboutLinks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search settings.
+        /// </summary>
+        public static string AboutSearchSettings {
+            get {
+                return ResourceManager.GetString("AboutSearchSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source Code (GitHub).
+        /// </summary>
+        public static string AboutSourceCode {
+            get {
+                return ResourceManager.GetString("AboutSourceCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Star on GitHub.
+        /// </summary>
+        public static string AboutStarOnGitHub {
+            get {
+                return ResourceManager.GetString("AboutStarOnGitHub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User interface.
+        /// </summary>
+        public static string AboutUserInterface {
+            get {
+                return ResourceManager.GetString("AboutUserInterface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string AboutVersionPrefix {
+            get {
+                return ResourceManager.GetString("AboutVersionPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy full path to clipboard.
+        /// </summary>
+        public static string ShortcutCopyFullPath {
+            get {
+                return ResourceManager.GetString("ShortcutCopyFullPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cycle through filters.
+        /// </summary>
+        public static string ShortcutCycleFilters {
+            get {
+                return ResourceManager.GetString("ShortcutCycleFilters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File properties.
+        /// </summary>
+        public static string ShortcutFileProperties {
+            get {
+                return ResourceManager.GetString("ShortcutFileProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navigate search history (if enabled).
+        /// </summary>
+        public static string ShortcutNavigateHistory {
+            get {
+                return ResourceManager.GetString("ShortcutNavigateHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navigate search results.
+        /// </summary>
+        public static string ShortcutNavigateResults {
+            get {
+                return ResourceManager.GetString("ShortcutNavigateResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string ShortcutOpen {
+            get {
+                return ResourceManager.GetString("ShortcutOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open in Everything.
+        /// </summary>
+        public static string ShortcutOpenInEverything {
+            get {
+                return ResourceManager.GetString("ShortcutOpenInEverything", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open path.
+        /// </summary>
+        public static string ShortcutOpenPath {
+            get {
+                return ResourceManager.GetString("ShortcutOpenPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview file in QuickLook.
+        /// </summary>
+        public static string ShortcutPreviewQuickLook {
+            get {
+                return ResourceManager.GetString("ShortcutPreviewQuickLook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run as admin.
+        /// </summary>
+        public static string ShortcutRunAsAdmin {
+            get {
+                return ResourceManager.GetString("ShortcutRunAsAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select filter.
+        /// </summary>
+        public static string ShortcutSelectFilter {
+            get {
+                return ResourceManager.GetString("ShortcutSelectFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced.
+        /// </summary>
+        public static string SettingsAdvanced {
+            get {
+                return ResourceManager.GetString("SettingsAdvanced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable UI animations for improved performance.
+        /// </summary>
+        public static string SettingsAnimationsHelp {
+            get {
+                return ResourceManager.GetString("SettingsAnimationsHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        public static string SettingsAppearance {
+            get {
+                return ResourceManager.GetString("SettingsAppearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Behavior.
+        /// </summary>
+        public static string SettingsBehavior {
+            get {
+                return ResourceManager.GetString("SettingsBehavior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check now.
+        /// </summary>
+        public static string SettingsCheckNow {
+            get {
+                return ResourceManager.GetString("SettingsCheckNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear now.
+        /// </summary>
+        public static string SettingsClearHistoryNow {
+            get {
+                return ResourceManager.GetString("SettingsClearHistoryNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom Actions.
+        /// </summary>
+        public static string SettingsCustomActions {
+            get {
+                return ResourceManager.GetString("SettingsCustomActions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom shortcuts.
+        /// </summary>
+        public static string SettingsCustomShortcuts {
+            get {
+                return ResourceManager.GetString("SettingsCustomShortcuts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default instance.
+        /// </summary>
+        public static string SettingsDefaultInstance {
+            get {
+                return ResourceManager.GetString("SettingsDefaultInstance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Require double-click to open results.
+        /// </summary>
+        public static string SettingsDoubleClickHelp {
+            get {
+                return ResourceManager.GetString("SettingsDoubleClickHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download latest version.
+        /// </summary>
+        public static string SettingsDownloadLatestVersion {
+            get {
+                return ResourceManager.GetString("SettingsDownloadLatestVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Everything's custom filters in the toolbar.
+        /// </summary>
+        public static string SettingsEverythingFiltersHelp {
+            get {
+                return ResourceManager.GetString("SettingsEverythingFiltersHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filters.
+        /// </summary>
+        public static string SettingsFilters {
+            get {
+                return ResourceManager.GetString("SettingsFilters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide results when search term is empty.
+        /// </summary>
+        public static string SettingsHideEmptyResultsHelp {
+            get {
+                return ResourceManager.GetString("SettingsHideEmptyResultsHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to History.
+        /// </summary>
+        public static string SettingsHistory {
+            get {
+                return ResourceManager.GetString("SettingsHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save previous search terms for quick access.
+        /// </summary>
+        public static string SettingsHistoryHelp {
+            get {
+                return ResourceManager.GetString("SettingsHistoryHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string SettingsHome {
+            get {
+                return ResourceManager.GetString("SettingsHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Everything instance name.
+        /// </summary>
+        public static string SettingsInstanceName {
+            get {
+                return ResourceManager.GetString("SettingsInstanceName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set the name of the Everything instance to connect to.
+        /// </summary>
+        public static string SettingsInstanceNameHelp {
+            get {
+                return ResourceManager.GetString("SettingsInstanceNameHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are already using the latest version..
+        /// </summary>
+        public static string SettingsLatestVersionMessage {
+            get {
+                return ResourceManager.GetString("SettingsLatestVersionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Named Instance.
+        /// </summary>
+        public static string SettingsNamedInstance {
+            get {
+                return ResourceManager.GetString("SettingsNamedInstance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open search window.
+        /// </summary>
+        public static string SettingsOpenSearchWindow {
+            get {
+                return ResourceManager.GetString("SettingsOpenSearchWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other.
+        /// </summary>
+        public static string SettingsOther {
+            get {
+                return ResourceManager.GetString("SettingsOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other shortcuts.
+        /// </summary>
+        public static string SettingsOtherShortcuts {
+            get {
+                return ResourceManager.GetString("SettingsOtherShortcuts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show quick toggle buttons for filters and settings.
+        /// </summary>
+        public static string SettingsQuickTogglesHelp {
+            get {
+                return ResourceManager.GetString("SettingsQuickTogglesHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember the last used filter for future searches.
+        /// </summary>
+        public static string SettingsRememberFilterHelp {
+            get {
+                return ResourceManager.GetString("SettingsRememberFilterHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace the default Windows Start menu search with EverythingToolbar.
+        /// </summary>
+        public static string SettingsReplaceStartMenuHelp {
+            get {
+                return ResourceManager.GetString("SettingsReplaceStartMenuHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report a problem.
+        /// </summary>
+        public static string SettingsReportProblem {
+            get {
+                return ResourceManager.GetString("SettingsReportProblem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display the number of search results.
+        /// </summary>
+        public static string SettingsResultsCountHelp {
+            get {
+                return ResourceManager.GetString("SettingsResultsCountHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string SettingsSearch {
+            get {
+                return ResourceManager.GetString("SettingsSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start searching as you type, without pressing Enter.
+        /// </summary>
+        public static string SettingsSearchAsYouTypeHelp {
+            get {
+                return ResourceManager.GetString("SettingsSearchAsYouTypeHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically select the first result.
+        /// </summary>
+        public static string SettingsSelectFirstResultHelp {
+            get {
+                return ResourceManager.GetString("SettingsSelectFirstResultHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shortcuts.
+        /// </summary>
+        public static string SettingsShortcuts {
+            get {
+                return ResourceManager.GetString("SettingsShortcuts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show thumbnails for supported file types.
+        /// </summary>
+        public static string SettingsThumbnailsHelp {
+            get {
+                return ResourceManager.GetString("SettingsThumbnailsHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updates.
+        /// </summary>
+        public static string SettingsUpdates {
+            get {
+                return ResourceManager.GetString("SettingsUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notify when a new version is available.
+        /// </summary>
+        public static string SettingsUpdatesHelp {
+            get {
+                return ResourceManager.GetString("SettingsUpdatesHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Interface.
+        /// </summary>
+        public static string SettingsUserInterface {
+            get {
+                return ResourceManager.GetString("SettingsUserInterface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose the layout for search results.
+        /// </summary>
+        public static string SettingsViewLayoutHelp {
+            get {
+                return ResourceManager.GetString("SettingsViewLayoutHelp", resourceCulture);
             }
         }
     }

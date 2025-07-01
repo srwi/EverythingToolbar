@@ -165,7 +165,7 @@
           <XamlRuntime>Wpf</XamlRuntime>
           <SubType>Designer</SubType>
         </Page>
-        <Page Update="Settings\ShortcutSelector.xaml">
+        <Page Update="Settings\Shortcuts.xaml">
           <Generator>MSBuild:Compile</Generator>
           <XamlRuntime>Wpf</XamlRuntime>
           <SubType>Designer</SubType>

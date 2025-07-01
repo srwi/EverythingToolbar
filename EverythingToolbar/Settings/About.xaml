@@ -4,6 +4,7 @@
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:behaviors="clr-namespace:EverythingToolbar.Behaviors"
+      xmlns:properties="clr-namespace:EverythingToolbar.Properties"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       ScrollViewer.CanContentScroll="False">
     
@@ -51,12 +52,12 @@
                                 FontTypography="Subtitle"
                                 Foreground="#B7FFFFFF"
                                 Margin="0,0,0,5"
-                                Text="Everything integration for the Windows taskbar." />
+                                Text="{x:Static properties:Resources.AboutDescription}" />
                             <ui:TextBlock
                                 Name="VersionTextBlock"
                                 FontTypography="BodyStrong"
                                 Foreground="#99FFFFFF"
-                                Text="Version X.X.X.X" />
+                                Text="{x:Static properties:Resources.AboutVersion}" />
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -96,7 +97,7 @@
                             Margin="24"
                             VerticalAlignment="Center"
                             FontTypography="BodyStrong"
-                            Text="Search settings"
+                            Text="{x:Static properties:Resources.AboutSearchSettings}"
                             TextWrapping="WrapWithOverflow" />
                     </Grid>
                 </ui:CardAction>
@@ -125,7 +126,7 @@
                             Margin="24"
                             VerticalAlignment="Center"
                             FontTypography="BodyStrong"
-                            Text="User interface"
+                            Text="{x:Static properties:Resources.AboutUserInterface}"
                             TextWrapping="WrapWithOverflow" />
                     </Grid>
                 </ui:CardAction>
@@ -154,7 +155,7 @@
                             Margin="24"
                             VerticalAlignment="Center"
                             FontTypography="BodyStrong"
-                            Text="Custom actions"
+                            Text="{x:Static properties:Resources.AboutCustomActions}"
                             TextWrapping="WrapWithOverflow" />
                     </Grid>
                 </ui:CardAction>
@@ -164,29 +165,29 @@
                 <ui:TextBlock
                     FontSize="18"
                     FontWeight="DemiBold"
-                    Text="Links" />
+                    Text="{x:Static properties:Resources.AboutLinks}" />
                 <ui:HyperlinkButton
                     Margin="8,8,0,0"
                     Padding="4"
-                    Content="Frequently Asked Questions"
+                    Content="{x:Static properties:Resources.AboutFAQ}"
                     NavigateUri="https://github.com/srwi/EverythingToolbar/wiki/FAQ"
                     ToolTip="https://github.com/srwi/EverythingToolbar/wiki/FAQ" />
                 <ui:HyperlinkButton
                     Margin="8,0,0,0"
                     Padding="4"
-                    Content="Source Code (GitHub)"
+                    Content="{x:Static properties:Resources.AboutSourceCode}"
                     NavigateUri="https://github.com/srwi/EverythingToolbar"
                     ToolTip="https://github.com/srwi/EverythingToolbar" />
                 <ui:HyperlinkButton
                     Margin="8,0,0,0"
                     Padding="4"
-                    Content="Star on GitHub"
+                    Content="{x:Static properties:Resources.AboutStarOnGitHub}"
                     NavigateUri="https://github.com/srwi/EverythingToolbar"
                     ToolTip="https://github.com/srwi/EverythingToolbar" />
                 <ui:HyperlinkButton
                     Margin="8,0,0,0"
                     Padding="4"
-                    Content="Make a donation"
+                    Content="{x:Static properties:Resources.AboutDonation}"
                     NavigateUri="https://paypal.me/rumswinkel"
                     ToolTip="https://paypal.me/rumswinkel" />
             </StackPanel>

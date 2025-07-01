@@ -8,6 +8,7 @@
     <StackPanel Orientation="Horizontal">
         <Button Content="&#xE8CB;"
                 Click="OpenButtonContextMenu"
+                ToolTip="{x:Static properties:Resources.SettingsSortBy}"
                 FontSize="12pt"
                 FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                 Style="{DynamicResource TabBarButtonStyle}"
@@ -68,6 +69,7 @@
         </Button>
         <Button Content="&#xE713;"
                 Click="OpenButtonContextMenu"
+                ToolTip="{x:Static properties:Resources.SettingsPreferences}"
                 FontSize="12pt"
                 FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                 Style="{DynamicResource TabBarButtonStyle}"
@@ -88,7 +90,7 @@
                               IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsMatchWholeWord, Mode=TwoWay}"
                               IsEnabled="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={converters:NotConverter}}" />
                     <Separator />
-                    <MenuItem Header="Settings..."
+                    <MenuItem Header="{x:Static properties:Resources.SettingsPreferences}"
                               Click="OpenSettingsWindow"
                               Icon="&#xE713;" />
                 </ContextMenu>
