@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -399,7 +399,190 @@
   <data name="SettingsSearchAsYouType" xml:space="preserve">
     <value>Durante la ricerca</value>
   </data>
+  <data name="SettingsUserInterface" xml:space="preserve">
+    <value>Interfaccia Utente</value>
+  </data>
+  <data name="SettingsAppearance" xml:space="preserve">
+    <value>Aspetto</value>
+  </data>
+  <data name="SettingsOther" xml:space="preserve">
+    <value>Altro</value>
+  </data>
+  <data name="SettingsShortcuts" xml:space="preserve">
+    <value>Scorciatoie</value>
+  </data>
+  <data name="SettingsCustomShortcuts" xml:space="preserve">
+    <value>Scorciatoie personalizzate</value>
+  </data>
+  <data name="SettingsOtherShortcuts" xml:space="preserve">
+    <value>Altre scorciatoie</value>
+  </data>
+  <data name="SettingsOpenSearchWindow" xml:space="preserve">
+    <value>Apri la finestra di ricerca</value>
+  </data>
+  <data name="ShortcutNavigateResults" xml:space="preserve">
+    <value>Naviga i risultati di ricerca</value>
+  </data>
+  <data name="ShortcutNavigateHistory" xml:space="preserve">
+    <value>Naviga nella cronologia di ricerca (se abilitata)</value>
+  </data>
+  <data name="ShortcutOpen" xml:space="preserve">
+    <value>Apri</value>
+  </data>
+  <data name="ShortcutOpenPath" xml:space="preserve">
+    <value>Apri percorso</value>
+  </data>
+  <data name="ShortcutOpenInEverything" xml:space="preserve">
+    <value>Apri in Everything</value>
+  </data>
+  <data name="ShortcutRunAsAdmin" xml:space="preserve">
+    <value>Esegui come amministratore</value>
+  </data>
+  <data name="ShortcutFileProperties" xml:space="preserve">
+    <value>Proprietà del file</value>
+  </data>
+  <data name="ShortcutCopyFullPath" xml:space="preserve">
+    <value>Copia il percorso completo negli appunti</value>
+  </data>
+  <data name="ShortcutCycleFilters" xml:space="preserve">
+    <value>Ciclo attraverso i filtri</value>
+  </data>
+  <data name="ShortcutSelectFilter" xml:space="preserve">
+    <value>Seleziona filtro</value>
+  </data>
+  <data name="ShortcutPreviewQuickLook" xml:space="preserve">
+    <value>Anteprima del file in QuickLook</value>
+  </data>
+  <data name="SettingsHome" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="SettingsSearch" xml:space="preserve">
+    <value>Cerca</value>
+  </data>
+  <data name="SettingsCustomActions" xml:space="preserve">
+    <value>Azioni personalizzate</value>
+  </data>
+  <data name="SettingsAdvanced" xml:space="preserve">
+    <value>Avanzate</value>
+  </data>
+  <data name="SettingsReportProblem" xml:space="preserve">
+    <value>Segnala un problema</value>
+  </data>
+  <data name="SettingsBehavior" xml:space="preserve">
+    <value>Comportamento</value>
+  </data>
+  <data name="SettingsHistory" xml:space="preserve">
+    <value>Cronologia</value>
+  </data>
+  <data name="SettingsFilters" xml:space="preserve">
+    <value>Filtri</value>
+  </data>
+  <data name="SettingsClearHistoryNow" xml:space="preserve">
+    <value>Svuota ora</value>
+  </data>
+  <data name="SettingsUpdates" xml:space="preserve">
+    <value>Aggiornamenti</value>
+  </data>
+  <data name="SettingsCheckNow" xml:space="preserve">
+    <value>Controlla ora</value>
+  </data>
+  <data name="SettingsDownloadLatestVersion" xml:space="preserve">
+    <value>Scarica l'ultima versione</value>
+  </data>
+  <data name="SettingsLatestVersionMessage" xml:space="preserve">
+    <value>Stai già usando l'ultima versione.</value>
+  </data>
+  <data name="SettingsNamedInstance" xml:space="preserve">
+    <value>Istanza Nominata</value>
+  </data>
+  <data name="SettingsInstanceName" xml:space="preserve">
+    <value>Istanza Nominata di Everything</value>
+  </data>
+  <data name="SettingsInstanceNameHelp" xml:space="preserve">
+    <value>Imposta il nome dell'istanza di Everything da usare</value>
+  </data>
+  <data name="SettingsDefaultInstance" xml:space="preserve">
+    <value>Istanza predefinita</value>
+  </data>
+  <data name="AboutDescription" xml:space="preserve">
+    <value>L'integrazione di Everything per la barra delle applicazioni di Windows.</value>
+  </data>
+  <data name="AboutSearchSettings" xml:space="preserve">
+    <value>Cerca impostazioni</value>
+  </data>
+  <data name="AboutUserInterface" xml:space="preserve">
+    <value>Interfaccia utente</value>
+  </data>
+  <data name="AboutCustomActions" xml:space="preserve">
+    <value>Azioni personalizzate</value>
+  </data>
+  <data name="AboutLinks" xml:space="preserve">
+    <value>Collegamenti</value>
+  </data>
+  <data name="AboutFAQ" xml:space="preserve">
+    <value>Domande Frequenti</value>
+  </data>
+  <data name="AboutSourceCode" xml:space="preserve">
+    <value>Codice Sorgente (GitHub)</value>
+  </data>
+  <data name="AboutStarOnGitHub" xml:space="preserve">
+    <value>Stella su Github</value>
+  </data>
+  <data name="AboutDonation" xml:space="preserve">
+    <value>Fai una donazione</value>
+  </data>
+  <data name="SettingsViewLayoutHelp" xml:space="preserve">
+    <value>Scegli il layout per i risultati della ricerca</value>
+  </data>
+  <data name="SettingsThumbnailsHelp" xml:space="preserve">
+    <value>Mostra le miniature per i file immagine</value>
+  </data>
+  <data name="SettingsResultsCountHelp" xml:space="preserve">
+    <value>Mostra il numero totale dei risultati della ricerca</value>
+  </data>
+  <data name="SettingsQuickTogglesHelp" xml:space="preserve">
+    <value>Mostra i pulsanti di scelta rapida per le opzioni di ricerca nella barra di ricerca</value>
+  </data>
+  <data name="SettingsAnimationsHelp" xml:space="preserve">
+    <value>Disabilita le animazioni dell'interfaccia utente per migliorare le prestazioni</value>
+  </data>
+  <data name="SettingsHideEmptyResultsHelp" xml:space="preserve">
+    <value>Nascondi i risultati quando il termine di ricerca è vuoto</value>
+  </data>
+  <data name="SettingsSearchAsYouTypeHelp" xml:space="preserve">
+    <value>Inizia la ricerca mentre scrivi, senza premere Invio</value>
+  </data>
+  <data name="SettingsSelectFirstResultHelp" xml:space="preserve">
+    <value>Seleziona automaticamente il primo risultato mantenendo la barra di ricerca focalizzata</value>
+  </data>
+  <data name="SettingsDoubleClickHelp" xml:space="preserve">
+    <value>Richiede un doppio clic per aprire i risultati</value>
+  </data>
+  <data name="SettingsHistoryHelp" xml:space="preserve">
+    <value>Ricorda i termini di ricerca precedenti per l'accesso rapido</value>
+  </data>
+  <data name="SettingsEverythingFiltersHelp" xml:space="preserve">
+    <value>Sincronizza i filtri personalizzati di Everything</value>
+  </data>
+  <data name="SettingsRememberFilterHelp" xml:space="preserve">
+    <value>Ricorda l'ultimo filtro usato per le ricerche future</value>
+  </data>
+  <data name="SettingsUpdatesHelp" xml:space="preserve">
+    <value>Notifica quando è disponibile una nuova versione</value>
+  </data>
+  <data name="SettingsReplaceStartMenuHelp" xml:space="preserve">
+    <value>Sostituisci la ricerca predefinita del menu Windows Start con EverythingToolbar</value>
+  </data>
   <data name="MessageBoxOk" xml:space="preserve">
     <value>OK</value>
+  </data>
+  <data name="ContextMenuOpenWithNoCustomActions" xml:space="preserve">
+    <value>Nessuna azione definita</value>
+  </data>
+  <data name="MessageBoxCustomActionsNameEmpty" xml:space="preserve">
+    <value>Un nome di azione personalizzato non può essere vuoto.</value>
+  </data>
+  <data name="CustomActionsAutoApply" xml:space="preserve">
+    <value>Applica automaticamente le azioni in base al tipo e all'espressione regolare</value>
   </data>
 </root>
