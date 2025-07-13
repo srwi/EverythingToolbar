@@ -117,26 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonClose" xml:space="preserve">
-    <value>Đóng</value>
-  </data>
-  <data name="CheckboxEnable" xml:space="preserve">
-    <value>Bật</value>
-  </data>
-  <data name="CheckboxHide" xml:space="preserve">
-    <value>Ẩn</value>
-  </data>
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>Thoát</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>Chạy trình trợ giúp thiết lập...</value>
   </data>
-  <data name="SetupAssistantSecondStepText" xml:space="preserve">
+  <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>Để ghim EverythingToolbar vào thanh tác vụ, hãy nhấp chuột phải vào biểu tượng và chọn 'Ghim vào thanh tác vụ'.</value>
-  </data>
-  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Ghim vào thanh tác vụ</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>Cần khởi động lại File Explorer để cập nhật biểu tượng trên thanh tác vụ. Bạn có muốn khởi động lại ngay bây giờ không?</value>
@@ -144,37 +132,43 @@
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>Khởi động lại File Explorer</value>
   </data>
-  <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>Nếu muốn bạn cũng có thể ẩn biểu tượng tìm kiếm mặc định của Windows.</value>
-  </data>
-  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Ẩn menu Tìm Kiếm của Windows</value>
-  </data>
-  <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>Bạn nên thiết lập EverythingToolbar tự khởi động cùng hệ thống.</value>
-  </data>
-  <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. Cấu hình tự khởi động cùng hệ thống</value>
-  </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Trình trợ giúp thiết lập EverythingToolbar</value>
-  </data>
-  <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>Chọn một trong các biểu tượng thanh tác vụ sau:</value>
-  </data>
-  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. Biểu tượng thanh tác vụ</value>
-  </data>
-  <data name="SetupAssistantFifthStepText" xml:space="preserve">
-    <value>Bằng cách bật biểu tượng ở khay hệ thống, bạn có thể thoát tiến trình chạy nền của EverythingToolbar bất cứ lúc nào. Nếu không bật, bạn vẫn có thể thoát EverythingToolbar qua Trình quản lý tác vụ.</value>
-  </data>
-  <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
-    <value>5. Cấu hình biểu tượng khay hệ thống</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
     <value>Bạn có chắc chắn muốn thoát trình trợ giúp thiết lập không? EverythingToolbar sẽ chỉ có thể truy cập bằng phím tắt. Bạn có thể mở lại trình trợ giúp thiết lập qua biểu tượng khay hệ thống để ghim biểu tượng tìm kiếm vào thanh tác vụ.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
     <value>Thoát trình trợ giúp thiết lập</value>
+  </data>
+  <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
+    <value>Pin to taskbar</value>
+  </data>
+  <data name="SetupAssistantPreferences" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
+  <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
+    <value>Hide Windows search icon</value>
+  </data>
+  <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
+    <value>Hides the original Windows search icon from the taskbar</value>
+  </data>
+  <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
+    <value>Enable system tray icon</value>
+  </data>
+  <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
+    <value>Enables the system tray icon for quick access to settings</value>
+  </data>
+  <data name="SetupAssistantEnableAutostart" xml:space="preserve">
+    <value>Enable autostart</value>
+  </data>
+  <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
+    <value>Automatically starts EverythingToolbar when Windows starts</value>
+  </data>
+  <data name="SetupAssistantDone" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="CheckboxEnable" xml:space="preserve">
+    <value></value>
   </data>
 </root>
