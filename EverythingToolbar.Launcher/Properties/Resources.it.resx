@@ -117,26 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonClose" xml:space="preserve">
-    <value>Chiudi</value>
-  </data>
-  <data name="CheckboxEnable" xml:space="preserve">
-    <value>Abilita</value>
-  </data>
-  <data name="CheckboxHide" xml:space="preserve">
-    <value>Nascondi</value>
-  </data>
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>Esci</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>Esegui assistente installazione...</value>
   </data>
-  <data name="SetupAssistantSecondStepText" xml:space="preserve">
+  <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>Per aggiungere EverythingToolbar alla barra delle applicazioni fare click destro sulla sua icona e seleziona 'Aggiungi alla barra delle applicazioni'.</value>
-  </data>
-  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. Aggiungi alla Barra delle applicazioni</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>Per aggiornare la barra delle applicazioni è necessario riavviare Esplora Risorse. Riavviarlo ora?</value>
@@ -144,37 +132,43 @@
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>Riavvia esplora risorse</value>
   </data>
-  <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>A scelta l'icona originale della ricerca di Windows può essere nascosta.</value>
-  </data>
-  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. Nascondi ricerca di Windows</value>
-  </data>
-  <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>Si consiglia di avviare EverythingToolbar automaticamente all'avvio del sistema.</value>
-  </data>
-  <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. Configura avvio automatico</value>
-  </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Assistente Configurazione EverythingToolbar</value>
-  </data>
-  <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>Scegli una delle seguenti icone per la barra delle applicazioni:</value>
-  </data>
-  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>Icona barra delle applicazioni</value>
-  </data>
-  <data name="SetupAssistantFifthStepText" xml:space="preserve">
-    <value>Abilitando l'icona della barra delle applicazioni puoi chiudere il processo in background di EverythingToolbar in qualsiasi momento. Senza di essa, EverythingToolbar può sempre essere chiuso tramite il task manager.</value>
-  </data>
-  <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
-    <value>5. Configurare l'icona della barra delle applicazioni</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
     <value>Sei sicuro di voler uscire dall'assistente di configurazione? EverythingToolbar sarà accessibile solo usando la scorciatoia da tastiera. È possibile accedere nuovamente all'assistente di configurazione tramite l'icona della barra delle applicazioni per fissare l'icona di ricerca alla barra delle applicazioni.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
     <value>Esci Dall'Assistente di Configurazione</value>
+  </data>
+  <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
+    <value>Pin to taskbar</value>
+  </data>
+  <data name="SetupAssistantPreferences" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
+  <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
+    <value>Hide Windows search icon</value>
+  </data>
+  <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
+    <value>Hides the original Windows search icon from the taskbar</value>
+  </data>
+  <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
+    <value>Enable system tray icon</value>
+  </data>
+  <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
+    <value>Enables the system tray icon for quick access to settings</value>
+  </data>
+  <data name="SetupAssistantEnableAutostart" xml:space="preserve">
+    <value>Enable autostart</value>
+  </data>
+  <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
+    <value>Automatically starts EverythingToolbar when Windows starts</value>
+  </data>
+  <data name="SetupAssistantDone" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="CheckboxEnable" xml:space="preserve">
+    <value></value>
   </data>
 </root>
