@@ -117,26 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonClose" xml:space="preserve">
-    <value>إغلاق</value>
-  </data>
-  <data name="CheckboxEnable" xml:space="preserve">
-    <value>تمكين</value>
-  </data>
-  <data name="CheckboxHide" xml:space="preserve">
-    <value>إخفاء</value>
-  </data>
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>خروج</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>تشغيل مساعد الإعداد...</value>
   </data>
-  <data name="SetupAssistantSecondStepText" xml:space="preserve">
+  <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>لتثبيت EverythingToolbar على شريط المهام، انقر بالزر الأيمن على أيقونة الأداة وحدّد "تثبيت إلى شريط المهام".</value>
-  </data>
-  <data name="SetupAssistantSecondStepTitle" xml:space="preserve">
-    <value>2. تثبيت إلى شريط المهام</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>يجب إعادة تشغيل مستكشف الملفات لتحديث أيقونة شريط المهام. هل ترغب في إعادة التشغيل الآن؟</value>
@@ -144,37 +132,43 @@
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>إعادة تشغيل مستكشف الملفات</value>
   </data>
-  <data name="SetupAssistantThirdStepText" xml:space="preserve">
-    <value>يمكن إخفاء أيقونة البحث الأصلية لـ Windows اختياريًا.</value>
-  </data>
-  <data name="SetupAssistantThirdStepTitle" xml:space="preserve">
-    <value>3. إخفاء بحث Windows</value>
-  </data>
-  <data name="SetupAssistantFourthStepText" xml:space="preserve">
-    <value>يفضل تفعيل تشغيل EverythingToolbar تلقائيًا عند تشغيل النظام.</value>
-  </data>
-  <data name="SetupAssistantFourthStepTitle" xml:space="preserve">
-    <value>4. تكوين التشغيل التلقائي</value>
-  </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>مساعد الإعداد لـ EverythingToolbar</value>
-  </data>
-  <data name="SetupAssistantFirstStepText" xml:space="preserve">
-    <value>اختر إحدى أيقونات شريط المهام التالية:</value>
-  </data>
-  <data name="SetupAssistantFirstStepTitle" xml:space="preserve">
-    <value>1. تعيين أيقونة شريط المهام</value>
-  </data>
-  <data name="SetupAssistantFifthStepText" xml:space="preserve">
-    <value>بتفعيل أيقونة شريط المهام، يمكنك إغلاق عمليات EverythingToolbar الخلفية في أي وقت. بدونها، يمكنك إغلاق EverythingToolbar دائمًا عبر مدير المهام.</value>
-  </data>
-  <data name="SetupAssistantFifthStepTitle" xml:space="preserve">
-    <value>5. إعداد رمز شريط المهام</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
     <value>هل أنت متأكد من رغبتك في الخروج من مساعد الإعداد؟ لن تتمكن من الوصول إلى شريط أدوات EverythingToolbar إلا باستخدام اختصار لوحة المفاتيح. يمكنك الوصول إلى مساعد الإعداد مجددًا عبر أيقونة شريط المهام لتثبيت أيقونة البحث على شريط المهام.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
     <value>الخروج من مساعد الإعداد</value>
+  </data>
+  <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
+    <value>Pin to taskbar</value>
+  </data>
+  <data name="SetupAssistantPreferences" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
+  <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
+    <value>Hide Windows search icon</value>
+  </data>
+  <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
+    <value>Hides the original Windows search icon from the taskbar</value>
+  </data>
+  <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
+    <value>Enable system tray icon</value>
+  </data>
+  <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
+    <value>Enables the system tray icon for quick access to settings</value>
+  </data>
+  <data name="SetupAssistantEnableAutostart" xml:space="preserve">
+    <value>Enable autostart</value>
+  </data>
+  <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
+    <value>Automatically starts EverythingToolbar when Windows starts</value>
+  </data>
+  <data name="SetupAssistantDone" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="CheckboxEnable" xml:space="preserve">
+    <value></value>
   </data>
 </root>
