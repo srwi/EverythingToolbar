@@ -565,7 +565,7 @@
     <value>Sincronizza i filtri personalizzati di Everything</value>
   </data>
   <data name="SettingsRememberFilterHelp" xml:space="preserve">
-    <value>Ricorda l'ultimo filtro usato per le ricerche future</value>
+    <value>Remember the most recently used filter for future searches</value>
   </data>
   <data name="SettingsUpdatesHelp" xml:space="preserve">
     <value>Notifica quando è disponibile una nuova versione</value>
@@ -584,5 +584,35 @@
   </data>
   <data name="CustomActionsAutoApply" xml:space="preserve">
     <value>Applica automaticamente le azioni in base al tipo e all'espressione regolare</value>
+  </data>
+  <data name="SettingsTaskbarIntegration" xml:space="preserve">
+    <value>Taskbar integration</value>
+  </data>
+  <data name="SettingsHideWindowsSearchIcon" xml:space="preserve">
+    <value>Hide Windows search icon</value>
+  </data>
+  <data name="SettingsHideWindowsSearchIconHelp" xml:space="preserve">
+    <value>Hides the original Windows search icon from the taskbar</value>
+  </data>
+  <data name="SettingsEnableSystemTrayIcon" xml:space="preserve">
+    <value>Enable system tray icon</value>
+  </data>
+  <data name="SettingsEnableSystemTrayIconHelp" xml:space="preserve">
+    <value>Enables the system tray icon to be able to quit EverythingToolbar easily</value>
+  </data>
+  <data name="SettingsSearchIcon" xml:space="preserve">
+    <value>Search icon</value>
+  </data>
+  <data name="SettingsSearchIconHelp" xml:space="preserve">
+    <value>Changes the style of the taskbar icon (requires explorer restart)</value>
+  </data>
+  <data name="SettingsFilterOrder" xml:space="preserve">
+    <value>Filter order</value>
+  </data>
+  <data name="SettingsMaxTabItems" xml:space="preserve">
+    <value>Number of filter tabs</value>
+  </data>
+  <data name="SettingsMaxTabItemsHelp" xml:space="preserve">
+    <value>Controls the number of visible filter tabs</value>
   </data>
 </root>
