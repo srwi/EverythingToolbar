@@ -154,10 +154,10 @@
     <value>Nasconde l'icona cerca originale di Windows dalla barra delle applicazioni</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>Abilita icona area di notifica</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
-    <value>Enables the system tray icon for quick access to settings</value>
+    <value>Abilita icona area di notifica per un accesso rapido alle impostazioni</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>Abilita avvio automatico</value>
