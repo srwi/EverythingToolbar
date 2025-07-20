@@ -99,19 +99,16 @@ namespace EverythingToolbar.Controls
             }
             else if (e.Key == Key.Tab)
             {
-                // The down stroke of the Tab key is not always consistent. Therefore it's handled by the up stroke event.
+                // Handle Tab key completely in KeyDown to avoid repeated processing
+                var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
+                SearchState.Instance.CycleFilters(offset);
                 e.Handled = true;
             }
         }
 
         private void OnPreviewKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Tab)
-            {
-                var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
-                SearchState.Instance.CycleFilters(offset);
-                e.Handled = true;
-            }
+            // Tab key is now handled completely in OnPreviewKeyDown
         }
 
         private void UpdateSearchTerm(string newSearchTerm)

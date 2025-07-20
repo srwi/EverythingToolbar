@@ -1,5 +1,6 @@
 ﻿using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -151,7 +152,17 @@ namespace EverythingToolbar.Search
         public void CycleFilters(int offset = 1)
         {
             var filterCount = FilterLoader.Instance.Filters.Count;
+            if (filterCount == 0) return;
+            
             var currentIndex = FilterLoader.Instance.Filters.IndexOf(Filter);
+            
+            // If current filter is not found in the list, start from the first filter
+            if (currentIndex < 0)
+            {
+                Filter = FilterLoader.Instance.Filters[0];
+                return;
+            }
+            
             var newIndex = (currentIndex + offset + filterCount) % filterCount;
             Filter = FilterLoader.Instance.Filters[newIndex];
         }
