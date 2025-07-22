@@ -168,7 +168,4 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Fatto</value>
   </data>
-  <data name="CheckboxEnable" xml:space="preserve">
-    <value></value>
-  </data>
 </root>
