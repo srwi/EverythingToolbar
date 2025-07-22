@@ -615,4 +615,10 @@
   <data name="SettingsMaxTabItemsHelp" xml:space="preserve">
     <value>Controls the number of visible filter tabs</value>
   </data>
+  <data name="SettingsForceWin10Styles" xml:space="preserve">
+    <value>Force Windows 10 styles</value>
+  </data>
+  <data name="SettingsForceWin10StylesHelp" xml:space="preserve">
+    <value>Uses Windows 10 styles to match certain legacy taskbar modifications</value>
+  </data>
 </root>
