@@ -616,9 +616,9 @@
     <value>Controlla il numero di schede dei filtri visibili</value>
   </data>
   <data name="SettingsForceWin10Styles" xml:space="preserve">
-    <value>Force Windows 10 styles</value>
+    <value>Forza stili Windows 10</value>
   </data>
   <data name="SettingsForceWin10StylesHelp" xml:space="preserve">
-    <value>Uses Windows 10 styles to match certain legacy taskbar modifications</value>
+    <value>Usa gli stili di Windows 10 per abbinare alcune modifiche alla barra delle applicazioni legacy</value>
   </data>
 </root>
