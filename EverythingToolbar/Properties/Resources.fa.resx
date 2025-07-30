@@ -621,4 +621,16 @@
   <data name="SettingsForceWin10StylesHelp" xml:space="preserve">
     <value>Uses Windows 10 styles to match certain legacy taskbar modifications</value>
   </data>
+  <data name="UpdateSuccessfulBannerHeader" xml:space="preserve">
+    <value>EverythingToolbar {version} was updated successfully!</value>
+  </data>
+  <data name="UpdateSuccessfulBannerText" xml:space="preserve">
+    <value>If it makes your life easier, consider donating to support future updates.</value>
+  </data>
+  <data name="UpdateSuccessfulBannerDonate" xml:space="preserve">
+    <value>Donate</value>
+  </data>
+  <data name="UpdateSuccessfulBannerDismiss" xml:space="preserve">
+    <value>Dismiss</value>
+  </data>
 </root>
