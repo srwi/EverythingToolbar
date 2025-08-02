@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -142,30 +142,30 @@
     <value>Einrichtungsassistenten schließen</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>An Taskleiste anheften</value>
   </data>
   <data name="SetupAssistantPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Einstellungen</value>
   </data>
   <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Windows-Suchsymbol ausblenden</value>
   </data>
   <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>Versteckt das ursprüngliche Windows-Suchsymbol in der Taskleiste</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>Infobereichsymbol aktivieren</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
-    <value>Enables the system tray icon for quick access to settings</value>
+    <value>Aktiviert das Infobereichsymbol für schnellen Zugriff auf die Einstellungen</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>Autostart aktivieren</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Startet die EverythingToolbar automatisch beim Start von Windows</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
-    <value>Done</value>
+    <value>Fertig</value>
   </data>
 </root>
