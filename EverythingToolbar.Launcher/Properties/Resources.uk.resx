@@ -145,7 +145,7 @@
     <value>Pin to taskbar</value>
   </data>
   <data name="SetupAssistantPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Налаштування</value>
   </data>
   <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
     <value>Hide Windows search icon</value>
@@ -160,12 +160,12 @@
     <value>Enables the system tray icon for quick access to settings</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>Увімкнути автозапуск</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Автоматично запускати EverythingToolBar при запуску Windows</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
-    <value>Done</value>
+    <value>Готово</value>
   </data>
 </root>
