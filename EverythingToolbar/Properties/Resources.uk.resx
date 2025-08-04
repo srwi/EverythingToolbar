@@ -466,7 +466,7 @@
     <value>Advanced</value>
   </data>
   <data name="SettingsReportProblem" xml:space="preserve">
-    <value>Report a problem</value>
+    <value>Повідомити про проблему</value>
   </data>
   <data name="SettingsBehavior" xml:space="preserve">
     <value>Behavior</value>
@@ -508,10 +508,10 @@
     <value>Everything integration for the Windows taskbar.</value>
   </data>
   <data name="AboutSearchSettings" xml:space="preserve">
-    <value>Search settings</value>
+    <value>Налаштування пошуку</value>
   </data>
   <data name="AboutUserInterface" xml:space="preserve">
-    <value>User interface</value>
+    <value>Інтерфейс користувача</value>
   </data>
   <data name="AboutCustomActions" xml:space="preserve">
     <value>Custom actions</value>
@@ -520,10 +520,10 @@
     <value>Посилання</value>
   </data>
   <data name="AboutFAQ" xml:space="preserve">
-    <value>Frequently Asked Questions</value>
+    <value>Поширені запитання</value>
   </data>
   <data name="AboutSourceCode" xml:space="preserve">
-    <value>Source Code (GitHub)</value>
+    <value>Джерело коду (GitHub)</value>
   </data>
   <data name="AboutStarOnGitHub" xml:space="preserve">
     <value>Поставити зірочку на GitHub</value>
@@ -532,7 +532,7 @@
     <value>Зробити внесок</value>
   </data>
   <data name="SettingsViewLayoutHelp" xml:space="preserve">
-    <value>Choose the layout for search results</value>
+    <value>Виберіть макет для результатів пошуку</value>
   </data>
   <data name="SettingsThumbnailsHelp" xml:space="preserve">
     <value>Показувати мініатюри для файлів зображень</value>
@@ -544,16 +544,16 @@
     <value>Show quick toggle buttons for search options in the search bar</value>
   </data>
   <data name="SettingsAnimationsHelp" xml:space="preserve">
-    <value>Disable UI animations for improved performance</value>
+    <value>Вимкнути анімацію інтерфейсу для підвищення продуктивності</value>
   </data>
   <data name="SettingsHideEmptyResultsHelp" xml:space="preserve">
-    <value>Hide results when search term is empty</value>
+    <value>Приховати результати, якщо пошуковий запит порожній</value>
   </data>
   <data name="SettingsSearchAsYouTypeHelp" xml:space="preserve">
-    <value>Start searching as you type, without pressing Enter</value>
+    <value>Починати пошук під час введення тексту, не натискаючи Enter</value>
   </data>
   <data name="SettingsSelectFirstResultHelp" xml:space="preserve">
-    <value>Automatically select the first result while keeping the search bar focused</value>
+    <value>Автоматично вибирати перший результат, залишаючи фокус на панелі пошуку</value>
   </data>
   <data name="SettingsDoubleClickHelp" xml:space="preserve">
     <value>Require double-click to open results</value>
@@ -577,34 +577,34 @@
     <value>OK</value>
   </data>
   <data name="ContextMenuOpenWithNoCustomActions" xml:space="preserve">
-    <value>No actions defined</value>
+    <value>Не визначено жодних дій</value>
   </data>
   <data name="MessageBoxCustomActionsNameEmpty" xml:space="preserve">
     <value>A custom action name cannot be empty.</value>
   </data>
   <data name="CustomActionsAutoApply" xml:space="preserve">
-    <value>Automatically apply actions based on type and regular expression</value>
+    <value>Автоматично застосовувати дії на основі типу та регулярного виразу</value>
   </data>
   <data name="SettingsTaskbarIntegration" xml:space="preserve">
-    <value>Taskbar integration</value>
+    <value>Інтеграція з панеллю завдань</value>
   </data>
   <data name="SettingsHideWindowsSearchIcon" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Сховати піктограму пошуку Windows</value>
   </data>
   <data name="SettingsHideWindowsSearchIconHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>Приховує оригінальну піктограму пошуку Windows з панелі завдань</value>
   </data>
   <data name="SettingsEnableSystemTrayIcon" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>Відображати піктограму в системному треї</value>
   </data>
   <data name="SettingsEnableSystemTrayIconHelp" xml:space="preserve">
     <value>Enables the system tray icon to be able to quit EverythingToolbar easily</value>
   </data>
   <data name="SettingsSearchIcon" xml:space="preserve">
-    <value>Search icon</value>
+    <value>Піктограма пошук</value>
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
-    <value>Changes the style of the taskbar icon (requires explorer restart)</value>
+    <value>Змінює стиль піктограми панелі завдань (потрібно перезапустити Провідник)</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>Filter order</value>
