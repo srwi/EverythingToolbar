@@ -622,18 +622,18 @@
     <value>Usa gli stili di Windows 10 per abbinare alcune modifiche alla barra delle applicazioni legacy</value>
   </data>
   <data name="UpdateSuccessfulBannerHeader" xml:space="preserve">
-    <value>EverythingToolbar {version} was updated successfully!</value>
+    <value>EverythingToolbar {version} è stato aggiornato con successo!</value>
   </data>
   <data name="UpdateSuccessfulBannerText" xml:space="preserve">
-    <value>If it makes your life easier, consider donating to support future updates.</value>
+    <value>Se rende la tua vita più facile, considera la donazione per supportare gli aggiornamenti futuri.</value>
   </data>
   <data name="UpdateSuccessfulBannerDonate" xml:space="preserve">
-    <value>Donate</value>
+    <value>Dona</value>
   </data>
   <data name="UpdateSuccessfulBannerDismiss" xml:space="preserve">
-    <value>Dismiss</value>
+    <value>Disattiva</value>
   </data>
   <data name="ShortcutOpenSystemContextMenu" xml:space="preserve">
-    <value>Open system context menu</value>
+    <value>Apri menu contestuale di sistema</value>
   </data>
 </root>
