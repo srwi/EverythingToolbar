@@ -127,43 +127,43 @@
     <value>Щоб закріпити EverythingToolbar в панелі завдань, натисніть правою кнопкою миші по його значку, і виберіть "Закріпити на панелі завдань".</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>Для оновлення значка панелі завдань потрібен перезапуск провідника. Хочете перезапустити зараз?</value>
+    <value>Для оновлення піктограми на панелі завдань потрібно перезапустити Провідник. Чи хочете ви перезапустити його зараз?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>Перезапустити провідник</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>Програма встановлення EverythingToolbar</value>
+    <value>Помічник налаштування EverythingToolbar</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+    <value>Ви впевнені, що хочете вийти з помічника налаштування? Доступ до EverythingToolbar буде можливий лише за допомогою комбінації клавіш. Ви можете знову відкрити помічник налаштування через піктограму в системному треї, щоб закріпити піктограму пошуку на панелі завдань.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>Exit Setup Assistant</value>
+    <value>Вийти з помічника налаштувань</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>Закріпити на панелі завдань</value>
   </data>
   <data name="SetupAssistantPreferences" xml:space="preserve">
     <value>Налаштування</value>
   </data>
   <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Сховати піктограму пошуку Windows</value>
   </data>
   <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>Приховує оригінальний значок пошуку Windows на панелі задач</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>Відображати піктограму в системному треї</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
-    <value>Enables the system tray icon for quick access to settings</value>
+    <value>Вмикає піктограму панелі завдань для швидкого доступу до налаштувань</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>Увімкнути автозапуск</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Автоматично запускати EverythingToolBar при запуску Windows</value>
+    <value>Автоматично запускає EverythingToolbar під час запуску Windows</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Готово</value>
