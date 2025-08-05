@@ -550,90 +550,90 @@
     <value>Скрывать результаты при пустой строке поиска</value>
   </data>
   <data name="SettingsSearchAsYouTypeHelp" xml:space="preserve">
-    <value>Start searching as you type, without pressing Enter</value>
+    <value>Начинать поиск по мере ввода, без нажатия Enter</value>
   </data>
   <data name="SettingsSelectFirstResultHelp" xml:space="preserve">
-    <value>Automatically select the first result while keeping the search bar focused</value>
+    <value>Автоматически выбирать первый результат, сохраняя активной строку поиска</value>
   </data>
   <data name="SettingsDoubleClickHelp" xml:space="preserve">
-    <value>Require double-click to open results</value>
+    <value>Открывать результаты по двойному щелчку</value>
   </data>
   <data name="SettingsHistoryHelp" xml:space="preserve">
-    <value>Remember previous search terms for quick access</value>
+    <value>Запоминать условия предыдущего поиска для быстрого доступа</value>
   </data>
   <data name="SettingsEverythingFiltersHelp" xml:space="preserve">
-    <value>Synchronize Everything's custom filters</value>
+    <value>Синхронизировать пользовательские фильтры Everything</value>
   </data>
   <data name="SettingsRememberFilterHelp" xml:space="preserve">
-    <value>Remember the most recently used filter for future searches</value>
+    <value>Запоминать последний фильтр для будущих поисков</value>
   </data>
   <data name="SettingsUpdatesHelp" xml:space="preserve">
-    <value>Notify when a new version is available</value>
+    <value>Уведомлять о наличии новой версии</value>
   </data>
   <data name="SettingsReplaceStartMenuHelp" xml:space="preserve">
-    <value>Replace the default Windows Start menu search with EverythingToolbar</value>
+    <value>Заменить стандартный поиск в меню Windows на EverythingToolbar</value>
   </data>
   <data name="MessageBoxOk" xml:space="preserve">
     <value>ОК</value>
   </data>
   <data name="ContextMenuOpenWithNoCustomActions" xml:space="preserve">
-    <value>No actions defined</value>
+    <value>Действия не определены</value>
   </data>
   <data name="MessageBoxCustomActionsNameEmpty" xml:space="preserve">
-    <value>A custom action name cannot be empty.</value>
+    <value>Имя своего действия не может быть пустым.</value>
   </data>
   <data name="CustomActionsAutoApply" xml:space="preserve">
-    <value>Automatically apply actions based on type and regular expression</value>
+    <value>Автоматически применять действия, основанные на типе и регулярном выражении</value>
   </data>
   <data name="SettingsTaskbarIntegration" xml:space="preserve">
-    <value>Taskbar integration</value>
+    <value>Интеграция с панелью задач</value>
   </data>
   <data name="SettingsHideWindowsSearchIcon" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Скрыть значок поиска Windows</value>
   </data>
   <data name="SettingsHideWindowsSearchIconHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>Скрывает исходный значок поиска Windows из панели задач</value>
   </data>
   <data name="SettingsEnableSystemTrayIcon" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>Показывать значок в области уведомлений</value>
   </data>
   <data name="SettingsEnableSystemTrayIconHelp" xml:space="preserve">
-    <value>Enables the system tray icon to be able to quit EverythingToolbar easily</value>
+    <value>Показ значка в области уведомлений для быстрого выхода из EverythingToolbar</value>
   </data>
   <data name="SettingsSearchIcon" xml:space="preserve">
-    <value>Search icon</value>
+    <value>Значок поиска</value>
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
-    <value>Changes the style of the taskbar icon (requires explorer restart)</value>
+    <value>Изменяет стиль значка в панели задач (требуется перезапуск проводника)</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
-    <value>Filter order</value>
+    <value>Порядок фильтров</value>
   </data>
   <data name="SettingsMaxTabItems" xml:space="preserve">
-    <value>Number of filter tabs</value>
+    <value>Количество вкладок фильтрации</value>
   </data>
   <data name="SettingsMaxTabItemsHelp" xml:space="preserve">
-    <value>Controls the number of visible filter tabs</value>
+    <value>Определяет количество видимых вкладок фильтра</value>
   </data>
   <data name="SettingsForceWin10Styles" xml:space="preserve">
-    <value>Force Windows 10 styles</value>
+    <value>Использовать стили Windows 10</value>
   </data>
   <data name="SettingsForceWin10StylesHelp" xml:space="preserve">
-    <value>Uses Windows 10 styles to match certain legacy taskbar modifications</value>
+    <value>Использует стили Windows 10 для совпадения с некоторыми предыдущими модификациями панели задач</value>
   </data>
   <data name="UpdateSuccessfulBannerHeader" xml:space="preserve">
-    <value>EverythingToolbar {version} was updated successfully!</value>
+    <value>Панель EverythingToolbar {version} успешно обновлена.</value>
   </data>
   <data name="UpdateSuccessfulBannerText" xml:space="preserve">
-    <value>If it makes your life easier, consider donating to support future updates.</value>
+    <value>Если этот продукт упрощает вам жизнь, поддержите разработчиков!</value>
   </data>
   <data name="UpdateSuccessfulBannerDonate" xml:space="preserve">
-    <value>Donate</value>
+    <value>Поддержать</value>
   </data>
   <data name="UpdateSuccessfulBannerDismiss" xml:space="preserve">
-    <value>Dismiss</value>
+    <value>Отказаться</value>
   </data>
   <data name="ShortcutOpenSystemContextMenu" xml:space="preserve">
-    <value>Open system context menu</value>
+    <value>Открыть системное контекстное меню</value>
   </data>
 </root>
