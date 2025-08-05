@@ -133,39 +133,39 @@
     <value>Перезапустить Проводник</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>Помощник установки EverythingToolbar</value>
+    <value>Помощник настройки EverythingToolbar</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+    <value>Вы действительно хотите закрыть помощника по настройке? EverythingToolbar будет доступен только с помощью клавиатуры. Чтобы закрепить значок поиска в панели задач, вызовите помощник по настройке через значок в области уведомлений.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>Exit Setup Assistant</value>
+    <value>Закрыть помощника по настройке</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>Закрепить на панели задач</value>
   </data>
   <data name="SetupAssistantPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Настройки</value>
   </data>
   <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Скрыть значок поиска Windows</value>
   </data>
   <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>Скрывает исходный значок поиска Windows из панели задач</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>Показывать значок в области уведомлений</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
-    <value>Enables the system tray icon for quick access to settings</value>
+    <value>Показывать значок в области уведомлений для быстрого доступа к настройкам</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>Включить автозапуск</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Автоматически запускать EverythingToolbar вместе с Windows</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
-    <value>Done</value>
+    <value>Готово</value>
   </data>
 </root>
