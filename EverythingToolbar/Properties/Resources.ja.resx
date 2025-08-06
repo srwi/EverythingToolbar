@@ -400,240 +400,240 @@
     <value>入力して検索</value>
   </data>
   <data name="SettingsUserInterface" xml:space="preserve">
-    <value>User Interface</value>
+    <value>ユーザーインターフェース</value>
   </data>
   <data name="SettingsAppearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>外観</value>
   </data>
   <data name="SettingsOther" xml:space="preserve">
-    <value>Other</value>
+    <value>その他</value>
   </data>
   <data name="SettingsShortcuts" xml:space="preserve">
-    <value>Shortcuts</value>
+    <value>ショートカット</value>
   </data>
   <data name="SettingsCustomShortcuts" xml:space="preserve">
-    <value>Custom shortcuts</value>
+    <value>カスタムショートカット</value>
   </data>
   <data name="SettingsOtherShortcuts" xml:space="preserve">
-    <value>Other shortcuts</value>
+    <value>その他のショートカット</value>
   </data>
   <data name="SettingsOpenSearchWindow" xml:space="preserve">
-    <value>Open search window</value>
+    <value>検索ウィンドウを開く</value>
   </data>
   <data name="ShortcutNavigateResults" xml:space="preserve">
-    <value>Navigate search results</value>
+    <value>検索結果を移動</value>
   </data>
   <data name="ShortcutNavigateHistory" xml:space="preserve">
-    <value>Navigate search history (if enabled)</value>
+    <value>検索履歴を移動 (有効な場合)</value>
   </data>
   <data name="ShortcutOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>開く</value>
   </data>
   <data name="ShortcutOpenPath" xml:space="preserve">
-    <value>Open path</value>
+    <value>パスを開く</value>
   </data>
   <data name="ShortcutOpenInEverything" xml:space="preserve">
-    <value>Open in Everything</value>
+    <value>Everything で開く</value>
   </data>
   <data name="ShortcutRunAsAdmin" xml:space="preserve">
-    <value>Run as admin</value>
+    <value>管理者として実行</value>
   </data>
   <data name="ShortcutFileProperties" xml:space="preserve">
-    <value>File properties</value>
+    <value>ファイルのプロパティ</value>
   </data>
   <data name="ShortcutCopyFullPath" xml:space="preserve">
-    <value>Copy full path to clipboard</value>
+    <value>完全なパスをクリップボードにコピー</value>
   </data>
   <data name="ShortcutCycleFilters" xml:space="preserve">
-    <value>Cycle through filters</value>
+    <value>フィルターの切り替え</value>
   </data>
   <data name="ShortcutSelectFilter" xml:space="preserve">
-    <value>Select filter</value>
+    <value>フィルターを選択</value>
   </data>
   <data name="ShortcutPreviewQuickLook" xml:space="preserve">
-    <value>Preview file in QuickLook</value>
+    <value>QuickLookでファイルをプレビューする</value>
   </data>
   <data name="SettingsHome" xml:space="preserve">
-    <value>Home</value>
+    <value>ホーム</value>
   </data>
   <data name="SettingsSearch" xml:space="preserve">
-    <value>Search</value>
+    <value>検索</value>
   </data>
   <data name="SettingsCustomActions" xml:space="preserve">
-    <value>Custom Actions</value>
+    <value>カスタムアクション</value>
   </data>
   <data name="SettingsAdvanced" xml:space="preserve">
-    <value>Advanced</value>
+    <value>詳細</value>
   </data>
   <data name="SettingsReportProblem" xml:space="preserve">
-    <value>Report a problem</value>
+    <value>問題を報告する</value>
   </data>
   <data name="SettingsBehavior" xml:space="preserve">
-    <value>Behavior</value>
+    <value>操作</value>
   </data>
   <data name="SettingsHistory" xml:space="preserve">
-    <value>History</value>
+    <value>履歴</value>
   </data>
   <data name="SettingsFilters" xml:space="preserve">
-    <value>Filters</value>
+    <value>フィルター</value>
   </data>
   <data name="SettingsClearHistoryNow" xml:space="preserve">
-    <value>Clear now</value>
+    <value>今すぐ消去</value>
   </data>
   <data name="SettingsUpdates" xml:space="preserve">
-    <value>Updates</value>
+    <value>アップデート</value>
   </data>
   <data name="SettingsCheckNow" xml:space="preserve">
-    <value>Check now</value>
+    <value>今すぐ確認</value>
   </data>
   <data name="SettingsDownloadLatestVersion" xml:space="preserve">
-    <value>Download latest version</value>
+    <value>最新バージョンをダウンロード</value>
   </data>
   <data name="SettingsLatestVersionMessage" xml:space="preserve">
-    <value>You are already using the latest version.</value>
+    <value>既に最新バージョンを使用しています。</value>
   </data>
   <data name="SettingsNamedInstance" xml:space="preserve">
-    <value>Named Instance</value>
+    <value>名前付きインスタンス</value>
   </data>
   <data name="SettingsInstanceName" xml:space="preserve">
-    <value>Everything instance name</value>
+    <value>Everything のインスタンス名</value>
   </data>
   <data name="SettingsInstanceNameHelp" xml:space="preserve">
-    <value>Set the name of the Everything instance to use</value>
+    <value>Everything で使用するインスタンスの名前を設定します</value>
   </data>
   <data name="SettingsDefaultInstance" xml:space="preserve">
-    <value>Default instance</value>
+    <value>デフォルトのインスタンス</value>
   </data>
   <data name="AboutDescription" xml:space="preserve">
-    <value>Everything integration for the Windows taskbar.</value>
+    <value>Windows タスクバーに Everything を統合。</value>
   </data>
   <data name="AboutSearchSettings" xml:space="preserve">
-    <value>Search settings</value>
+    <value>検索設定</value>
   </data>
   <data name="AboutUserInterface" xml:space="preserve">
-    <value>User interface</value>
+    <value>ユーザーインターフェース</value>
   </data>
   <data name="AboutCustomActions" xml:space="preserve">
-    <value>Custom actions</value>
+    <value>カスタムアクション</value>
   </data>
   <data name="AboutLinks" xml:space="preserve">
-    <value>Links</value>
+    <value>リンク</value>
   </data>
   <data name="AboutFAQ" xml:space="preserve">
-    <value>Frequently Asked Questions</value>
+    <value>よくある質問 (英語)</value>
   </data>
   <data name="AboutSourceCode" xml:space="preserve">
-    <value>Source Code (GitHub)</value>
+    <value>ソースコード (GitHub)</value>
   </data>
   <data name="AboutStarOnGitHub" xml:space="preserve">
-    <value>Star on GitHub</value>
+    <value>Github でスターをつける</value>
   </data>
   <data name="AboutDonation" xml:space="preserve">
-    <value>Make a donation</value>
+    <value>寄付する</value>
   </data>
   <data name="SettingsViewLayoutHelp" xml:space="preserve">
-    <value>Choose the layout for search results</value>
+    <value>検索結果のレイアウトを選択します</value>
   </data>
   <data name="SettingsThumbnailsHelp" xml:space="preserve">
-    <value>Show thumbnails for image files</value>
+    <value>画像ファイルのサムネイルを表示します</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
-    <value>Display the total number of search results</value>
+    <value>検索結果の総数を表示します</value>
   </data>
   <data name="SettingsQuickTogglesHelp" xml:space="preserve">
-    <value>Show quick toggle buttons for search options in the search bar</value>
+    <value>検索バーに検索オプションのクイック切り替えボタンを表示します</value>
   </data>
   <data name="SettingsAnimationsHelp" xml:space="preserve">
-    <value>Disable UI animations for improved performance</value>
+    <value>パフォーマンスを向上させるために UI アニメーションを無効にします</value>
   </data>
   <data name="SettingsHideEmptyResultsHelp" xml:space="preserve">
-    <value>Hide results when search term is empty</value>
+    <value>検索語が空の場合は結果を非表示にします</value>
   </data>
   <data name="SettingsSearchAsYouTypeHelp" xml:space="preserve">
-    <value>Start searching as you type, without pressing Enter</value>
+    <value>Enter キーを押さずに、入力して検索を開始します</value>
   </data>
   <data name="SettingsSelectFirstResultHelp" xml:space="preserve">
-    <value>Automatically select the first result while keeping the search bar focused</value>
+    <value>検索バーのフォーカスを維持しながら最初の結果を自動的に選択します</value>
   </data>
   <data name="SettingsDoubleClickHelp" xml:space="preserve">
-    <value>Require double-click to open results</value>
+    <value>結果を開くときにダブルクリックを必要にします</value>
   </data>
   <data name="SettingsHistoryHelp" xml:space="preserve">
-    <value>Remember previous search terms for quick access</value>
+    <value>クイックアクセスのために以前の検索語を保存します</value>
   </data>
   <data name="SettingsEverythingFiltersHelp" xml:space="preserve">
-    <value>Synchronize Everything's custom filters</value>
+    <value>Everything のカスタムフィルターを同期します</value>
   </data>
   <data name="SettingsRememberFilterHelp" xml:space="preserve">
-    <value>Remember the most recently used filter for future searches</value>
+    <value>今後の検索に最後使用したフィルターを記憶します</value>
   </data>
   <data name="SettingsUpdatesHelp" xml:space="preserve">
-    <value>Notify when a new version is available</value>
+    <value>新しいバージョンが利用可能になった時に通知します</value>
   </data>
   <data name="SettingsReplaceStartMenuHelp" xml:space="preserve">
-    <value>Replace the default Windows Start menu search with EverythingToolbar</value>
+    <value>デフォルトの Windows スタートメニュー検索を EverythingToolbar に置き換えます</value>
   </data>
   <data name="MessageBoxOk" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="ContextMenuOpenWithNoCustomActions" xml:space="preserve">
-    <value>No actions defined</value>
+    <value>アクションが定義されていません</value>
   </data>
   <data name="MessageBoxCustomActionsNameEmpty" xml:space="preserve">
-    <value>A custom action name cannot be empty.</value>
+    <value>カスタムアクション名は空欄にできません。</value>
   </data>
   <data name="CustomActionsAutoApply" xml:space="preserve">
-    <value>Automatically apply actions based on type and regular expression</value>
+    <value>型と正規表現に基づいてアクションを自動的に適用する</value>
   </data>
   <data name="SettingsTaskbarIntegration" xml:space="preserve">
-    <value>Taskbar integration</value>
+    <value>タスクバー連携</value>
   </data>
   <data name="SettingsHideWindowsSearchIcon" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Windows の検索アイコンを隠す</value>
   </data>
   <data name="SettingsHideWindowsSearchIconHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>元の Windows の検索アイコンをタスクバーから非表示にします</value>
   </data>
   <data name="SettingsEnableSystemTrayIcon" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>システムトレイアイコンを有効にする</value>
   </data>
   <data name="SettingsEnableSystemTrayIconHelp" xml:space="preserve">
-    <value>Enables the system tray icon to be able to quit EverythingToolbar easily</value>
+    <value>システムトレイアイコンを有効にして、EverythingToolbar を簡単に終了します</value>
   </data>
   <data name="SettingsSearchIcon" xml:space="preserve">
-    <value>Search icon</value>
+    <value>検索アイコン</value>
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
-    <value>Changes the style of the taskbar icon (requires explorer restart)</value>
+    <value>タスクバーアイコンのスタイルを変更します (エクスプローラーの再起動が必要です)</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
-    <value>Filter order</value>
+    <value>フィルターの順番</value>
   </data>
   <data name="SettingsMaxTabItems" xml:space="preserve">
-    <value>Number of filter tabs</value>
+    <value>フィルタータブの数</value>
   </data>
   <data name="SettingsMaxTabItemsHelp" xml:space="preserve">
-    <value>Controls the number of visible filter tabs</value>
+    <value>表示されるフィルタータブの数を制御します</value>
   </data>
   <data name="SettingsForceWin10Styles" xml:space="preserve">
-    <value>Force Windows 10 styles</value>
+    <value>Windows 10 スタイルを強制する</value>
   </data>
   <data name="SettingsForceWin10StylesHelp" xml:space="preserve">
-    <value>Uses Windows 10 styles to match certain legacy taskbar modifications</value>
+    <value>Windows 10 スタイルを使用して、従来のタスクバーの変更に一致します</value>
   </data>
   <data name="UpdateSuccessfulBannerHeader" xml:space="preserve">
-    <value>EverythingToolbar {version} was updated successfully!</value>
+    <value>EverythingToolbar {version} は正常に更新されました！</value>
   </data>
   <data name="UpdateSuccessfulBannerText" xml:space="preserve">
-    <value>If it makes your life easier, consider donating to support future updates.</value>
+    <value>それがあなたの人生をより簡単にするなら、将来の更新をサポートするために寄付を検討してください。</value>
   </data>
   <data name="UpdateSuccessfulBannerDonate" xml:space="preserve">
-    <value>Donate</value>
+    <value>寄付する</value>
   </data>
   <data name="UpdateSuccessfulBannerDismiss" xml:space="preserve">
-    <value>Dismiss</value>
+    <value>閉じる</value>
   </data>
   <data name="ShortcutOpenSystemContextMenu" xml:space="preserve">
-    <value>Open system context menu</value>
+    <value>システムのコンテキストメニューを開く</value>
   </data>
 </root>
