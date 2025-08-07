@@ -142,30 +142,30 @@
     <value>Kurulum Yardımcısından Çık</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>Görev çubuğuna sabitle</value>
   </data>
   <data name="SetupAssistantPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Tercihler</value>
   </data>
   <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Windows arama simgesini gizle</value>
   </data>
   <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>Görev çubuğundan orijinal Windows arama simgesini gizler</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>Sistem tepsisi simgesini etkinleştir</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
-    <value>Enables the system tray icon for quick access to settings</value>
+    <value>Ayarlara hızlı erişim için sistem tepsisi simgesini etkinleştirir</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>Otomatik başlatmayı etkinleştir</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Windows başladığında EverythingToolbar'ı otomatik olarak başlatır</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
-    <value>Done</value>
+    <value>Tamam</value>
   </data>
 </root>
