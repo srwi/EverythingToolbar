@@ -586,54 +586,54 @@
     <value>Eylemleri türe ve düzenli ifadeye göre otomatik olarak uygula</value>
   </data>
   <data name="SettingsTaskbarIntegration" xml:space="preserve">
-    <value>Taskbar integration</value>
+    <value>Görev çubuğu entegrasyonu</value>
   </data>
   <data name="SettingsHideWindowsSearchIcon" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Windows arama simgesini gizle</value>
   </data>
   <data name="SettingsHideWindowsSearchIconHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>Görev çubuğundan orijinal Windows arama simgesini gizler</value>
   </data>
   <data name="SettingsEnableSystemTrayIcon" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>Sistem tepsisi simgesini etkinleştir</value>
   </data>
   <data name="SettingsEnableSystemTrayIconHelp" xml:space="preserve">
     <value>EverythingToolbar'dan kolayca çıkmak için sistem tepsisi simgesini etkinleştirir</value>
   </data>
   <data name="SettingsSearchIcon" xml:space="preserve">
-    <value>Search icon</value>
+    <value>Arama simgesi</value>
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
-    <value>Changes the style of the taskbar icon (requires explorer restart)</value>
+    <value>Görev çubuğu simgesinin stilini değiştirir (Explorer'ın yeniden başlatılması gerekir)</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
-    <value>Filter order</value>
+    <value>Filtre sırası</value>
   </data>
   <data name="SettingsMaxTabItems" xml:space="preserve">
-    <value>Number of filter tabs</value>
+    <value>Filtre sekmelerinin sayısı</value>
   </data>
   <data name="SettingsMaxTabItemsHelp" xml:space="preserve">
-    <value>Controls the number of visible filter tabs</value>
+    <value>Görünen filtre sekmesi sayısını kontrol eder</value>
   </data>
   <data name="SettingsForceWin10Styles" xml:space="preserve">
-    <value>Force Windows 10 styles</value>
+    <value>Windows 10 stillerini zorla</value>
   </data>
   <data name="SettingsForceWin10StylesHelp" xml:space="preserve">
-    <value>Uses Windows 10 styles to match certain legacy taskbar modifications</value>
+    <value>Belirli eski görev çubuğu değişikliklerine uyması için Windows 10 stillerini kullanır</value>
   </data>
   <data name="UpdateSuccessfulBannerHeader" xml:space="preserve">
     <value>EverythingToolbar {version} başarıyla güncellendi!</value>
   </data>
   <data name="UpdateSuccessfulBannerText" xml:space="preserve">
-    <value>If it makes your life easier, consider donating to support future updates.</value>
+    <value>Hayatınızı kolaylaştıracaksa, gelecekteki güncellemeleri desteklemek için bağış yapmayı düşünün.</value>
   </data>
   <data name="UpdateSuccessfulBannerDonate" xml:space="preserve">
-    <value>Donate</value>
+    <value>Bağış Yapın</value>
   </data>
   <data name="UpdateSuccessfulBannerDismiss" xml:space="preserve">
-    <value>Dismiss</value>
+    <value>Kapat</value>
   </data>
   <data name="ShortcutOpenSystemContextMenu" xml:space="preserve">
-    <value>Open system context menu</value>
+    <value>Bağlam menüsünü aç</value>
   </data>
 </root>
