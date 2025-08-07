@@ -136,36 +136,36 @@
     <value>Assistant d'installation EverythingToolbar</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+    <value>Êtes-vous sûr de vouloir quitter l’assistant de configuration ? EverythingToolbar sera accessible uniquement en utilisant le raccourci clavier. Vous pouvez à nouveau accéder à l'assistant de configuration via l'icône de la barre des tâches pour épingler l'icône de recherche dans la barre des tâches.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>Exit Setup Assistant</value>
+    <value>Quitter l'assistant de configuration</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>Épingler à la barre des tâches</value>
   </data>
   <data name="SetupAssistantPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Préférences</value>
   </data>
   <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Masquer la recherche Windows</value>
   </data>
   <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>Masque l'icône de recherche Windows originale de la barre des tâches</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>Activer l'icône de la barre d'état système</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
-    <value>Enables the system tray icon for quick access to settings</value>
+    <value>Active l'icône de la barre d'état système pour un accès rapide aux paramètres</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>Activer le démarrage automatique</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Démarre automatiquement EverythingToolbar lorsque Windows démarre</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
-    <value>Done</value>
+    <value>Terminé</value>
   </data>
 </root>
