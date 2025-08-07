@@ -187,7 +187,7 @@
     <value>Ctrl</value>
   </data>
   <data name="KeyShift" xml:space="preserve">
-    <value>Shift</value>
+    <value>Maj</value>
   </data>
   <data name="KeyWin" xml:space="preserve">
     <value>Win</value>
@@ -400,94 +400,94 @@
     <value>Rechercher à chaque caractère tapé</value>
   </data>
   <data name="SettingsUserInterface" xml:space="preserve">
-    <value>User Interface</value>
+    <value>Interface utilisateur</value>
   </data>
   <data name="SettingsAppearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>Apparence</value>
   </data>
   <data name="SettingsOther" xml:space="preserve">
-    <value>Other</value>
+    <value>Autre</value>
   </data>
   <data name="SettingsShortcuts" xml:space="preserve">
-    <value>Shortcuts</value>
+    <value>Raccourcis</value>
   </data>
   <data name="SettingsCustomShortcuts" xml:space="preserve">
-    <value>Custom shortcuts</value>
+    <value>Raccourcis personnalisés</value>
   </data>
   <data name="SettingsOtherShortcuts" xml:space="preserve">
-    <value>Other shortcuts</value>
+    <value>Autres raccourcis</value>
   </data>
   <data name="SettingsOpenSearchWindow" xml:space="preserve">
-    <value>Open search window</value>
+    <value>Ouvrir la fenêtre de recherche</value>
   </data>
   <data name="ShortcutNavigateResults" xml:space="preserve">
-    <value>Navigate search results</value>
+    <value>Naviguer dans les résultats de recherche</value>
   </data>
   <data name="ShortcutNavigateHistory" xml:space="preserve">
-    <value>Navigate search history (if enabled)</value>
+    <value>Naviguer dans l'historique de recherche (si activé)</value>
   </data>
   <data name="ShortcutOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>Ouvrir</value>
   </data>
   <data name="ShortcutOpenPath" xml:space="preserve">
-    <value>Open path</value>
+    <value>Ouvrir le chemin</value>
   </data>
   <data name="ShortcutOpenInEverything" xml:space="preserve">
-    <value>Open in Everything</value>
+    <value>Ouvrir dans Everything</value>
   </data>
   <data name="ShortcutRunAsAdmin" xml:space="preserve">
-    <value>Run as admin</value>
+    <value>Exécuter en tant qu'admin</value>
   </data>
   <data name="ShortcutFileProperties" xml:space="preserve">
-    <value>File properties</value>
+    <value>Propriétés du fichier</value>
   </data>
   <data name="ShortcutCopyFullPath" xml:space="preserve">
-    <value>Copy full path to clipboard</value>
+    <value>Copier le chemin du fichier dans le presse-papier</value>
   </data>
   <data name="ShortcutCycleFilters" xml:space="preserve">
-    <value>Cycle through filters</value>
+    <value>Parcourir les filtres</value>
   </data>
   <data name="ShortcutSelectFilter" xml:space="preserve">
-    <value>Select filter</value>
+    <value>Sélectionner un filtre</value>
   </data>
   <data name="ShortcutPreviewQuickLook" xml:space="preserve">
-    <value>Preview file in QuickLook</value>
+    <value>Prévisualiser le fichier dans QuickLook</value>
   </data>
   <data name="SettingsHome" xml:space="preserve">
-    <value>Home</value>
+    <value>Accueil</value>
   </data>
   <data name="SettingsSearch" xml:space="preserve">
-    <value>Search</value>
+    <value>Recherche</value>
   </data>
   <data name="SettingsCustomActions" xml:space="preserve">
-    <value>Custom Actions</value>
+    <value>Actions personnalisées</value>
   </data>
   <data name="SettingsAdvanced" xml:space="preserve">
-    <value>Advanced</value>
+    <value>Avancé</value>
   </data>
   <data name="SettingsReportProblem" xml:space="preserve">
-    <value>Report a problem</value>
+    <value>Signaler un problème</value>
   </data>
   <data name="SettingsBehavior" xml:space="preserve">
-    <value>Behavior</value>
+    <value>Comportement</value>
   </data>
   <data name="SettingsHistory" xml:space="preserve">
-    <value>History</value>
+    <value>Historique</value>
   </data>
   <data name="SettingsFilters" xml:space="preserve">
-    <value>Filters</value>
+    <value>Filtres</value>
   </data>
   <data name="SettingsClearHistoryNow" xml:space="preserve">
-    <value>Clear now</value>
+    <value>Effacer maintenant</value>
   </data>
   <data name="SettingsUpdates" xml:space="preserve">
-    <value>Updates</value>
+    <value>Mises à jour</value>
   </data>
   <data name="SettingsCheckNow" xml:space="preserve">
-    <value>Check now</value>
+    <value>Vérifier maintenant</value>
   </data>
   <data name="SettingsDownloadLatestVersion" xml:space="preserve">
-    <value>Download latest version</value>
+    <value>Télécharger la dernière version</value>
   </data>
   <data name="SettingsLatestVersionMessage" xml:space="preserve">
     <value>You are already using the latest version.</value>
