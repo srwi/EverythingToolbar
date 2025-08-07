@@ -580,10 +580,10 @@
     <value>Tanımlı eylem yok</value>
   </data>
   <data name="MessageBoxCustomActionsNameEmpty" xml:space="preserve">
-    <value>A custom action name cannot be empty.</value>
+    <value>Özel eylem adı boş olamaz.</value>
   </data>
   <data name="CustomActionsAutoApply" xml:space="preserve">
-    <value>Automatically apply actions based on type and regular expression</value>
+    <value>Eylemleri türe ve düzenli ifadeye göre otomatik olarak uygula</value>
   </data>
   <data name="SettingsTaskbarIntegration" xml:space="preserve">
     <value>Taskbar integration</value>
