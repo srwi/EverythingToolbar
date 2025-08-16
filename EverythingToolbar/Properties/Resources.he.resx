@@ -418,7 +418,7 @@
     <value>Other shortcuts</value>
   </data>
   <data name="SettingsOpenSearchWindow" xml:space="preserve">
-    <value>Open search window</value>
+    <value>פתח חלון חיפוש</value>
   </data>
   <data name="ShortcutNavigateResults" xml:space="preserve">
     <value>Navigate search results</value>
@@ -427,7 +427,7 @@
     <value>Navigate search history (if enabled)</value>
   </data>
   <data name="ShortcutOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>פתח</value>
   </data>
   <data name="ShortcutOpenPath" xml:space="preserve">
     <value>Open path</value>
@@ -436,7 +436,7 @@
     <value>Open in Everything</value>
   </data>
   <data name="ShortcutRunAsAdmin" xml:space="preserve">
-    <value>Run as admin</value>
+    <value>הפעל כמנהל</value>
   </data>
   <data name="ShortcutFileProperties" xml:space="preserve">
     <value>File properties</value>
@@ -463,34 +463,34 @@
     <value>Custom Actions</value>
   </data>
   <data name="SettingsAdvanced" xml:space="preserve">
-    <value>Advanced</value>
+    <value>מתקדם</value>
   </data>
   <data name="SettingsReportProblem" xml:space="preserve">
-    <value>Report a problem</value>
+    <value>דווח על בעיה</value>
   </data>
   <data name="SettingsBehavior" xml:space="preserve">
-    <value>Behavior</value>
+    <value>התנהגות</value>
   </data>
   <data name="SettingsHistory" xml:space="preserve">
-    <value>History</value>
+    <value>היסטוריה</value>
   </data>
   <data name="SettingsFilters" xml:space="preserve">
-    <value>Filters</value>
+    <value>מסננים</value>
   </data>
   <data name="SettingsClearHistoryNow" xml:space="preserve">
     <value>Clear now</value>
   </data>
   <data name="SettingsUpdates" xml:space="preserve">
-    <value>Updates</value>
+    <value>עדכונים</value>
   </data>
   <data name="SettingsCheckNow" xml:space="preserve">
-    <value>Check now</value>
+    <value>בדוק עכשיו</value>
   </data>
   <data name="SettingsDownloadLatestVersion" xml:space="preserve">
-    <value>Download latest version</value>
+    <value>הורד גרסה אחרונה</value>
   </data>
   <data name="SettingsLatestVersionMessage" xml:space="preserve">
-    <value>You are already using the latest version.</value>
+    <value>אתה כבר משתמש בגרסה האחרונה.</value>
   </data>
   <data name="SettingsNamedInstance" xml:space="preserve">
     <value>Named Instance</value>
@@ -517,10 +517,10 @@
     <value>Custom actions</value>
   </data>
   <data name="AboutLinks" xml:space="preserve">
-    <value>Links</value>
+    <value>קישורים</value>
   </data>
   <data name="AboutFAQ" xml:space="preserve">
-    <value>Frequently Asked Questions</value>
+    <value>שאלות נפוצות</value>
   </data>
   <data name="AboutSourceCode" xml:space="preserve">
     <value>Source Code (GitHub)</value>
@@ -529,7 +529,7 @@
     <value>Star on GitHub</value>
   </data>
   <data name="AboutDonation" xml:space="preserve">
-    <value>Make a donation</value>
+    <value>תרום</value>
   </data>
   <data name="SettingsViewLayoutHelp" xml:space="preserve">
     <value>Choose the layout for search results</value>
