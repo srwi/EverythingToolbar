@@ -142,7 +142,7 @@
     <value>Mostrar mais opções</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
-    <value>Abrir com</value>
+    <value>Abrir com…</value>
   </data>
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>Escolher aplicativo</value>
@@ -274,7 +274,7 @@
     <value>Ocultar pesquisa sem resultados</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>Diferenciar maiúsculas de minúsculas</value>
+    <value>Diferenciar Maiúsculas e Minúsculas</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
     <value>Corresponder Caminho</value>
@@ -571,7 +571,7 @@
     <value>Notify when a new version is available</value>
   </data>
   <data name="SettingsReplaceStartMenuHelp" xml:space="preserve">
-    <value>Replace the default Windows Start menu search with EverythingToolbar</value>
+    <value>Substitua a pesquisa padrão do menu Iniciar do Windows pelo EverythingToolbar</value>
   </data>
   <data name="MessageBoxOk" xml:space="preserve">
     <value>OK</value>
