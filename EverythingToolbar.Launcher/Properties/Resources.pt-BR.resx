@@ -163,7 +163,7 @@
     <value>Enable autostart</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Iniciar automaticamente o EverythingToolbar com o Windows</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Done</value>
