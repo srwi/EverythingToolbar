@@ -9,6 +9,7 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <LangVersion>12</LangVersion>
     <Nullable>enable</Nullable>
+    <Platforms>x64;ARM64</Platforms>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Icons\Medium.ico</ApplicationIcon>
@@ -75,13 +76,22 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='x64'">
     <PreBuildEvent>taskkill /IM EverythingToolbar.Launcher.exe /F 2&gt;nul &amp;set errorlevel=0
 xcopy $(SolutionDir)EverythingSDK\x64\$(Configuration)\Everything64.dll $(TargetDir) /r /y
 Exit 0</PreBuildEvent>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='ARM64'">
+    <PreBuildEvent>taskkill /IM EverythingToolbar.Launcher.exe /F 2&gt;nul &amp;set errorlevel=0
+xcopy $(SolutionDir)EverythingSDK\ARM64\$(Configuration)\Everything64.dll $(TargetDir) /r /y
+Exit 0</PreBuildEvent>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"></PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'"></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
 </Project>

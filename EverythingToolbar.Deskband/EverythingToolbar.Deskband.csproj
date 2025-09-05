@@ -11,6 +11,7 @@
     <EnableComHosting>true</EnableComHosting>
     <GenerateComInterfaceMetadata>true</GenerateComInterfaceMetadata>
     <Nullable>enable</Nullable>
+    <Platforms>x64;ARM64</Platforms>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
@@ -19,6 +20,12 @@
     <DefineConstants>DESKBAND_WPF</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DefineConstants>TRACE;DEBUG;DESKBAND_WPF</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <DefineConstants>DESKBAND_WPF</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
     <DefineConstants>TRACE;DEBUG;DESKBAND_WPF</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
@@ -55,9 +62,14 @@
     <PackageReference Include="NHotkey.Wpf" Version="2.1.0" />
     <PackageReference Include="NLog" Version="5.1.1" />
   </ItemGroup>
-  <PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='x64'">
     <PreBuildEvent>taskkill /f /im explorer.exe
       xcopy $(SolutionDir)EverythingSDK\x64\$(Configuration)\Everything64.dll $(TargetDir) /r /y
+Exit 0</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='ARM64'">
+    <PreBuildEvent>taskkill /f /im explorer.exe
+      xcopy $(SolutionDir)EverythingSDK\ARM64\$(Configuration)\Everything64.dll $(TargetDir) /r /y
 Exit 0</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
