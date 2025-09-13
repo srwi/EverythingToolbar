@@ -15,7 +15,7 @@
                 Padding="10, 4, 10, 4">
             <Button.ContextMenu>
                 <ContextMenu Name="SortByMenu"
-                             FontFamily="Global User Interface">
+                             FontFamily="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=FontFamily}">
                     <MenuItem IsCheckable="True"
                               Header="{x:Static properties:Resources.SortByName}"
                               Click="OnSortByClicked" />
@@ -75,7 +75,7 @@
                 Style="{DynamicResource TabBarButtonStyle}"
                 Padding="10, 4, 10, 4">
             <Button.ContextMenu>
-                <ContextMenu FontFamily="Global User Interface">
+                <ContextMenu FontFamily="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=FontFamily}">
                     <MenuItem IsCheckable="True"
                               Header="{x:Static properties:Resources.SettingsRegularExpressions}"
                               IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsRegExEnabled, Mode=TwoWay}" />
