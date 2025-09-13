@@ -586,7 +586,7 @@
     <value>Automatically apply actions based on type and regular expression</value>
   </data>
   <data name="SettingsTaskbarIntegration" xml:space="preserve">
-    <value></value>
+    <value>Taskbar integration</value>
   </data>
   <data name="SettingsHideWindowsSearchIcon" xml:space="preserve">
     <value>Hide Windows search icon</value>
