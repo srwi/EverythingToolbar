@@ -21,6 +21,7 @@
                             Grid.Column="1"
                             VerticalAlignment="Bottom"
                             Margin="0, 7, 0, 4"
+                            ToolTip="{Binding FileName}"
                             Foreground="{DynamicResource SearchResultFileName}" />
             <ContentControl Content="{Binding HighlightedPath, Converter={c:HighlightedTextConverter}, ConverterParameter=10, Mode=OneTime}"
                             ToolTip="{Binding Path}"

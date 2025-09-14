@@ -17,6 +17,7 @@
             <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, ConverterParameter=9, Mode=OneTime}"
                             Grid.Column="1"
                             Margin="2, 0"
+                            ToolTip="{Binding FileName}"
                             Foreground="{DynamicResource SearchResultFileName}" />
             <ContentControl Content="{Binding HighlightedPath, Converter={c:HighlightedTextConverter}, ConverterParameter=9, Mode=OneTime}"
                             ToolTip="{Binding Path}"

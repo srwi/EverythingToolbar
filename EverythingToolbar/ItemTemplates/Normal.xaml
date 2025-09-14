@@ -17,6 +17,7 @@
                             Grid.Column="1"
                             VerticalAlignment="Bottom"
                             Margin="0, 7, 0, 4"
+                            ToolTip="{Binding FileName}"
                             Foreground="{DynamicResource SearchResultFileName}" />
             <TextBlock Grid.Column="2"
                        VerticalAlignment="Bottom"
