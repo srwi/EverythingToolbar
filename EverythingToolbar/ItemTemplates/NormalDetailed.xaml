@@ -14,9 +14,11 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Image Source="{Binding Icon}"
-                   Width="16"
-                   Height="16"
-                   Margin="0, 5, 0, 0" />
+                   Grid.RowSpan="2"
+                   Width="24"
+                   Height="24" 
+                   VerticalAlignment="Center" 
+                   HorizontalAlignment="Center" />
             <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, ConverterParameter=12, Mode=OneTime}"
                             Grid.Column="1"
                             VerticalAlignment="Bottom"
