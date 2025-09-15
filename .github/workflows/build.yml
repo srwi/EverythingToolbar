@@ -4,36 +4,45 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
-    runs-on: windows-2025
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        include:
+          - runner: windows-2025
+            arch: x64
+            installer: Installer-x64.iss
+          - runner: windows-11-arm
+            arch: arm64
+            installer: Installer-arm64.iss
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+        
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
-
+        
       - name: Install NuGet
         uses: nuget/setup-nuget@v1
-
+        
       - name: Restore NuGet dependencies
         run: nuget restore
-
+        
       - name: Decode certificate
         shell: bash
         run: echo ${{ secrets.PFX_CERTIFICATE_FILE }} | base64 --decode  > ./EverythingToolbar.snk
-
+        
       - name: Build all
-        run: MSBuild $Env:GITHUB_WORKSPACE /p:Configuration=Release
-
+        run: MSBuild $Env:GITHUB_WORKSPACE /p:Configuration=Release /p:Platform=${{ matrix.arch }}
+        
       - name: Install Inno Setup
         run: choco install innosetup -y --version 6.4.0
-
+        
       - name: Build installer
-        run: iscc "Installer\Installer-x64.iss"
-
+        run: iscc "Installer\${{ matrix.installer }}"
+        
       - name: Upload installer artifact
         if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
-          name: EverythingToolbar-Installer
+          name: EverythingToolbar-Installer-${{ matrix.arch }}
           path: Installer/Output/*.exe
