@@ -1,11 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:c="clr-namespace:EverythingToolbar.Converters;assembly=EverythingToolbar">
-    
+
     <DataTemplate x:Key="SearchResultsViewTemplate">
         <Grid x:Name="ListViewItem" Margin="0, 0, 0, 4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="56" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
@@ -47,5 +47,5 @@
                        Text="{Binding HumanReadableFileSize}" />
         </Grid>
     </DataTemplate>
-    
+
 </ResourceDictionary>
