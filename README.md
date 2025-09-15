@@ -1,3 +1,5 @@
+**Read this in other languages: [English](README.md), [中文](README.zh-CN.md).**
+
 # <img src="EverythingToolbar/Images/AppIcon.ico" width="24"> EverythingToolbar
 
 <a href="https://paypal.me/rumswinkel"><img src="https://img.shields.io/static/v1?label=Donate&message=%E2%9D%A4&logo=PayPal&color=%23009cde" height="25" /></a>
