@@ -406,7 +406,7 @@
     <value>Appearance</value>
   </data>
   <data name="SettingsOther" xml:space="preserve">
-    <value>Other</value>
+    <value>אחר</value>
   </data>
   <data name="SettingsShortcuts" xml:space="preserve">
     <value>Shortcuts</value>
