@@ -400,25 +400,25 @@
     <value>Keresés gépelés közben</value>
   </data>
   <data name="SettingsUserInterface" xml:space="preserve">
-    <value>User Interface</value>
+    <value>Felhasználói felület</value>
   </data>
   <data name="SettingsAppearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>Kinézet</value>
   </data>
   <data name="SettingsOther" xml:space="preserve">
-    <value>Other</value>
+    <value>Egyéb</value>
   </data>
   <data name="SettingsShortcuts" xml:space="preserve">
-    <value>Shortcuts</value>
+    <value>Gyorsbillentyűk</value>
   </data>
   <data name="SettingsCustomShortcuts" xml:space="preserve">
-    <value>Custom shortcuts</value>
+    <value>Egyéni gyorsbillentyűk</value>
   </data>
   <data name="SettingsOtherShortcuts" xml:space="preserve">
-    <value>Other shortcuts</value>
+    <value>Egyéb gyorsbillentyűk</value>
   </data>
   <data name="SettingsOpenSearchWindow" xml:space="preserve">
-    <value>Open search window</value>
+    <value>Keresőablak megnyitása</value>
   </data>
   <data name="ShortcutNavigateResults" xml:space="preserve">
     <value>Navigate search results</value>
@@ -427,70 +427,70 @@
     <value>Navigate search history (if enabled)</value>
   </data>
   <data name="ShortcutOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>Megnyitás</value>
   </data>
   <data name="ShortcutOpenPath" xml:space="preserve">
-    <value>Open path</value>
+    <value>Fájl helyének megnyitása</value>
   </data>
   <data name="ShortcutOpenInEverything" xml:space="preserve">
-    <value>Open in Everything</value>
+    <value>Megnyitás Everythingben</value>
   </data>
   <data name="ShortcutRunAsAdmin" xml:space="preserve">
-    <value>Run as admin</value>
+    <value>Futtatás rendszergazdaként</value>
   </data>
   <data name="ShortcutFileProperties" xml:space="preserve">
-    <value>File properties</value>
+    <value>Tulajdonságok</value>
   </data>
   <data name="ShortcutCopyFullPath" xml:space="preserve">
-    <value>Copy full path to clipboard</value>
+    <value>Másolás elérési útként</value>
   </data>
   <data name="ShortcutCycleFilters" xml:space="preserve">
     <value>Cycle through filters</value>
   </data>
   <data name="ShortcutSelectFilter" xml:space="preserve">
-    <value>Select filter</value>
+    <value>Szűrő kiválasztása</value>
   </data>
   <data name="ShortcutPreviewQuickLook" xml:space="preserve">
     <value>Preview file in QuickLook</value>
   </data>
   <data name="SettingsHome" xml:space="preserve">
-    <value>Home</value>
+    <value>Kezdőlap</value>
   </data>
   <data name="SettingsSearch" xml:space="preserve">
-    <value>Search</value>
+    <value>Keresés</value>
   </data>
   <data name="SettingsCustomActions" xml:space="preserve">
-    <value>Custom Actions</value>
+    <value>Egyéni műveletek</value>
   </data>
   <data name="SettingsAdvanced" xml:space="preserve">
-    <value>Advanced</value>
+    <value>Haladó</value>
   </data>
   <data name="SettingsReportProblem" xml:space="preserve">
-    <value>Report a problem</value>
+    <value>Probléma jelentése</value>
   </data>
   <data name="SettingsBehavior" xml:space="preserve">
-    <value>Behavior</value>
+    <value>Viselkedés</value>
   </data>
   <data name="SettingsHistory" xml:space="preserve">
-    <value>History</value>
+    <value>Előzmények</value>
   </data>
   <data name="SettingsFilters" xml:space="preserve">
-    <value>Filters</value>
+    <value>Szűrők</value>
   </data>
   <data name="SettingsClearHistoryNow" xml:space="preserve">
-    <value>Clear now</value>
+    <value>Törlés</value>
   </data>
   <data name="SettingsUpdates" xml:space="preserve">
-    <value>Updates</value>
+    <value>Frissítések</value>
   </data>
   <data name="SettingsCheckNow" xml:space="preserve">
-    <value>Check now</value>
+    <value>Ellenőrzés most</value>
   </data>
   <data name="SettingsDownloadLatestVersion" xml:space="preserve">
-    <value>Download latest version</value>
+    <value>Legújabb verzió letöltése</value>
   </data>
   <data name="SettingsLatestVersionMessage" xml:space="preserve">
-    <value>You are already using the latest version.</value>
+    <value>Már a legújabb verziót használod.</value>
   </data>
   <data name="SettingsNamedInstance" xml:space="preserve">
     <value>Named Instance</value>
@@ -508,34 +508,34 @@
     <value>Everything integration for the Windows taskbar.</value>
   </data>
   <data name="AboutSearchSettings" xml:space="preserve">
-    <value>Search settings</value>
+    <value>Keresési beállítások</value>
   </data>
   <data name="AboutUserInterface" xml:space="preserve">
-    <value>User interface</value>
+    <value>Felhasználói felület</value>
   </data>
   <data name="AboutCustomActions" xml:space="preserve">
-    <value>Custom actions</value>
+    <value>Egyéni műveletek</value>
   </data>
   <data name="AboutLinks" xml:space="preserve">
-    <value>Links</value>
+    <value>Linkek</value>
   </data>
   <data name="AboutFAQ" xml:space="preserve">
-    <value>Frequently Asked Questions</value>
+    <value>Gyakran ismételt kérdések</value>
   </data>
   <data name="AboutSourceCode" xml:space="preserve">
-    <value>Source Code (GitHub)</value>
+    <value>Forráskód (GitHub)</value>
   </data>
   <data name="AboutStarOnGitHub" xml:space="preserve">
-    <value>Star on GitHub</value>
+    <value>Csillagozás a GitHub-on</value>
   </data>
   <data name="AboutDonation" xml:space="preserve">
-    <value>Make a donation</value>
+    <value>Támogatás</value>
   </data>
   <data name="SettingsViewLayoutHelp" xml:space="preserve">
     <value>Choose the layout for search results</value>
   </data>
   <data name="SettingsThumbnailsHelp" xml:space="preserve">
-    <value>Show thumbnails for image files</value>
+    <value>Bélyegképek mutatása képfájloknál</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
     <value>Display the total number of search results</value>
@@ -568,7 +568,7 @@
     <value>Remember the most recently used filter for future searches</value>
   </data>
   <data name="SettingsUpdatesHelp" xml:space="preserve">
-    <value>Notify when a new version is available</value>
+    <value>Értesítés új verziókról</value>
   </data>
   <data name="SettingsReplaceStartMenuHelp" xml:space="preserve">
     <value>Replace the default Windows Start menu search with EverythingToolbar</value>
@@ -577,7 +577,7 @@
     <value>OK</value>
   </data>
   <data name="ContextMenuOpenWithNoCustomActions" xml:space="preserve">
-    <value>No actions defined</value>
+    <value>Nincs beállítva művelet</value>
   </data>
   <data name="MessageBoxCustomActionsNameEmpty" xml:space="preserve">
     <value>A custom action name cannot be empty.</value>
@@ -586,28 +586,28 @@
     <value>Automatically apply actions based on type and regular expression</value>
   </data>
   <data name="SettingsTaskbarIntegration" xml:space="preserve">
-    <value>Taskbar integration</value>
+    <value>Tálca integráció</value>
   </data>
   <data name="SettingsHideWindowsSearchIcon" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Windows kereső elrejtése</value>
   </data>
   <data name="SettingsHideWindowsSearchIconHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>Elrejti a Windows keresőt az tálcáról</value>
   </data>
   <data name="SettingsEnableSystemTrayIcon" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>Rejtett ikon engedélyezése</value>
   </data>
   <data name="SettingsEnableSystemTrayIconHelp" xml:space="preserve">
-    <value>Enables the system tray icon to be able to quit EverythingToolbar easily</value>
+    <value>Engedélyezi a rejtett ikont, amivel könnyen ki lehet lépni az EverythingToolbarból</value>
   </data>
   <data name="SettingsSearchIcon" xml:space="preserve">
-    <value>Search icon</value>
+    <value>Keresés ikon</value>
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
-    <value>Changes the style of the taskbar icon (requires explorer restart)</value>
+    <value>Kicseréli a tálcaikon stílusát (újra kell indítani a fájlkezelőt)</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
-    <value>Filter order</value>
+    <value>Szűrők rendezése</value>
   </data>
   <data name="SettingsMaxTabItems" xml:space="preserve">
     <value>Number of filter tabs</value>
@@ -616,22 +616,22 @@
     <value>Controls the number of visible filter tabs</value>
   </data>
   <data name="SettingsForceWin10Styles" xml:space="preserve">
-    <value>Force Windows 10 styles</value>
+    <value>Windows 10 stílus kényszerítése</value>
   </data>
   <data name="SettingsForceWin10StylesHelp" xml:space="preserve">
     <value>Uses Windows 10 styles to match certain legacy taskbar modifications</value>
   </data>
   <data name="UpdateSuccessfulBannerHeader" xml:space="preserve">
-    <value>EverythingToolbar {version} was updated successfully!</value>
+    <value>Az EverythingToolbar {version} sikeresen frissítve!</value>
   </data>
   <data name="UpdateSuccessfulBannerText" xml:space="preserve">
-    <value>If it makes your life easier, consider donating to support future updates.</value>
+    <value>Ha megkönnyítjük az életed, fontold meg az támogatást a jövőbeli frissítésekért.</value>
   </data>
   <data name="UpdateSuccessfulBannerDonate" xml:space="preserve">
-    <value>Donate</value>
+    <value>Támogatás</value>
   </data>
   <data name="UpdateSuccessfulBannerDismiss" xml:space="preserve">
-    <value>Dismiss</value>
+    <value>Elvetés</value>
   </data>
   <data name="ShortcutOpenSystemContextMenu" xml:space="preserve">
     <value>Open system context menu</value>
