@@ -547,7 +547,7 @@
     <value>Disable UI animations for improved performance</value>
   </data>
   <data name="SettingsHideEmptyResultsHelp" xml:space="preserve">
-    <value>Hide results when search term is empty</value>
+    <value>當搜尋詞為空時隱藏結果</value>
   </data>
   <data name="SettingsSearchAsYouTypeHelp" xml:space="preserve">
     <value>Start searching as you type, without pressing Enter</value>
