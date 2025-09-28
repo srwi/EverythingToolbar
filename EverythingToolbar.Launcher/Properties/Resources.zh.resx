@@ -121,10 +121,10 @@
     <value>離開</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>執行設置助手……</value>
+    <value>執行設定精靈...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
-    <value>要將 EverythingToobar 釘選至工作列，請在圖示上點擊右鍵並選擇「釘選到工作列」。</value>
+    <value>要將 EverythingToolbar 釘選到工作列，請在其圖示上按右鍵並選擇「釘選到工作列」。</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>更新工作列圖示需要重啟檔案總管，您想要立即重新啟動嗎？</value>
@@ -133,39 +133,39 @@
     <value>重啟檔案總管</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>EverythingToolbar 設置助手</value>
+    <value>EverythingToolbar 設定精靈</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>您確定要退出設置助手嗎？退出後，EverythingToolbar 只能通過鍵盤快捷鍵訪問。您可以通過系統匣圖示再次進入設置助手，將搜尋圖示固定到任務欄。</value>
+    <value>您確定要結束設定精靈嗎？結束後只能透過快速鍵使用 EverythingToolbar。您隨時可透過系統匣圖示重新開啟設定精靈，以將搜尋圖示釘選到工作列。</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>執行設置助手</value>
+    <value>執行設定精靈</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>釘選到工作列</value>
   </data>
   <data name="SetupAssistantPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>偏好設定</value>
   </data>
   <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>隱藏 Windows 搜尋圖示</value>
   </data>
   <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>隱藏工作列上原有的 Windows 搜尋圖示</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>啟用系統匣圖示</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
-    <value>Enables the system tray icon for quick access to settings</value>
+    <value>啟用系統匣圖示以快速存取設定</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>啟用自動啟動</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>當 Windows 啟動時自動執行 EverythingToolbar</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
-    <value>Done</value>
+    <value>完成</value>
   </data>
 </root>
