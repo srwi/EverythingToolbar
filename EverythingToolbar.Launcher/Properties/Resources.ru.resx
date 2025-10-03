@@ -121,7 +121,7 @@
     <value>Выход</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Запустить с помощью...</value>
+    <value>Запустить помощника по настройке...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>Чтобы закрепить EverythingToolbar на панели задач, щёлкните правой кнопкой мыши и выберите 'Закрепить на панели задач'.</value>
@@ -151,7 +151,7 @@
     <value>Скрыть значок поиска Windows</value>
   </data>
   <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
-    <value>Скрывает исходный значок поиска Windows из панели задач</value>
+    <value>Скрывает исходный значок поиска Windows в панели задач</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
     <value>Показывать значок в области уведомлений</value>
