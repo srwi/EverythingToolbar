@@ -121,7 +121,7 @@
     <value>Версия</value>
   </data>
   <data name="ContextMenuCopy" xml:space="preserve">
-    <value>Копировать</value>
+    <value>Скопировать</value>
   </data>
   <data name="ContextMenuCopyFile" xml:space="preserve">
     <value>Скопировать</value>
@@ -220,7 +220,7 @@
     <value>Не удалось выполнить команду</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
-    <value>Для использования этого метода сортировки требуется быстрая сортировка. Её можно включить в настройках Everything.</value>
+    <value>Для использования этого метода сортировки требуется быстрая сортировка. Включите её в настройках Everything.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
     <value>Быстрая сортировка отключена</value>
@@ -304,7 +304,7 @@
     <value>Сортировка</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>Включить отображение миниатюр</value>
+    <value>Показывать миниатюры</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Использовать фильтры Everything</value>
@@ -592,7 +592,7 @@
     <value>Скрыть значок поиска Windows</value>
   </data>
   <data name="SettingsHideWindowsSearchIconHelp" xml:space="preserve">
-    <value>Скрывает исходный значок поиска Windows из панели задач</value>
+    <value>Скрывает исходный значок поиска Windows в панели задач</value>
   </data>
   <data name="SettingsEnableSystemTrayIcon" xml:space="preserve">
     <value>Показывать значок в области уведомлений</value>
@@ -625,7 +625,7 @@
     <value>Панель EverythingToolbar {version} успешно обновлена.</value>
   </data>
   <data name="UpdateSuccessfulBannerText" xml:space="preserve">
-    <value>Если этот продукт упрощает вам жизнь, поддержите разработчиков!</value>
+    <value>Если этот продукт упрощает вам жизнь, финансово поддержите разработчиков!</value>
   </data>
   <data name="UpdateSuccessfulBannerDonate" xml:space="preserve">
     <value>Поддержать</value>
