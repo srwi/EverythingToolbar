@@ -445,7 +445,7 @@
     <value>Copiar caminho para área de transferência</value>
   </data>
   <data name="ShortcutCycleFilters" xml:space="preserve">
-    <value>Cycle through filters</value>
+    <value>Alternar entre filtros</value>
   </data>
   <data name="ShortcutSelectFilter" xml:space="preserve">
     <value>Selecionar filtro</value>
@@ -535,7 +535,7 @@
     <value>Escolha o layout para os resultados da pesquisa</value>
   </data>
   <data name="SettingsThumbnailsHelp" xml:space="preserve">
-    <value>Show thumbnails for image files</value>
+    <value>Mostrar miniaturas para arquivos de imagens</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
     <value>Display the total number of search results</value>
