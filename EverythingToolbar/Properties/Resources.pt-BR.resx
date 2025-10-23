@@ -142,7 +142,7 @@
     <value>Mostrar mais opções</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
-    <value>Abrir com…</value>
+    <value>Abrir com...</value>
   </data>
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>Escolher aplicativo</value>
@@ -562,7 +562,7 @@
     <value>Remember previous search terms for quick access</value>
   </data>
   <data name="SettingsEverythingFiltersHelp" xml:space="preserve">
-    <value>Synchronize Everything's custom filters</value>
+    <value>Sincronizar filtros customizados do Everything</value>
   </data>
   <data name="SettingsRememberFilterHelp" xml:space="preserve">
     <value>Remember the most recently used filter for future searches</value>
