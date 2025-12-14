@@ -142,7 +142,7 @@
     <value>Thoát trình trợ giúp thiết lập</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>Ghim vào thanh tác vụ</value>
   </data>
   <data name="SetupAssistantPreferences" xml:space="preserve">
     <value>Preferences</value>
@@ -154,7 +154,7 @@
     <value>Hides the original Windows search icon from the taskbar</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>Hiện biểu tượng trên khay hệ thống</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>Enables the system tray icon for quick access to settings</value>
@@ -163,9 +163,9 @@
     <value>Enable autostart</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Tự khởi động EverythingToolbar cùng Windows</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
-    <value>Done</value>
+    <value>Xong</value>
   </data>
 </root>
