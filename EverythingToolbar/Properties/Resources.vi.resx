@@ -535,7 +535,7 @@
     <value>Choose the layout for search results</value>
   </data>
   <data name="SettingsThumbnailsHelp" xml:space="preserve">
-    <value>Show thumbnails for image files</value>
+    <value>Hiện hình thu nhỏ cho các tệp hình ảnh</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
     <value>Display the total number of search results</value>
