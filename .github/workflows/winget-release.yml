@@ -1,25 +1,38 @@
-name: Publish WinGet releases
+name: Publish to WinGet
 
 on:
-  workflow_dispatch:
-#  release:
-#    types: [released]
+  release:
+    types: [released]
+  workflow_dispatch: 
+      inputs:
+        version_tag:
+          description: 'Tag to run winget-releaser for'
+          required: true
 
 jobs:
   winget:
-    name: Publish release to WinGet
-    runs-on: windows-latest
-    env:
-      WINGET_TOKEN: ${{ secrets.WINGET_PAT }}
+    name: Publish to WinGet
+    # winget-releaser is cross-platform, we use ubuntu cause it uses less resources than windows
+    runs-on: ubuntu-latest
+    steps:
+      # LAUNCHER
+      - name: Update Launcher
+        # we peg winget-releaser to v2 for stability
+        uses: vedantmgoyal9/winget-releaser@v2
+        with:
+          identifier: srwi.EverythingToolbar.Launcher
+          token: ${{ secrets.WINGET_PAT }}
+          # regex assumes there's only one file ending with x64.exe and arm64.exe in each release
+          # if this changes in the future, modify the regex accordingly, in both launcher and deskband!
+          installers-regex: '-x64\.exe$|-arm64\.exe$'
+          # if there was a version_tag supplied (manual run) use that, otherwise determine it automatically
+          release-tag: ${{ inputs.version_tag || github.event.release.tag_name }}
 
-    steps:  
-      - name: Get WinGet create tool
-        run: iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
-
-      - name: Submit releases to WinGet
-        run: |
-          $releases = Invoke-RestMethod -uri "https://api.github.com/repos/srwi/EverythingToolbar/releases"
-          $stableRelease = $releases | Where-Object { $_.prerelease -eq $false } | Select -First 1
-          $installerUrl = $stableRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match "EverythingToolbar.*exe" | Select -ExpandProperty browser_download_url
-          .\wingetcreate.exe update srwi.EverythingToolbar.Launcher -s -v $stableRelease.tag_name -d $stableRelease.tag_name -u $installerUrl -t $env:WINGET_TOKEN
-          .\wingetcreate.exe update srwi.EverythingToolbar.Deskband -s -v $stableRelease.tag_name -d $stableRelease.tag_name -u $installerUrl -t $env:WINGET_TOKEN
+      # DESKBAND
+      - name: Update Deskband
+        uses: vedantmgoyal9/winget-releaser@v2
+        with:
+          identifier: srwi.EverythingToolbar.Deskband
+          token: ${{ secrets.WINGET_PAT }}
+          installers-regex: '-x64\.exe$|-arm64\.exe$'
+          release-tag: ${{ inputs.version_tag || github.event.release.tag_name }}
