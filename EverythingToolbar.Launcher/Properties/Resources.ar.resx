@@ -166,6 +166,6 @@
     <value>Automatically starts EverythingToolbar when Windows starts</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
-    <value>Done</value>
+    <value>أكتمل</value>
   </data>
 </root>
