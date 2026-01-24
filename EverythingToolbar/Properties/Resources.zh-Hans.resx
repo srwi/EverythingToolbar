@@ -387,6 +387,9 @@
   <data name="SettingsSelectFirstResult" xml:space="preserve">
     <value>选择第一个结果</value>
   </data>
+  <data name="SettingsHomeEndNavigateResults" xml:space="preserve">
+    <value>Home/End keys navigate results</value>
+  </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
     <value>双击打开</value>
   </data>
@@ -554,6 +557,9 @@
   </data>
   <data name="SettingsSelectFirstResultHelp" xml:space="preserve">
     <value>保持搜索栏焦点时自动选择第一个结果</value>
+  </data>
+  <data name="SettingsHomeEndNavigateResultsHelp" xml:space="preserve">
+    <value>Home/End keys will navigate search results instead of moving the cursor</value>
   </data>
   <data name="SettingsDoubleClickHelp" xml:space="preserve">
     <value>需要双击以打开结果</value>
