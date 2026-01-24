@@ -168,4 +168,10 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>完成</value>
   </data>
+  <data name="TrayIconDisableErrorText" xml:space="preserve">
+    <value>The system tray icon cannot be disabled when EverythingToolbar is not pinned to the taskbar. Please pin EverythingToolbar to the taskbar first, or keep the system tray icon enabled to access settings and functionality.</value>
+  </data>
+  <data name="TrayIconDisableErrorTitle" xml:space="preserve">
+    <value>Cannot disable system tray icon</value>
+  </data>
 </root>
