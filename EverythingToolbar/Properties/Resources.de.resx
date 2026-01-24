@@ -387,6 +387,9 @@
   <data name="SettingsSelectFirstResult" xml:space="preserve">
     <value>Erstes Ergebnis auswählen</value>
   </data>
+  <data name="SettingsHomeEndNavigateResults" xml:space="preserve">
+    <value>Home/End keys navigate results</value>
+  </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
     <value>Doppelklick zum Öffnen</value>
   </data>
@@ -554,6 +557,9 @@
   </data>
   <data name="SettingsSelectFirstResultHelp" xml:space="preserve">
     <value>Wählt das erste Ergebnis aus, während die Suchleiste aktiv bleibt</value>
+  </data>
+  <data name="SettingsHomeEndNavigateResultsHelp" xml:space="preserve">
+    <value>Home/End keys will navigate search results instead of moving the cursor</value>
   </data>
   <data name="SettingsDoubleClickHelp" xml:space="preserve">
     <value>Erfordert einen Doppelklick zum Öffnen von Ergebnissen</value>
