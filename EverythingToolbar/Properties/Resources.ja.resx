@@ -387,6 +387,9 @@
   <data name="SettingsSelectFirstResult" xml:space="preserve">
     <value>最初の結果を選択する</value>
   </data>
+  <data name="SettingsHomeEndNavigateResults" xml:space="preserve">
+    <value>Home/End keys navigate results</value>
+  </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
     <value>ダブルクリックで開く</value>
   </data>
@@ -554,6 +557,9 @@
   </data>
   <data name="SettingsSelectFirstResultHelp" xml:space="preserve">
     <value>検索バーのフォーカスを維持しながら最初の結果を自動的に選択します</value>
+  </data>
+  <data name="SettingsHomeEndNavigateResultsHelp" xml:space="preserve">
+    <value>Home/End keys will navigate search results instead of moving the cursor</value>
   </data>
   <data name="SettingsDoubleClickHelp" xml:space="preserve">
     <value>結果を開くときにダブルクリックを必要にします</value>
