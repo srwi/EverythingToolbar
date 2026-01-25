@@ -169,9 +169,9 @@
     <value>Terminé</value>
   </data>
   <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>The system tray icon cannot be disabled when EverythingToolbar is not pinned to the taskbar. Please pin EverythingToolbar to the taskbar first, or keep the system tray icon enabled to access settings and functionality.</value>
+    <value>L'icône de la barre d'état système ne peut pas être désactivée lorsque EverythingToolbar n'est pas épinglée sur la barre des tâches. Veuillez épingler EverythingToolbar sur la barre des tâches en premier, ou garder l'icône de la barre d'état système activée pour accéder aux paramètres et aux fonctionnalités.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
-    <value>Cannot disable system tray icon</value>
+    <value>Impossible de désactiver l'icône de la barre d'état système</value>
   </data>
 </root>
