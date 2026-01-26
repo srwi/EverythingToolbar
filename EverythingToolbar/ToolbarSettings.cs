@@ -111,6 +111,9 @@ namespace EverythingToolbar
         bool IsHomeEndNavigateResults { get; set; }
 
         [Option(DefaultValue = true)]
+        bool IsListWrapAroundEnabled { get; set; }
+
+        [Option(DefaultValue = true)]
         bool IsSearchAsYouType { get; set; }
 
         [Option(DefaultValue = false)]
@@ -572,6 +575,19 @@ namespace EverythingToolbar
                 if (settings.IsHomeEndNavigateResults != value)
                 {
                     settings.IsHomeEndNavigateResults = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsListWrapAroundEnabled
+        {
+            get => settings.IsListWrapAroundEnabled;
+            set
+            {
+                if (settings.IsListWrapAroundEnabled != value)
+                {
+                    settings.IsListWrapAroundEnabled = value;
                     OnPropertyChanged();
                 }
             }

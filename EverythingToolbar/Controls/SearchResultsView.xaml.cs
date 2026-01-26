@@ -268,13 +268,17 @@ namespace EverythingToolbar.Controls
             }
             else if (e.Key == Key.Up)
             {
-                if (
-                    SearchResultsListView.SelectedIndex == 0
-                    && (!ToolbarSettings.User.IsAutoSelectFirstResult || !ToolbarSettings.User.IsSearchAsYouType)
-                )
+                if (SearchResultsListView.SelectedIndex == 0)
                 {
-                    SearchResultsListView.SelectedIndex = -1;
-                    EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
+                    if (ToolbarSettings.User.IsListWrapAroundEnabled)
+                    {
+                        SelectNthSearchResult(SearchResultsListView.Items.Count - 1);
+                    }
+                    else if (!ToolbarSettings.User.IsAutoSelectFirstResult || !ToolbarSettings.User.IsSearchAsYouType)
+                    {
+                        SearchResultsListView.SelectedIndex = -1;
+                        EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
+                    }
                 }
                 else
                 {
@@ -285,7 +289,14 @@ namespace EverythingToolbar.Controls
             }
             else if (e.Key == Key.Down)
             {
-                SelectNextSearchResult();
+                if (ToolbarSettings.User.IsListWrapAroundEnabled && SearchResultsListView.SelectedIndex == SearchResultsListView.Items.Count - 1)
+                {
+                    SelectNthSearchResult(0);
+                }
+                else
+                {
+                    SelectNextSearchResult();
+                }
                 e.Handled = true;
             }
             else if (e.Key == Key.PageUp || e.Key == Key.PageDown || e.Key == Key.Home || e.Key == Key.End)

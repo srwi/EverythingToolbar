@@ -642,4 +642,10 @@
   <data name="ShortcutOpenSystemContextMenu" xml:space="preserve">
     <value>Open system context menu</value>
   </data>
+  <data name="SettingsListWrapAround" xml:space="preserve">
+    <value>List wrap around</value>
+  </data>
+  <data name="SettingsListWrapAroundHelp" xml:space="preserve">
+    <value>Allows navigating from the bottom to the top of the list and vice versa using arrow keys</value>
+  </data>
 </root>

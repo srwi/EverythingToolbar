@@ -1248,6 +1248,24 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List wrap around.
+        /// </summary>
+        public static string SettingsListWrapAround {
+            get {
+                return ResourceManager.GetString("SettingsListWrapAround", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allows navigating from the bottom to the top of the list and vice versa using arrow keys.
+        /// </summary>
+        public static string SettingsListWrapAroundHelp {
+            get {
+                return ResourceManager.GetString("SettingsListWrapAroundHelp", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Choose the layout for search results.
         /// </summary>
         public static string SettingsViewLayoutHelp {
