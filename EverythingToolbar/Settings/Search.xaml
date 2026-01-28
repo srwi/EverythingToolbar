@@ -75,10 +75,14 @@
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,0"
                     CornerRadius="0">
-                <controls:SettingItem Title="{x:Static properties:Resources.SettingsListWrapAround}"
-                                      HelpText="{x:Static properties:Resources.SettingsListWrapAroundHelp}">
+                <controls:SettingItem Title="{x:Static properties:Resources.SettingsListFocusBehavior}"
+                                      HelpText="{x:Static properties:Resources.SettingsListFocusBehaviorHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsListWrapAroundEnabled, Mode=TwoWay}" />
+                        <ComboBox HorizontalAlignment="Right"
+                                  ItemsSource="{Binding FocusBehaviorItems}"
+                                  DisplayMemberPath="Key"
+                                  SelectedValuePath="Value"
+                                  SelectedValue="{Binding Source={x:Static local:ToolbarSettings.User}, Path=ListFocusBehavior, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
