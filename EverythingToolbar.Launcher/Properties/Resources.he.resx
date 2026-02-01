@@ -169,9 +169,9 @@
     <value>בוצע</value>
   </data>
   <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>The system tray icon cannot be disabled when EverythingToolbar is not pinned to the taskbar. Please pin EverythingToolbar to the taskbar first, or keep the system tray icon enabled to access settings and functionality.</value>
+    <value>לא ניתן להשבית את סמל מגש המערכת כאשר EverythingToolbar אינו מוצמד לשורת המשימות. אנא הצמד תחילה את EverythingToolbar לשורת המשימות, או השאר את סמל מגש המערכת מופעל כדי לגשת להגדרות ולפונקציונליות.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
-    <value>Cannot disable system tray icon</value>
+    <value>לא ניתן להשבית את סמל מגש המערכת</value>
   </data>
 </root>
