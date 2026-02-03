@@ -270,14 +270,19 @@ namespace EverythingToolbar.Controls
             {
                 if (SearchResultsListView.SelectedIndex == 0)
                 {
-                    if (ToolbarSettings.User.IsListWrapAroundEnabled)
+                    switch (ToolbarSettings.User.ListFocusBehavior)
                     {
-                        SelectNthSearchResult(SearchResultsListView.Items.Count - 1);
-                    }
-                    else if (!ToolbarSettings.User.IsAutoSelectFirstResult || !ToolbarSettings.User.IsSearchAsYouType)
-                    {
-                        SearchResultsListView.SelectedIndex = -1;
-                        EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
+                        case FocusBehavior.Repeat:
+                            SelectNthSearchResult(SearchResultsListView.Items.Count - 1);
+                            break;
+                        case FocusBehavior.RepeatWithSearch:
+                            SearchResultsListView.SelectedIndex = -1;
+                            EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
+                            break;
+                        case FocusBehavior.Clamp:
+                        default:
+                            // Do nothing
+                            break;
                     }
                 }
                 else
@@ -289,9 +294,22 @@ namespace EverythingToolbar.Controls
             }
             else if (e.Key == Key.Down)
             {
-                if (ToolbarSettings.User.IsListWrapAroundEnabled && SearchResultsListView.SelectedIndex == SearchResultsListView.Items.Count - 1)
+                if (SearchResultsListView.SelectedIndex == SearchResultsListView.Items.Count - 1)
                 {
-                    SelectNthSearchResult(0);
+                    switch (ToolbarSettings.User.ListFocusBehavior)
+                    {
+                        case FocusBehavior.Repeat:
+                            SelectNthSearchResult(0);
+                            break;
+                        case FocusBehavior.RepeatWithSearch:
+                            SearchResultsListView.SelectedIndex = -1;
+                            EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
+                            break;
+                        case FocusBehavior.Clamp:
+                        default:
+                            // Do nothing
+                            break;
+                    }
                 }
                 else
                 {

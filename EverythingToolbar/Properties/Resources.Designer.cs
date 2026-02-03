@@ -1248,20 +1248,47 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List wrap around.
+        ///   Looks up a localized string similar to Clamp.
         /// </summary>
-        public static string SettingsListWrapAround {
+        public static string FocusBehaviorClamp {
             get {
-                return ResourceManager.GetString("SettingsListWrapAround", resourceCulture);
+                return ResourceManager.GetString("FocusBehaviorClamp", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Allows navigating from the bottom to the top of the list and vice versa using arrow keys.
+        ///   Looks up a localized string similar to Repeat.
         /// </summary>
-        public static string SettingsListWrapAroundHelp {
+        public static string FocusBehaviorRepeat {
             get {
-                return ResourceManager.GetString("SettingsListWrapAroundHelp", resourceCulture);
+                return ResourceManager.GetString("FocusBehaviorRepeat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repeat with search.
+        /// </summary>
+        public static string FocusBehaviorRepeatWithSearch {
+            get {
+                return ResourceManager.GetString("FocusBehaviorRepeatWithSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Result list focus.
+        /// </summary>
+        public static string SettingsListFocusBehavior {
+            get {
+                return ResourceManager.GetString("SettingsListFocusBehavior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Controls how the focus behaves when navigating the result list.
+        /// </summary>
+        public static string SettingsListFocusBehaviorHelp {
+            get {
+                return ResourceManager.GetString("SettingsListFocusBehaviorHelp", resourceCulture);
             }
         }
 

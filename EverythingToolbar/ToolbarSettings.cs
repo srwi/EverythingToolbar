@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.CompilerServices;
 using Config.Net;
+using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar
@@ -13,6 +14,9 @@ namespace EverythingToolbar
 
         [Option(DefaultValue = false)]
         bool IsRegExEnabled { get; set; }
+
+        [Option(DefaultValue = FocusBehavior.Repeat)]
+        FocusBehavior ListFocusBehavior { get; set; }
 
         [Option(DefaultValue = false)]
         bool IsMatchPath { get; set; }
@@ -110,8 +114,7 @@ namespace EverythingToolbar
         [Option(DefaultValue = true)]
         bool IsHomeEndNavigateResults { get; set; }
 
-        [Option(DefaultValue = true)]
-        bool IsListWrapAroundEnabled { get; set; }
+
 
         [Option(DefaultValue = true)]
         bool IsSearchAsYouType { get; set; }
@@ -580,14 +583,16 @@ namespace EverythingToolbar
             }
         }
 
-        public bool IsListWrapAroundEnabled
+
+
+        public FocusBehavior ListFocusBehavior
         {
-            get => settings.IsListWrapAroundEnabled;
+            get => settings.ListFocusBehavior;
             set
             {
-                if (settings.IsListWrapAroundEnabled != value)
+                if (settings.ListFocusBehavior != value)
                 {
-                    settings.IsListWrapAroundEnabled = value;
+                    settings.ListFocusBehavior = value;
                     OnPropertyChanged();
                 }
             }
