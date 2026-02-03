@@ -268,30 +268,40 @@ namespace EverythingToolbar.Controls
             }
             else if (e.Key == Key.Up)
             {
-                bool isWrapEnabled = ToolbarSettings.User.ListFocusBehavior != FocusBehavior.Clamp;
-                bool forceSearchBox = ToolbarSettings.User.ListFocusBehavior == FocusBehavior.RepeatWithSearch;
-
-                if (
-                    isWrapEnabled
-                    && (
-                        (SearchResultsListView.SelectedIndex == 0 && ToolbarSettings.User.IsAutoSelectFirstResult && !forceSearchBox)
-                        || (SelectedItem == null && (!ToolbarSettings.User.IsAutoSelectFirstResult || forceSearchBox))
-                    )
-                )
+                if (SearchResultsListView.SelectedIndex > 0)
                 {
-                    ForwardKeyPressToControl(SearchResultsListView, Key.End);
+                    SelectPreviousSearchResult();
                 }
-                else if (
-                    SearchResultsListView.SelectedIndex == 0
-                    && (!ToolbarSettings.User.IsAutoSelectFirstResult || !ToolbarSettings.User.IsSearchAsYouType || forceSearchBox)
-                )
+                else if (SearchResultsListView.SelectedIndex == 0)
                 {
-                    SearchResultsListView.SelectedIndex = -1;
-                    EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
+                    switch (ToolbarSettings.User.ListFocusBehavior)
+                    {
+                        case FocusBehavior.Repeat:
+                            ForwardKeyPressToControl(SearchResultsListView, Key.End);
+                            break;
+                        case FocusBehavior.RepeatWithSearch:
+                            SearchResultsListView.SelectedIndex = -1;
+                            EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
+                            break;
+                        case FocusBehavior.Clamp:
+                        default:
+                            if (!ToolbarSettings.User.IsAutoSelectFirstResult)
+                            {
+                                SearchResultsListView.SelectedIndex = -1;
+                                EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
+                            }
+                            break;
+                    }
                 }
                 else
                 {
-                    SelectPreviousSearchResult();
+                    // SelectedIndex == -1 (e.g. from SearchBox)
+                    if (ToolbarSettings.User.ListFocusBehavior != FocusBehavior.Clamp)
+                    {
+                        // Wrap to end
+                        SearchResultsListView.Focus();
+                        ForwardKeyPressToControl(SearchResultsListView, Key.End);
+                    }
                 }
 
                 e.Handled = true;
@@ -300,20 +310,19 @@ namespace EverythingToolbar.Controls
             {
                 if (SearchResultsListView.SelectedIndex == SearchResultsListView.Items.Count - 1)
                 {
-                    bool isWrapEnabled = ToolbarSettings.User.ListFocusBehavior != FocusBehavior.Clamp;
-                    bool forceSearchBox = ToolbarSettings.User.ListFocusBehavior == FocusBehavior.RepeatWithSearch;
-
-                    if (isWrapEnabled)
+                    switch (ToolbarSettings.User.ListFocusBehavior)
                     {
-                        if (ToolbarSettings.User.IsAutoSelectFirstResult && !forceSearchBox)
-                        {
+                        case FocusBehavior.Repeat:
                             SelectNthSearchResult(0);
-                        }
-                        else
-                        {
+                            break;
+                        case FocusBehavior.RepeatWithSearch:
                             SearchResultsListView.SelectedIndex = -1;
                             EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
-                        }
+                            break;
+                        case FocusBehavior.Clamp:
+                        default:
+                            // Do nothing
+                            break;
                     }
                 }
                 else
