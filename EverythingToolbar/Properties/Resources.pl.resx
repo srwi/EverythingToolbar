@@ -544,82 +544,82 @@
     <value>Wyświetl całkowitą liczbę wyników wyszukiwania</value>
   </data>
   <data name="SettingsQuickTogglesHelp" xml:space="preserve">
-    <value>Show quick toggle buttons for search options in the search bar</value>
+    <value>Pokaż przyciski do szybkiego przełączania dla opcji na pasku wyszukiwania</value>
   </data>
   <data name="SettingsAnimationsHelp" xml:space="preserve">
-    <value>Disable UI animations for improved performance</value>
+    <value>Wyłącz animacje interfejsu użytkownika, aby poprawić wydajność</value>
   </data>
   <data name="SettingsHideEmptyResultsHelp" xml:space="preserve">
-    <value>Hide results when search term is empty</value>
+    <value>Ukryj wyniki, gdy pole wyszukiwania jest puste</value>
   </data>
   <data name="SettingsSearchAsYouTypeHelp" xml:space="preserve">
-    <value>Start searching as you type, without pressing Enter</value>
+    <value>Rozpocznij wyszukiwanie w trakcie pisania, bez naciskania Enter</value>
   </data>
   <data name="SettingsSelectFirstResultHelp" xml:space="preserve">
-    <value>Automatically select the first result while keeping the search bar focused</value>
+    <value>Automatycznie wybierz pierwszy wynik, pozostawiając fokus na pasku wyszukiwania</value>
   </data>
   <data name="SettingsHomeEndNavigateResultsHelp" xml:space="preserve">
-    <value>Home/End keys will navigate search results instead of moving the cursor</value>
+    <value>Klawisze Home/End będą używane do nawigacji wyników wyszukiwania zamiast kursora</value>
   </data>
   <data name="SettingsDoubleClickHelp" xml:space="preserve">
-    <value>Require double-click to open results</value>
+    <value>Wymagaj dwukrotnego kliknięcia, aby otworzyć wyniki</value>
   </data>
   <data name="SettingsHistoryHelp" xml:space="preserve">
-    <value>Remember previous search terms for quick access</value>
+    <value>Zapamiętaj poprzednie warunki wyszukiwania, aby umożliwić szybki dostęp</value>
   </data>
   <data name="SettingsEverythingFiltersHelp" xml:space="preserve">
-    <value>Synchronize Everything's custom filters</value>
+    <value>Synchronizuj niestandardowe filtry aplikacji Everything</value>
   </data>
   <data name="SettingsRememberFilterHelp" xml:space="preserve">
-    <value>Remember the most recently used filter for future searches</value>
+    <value>Pamiętaj ostatnio używany filtr do przyszłych wyszukiwań</value>
   </data>
   <data name="SettingsUpdatesHelp" xml:space="preserve">
-    <value>Notify when a new version is available</value>
+    <value>Powiadom, gdy nowa wersja jest dostępna</value>
   </data>
   <data name="SettingsReplaceStartMenuHelp" xml:space="preserve">
-    <value>Replace the default Windows Start menu search with EverythingToolbar</value>
+    <value>Zastąp domyślne wyszukiwanie w menu Start tym z EverythingToolbar</value>
   </data>
   <data name="MessageBoxOk" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="ContextMenuOpenWithNoCustomActions" xml:space="preserve">
-    <value>No actions defined</value>
+    <value>Nie zdefiniowano działania</value>
   </data>
   <data name="MessageBoxCustomActionsNameEmpty" xml:space="preserve">
-    <value>A custom action name cannot be empty.</value>
+    <value>Niestandardowa nazwa akcji nie może być pusta.</value>
   </data>
   <data name="CustomActionsAutoApply" xml:space="preserve">
-    <value>Automatically apply actions based on type and regular expression</value>
+    <value>Automatycznie zastosuj akcje na podstawie typu i wyrażenia regularnego</value>
   </data>
   <data name="SettingsTaskbarIntegration" xml:space="preserve">
-    <value>Taskbar integration</value>
+    <value>Integracja z paskiem zadań</value>
   </data>
   <data name="SettingsHideWindowsSearchIcon" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Ukryj ikonę wyszukiwarki Windows</value>
   </data>
   <data name="SettingsHideWindowsSearchIconHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>Ukrywa oryginalną ikonę wyszukiwania Windows z paska zadań</value>
   </data>
   <data name="SettingsEnableSystemTrayIcon" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>Wyświetlaj ikonę w zasobniku systemowym</value>
   </data>
   <data name="SettingsEnableSystemTrayIconHelp" xml:space="preserve">
-    <value>Enables the system tray icon to be able to quit EverythingToolbar easily</value>
+    <value>Włącza wyświetlanie ikony w zasobniku systemowym, aby ułatwić wyłączenie EverythingToolbar</value>
   </data>
   <data name="SettingsSearchIcon" xml:space="preserve">
-    <value>Search icon</value>
+    <value>Ikona wyszukiwania</value>
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
-    <value>Changes the style of the taskbar icon (requires explorer restart)</value>
+    <value>Zmienia styl ikony na pasku zadań (wymaga restartu eksploratora)</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
-    <value>Filter order</value>
+    <value>Kolejność filtrowania</value>
   </data>
   <data name="SettingsMaxTabItems" xml:space="preserve">
-    <value>Number of filter tabs</value>
+    <value>Liczba kart filtrów</value>
   </data>
   <data name="SettingsMaxTabItemsHelp" xml:space="preserve">
-    <value>Controls the number of visible filter tabs</value>
+    <value>Kontroluje liczbę widocznych kart filtrów</value>
   </data>
   <data name="SettingsForceWin10Styles" xml:space="preserve">
     <value>Wymuś styl Windows 10</value>
