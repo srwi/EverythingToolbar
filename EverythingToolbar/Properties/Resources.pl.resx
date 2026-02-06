@@ -388,7 +388,7 @@
     <value>Wybierz pierwszy wynik</value>
   </data>
   <data name="SettingsHomeEndNavigateResults" xml:space="preserve">
-    <value>Home/End keys navigate results</value>
+    <value>Nawigowanie rezultatów klawiszami Home/End</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
     <value>Kliknij dwukrotnie, aby otworzyć</value>
@@ -538,10 +538,10 @@
     <value>Wybierz układ wyników wyszukiwania</value>
   </data>
   <data name="SettingsThumbnailsHelp" xml:space="preserve">
-    <value>Show thumbnails for image files</value>
+    <value>Pokaż miniatury dla wyszukanych obrazów</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
-    <value>Display the total number of search results</value>
+    <value>Wyświetl całkowitą liczbę wyników wyszukiwania</value>
   </data>
   <data name="SettingsQuickTogglesHelp" xml:space="preserve">
     <value>Show quick toggle buttons for search options in the search bar</value>
@@ -622,24 +622,24 @@
     <value>Controls the number of visible filter tabs</value>
   </data>
   <data name="SettingsForceWin10Styles" xml:space="preserve">
-    <value>Force Windows 10 styles</value>
+    <value>Wymuś styl Windows 10</value>
   </data>
   <data name="SettingsForceWin10StylesHelp" xml:space="preserve">
-    <value>Uses Windows 10 styles to match certain legacy taskbar modifications</value>
+    <value>Używa stylu Windows 10, aby wpasować się w niektóre starsze modyfikacje paska zadań</value>
   </data>
   <data name="UpdateSuccessfulBannerHeader" xml:space="preserve">
-    <value>EverythingToolbar {version} was updated successfully!</value>
+    <value>EverythingToolbar {version} został zaktualizowany pomyślnie!</value>
   </data>
   <data name="UpdateSuccessfulBannerText" xml:space="preserve">
-    <value>If it makes your life easier, consider donating to support future updates.</value>
+    <value>Jeśli to narzędzie ułatwia Twoje życie, rozważ darowiznę, aby wesprzeć przyszłe aktualizacje.</value>
   </data>
   <data name="UpdateSuccessfulBannerDonate" xml:space="preserve">
-    <value>Donate</value>
+    <value>Wspomóż</value>
   </data>
   <data name="UpdateSuccessfulBannerDismiss" xml:space="preserve">
-    <value>Dismiss</value>
+    <value>Odrzuć</value>
   </data>
   <data name="ShortcutOpenSystemContextMenu" xml:space="preserve">
-    <value>Open system context menu</value>
+    <value>Otwórz systemowe menu kontekstowe</value>
   </data>
 </root>
