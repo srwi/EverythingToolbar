@@ -642,4 +642,19 @@
   <data name="ShortcutOpenSystemContextMenu" xml:space="preserve">
     <value>פתח את תפריט ההקשר של המערכת</value>
   </data>
+  <data name="SettingsListFocusBehavior" xml:space="preserve">
+    <value>Result list focus</value>
+  </data>
+  <data name="SettingsListFocusBehaviorHelp" xml:space="preserve">
+    <value>Controls how the focus behaves when navigating the result list</value>
+  </data>
+  <data name="FocusBehaviorClamp" xml:space="preserve">
+    <value>Clamp</value>
+  </data>
+  <data name="FocusBehaviorRepeat" xml:space="preserve">
+    <value>Repeat</value>
+  </data>
+  <data name="FocusBehaviorRepeatWithSearch" xml:space="preserve">
+    <value>Repeat with search</value>
+  </data>
 </root>
