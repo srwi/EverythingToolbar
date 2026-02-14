@@ -127,16 +127,16 @@
     <value>Για να καρφιτσώσετε EverythingToolbar στη γραμμή εργασιών κάντε δεξί κλικ στο εικονίδιο και επιλέξτε 'Καρφίτσωμα στη γραμμή εργασιών'.</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>
+    <value>Απαιτείται επανεκκίνηση του εξερευνητή αρχείων για την ενημέρωση του εικονιδίου της γραμμής εργασιών. Θα θέλατε να επανεκκινήσετε τώρα;</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>Restart explorer</value>
+    <value>Επανεκκίνηση του εξερευνητή αρχείων</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Βοηθός Εγκατάστασης EverythingToolbar</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+    <value>Είστε βέβαιοι ότι θέλετε να βγείτε από τον βοηθό εγκατάστασης? Το EverythingToolbar θα είναι προσβάσιμο μόνο με τη συντόμευση πληκτρολογίου. Μπορείτε να αποκτήσετε πρόσβαση στον βοηθό εγκατάστασης ξανά μέσω του εικονιδίου πλαισίου συστήματος για να καρφιτσώσετε το εικονίδιο αναζήτησης στη γραμμή εργασιών.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
     <value>Έξοδος Βοηθού Εγκατάστασης</value>
