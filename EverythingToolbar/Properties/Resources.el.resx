@@ -328,16 +328,16 @@
     <value>Date recently changed</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
-    <value>Date run</value>
+    <value>Ημερομηνία εκτέλεσης</value>
   </data>
   <data name="SortByExtension" xml:space="preserve">
-    <value>Extension</value>
+    <value>Επέκταση</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
     <value>File list filename</value>
   </data>
   <data name="SortByName" xml:space="preserve">
-    <value>Name</value>
+    <value>Όνομα</value>
   </data>
   <data name="SortByPath" xml:space="preserve">
     <value>Path</value>
@@ -346,7 +346,7 @@
     <value>Run count</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
-    <value>Size</value>
+    <value>Μέγεθος</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
     <value>Type name</value>
@@ -376,10 +376,10 @@
     <value>Update available:</value>
   </data>
   <data name="UpdateBannerSkip" xml:space="preserve">
-    <value>Skip</value>
+    <value>Παράλειψη</value>
   </data>
   <data name="UpdateBannerDownload" xml:space="preserve">
-    <value>Download</value>
+    <value>Λήψη</value>
   </data>
   <data name="SettingsCheckForUpdates" xml:space="preserve">
     <value>Check for updates automatically</value>
@@ -406,13 +406,13 @@
     <value>User Interface</value>
   </data>
   <data name="SettingsAppearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>Εμφάνιση</value>
   </data>
   <data name="SettingsOther" xml:space="preserve">
     <value>Other</value>
   </data>
   <data name="SettingsShortcuts" xml:space="preserve">
-    <value>Shortcuts</value>
+    <value>Συντομεύσεις</value>
   </data>
   <data name="SettingsCustomShortcuts" xml:space="preserve">
     <value>Custom shortcuts</value>
@@ -430,7 +430,7 @@
     <value>Navigate search history (if enabled)</value>
   </data>
   <data name="ShortcutOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>Άνοιγμα</value>
   </data>
   <data name="ShortcutOpenPath" xml:space="preserve">
     <value>Open path</value>
@@ -439,10 +439,10 @@
     <value>Open in Everything</value>
   </data>
   <data name="ShortcutRunAsAdmin" xml:space="preserve">
-    <value>Run as admin</value>
+    <value>Εκτέλεση ως διαχειριστής</value>
   </data>
   <data name="ShortcutFileProperties" xml:space="preserve">
-    <value>File properties</value>
+    <value>Ιδιότητες αρχείου</value>
   </data>
   <data name="ShortcutCopyFullPath" xml:space="preserve">
     <value>Copy full path to clipboard</value>
@@ -454,13 +454,13 @@
     <value>Select filter</value>
   </data>
   <data name="ShortcutPreviewQuickLook" xml:space="preserve">
-    <value>Preview file in QuickLook</value>
+    <value>Προεπισκόπηση αρχείου στο QuickLook</value>
   </data>
   <data name="SettingsHome" xml:space="preserve">
     <value>Home</value>
   </data>
   <data name="SettingsSearch" xml:space="preserve">
-    <value>Search</value>
+    <value>Αναζήτηση</value>
   </data>
   <data name="SettingsCustomActions" xml:space="preserve">
     <value>Custom Actions</value>
@@ -469,31 +469,31 @@
     <value>Advanced</value>
   </data>
   <data name="SettingsReportProblem" xml:space="preserve">
-    <value>Report a problem</value>
+    <value>Αναφορά προβλήματος</value>
   </data>
   <data name="SettingsBehavior" xml:space="preserve">
     <value>Behavior</value>
   </data>
   <data name="SettingsHistory" xml:space="preserve">
-    <value>History</value>
+    <value>Ιστορικό</value>
   </data>
   <data name="SettingsFilters" xml:space="preserve">
-    <value>Filters</value>
+    <value>Φίλτρα</value>
   </data>
   <data name="SettingsClearHistoryNow" xml:space="preserve">
     <value>Clear now</value>
   </data>
   <data name="SettingsUpdates" xml:space="preserve">
-    <value>Updates</value>
+    <value>Ενημερώσεις</value>
   </data>
   <data name="SettingsCheckNow" xml:space="preserve">
-    <value>Check now</value>
+    <value>Έλεγχος τώρα</value>
   </data>
   <data name="SettingsDownloadLatestVersion" xml:space="preserve">
-    <value>Download latest version</value>
+    <value>Κατεβάστε τη τελευταία έκδοση</value>
   </data>
   <data name="SettingsLatestVersionMessage" xml:space="preserve">
-    <value>You are already using the latest version.</value>
+    <value>Χρησιμοποιείτε ήδη την τελευταία έκδοση.</value>
   </data>
   <data name="SettingsNamedInstance" xml:space="preserve">
     <value>Named Instance</value>
@@ -511,7 +511,7 @@
     <value>Everything integration for the Windows taskbar.</value>
   </data>
   <data name="AboutSearchSettings" xml:space="preserve">
-    <value>Search settings</value>
+    <value>Αναζήτηση ρυθμίσεων</value>
   </data>
   <data name="AboutUserInterface" xml:space="preserve">
     <value>User interface</value>
@@ -520,37 +520,37 @@
     <value>Custom actions</value>
   </data>
   <data name="AboutLinks" xml:space="preserve">
-    <value>Links</value>
+    <value>Σύνδεσμοι</value>
   </data>
   <data name="AboutFAQ" xml:space="preserve">
-    <value>Frequently Asked Questions</value>
+    <value>Συχνές ερωτήσεις</value>
   </data>
   <data name="AboutSourceCode" xml:space="preserve">
-    <value>Source Code (GitHub)</value>
+    <value>Πηγαίος Κώδικας (Github)</value>
   </data>
   <data name="AboutStarOnGitHub" xml:space="preserve">
     <value>Star on GitHub</value>
   </data>
   <data name="AboutDonation" xml:space="preserve">
-    <value>Make a donation</value>
+    <value>Κάντε μια δωρεά</value>
   </data>
   <data name="SettingsViewLayoutHelp" xml:space="preserve">
     <value>Choose the layout for search results</value>
   </data>
   <data name="SettingsThumbnailsHelp" xml:space="preserve">
-    <value>Show thumbnails for image files</value>
+    <value>Εμφάνιση εικόνων επισκόπησης για αρχεία εικόνας</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
-    <value>Display the total number of search results</value>
+    <value>Εμφάνιση του συνολικού αριθμού των αποτελεσμάτων αναζήτησης</value>
   </data>
   <data name="SettingsQuickTogglesHelp" xml:space="preserve">
     <value>Show quick toggle buttons for search options in the search bar</value>
   </data>
   <data name="SettingsAnimationsHelp" xml:space="preserve">
-    <value>Disable UI animations for improved performance</value>
+    <value>Απενεργοποίηση εφέ κίνησης UI για βελτιωμένη απόδοση</value>
   </data>
   <data name="SettingsHideEmptyResultsHelp" xml:space="preserve">
-    <value>Hide results when search term is empty</value>
+    <value>Απόκρυψη αποτελεσμάτων όταν ο όρος αναζήτησης είναι κενός</value>
   </data>
   <data name="SettingsSearchAsYouTypeHelp" xml:space="preserve">
     <value>Start searching as you type, without pressing Enter</value>
@@ -565,25 +565,25 @@
     <value>Require double-click to open results</value>
   </data>
   <data name="SettingsHistoryHelp" xml:space="preserve">
-    <value>Remember previous search terms for quick access</value>
+    <value>Απομνημόνευση προηγούμενων όρων αναζήτησης για γρήγορη πρόσβαση</value>
   </data>
   <data name="SettingsEverythingFiltersHelp" xml:space="preserve">
-    <value>Synchronize Everything's custom filters</value>
+    <value>Συγχρονισμός προσαρμοσμένων φίλτρων Everything</value>
   </data>
   <data name="SettingsRememberFilterHelp" xml:space="preserve">
-    <value>Remember the most recently used filter for future searches</value>
+    <value>Θυμηθείτε το πιο πρόσφατα χρησιμοποιούμενο φίλτρο για μελλοντικές αναζητήσεις</value>
   </data>
   <data name="SettingsUpdatesHelp" xml:space="preserve">
-    <value>Notify when a new version is available</value>
+    <value>Ειδοποίηση όταν μια νέα έκδοση είναι διαθέσιμη</value>
   </data>
   <data name="SettingsReplaceStartMenuHelp" xml:space="preserve">
-    <value>Replace the default Windows Start menu search with EverythingToolbar</value>
+    <value>Αντικαταστήστε την προεπιλεγμένη αναζήτηση μενού Έναρξη των Windows με το EverythingToolbar</value>
   </data>
   <data name="MessageBoxOk" xml:space="preserve">
     <value>ΟΚ</value>
   </data>
   <data name="ContextMenuOpenWithNoCustomActions" xml:space="preserve">
-    <value>No actions defined</value>
+    <value>Δεν έχουν οριστεί ενέργειες</value>
   </data>
   <data name="MessageBoxCustomActionsNameEmpty" xml:space="preserve">
     <value>A custom action name cannot be empty.</value>
@@ -607,7 +607,7 @@
     <value>Enables the system tray icon to be able to quit EverythingToolbar easily</value>
   </data>
   <data name="SettingsSearchIcon" xml:space="preserve">
-    <value>Search icon</value>
+    <value>Εικονίδιο Αναζήτησης</value>
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
     <value>Changes the style of the taskbar icon (requires explorer restart)</value>
