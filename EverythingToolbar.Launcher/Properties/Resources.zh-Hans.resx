@@ -169,9 +169,9 @@
     <value>完成</value>
   </data>
   <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>The system tray icon cannot be disabled when EverythingToolbar is not pinned to the taskbar. Please pin EverythingToolbar to the taskbar first, or keep the system tray icon enabled to access settings and functionality.</value>
+    <value>当 EverythingToolbar 未固定到任务栏时，系统托盘图标无法禁用。请先将 EverythingToolbar 固定到任务栏，或保持系统托盘图标启用以访问设置和功能。</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
-    <value>Cannot disable system tray icon</value>
+    <value>无法禁用系统托盘图标</value>
   </data>
 </root>
