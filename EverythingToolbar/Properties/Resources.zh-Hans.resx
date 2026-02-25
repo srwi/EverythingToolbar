@@ -142,7 +142,7 @@
     <value>显示更多选项</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
-    <value>打开方式...</value>
+    <value>打开方式……</value>
   </data>
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
     <value>选择应用</value>
@@ -199,7 +199,7 @@
     <value>错误</value>
   </data>
   <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
-    <value>无法复制文件</value>
+    <value>无法复制文件。</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>复制路径失败。</value>
@@ -229,7 +229,7 @@
     <value>至少有一个正则表达式无效。</value>
   </data>
   <data name="MessageBoxSelectEverythingExe" xml:space="preserve">
-    <value>请选择 Everything.exe...</value>
+    <value>请选择 Everything.exe……</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
     <value>请选择Filters.csv文件。默认情况下，它可以在%APPDATA%\Everything中找到。根据您的安装设置，它的位置可能不同。</value>
@@ -388,7 +388,7 @@
     <value>选择第一个结果</value>
   </data>
   <data name="SettingsHomeEndNavigateResults" xml:space="preserve">
-    <value>Home/End keys navigate results</value>
+    <value>Home/End 键导航结果列表</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
     <value>双击打开</value>
@@ -559,7 +559,7 @@
     <value>保持搜索栏焦点时自动选择第一个结果</value>
   </data>
   <data name="SettingsHomeEndNavigateResultsHelp" xml:space="preserve">
-    <value>Home/End keys will navigate search results instead of moving the cursor</value>
+    <value>Home/End 键将在搜索结果间跳转，而非移动文本光标</value>
   </data>
   <data name="SettingsDoubleClickHelp" xml:space="preserve">
     <value>需要双击以打开结果</value>
@@ -643,18 +643,18 @@
     <value>打开系统上下文菜单</value>
   </data>
   <data name="SettingsListFocusBehavior" xml:space="preserve">
-    <value>Result list focus</value>
+    <value>结果列表焦点移动方式</value>
   </data>
   <data name="SettingsListFocusBehaviorHelp" xml:space="preserve">
-    <value>Controls how the focus behaves when navigating the result list</value>
+    <value>控制使用方向键浏览搜索结果时焦点的移动方式</value>
   </data>
   <data name="FocusBehaviorClamp" xml:space="preserve">
-    <value>Clamp</value>
+    <value>边界停止</value>
   </data>
   <data name="FocusBehaviorRepeat" xml:space="preserve">
-    <value>Repeat</value>
+    <value>首尾循环</value>
   </data>
   <data name="FocusBehaviorRepeatWithSearch" xml:space="preserve">
-    <value>Repeat with search</value>
+    <value>循环并刷新搜索</value>
   </data>
 </root>
