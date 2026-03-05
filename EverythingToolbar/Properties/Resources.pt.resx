@@ -121,7 +121,7 @@
     <value>Versão</value>
   </data>
   <data name="ContextMenuCopy" xml:space="preserve">
-    <value>Cópia</value>
+    <value>Copiar</value>
   </data>
   <data name="ContextMenuCopyFile" xml:space="preserve">
     <value>Cópia</value>
@@ -145,7 +145,7 @@
     <value>Abrir com...</value>
   </data>
   <data name="ContextMenuOpenWithChooseApp" xml:space="preserve">
-    <value>Escolha o aplicativo</value>
+    <value>Escolha a aplicação</value>
   </data>
   <data name="ContextMenuPaste" xml:space="preserve">
     <value>Colar</value>
