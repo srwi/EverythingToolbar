@@ -300,6 +300,9 @@
   <data name="SettingsShowResultsCount" xml:space="preserve">
     <value>显示结果数</value>
   </data>
+  <data name="SettingsPreviewPaneEnabled" xml:space="preserve">
+    <value>Show preview pane</value>
+  </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>排序</value>
   </data>
@@ -545,6 +548,18 @@
   </data>
   <data name="SettingsQuickTogglesHelp" xml:space="preserve">
     <value>在搜索栏显示快速切换搜索选项按钮</value>
+  </data>
+  <data name="SettingsPreviewPaneHelp" xml:space="preserve">
+    <value>Show a Start menu style side pane for the selected result</value>
+  </data>
+  <data name="PreviewPaneFilePath" xml:space="preserve">
+    <value>File path</value>
+  </data>
+  <data name="PreviewPaneSelectResult" xml:space="preserve">
+    <value>Nothing selected</value>
+  </data>
+  <data name="PreviewPaneSize" xml:space="preserve">
+    <value>Size</value>
   </data>
   <data name="SettingsAnimationsHelp" xml:space="preserve">
     <value>禁用界面动画以提高性能</value>
