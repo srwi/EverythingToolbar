@@ -300,6 +300,9 @@
   <data name="SettingsShowResultsCount" xml:space="preserve">
     <value>Pokaż liczbę wyników</value>
   </data>
+  <data name="SettingsPreviewPaneEnabled" xml:space="preserve">
+    <value>Show preview pane</value>
+  </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Sortuj według</value>
   </data>
@@ -545,6 +548,18 @@
   </data>
   <data name="SettingsQuickTogglesHelp" xml:space="preserve">
     <value>Pokaż przyciski do szybkiego przełączania dla opcji na pasku wyszukiwania</value>
+  </data>
+  <data name="SettingsPreviewPaneHelp" xml:space="preserve">
+    <value>Show a Start menu style side pane for the selected result</value>
+  </data>
+  <data name="PreviewPaneFilePath" xml:space="preserve">
+    <value>File path</value>
+  </data>
+  <data name="PreviewPaneSelectResult" xml:space="preserve">
+    <value>Nothing selected</value>
+  </data>
+  <data name="PreviewPaneSize" xml:space="preserve">
+    <value>Size</value>
   </data>
   <data name="SettingsAnimationsHelp" xml:space="preserve">
     <value>Wyłącz animacje interfejsu użytkownika, aby poprawić wydajność</value>
