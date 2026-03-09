@@ -301,7 +301,7 @@
     <value>Afficher le nombre de résultats</value>
   </data>
   <data name="SettingsPreviewPaneEnabled" xml:space="preserve">
-    <value>Show preview pane</value>
+    <value>Afficher le panneau d’aperçu</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Trier par</value>
@@ -550,16 +550,16 @@
     <value>Afficher les boutons rapides pour les options de recherche dans la barre de recherche</value>
   </data>
   <data name="SettingsPreviewPaneHelp" xml:space="preserve">
-    <value>Show a Start menu style side pane for the selected result</value>
+    <value>Afficher un panneau latéral du style menu Démarrer pour le résultat sélectionné</value>
   </data>
   <data name="PreviewPaneFilePath" xml:space="preserve">
-    <value>File path</value>
+    <value>Emplacement du fichier</value>
   </data>
   <data name="PreviewPaneSelectResult" xml:space="preserve">
-    <value>Nothing selected</value>
+    <value>Rien de sélectionné</value>
   </data>
   <data name="PreviewPaneSize" xml:space="preserve">
-    <value>Size</value>
+    <value>Taille</value>
   </data>
   <data name="SettingsAnimationsHelp" xml:space="preserve">
     <value>Désactiver les animations de l'interface utilisateur pour de meilleures performances</value>
