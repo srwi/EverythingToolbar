@@ -29,7 +29,7 @@
     <DefineConstants>TRACE;DEBUG;DESKBAND_WPF</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\EverythingToolbar.snk</AssemblyOriginatorKeyFile>

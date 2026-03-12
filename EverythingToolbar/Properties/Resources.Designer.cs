@@ -1347,6 +1347,24 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string SettingsUILanguage {
+            get {
+                return ResourceManager.GetString("SettingsUILanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose the UI language. Restart the application to apply changes..
+        /// </summary>
+        public static string SettingsUILanguageHelp {
+            get {
+                return ResourceManager.GetString("SettingsUILanguageHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy full path to clipboard.
         /// </summary>
         public static string ShortcutCopyFullPath {

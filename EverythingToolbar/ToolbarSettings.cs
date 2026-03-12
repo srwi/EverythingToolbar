@@ -134,6 +134,9 @@ namespace EverythingToolbar
 
         [Option(DefaultValue = "")]
         string VersionBeforeUpdate { get; set; }
+
+        [Option(DefaultValue = "")]
+        string UILanguage { get; set; }
     }
 
     public sealed class ToolbarSettingsWrapper(IToolbarSettings settings) : INotifyPropertyChanged
@@ -683,6 +686,19 @@ namespace EverythingToolbar
                 if (settings.VersionBeforeUpdate != value)
                 {
                     settings.VersionBeforeUpdate = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string UILanguage
+        {
+            get => settings.UILanguage;
+            set
+            {
+                if (settings.UILanguage != value)
+                {
+                    settings.UILanguage = value;
                     OnPropertyChanged();
                 }
             }

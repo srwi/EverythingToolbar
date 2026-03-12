@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows;
+using EverythingToolbar;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using NLog;
@@ -28,6 +29,9 @@ namespace EverythingToolbar.Deskband
         {
             try
             {
+                // Apply saved UI language
+                CultureHelper.ApplyUILanguage(ToolbarSettings.User.UILanguage);
+
                 _toolbarControl = new ToolbarControl();
 
                 Options.MinHorizontalSize = new Size(24, 30);

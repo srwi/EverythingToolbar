@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using EverythingToolbar.Data;
+using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
@@ -35,6 +36,8 @@ namespace EverythingToolbar.Settings
                 new(Resources.ItemTemplateNormal, "Normal"),
                 new(Resources.ItemTemplateNormalDetailed, "NormalDetailed"),
             ];
+
+        public List<KeyValuePair<string, string>> Languages { get; } = CultureHelper.GetAvailableLanguages();
 
         public List<IconItem> IconItems { get; } =
             [

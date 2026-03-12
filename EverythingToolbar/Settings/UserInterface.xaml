@@ -64,6 +64,17 @@
                         <ContentControl Content="{Binding SampleSearchResult}" FontSize="15"
                                         ContentTemplate="{DynamicResource SearchResultsViewTemplate}" />
                     </Border>
+                    <controls:SettingItem Title="{x:Static properties:Resources.SettingsUILanguage}"
+                                          HelpText="{x:Static properties:Resources.SettingsUILanguageHelp}"
+                                          Margin="0,17,0,0">
+                        <controls:SettingItem.SettingContent>
+                            <ComboBox HorizontalAlignment="Right"
+                                      ItemsSource="{Binding Languages}"
+                                      DisplayMemberPath="Key"
+                                      SelectedValuePath="Value"
+                                      SelectedValue="{Binding Source={x:Static local:ToolbarSettings.User}, Path=UILanguage, Mode=TwoWay}" />
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
                 </StackPanel>
             </Border>
             <Border Padding="16"

@@ -315,6 +315,12 @@
   <data name="SettingsView" xml:space="preserve">
     <value>View</value>
   </data>
+  <data name="SettingsUILanguage" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SettingsUILanguageHelp" xml:space="preserve">
+    <value>Choose the UI language. Restart the application to apply changes.</value>
+  </data>
   <data name="SortByAttributes" xml:space="preserve">
     <value>Attributes</value>
   </data>

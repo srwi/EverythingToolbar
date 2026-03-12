@@ -177,6 +177,9 @@ namespace EverythingToolbar.Launcher
             {
                 if (createdNew)
                 {
+                    // Apply saved UI language
+                    CultureHelper.ApplyUILanguage(ToolbarSettings.User.UILanguage);
+
                     using var trayIcon = new NotifyIcon();
                     var app = new Application();
                     trayIcon.Icon = new Icon(Utils.GetThemedAppIconPath(absolute: true));
