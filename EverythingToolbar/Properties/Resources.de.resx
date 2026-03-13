@@ -301,7 +301,7 @@
     <value>Ergebnisanzahl anzeigen</value>
   </data>
   <data name="SettingsPreviewPaneEnabled" xml:space="preserve">
-    <value>Show preview pane</value>
+    <value>Vorschau anzeigen</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Sortieren nach</value>
@@ -553,13 +553,13 @@
     <value>Show a Start menu style side pane for the selected result</value>
   </data>
   <data name="PreviewPaneFilePath" xml:space="preserve">
-    <value>File path</value>
+    <value>Dateipfad</value>
   </data>
   <data name="PreviewPaneSelectResult" xml:space="preserve">
-    <value>Nothing selected</value>
+    <value>Nichts ausgewählt</value>
   </data>
   <data name="PreviewPaneSize" xml:space="preserve">
-    <value>Size</value>
+    <value>Größe</value>
   </data>
   <data name="SettingsAnimationsHelp" xml:space="preserve">
     <value>UI-Animationen für verbesserte Leistung deaktivieren</value>
@@ -658,16 +658,16 @@
     <value>Systemkontextmenü öffnen</value>
   </data>
   <data name="SettingsListFocusBehavior" xml:space="preserve">
-    <value>Result list focus</value>
+    <value>Ergebnislisten-Fokus</value>
   </data>
   <data name="SettingsListFocusBehaviorHelp" xml:space="preserve">
-    <value>Controls how the focus behaves when navigating the result list</value>
+    <value>Festlegen, wie sich der Fokus beim Navigieren der Ergebnisliste verhält</value>
   </data>
   <data name="FocusBehaviorClamp" xml:space="preserve">
     <value>Clamp</value>
   </data>
   <data name="FocusBehaviorRepeat" xml:space="preserve">
-    <value>Repeat</value>
+    <value>Wiederholen</value>
   </data>
   <data name="FocusBehaviorRepeatWithSearch" xml:space="preserve">
     <value>Repeat with search</value>
