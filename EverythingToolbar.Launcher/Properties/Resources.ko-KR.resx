@@ -124,10 +124,10 @@
     <value>설정 도우미 실행...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
-    <value>EverythingToolbar를 작업 표시줄에 고정하려면 해당 아이콘을 마우스 오른쪽 버튼으로 클릭하고 '작업 표시줄에 고정'을 선택합니다.</value>
+    <value>EverythingToolbar를 작업 표시줄에 고정하려면 아이콘을 오른쪽 클릭하고 '작업 표시줄에 고정'을 선택합니다.</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>작업 표시줄 아이콘을 업데이트하려면 탐색기를 다시 시작해야 합니다. 지금 다시 시작하시겠습니까?</value>
+    <value>작업 표시줄 아이콘을 업데이트하려면 탐색기를 재시작해야 합니다. 지금 다시 시작하시겠습니까?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
     <value>탐색기 다시 시작</value>
@@ -136,42 +136,42 @@
     <value>EverythingToolbar 설정 도우미</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+    <value>설정 도우미를 종료하시겠습니까? EverythingToolbar 는 키보드 바로 가기를 통해서만 액세스할 수 있습니다. 시스템 트레이 아이콘을 통해 설정 도우미에 다시 액세스하여 검색 아이콘을 작업 표시줄에 고정할 수 있습니다.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>Exit Setup Assistant</value>
+    <value>설치 도우미 종료</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>작업 표시줄에 고정</value>
   </data>
   <data name="SetupAssistantPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>환경 설정</value>
   </data>
   <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Windows 검색 아이콘 숨기기</value>
   </data>
   <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>작업 표시줄에서 원래 Windows 검색 아이콘 숨기기</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>트레이 아이콘 사용함</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
-    <value>Enables the system tray icon for quick access to settings</value>
+    <value>시스템 트레이 아이콘을 활성화하여 설정에 빠르게 액세스할 수 있습니다</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>자동 시작 사용함</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Windows가 시작되면 EverythingToolbar가 자동으로 시작됩니다</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
-    <value>Done</value>
+    <value>완료</value>
   </data>
   <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>The system tray icon cannot be disabled when EverythingToolbar is not pinned to the taskbar. Please pin EverythingToolbar to the taskbar first, or keep the system tray icon enabled to access settings and functionality.</value>
+    <value>EverythingToolbar가 작업 표시줄에 고정되어 있지 않으면 시스템 트레이 아이콘을 비활성화할 수 없습니다. 먼저 EverythingToolbar를 작업 표시줄에 고정하거나 시스템 트레이 아이콘을 활성화하여 설정 및 기능에 액세스하세요.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
-    <value>Cannot disable system tray icon</value>
+    <value>시스템 트레이 아이콘을 비활성화할 수 없습니다</value>
   </data>
 </root>
