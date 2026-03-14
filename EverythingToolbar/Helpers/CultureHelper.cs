@@ -10,50 +10,36 @@ namespace EverythingToolbar.Helpers
     public static class CultureHelper
     {
         /// <summary>
-        /// Dynamically gets supported language codes by scanning for .resx files.
+        /// Dynamically gets supported language codes by scanning for satellite assemblies.
         /// </summary>
         private static string[] GetSupportedLanguageCodes()
         {
             try
             {
-                // Get the Properties directory where .resx files are located
-                string propertiesDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Properties");
-                
-                if (!Directory.Exists(propertiesDir))
-                {
-                    // Fallback to app directory if Properties doesn't exist
-                    propertiesDir = AppDomain.CurrentDomain.BaseDirectory;
-                }
+                var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                var assemblyName = "EverythingToolbar.resources.dll";
 
-                // Find all Resources.*.resx files (excluding base Resources.resx)
-                var resx = Directory.GetFiles(propertiesDir, "Resources.*.resx")
-                    .Select(f => Path.GetFileNameWithoutExtension(f))
-                    .Select(f => f.Replace("Resources.", ""))
-                    .Where(f => !string.IsNullOrEmpty(f))
-                    .OrderBy(f => f)
+                return Directory.GetDirectories(baseDir)
+                    .Select(dir => Path.GetFileName(dir))
+                    .Where(name => 
+                    {
+                        try
+                        {
+                            _ = CultureInfo.GetCultureInfo(name);
+                            return File.Exists(Path.Combine(baseDir, name, assemblyName));
+                        }
+                        catch
+                        {
+                            return false;
+                        }
+                    })
+                    .OrderBy(c => c)
                     .ToArray();
-
-                return resx.Length > 0 ? resx : GetFallbackLanguages();
             }
             catch
             {
-                // If scanning fails, use fallback list
-                return GetFallbackLanguages();
+                return Array.Empty<string>();
             }
-        }
-
-        /// <summary>
-        /// Fallback list of languages if file scanning fails.
-        /// </summary>
-        private static string[] GetFallbackLanguages()
-        {
-            return new[]
-            {
-                "af", "ar", "ca", "cs", "da", "de", "el", "es", "fa", "fi", 
-                "fr", "he", "hu", "it", "ja", "ko-KR", "nl", "no", "pl", "pt", 
-                "pt-BR", "ro", "ru", "sr", "sv", "tr", "ug", "uk", "uz", "vi", 
-                "zh", "zh-Hans"
-            };
         }
 
         /// <summary>
@@ -63,7 +49,7 @@ namespace EverythingToolbar.Helpers
         {
             var languages = new List<KeyValuePair<string, string>>
             {
-                new("Use System Language", "")
+                new(Properties.Resources.SettingsUseSystemLanguage, "")
             };
 
             // Always include English first

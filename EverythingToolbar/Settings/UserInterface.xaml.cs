@@ -1,12 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Runtime.CompilerServices;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
+using EverythingToolbar.Controls;
+using MessageBoxResult = Wpf.Ui.Controls.MessageBoxResult;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 namespace EverythingToolbar.Settings
@@ -36,8 +39,21 @@ namespace EverythingToolbar.Settings
                 new(Resources.ItemTemplateNormal, "Normal"),
                 new(Resources.ItemTemplateNormalDetailed, "NormalDetailed"),
             ];
-
         public List<KeyValuePair<string, string>> Languages { get; } = CultureHelper.GetAvailableLanguages();
+
+        public string SelectedLanguage
+        {
+            get => ToolbarSettings.User.UILanguage;
+            set
+            {
+                if (ToolbarSettings.User.UILanguage != value)
+                {
+                    ToolbarSettings.User.UILanguage = value;
+                    OnPropertyChanged();
+                    OnUILanguageChanged();
+                }
+            }
+        }
 
         public List<IconItem> IconItems { get; } =
             [
@@ -106,6 +122,47 @@ namespace EverythingToolbar.Settings
                 dwLowDateTime = (int)(fileTime & 0xFFFFFFFF),
                 dwHighDateTime = (int)(fileTime >> 32),
             };
+        }
+
+        private async void OnUILanguageChanged()
+        {
+            var result = await FluentMessageBox.CreateYesNo(
+                Resources.MessageBoxRestartMessage,
+                Resources.MessageBoxRestartTitle
+            ).ShowDialogAsync();
+
+            if (result != MessageBoxResult.Primary)
+                return;
+
+            string? executablePath = System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName;
+
+            if (IsLauncher && executablePath != null)
+            {
+                // Start a new instance with a delay to allow the current one to exit and release the Mutex
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "cmd.exe",
+                    Arguments = $"/c timeout /t 1 /nobreak && start \"\" \"{executablePath}\"",
+                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                    CreateNoWindow = true
+                });
+            }
+
+            // Always restart explorer to provide consistent visual feedback/refresh
+            foreach (var process in System.Diagnostics.Process.GetProcessesByName("explorer"))
+            {
+                process.Kill();
+            }
+
+            if (IsLauncher)
+            {
+                Application.Current.Shutdown();
+            }
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

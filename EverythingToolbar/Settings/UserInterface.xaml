@@ -1,4 +1,4 @@
-﻿<Page x:Class="EverythingToolbar.Settings.UserInterface"
+<Page x:Class="EverythingToolbar.Settings.UserInterface"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:properties="clr-namespace:EverythingToolbar.Properties"
@@ -64,18 +64,23 @@
                         <ContentControl Content="{Binding SampleSearchResult}" FontSize="15"
                                         ContentTemplate="{DynamicResource SearchResultsViewTemplate}" />
                     </Border>
-                    <controls:SettingItem Title="{x:Static properties:Resources.SettingsUILanguage}"
-                                          HelpText="{x:Static properties:Resources.SettingsUILanguageHelp}"
-                                          Margin="0,17,0,0">
-                        <controls:SettingItem.SettingContent>
-                            <ComboBox HorizontalAlignment="Right"
-                                      ItemsSource="{Binding Languages}"
-                                      DisplayMemberPath="Key"
-                                      SelectedValuePath="Value"
-                                      SelectedValue="{Binding Source={x:Static local:ToolbarSettings.User}, Path=UILanguage, Mode=TwoWay}" />
-                        </controls:SettingItem.SettingContent>
-                    </controls:SettingItem>
                 </StackPanel>
+            </Border>
+            <Border Padding="16"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1,1,1,0"
+                    CornerRadius="0">
+                <controls:SettingItem Title="{x:Static properties:Resources.SettingsUILanguage}"
+                                      HelpText="{x:Static properties:Resources.SettingsUILanguageHelp}">
+                    <controls:SettingItem.SettingContent>
+                        <ComboBox HorizontalAlignment="Right"
+                                  ItemsSource="{Binding Languages}"
+                                  DisplayMemberPath="Key"
+                                  SelectedValuePath="Value"
+                                  SelectedValue="{Binding SelectedLanguage, Mode=TwoWay}" />
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
             </Border>
             <Border Padding="16"
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"

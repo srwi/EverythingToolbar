@@ -1,4 +1,4 @@
-﻿namespace EverythingToolbar.Data
+namespace EverythingToolbar.Data
 {
     public class Filter
     {
