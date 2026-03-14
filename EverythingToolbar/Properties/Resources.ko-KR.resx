@@ -127,7 +127,7 @@
     <value>복사</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
-    <value>전체 이름을 클립보드에 복사</value>
+    <value>클립보드에 전체 이름 복사</value>
   </data>
   <data name="ContextMenuCut" xml:space="preserve">
     <value>잘라내기</value>
@@ -139,7 +139,7 @@
     <value>경로 열기</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
-    <value>옵션 더 보기</value>
+    <value>더 많은 옵션 표시</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
     <value>다른 프로그램으로 열기</value>
@@ -157,10 +157,10 @@
     <value>관리자로 실행</value>
   </data>
   <data name="ContextMenuShowInEverything" xml:space="preserve">
-    <value>Everything에서 보기</value>
+    <value>Everything에서 표시</value>
   </data>
   <data name="DefaultFilterAll" xml:space="preserve">
-    <value>전체</value>
+    <value>모두</value>
   </data>
   <data name="DefaultFilterFile" xml:space="preserve">
     <value>파일</value>
@@ -169,10 +169,10 @@
     <value>폴더</value>
   </data>
   <data name="ItemTemplateCompact" xml:space="preserve">
-    <value>간단</value>
+    <value>간략한</value>
   </data>
   <data name="ItemTemplateCompactDetailed" xml:space="preserve">
-    <value>간단 (자세히)</value>
+    <value>간략한 (상세한)</value>
   </data>
   <data name="ItemTemplateNormal" xml:space="preserve">
     <value>기본</value>
@@ -193,10 +193,10 @@
     <value>Win</value>
   </data>
   <data name="MessageBoxCopyException" xml:space="preserve">
-    <value>예외 항목을 클립보드에 복사하시겠습니까?</value>
+    <value>예외 내용을 클립보드에 복사하시겠습니까?</value>
   </data>
   <data name="MessageBoxErrorTitle" xml:space="preserve">
-    <value>에러</value>
+    <value>오류</value>
   </data>
   <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
     <value>파일 복사에 실패했습니다.</value>
@@ -259,13 +259,13 @@
     <value>Everything으로 검색</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
-    <value>항목</value>
+    <value>개체</value>
   </data>
   <data name="SearchResults" xml:space="preserve">
-    <value>항목</value>
+    <value>개체</value>
   </data>
   <data name="SettingsDisableAnimations" xml:space="preserve">
-    <value>애니메이션 비활성화</value>
+    <value>애니메이션 사용 안 함</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>검색 기록 사용함</value>
@@ -274,7 +274,7 @@
     <value>빈 검색 숨기기</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
-    <value>대/소문자 일치</value>
+    <value>대소문자 일치</value>
   </data>
   <data name="SettingsMatchPath" xml:space="preserve">
     <value>경로 일치</value>
@@ -286,7 +286,7 @@
     <value>속성</value>
   </data>
   <data name="SettingsRegularExpressions" xml:space="preserve">
-    <value>정규식</value>
+    <value>정규 표현식</value>
   </data>
   <data name="SettingsRememberFilter" xml:space="preserve">
     <value>필터 기억</value>
@@ -301,7 +301,7 @@
     <value>검색 결과 수 표시</value>
   </data>
   <data name="SettingsPreviewPaneEnabled" xml:space="preserve">
-    <value>Show preview pane</value>
+    <value>미리보기 창 표시</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>정렬 기준</value>
@@ -316,43 +316,43 @@
     <value>보기</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
-    <value>Attributes</value>
+    <value>속성</value>
   </data>
   <data name="SortByDateAccessed" xml:space="preserve">
-    <value>Date accessed</value>
+    <value>접근 날짜</value>
   </data>
   <data name="SortByDateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>생성 날짜</value>
   </data>
   <data name="SortByDateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>수정 날짜</value>
   </data>
   <data name="SortByDateRecentlyChanged" xml:space="preserve">
-    <value>Date recently changed</value>
+    <value>최근 변경된 날짜</value>
   </data>
   <data name="SortByDateRun" xml:space="preserve">
-    <value>Date run</value>
+    <value>실행 날짜</value>
   </data>
   <data name="SortByExtension" xml:space="preserve">
-    <value>Extension</value>
+    <value>확장자</value>
   </data>
   <data name="SortByFileListFilename" xml:space="preserve">
-    <value>File list filename</value>
+    <value>파일 목록 파일 이름</value>
   </data>
   <data name="SortByName" xml:space="preserve">
-    <value>Name</value>
+    <value>이름</value>
   </data>
   <data name="SortByPath" xml:space="preserve">
-    <value>Path</value>
+    <value>경로</value>
   </data>
   <data name="SortByRunCount" xml:space="preserve">
-    <value>Run count</value>
+    <value>실행 횟수</value>
   </data>
   <data name="SortBySize" xml:space="preserve">
-    <value>Size</value>
+    <value>크기</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
-    <value>Type name</value>
+    <value>유형 이름</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>오디오</value>
@@ -373,7 +373,7 @@
     <value>더 보기</value>
   </data>
   <data name="UserFilterVideo" xml:space="preserve">
-    <value>비디오</value>
+    <value>동영상</value>
   </data>
   <data name="UpdateBannerText" xml:space="preserve">
     <value>업데이트 사용 가능:</value>
@@ -391,285 +391,285 @@
     <value>첫 번째 결과 선택</value>
   </data>
   <data name="SettingsHomeEndNavigateResults" xml:space="preserve">
-    <value>Home/End keys navigate results</value>
+    <value>Home/End 키 탐색 결과</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
     <value>두 번 클릭으로 열기</value>
   </data>
   <data name="SortDescending" xml:space="preserve">
-    <value>Descending</value>
+    <value>내림차순</value>
   </data>
   <data name="SortAscending" xml:space="preserve">
-    <value>Ascending</value>
+    <value>오름차순</value>
   </data>
   <data name="SettingsSearchAsYouType" xml:space="preserve">
-    <value>Search as you type</value>
+    <value>입력할 때 검색</value>
   </data>
   <data name="SettingsUserInterface" xml:space="preserve">
-    <value>User Interface</value>
+    <value>사용자 인터페이스</value>
   </data>
   <data name="SettingsAppearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>모양</value>
   </data>
   <data name="SettingsOther" xml:space="preserve">
-    <value>Other</value>
+    <value>기타</value>
   </data>
   <data name="SettingsShortcuts" xml:space="preserve">
-    <value>Shortcuts</value>
+    <value>단축키</value>
   </data>
   <data name="SettingsCustomShortcuts" xml:space="preserve">
-    <value>Custom shortcuts</value>
+    <value>사용자 지정 단축키</value>
   </data>
   <data name="SettingsOtherShortcuts" xml:space="preserve">
-    <value>Other shortcuts</value>
+    <value>다른 단축키</value>
   </data>
   <data name="SettingsOpenSearchWindow" xml:space="preserve">
-    <value>Open search window</value>
+    <value>검색 창 열기</value>
   </data>
   <data name="ShortcutNavigateResults" xml:space="preserve">
-    <value>Navigate search results</value>
+    <value>검색 결과 탐색</value>
   </data>
   <data name="ShortcutNavigateHistory" xml:space="preserve">
-    <value>Navigate search history (if enabled)</value>
+    <value>검색 기록 탐색 (활성화된 경우)</value>
   </data>
   <data name="ShortcutOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>열기</value>
   </data>
   <data name="ShortcutOpenPath" xml:space="preserve">
-    <value>Open path</value>
+    <value>경로 열기</value>
   </data>
   <data name="ShortcutOpenInEverything" xml:space="preserve">
-    <value>Open in Everything</value>
+    <value>Everything에서 열기</value>
   </data>
   <data name="ShortcutRunAsAdmin" xml:space="preserve">
-    <value>Run as admin</value>
+    <value>관리자로 실행</value>
   </data>
   <data name="ShortcutFileProperties" xml:space="preserve">
-    <value>File properties</value>
+    <value>파일 속성</value>
   </data>
   <data name="ShortcutCopyFullPath" xml:space="preserve">
-    <value>Copy full path to clipboard</value>
+    <value>클립보드에 전체 경로 복사</value>
   </data>
   <data name="ShortcutCycleFilters" xml:space="preserve">
-    <value>Cycle through filters</value>
+    <value>필터를 순환</value>
   </data>
   <data name="ShortcutSelectFilter" xml:space="preserve">
-    <value>Select filter</value>
+    <value>필터 선택</value>
   </data>
   <data name="ShortcutPreviewQuickLook" xml:space="preserve">
-    <value>Preview file in QuickLook</value>
+    <value>QuickLook에서 미리 보기 파일</value>
   </data>
   <data name="SettingsHome" xml:space="preserve">
-    <value>Home</value>
+    <value>홈</value>
   </data>
   <data name="SettingsSearch" xml:space="preserve">
-    <value>Search</value>
+    <value>검색</value>
   </data>
   <data name="SettingsCustomActions" xml:space="preserve">
-    <value>Custom Actions</value>
+    <value>사용자 지정 동작</value>
   </data>
   <data name="SettingsAdvanced" xml:space="preserve">
-    <value>Advanced</value>
+    <value>고급</value>
   </data>
   <data name="SettingsReportProblem" xml:space="preserve">
-    <value>Report a problem</value>
+    <value>문제 보고</value>
   </data>
   <data name="SettingsBehavior" xml:space="preserve">
-    <value>Behavior</value>
+    <value>동작</value>
   </data>
   <data name="SettingsHistory" xml:space="preserve">
-    <value>History</value>
+    <value>기록</value>
   </data>
   <data name="SettingsFilters" xml:space="preserve">
-    <value>Filters</value>
+    <value>필터</value>
   </data>
   <data name="SettingsClearHistoryNow" xml:space="preserve">
-    <value>Clear now</value>
+    <value>지금 지우기</value>
   </data>
   <data name="SettingsUpdates" xml:space="preserve">
-    <value>Updates</value>
+    <value>업데이트</value>
   </data>
   <data name="SettingsCheckNow" xml:space="preserve">
-    <value>Check now</value>
+    <value>지금 확인</value>
   </data>
   <data name="SettingsDownloadLatestVersion" xml:space="preserve">
-    <value>Download latest version</value>
+    <value>최신 버전 다운로드</value>
   </data>
   <data name="SettingsLatestVersionMessage" xml:space="preserve">
-    <value>You are already using the latest version.</value>
+    <value>이미 최신 버전을 사용하고 있습니다.</value>
   </data>
   <data name="SettingsNamedInstance" xml:space="preserve">
-    <value>Named Instance</value>
+    <value>명명된 인스턴스</value>
   </data>
   <data name="SettingsInstanceName" xml:space="preserve">
-    <value>Everything instance name</value>
+    <value>Everything 인스턴스 이름</value>
   </data>
   <data name="SettingsInstanceNameHelp" xml:space="preserve">
-    <value>Set the name of the Everything instance to use</value>
+    <value>사용할 Everything 인스턴스의 이름 설정</value>
   </data>
   <data name="SettingsDefaultInstance" xml:space="preserve">
-    <value>Default instance</value>
+    <value>기본 인스턴스</value>
   </data>
   <data name="AboutDescription" xml:space="preserve">
-    <value>Everything integration for the Windows taskbar.</value>
+    <value>Windows 작업 표시줄에 Everything을 통합합니다.</value>
   </data>
   <data name="AboutSearchSettings" xml:space="preserve">
-    <value>Search settings</value>
+    <value>검색 설정</value>
   </data>
   <data name="AboutUserInterface" xml:space="preserve">
-    <value>User interface</value>
+    <value>사용자 인터페이스</value>
   </data>
   <data name="AboutCustomActions" xml:space="preserve">
-    <value>Custom actions</value>
+    <value>사용자 지정 동작</value>
   </data>
   <data name="AboutLinks" xml:space="preserve">
-    <value>Links</value>
+    <value>연결</value>
   </data>
   <data name="AboutFAQ" xml:space="preserve">
-    <value>Frequently Asked Questions</value>
+    <value>자주 묻는 질문</value>
   </data>
   <data name="AboutSourceCode" xml:space="preserve">
-    <value>Source Code (GitHub)</value>
+    <value>소스 코드 (GitHub)</value>
   </data>
   <data name="AboutStarOnGitHub" xml:space="preserve">
-    <value>Star on GitHub</value>
+    <value>GitHub에서 별표</value>
   </data>
   <data name="AboutDonation" xml:space="preserve">
-    <value>Make a donation</value>
+    <value>기부하기</value>
   </data>
   <data name="SettingsViewLayoutHelp" xml:space="preserve">
-    <value>Choose the layout for search results</value>
+    <value>검색 결과 레이아웃 선택</value>
   </data>
   <data name="SettingsThumbnailsHelp" xml:space="preserve">
-    <value>Show thumbnails for image files</value>
+    <value>이미지 파일의 썸네일 표시</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
-    <value>Display the total number of search results</value>
+    <value>검색 결과의 총 수 표시</value>
   </data>
   <data name="SettingsQuickTogglesHelp" xml:space="preserve">
-    <value>Show quick toggle buttons for search options in the search bar</value>
+    <value>검색창에 검색 옵션에 대한 빠른 전환 버튼 표시</value>
   </data>
   <data name="SettingsPreviewPaneHelp" xml:space="preserve">
-    <value>Show a Start menu style side pane for the selected result</value>
+    <value>선택한 결과에 대한 시작 메뉴 스타일 측면 창 표시</value>
   </data>
   <data name="PreviewPaneFilePath" xml:space="preserve">
-    <value>File path</value>
+    <value>파일 경로</value>
   </data>
   <data name="PreviewPaneSelectResult" xml:space="preserve">
-    <value>Nothing selected</value>
+    <value>선택된 항목 없음</value>
   </data>
   <data name="PreviewPaneSize" xml:space="preserve">
-    <value>Size</value>
+    <value>크기</value>
   </data>
   <data name="SettingsAnimationsHelp" xml:space="preserve">
-    <value>Disable UI animations for improved performance</value>
+    <value>성능 향상을 위해 UI 애니메이션 비활성화</value>
   </data>
   <data name="SettingsHideEmptyResultsHelp" xml:space="preserve">
-    <value>Hide results when search term is empty</value>
+    <value>검색어가 비어 있을 때 결과 숨기기</value>
   </data>
   <data name="SettingsSearchAsYouTypeHelp" xml:space="preserve">
-    <value>Start searching as you type, without pressing Enter</value>
+    <value>입력할 때 Enter 키를 누르지 않고 검색 시작</value>
   </data>
   <data name="SettingsSelectFirstResultHelp" xml:space="preserve">
-    <value>Automatically select the first result while keeping the search bar focused</value>
+    <value>검색창에 초점을 맞추면서 첫 번째 결과 자동으로 선택</value>
   </data>
   <data name="SettingsHomeEndNavigateResultsHelp" xml:space="preserve">
-    <value>Home/End keys will navigate search results instead of moving the cursor</value>
+    <value>Home/End 키는 커서를 이동하는 대신 검색 결과 탐색</value>
   </data>
   <data name="SettingsDoubleClickHelp" xml:space="preserve">
-    <value>Require double-click to open results</value>
+    <value>결과를 열려면 두 번 클릭해야 합니다</value>
   </data>
   <data name="SettingsHistoryHelp" xml:space="preserve">
-    <value>Remember previous search terms for quick access</value>
+    <value>빠른 액세스를 위해 이전 검색어 기억</value>
   </data>
   <data name="SettingsEverythingFiltersHelp" xml:space="preserve">
-    <value>Synchronize Everything's custom filters</value>
+    <value>Everything의 사용자 지정 필터 동기화</value>
   </data>
   <data name="SettingsRememberFilterHelp" xml:space="preserve">
-    <value>Remember the most recently used filter for future searches</value>
+    <value>향후 검색에 가장 최근에 사용된 필터 기억</value>
   </data>
   <data name="SettingsUpdatesHelp" xml:space="preserve">
-    <value>Notify when a new version is available</value>
+    <value>새 버전이 사용 가능할 때 알림</value>
   </data>
   <data name="SettingsReplaceStartMenuHelp" xml:space="preserve">
-    <value>Replace the default Windows Start menu search with EverythingToolbar</value>
+    <value>기본 Windows 시작 메뉴 검색을 EverythingToolbar로 교체</value>
   </data>
   <data name="MessageBoxOk" xml:space="preserve">
     <value>확인</value>
   </data>
   <data name="ContextMenuOpenWithNoCustomActions" xml:space="preserve">
-    <value>No actions defined</value>
+    <value>정의된 작업 없음</value>
   </data>
   <data name="MessageBoxCustomActionsNameEmpty" xml:space="preserve">
-    <value>A custom action name cannot be empty.</value>
+    <value>사용자 지정 작업 이름은 비워둘 수 없습니다.</value>
   </data>
   <data name="CustomActionsAutoApply" xml:space="preserve">
-    <value>Automatically apply actions based on type and regular expression</value>
+    <value>유형 및 정규 표현식에 따라 자동으로 작업 적용</value>
   </data>
   <data name="SettingsTaskbarIntegration" xml:space="preserve">
-    <value>Taskbar integration</value>
+    <value>작업 표시줄 통합</value>
   </data>
   <data name="SettingsHideWindowsSearchIcon" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Windows 검색 아이콘 숨기기</value>
   </data>
   <data name="SettingsHideWindowsSearchIconHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>작업 표시줄에서 원래 Windows 검색 아이콘 숨기기</value>
   </data>
   <data name="SettingsEnableSystemTrayIcon" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>트레이 아이콘 사용함</value>
   </data>
   <data name="SettingsEnableSystemTrayIconHelp" xml:space="preserve">
-    <value>Enables the system tray icon to be able to quit EverythingToolbar easily</value>
+    <value>시스템 트레이 아이콘을 통해 EverythingToolbar를 쉽게 종료할 수 있도록 합니다</value>
   </data>
   <data name="SettingsSearchIcon" xml:space="preserve">
-    <value>Search icon</value>
+    <value>아이콘 검색</value>
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
-    <value>Changes the style of the taskbar icon (requires explorer restart)</value>
+    <value>작업 표시줄 아이콘의 스타일을 변경합니다 (탐색기 재시작 필요)</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
-    <value>Filter order</value>
+    <value>필터 순서</value>
   </data>
   <data name="SettingsMaxTabItems" xml:space="preserve">
-    <value>Number of filter tabs</value>
+    <value>필터 탭 수</value>
   </data>
   <data name="SettingsMaxTabItemsHelp" xml:space="preserve">
-    <value>Controls the number of visible filter tabs</value>
+    <value>보이는 필터 탭의 수 제어</value>
   </data>
   <data name="SettingsForceWin10Styles" xml:space="preserve">
-    <value>Force Windows 10 styles</value>
+    <value>강제 Windows 10 스타일</value>
   </data>
   <data name="SettingsForceWin10StylesHelp" xml:space="preserve">
-    <value>Uses Windows 10 styles to match certain legacy taskbar modifications</value>
+    <value>Windows 10 스타일을 사용하여 특정 기존 작업 표시줄 수정 사항을 일치시킵니다</value>
   </data>
   <data name="UpdateSuccessfulBannerHeader" xml:space="preserve">
-    <value>EverythingToolbar {version} was updated successfully!</value>
+    <value>EverythingToolbar {version}이 성공적으로 업데이트되었습니다!</value>
   </data>
   <data name="UpdateSuccessfulBannerText" xml:space="preserve">
-    <value>If it makes your life easier, consider donating to support future updates.</value>
+    <value>당신의 삶을 더 편리하게 만든다면, 향후 업데이트를 지원하기 위해 기부하는 것을 고려해 보세요.</value>
   </data>
   <data name="UpdateSuccessfulBannerDonate" xml:space="preserve">
-    <value>Donate</value>
+    <value>기부하기</value>
   </data>
   <data name="UpdateSuccessfulBannerDismiss" xml:space="preserve">
-    <value>Dismiss</value>
+    <value>닫기</value>
   </data>
   <data name="ShortcutOpenSystemContextMenu" xml:space="preserve">
-    <value>Open system context menu</value>
+    <value>시스템 컨텍스트 메뉴 열기</value>
   </data>
   <data name="SettingsListFocusBehavior" xml:space="preserve">
-    <value>Result list focus</value>
+    <value>결과 목록 집중</value>
   </data>
   <data name="SettingsListFocusBehaviorHelp" xml:space="preserve">
-    <value>Controls how the focus behaves when navigating the result list</value>
+    <value>결과 목록을 탐색할 때 초점이 어떻게 작동하는지 제어합니다</value>
   </data>
   <data name="FocusBehaviorClamp" xml:space="preserve">
-    <value>Clamp</value>
+    <value>고정</value>
   </data>
   <data name="FocusBehaviorRepeat" xml:space="preserve">
-    <value>Repeat</value>
+    <value>반복</value>
   </data>
   <data name="FocusBehaviorRepeatWithSearch" xml:space="preserve">
-    <value>Repeat with search</value>
+    <value>검색으로 반복</value>
   </data>
 </root>
