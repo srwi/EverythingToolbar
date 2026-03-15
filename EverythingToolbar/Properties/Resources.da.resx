@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -314,6 +314,12 @@
   </data>
   <data name="SettingsView" xml:space="preserve">
     <value>View</value>
+  </data>
+  <data name="SettingsUILanguage" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SettingsUILanguageHelp" xml:space="preserve">
+    <value>Choose the UI language. Restart the application to apply changes.</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
     <value>Attributes</value>
@@ -671,5 +677,14 @@
   </data>
   <data name="FocusBehaviorRepeatWithSearch" xml:space="preserve">
     <value>Repeat with search</value>
+  </data>
+  <data name="SettingsUseSystemLanguage" xml:space="preserve">
+    <value>Use System Language</value>
+  </data>
+  <data name="MessageBoxRestartTitle" xml:space="preserve">
+    <value>Restart required</value>
+  </data>
+  <data name="MessageBoxRestartMessage" xml:space="preserve">
+    <value>A restart is required for the language changes to take effect. Do you want to restart now?</value>
   </data>
 </root>
