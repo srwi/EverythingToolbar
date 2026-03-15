@@ -127,46 +127,46 @@
     <value>Chcete-li připnout EverythingToolbar na hlavní panel, klepněte pravým tlačítkem na jeho ikonu a zvolte „Připnout na hlavní panel“.</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>Pro aktualizaci ikony hlavního panelu je vyžadován restart průzkumníka. Chcete jej nyní restartovat?</value>
+    <value>K aktualizaci ikony na hlavním panelu je nutný restart Průzkumníka. Chcete jej nyní restartovat?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>Restartovat průzkumníka</value>
+    <value>Restartovat Průzkumníka</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Průvodce nastavením EverythingToolbar</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Jste si jisti, že chcete ukončit asistenta pro nastavení? EverythingToolbar bude přístupný pouze pomocí klávesové zkratky. Můžete znovu spustit asistenta pro nastavení přes ikonu systémové lišty pro připnutí vyhledávací ikony na hlavní lištu.</value>
+    <value>Opravdu chcete opustit průvodce nastavením? Aplikace EverythingToolbar bude přístupná pouze pomocí klávesové zkratky. K průvodci nastavením se můžete znovu dostat přes ikonu v oznamovací oblasti a připnout tak ikonu vyhledávání na hlavní panel.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>Ukončit asistenta nastavení</value>
+    <value>Ukončit průvodce nastavením</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
     <value>Připnout na hlavní panel</value>
   </data>
   <data name="SetupAssistantPreferences" xml:space="preserve">
-    <value>Předvolby</value>
+    <value>Nastavení</value>
   </data>
   <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
     <value>Skrýt ikonu vyhledávání Windows</value>
   </data>
   <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>Skryje původní ikonu vyhledávání Windows z hlavního panelu</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>Zobrazovat ikonu v oznamovací oblasti</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
-    <value>Enables the system tray icon for quick access to settings</value>
+    <value>Zobrazovat ikonu v oznamovací oblasti pro rychlý přístup k nastavení</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>Spouštět automaticky při startu</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Automaticky spouštět EverythingToolbar při startu Windows</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
-    <value>Done</value>
+    <value>Dokončit</value>
   </data>
   <data name="TrayIconDisableErrorText" xml:space="preserve">
     <value>Ikonu v oznamovací oblasti nelze zakázat, pokud není EverythingToolbar připnut k hlavnímu panelu. Nejprve připněte EverythingToolbar k hlavnímu panelu, nebo nechte ikonu v oznamovací oblasti zapnutou pro přístup k nastavení a funkcím.</value>
