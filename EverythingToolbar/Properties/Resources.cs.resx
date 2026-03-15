@@ -391,7 +391,7 @@
     <value>Vybrat první výsledek</value>
   </data>
   <data name="SettingsHomeEndNavigateResults" xml:space="preserve">
-    <value>Home/End keys navigate results</value>
+    <value>Klávesy Home/End procházejí výsledky</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
     <value>Klepnout dvakrát pro otevření</value>
@@ -553,13 +553,13 @@
     <value>Show a Start menu style side pane for the selected result</value>
   </data>
   <data name="PreviewPaneFilePath" xml:space="preserve">
-    <value>File path</value>
+    <value>Cesta k souboru</value>
   </data>
   <data name="PreviewPaneSelectResult" xml:space="preserve">
-    <value>Nothing selected</value>
+    <value>Není nic vybráno</value>
   </data>
   <data name="PreviewPaneSize" xml:space="preserve">
-    <value>Size</value>
+    <value>Velikost</value>
   </data>
   <data name="SettingsAnimationsHelp" xml:space="preserve">
     <value>Zakázat animace UI pro zlepšení výkonu</value>
@@ -574,7 +574,7 @@
     <value>Automaticky vybrat první výsledek při zachování zaměření vyhledávacího panelu</value>
   </data>
   <data name="SettingsHomeEndNavigateResultsHelp" xml:space="preserve">
-    <value>Home/End keys will navigate search results instead of moving the cursor</value>
+    <value>Klávesy Home/End budou procházet výsledky hledání namísto pohybu kurzoru</value>
   </data>
   <data name="SettingsDoubleClickHelp" xml:space="preserve">
     <value>Vyžadovat dvojklik pro otevření výsledků</value>
@@ -649,10 +649,10 @@
     <value>If it makes your life easier, consider donating to support future updates.</value>
   </data>
   <data name="UpdateSuccessfulBannerDonate" xml:space="preserve">
-    <value>Donate</value>
+    <value>Přispět</value>
   </data>
   <data name="UpdateSuccessfulBannerDismiss" xml:space="preserve">
-    <value>Dismiss</value>
+    <value>Zavřít</value>
   </data>
   <data name="ShortcutOpenSystemContextMenu" xml:space="preserve">
     <value>Open system context menu</value>
@@ -667,7 +667,7 @@
     <value>Clamp</value>
   </data>
   <data name="FocusBehaviorRepeat" xml:space="preserve">
-    <value>Repeat</value>
+    <value>Opakovat</value>
   </data>
   <data name="FocusBehaviorRepeatWithSearch" xml:space="preserve">
     <value>Repeat with search</value>
