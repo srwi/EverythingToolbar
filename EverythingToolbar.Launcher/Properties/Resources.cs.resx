@@ -142,13 +142,13 @@
     <value>Ukončit asistenta nastavení</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>Připnout na hlavní panel</value>
   </data>
   <data name="SetupAssistantPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Předvolby</value>
   </data>
   <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Skrýt ikonu vyhledávání Windows</value>
   </data>
   <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
     <value>Hides the original Windows search icon from the taskbar</value>
@@ -169,9 +169,9 @@
     <value>Done</value>
   </data>
   <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>The system tray icon cannot be disabled when EverythingToolbar is not pinned to the taskbar. Please pin EverythingToolbar to the taskbar first, or keep the system tray icon enabled to access settings and functionality.</value>
+    <value>Ikonu v oznamovací oblasti nelze zakázat, pokud není EverythingToolbar připnut k hlavnímu panelu. Nejprve připněte EverythingToolbar k hlavnímu panelu, nebo nechte ikonu v oznamovací oblasti zapnutou pro přístup k nastavení a funkcím.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
-    <value>Cannot disable system tray icon</value>
+    <value>Ikonu v oznamovací oblasti nelze zakázat</value>
   </data>
 </root>
