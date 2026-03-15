@@ -16,13 +16,17 @@ namespace EverythingToolbar.Helpers
         {
             try
             {
-                var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                var assembly = typeof(CultureHelper).Assembly;
+                var baseDir = Path.GetDirectoryName(assembly.Location);
+                if (string.IsNullOrEmpty(baseDir)) return Array.Empty<string>();
+
                 var assemblyName = "EverythingToolbar.resources.dll";
 
                 return Directory.GetDirectories(baseDir)
-                    .Select(dir => Path.GetFileName(dir))
+                    .Select(Path.GetFileName)
                     .Where(name => 
                     {
+                        if (name == null) return false;
                         try
                         {
                             _ = CultureInfo.GetCultureInfo(name);
