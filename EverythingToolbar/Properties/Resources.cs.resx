@@ -316,10 +316,10 @@
     <value>Zobrazit</value>
   </data>
   <data name="SettingsUILanguage" xml:space="preserve">
-    <value>Language</value>
+    <value>Jazyk</value>
   </data>
   <data name="SettingsUILanguageHelp" xml:space="preserve">
-    <value>Choose the UI language. Restart the application to apply changes.</value>
+    <value>Zvolte jazyk uživatelského rozhraní. Pro projevení změn aplikaci restartujte.</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
     <value>Atributy</value>
@@ -679,12 +679,12 @@
     <value>Přejít na vyhledávací pole a překlopit</value>
   </data>
   <data name="SettingsUseSystemLanguage" xml:space="preserve">
-    <value>Use System Language</value>
+    <value>Použít jazyk systému</value>
   </data>
   <data name="MessageBoxRestartTitle" xml:space="preserve">
-    <value>Restart required</value>
+    <value>Vyžadován restart</value>
   </data>
   <data name="MessageBoxRestartMessage" xml:space="preserve">
-    <value>A restart is required for the language changes to take effect. Do you want to restart now?</value>
+    <value>K projevení změn jazyka je vyžadován restart. Chcete jej provést nyní?</value>
   </data>
 </root>
