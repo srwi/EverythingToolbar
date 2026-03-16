@@ -142,36 +142,36 @@
     <value>Sair do Assistente de Configuração</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>Fixar na barra de tarefas</value>
   </data>
   <data name="SetupAssistantPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Preferências</value>
   </data>
   <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Ocultar o ícone de pesquisa do Windows</value>
   </data>
   <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>Oculta o ícone original de pesquisa do Windows na barra de tarefas</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>Configurar ícone da bandeja do sistema</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
-    <value>Enables the system tray icon for quick access to settings</value>
+    <value>Habilita o ícone da bandeja do sistema para acesso rápido às configurações</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>Ative a Inicialização Automática do aplicativo</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
     <value>Iniciar automaticamente o EverythingToolbar com o Windows</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
-    <value>Done</value>
+    <value>Concluído</value>
   </data>
   <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>The system tray icon cannot be disabled when EverythingToolbar is not pinned to the taskbar. Please pin EverythingToolbar to the taskbar first, or keep the system tray icon enabled to access settings and functionality.</value>
+    <value>O ícone da bandeja do sistema não pode ser desativado quando EverythingToolbar não está fixado na barra de tarefas. Por favor, fixe o EverythingToolbar na barra de tarefas primeiro, ou mantenha o ícone de bandeja habilitado para acessar as configurações e funcionalidades.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
-    <value>Cannot disable system tray icon</value>
+    <value>Não é possível desativar o ícone da bandeja do sistema</value>
   </data>
 </root>
