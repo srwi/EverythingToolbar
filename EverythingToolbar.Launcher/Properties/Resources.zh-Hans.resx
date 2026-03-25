@@ -163,7 +163,7 @@
     <value>启用自动启动</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Windows启动时自动启动EverythingToolbar</value>
+    <value>Windows 启动时自动启动 EverythingToolbar</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>完成</value>
