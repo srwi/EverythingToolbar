@@ -124,7 +124,7 @@
     <value>Asistente de configuración...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
-    <value>Para anclar haga clic derecho en el icono y seleccione 'Anclar a la barra de tareas'.</value>
+    <value>Hacer clic derecho en el icono y seleccionar 'Anclar a la barra de tareas'.</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>Es necesario reiniciar el explorador para actualizar el icono de la barra de tareas. ¿Desea reiniciarlo ahora?</value>
@@ -142,36 +142,36 @@
     <value>Salir del asistente de configuración</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>Anclar a la barra de tareas</value>
   </data>
   <data name="SetupAssistantPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Configuración</value>
   </data>
   <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
     <value>Ocultar icono de búsqueda de Windows</value>
   </data>
   <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>Oculta el icono de búsqueda original de Windows de la barra de tareas</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
-    <value>Habilita el icono de la bandeja del sistema</value>
+    <value>Habilitar icono en la bandeja del sistema</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>Habilita el icono de la bandeja del sistema para un acceso rápido a la configuración</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>Activar inicio automático</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>EverythingToolbar se inicia automáticamente al arrancar Windows</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
-    <value>Done</value>
+    <value>Hecho</value>
   </data>
   <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>El icono de la bandeja del sistema no se puede desactivar si EverythingToolbar no está anclado a la barra de tareas. Anclar primero EverythingToolbar a la barra de tareas o mantener activado el icono de la bandeja del sistema para acceder a la configuración y y a las demás funciones.</value>
+    <value>El icono de la bandeja del sistema no se puede inhabilitar si EverythingToolbar no está anclado a la barra de tareas. Anclar primero EverythingToolbar a la barra de tareas o mantener habilitado el icono de la bandeja del sistema para acceder a la configuración y a las demás funciones.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
-    <value>No se puede desactivar el icono de la bandeja del sistema</value>
+    <value>No se puede inhabilitar el icono de la bandeja del sistema</value>
   </data>
 </root>
