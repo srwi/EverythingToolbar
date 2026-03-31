@@ -187,7 +187,7 @@
     <value>Ctrl</value>
   </data>
   <data name="KeyShift" xml:space="preserve">
-    <value>Shift</value>
+    <value>Mayús</value>
   </data>
   <data name="KeyWin" xml:space="preserve">
     <value>Win</value>
@@ -301,7 +301,7 @@
     <value>Mostrar número de resultados</value>
   </data>
   <data name="SettingsPreviewPaneEnabled" xml:space="preserve">
-    <value>Show preview pane</value>
+    <value>Mostrar panel de vista previa</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Ordenar por</value>
@@ -316,10 +316,10 @@
     <value>Ver</value>
   </data>
   <data name="SettingsUILanguage" xml:space="preserve">
-    <value>Language</value>
+    <value>Idioma</value>
   </data>
   <data name="SettingsUILanguageHelp" xml:space="preserve">
-    <value>Choose the UI language. Restart the application to apply changes.</value>
+    <value>Seleccionar idioma de la interfaz de usuario. Reiniciar aplicación para aplicar los cambios.</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
     <value>Atributos</value>
@@ -361,7 +361,7 @@
     <value>Escribir nombre</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
-    <value>Audio</value>
+    <value>Sonido</value>
   </data>
   <data name="UserFilterCompressed" xml:space="preserve">
     <value>Comprimido</value>
@@ -397,7 +397,7 @@
     <value>Seleccionar primer resultado</value>
   </data>
   <data name="SettingsHomeEndNavigateResults" xml:space="preserve">
-    <value>Home/End keys navigate results</value>
+    <value>Utilizar teclas Inicio/Fin para desplazarse por los resultados</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
     <value>Doble clic para abrir</value>
@@ -412,139 +412,139 @@
     <value>Buscar mientras se escribe</value>
   </data>
   <data name="SettingsUserInterface" xml:space="preserve">
-    <value>User Interface</value>
+    <value>Interfaz de usuario</value>
   </data>
   <data name="SettingsAppearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>Apariencia</value>
   </data>
   <data name="SettingsOther" xml:space="preserve">
-    <value>Other</value>
+    <value>Otros</value>
   </data>
   <data name="SettingsShortcuts" xml:space="preserve">
-    <value>Shortcuts</value>
+    <value>Atajos de teclado</value>
   </data>
   <data name="SettingsCustomShortcuts" xml:space="preserve">
-    <value>Custom shortcuts</value>
+    <value>Atajos de teclado personalizados</value>
   </data>
   <data name="SettingsOtherShortcuts" xml:space="preserve">
-    <value>Other shortcuts</value>
+    <value>Otros atajos del teclado</value>
   </data>
   <data name="SettingsOpenSearchWindow" xml:space="preserve">
-    <value>Open search window</value>
+    <value>Abrir ventana de búsqueda</value>
   </data>
   <data name="ShortcutNavigateResults" xml:space="preserve">
-    <value>Navigate search results</value>
+    <value>Navegar por los resultados de la búsqueda</value>
   </data>
   <data name="ShortcutNavigateHistory" xml:space="preserve">
-    <value>Navigate search history (if enabled)</value>
+    <value>Navegar por el historial de búsqueda (si está habilitado)</value>
   </data>
   <data name="ShortcutOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>Abrir</value>
   </data>
   <data name="ShortcutOpenPath" xml:space="preserve">
-    <value>Open path</value>
+    <value>Abrir ruta</value>
   </data>
   <data name="ShortcutOpenInEverything" xml:space="preserve">
-    <value>Open in Everything</value>
+    <value>Abrir en Everything</value>
   </data>
   <data name="ShortcutRunAsAdmin" xml:space="preserve">
-    <value>Run as admin</value>
+    <value>Ejecutar como administrador</value>
   </data>
   <data name="ShortcutFileProperties" xml:space="preserve">
-    <value>File properties</value>
+    <value>Propiedades del archivo</value>
   </data>
   <data name="ShortcutCopyFullPath" xml:space="preserve">
-    <value>Copy full path to clipboard</value>
+    <value>Copiar ruta completa al portapapeles</value>
   </data>
   <data name="ShortcutCycleFilters" xml:space="preserve">
-    <value>Cycle through filters</value>
+    <value>Recorrer todos los filtros</value>
   </data>
   <data name="ShortcutSelectFilter" xml:space="preserve">
-    <value>Select filter</value>
+    <value>Seleccionar filtro</value>
   </data>
   <data name="ShortcutPreviewQuickLook" xml:space="preserve">
-    <value>Preview file in QuickLook</value>
+    <value>Vista previa del archivo en QuickLook</value>
   </data>
   <data name="SettingsHome" xml:space="preserve">
-    <value>Home</value>
+    <value>Inicio</value>
   </data>
   <data name="SettingsSearch" xml:space="preserve">
-    <value>Search</value>
+    <value>Búsqueda</value>
   </data>
   <data name="SettingsCustomActions" xml:space="preserve">
-    <value>Custom Actions</value>
+    <value>Acciones personalizadas</value>
   </data>
   <data name="SettingsAdvanced" xml:space="preserve">
-    <value>Advanced</value>
+    <value>Avanzado</value>
   </data>
   <data name="SettingsReportProblem" xml:space="preserve">
-    <value>Report a problem</value>
+    <value>Informar de un problema</value>
   </data>
   <data name="SettingsBehavior" xml:space="preserve">
-    <value>Behavior</value>
+    <value>Comportamiento</value>
   </data>
   <data name="SettingsHistory" xml:space="preserve">
-    <value>History</value>
+    <value>Historial</value>
   </data>
   <data name="SettingsFilters" xml:space="preserve">
-    <value>Filters</value>
+    <value>Filtros</value>
   </data>
   <data name="SettingsClearHistoryNow" xml:space="preserve">
-    <value>Clear now</value>
+    <value>Limpiar ahora</value>
   </data>
   <data name="SettingsUpdates" xml:space="preserve">
-    <value>Updates</value>
+    <value>Actualizaciones</value>
   </data>
   <data name="SettingsCheckNow" xml:space="preserve">
-    <value>Check now</value>
+    <value>Comprobar ahora</value>
   </data>
   <data name="SettingsDownloadLatestVersion" xml:space="preserve">
-    <value>Download latest version</value>
+    <value>Descargar la última versión</value>
   </data>
   <data name="SettingsLatestVersionMessage" xml:space="preserve">
-    <value>You are already using the latest version.</value>
+    <value>Ya estás usando la última versión.</value>
   </data>
   <data name="SettingsNamedInstance" xml:space="preserve">
-    <value>Named Instance</value>
+    <value>Instancia nombrada</value>
   </data>
   <data name="SettingsInstanceName" xml:space="preserve">
-    <value>Everything instance name</value>
+    <value>Escribir nombre de la instancia de Everything</value>
   </data>
   <data name="SettingsInstanceNameHelp" xml:space="preserve">
-    <value>Set the name of the Everything instance to use</value>
+    <value>Establece el nombre de la instancia de Everything que se va a utilizar</value>
   </data>
   <data name="SettingsDefaultInstance" xml:space="preserve">
-    <value>Default instance</value>
+    <value>Instancia predeterminada</value>
   </data>
   <data name="AboutDescription" xml:space="preserve">
-    <value>Everything integration for the Windows taskbar.</value>
+    <value>Integración de Everything en la barra de tareas de Windows.</value>
   </data>
   <data name="AboutSearchSettings" xml:space="preserve">
-    <value>Search settings</value>
+    <value>Configuración de búsqueda</value>
   </data>
   <data name="AboutUserInterface" xml:space="preserve">
-    <value>User interface</value>
+    <value>Interfaz de usuario</value>
   </data>
   <data name="AboutCustomActions" xml:space="preserve">
-    <value>Custom actions</value>
+    <value>Acciones personalizadas</value>
   </data>
   <data name="AboutLinks" xml:space="preserve">
-    <value>Links</value>
+    <value>Enlaces</value>
   </data>
   <data name="AboutFAQ" xml:space="preserve">
-    <value>Frequently Asked Questions</value>
+    <value>Preguntas frecuentes</value>
   </data>
   <data name="AboutSourceCode" xml:space="preserve">
-    <value>Source Code (GitHub)</value>
+    <value>Código fuente (GitHub)</value>
   </data>
   <data name="AboutStarOnGitHub" xml:space="preserve">
-    <value>Star on GitHub</value>
+    <value>Mettez une étoile sur GitHub</value>
   </data>
   <data name="AboutDonation" xml:space="preserve">
-    <value>Make a donation</value>
+    <value>Hacer un donativo</value>
   </data>
   <data name="SettingsViewLayoutHelp" xml:space="preserve">
-    <value>Choose the layout for search results</value>
+    <value>Selecciona el diseño para los resultados de búsqueda</value>
   </data>
   <data name="SettingsThumbnailsHelp" xml:space="preserve">
     <value>Show thumbnails for image files</value>
