@@ -361,7 +361,7 @@
     <value>Escribir nombre</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
-    <value>Sonido</value>
+    <value>Audio</value>
   </data>
   <data name="UserFilterCompressed" xml:space="preserve">
     <value>Comprimido</value>
@@ -613,7 +613,7 @@
     <value>Aplicar acciones automáticamente en función del tipo y de las expresiones regulares</value>
   </data>
   <data name="SettingsTaskbarIntegration" xml:space="preserve">
-    <value>Integración con la barra de tareas</value>
+    <value>Integración en la barra de tareas</value>
   </data>
   <data name="SettingsHideWindowsSearchIcon" xml:space="preserve">
     <value>Ocultar el icono de búsqueda de Windows</value>
