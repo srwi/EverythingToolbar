@@ -232,7 +232,7 @@
     <value>Selecteer Everything.exe...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>Selecteer het bestand Filters.csv. Het is standaard te vinden in% APPDATA% \ Everything. De locatie kan verschillen, afhankelijk van uw installatie. Als het bestand niet bestaat, betekent dit dat je geen wijzigingen hebt aangebracht in de standaardfilters van Everything.</value>
+    <value>Selecteer het Filters.csv bestand. Het is standaard te vinden in %APPDATA%\Everything. De locatie kan verschillen, afhankelijk van uw installatie. Als het bestand niet bestaat, betekent dit dat je geen wijzigingen hebt aangebracht in de standaardfilters van Everything.</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
     <value>Filters.csv niet gevonden</value>
