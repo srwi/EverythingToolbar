@@ -121,57 +121,57 @@
     <value>Afsluiten</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Setup assistent uitvoeren...</value>
+    <value>Installatie-assistent uitvoeren...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
-    <value>Om EverythingToolbar aan de taakbalk vast te pinnen, klikt u met de rechtermuisknop op het pictogram en selecteert u 'Vastmaken aan taakbalk'.</value>
+    <value>Om EverythingToolbar aan de taakbalk vast te maken, klik je met de rechtermuisknop op het pictogram en selecteer je ‘Aan taakbalk vastmaken’.</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
-    <value>Een verkenner herstart is vereist om het taakbalkpictogram bij te werken. Wilt u het nu herstarten?</value>
+    <value>Verkenner moet opnieuw worden opgestart om het taakbalkpictogram te updaten. Wil je het nu opnieuw opstarten?</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogTitle" xml:space="preserve">
-    <value>Herstart verkenner</value>
+    <value>Verkenner herstarten</value>
   </data>
   <data name="SetupAssistantTitle" xml:space="preserve">
-    <value>EverythingToolbar configuratie assistent</value>
+    <value>EverythingToolbar installatie-assistent</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Weet je zeker dat je de setup-assistent wilt verlaten? EverythingToolbar zal alleen toegankelijk zijn met behulp van de sneltoets. U kunt de setup-assistent opnieuw bereiken via het systeemvak pictogram om het zoek-icoon naar de taakbalk te pinnen.</value>
+    <value>Weet je zeker dat je de installatie-assistent wilt afsluiten? EverythingToolbar is dan alleen nog via de sneltoets toegankelijk. Je kunt de installatie-assistent opnieuw openen via het systeemvakpictogram om het zoekpictogram aan de taakbalk vast te maken.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
-    <value>Setup Assistant afsluiten</value>
+    <value>Installatie-assistent afsluiten</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>Aan taakbalk vastmaken</value>
   </data>
   <data name="SetupAssistantPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Voorkeuren</value>
   </data>
   <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Windows zoekpictogram verbergen</value>
   </data>
   <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>Verbergt het originele Windows zoekpictogram uit de taakbalk</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
-    <value>Enable system tray icon</value>
+    <value>Systeemvakpictogram inschakelen</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
-    <value>Enables the system tray icon for quick access to settings</value>
+    <value>Schakelt het Systeemvakpictogram in voor snelle toegang tot instellingen</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>Automatisch opstarten inschakelen</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>EverythingToolbar wordt automatisch opgestart wanneer Windows opstart</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
-    <value>Done</value>
+    <value>Klaar</value>
   </data>
   <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>The system tray icon cannot be disabled when EverythingToolbar is not pinned to the taskbar. Please pin EverythingToolbar to the taskbar first, or keep the system tray icon enabled to access settings and functionality.</value>
+    <value>Het systeemvakpictogram kan niet worden uitgeschakeld als EverythingToolbar niet aan de taakbalk is vastgemaakt. Maak EverythingToolbar eerst vast aan de taakbalk, of laat het systeemvakpictogram ingeschakeld om toegang te krijgen tot de instellingen en functies.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
-    <value>Cannot disable system tray icon</value>
+    <value>Systeemvakpictogram kan niet worden uitgeschakeld</value>
   </data>
 </root>
