@@ -127,7 +127,7 @@
     <value>Copiar</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
-    <value>Copiar nombre completo al portapapeles</value>
+    <value>Copiar ruta completa al portapapeles</value>
   </data>
   <data name="ContextMenuCut" xml:space="preserve">
     <value>Cortar</value>
