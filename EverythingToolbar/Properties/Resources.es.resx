@@ -502,10 +502,10 @@
     <value>Descargar la última versión</value>
   </data>
   <data name="SettingsLatestVersionMessage" xml:space="preserve">
-    <value>Ya estás usando la última versión.</value>
+    <value>Ya está usando la última versión.</value>
   </data>
   <data name="SettingsNamedInstance" xml:space="preserve">
-    <value>Instancia nombrada</value>
+    <value>Instancia con nombre</value>
   </data>
   <data name="SettingsInstanceName" xml:space="preserve">
     <value>Escribir nombre de la instancia de Everything</value>
