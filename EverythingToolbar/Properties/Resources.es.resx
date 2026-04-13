@@ -505,10 +505,10 @@
     <value>Ya está usando la última versión.</value>
   </data>
   <data name="SettingsNamedInstance" xml:space="preserve">
-    <value>Instancia con nombre</value>
+    <value>Especificación de instancia</value>
   </data>
   <data name="SettingsInstanceName" xml:space="preserve">
-    <value>Escribir nombre de la instancia de Everything</value>
+    <value>Nombre de la instancia de Everything</value>
   </data>
   <data name="SettingsInstanceNameHelp" xml:space="preserve">
     <value>Establece el nombre de la instancia de Everything que se va a utilizar</value>
@@ -538,7 +538,7 @@
     <value>Código fuente (GitHub)</value>
   </data>
   <data name="AboutStarOnGitHub" xml:space="preserve">
-    <value>Mettez une étoile sur GitHub</value>
+    <value>Abrir en GitHub</value>
   </data>
   <data name="AboutDonation" xml:space="preserve">
     <value>Hacer un donativo</value>
@@ -610,7 +610,7 @@
     <value>El nombre de una acción personalizada no puede estar vacío.</value>
   </data>
   <data name="CustomActionsAutoApply" xml:space="preserve">
-    <value>Aplicar acciones automáticamente en función del tipo y de las expresiones regulares</value>
+    <value>Aplicar acciones automáticamente en función del tipo de archivo y de la expresión regular</value>
   </data>
   <data name="SettingsTaskbarIntegration" xml:space="preserve">
     <value>Integración en la barra de tareas</value>
