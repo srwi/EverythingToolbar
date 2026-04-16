@@ -1,28 +1,73 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:c="clr-namespace:EverythingToolbar.Converters;assembly=EverythingToolbar">
-    
+                    xmlns:c="clr-namespace:EverythingToolbar.Converters;assembly=EverythingToolbar"
+                    xmlns:local="clr-namespace:EverythingToolbar;assembly=EverythingToolbar">
+
     <DataTemplate x:Key="SearchResultsViewTemplate">
         <Grid x:Name="ListViewItem" Margin="3">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+
+            <Grid x:Name="CheckBoxColumn" Width="0" ClipToBounds="True">
+                <CheckBox x:Name="SelectionCheckBox"
+                          IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListViewItem}, Mode=OneWay}"
+                          Opacity="0"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          IsHitTestVisible="False"
+                          Margin="4,0,0,0">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
+            </Grid>
+
             <Image Source="{Binding Icon}"
+                   Grid.Column="1"
                    Width="16"
                    Height="16" />
             <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, ConverterParameter=9, Mode=OneTime}"
-                            Grid.Column="1"
+                            Grid.Column="2"
                             Margin="2, 0"
                             ToolTip="{Binding FileName}"
                             Foreground="{DynamicResource SearchResultFileName}" />
-            <TextBlock Grid.Column="2"
+            <TextBlock Grid.Column="3"
                        FontSize="9pt"
                        Margin="2, 0"
                        Foreground="{DynamicResource SearchResultDateModified}"
                        Text="{Binding HumanReadableDateModified}" />
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsSelectionModeEnabled}" Value="True">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="CheckBoxColumn" Storyboard.TargetProperty="Width" To="22" Duration="0:0:0.15">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuadraticEase EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Storyboard.TargetName="SelectionCheckBox" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.15" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="CheckBoxColumn" Storyboard.TargetProperty="Width" To="0" Duration="0:0:0.15">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuadraticEase EasingMode="EaseIn"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Storyboard.TargetName="SelectionCheckBox" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.15" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.ExitActions>
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
-    
 </ResourceDictionary>

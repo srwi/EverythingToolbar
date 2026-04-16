@@ -274,14 +274,24 @@ namespace Peter
         /// </summary>
         /// <param name="arrFI">Array of FileInfo</param>
         /// <returns>Array of PIDLs</returns>
-        protected IntPtr[] GetPIDLs(FileInfo[] arrFI)
+        protected IntPtr[] GetPIDLs(FileSystemInfo[] arrFI)
         {
             if (null == arrFI || 0 == arrFI.Length)
             {
                 return null;
             }
 
-            var oParentFolder = GetParentFolder(arrFI[0].DirectoryName);
+            string directoryName;
+            if (arrFI[0] is FileInfo fi)
+            {
+                directoryName = fi.DirectoryName;
+            }
+            else
+            {
+                directoryName = ((DirectoryInfo)arrFI[0]).Parent?.FullName ?? arrFI[0].FullName;
+            }
+
+            var oParentFolder = GetParentFolder(directoryName);
             if (null == oParentFolder)
             {
                 return null;
@@ -289,62 +299,15 @@ namespace Peter
 
             var arrPIDLs = new IntPtr[arrFI.Length];
             var n = 0;
-            foreach (var fi in arrFI)
+            foreach (var fsi in arrFI)
             {
-                // Get the file relative to folder
                 uint pchEaten = 0;
                 SFGAO pdwAttributes = 0;
                 var pPIDL = IntPtr.Zero;
                 var nResult = oParentFolder.ParseDisplayName(
                     IntPtr.Zero,
                     IntPtr.Zero,
-                    fi.Name,
-                    ref pchEaten,
-                    out pPIDL,
-                    ref pdwAttributes
-                );
-                if (S_OK != nResult)
-                {
-                    FreePIDLs(arrPIDLs);
-                    return null;
-                }
-                arrPIDLs[n] = pPIDL;
-                n++;
-            }
-
-            return arrPIDLs;
-        }
-
-        /// <summary>
-        /// Get the PIDLs
-        /// </summary>
-        /// <param name="arrFI">Array of DirectoryInfo</param>
-        /// <returns>Array of PIDLs</returns>
-        protected IntPtr[] GetPIDLs(DirectoryInfo[] arrFI)
-        {
-            if (null == arrFI || 0 == arrFI.Length)
-            {
-                return null;
-            }
-
-            var oParentFolder = GetParentFolder(arrFI[0].Parent.FullName);
-            if (null == oParentFolder)
-            {
-                return null;
-            }
-
-            var arrPIDLs = new IntPtr[arrFI.Length];
-            var n = 0;
-            foreach (var fi in arrFI)
-            {
-                // Get the file relative to folder
-                uint pchEaten = 0;
-                SFGAO pdwAttributes = 0;
-                var pPIDL = IntPtr.Zero;
-                var nResult = oParentFolder.ParseDisplayName(
-                    IntPtr.Zero,
-                    IntPtr.Zero,
-                    fi.Name,
+                    fsi.Name,
                     ref pchEaten,
                     out pPIDL,
                     ref pdwAttributes
@@ -384,30 +347,16 @@ namespace Peter
         #endregion
 
         #region ShowContextMenu()
-
         /// <summary>
         /// Shows the context menu
         /// </summary>
-        /// <param name="files">FileInfos (should all be in same directory)</param>
+        /// <param name="items">FileSystemInfos (should all be in same directory)</param>
         /// <param name="pointScreen">Where to show the menu</param>
-        public void ShowContextMenu(FileInfo[] files, Point pointScreen)
+        public void ShowContextMenu(FileSystemInfo[] items, Point pointScreen)
         {
             // Release all resources first.
             ReleaseAll();
-            _arrPIDLs = GetPIDLs(files);
-            ShowContextMenu(pointScreen);
-        }
-
-        /// <summary>
-        /// Shows the context menu
-        /// </summary>
-        /// <param name="dirs">DirectoryInfos (should all be in same directory)</param>
-        /// <param name="pointScreen">Where to show the menu</param>
-        public void ShowContextMenu(DirectoryInfo[] dirs, Point pointScreen)
-        {
-            // Release all resources first.
-            ReleaseAll();
-            _arrPIDLs = GetPIDLs(dirs);
+            _arrPIDLs = GetPIDLs(items);
             ShowContextMenu(pointScreen);
         }
 
