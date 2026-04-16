@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+             xmlns:local="clr-namespace:EverythingToolbar"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignWidth="300"
@@ -128,7 +129,6 @@
 
     <Grid>
         <ListView Name="SearchResultsListView"
-                  SelectionMode="Single"
                   SelectedItem="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=SelectedSearchResult, Mode=TwoWay}"
                   BorderThickness="0"
                   HorizontalContentAlignment="Stretch"
@@ -146,7 +146,18 @@
                   ScrollViewer.VerticalScrollBarVisibility="Visible"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   ScrollViewer.PanningMode="VerticalOnly"
-                  FocusVisualStyle="{x:Null}" />
+                  FocusVisualStyle="{x:Null}">
+            <ListView.Style>
+                <Style TargetType="{x:Type ListView}">
+                    <Setter Property="SelectionMode" Value="Extended" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsSelectionModeEnabled}" Value="True">
+                            <Setter Property="SelectionMode" Value="Multiple" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Style>
+        </ListView>
         <Grid x:Name="SpinnerOverlay"
               Visibility="Collapsed"
               IsHitTestVisible="False"
