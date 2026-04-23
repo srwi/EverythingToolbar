@@ -577,6 +577,78 @@ namespace EverythingToolbar.Controls
             SearchResult.ShowWindowsContextMenu(GetSelectedItems());
         }
 
+        private void Cut(object sender, RoutedEventArgs e)
+        {
+            var items = GetSelectedItems().ToList();
+            if (items.Count == 0)
+                return;
+
+            foreach (var item in items)
+                item.CutToClipboard();
+        }
+
+        private void Rename(object sender, RoutedEventArgs e)
+        {
+            var items = GetSelectedItems().ToList();
+            if (items.Count == 0)
+                return;
+
+            if (items.Count > 1)
+            {
+                FluentMessageBox
+                    .CreateError(
+                        Properties.Resources.MessageBoxRenameSingleItemOnly,
+                        Properties.Resources.MessageBoxErrorTitle
+                    )
+                    .ShowDialogAsync();
+                return;
+            }
+
+            items[0].Rename();
+            SearchWindow.Instance.Hide();
+        }
+
+        private void DeleteToRecycleBin(object sender, RoutedEventArgs e)
+        {
+            var items = GetSelectedItems().ToList();
+            if (items.Count == 0)
+                return;
+
+            foreach (var item in items)
+                item.DeleteToRecycleBin();
+
+            SearchWindow.Instance.Hide();
+        }
+
+        private async void DeletePermanently(object sender, RoutedEventArgs e)
+        {
+            var items = GetSelectedItems().ToList();
+            if (items.Count == 0)
+                return;
+
+            var message = items.Count == 1
+                ? string.Format(
+                    Properties.Resources.MessageBoxDeletePermanentlyConfirm,
+                    items[0].FileName
+                )
+                : string.Format(
+                    Properties.Resources.MessageBoxDeletePermanentlyConfirmMultiple,
+                    items.Count
+                );
+
+            var result = await FluentMessageBox
+                .CreateYesNo(message, Properties.Resources.MessageBoxWarningTitle)
+                .ShowDialogAsync();
+
+            if (result == Wpf.Ui.Controls.MessageBoxResult.Primary)
+            {
+                foreach (var item in items)
+                    item.DeletePermanently();
+            }
+
+            SearchWindow.Instance.Hide();
+        }
+
         private void OnOpenWithMenuLoaded(object sender, RoutedEventArgs e)
         {
             if (sender is not MenuItem menuItem)

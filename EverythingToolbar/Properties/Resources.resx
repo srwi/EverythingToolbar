@@ -687,4 +687,55 @@
   <data name="MessageBoxRestartMessage" xml:space="preserve">
     <value>A restart is required for the language changes to take effect. Do you want to restart now?</value>
   </data>
+  <data name="ContextMenuRename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="ContextMenuDeleteRecycleBin" xml:space="preserve">
+    <value>Delete to Recycle Bin</value>
+  </data>
+  <data name="ContextMenuDeletePermanently" xml:space="preserve">
+    <value>Delete Permanently</value>
+  </data>
+  <data name="MessageBoxFailedToCutFile" xml:space="preserve">
+    <value>Failed to cut file.</value>
+  </data>
+  <data name="MessageBoxFailedToRenameFile" xml:space="preserve">
+    <value>Failed to rename file.</value>
+  </data>
+  <data name="MessageBoxFailedToDeleteFile" xml:space="preserve">
+    <value>Failed to delete file.</value>
+  </data>
+  <data name="MessageBoxRenameSingleItemOnly" xml:space="preserve">
+    <value>You can only rename one item at a time.</value>
+  </data>
+  <data name="MessageBoxDeletePermanentlyConfirm" xml:space="preserve">
+    <value>Are you sure you want to permanently delete "{0}"? This cannot be undone.</value>
+  </data>
+  <data name="MessageBoxDeletePermanentlyConfirmMultiple" xml:space="preserve">
+    <value>Are you sure you want to permanently delete {0} items? This cannot be undone.</value>
+  </data>
+  <data name="RenameDialogTitle" xml:space="preserve">
+    <value>Rename Item</value>
+  </data>
+  <data name="RenameDialogPrompt" xml:space="preserve">
+    <value>Enter new name for "{0}":</value>
+  </data>
+  <data name="RenameInvalidFileName" xml:space="preserve">
+    <value>The file name contains invalid characters.</value>
+  </data>
+  <data name="RenameFileAlreadyExists" xml:space="preserve">
+    <value>A file or folder with this name already exists.</value>
+  </data>
+  <data name="RenameAccessDenied" xml:space="preserve">
+    <value>Access denied. You don't have permission to rename this file.</value>
+  </data>
+  <data name="DeleteAccessDenied" xml:space="preserve">
+    <value>Access denied. You don't have permission to delete this file.</value>
+  </data>
+  <data name="MessageBoxWarningTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="MessageBoxCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
 </root>

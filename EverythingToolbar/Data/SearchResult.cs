@@ -305,6 +305,247 @@ namespace EverythingToolbar.Data
             menu.ShowContextMenu(arrFi, Control.MousePosition);
         }
 
+        public void CutToClipboard()
+        {
+            try
+            {
+                var dataObj = new DataObject();
+                dataObj.SetFileDropList(new StringCollection { FullPathAndFileName });
+
+                // Set the Preferred Drop Effect to Move for cut operation
+                using (var stream = new MemoryStream())
+                {
+                    var writer = new BinaryWriter(stream);
+                    writer.Write((int)System.Windows.Forms.DragDropEffects.Move);
+                    writer.Flush();
+                    dataObj.SetData("Preferred DropEffect", stream.ToArray());
+                }
+
+                Clipboard.SetDataObject(dataObj, copy: false); // Fixes #362
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Failed to cut file.");
+                FluentMessageBox
+                    .CreateError(EverythingToolbar.Properties.Resources.MessageBoxFailedToCutFile, EverythingToolbar.Properties.Resources.MessageBoxErrorTitle)
+                    .ShowDialogAsync();
+            }
+        }
+
+        public void Rename()
+        {
+            try
+            {
+                var currentName = IsFile ? System.IO.Path.GetFileName(FullPathAndFileName) : System.IO.Path.GetFileName(FullPathAndFileName);
+                var currentDirectory = IsFile ? System.IO.Path.GetDirectoryName(FullPathAndFileName) : FullPathAndFileName;
+
+                var inputDialog = new System.Windows.Window
+                {
+                    Title = EverythingToolbar.Properties.Resources.RenameDialogTitle,
+                    Width = 400,
+                    Height = 175,
+                    WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen,
+                    Background = System.Windows.SystemColors.ControlBrush,
+                    ShowInTaskbar = false,
+                    Owner = System.Windows.Application.Current.MainWindow,
+                };
+
+                var grid = new System.Windows.Controls.Grid();
+                grid.RowDefinitions.Add(new System.Windows.Controls.RowDefinition { Height = System.Windows.GridLength.Auto });
+                grid.RowDefinitions.Add(new System.Windows.Controls.RowDefinition { Height = System.Windows.GridLength.Auto });
+
+                var textBlock = new System.Windows.Controls.TextBlock
+                {
+                    Text = string.Format(EverythingToolbar.Properties.Resources.RenameDialogPrompt, currentName),
+                    Margin = new System.Windows.Thickness(20, 20, 20, 10),
+                    TextWrapping = System.Windows.TextWrapping.Wrap,
+                };
+                System.Windows.Controls.Grid.SetRow(textBlock, 0);
+                grid.Children.Add(textBlock);
+
+                var inputPanel = new System.Windows.Controls.StackPanel
+                {
+                    Margin = new System.Windows.Thickness(20, 10, 20, 20),
+                    Orientation = System.Windows.Controls.Orientation.Vertical,
+                };
+                System.Windows.Controls.Grid.SetRow(inputPanel, 1);
+
+                var textBox = new System.Windows.Controls.TextBox
+                {
+                    Text = currentName,
+                    Margin = new System.Windows.Thickness(0, 0, 0, 10),
+                    Padding = new System.Windows.Thickness(5),
+                };
+                textBox.Focus();
+                textBox.SelectAll();
+                inputPanel.Children.Add(textBox);
+
+                var buttonPanel = new System.Windows.Controls.StackPanel
+                {
+                    Orientation = System.Windows.Controls.Orientation.Horizontal,
+                    HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
+                };
+
+                var okButton = new System.Windows.Controls.Button
+                {
+                    Content = "OK",
+                    Width = 70,
+                    Margin = new System.Windows.Thickness(0, 0, 10, 0),
+                    Padding = new System.Windows.Thickness(10, 5, 10, 5),
+                };
+
+                var cancelButton = new System.Windows.Controls.Button
+                {
+                    Content = EverythingToolbar.Properties.Resources.MessageBoxCancel,
+                    Width = 70,
+                    Padding = new System.Windows.Thickness(10, 5, 10, 5),
+                };
+
+                buttonPanel.Children.Add(okButton);
+                buttonPanel.Children.Add(cancelButton);
+                inputPanel.Children.Add(buttonPanel);
+
+                grid.Children.Add(inputPanel);
+                inputDialog.Content = grid;
+
+                var isConfirmed = false;
+
+                okButton.Click += (sender, e) =>
+                {
+                    isConfirmed = true;
+                    inputDialog.Close();
+                };
+
+                cancelButton.Click += (sender, e) =>
+                {
+                    inputDialog.Close();
+                };
+
+                inputDialog.ShowDialog();
+
+                if (!isConfirmed || string.IsNullOrWhiteSpace(textBox.Text))
+                    return;
+
+                var newName = textBox.Text.Trim();
+
+                // Validate file name
+                var invalidChars = System.IO.Path.GetInvalidFileNameChars();
+                if (newName.IndexOfAny(invalidChars) >= 0)
+                {
+                    FluentMessageBox
+                        .CreateError(Resources.RenameInvalidFileName, Resources.MessageBoxErrorTitle)
+                        .ShowDialogAsync();
+                    return;
+                }
+
+                var directory = System.IO.Path.GetDirectoryName(FullPathAndFileName);
+                var newPath = System.IO.Path.Combine(directory ?? string.Empty, newName);
+
+                // Check if file/directory already exists
+                if (File.Exists(newPath) || Directory.Exists(newPath))
+                {
+                    FluentMessageBox
+                        .CreateError(Resources.RenameFileAlreadyExists, Resources.MessageBoxErrorTitle)
+                        .ShowDialogAsync();
+                    return;
+                }
+
+                // Perform rename
+                if (IsFile)
+                {
+                    System.IO.File.Move(FullPathAndFileName, newPath);
+                }
+                else
+                {
+                    System.IO.Directory.Move(FullPathAndFileName, newPath);
+                }
+
+                Logger.Info($"Renamed '{FullPathAndFileName}' to '{newPath}'");
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Logger.Error("Access denied when renaming file.");
+                FluentMessageBox
+                    .CreateError(Resources.RenameAccessDenied, Resources.MessageBoxErrorTitle)
+                    .ShowDialogAsync();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Failed to rename file.");
+                FluentMessageBox
+                    .CreateError(Resources.MessageBoxFailedToRenameFile, Resources.MessageBoxErrorTitle)
+                    .ShowDialogAsync();
+            }
+        }
+
+        public void DeleteToRecycleBin()
+        {
+            try
+            {
+                if (IsFile)
+                {
+                    Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(
+                        FullPathAndFileName,
+                        Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs,
+                        Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin
+                    );
+                }
+                else
+                {
+                    Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory(
+                        FullPathAndFileName,
+                        Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs,
+                        Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin
+                    );
+                }
+                Logger.Info($"Deleted to recycle bin: '{FullPathAndFileName}'");
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Logger.Error("Access denied when deleting file.");
+                FluentMessageBox
+                    .CreateError(Resources.DeleteAccessDenied, Resources.MessageBoxErrorTitle)
+                    .ShowDialogAsync();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Failed to delete file to recycle bin.");
+                FluentMessageBox
+                    .CreateError(Resources.MessageBoxFailedToDeleteFile, Resources.MessageBoxErrorTitle)
+                    .ShowDialogAsync();
+            }
+        }
+
+        public void DeletePermanently()
+        {
+            try
+            {
+                if (IsFile)
+                {
+                    System.IO.File.Delete(FullPathAndFileName);
+                }
+                else
+                {
+                    System.IO.Directory.Delete(FullPathAndFileName, recursive: true);
+                }
+                Logger.Info($"Permanently deleted: '{FullPathAndFileName}'");
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Logger.Error("Access denied when deleting file.");
+                FluentMessageBox
+                    .CreateError(Resources.DeleteAccessDenied, Resources.MessageBoxErrorTitle)
+                    .ShowDialogAsync();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Failed to permanently delete file.");
+                FluentMessageBox
+                    .CreateError(Resources.MessageBoxFailedToDeleteFile, Resources.MessageBoxErrorTitle)
+                    .ShowDialogAsync();
+            }
+        }
+
         public void ShowInEverything()
         {
             SearchResultProvider.OpenSearchInEverything(SearchState.Instance, filenameToHighlight: FullPathAndFileName);

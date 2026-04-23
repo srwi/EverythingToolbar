@@ -41,6 +41,21 @@
                 <MenuItem Header="{x:Static properties:Resources.ContextMenuCopyFile}"
                           Click="CopyFile"
                           Icon="&#xE8C8;" />
+                <MenuItem Header="{x:Static properties:Resources.ContextMenuCut}"
+                          Click="Cut"
+                          Icon="&#xE8C6;" />
+                <Separator />
+                <MenuItem Header="{x:Static properties:Resources.ContextMenuRename}"
+                          Click="Rename"
+                          Icon="&#xE8AC;" />
+                <Separator />
+                <MenuItem Header="{x:Static properties:Resources.ContextMenuDeleteRecycleBin}"
+                          Click="DeleteToRecycleBin"
+                          Icon="&#xE74D;" />
+                <MenuItem Header="{x:Static properties:Resources.ContextMenuDeletePermanently}"
+                          Click="DeletePermanently"
+                          Icon="&#xE74D;" />
+                <Separator />
                 <MenuItem Header="{x:Static properties:Resources.ContextMenuProperties}"
                           Click="ShowFileProperties"
                           Icon="&#xE946;" />
