@@ -301,7 +301,7 @@
     <value>検索結果の数を表示</value>
   </data>
   <data name="SettingsPreviewPaneEnabled" xml:space="preserve">
-    <value>Show preview pane</value>
+    <value>プレビューペインを表示</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>ソート</value>
@@ -316,10 +316,10 @@
     <value>表示</value>
   </data>
   <data name="SettingsUILanguage" xml:space="preserve">
-    <value>Language</value>
+    <value>言語</value>
   </data>
   <data name="SettingsUILanguageHelp" xml:space="preserve">
-    <value>Choose the UI language. Restart the application to apply changes.</value>
+    <value>UI 言語を選択します。変更を適用するには、アプリケーションを再起動します。</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
     <value>属性</value>
@@ -559,7 +559,7 @@
     <value>Show a Start menu style side pane for the selected result</value>
   </data>
   <data name="PreviewPaneFilePath" xml:space="preserve">
-    <value>File path</value>
+    <value>ファイルパス</value>
   </data>
   <data name="PreviewPaneSelectResult" xml:space="preserve">
     <value>Nothing selected</value>
