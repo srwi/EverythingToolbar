@@ -85,8 +85,14 @@
                           TextBlock.FontWeight="Bold"
                           Content=".*"
                           Margin="1" />
+
+            <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
+                          ToolTip="Multiple Selection"
+                          IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsSelectionModeEnabled}"
+                          FontFamily="Segoe MDL2 Assets"
+                          Content="&#xE762;"
+                          Margin="1" />
         </StackPanel>
 
     </Grid>
-
 </UserControl>
