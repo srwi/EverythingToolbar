@@ -556,16 +556,16 @@
     <value>検索バーに検索オプションのクイック切り替えボタンを表示します</value>
   </data>
   <data name="SettingsPreviewPaneHelp" xml:space="preserve">
-    <value>Show a Start menu style side pane for the selected result</value>
+    <value>選択した検索結果に対してスタートメニュースタイルのサイドペインを表示する</value>
   </data>
   <data name="PreviewPaneFilePath" xml:space="preserve">
     <value>ファイルパス</value>
   </data>
   <data name="PreviewPaneSelectResult" xml:space="preserve">
-    <value>Nothing selected</value>
+    <value>何も選択されていません</value>
   </data>
   <data name="PreviewPaneSize" xml:space="preserve">
-    <value>Size</value>
+    <value>サイズ</value>
   </data>
   <data name="SettingsAnimationsHelp" xml:space="preserve">
     <value>パフォーマンスを向上させるために UI アニメーションを無効にします</value>
@@ -664,27 +664,27 @@
     <value>システムのコンテキストメニューを開く</value>
   </data>
   <data name="SettingsListFocusBehavior" xml:space="preserve">
-    <value>Result list focus</value>
+    <value>検索結果リストのフォーカス</value>
   </data>
   <data name="SettingsListFocusBehaviorHelp" xml:space="preserve">
-    <value>Controls how the focus behaves when navigating the result list</value>
+    <value>検索結果リストをナビゲートする際のフォーカスの動作を制御します</value>
   </data>
   <data name="FocusBehaviorClamp" xml:space="preserve">
-    <value>Clamp</value>
+    <value>クランプ</value>
   </data>
   <data name="FocusBehaviorRepeat" xml:space="preserve">
-    <value>Repeat</value>
+    <value>繰り返す</value>
   </data>
   <data name="FocusBehaviorRepeatWithSearch" xml:space="preserve">
-    <value>Repeat with search</value>
+    <value>検索時に繰り返す</value>
   </data>
   <data name="SettingsUseSystemLanguage" xml:space="preserve">
-    <value>Use System Language</value>
+    <value>システム言語を使用する</value>
   </data>
   <data name="MessageBoxRestartTitle" xml:space="preserve">
-    <value>Restart required</value>
+    <value>再起動が必要です</value>
   </data>
   <data name="MessageBoxRestartMessage" xml:space="preserve">
-    <value>A restart is required for the language changes to take effect. Do you want to restart now?</value>
+    <value>言語の変更を有効にするには再起動が必要です。今すぐ再起動しますか？</value>
   </data>
 </root>
