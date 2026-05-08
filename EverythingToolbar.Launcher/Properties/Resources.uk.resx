@@ -121,10 +121,10 @@
     <value>Вийти</value>
   </data>
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Запустити установку...</value>
+    <value>Запуск помічника налаштувань...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
-    <value>Щоб закріпити EverythingToolbar в панелі завдань, натисніть правою кнопкою миші по його значку, і виберіть "Закріпити на панелі завдань".</value>
+    <value>Щоб закріпити EverythingToolbar у панелі завдань, натисніть правою кнопкою миші на його значку та виберіть «Закріпити на панелі завдань».</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>Для оновлення піктограми на панелі завдань потрібно перезапустити Провідник. Чи хочете ви перезапустити його зараз?</value>
@@ -136,7 +136,7 @@
     <value>Помічник налаштування EverythingToolbar</value>
   </data>
   <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Ви впевнені, що хочете вийти з помічника налаштування? Доступ до EverythingToolbar буде можливий лише за допомогою комбінації клавіш. Ви можете знову відкрити помічник налаштування через піктограму в системному треї, щоб закріпити піктограму пошуку на панелі завдань.</value>
+    <value>Упевнені, що хочете вийти з помічника налаштувань? EverythingToolbar буде доступний лише за допомогою комбінації клавіш. Ви зможете знову відкрити помічник налаштувань через значок у системному лотку, щоб закріпити значок пошуку на панелі завдань.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
     <value>Вийти з помічника налаштувань</value>
@@ -154,7 +154,7 @@
     <value>Приховує оригінальний значок пошуку Windows на панелі задач</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
-    <value>Відображати піктограму в системному треї</value>
+    <value>Показувати значок в системному лотку</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>Вмикає піктограму панелі завдань для швидкого доступу до налаштувань</value>
@@ -169,9 +169,9 @@
     <value>Готово</value>
   </data>
   <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>The system tray icon cannot be disabled when EverythingToolbar is not pinned to the taskbar. Please pin EverythingToolbar to the taskbar first, or keep the system tray icon enabled to access settings and functionality.</value>
+    <value>Значок у системному лотку неможливо вимкнути, якщо EverythingToolbar не закріплено на панелі завдань. Спочатку закріпіть EverythingToolbar на панелі завдань або залиште значок у лотку ввімкненим, щоби мати доступ до налаштувань і функцій.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
-    <value>Cannot disable system tray icon</value>
+    <value>Не вдалося вимкнути значок у системному лотку</value>
   </data>
 </root>
