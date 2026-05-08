@@ -301,7 +301,7 @@
     <value>Показувати кількість результатів</value>
   </data>
   <data name="SettingsPreviewPaneEnabled" xml:space="preserve">
-    <value>Show preview pane</value>
+    <value>Показувати панель передперегляду</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Сортувати за</value>
@@ -316,10 +316,10 @@
     <value>Вигляд</value>
   </data>
   <data name="SettingsUILanguage" xml:space="preserve">
-    <value>Language</value>
+    <value>Мова</value>
   </data>
   <data name="SettingsUILanguageHelp" xml:space="preserve">
-    <value>Choose the UI language. Restart the application to apply changes.</value>
+    <value>Виберіть мову інтерфейсу користувача. Перезапустіть застосунок, щоб застосувати зміни.</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
     <value>Атрибути</value>
