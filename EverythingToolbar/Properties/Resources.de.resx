@@ -217,10 +217,10 @@
     <value>Das Tastenkürzel konnte nicht registriert werden. Möglicherweise wird es bereits von einer anderen Anwendung verwendet.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
-    <value>Ausführen des Befehls ist fehlgeschlagen.</value>
+    <value>Ausführen des Befehls ist fehlgeschlagen</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
-    <value>Schnelle Sortierung ist für diese Sortiermethode nicht aktiviert. Bitte aktivieren Sie sie in den Everything-Einstellungen, um diese Sortiermethode verwenden zu können.</value>
+    <value>Schnelle Sortierung ist für diese Sortiermethode nicht aktiviert. Sie können diese in den Einstellungen von Everything aktivieren.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
     <value>Schnelle Sortierung nicht verfügbar</value>
