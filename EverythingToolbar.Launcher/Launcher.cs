@@ -65,6 +65,8 @@ namespace EverythingToolbar.Launcher
 
                 StartMenuIntegration.Instance.Initialize();
 
+                SetupAutostartStateCallback();
+
                 SearchWindow.Instance.Hiding += OnSearchWindowHiding;
 
                 ToolbarSettings.User.PropertyChanged += async (_, e) =>
@@ -148,6 +150,11 @@ namespace EverythingToolbar.Launcher
                 });
             }
 
+            private void SetupAutostartStateCallback()
+            {
+                Settings.Advanced.GetAutostartStateCallback = () => Utils.GetAutostartState();
+                Settings.Advanced.SetAutostartStateCallback = (state) => Utils.SetAutostartState(state);
+            }
             private void ToggleWindow()
             {
                 // Prevent search window from reappearing after clicking the icon to close

@@ -71,6 +71,26 @@ namespace EverythingToolbar.Settings
             }
         }
 
+        public static Func<bool> GetAutostartStateCallback { get; set; }
+        public static Action<bool> SetAutostartStateCallback { get; set; }
+
+        private bool _isAutostartEnabled = GetAutostartStateCallback?.Invoke() ?? false;
+
+        public bool IsAutostartEnabled
+        {
+            get => _isAutostartEnabled;
+            set
+            {
+                if (_isAutostartEnabled != value)
+                {
+                    _isAutostartEnabled = value;
+
+                    SetAutostartStateCallback?.Invoke(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public Advanced()
         {
             InitializeComponent();

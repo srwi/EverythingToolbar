@@ -129,6 +129,19 @@
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
+            <Border Padding="16"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1,1,1,1"
+                    CornerRadius="8,8,0,0"
+				    Visibility="{Binding IsLauncher, Converter={c:BoolToVisibilityConverter}}">
+                <controls:SettingItem Title="{x:Static properties:Resources.SettingsEnableAutostart}"
+                                      HelpText="{x:Static properties:Resources.SettingsEnableAutostartHelp}">
+                    <controls:SettingItem.SettingContent>
+                        <ui:ToggleSwitch IsChecked="{Binding IsAutostartEnabled, Mode=TwoWay}" />
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
+            </Border>
         </StackPanel>
     </ScrollViewer>
 </Page>
