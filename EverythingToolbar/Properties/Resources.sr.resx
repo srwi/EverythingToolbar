@@ -267,6 +267,12 @@
   <data name="SettingsDisableAnimations" xml:space="preserve">
     <value>Disable animations</value>
   </data>
+  <data name="SettingsEnableAutostart" xml:space="preserve">
+    <value>Enable autostart</value>
+  </data>
+  <data name="SettingsEnableAutostartHelp" xml:space="preserve">
+    <value>Automatically starts EverythingToolbar when Windows starts</value>
+  </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>Enable search history</value>
   </data>
