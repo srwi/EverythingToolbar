@@ -268,10 +268,10 @@
     <value>Вимкнути анімації</value>
   </data>
   <data name="SettingsEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>Увімкнути автозапуск</value>
   </data>
   <data name="SettingsEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Автоматично запускає EverythingToolbar під час запуску Windows</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>Увімкнути історію пошуку</value>
