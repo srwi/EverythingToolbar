@@ -268,10 +268,10 @@
     <value>Désactiver les animation</value>
   </data>
   <data name="SettingsEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>Activer le démarrage automatique</value>
   </data>
   <data name="SettingsEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Démarre automatiquement EverythingToolbar lorsque Windows démarre</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>Activer l'historique des recherches</value>
