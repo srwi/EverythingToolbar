@@ -271,7 +271,7 @@
     <value>Activar inicio automático</value>
   </data>
   <data name="SettingsEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Iniciar automáticamente EverythingToolbar al arrancar Windows</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>Activar el historial de búsqueda</value>
