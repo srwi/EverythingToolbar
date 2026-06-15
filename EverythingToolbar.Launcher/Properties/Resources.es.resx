@@ -169,9 +169,9 @@
     <value>Hecho</value>
   </data>
   <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>El icono de la bandeja del sistema no se puede inhabilitar si EverythingToolbar no está anclado a la barra de tareas. Anclar primero EverythingToolbar a la barra de tareas o mantener habilitado el icono de la bandeja del sistema para acceder a la configuración y a las demás funciones.</value>
+    <value>El icono de la bandeja del sistema no se puede desactivar si EverythingToolbar no está anclado a la barra de tareas. Anclar primero EverythingToolbar a la barra de tareas o mantener activado el icono de la bandeja del sistema para acceder a la configuración y y a las demás funciones.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
-    <value>No se puede inhabilitar el icono de la bandeja del sistema</value>
+    <value>No se puede desactivar el icono de la bandeja del sistema</value>
   </data>
 </root>
