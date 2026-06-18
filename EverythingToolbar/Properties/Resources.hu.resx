@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>Sikertelen útvonal megnyitás.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Sikertelen gyorsbillentyű regisztráció. Talán egy másik alkalmazás használja.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Sikertelen parancs futtatás</value>
   </data>
