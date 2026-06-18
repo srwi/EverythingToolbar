@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>Otwieranie ścieżki zakończone niepowodzeniem.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Rejestrowanie skrótu klawiszowego zakończone niepowodzeniem. Możliwe, że jest używany przez inną aplikację.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Uruchomienie komendy zakończone niepowodzeniem.</value>
   </data>
