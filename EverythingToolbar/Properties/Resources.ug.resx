@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>يولىنى ئاچالمىدى.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>تېزلەتمە كۇنۇپكىنى تىزىملىتالمىدى. بەلكىم باشقا دېتال ئىشلىتىۋاتقان بولۇشى مۇمكىن.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>بۇيرۇقنى ئىجرا قىلالمىدى</value>
   </data>
