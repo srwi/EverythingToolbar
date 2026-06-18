@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>Mở đường dẫn thất bại.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Đăng ký phím thất bại. Có vẻ như nút đó đã được sử dụng bởi chương trình khác.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Chạy lệnh thất bại</value>
   </data>
