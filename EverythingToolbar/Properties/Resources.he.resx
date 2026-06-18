@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>פתיחת נתיב הקובץ נכשלה.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>שגיאה בהגדרת צירוף המקשים, יתכן ונמצא כבר בשימוש ביישום אחר.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>שגיאה בהרצת הפקודה</value>
   </data>
