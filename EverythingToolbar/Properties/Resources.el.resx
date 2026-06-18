@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>Αποτυχία ανοίγματος διαδρομής.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Αποτυχία καταχώρησης συντόμευσης. Μπορεί να είναι σε χρήση από άλλη εφαρμογή.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Αποτυχία εκτέλεσης της εντολής</value>
   </data>
