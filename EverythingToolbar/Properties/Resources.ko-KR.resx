@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>경로 열기에 실패했습니다.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>단축키 등록에 실패했습니다. 다른 응용 프로그램에서 사용 중일 수 있습니다.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>명령 실행에 실패했습니다.</value>
   </data>
