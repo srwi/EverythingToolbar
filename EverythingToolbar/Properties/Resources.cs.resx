@@ -315,6 +315,9 @@
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>Povolit náhledy</value>
   </data>
+  <data name="SettingsSystemContextMenuDefault" xml:space="preserve">
+    <value>Use system context menu by default</value>
+  </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Použít Everything filtry</value>
   </data>
@@ -554,6 +557,9 @@
   </data>
   <data name="SettingsThumbnailsHelp" xml:space="preserve">
     <value>Zobrazovat náhledy obrázků</value>
+  </data>
+  <data name="SettingsSystemContextMenuDefaultHelp" xml:space="preserve">
+    <value>Show the Windows context menu when right-clicking a result</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
     <value>Zobrazovat celkový počet výsledků</value>
