@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>Не вдалося відкрити шлях.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Не вдалося зареєструвати скорочення клавіш. Можливо, воно використовується іншою програмою.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Не вдалося виконати команду</value>
   </data>
