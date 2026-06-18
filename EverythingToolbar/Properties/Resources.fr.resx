@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>Impossible d'ouvrir le chemin.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Impossible d'enregistrer le raccourci-clavier. Il est peut-être utilisé par une autre application.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Impossible d'exécuter la commande.</value>
   </data>
