@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>فشل فتح المسار.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>فشل في تسجيل مفتاح الاختصار. قد يكون قيد الاستخدام من قبل تطبيق آخر.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>فشل في تشغيل الأمر</value>
   </data>
