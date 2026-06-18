@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>Falha ao abrir o caminho.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Falha ao registrar a tecla de atalho. Ela pode estar sendo usada por outro aplicativo.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Falha ao executar o comando</value>
   </data>
