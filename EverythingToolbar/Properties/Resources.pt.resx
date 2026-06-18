@@ -315,6 +315,9 @@
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>Enable thumbnails</value>
   </data>
+  <data name="SettingsSystemContextMenuDefault" xml:space="preserve">
+    <value>Use system context menu by default</value>
+  </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Use Everything filters</value>
   </data>
@@ -554,6 +557,9 @@
   </data>
   <data name="SettingsThumbnailsHelp" xml:space="preserve">
     <value>Show thumbnails for image files</value>
+  </data>
+  <data name="SettingsSystemContextMenuDefaultHelp" xml:space="preserve">
+    <value>Show the Windows context menu when right-clicking a result</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
     <value>Display the total number of search results</value>
