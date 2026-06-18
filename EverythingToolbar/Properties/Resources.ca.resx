@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>Failed to open path.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Failed to register hotkey. It might be in use by another application.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Failed to run command</value>
   </data>
