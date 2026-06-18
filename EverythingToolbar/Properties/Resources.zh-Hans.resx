@@ -315,6 +315,9 @@
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
     <value>启用缩略图</value>
   </data>
+  <data name="SettingsSystemContextMenuDefault" xml:space="preserve">
+    <value>Use system context menu by default</value>
+  </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>使用Everything筛选器</value>
   </data>
@@ -554,6 +557,9 @@
   </data>
   <data name="SettingsThumbnailsHelp" xml:space="preserve">
     <value>显示图像文件缩略图</value>
+  </data>
+  <data name="SettingsSystemContextMenuDefaultHelp" xml:space="preserve">
+    <value>Show the Windows context menu when right-clicking a result</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
     <value>显示搜索结果总数</value>
