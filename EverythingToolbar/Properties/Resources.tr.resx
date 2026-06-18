@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>Klasör yolunu açarken hata.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Kısayol tuşunu kaydederken hata. Kısayol başka bir uygulama tarafından kullanılıyor olabilir.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Komut çalıştırılamadı.</value>
   </data>
