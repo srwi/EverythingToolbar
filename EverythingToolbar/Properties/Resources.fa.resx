@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>باز کردن مسیر شکست خورد.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>ثبت کلید میانبر شکست خورد. ممکن است که یک نرم‌افزار دیگر به کار رفته باشد.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>اجرای دستور شکست خورد</value>
   </data>
