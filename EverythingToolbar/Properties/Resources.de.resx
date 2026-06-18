@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>Das Öffnen des Pfades ist fehlgeschlagen.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Das Tastenkürzel konnte nicht registriert werden. Möglicherweise wird es bereits von einer anderen Anwendung verwendet.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Ausführen des Befehls ist fehlgeschlagen</value>
   </data>
