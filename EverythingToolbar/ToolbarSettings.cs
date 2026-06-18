@@ -140,6 +140,9 @@ namespace EverythingToolbar
 
         [Option(DefaultValue = "")]
         string UILanguage { get; set; }
+
+        [Option(DefaultValue = false)]
+        bool IsSelectionModeEnabled { get; set; }
     }
 
     public sealed class ToolbarSettingsWrapper(IToolbarSettings settings) : INotifyPropertyChanged
@@ -715,6 +718,19 @@ namespace EverythingToolbar
                 if (settings.UILanguage != value)
                 {
                     settings.UILanguage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsSelectionModeEnabled
+        {
+            get => settings.IsSelectionModeEnabled;
+            set
+            {
+                if (settings.IsSelectionModeEnabled != value)
+                {
+                    settings.IsSelectionModeEnabled = value;
                     OnPropertyChanged();
                 }
             }

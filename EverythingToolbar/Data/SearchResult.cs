@@ -286,9 +286,22 @@ namespace EverythingToolbar.Data
 
         public void ShowWindowsContextMenu()
         {
+            ShowWindowsContextMenu(new[] { this });
+        }
+
+        public static void ShowWindowsContextMenu(IEnumerable<SearchResult> items)
+        {
+            var itemsList = items.ToList();
+            if (itemsList.Count == 0) return;
+
+            var firstItemDir = itemsList[0].Path;
+            var validItems = itemsList.Where(i => string.Equals(i.Path, firstItemDir, StringComparison.OrdinalIgnoreCase)).ToList();
+
             var menu = new ShellContextMenu();
-            var arrFi = new FileInfo[1];
-            arrFi[0] = new FileInfo(FullPathAndFileName);
+            var arrFi = validItems.Select<SearchResult, FileSystemInfo>(i =>
+                i.IsFile ? new FileInfo(i.FullPathAndFileName) : new DirectoryInfo(i.FullPathAndFileName)
+            ).ToArray();
+
             menu.ShowContextMenu(arrFi, Control.MousePosition);
         }
 
