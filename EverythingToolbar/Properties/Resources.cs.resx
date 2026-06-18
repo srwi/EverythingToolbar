@@ -213,9 +213,6 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>Otevření cesty se nezdařilo.</value>
   </data>
-  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Nepodařilo se zaregistrovat klávesovou zkratku. Může být používána jinou aplikací.</value>
-  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Příkaz se nepodařilo spustit</value>
   </data>
