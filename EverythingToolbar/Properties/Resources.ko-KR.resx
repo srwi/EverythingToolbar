@@ -265,10 +265,10 @@
     <value>애니메이션 사용 안 함</value>
   </data>
   <data name="SettingsEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>자동 시작 사용</value>
   </data>
   <data name="SettingsEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Windows가 시작되면 EverythingToolbar가 자동으로 시작됩니다</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>검색 기록 사용함</value>
@@ -313,7 +313,7 @@
     <value>썸네일 사용함</value>
   </data>
   <data name="SettingsSystemContextMenuDefault" xml:space="preserve">
-    <value>Use system context menu by default</value>
+    <value>기본적으로 시스템 컨텍스트 메뉴 사용</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Everything 필터 사용</value>
@@ -556,7 +556,7 @@
     <value>이미지 파일의 썸네일 표시</value>
   </data>
   <data name="SettingsSystemContextMenuDefaultHelp" xml:space="preserve">
-    <value>Show the Windows context menu when right-clicking a result</value>
+    <value>결과를 마우스 오른쪽 버튼으로 클릭할 때 Windows 컨텍스트 메뉴 표시</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
     <value>검색 결과의 총 수 표시</value>
