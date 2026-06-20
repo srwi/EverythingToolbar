@@ -250,7 +250,7 @@
     <value>Tipo</value>
   </data>
   <data name="CustomActionsHelpText" xml:space="preserve">
-    <value>Utilice %file%, %filename% y %path% como marcadores de posición en los comandos.</value>
+    <value>Utilizar %file%, %filename% y %path% como marcadores de posición en los comandos.</value>
   </data>
   <data name="TextBoxWatermark" xml:space="preserve">
     <value>Buscar con Everything</value>
@@ -268,7 +268,7 @@
     <value>Activar inicio automático</value>
   </data>
   <data name="SettingsEnableAutostartHelp" xml:space="preserve">
-    <value>Iniciar automáticamente EverythingToolbar al arrancar Windows</value>
+    <value>Inicia automáticamente EverythingToolbar al arrancar Windows</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>Activar el historial de búsqueda</value>
@@ -517,7 +517,7 @@
     <value>Nombre de la instancia de Everything</value>
   </data>
   <data name="SettingsInstanceNameHelp" xml:space="preserve">
-    <value>Establece el nombre de la instancia de Everything que se va a utilizar</value>
+    <value>Establecer el nombre de la instancia de Everything que se va a utilizar</value>
   </data>
   <data name="SettingsDefaultInstance" xml:space="preserve">
     <value>Instancia predeterminada</value>
@@ -550,22 +550,22 @@
     <value>Hacer un donativo</value>
   </data>
   <data name="SettingsViewLayoutHelp" xml:space="preserve">
-    <value>Selecciona el diseño para los resultados de búsqueda</value>
+    <value>Seleccionar el diseño para los resultados de búsqueda</value>
   </data>
   <data name="SettingsThumbnailsHelp" xml:space="preserve">
     <value>Muestra miniaturas para los archivos de imagen</value>
   </data>
   <data name="SettingsSystemContextMenuDefaultHelp" xml:space="preserve">
-    <value>Show the Windows context menu when right-clicking a result</value>
+    <value>Muestra el menú contextual de Windows al hacer clic derecho en un resultado</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
     <value>Muestra el número total de resultados de la búsqueda</value>
   </data>
   <data name="SettingsQuickTogglesHelp" xml:space="preserve">
-    <value>Mostrar botones de acceso rápido para las opciones de búsqueda en la barra de búsqueda</value>
+    <value>Muestra botones de acceso rápido para las opciones de búsqueda en la barra de búsqueda</value>
   </data>
   <data name="SettingsPreviewPaneHelp" xml:space="preserve">
-    <value>Muetra un panel lateral al estilo del menú de Inicio para el resultado seleccionado</value>
+    <value>Muestra un panel lateral al estilo del menú de Inicio para el resultado seleccionado</value>
   </data>
   <data name="PreviewPaneFilePath" xml:space="preserve">
     <value>Ruta del archivo</value>
@@ -640,7 +640,7 @@
     <value>Icono de búsqueda</value>
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
-    <value>Cambia el estilo del icono de la barra de tareas (es necesario reiniciar el Explorador)</value>
+    <value>Seleccionar el estilo del icono de la barra de tareas (es necesario reiniciar el Explorador)</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>Ordenar filtros</value>
