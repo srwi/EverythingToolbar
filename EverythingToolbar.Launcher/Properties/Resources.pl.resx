@@ -142,22 +142,22 @@
     <value>Zamknij asystenta konfiguracji</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>Przypnij do paska zadań</value>
   </data>
   <data name="SetupAssistantPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Preferencje</value>
   </data>
   <data name="SetupAssistantHideWindowsSearch" xml:space="preserve">
-    <value>Hide Windows search icon</value>
+    <value>Ukryj ikonę wyszukiwarki Windows</value>
   </data>
   <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
-    <value>Hides the original Windows search icon from the taskbar</value>
+    <value>Ukrywa oryginalną ikonę wyszukiwarki Windows z paska zadań</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
     <value>Enable system tray icon</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
-    <value>Enables the system tray icon for quick access to settings</value>
+    <value>Włącza ikonę w zasobniku systemowym dla szybkiego dostępu do ustawień</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>Enable autostart</value>
