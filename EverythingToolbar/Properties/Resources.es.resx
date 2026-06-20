@@ -313,7 +313,7 @@
     <value>Habilitar miniaturas</value>
   </data>
   <data name="SettingsSystemContextMenuDefault" xml:space="preserve">
-    <value>Use system context menu by default</value>
+    <value>Utilizar el menú contextual del sistema como predeterminado</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Usar filtros de Everything</value>
