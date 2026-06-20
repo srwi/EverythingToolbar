@@ -313,7 +313,7 @@
     <value>启用缩略图</value>
   </data>
   <data name="SettingsSystemContextMenuDefault" xml:space="preserve">
-    <value>Use system context menu by default</value>
+    <value>默认使用系统右键菜单</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>使用Everything筛选器</value>
@@ -556,7 +556,7 @@
     <value>显示图像文件缩略图</value>
   </data>
   <data name="SettingsSystemContextMenuDefaultHelp" xml:space="preserve">
-    <value>Show the Windows context menu when right-clicking a result</value>
+    <value>右键点击结果时显示 Windows 右键菜单</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
     <value>显示搜索结果总数</value>
