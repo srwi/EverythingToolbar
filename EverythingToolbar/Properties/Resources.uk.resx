@@ -313,7 +313,7 @@
     <value>Увімкнути ескізи</value>
   </data>
   <data name="SettingsSystemContextMenuDefault" xml:space="preserve">
-    <value>Use system context menu by default</value>
+    <value>Типово використовувати системне контекстне меню</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Використовувати фільтри Everything</value>
