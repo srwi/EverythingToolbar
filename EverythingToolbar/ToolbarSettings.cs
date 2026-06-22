@@ -140,6 +140,12 @@ namespace EverythingToolbar
 
         [Option(DefaultValue = "")]
         string UILanguage { get; set; }
+
+        [Option(DefaultValue = false)]
+        bool TaskbarWindowEnabled { get; set; }
+
+        [Option(DefaultValue = "Left")]
+        string TaskbarWindowAlignment { get; set; }
     }
 
     public sealed class ToolbarSettingsWrapper(IToolbarSettings settings) : INotifyPropertyChanged
@@ -715,6 +721,32 @@ namespace EverythingToolbar
                 if (settings.UILanguage != value)
                 {
                     settings.UILanguage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool TaskbarWindowEnabled
+        {
+            get => settings.TaskbarWindowEnabled;
+            set
+            {
+                if (settings.TaskbarWindowEnabled != value)
+                {
+                    settings.TaskbarWindowEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string TaskbarWindowAlignment
+        {
+            get => settings.TaskbarWindowAlignment;
+            set
+            {
+                if (settings.TaskbarWindowAlignment != value)
+                {
+                    settings.TaskbarWindowAlignment = value;
                     OnPropertyChanged();
                 }
             }

@@ -103,6 +103,34 @@
                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,0"
+                    CornerRadius="0,0,0,0"
+                    Visibility="{Binding IsLauncher, Converter={c:BoolToVisibilityConverter}}">
+                <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindow}"
+                                      HelpText="{x:Static properties:Resources.SettingsTaskbarWindowHelp}">
+                    <controls:SettingItem.SettingContent>
+                        <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowEnabled, Mode=TwoWay}" />
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
+            </Border>
+            <Border Padding="16"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1,1,1,0"
+                    CornerRadius="0,0,0,0"
+                    Visibility="{Binding IsLauncher, Converter={c:BoolToVisibilityConverter}}">
+                <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindowAlignment}"
+                                      HelpText="{x:Static properties:Resources.SettingsTaskbarWindowAlignmentHelp}">
+                    <controls:SettingItem.SettingContent>
+                        <ComboBox HorizontalAlignment="Right"
+                                  ItemsSource="{Binding TaskbarWindowAlignmentOptions}"
+                                  SelectedValue="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowAlignment, Mode=TwoWay}" />
+                    </controls:SettingItem.SettingContent>
+                </controls:SettingItem>
+            </Border>
+            <Border Padding="16"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1,1,1,0"
                     CornerRadius="0,0,0,0">
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsThumbnailsEnabled}"
                                       HelpText="{x:Static properties:Resources.SettingsThumbnailsHelp}">

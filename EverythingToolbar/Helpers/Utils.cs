@@ -168,5 +168,21 @@ namespace EverythingToolbar.Helpers
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool SystemParametersInfo(int uiAction, int uiParam, bool pvParam, int fWinIni);
+
+        public static bool IsTaskbarCenterAligned()
+        {
+            if (ToolbarSettings.User.IsForceCenterAlignment)
+                return true;
+
+            if (GetWindowsVersion() < WindowsVersion.Windows11)
+                return false;
+
+            using var key = Registry.CurrentUser.OpenSubKey(
+                @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+            );
+            var taskbarAlignment = key?.GetValue("TaskbarAl");
+            var leftAligned = taskbarAlignment != null && (int)taskbarAlignment == 0;
+            return !leftAligned;
+        }
     }
 }

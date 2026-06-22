@@ -55,6 +55,12 @@ namespace EverythingToolbar.Settings
             }
         }
 
+        public List<string> TaskbarWindowAlignmentOptions { get; } =
+            [
+                "Left",
+                "Right",
+            ];
+
         public List<IconItem> IconItems { get; } =
             [
                 new()

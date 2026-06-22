@@ -642,6 +642,18 @@
   <data name="SettingsSearchIconHelp" xml:space="preserve">
     <value>Changes the style of the taskbar icon (requires explorer restart)</value>
   </data>
+  <data name="SettingsTaskbarWindow" xml:space="preserve">
+    <value>Taskbar Window</value>
+  </data>
+  <data name="SettingsTaskbarWindowHelp" xml:space="preserve">
+    <value>Show a search box directly on the taskbar for Windows 11 (requires restart)</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignment" xml:space="preserve">
+    <value>Taskbar Window Alignment</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignmentHelp" xml:space="preserve">
+    <value>Left: Aligns to the left edge if taskbar is centered, otherwise right. Right: Aligns to the right edge (system tray area)</value>
+  </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>Filter order</value>
   </data>

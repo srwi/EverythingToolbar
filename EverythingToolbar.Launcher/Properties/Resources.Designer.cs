@@ -77,7 +77,16 @@ namespace EverythingToolbar.Launcher.Properties {
                 return ResourceManager.GetString("ContextMenuRunSetupAssistant", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Settings....
+        /// </summary>
+        public static string ContextMenuSettings {
+            get {
+                return ResourceManager.GetString("ContextMenuSettings", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar..
         /// </summary>
@@ -140,7 +149,25 @@ namespace EverythingToolbar.Launcher.Properties {
                 return ResourceManager.GetString("SetupAssistantEnableSystemTrayHelp", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Show search box on the taskbar.
+        /// </summary>
+        public static string SetupAssistantTaskbarWindow {
+            get {
+                return ResourceManager.GetString("SetupAssistantTaskbarWindow", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Adds an Everything search box directly to the Windows 11 taskbar.
+        /// </summary>
+        public static string SetupAssistantTaskbarWindowHelp {
+            get {
+                return ResourceManager.GetString("SetupAssistantTaskbarWindowHelp", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Hide Windows search icon.
         /// </summary>

@@ -14,6 +14,7 @@ namespace EverythingToolbar
     {
         public static readonly SearchWindow Instance = new();
         public event EventHandler<EventArgs>? Hiding;
+        public event EventHandler<EventArgs>? Hidden;
         public event EventHandler<EventArgs>? Showing;
 
         private bool _dwmFlushOnRender;
@@ -92,6 +93,9 @@ namespace EverythingToolbar
             _dwmFlushOnRender = false;
 
             SearchState.Instance.Reset();
+            
+            // Fire Hidden event after animation is complete and window is actually hidden
+            Hidden?.Invoke(this, EventArgs.Empty);
         }
 
         public new void Show()

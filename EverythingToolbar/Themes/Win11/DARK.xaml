@@ -72,4 +72,9 @@
     <SolidColorBrush x:Key="ScrollbarThumbBackgroundHover" Color="#A9A9A9" />
     <SolidColorBrush x:Key="ScrollbarThumbBackgroundActive" Color="#A9A9A9" />
     
+    <!-- TaskbarWindow Resources -->
+    <SolidColorBrush x:Key="TaskbarWindowBackground" Color="#c52c2c2c" />
+    <SolidColorBrush x:Key="TaskbarWindowBackgroundHover" Color="#cc3e3e3e" />
+    <SolidColorBrush x:Key="TaskbarWindowBorder" Color="#4f4f4f" />
+
 </ResourceDictionary>

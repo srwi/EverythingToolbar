@@ -123,6 +123,9 @@
   <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
     <value>Run setup assistant...</value>
   </data>
+  <data name="ContextMenuSettings" xml:space="preserve">
+    <value>Settings...</value>
+  </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
   </data>
@@ -158,6 +161,12 @@
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>Enables the system tray icon for quick access to settings</value>
+  </data>
+  <data name="SetupAssistantTaskbarWindow" xml:space="preserve">
+    <value>Show search box on the taskbar</value>
+  </data>
+  <data name="SetupAssistantTaskbarWindowHelp" xml:space="preserve">
+    <value>Adds an Everything search box directly to the Windows 11 taskbar</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>Enable autostart</value>

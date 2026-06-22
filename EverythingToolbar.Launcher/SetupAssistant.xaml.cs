@@ -45,6 +45,12 @@ namespace EverythingToolbar.Launcher
             }
         }
 
+        /// <summary>
+        /// The taskbar search box is only available on Windows 11 and later.
+        /// </summary>
+        public bool IsTaskbarWindowSupported =>
+            Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11;
+
         private int _currentStep;
         public int CurrentStep
         {

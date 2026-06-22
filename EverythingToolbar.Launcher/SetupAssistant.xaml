@@ -6,6 +6,7 @@
                  xmlns:b="clr-namespace:EverythingToolbar.Behaviors;assembly=EverythingToolbar"
                  xmlns:properties="clr-namespace:EverythingToolbar.Launcher.Properties"
                  xmlns:controls="clr-namespace:EverythingToolbar.Controls;assembly=EverythingToolbar"
+                 xmlns:c="clr-namespace:EverythingToolbar.Converters;assembly=EverythingToolbar"
                  xmlns:local="clr-namespace:EverythingToolbar;assembly=EverythingToolbar"
                  WindowBackdropType="Mica"
                  ExtendsContentIntoTitleBar="True"
@@ -147,6 +148,20 @@
                                           HelpText="{x:Static properties:Resources.SetupAssistantEnableSystemTrayHelp}">
                         <controls:SettingItem.SettingContent>
                             <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsTrayIconEnabled, Mode=TwoWay}" />
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                </Border>
+                <Border Padding="16"
+                        Margin="0, 16, 0, 0"
+                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1,1,1,1"
+                        CornerRadius="8,8,8,8"
+                        Visibility="{Binding IsTaskbarWindowSupported, Converter={c:BoolToVisibilityConverter}}">
+                    <controls:SettingItem Title="{x:Static properties:Resources.SetupAssistantTaskbarWindow}"
+                                          HelpText="{x:Static properties:Resources.SetupAssistantTaskbarWindowHelp}">
+                        <controls:SettingItem.SettingContent>
+                            <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowEnabled, Mode=TwoWay}" />
                         </controls:SettingItem.SettingContent>
                     </controls:SettingItem>
                 </Border>

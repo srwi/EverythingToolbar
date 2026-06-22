@@ -1239,6 +1239,42 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Taskbar Window.
+        /// </summary>
+        public static string SettingsTaskbarWindow {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show a search box directly on the taskbar for Windows 11 (requires restart).
+        /// </summary>
+        public static string SettingsTaskbarWindowHelp {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarWindowHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Taskbar Window Alignment.
+        /// </summary>
+        public static string SettingsTaskbarWindowAlignment {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarWindowAlignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left: Aligns to the left edge if taskbar is centered, otherwise right. Right: Aligns to the right edge (system tray area).
+        /// </summary>
+        public static string SettingsTaskbarWindowAlignmentHelp {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarWindowAlignmentHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select first result.
         /// </summary>
         public static string SettingsSelectFirstResult {

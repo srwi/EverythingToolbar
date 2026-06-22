@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -8,13 +8,33 @@ using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
 using NLog;
 using FlowDirection = System.Windows.FlowDirection;
+using Point = System.Drawing.Point;
 using Size = System.Windows.Size;
 
-namespace EverythingToolbar.Launcher
+namespace EverythingToolbar.Behaviors
 {
-    internal class SearchWindowPlacement : Behavior<SearchWindow>
+    /// <summary>
+    /// Behavior that positions the SearchWindow relative to a placement target (deskband/taskbar window mode)
+    /// or based on cursor/taskbar location (launcher icon mode).
+    /// </summary>
+    public class SearchWindowPlacement : Behavior<SearchWindow>
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<SearchWindowPlacement>();
+
+        /// <summary>
+        /// Optional placement target. When set, SearchWindow positions relative to this element (deskband/taskbar window mode).
+        /// When null, positions based on cursor/taskbar location (launcher icon mode).
+        /// </summary>
+        public FrameworkElement? PlacementTarget { get; set; }
+
+        /// <summary>
+        /// When true, the next show uses cursor/taskbar placement even if a PlacementTarget
+        /// is set. The launcher icon/tray use this to open the classic launcher popup while a
+        /// taskbar window surface exists. Reset automatically after each show.
+        /// </summary>
+        public bool UseCursorPlacement { get; set; }
+
+        private double _dpiScalingFactor = 1.0;
 
         protected override void OnAttached()
         {
@@ -24,6 +44,23 @@ namespace EverythingToolbar.Launcher
 
             AssociatedObject.Showing += OnShowing;
             AssociatedObject.Hiding += OnHiding;
+
+            if (PlacementTarget != null)
+                PlacementTarget.Loaded += OnPlacementTargetLoaded;
+        }
+
+        protected override void OnDetaching()
+        {
+            AssociatedObject.Showing -= OnShowing;
+            AssociatedObject.Hiding -= OnHiding;
+
+            if (PlacementTarget != null)
+                PlacementTarget.Loaded -= OnPlacementTargetLoaded;
+        }
+
+        private void OnPlacementTargetLoaded(object sender, RoutedEventArgs e)
+        {
+            _dpiScalingFactor = GetScalingFactor();
         }
 
         private void OnHiding(object? sender, EventArgs e)
@@ -33,23 +70,124 @@ namespace EverythingToolbar.Launcher
 
         private void OnShowing(object? sender, EventArgs e)
         {
-            var scalingFactor = GetScalingFactor();
-            var position = CalculatePosition(scalingFactor);
+            _dpiScalingFactor = GetScalingFactor();
+
+            // Cursor/taskbar-based positioning (launcher icon mode) when forced or when no
+            // surface exists; otherwise anchor to the surface (deskband/taskbar window).
+            var useCursor = UseCursorPlacement || PlacementTarget == null;
+            UseCursorPlacement = false;
+
+            var position = useCursor
+                ? CalculatePositionFromTaskbar()
+                : CalculatePositionFromTarget();
+
             AssociatedObject.AnimateShow(
-                position.Left * scalingFactor,
-                position.Top * scalingFactor,
-                (position.Right - position.Left) * scalingFactor,
-                (position.Bottom - position.Top) * scalingFactor,
+                position.Left * _dpiScalingFactor,
+                position.Top * _dpiScalingFactor,
+                (position.Right - position.Left) * _dpiScalingFactor,
+                (position.Bottom - position.Top) * _dpiScalingFactor,
                 TaskbarStateManager.Instance.TaskbarEdge
             );
         }
 
-        private Rect CalculatePosition(double scalingFactor)
+        /// <summary>
+        /// Calculate position relative to PlacementTarget (deskband/taskbar window mode).
+        /// </summary>
+        private Rect CalculatePositionFromTarget()
+        {
+            if (PlacementTarget == null ||
+                PresentationSource.FromVisual(PlacementTarget) as HwndSource is not { } hwndSource)
+            {
+                Logger.Error("Failed to get HwndSource from PlacementTarget. Cannot calculate window position.");
+                return new Rect();
+            }
+
+            GetWindowRect(hwndSource.Handle, out var placementTarget);
+
+            var placementTargetPos = new Point(placementTarget.Left, placementTarget.Top);
+            var screen = Screen.FromPoint(placementTargetPos);
+            var workingArea = screen.WorkingArea;
+            var screenBounds = screen.Bounds;
+            var windowSize = GetTargetWindowSize();
+            var taskbarSize = TaskbarStateManager.Instance.TaskbarSize;
+            var margin = GetMargin();
+
+            var windowPosition = new Rect();
+            switch (TaskbarStateManager.Instance.TaskbarEdge)
+            {
+                case Edge.Bottom:
+                case Edge.Top:
+                    // In case of auto-hiding taskbar the working area is not affected by the taskbar.
+                    // Therefore the taskbar size needs to be handled separately.
+                    var topDockPos = Math.Max(workingArea.Top, screenBounds.Top + (int)taskbarSize.Height);
+                    var bottomDockPos = Math.Min(workingArea.Bottom, screenBounds.Bottom - (int)taskbarSize.Height);
+
+                    // Calculate horizontal position
+                    windowPosition.Right = Math.Min(
+                        placementTarget.Left + (int)windowSize.Width,
+                        workingArea.Right - margin
+                    );
+                    windowPosition.Left = Math.Max(
+                        workingArea.Left + margin,
+                        windowPosition.Right - (int)windowSize.Width
+                    );
+                    // Ensure width is preserved
+                    windowPosition.Right = windowPosition.Left + (int)windowSize.Width;
+
+                    // Calculate vertical position - derive Top from Bottom to preserve height
+                    windowPosition.Bottom = Math.Min(
+                        placementTarget.Top - margin,
+                        bottomDockPos - margin
+                    );
+                    windowPosition.Top = Math.Max(
+                        topDockPos + margin,
+                        windowPosition.Bottom - (int)windowSize.Height
+                    );
+                    // Ensure height is preserved (recalculate Bottom based on Top)
+                    windowPosition.Bottom = windowPosition.Top + (int)windowSize.Height;
+                    break;
+                case Edge.Left:
+                case Edge.Right:
+                    var leftDockPos = Math.Max(workingArea.Left, screenBounds.Left + (int)taskbarSize.Width);
+                    var rightDockPos = Math.Min(workingArea.Right, screenBounds.Right - (int)taskbarSize.Width);
+
+                    // Calculate vertical position
+                    windowPosition.Bottom = Math.Min(
+                        placementTarget.Top + (int)windowSize.Height,
+                        workingArea.Bottom - margin
+                    );
+                    windowPosition.Top = Math.Max(
+                        workingArea.Top + margin,
+                        windowPosition.Bottom - (int)windowSize.Height
+                    );
+                    // Ensure height is preserved
+                    windowPosition.Bottom = windowPosition.Top + (int)windowSize.Height;
+
+                    // Calculate horizontal position - derive Left from Right to preserve width
+                    windowPosition.Right = Math.Min(
+                        placementTarget.Left - margin,
+                        rightDockPos - margin
+                    );
+                    windowPosition.Left = Math.Max(
+                        leftDockPos + margin,
+                        windowPosition.Right - (int)windowSize.Width
+                    );
+                    // Ensure width is preserved (recalculate Right based on Left)
+                    windowPosition.Right = windowPosition.Left + (int)windowSize.Width;
+                    break;
+            }
+            return windowPosition;
+        }
+
+        /// <summary>
+        /// Calculate position based on cursor/taskbar location (launcher icon mode).
+        /// </summary>
+        private Rect CalculatePositionFromTaskbar()
         {
             var screen = Screen.FromPoint(Cursor.Position);
             var taskbar = FindDockedTaskBar(screen);
-            var windowSize = GetTargetWindowSize(scalingFactor);
-            var margin = (int)(GetMargin() / scalingFactor);
+            var windowSize = GetTargetWindowSize();
+            var margin = GetMargin();
 
             var windowPosition = new Rect();
 
@@ -103,11 +241,11 @@ namespace EverythingToolbar.Launcher
             return windowPosition;
         }
 
-        private Size GetTargetWindowSize(double scalingFactor)
+        private Size GetTargetWindowSize()
         {
             var windowSize = new Size(ToolbarSettings.User.PopupWidth, ToolbarSettings.User.PopupHeight);
-            windowSize.Width = Math.Max(windowSize.Width, AssociatedObject.MinWidth) / scalingFactor;
-            windowSize.Height = Math.Max(windowSize.Height, AssociatedObject.MinHeight) / scalingFactor;
+            windowSize.Width = Math.Max(windowSize.Width, AssociatedObject.MinWidth) / _dpiScalingFactor;
+            windowSize.Height = Math.Max(windowSize.Height, AssociatedObject.MinHeight) / _dpiScalingFactor;
             return windowSize;
         }
 
@@ -209,7 +347,9 @@ namespace EverythingToolbar.Launcher
 
         private double GetScalingFactor()
         {
-            if (!(PresentationSource.FromVisual(AssociatedObject) is HwndSource hwndSource))
+            // Try to get scaling from PlacementTarget first, then fall back to AssociatedObject
+            var visual = PlacementTarget ?? (System.Windows.Media.Visual)AssociatedObject;
+            if (PresentationSource.FromVisual(visual) is not HwndSource hwndSource)
             {
                 Logger.Error("Failed to get display scaling factor. This may result in incorrect window placement.");
                 return 1.0;
@@ -220,11 +360,15 @@ namespace EverythingToolbar.Launcher
 
         private int GetMargin()
         {
-            return Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11 ? 12 : 0;
+            return Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows11 ? 12 : 0;
         }
 
         [DllImport("user32")]
-        static extern uint GetDpiForWindow(IntPtr hWnd);
+        private static extern uint GetDpiForWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
 
         private struct TaskbarLocation
         {
