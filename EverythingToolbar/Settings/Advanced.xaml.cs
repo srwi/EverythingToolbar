@@ -56,21 +56,6 @@ namespace EverythingToolbar.Settings
             }
         }
 
-        private bool _isWindowsSearchHidden = !Utils.GetWindowsSearchEnabledState();
-        public bool IsWindowsSearchHidden
-        {
-            get => _isWindowsSearchHidden;
-            set
-            {
-                if (_isWindowsSearchHidden != value)
-                {
-                    _isWindowsSearchHidden = value;
-                    Utils.SetWindowsSearchEnabledState(!value);
-                    OnPropertyChanged();
-                }
-            }
-        }
-
         public static Func<bool>? GetAutostartStateCallback { get; set; }
         public static Action<bool>? SetAutostartStateCallback { get; set; }
 

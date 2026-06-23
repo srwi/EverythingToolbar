@@ -120,8 +120,8 @@
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>Quit</value>
   </data>
-  <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Run setup assistant...</value>
+  <data name="ContextMenuSettings" xml:space="preserve">
+    <value>Settings...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
@@ -135,8 +135,8 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar Setup Assistant</value>
   </data>
-  <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar.</value>
+  <data name="SetupAssistantExitWarningText" xml:space="preserve">
+    <value>Are you sure you want to exit the setup assistant? The tray icon will be enabled so you can still open EverythingToolbar's settings and set up taskbar integration later. You can also open search anytime with the keyboard shortcut.</value>
   </data>
   <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
     <value>Exit Setup Assistant</value>
@@ -159,6 +159,9 @@
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>Enables the system tray icon for quick access to settings</value>
   </data>
+  <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
+    <value>Embeds a search box on the taskbar</value>
+  </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>Enable autostart</value>
   </data>
@@ -168,10 +171,25 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Done</value>
   </data>
-  <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>The system tray icon cannot be disabled when EverythingToolbar is not pinned to the taskbar. Please pin EverythingToolbar to the taskbar first, or keep the system tray icon enabled to access settings and functionality.</value>
+  <data name="SetupAssistantChooseAccess" xml:space="preserve">
+    <value>Choose how to open EverythingToolbar</value>
+  </data>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>or</value>
+  </data>
+  <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
+    <value>Taskbar search box</value>
+  </data>
+  <data name="TrayIconDisableErrorMessage" xml:space="preserve">
+    <value>The system tray icon cannot be disabled when EverythingToolbar is neither pinned to the taskbar nor has the taskbar search box enabled. Please enable either first, or keep the system tray icon enabled to access settings.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>Cannot disable system tray icon</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
+    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
+    <value>Tray icon enabled</value>
   </data>
 </root>

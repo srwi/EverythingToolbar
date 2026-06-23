@@ -1,10 +1,14 @@
 using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Interop;
 using System.Windows.Shell;
+using System.Windows.Threading;
+using EverythingToolbar.Behaviors;
 using EverythingToolbar.Controls;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Launcher.Properties;
@@ -26,12 +30,17 @@ namespace EverythingToolbar.Launcher
 
         private class LauncherWindow : Window
         {
+            private TaskbarWindow? _taskbarWindow;
+            private readonly SearchWindowPlacement? _searchWindowPlacementBehavior;
+            private bool _temporarilyInIconMode;
+            private bool _closingTaskbarWindowIntentionally;
+            private uint _taskbarCreatedMsg;
+
             public LauncherWindow(NotifyIcon icon)
             {
                 ToolbarLogger.Initialize("Launcher");
 
                 _notifyIcon = icon;
-                SetupJumpList();
 
                 _searchWindowRecentlyClosedTimer = new Timer(500);
                 _searchWindowRecentlyClosedTimer.AutoReset = false;
@@ -47,15 +56,19 @@ namespace EverythingToolbar.Launcher
                 ResizeMode = ResizeMode.NoResize;
                 WindowStyle = WindowStyle.None;
 
-                TaskbarStateManager.Instance.IsIcon = true;
+                _searchWindowPlacementBehavior = new SearchWindowPlacement();
+                Interaction.GetBehaviors(SearchWindow.Instance).Add(_searchWindowPlacementBehavior);
 
-                var behavior = new SearchWindowPlacement();
-                Interaction.GetBehaviors(SearchWindow.Instance).Add(behavior);
+                if (Helpers.Utils.IsTaskbarWindowActive())
+                    CreateTaskbarWindow();
+                else
+                    TaskbarStateManager.Instance.IsIcon = true;
 
                 StartToggleListener();
 
                 if (
                     !Utils.IsTaskbarPinned()
+                    && !Helpers.Utils.IsTaskbarWindowActive()
                     && (!ToolbarSettings.User.IsSetupAssistantDisabled || !ToolbarSettings.User.IsTrayIconEnabled)
                 )
                     new SetupAssistant(icon).Show();
@@ -64,19 +77,24 @@ namespace EverythingToolbar.Launcher
 
                 StartMenuIntegration.Instance.Initialize();
 
-                SetupAutostartStateCallback();
+                SetupSettingsCallbacks();
 
                 SearchWindow.Instance.Hiding += OnSearchWindowHiding;
+                SearchWindow.Instance.Hidden += OnSearchWindowHidden;
 
                 ToolbarSettings.User.PropertyChanged += async (_, e) =>
                 {
                     if (e.PropertyName == nameof(ToolbarSettings.User.IsTrayIconEnabled))
                     {
-                        if (!ToolbarSettings.User.IsTrayIconEnabled && !Utils.IsTaskbarPinned())
+                        if (
+                            !ToolbarSettings.User.IsTrayIconEnabled
+                            && !Utils.IsTaskbarPinned()
+                            && !Helpers.Utils.IsTaskbarWindowActive()
+                        )
                         {
                             await FluentMessageBox
                                 .CreateError(
-                                    Properties.Resources.TrayIconDisableErrorText,
+                                    Properties.Resources.TrayIconDisableErrorMessage,
                                     Properties.Resources.TrayIconDisableErrorTitle
                                 )
                                 .ShowDialogAsync();
@@ -98,33 +116,164 @@ namespace EverythingToolbar.Launcher
                                 .ShowDialogAsync() == MessageBoxResult.Primary;
                         Utils.ChangeTaskbarPinIcon(ToolbarSettings.User.IconName, restartExplorer);
                     }
+                    else if (e.PropertyName == nameof(ToolbarSettings.User.TaskbarWindowEnabled))
+                    {
+                        if (Helpers.Utils.IsTaskbarWindowActive())
+                        {
+                            CreateTaskbarWindow();
+                        }
+                        else
+                        {
+                            if (SearchWindow.Instance.IsVisible)
+                                SearchWindow.Instance.Hide();
+
+                            // Never leave the user with no way into search or settings.
+                            if (!Utils.IsTaskbarPinned() && !ToolbarSettings.User.IsTrayIconEnabled)
+                            {
+                                ToolbarSettings.User.IsTrayIconEnabled = true;
+                                await FluentMessageBox
+                                    .CreateRegular(
+                                        Properties.Resources.TaskbarWindowDisabledTrayEnabledText,
+                                        Properties.Resources.TaskbarWindowDisabledTrayEnabledTitle
+                                    )
+                                    .ShowDialogAsync();
+                            }
+
+                            CloseTaskbarWindow();
+                        }
+                    }
                 };
             }
 
-            private void SetupJumpList()
+            protected override void OnSourceInitialized(EventArgs e)
             {
-                var jumpList = new JumpList();
-                jumpList.JumpItems.Add(
-                    new JumpTask
-                    {
-                        Title = Properties.Resources.ContextMenuRunSetupAssistant,
-                        Description = Properties.Resources.ContextMenuRunSetupAssistant,
-                        ApplicationPath = Environment.ProcessPath,
-                        Arguments = "--run-setup-assistant",
-                    }
-                );
-                JumpList.SetJumpList(Application.Current, jumpList);
+                base.OnSourceInitialized(e);
+
+                _taskbarCreatedMsg = RegisterWindowMessage("TaskbarCreated");
+                if (PresentationSource.FromVisual(this) is HwndSource source)
+                {
+                    source.AddHook(WndProc);
+
+                    if (_taskbarCreatedMsg != 0)
+                        ChangeWindowMessageFilterEx(source.Handle, _taskbarCreatedMsg, MSGFLT_ALLOW, IntPtr.Zero);
+                }
             }
 
-            private static void OnSearchWindowHiding(object? sender, EventArgs e)
+            private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+            {
+                if (_taskbarCreatedMsg != 0 && msg == _taskbarCreatedMsg && Helpers.Utils.IsTaskbarWindowActive())
+                {
+                    // Delay so the new taskbar's UIA tree (Widgets button / tray) is ready for positioning.
+                    var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
+                    timer.Tick += (_, _) =>
+                    {
+                        timer.Stop();
+                        CloseTaskbarWindow();
+                        CreateTaskbarWindow();
+                    };
+                    timer.Start();
+                }
+
+                return IntPtr.Zero;
+            }
+
+            private void CreateTaskbarWindow()
+            {
+                if (!Helpers.Utils.IsTaskbarWindowActive() || _taskbarWindow != null)
+                    return;
+
+                _taskbarWindow = new TaskbarWindow();
+                _taskbarWindow.Closed += OnTaskbarWindowClosed;
+
+                new WindowInteropHelper(_taskbarWindow).EnsureHandle();
+                if (!_taskbarWindow.IsAttachedToTaskbar)
+                {
+                    CloseTaskbarWindow();
+                    return;
+                }
+
+                _taskbarWindow.Show();
+                TaskbarStateManager.Instance.IsIcon = false;
+                if (_searchWindowPlacementBehavior != null)
+                    _searchWindowPlacementBehavior.PlacementTarget = _taskbarWindow.PlacementTarget;
+            }
+
+            private void CloseTaskbarWindow()
+            {
+                if (_taskbarWindow != null)
+                {
+                    _closingTaskbarWindowIntentionally = true;
+                    try
+                    {
+                        _taskbarWindow.Close();
+                    }
+                    catch
+                    {
+                        // Window may already be destroyed (e.g. explorer restarted); ignore.
+                    }
+                    finally
+                    {
+                        _taskbarWindow = null;
+                        _closingTaskbarWindowIntentionally = false;
+                    }
+                }
+
+                TaskbarStateManager.Instance.IsIcon = true;
+                if (_searchWindowPlacementBehavior != null)
+                    _searchWindowPlacementBehavior.PlacementTarget = null;
+            }
+
+            private void OnTaskbarWindowClosed(object? sender, EventArgs e)
+            {
+                if (_closingTaskbarWindowIntentionally)
+                    return;
+
+                _taskbarWindow = null;
+                TaskbarStateManager.Instance.IsIcon = true;
+                if (_searchWindowPlacementBehavior != null)
+                    _searchWindowPlacementBehavior.PlacementTarget = null;
+            }
+
+            private void OnSearchWindowHiding(object? sender, EventArgs e)
             {
                 _searchWindowRecentlyClosed = true;
                 _searchWindowRecentlyClosedTimer?.Start();
             }
 
-            private static void FocusSearchBox()
+            private void OnSearchWindowHidden(object? sender, EventArgs e)
             {
-                SearchWindow.Instance.Toggle();
+                if (_temporarilyInIconMode && _taskbarWindow != null)
+                {
+                    TaskbarStateManager.Instance.IsIcon = false;
+                    _temporarilyInIconMode = false;
+                }
+            }
+
+            private void FocusSearchBox()
+            {
+                if (_taskbarWindow is { IsLoaded: true })
+                {
+                    if (SearchWindow.Instance.IsVisible)
+                        SearchWindow.Instance.Hide();
+                    else
+                        EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
+                }
+                else
+                {
+                    SearchWindow.Instance.Toggle();
+                }
+            }
+
+            private void ShowAsLauncher()
+            {
+                if (_taskbarWindow != null && _searchWindowPlacementBehavior != null)
+                {
+                    _temporarilyInIconMode = true;
+                    TaskbarStateManager.Instance.IsIcon = true;
+                    _searchWindowPlacementBehavior.UseCursorPlacement = true;
+                }
+
+                SearchWindow.Instance.Show();
             }
 
             private void StartToggleListener()
@@ -149,10 +298,20 @@ namespace EverythingToolbar.Launcher
                 });
             }
 
-            private void SetupAutostartStateCallback()
+            private void SetupSettingsCallbacks()
             {
-                Settings.Advanced.GetAutostartStateCallback = () => Utils.GetAutostartState();
-                Settings.Advanced.SetAutostartStateCallback = (state) => Utils.SetAutostartState(state);
+                EverythingToolbar.Settings.Advanced.GetAutostartStateCallback = () => Utils.GetAutostartState();
+                EverythingToolbar.Settings.Advanced.SetAutostartStateCallback = (state) =>
+                    Utils.SetAutostartState(state);
+
+                EverythingToolbar.Settings.SettingsWindow.RegisterPage(
+                    new EverythingToolbar.Settings.SettingsPageDescriptor(
+                        EverythingToolbar.Properties.Resources.SettingsTaskbarIntegration,
+                        Wpf.Ui.Controls.SymbolRegular.Pin24,
+                        typeof(Settings.TaskbarIntegration),
+                        typeof(EverythingToolbar.Settings.About)
+                    )
+                );
             }
 
             private void ToggleWindow()
@@ -163,7 +322,10 @@ namespace EverythingToolbar.Launcher
 
                 Dispatcher?.Invoke(() =>
                 {
-                    SearchWindow.Instance.Toggle();
+                    if (SearchWindow.Instance.IsVisible)
+                        SearchWindow.Instance.Hide();
+                    else
+                        ShowAsLauncher();
                 });
             }
 
@@ -175,6 +337,43 @@ namespace EverythingToolbar.Launcher
                         new SetupAssistant(_notifyIcon).Show();
                 });
             }
+
+            protected override void OnClosed(EventArgs e)
+            {
+                CloseTaskbarWindow();
+                base.OnClosed(e);
+            }
+
+            [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+            private static extern uint RegisterWindowMessage(string lpString);
+
+            private const uint MSGFLT_ALLOW = 1;
+
+            [DllImport("user32.dll", SetLastError = true)]
+            private static extern bool ChangeWindowMessageFilterEx(
+                IntPtr hwnd,
+                uint message,
+                uint action,
+                IntPtr pChangeFilterStruct
+            );
+        }
+
+        private static void OpenSettingsWindow()
+        {
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is EverythingToolbar.Settings.SettingsWindow existing)
+                {
+                    if (existing.WindowState == WindowState.Minimized)
+                        existing.WindowState = WindowState.Normal;
+
+                    existing.Activate();
+
+                    return;
+                }
+            }
+
+            new EverythingToolbar.Settings.SettingsWindow().Show();
         }
 
         [STAThread]
@@ -191,15 +390,15 @@ namespace EverythingToolbar.Launcher
                     var app = new Application();
                     trayIcon.Icon = new Icon(Utils.GetThemedAppIconPath(absolute: true));
                     trayIcon.ContextMenuStrip = new ContextMenuStrip();
-                    var setupItem = new ToolStripMenuItem(
-                        Resources.ContextMenuRunSetupAssistant,
+                    var settingsItem = new ToolStripMenuItem(
+                        Resources.ContextMenuSettings,
                         null,
                         (_, _) =>
                         {
-                            new SetupAssistant(trayIcon).Show();
+                            OpenSettingsWindow();
                         }
                     );
-                    trayIcon.ContextMenuStrip.Items.Add(setupItem);
+                    trayIcon.ContextMenuStrip.Items.Add(settingsItem);
                     var quitItem = new ToolStripMenuItem(
                         Resources.ContextMenuQuit,
                         null,

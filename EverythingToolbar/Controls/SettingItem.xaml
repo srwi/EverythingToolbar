@@ -10,8 +10,10 @@
         </Grid.ColumnDefinitions>
         <StackPanel VerticalAlignment="Center">
             <ui:TextBlock Text="{Binding Title, ElementName=Root}"
+                          FontSize="14"
                           TextWrapping="Wrap" />
             <ui:TextBlock Text="{Binding HelpText, ElementName=Root}"
+                          FontSize="12"
                           Foreground="{DynamicResource TextFillColorDisabledBrush}">
                 <ui:TextBlock.Style>
                     <Style TargetType="ui:TextBlock">

@@ -23,13 +23,6 @@ namespace EverythingToolbar.Settings
         }
     }
 
-    public class IconItem
-    {
-        public string DisplayName { get; set; } = "";
-        public string IconPath { get; set; } = "";
-        public string Value { get; set; } = "";
-    }
-
     public class UserInterfaceViewModel : INotifyPropertyChanged
     {
         public List<KeyValuePair<string, string>> ItemTemplates { get; } =
@@ -55,42 +48,7 @@ namespace EverythingToolbar.Settings
             }
         }
 
-        public List<IconItem> IconItems { get; } =
-            [
-                new()
-                {
-                    DisplayName = "Light",
-                    IconPath = "pack://siteoforigin:,,,/Icons/Dark.ico",
-                    Value = "Icons/Dark.ico",
-                },
-                new()
-                {
-                    DisplayName = "Dark",
-                    IconPath = "pack://siteoforigin:,,,/Icons/Light.ico",
-                    Value = "Icons/Light.ico",
-                },
-                new()
-                {
-                    DisplayName = "Blue",
-                    IconPath = "pack://siteoforigin:,,,/Icons/Medium.ico",
-                    Value = "Icons/Medium.ico",
-                },
-            ];
-
         public SearchResult SampleSearchResult { get; }
-
-        public IconItem? SelectedIconItem
-        {
-            get => IconItems.FirstOrDefault(item => item.Value == ToolbarSettings.User.IconName);
-            set
-            {
-                if (value != null)
-                {
-                    ToolbarSettings.User.IconName = value.Value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedIconItem)));
-                }
-            }
-        }
 
         public bool IsLauncher => Application.Current != null;
 

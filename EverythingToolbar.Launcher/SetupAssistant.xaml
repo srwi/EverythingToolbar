@@ -5,7 +5,9 @@
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
                  xmlns:b="clr-namespace:EverythingToolbar.Behaviors;assembly=EverythingToolbar"
                  xmlns:properties="clr-namespace:EverythingToolbar.Launcher.Properties"
+                 xmlns:sprops="clr-namespace:EverythingToolbar.Properties;assembly=EverythingToolbar"
                  xmlns:controls="clr-namespace:EverythingToolbar.Controls;assembly=EverythingToolbar"
+                 xmlns:c="clr-namespace:EverythingToolbar.Converters;assembly=EverythingToolbar"
                  xmlns:local="clr-namespace:EverythingToolbar;assembly=EverythingToolbar"
                  WindowBackdropType="Mica"
                  ExtendsContentIntoTitleBar="True"
@@ -18,8 +20,7 @@
                  ResizeMode="NoResize"
                  Title="{x:Static properties:Resources.SetupAssistantTitle}"
                  Closed="OnClosed"
-                 Closing="OnClosing"
-                 Width="600">
+                 Closing="OnClosing">
 
     <ui:FluentWindow.Resources>
         <Storyboard x:Key="WiggleStoryboard">
@@ -44,8 +45,6 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
@@ -59,113 +58,235 @@
         </ui:TitleBar>
 
         <StackPanel Grid.Row="1"
-                    Margin="40, 20, 40, 20">
-            <StackPanel.RenderTransform>
-                <TranslateTransform x:Name="WiggleTransform" />
-            </StackPanel.RenderTransform>
+                    Margin="40, 10, 40, 20">
+
             <ui:TextBlock FontTypography="BodyStrong"
-                          Text="{x:Static properties:Resources.SetupAssistantPinToTaskbar}"
-                          Margin="0, 0, 0, 7"/>
-            <Border Padding="16"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1,1,1,1"
-                    CornerRadius="8,8,8,8">
+                          Text="{x:Static properties:Resources.SetupAssistantChooseAccess}"
+                          Margin="0, 0, 0, 10"
+                          Visibility="{Binding IsTaskbarWindowSupported, Converter={c:BoolToVisibilityConverter}}" />
+
+            <!-- Two ways to open EverythingToolbar, presented side by side as a choice. -->
+            <Grid>
+                <Grid.RenderTransform>
+                    <TranslateTransform x:Name="WiggleTransform" />
+                </Grid.RenderTransform>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition>
+                        <ColumnDefinition.Style>
+                            <Style TargetType="ColumnDefinition">
+                                <Setter Property="Width" Value="0" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsTaskbarWindowSupported}" Value="True">
+                                        <Setter Property="Width" Value="*" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ColumnDefinition.Style>
+                    </ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <!-- Option 1: pin the taskbar icon (+ its related settings) -->
+                <StackPanel Grid.Column="0" VerticalAlignment="Top">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsPinOptionAvailable}" Value="False">
+                                    <Setter Property="Opacity" Value="0.4" />
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <Border Padding="16"
+                            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1,1,1,0"
+                            CornerRadius="8,8,0,0">
+                        <StackPanel>
+                            <Grid>
+                                <Image Source="Images/PinToTaskbar.png"
+                                       RenderOptions.BitmapScalingMode="Fant">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Opacity" Value="1" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsPinned}" Value="True">
+                                                    <Setter Property="Opacity" Value="0.2" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <ui:SymbolIcon Symbol="Checkmark24"
+                                               FontSize="64"
+                                               Foreground="{ui:ThemeResource AccentTextFillColorPrimaryBrush}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center">
+                                    <ui:SymbolIcon.Style>
+                                        <Style TargetType="ui:SymbolIcon">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsPinned}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ui:SymbolIcon.Style>
+                                </ui:SymbolIcon>
+                            </Grid>
+                            <controls:SettingItem Margin="0, 16, 0, 0"
+                                                  Title="{x:Static properties:Resources.SetupAssistantPinToTaskbar}"
+                                                  HelpText="{x:Static properties:Resources.SetupAssistantPinToTaskbarHelp}" />
+                        </StackPanel>
+                    </Border>
+                    <Border Padding="16"
+                            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1,1,1,1"
+                            CornerRadius="0,0,8,8">
+                        <controls:SettingItem Title="{x:Static properties:Resources.SetupAssistantHideWindowsSearch}"
+                                              HelpText="{x:Static properties:Resources.SetupAssistantHideWindowsSearchHelp}">
+                            <controls:SettingItem.SettingContent>
+                                <ui:ToggleSwitch IsChecked="{Binding WindowsSearchHidden, Mode=TwoWay}" />
+                            </controls:SettingItem.SettingContent>
+                        </controls:SettingItem>
+                    </Border>
+                </StackPanel>
+
+                <!-- Vertical "or" divider -->
+                <Grid Grid.Column="1"
+                      Margin="16, 0, 16, 0"
+                      Visibility="{Binding IsTaskbarWindowSupported, Converter={c:BoolToVisibilityConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Rectangle Grid.Row="0"
+                               Width="1"
+                               HorizontalAlignment="Center"
+                               Fill="{ui:ThemeResource CardStrokeColorDefaultBrush}" />
+                    <ui:TextBlock Grid.Row="1"
+                                  Margin="0, 8, 0, 8"
+                                  HorizontalAlignment="Center"
+                                  Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                  Text="{x:Static properties:Resources.SetupAssistantOr}" />
+                    <Rectangle Grid.Row="2"
+                               Width="1"
+                               HorizontalAlignment="Center"
+                               Fill="{ui:ThemeResource CardStrokeColorDefaultBrush}" />
+                </Grid>
+
+                <!-- Option 2: taskbar search box (+ its related settings), Windows 11+ -->
+                <StackPanel Grid.Column="2"
+                            VerticalAlignment="Top"
+                            Visibility="{Binding IsTaskbarWindowSupported, Converter={c:BoolToVisibilityConverter}}">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsWindowOptionAvailable}" Value="False">
+                                    <Setter Property="Opacity" Value="0.4" />
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <Border Padding="16"
+                            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1,1,1,0"
+                            CornerRadius="8,8,0,0">
+                        <StackPanel>
+                            <Image Source="Images/TaskbarSearchBox.png"
+                                   RenderOptions.BitmapScalingMode="Fant" />
+                            <controls:SettingItem Title="{x:Static properties:Resources.SetupAssistantTaskbarWindowOption}"
+                                                  HelpText="{x:Static properties:Resources.SetupAssistantTaskbarWindowAlternativeHelp}"
+                                                  Margin="0, 16, 0, 0">
+                                <controls:SettingItem.SettingContent>
+                                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowEnabled, Mode=TwoWay}" />
+                                </controls:SettingItem.SettingContent>
+                            </controls:SettingItem>
+                        </StackPanel>
+                    </Border>
+                    <Border Padding="16"
+                            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1,1,1,1"
+                            CornerRadius="0,0,8,8">
+                        <controls:SettingItem Title="{x:Static sprops:Resources.SettingsTaskbarWindowAlignment}"
+                                              HelpText="{x:Static sprops:Resources.SettingsTaskbarWindowAlignmentHelp}">
+                            <controls:SettingItem.SettingContent>
+                                <ComboBox HorizontalAlignment="Right"
+                                          ItemsSource="{Binding TaskbarWindowAlignmentOptions}"
+                                          DisplayMemberPath="Key"
+                                          SelectedValuePath="Value"
+                                          SelectedValue="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowAlignment, Mode=TwoWay}">
+                                    <ComboBox.IsEnabled>
+                                        <MultiBinding Converter="{c:BooleanAndConverter}">
+                                            <Binding Source="{x:Static local:ToolbarSettings.User}" Path="TaskbarWindowEnabled" />
+                                            <Binding Path="AllowLeftAlignment" />
+                                        </MultiBinding>
+                                    </ComboBox.IsEnabled>
+                                </ComboBox>
+                            </controls:SettingItem.SettingContent>
+                        </controls:SettingItem>
+                    </Border>
+                </StackPanel>
+            </Grid>
+
+            <!-- Settings that apply regardless of the chosen option. Until one of the options
+                 above is active, this section is disabled and clicking it wiggles the cards. -->
+            <Border MouseLeftButtonDown="OnSecondStepClicked" Background="Transparent">
                 <StackPanel>
-                    <TextBlock TextWrapping="Wrap" Text="{x:Static properties:Resources.SetupAssistantPinToTaskbarHelp}" />
-                    <Grid Margin="0, 16, 0, 0">
-                        <Image Source="Images/PinToTaskbar.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Opacity" Value="0.2" />
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding PreferencesUnlocked}" Value="True">
                                     <Setter Property="Opacity" Value="1" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CurrentStep}" Value="1">
-                                            <Setter Property="Opacity" Value="0.2" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                        <ui:SymbolIcon Symbol="Checkmark24"
-                                       FontSize="64"
-                                       Foreground="{ui:ThemeResource AccentTextFillColorPrimaryBrush}"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center">
-                            <ui:SymbolIcon.Style>
-                                <Style TargetType="ui:SymbolIcon">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CurrentStep}" Value="1">
-                                            <Setter Property="Visibility" Value="Visible" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ui:SymbolIcon.Style>
-                        </ui:SymbolIcon>
-                    </Grid>
+                                    <Setter Property="IsEnabled" Value="True" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <ui:TextBlock FontTypography="BodyStrong"
+                                  Text="{x:Static properties:Resources.SetupAssistantPreferences}"
+                                  Margin="0, 24, 0, 7" />
+                    <Border Padding="16"
+                            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1,1,1,0"
+                            CornerRadius="8,8,0,0">
+                        <controls:SettingItem Title="{x:Static properties:Resources.SetupAssistantEnableSystemTray}"
+                                              HelpText="{x:Static properties:Resources.SetupAssistantEnableSystemTrayHelp}">
+                            <controls:SettingItem.SettingContent>
+                                <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsTrayIconEnabled, Mode=TwoWay}" />
+                            </controls:SettingItem.SettingContent>
+                        </controls:SettingItem>
+                    </Border>
+                    <Border Padding="16"
+                            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1,1,1,1"
+                            CornerRadius="0,0,8,8">
+                        <controls:SettingItem Title="{x:Static properties:Resources.SetupAssistantEnableAutostart}"
+                                              HelpText="{x:Static properties:Resources.SetupAssistantEnableAutostartHelp}">
+                            <controls:SettingItem.SettingContent>
+                                <ui:ToggleSwitch IsChecked="{Binding AutostartEnabled, Mode=TwoWay}" />
+                            </controls:SettingItem.SettingContent>
+                        </controls:SettingItem>
+                    </Border>
+
+                    <ui:Button HorizontalAlignment="Center"
+                               Content="{x:Static properties:Resources.SetupAssistantDone}"
+                               Height="40"
+                               Margin="0, 20, 0, 0"
+                               Click="Close" />
                 </StackPanel>
             </Border>
         </StackPanel>
-
-        <Border Grid.Row="2"
-                Margin="40, 0, 40, 20"
-                MouseLeftButtonDown="OnSecondStepClicked">
-            <StackPanel>
-                <StackPanel.Style>
-                    <Style TargetType="StackPanel">
-                        <Setter Property="Opacity" Value="0.2" />
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding CurrentStep}" Value="1">
-                                <Setter Property="Opacity" Value="1" />
-                                <Setter Property="IsEnabled" Value="True" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Style>
-                <ui:TextBlock FontTypography="BodyStrong"
-                              Text="{x:Static properties:Resources.SetupAssistantPreferences}"
-                              Margin="0, 0, 0, 7"/>
-                <Border Padding="16"
-                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1,1,1,0"
-                        CornerRadius="8,8,0,0">
-                    <controls:SettingItem Title="{x:Static properties:Resources.SetupAssistantHideWindowsSearch}"
-                                          HelpText="{x:Static properties:Resources.SetupAssistantHideWindowsSearchHelp}">
-                        <controls:SettingItem.SettingContent>
-                            <ui:ToggleSwitch IsChecked="{Binding WindowsSearchHidden, Mode=TwoWay}" />
-                        </controls:SettingItem.SettingContent>
-                    </controls:SettingItem>
-                </Border>
-                <Border Padding="16"
-                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1,1,1,1"
-                        CornerRadius="0,0,8,8">
-                    <controls:SettingItem Title="{x:Static properties:Resources.SetupAssistantEnableSystemTray}"
-                                          HelpText="{x:Static properties:Resources.SetupAssistantEnableSystemTrayHelp}">
-                        <controls:SettingItem.SettingContent>
-                            <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsTrayIconEnabled, Mode=TwoWay}" />
-                        </controls:SettingItem.SettingContent>
-                    </controls:SettingItem>
-                </Border>
-                <Border Padding="16"
-                        Margin="0, 16, 0, 0"
-                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1,1,1,1"
-                        CornerRadius="8,8,8,8">
-                    <controls:SettingItem Title="{x:Static properties:Resources.SetupAssistantEnableAutostart}"
-                                          HelpText="{x:Static properties:Resources.SetupAssistantEnableAutostartHelp}">
-                        <controls:SettingItem.SettingContent>
-                            <ui:ToggleSwitch IsChecked="{Binding AutostartEnabled, Mode=TwoWay}"/>
-                        </controls:SettingItem.SettingContent>
-                    </controls:SettingItem>
-                </Border>
-
-                <ui:Button HorizontalAlignment="Center" Content="{x:Static properties:Resources.SetupAssistantDone}" Height="40" Margin="0, 20, 0, 0" Click="Close" />
-            </StackPanel>
-        </Border>
     </Grid>
 </ui:FluentWindow>

@@ -57,21 +57,7 @@ namespace EverythingToolbar.Launcher
             return Path.Combine(taskBarPath, "EverythingToolbar.lnk");
         }
 
-        public static bool IsTaskbarCenterAligned()
-        {
-            if (ToolbarSettings.User.IsForceCenterAlignment)
-                return true;
-
-            if (Helpers.Utils.GetWindowsVersion() < Helpers.Utils.WindowsVersion.Windows11)
-                return false;
-
-            using var key = Registry.CurrentUser.OpenSubKey(
-                @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-            );
-            var taskbarAlignment = key?.GetValue("TaskbarAl");
-            var leftAligned = taskbarAlignment != null && (int)taskbarAlignment == 0;
-            return !leftAligned;
-        }
+        public static bool IsTaskbarCenterAligned() => Helpers.Utils.IsTaskbarCenterAligned();
 
         public static bool GetAutostartState()
         {

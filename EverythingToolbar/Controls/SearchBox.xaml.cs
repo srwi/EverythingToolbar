@@ -28,6 +28,19 @@ namespace EverythingToolbar.Controls
             set => SetValue(SearchTermProperty, value);
         }
 
+        public static readonly DependencyProperty RespondsInIconModeProperty = DependencyProperty.Register(
+            nameof(RespondsInIconMode),
+            typeof(bool),
+            typeof(SearchBox),
+            new PropertyMetadata(false)
+        );
+
+        public bool RespondsInIconMode
+        {
+            get => (bool)GetValue(RespondsInIconModeProperty);
+            set => SetValue(RespondsInIconModeProperty, value);
+        }
+
         private static void OnSearchTermPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is SearchBox searchBox && e.NewValue is string newValue)
@@ -65,9 +78,10 @@ namespace EverythingToolbar.Controls
 
         private void OnFocusRequested(object? sender, EventArgs e)
         {
-            // Only visible SearchBoxes should respond to focus requests
-            if (Visibility == Visibility.Visible)
+            if (Visibility == Visibility.Visible && RespondsInIconMode == TaskbarStateManager.Instance.IsIcon)
+            {
                 Focus();
+            }
         }
 
         private void OnPreviewKeyDown(object? sender, KeyEventArgs e)

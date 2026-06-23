@@ -71,5 +71,5 @@
     <SolidColorBrush x:Key="ScrollbarThumbBackground" Color="#A9A9A9" />
     <SolidColorBrush x:Key="ScrollbarThumbBackgroundHover" Color="#A9A9A9" />
     <SolidColorBrush x:Key="ScrollbarThumbBackgroundActive" Color="#A9A9A9" />
-    
+
 </ResourceDictionary>

@@ -15,20 +15,6 @@
         <b:WpfUiBehavior />
     </i:Interaction.Behaviors>
 
-    <Page.Resources>
-        <DataTemplate x:Key="IconItemTemplate">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding IconPath}"
-                       Width="24"
-                       Height="24"
-                       Margin="0,0,8,0"
-                       RenderOptions.BitmapScalingMode="Fant" />
-                <TextBlock Text="{Binding DisplayName}"
-                           VerticalAlignment="Center" />
-            </StackPanel>
-        </DataTemplate>
-    </Page.Resources>
-
     <ScrollViewer>
         <StackPanel Margin="40">
             <ui:TextBlock FontTypography="Title"
@@ -79,23 +65,6 @@
                                   DisplayMemberPath="Key"
                                   SelectedValuePath="Value"
                                   SelectedValue="{Binding SelectedLanguage, Mode=TwoWay}" />
-                    </controls:SettingItem.SettingContent>
-                </controls:SettingItem>
-            </Border>
-            <Border Padding="16"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1,1,1,0"
-                    CornerRadius="0,0,0,0"
-                    Visibility="{Binding IsLauncher, Converter={c:BoolToVisibilityConverter}}">
-                <controls:SettingItem Title="{x:Static properties:Resources.SettingsSearchIcon}"
-                                      HelpText="{x:Static properties:Resources.SettingsSearchIconHelp}">
-                    <controls:SettingItem.SettingContent>
-                        <ComboBox HorizontalAlignment="Right"
-                                  MinWidth="150"
-                                  ItemsSource="{Binding IconItems}"
-                                  SelectedItem="{Binding SelectedIconItem, Mode=TwoWay}"
-                                  ItemTemplate="{StaticResource IconItemTemplate}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>

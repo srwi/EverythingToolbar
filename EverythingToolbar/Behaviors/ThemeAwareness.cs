@@ -30,6 +30,7 @@ namespace EverythingToolbar.Behaviors
 
         private readonly List<ResourceDictionary> _addedDictionaries = new();
         private UISettings? _settings;
+        private readonly RegistryValueWatcher _systemThemeWatcher;
         private static readonly RegistryEntry SystemThemeRegistryEntry = new(
             "HKEY_CURRENT_USER",
             @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize",
@@ -53,17 +54,19 @@ namespace EverythingToolbar.Behaviors
             }
         }
 
+        protected override void OnDetaching()
+        {
+            _systemThemeWatcher.Dispose();
+            ToolbarSettings.User.PropertyChanged -= OnSettingsChanged;
+            base.OnDetaching();
+        }
+
         public ThemeAwareness()
         {
-            var systemThemeWatcher = new RegistryWatcher(SystemThemeRegistryEntry);
-            systemThemeWatcher.OnChangeValue += newValue =>
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    var theme = GetThemeFromRegistryValue((int)(newValue ?? 0));
-                    ApplyTheme(theme);
-                });
-            };
+            _systemThemeWatcher = new RegistryValueWatcher(
+                @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+            );
+            _systemThemeWatcher.Changed += () => Dispatcher.Invoke(AutoApplyTheme);
 
             try
             {

@@ -1,0 +1,191 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Windows;
+using Res = EverythingToolbar.Properties.Resources;
+
+namespace EverythingToolbar.Launcher.Settings
+{
+    public partial class TaskbarIntegration : INotifyPropertyChanged
+    {
+        private readonly string _taskbarShortcutPath = Utils.GetTaskbarShortcutPath();
+        private FileSystemWatcher? _watcher;
+        private Helpers.RegistryValueWatcher? _taskbarAlignmentWatcher;
+
+        private bool _isTaskbarIconPinned;
+
+        public bool IsTaskbarIconPinned
+        {
+            get => _isTaskbarIconPinned;
+            private set
+            {
+                if (_isTaskbarIconPinned != value)
+                {
+                    _isTaskbarIconPinned = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool ShowTaskbarWindowSettings =>
+            Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11;
+
+        public List<KeyValuePair<string, string>> TaskbarWindowAlignmentOptions { get; } =
+            [
+                new(Res.SettingsTaskbarWindowAlignmentLeft, "Left"),
+                new(Res.SettingsTaskbarWindowAlignmentRight, "Right"),
+            ];
+
+        public bool AllowLeftAlignment => Helpers.Utils.IsTaskbarCenterAligned();
+
+        public List<IconItem> IconItems { get; } =
+            [
+                new()
+                {
+                    DisplayName = "Light",
+                    IconPath = "pack://siteoforigin:,,,/Icons/Dark.ico",
+                    Value = "Icons/Dark.ico",
+                },
+                new()
+                {
+                    DisplayName = "Dark",
+                    IconPath = "pack://siteoforigin:,,,/Icons/Light.ico",
+                    Value = "Icons/Light.ico",
+                },
+                new()
+                {
+                    DisplayName = "Blue",
+                    IconPath = "pack://siteoforigin:,,,/Icons/Medium.ico",
+                    Value = "Icons/Medium.ico",
+                },
+            ];
+
+        public IconItem? SelectedIconItem
+        {
+            get => IconItems.FirstOrDefault(item => item.Value == ToolbarSettings.User.IconName);
+            set
+            {
+                if (value != null)
+                {
+                    ToolbarSettings.User.IconName = value.Value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _isWindowsSearchHidden = !Helpers.Utils.GetWindowsSearchEnabledState();
+        public bool IsWindowsSearchHidden
+        {
+            get => _isWindowsSearchHidden;
+            set
+            {
+                if (_isWindowsSearchHidden != value)
+                {
+                    _isWindowsSearchHidden = value;
+                    Helpers.Utils.SetWindowsSearchEnabledState(!value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public TaskbarIntegration()
+        {
+            if (!AllowLeftAlignment && ToolbarSettings.User.TaskbarWindowAlignment == "Left")
+                ToolbarSettings.User.TaskbarWindowAlignment = "Right";
+
+            _isTaskbarIconPinned = File.Exists(_taskbarShortcutPath);
+
+            InitializeComponent();
+            DataContext = this;
+
+            Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            IsTaskbarIconPinned = File.Exists(_taskbarShortcutPath);
+            CreateFileWatcher();
+            CreateTaskbarAlignmentWatcher();
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (_watcher != null)
+            {
+                _watcher.EnableRaisingEvents = false;
+                _watcher.Dispose();
+                _watcher = null;
+            }
+
+            if (_taskbarAlignmentWatcher != null)
+            {
+                _taskbarAlignmentWatcher.Changed -= OnTaskbarAlignmentChanged;
+                _taskbarAlignmentWatcher.Dispose();
+                _taskbarAlignmentWatcher = null;
+            }
+        }
+
+        private void CreateTaskbarAlignmentWatcher()
+        {
+            if (!ShowTaskbarWindowSettings || _taskbarAlignmentWatcher != null)
+                return;
+
+            _taskbarAlignmentWatcher = new Helpers.RegistryValueWatcher(
+                @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+            );
+            _taskbarAlignmentWatcher.Changed += OnTaskbarAlignmentChanged;
+        }
+
+        private void OnTaskbarAlignmentChanged()
+        {
+            Dispatcher.BeginInvoke(() => OnPropertyChanged(nameof(AllowLeftAlignment)));
+        }
+
+        private void CreateFileWatcher()
+        {
+            if (_watcher != null)
+                return;
+
+            var pinnedIconName = Path.GetFileName(_taskbarShortcutPath);
+            if (Path.GetDirectoryName(_taskbarShortcutPath) is not { } pinnedIconsDir)
+                return;
+
+            try
+            {
+                Directory.CreateDirectory(pinnedIconsDir);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return;
+            }
+
+            _watcher = new FileSystemWatcher
+            {
+                Path = pinnedIconsDir,
+                Filter = pinnedIconName,
+                NotifyFilter = NotifyFilters.FileName,
+                EnableRaisingEvents = true,
+            };
+            _watcher.Created += (_, _) => Dispatcher.BeginInvoke(() => IsTaskbarIconPinned = true);
+            _watcher.Deleted += (_, _) => Dispatcher.BeginInvoke(() => IsTaskbarIconPinned = false);
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string? name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+    }
+
+    public class IconItem
+    {
+        public string DisplayName { get; set; } = "";
+        public string IconPath { get; set; } = "";
+        public string Value { get; set; } = "";
+    }
+}

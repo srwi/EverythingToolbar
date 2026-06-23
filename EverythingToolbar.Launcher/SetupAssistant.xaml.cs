@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -21,6 +22,7 @@ namespace EverythingToolbar.Launcher
         private readonly NotifyIcon _icon;
         private bool _iconUpdateRequired;
         private FileSystemWatcher? _watcher;
+        private RegistryValueWatcher? _taskbarAlignmentWatcher;
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<SetupAssistant>();
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -45,6 +47,26 @@ namespace EverythingToolbar.Launcher
             }
         }
 
+        public bool IsTaskbarWindowSupported =>
+            Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11;
+
+        public bool PreferencesUnlocked =>
+            CurrentStep == 1 || (IsTaskbarWindowSupported && ToolbarSettings.User.TaskbarWindowEnabled);
+
+        public bool IsPinned => CurrentStep == 1;
+
+        public bool IsPinOptionAvailable => IsPinned || !ToolbarSettings.User.TaskbarWindowEnabled;
+        public bool IsWindowOptionAvailable => ToolbarSettings.User.TaskbarWindowEnabled || !IsPinned;
+
+        // Display text is localized; the stored value stays the invariant "Left"/"Right".
+        public List<KeyValuePair<string, string>> TaskbarWindowAlignmentOptions { get; } =
+            [
+                new(EverythingToolbar.Properties.Resources.SettingsTaskbarWindowAlignmentLeft, "Left"),
+                new(EverythingToolbar.Properties.Resources.SettingsTaskbarWindowAlignmentRight, "Right"),
+            ];
+
+        public bool AllowLeftAlignment => Helpers.Utils.IsTaskbarCenterAligned();
+
         private int _currentStep;
         public int CurrentStep
         {
@@ -55,20 +77,34 @@ namespace EverythingToolbar.Launcher
                 {
                     _currentStep = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(IsPinned));
+                    OnPropertyChanged(nameof(IsPinOptionAvailable));
+                    OnPropertyChanged(nameof(IsWindowOptionAvailable));
+                    OnPropertyChanged(nameof(PreferencesUnlocked));
                 }
             }
         }
 
         public SetupAssistant(NotifyIcon icon)
         {
+            if (!AllowLeftAlignment && ToolbarSettings.User.TaskbarWindowAlignment == "Left")
+                ToolbarSettings.User.TaskbarWindowAlignment = "Right";
+
             InitializeComponent();
+
+            const double edgeMargin = 40;
+            double available = SystemParameters.WorkArea.Width - edgeMargin;
+            Width = Math.Min(IsTaskbarWindowSupported ? 960 : 600, available);
 
             DataContext = this;
 
             _icon = icon;
             _icon.Visible = false;
 
+            ToolbarSettings.User.PropertyChanged += OnToolbarSettingsChanged;
+
             CreateFileWatcher(_taskbarShortcutPath);
+            CreateTaskbarAlignmentWatcher();
 
             if (File.Exists(_taskbarShortcutPath))
             {
@@ -84,9 +120,35 @@ namespace EverythingToolbar.Launcher
             }
         }
 
+        private void OnToolbarSettingsChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ToolbarSettings.User.TaskbarWindowEnabled))
+            {
+                OnPropertyChanged(nameof(PreferencesUnlocked));
+                OnPropertyChanged(nameof(IsPinOptionAvailable));
+                OnPropertyChanged(nameof(IsWindowOptionAvailable));
+            }
+        }
+
         private void FlashTaskbarIcon()
         {
             NativeMethods.FlashWindow(new WindowInteropHelper(this).Handle, true);
+        }
+
+        private void CreateTaskbarAlignmentWatcher()
+        {
+            if (!IsTaskbarWindowSupported)
+                return;
+
+            _taskbarAlignmentWatcher = new Helpers.RegistryValueWatcher(
+                @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+            );
+            _taskbarAlignmentWatcher.Changed += OnTaskbarAlignmentChanged;
+        }
+
+        private void OnTaskbarAlignmentChanged()
+        {
+            Dispatcher.BeginInvoke(() => OnPropertyChanged(nameof(AllowLeftAlignment)));
         }
 
         private void SetAppIcon()
@@ -134,7 +196,7 @@ namespace EverythingToolbar.Launcher
             _watcher.Created += (_, _) =>
             {
                 _iconUpdateRequired = true;
-                Dispatcher.Invoke(() =>
+                Dispatcher.BeginInvoke(() =>
                 {
                     CurrentStep = 1;
                 });
@@ -142,7 +204,7 @@ namespace EverythingToolbar.Launcher
             _watcher.Deleted += (_, _) =>
             {
                 _iconUpdateRequired = false;
-                Dispatcher.Invoke(() =>
+                Dispatcher.BeginInvoke(() =>
                 {
                     CurrentStep = 0;
                 });
@@ -151,7 +213,7 @@ namespace EverythingToolbar.Launcher
 
         private void OnSecondStepClicked(object sender, MouseButtonEventArgs e)
         {
-            if (CurrentStep == 0)
+            if (!PreferencesUnlocked)
             {
                 var storyboard = (Storyboard)FindResource("WiggleStoryboard");
                 storyboard.Begin();
@@ -162,11 +224,11 @@ namespace EverythingToolbar.Launcher
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {
-            if (CurrentStep == 0)
+            if (CurrentStep == 0 && !(IsTaskbarWindowSupported && ToolbarSettings.User.TaskbarWindowEnabled))
             {
                 var result = await FluentMessageBox
                     .CreateYesNo(
-                        Properties.Resources.SetupAssistantDisableWarningText,
+                        Properties.Resources.SetupAssistantExitWarningText,
                         Properties.Resources.SetupAssistantDisableWarningTitle
                     )
                     .ShowDialogAsync();
@@ -195,12 +257,21 @@ namespace EverythingToolbar.Launcher
 
         private void OnClosed(object sender, EventArgs e)
         {
+            ToolbarSettings.User.PropertyChanged -= OnToolbarSettingsChanged;
+
             _icon.Visible = ToolbarSettings.User.IsTrayIconEnabled;
 
             if (_watcher != null)
             {
                 _watcher.EnableRaisingEvents = false;
                 _watcher.Dispose();
+            }
+
+            if (_taskbarAlignmentWatcher != null)
+            {
+                _taskbarAlignmentWatcher.Changed -= OnTaskbarAlignmentChanged;
+                _taskbarAlignmentWatcher.Dispose();
+                _taskbarAlignmentWatcher = null;
             }
         }
 
