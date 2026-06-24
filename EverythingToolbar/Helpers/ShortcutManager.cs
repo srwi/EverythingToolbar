@@ -19,7 +19,7 @@ namespace EverythingToolbar.Helpers
 
         public static bool IsEnabled { get; set; } = true;
 
-        private static LowLevelKeyboardProc? _hookCallback;
+        private static NativeMethods.LowLevelKeyboardProc? _hookCallback;
         private static IntPtr _hookId = IntPtr.Zero;
 
         private const int WhKeyboardLl = 13;
@@ -71,7 +71,7 @@ namespace EverythingToolbar.Helpers
                 return;
 
             _hookCallback = HookCallback;
-            _hookId = SetWindowsHookEx(WhKeyboardLl, _hookCallback, IntPtr.Zero, 0);
+            _hookId = NativeMethods.SetWindowsHookEx(WhKeyboardLl, _hookCallback, IntPtr.Zero, 0);
 
             if (_hookId == IntPtr.Zero)
                 Logger.Error("Failed to install the keyboard hook for the global shortcut.");
@@ -82,7 +82,7 @@ namespace EverythingToolbar.Helpers
             if (_hookId == IntPtr.Zero)
                 return;
 
-            UnhookWindowsHookEx(_hookId);
+            NativeMethods.UnhookWindowsHookEx(_hookId);
             _hookId = IntPtr.Zero;
             _hookCallback = null;
         }
@@ -92,22 +92,22 @@ namespace EverythingToolbar.Helpers
             try
             {
                 if (nCode < 0 || !IsEnabled || _triggerVk == 0)
-                    return CallNextHookEx(_hookId, nCode, wParam, lParam);
+                    return NativeMethods.CallNextHookEx(_hookId, nCode, wParam, lParam);
 
                 if (Marshal.ReadInt32(lParam) != _triggerVk)
-                    return CallNextHookEx(_hookId, nCode, wParam, lParam);
+                    return NativeMethods.CallNextHookEx(_hookId, nCode, wParam, lParam);
 
                 // Ignore events we injected ourselves (e.g. the disguise keystroke below).
                 var flags = Marshal.ReadInt32(lParam, 8);
                 if ((flags & LlkhfInjected) != 0)
-                    return CallNextHookEx(_hookId, nCode, wParam, lParam);
+                    return NativeMethods.CallNextHookEx(_hookId, nCode, wParam, lParam);
 
                 var message = (int)wParam;
 
                 if (message == WmKeyup || message == WmSyskeyup)
                 {
                     if (!_hotkeyDown)
-                        return CallNextHookEx(_hookId, nCode, wParam, lParam);
+                        return NativeMethods.CallNextHookEx(_hookId, nCode, wParam, lParam);
 
                     _hotkeyDown = false;
                     return 1; // Swallow the key up matching a suppressed key down
@@ -132,7 +132,7 @@ namespace EverythingToolbar.Helpers
                 Logger.Error(e, "Error in the keyboard hook callback.");
             }
 
-            return CallNextHookEx(_hookId, nCode, wParam, lParam);
+            return NativeMethods.CallNextHookEx(_hookId, nCode, wParam, lParam);
         }
 
         private static ModifierKeys GetCurrentModifiers()
@@ -158,33 +158,13 @@ namespace EverythingToolbar.Helpers
             if ((_modifiers & (ModifierKeys.Windows | ModifierKeys.Alt)) == 0)
                 return;
 
-            keybd_event(VkControl, 0, 0, UIntPtr.Zero);
-            keybd_event(VkControl, 0, KeyeventfKeyup, UIntPtr.Zero);
+            NativeMethods.keybd_event(VkControl, 0, 0, IntPtr.Zero);
+            NativeMethods.keybd_event(VkControl, 0, KeyeventfKeyup, IntPtr.Zero);
         }
 
         private static bool IsKeyDown(int vk) => (GetAsyncKeyState(vk) & 0x8000) != 0;
 
-        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr SetWindowsHookEx(
-            int idHook,
-            LowLevelKeyboardProc lpfn,
-            IntPtr hMod,
-            uint dwThreadId
-        );
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-
         [DllImport("user32.dll")]
         private static extern short GetAsyncKeyState(int vKey);
-
-        [DllImport("user32.dll")]
-        private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
     }
 }

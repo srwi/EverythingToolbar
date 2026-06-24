@@ -16,7 +16,7 @@ namespace EverythingToolbar.Helpers
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<StartMenuIntegration>();
 
         private static WinEventDelegate? _focusedWindowChangedCallback;
-        private static LowLevelKeyboardProc? _startMenuKeyboardHookCallback;
+        private static NativeMethods.LowLevelKeyboardProc? _startMenuKeyboardHookCallback;
         private static IntPtr _focusedWindowChangedHookId = IntPtr.Zero;
         private static IntPtr _startMenuKeyboardHookId = IntPtr.Zero;
 
@@ -129,14 +129,14 @@ namespace EverythingToolbar.Helpers
                 // We never want to block the Windows keys and Escape
                 if (virtualKeyCode == 0x5B || virtualKeyCode == 0x5C || virtualKeyCode == 0x1B)
                 {
-                    return CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
+                    return NativeMethods.CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
                 }
 
                 // Check for exception key (LALT)
                 if (virtualKeyCode == 0xA4)
                 {
                     _isNativeSearchActive = true;
-                    return CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
+                    return NativeMethods.CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
                 }
 
                 // Queue keypress for replay in EverythingToolbar
@@ -161,7 +161,7 @@ namespace EverythingToolbar.Helpers
                 return 1;
             }
 
-            return CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
+            return NativeMethods.CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
         }
 
         private void OnAnySearchBoxGotKeyboardFocus(object? sender, EventArgs e)
@@ -215,7 +215,12 @@ namespace EverythingToolbar.Helpers
             while (RecordedInputs.Count > 0)
             {
                 var input = RecordedInputs.Dequeue();
-                keybd_event((byte)input.u.ki.wVk, (byte)input.u.ki.wScan, input.u.ki.dwFlags, input.u.ki.dwExtraInfo);
+                NativeMethods.keybd_event(
+                    (byte)input.u.ki.wVk,
+                    (byte)input.u.ki.wScan,
+                    input.u.ki.dwFlags,
+                    input.u.ki.dwExtraInfo
+                );
             }
         }
 
@@ -254,27 +259,30 @@ namespace EverythingToolbar.Helpers
         {
             UnhookStartMenuInput();
             _startMenuKeyboardHookCallback = StartMenuKeyboardHookCallback;
-            _startMenuKeyboardHookId = SetWindowsHookEx(WhKeyboardLl, _startMenuKeyboardHookCallback, IntPtr.Zero, 0);
+            _startMenuKeyboardHookId = NativeMethods.SetWindowsHookEx(
+                WhKeyboardLl,
+                _startMenuKeyboardHookCallback,
+                IntPtr.Zero,
+                0
+            );
         }
 
         private void UnhookStartMenuInput()
         {
-            UnhookWindowsHookEx(_startMenuKeyboardHookId);
+            NativeMethods.UnhookWindowsHookEx(_startMenuKeyboardHookId);
             _startMenuKeyboardHookId = IntPtr.Zero;
         }
 
         private static void GetForegroundWindowAndProcess(out IntPtr foregroundHwnd, out string foregroundProcessName)
         {
-            foregroundHwnd = GetForegroundWindow();
-            GetWindowThreadProcessId(foregroundHwnd, out var processId);
+            foregroundHwnd = NativeMethods.GetForegroundWindow();
+            NativeMethods.GetWindowThreadProcessId(foregroundHwnd, out var processId);
             var processHandle = OpenProcess(0x0410, false, processId);
             var processNameBuilder = new StringBuilder(1000);
             GetModuleFileNameEx(processHandle, IntPtr.Zero, processNameBuilder, processNameBuilder.Capacity);
             CloseHandle(processHandle);
             foregroundProcessName = processNameBuilder.ToString();
         }
-
-        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
         private delegate void WinEventDelegate(
             IntPtr hWinEventHook,
@@ -291,22 +299,6 @@ namespace EverythingToolbar.Helpers
 
         [DllImport("kernel32.dll")]
         static extern bool CloseHandle(IntPtr handle);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc? lpfn, IntPtr hMod, uint dwThreadId);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool UnhookWindowsHookEx(IntPtr hhk);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("user32.dll")]
-        static extern IntPtr GetForegroundWindow();
-
-        [DllImport("user32.dll")]
-        static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
         [DllImport("user32.dll")]
         static extern IntPtr SetWinEventHook(
@@ -327,9 +319,6 @@ namespace EverythingToolbar.Helpers
 
         [DllImport("psapi.dll")]
         static extern uint GetModuleFileNameEx(IntPtr hWnd, IntPtr hModule, StringBuilder lpFileName, int nSize);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, IntPtr dwExtraInfo);
 
         [StructLayout(LayoutKind.Sequential)]
         private struct Input

@@ -310,7 +310,7 @@ namespace EverythingToolbar.Behaviors
                 return 1.0;
             }
 
-            return 96.0 / GetDpiForWindow(hwndSource.Handle);
+            return 96.0 / NativeMethods.GetDpiForWindow(hwndSource.Handle);
         }
 
         private int GetMargin()
@@ -318,9 +318,6 @@ namespace EverythingToolbar.Behaviors
             var marginDip = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows11 ? 12 : 0;
             return (int)Math.Round(marginDip / GetScalingFactor());
         }
-
-        [DllImport("user32")]
-        private static extern uint GetDpiForWindow(IntPtr hWnd);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]

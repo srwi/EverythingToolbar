@@ -18,7 +18,7 @@ namespace EverythingToolbar.Settings
 
         private static event EventHandler<WinKeyEventArgs>? WinKeyEventHandler;
 
-        private static LowLevelKeyboardProc? _llKeyboardHookCallback;
+        private static NativeMethods.LowLevelKeyboardProc? _llKeyboardHookCallback;
         private static IntPtr _llKeyboardHookId = IntPtr.Zero;
 
         private const int WhKeyboardLl = 13;
@@ -69,7 +69,7 @@ namespace EverythingToolbar.Settings
         private static IntPtr KeyboardHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode < 0)
-                return CallNextHookEx(_llKeyboardHookId, nCode, wParam, lParam);
+                return NativeMethods.CallNextHookEx(_llKeyboardHookId, nCode, wParam, lParam);
 
             var vkCode = (Keys)Marshal.ReadInt32(lParam);
             var isDown = (int)wParam == WmKeydown || (int)wParam == WmSyskeydown;
@@ -110,13 +110,13 @@ namespace EverythingToolbar.Settings
             ReleaseKeyboard();
             WinKeyEventHandler += callback;
             _llKeyboardHookCallback = KeyboardHookCallback;
-            _llKeyboardHookId = SetWindowsHookEx(WhKeyboardLl, _llKeyboardHookCallback, 0, 0);
+            _llKeyboardHookId = NativeMethods.SetWindowsHookEx(WhKeyboardLl, _llKeyboardHookCallback, IntPtr.Zero, 0);
         }
 
         private static void ReleaseKeyboard()
         {
             WinKeyEventHandler = null;
-            UnhookWindowsHookEx(_llKeyboardHookId);
+            NativeMethods.UnhookWindowsHookEx(_llKeyboardHookId);
         }
 
         private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -190,27 +190,10 @@ namespace EverythingToolbar.Settings
             }
         }
 
-        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
-
         public class WinKeyEventArgs(bool isDown, Key key) : EventArgs
         {
             public bool IsDown { get; set; } = isDown;
             public Key Key { get; set; } = key;
         }
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr SetWindowsHookEx(
-            int idHook,
-            LowLevelKeyboardProc lpfn,
-            IntPtr hMod,
-            uint dwThreadId
-        );
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
     }
 }
