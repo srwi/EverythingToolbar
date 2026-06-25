@@ -1,12 +1,13 @@
-﻿using System;
+﻿using EverythingToolbar.Helpers;
+using EverythingToolbar.Search;
+using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
-using EverythingToolbar.Helpers;
-using EverythingToolbar.Search;
 
 namespace EverythingToolbar
 {
@@ -29,6 +30,27 @@ namespace EverythingToolbar
 
         private void OnActivated(object? sender, EventArgs e)
         {
+            // check if Everything.exe process is running or not. If it is not running then start it in background.
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (!EverythingProcessHelper.IsRunning())
+                {
+                    EverythingProcessHelper.EnsureRunning();
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        // Triggers search again after the start of Everything process.
+                        var textBox = (SearchBox.FindName("TextBox") as System.Windows.Controls.TextBox);
+                        if (textBox != null)
+                        {
+                            textBox.Text = " ";
+                            textBox.Text = "";
+                        }
+                    });
+                }
+
+            }), DispatcherPriority.Background);
+
             if (TaskbarStateManager.Instance.IsIcon)
                 EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
 
@@ -57,7 +79,7 @@ namespace EverythingToolbar
         {
             if (e.NewFocus == null) // New focus outside application
             {
-                Hide();
+               Hide();
             }
         }
 

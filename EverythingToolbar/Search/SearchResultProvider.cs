@@ -394,7 +394,7 @@ namespace EverythingToolbar.Search
             }
         }
 
-        private static bool Initialize()
+        private bool Initialize()
         {
             SetInstanceName(ToolbarSettings.User.InstanceName);
 
@@ -417,6 +417,7 @@ namespace EverythingToolbar.Search
             {
                 LogLastError();
                 Logger.Error("Failed to get Everything version number.");
+                this.IsBusy = true;
             }
             else
             {
