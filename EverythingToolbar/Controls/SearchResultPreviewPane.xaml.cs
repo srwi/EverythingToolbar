@@ -3,13 +3,19 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Data;
+using EverythingToolbar.Helpers;
+using EverythingToolbar.Search;
 using EverythingToolbar.Settings;
 
 namespace EverythingToolbar.Controls
 {
     public partial class SearchResultPreviewPane
     {
+        private static ISearchWindowController SearchWindowController =>
+            Ioc.Default.GetRequiredService<ISearchWindowController>();
+
         public sealed class PreviewActionItem
         {
             public string Label { get; init; } = "";
@@ -84,10 +90,13 @@ namespace EverythingToolbar.Controls
 
         public ObservableCollection<PreviewActionItem> PreviewActions { get; } = [];
 
+        private readonly SearchResultActions _actions = Ioc.Default.GetRequiredService<SearchResultActions>();
+        private readonly ThemeOptions _themeOptions = Ioc.Default.GetRequiredService<ThemeOptions>();
+
         public SearchResultPreviewPane()
         {
             InitializeComponent();
-            ToolbarSettings.User.PropertyChanged += OnToolbarSettingsPropertyChanged;
+            _themeOptions.PropertyChanged += OnToolbarSettingsPropertyChanged;
             Unloaded += OnUnloaded;
         }
 
@@ -99,13 +108,13 @@ namespace EverythingToolbar.Controls
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            ToolbarSettings.User.PropertyChanged -= OnToolbarSettingsPropertyChanged;
+            _themeOptions.PropertyChanged -= OnToolbarSettingsPropertyChanged;
             Unloaded -= OnUnloaded;
         }
 
         private void OnToolbarSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ToolbarSettingsWrapper.ItemTemplate))
+            if (e.PropertyName == nameof(ThemeOptions.ItemTemplate))
                 RefreshActions();
         }
 
@@ -130,18 +139,18 @@ namespace EverythingToolbar.Controls
                 result =>
                 {
                     if (!CustomActions.HandleAction(result))
-                        result.Open();
+                        _actions.Open(result);
                 }
             );
-            AddAction(Properties.Resources.ContextMenuOpenPath, "\uE838", result => result.OpenPath());
-            AddAction(Properties.Resources.ContextMenuOpenWith, "\uE7AC", result => result.OpenWith());
-            AddAction(Properties.Resources.ContextMenuShowInEverything, "\uF78B", result => result.ShowInEverything());
-            AddAction(Properties.Resources.ContextMenuProperties, "\uE946", result => result.ShowProperties());
+            AddAction(Properties.Resources.ContextMenuOpenPath, "\uE838", result => _actions.OpenPath(result));
+            AddAction(Properties.Resources.ContextMenuOpenWith, "\uE7AC", result => _actions.OpenWith(result));
+            AddAction(Properties.Resources.ContextMenuShowInEverything, "\uF78B", result => _actions.ShowInEverything(result));
+            AddAction(Properties.Resources.ContextMenuProperties, "\uE946", result => _actions.ShowProperties(result));
         }
 
         private void UpdateFileInfoVisibility()
         {
-            var template = ToolbarSettings.User.ItemTemplate ?? "";
+            var template = _themeOptions.ItemTemplate ?? "";
             bool isDetailed =
                 template.Equals("NormalDetailed", StringComparison.OrdinalIgnoreCase)
                 || template.Equals("CompactDetailed", StringComparison.OrdinalIgnoreCase);
@@ -169,7 +178,7 @@ namespace EverythingToolbar.Controls
                 return;
 
             item.Action(SelectedResult);
-            SearchWindow.Instance.Hide();
+            SearchWindowController.Hide();
         }
     }
 }

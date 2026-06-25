@@ -5,13 +5,14 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Input;
 using System.Windows.Threading;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
 using NLog;
 
 namespace EverythingToolbar.Helpers
 {
     public class StartMenuIntegration
     {
-        public static readonly StartMenuIntegration Instance = new();
         private static readonly Queue<Input> RecordedInputs = new();
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<StartMenuIntegration>();
 
@@ -25,6 +26,7 @@ namespace EverythingToolbar.Helpers
         private static bool _isInterceptingKeys;
         private static bool? _animationsToRestore;
         private readonly DispatcherTimer _cleanupTimer = new() { Interval = TimeSpan.FromSeconds(1) };
+        private readonly StartMenuOptions _options;
 
         private const int WhKeyboardLl = 13;
         private const int WmKeyDown = 0x0100;
@@ -32,23 +34,24 @@ namespace EverythingToolbar.Helpers
         private const int InputKeyboard = 1;
         private const uint KeyeventFKeyup = 0x0002;
 
-        private StartMenuIntegration()
+        public StartMenuIntegration(StartMenuOptions options)
         {
+            _options = options;
             _cleanupTimer.Tick += OnCleanupTimerElapsed;
-            ToolbarSettings.User.PropertyChanged += OnSettingsChanged;
+            _options.PropertyChanged += OnSettingsChanged;
         }
 
         public void Initialize()
         {
-            if (ToolbarSettings.User.IsReplaceStartMenuSearch)
+            if (_options.IsReplaceStartMenuSearch)
                 Enable();
         }
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ToolbarSettings.User.IsReplaceStartMenuSearch))
+            if (e.PropertyName == nameof(StartMenuOptions.IsReplaceStartMenuSearch))
             {
-                if (ToolbarSettings.User.IsReplaceStartMenuSearch)
+                if (_options.IsReplaceStartMenuSearch)
                     Enable();
                 else
                     Disable();
@@ -164,12 +167,12 @@ namespace EverythingToolbar.Helpers
             return NativeMethods.CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
         }
 
-        private void OnAnySearchBoxGotKeyboardFocus(object? sender, EventArgs e)
+        private void OnAnySearchBoxGotKeyboardFocus()
         {
             if (!_isInterceptingKeys)
                 return;
 
-            EventDispatcher.Instance.SearchBoxFocused -= OnAnySearchBoxGotKeyboardFocus;
+            WeakReferenceMessenger.Default.Unregister<SearchBoxFocusedNotification>(this);
 
             Logger.Debug("Search box got keyboard focus. Replaying recorded inputs...");
 
@@ -198,13 +201,14 @@ namespace EverythingToolbar.Helpers
 
         private void TriggerSearchWindow()
         {
-            EventDispatcher.Instance.SearchBoxFocused -= OnAnySearchBoxGotKeyboardFocus;
-            EventDispatcher.Instance.SearchBoxFocused += OnAnySearchBoxGotKeyboardFocus;
-            SearchWindow.Instance.Dispatcher.BeginInvoke(
+            var searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();
+            WeakReferenceMessenger.Default.Unregister<SearchBoxFocusedNotification>(this);
+            WeakReferenceMessenger.Default.Register<SearchBoxFocusedNotification>(this, (_, _) => OnAnySearchBoxGotKeyboardFocus());
+            searchWindow.Dispatcher.BeginInvoke(
                 new Action(() =>
                 {
-                    SearchWindow.Instance.Show();
-                    EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
+                    searchWindow.Show();
+                    WeakReferenceMessenger.Default.Send(new FocusSearchBoxRequest());
                 }),
                 DispatcherPriority.Input
             );
@@ -228,8 +232,8 @@ namespace EverythingToolbar.Helpers
         {
             if (_searchAppHwnd != IntPtr.Zero)
             {
-                _animationsToRestore ??= Utils.GetSystemAnimationsEnabled();
-                Utils.SetSystemAnimationsEnabled(false);
+                _animationsToRestore ??= SystemSettings.GetSystemAnimationsEnabled();
+                SystemSettings.SetSystemAnimationsEnabled(false);
                 PostMessage(_searchAppHwnd, 0x0010, 0, 0);
                 _searchAppHwnd = IntPtr.Zero;
             }
@@ -251,7 +255,7 @@ namespace EverythingToolbar.Helpers
             if (_animationsToRestore is not bool enabled)
                 return;
 
-            Utils.SetSystemAnimationsEnabled(enabled);
+            SystemSettings.SetSystemAnimationsEnabled(enabled);
             _animationsToRestore = null;
         }
 

@@ -6,7 +6,7 @@ namespace EverythingToolbar.Helpers
 {
     public static class NativeMethods
     {
-        private static readonly ILogger Logger = ToolbarLogger.GetLogger(nameof(NativeMethods));
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
         #region Window discovery
 

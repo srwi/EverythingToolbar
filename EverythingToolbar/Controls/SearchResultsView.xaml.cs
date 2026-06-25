@@ -10,6 +10,8 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
@@ -55,13 +57,21 @@ namespace EverythingToolbar.Controls
         private SynchronizationContext _synchronizationContext = new();
         private readonly DispatcherTimer _busyIndicatorTimer;
         private const int BusyIndicatorDelayMilliseconds = 2000;
+        private readonly SearchState _searchState = Ioc.Default.GetRequiredService<SearchState>();
+        private readonly SearchResultActions _actions = Ioc.Default.GetRequiredService<SearchResultActions>();
+        private readonly IEverythingClient _everythingClient = Ioc.Default.GetRequiredService<IEverythingClient>();
+        private readonly SearchOptions _searchOptions = Ioc.Default.GetRequiredService<SearchOptions>();
+        private readonly MatchOptions _matchOptions = Ioc.Default.GetRequiredService<MatchOptions>();
+
+        private static ISearchWindowController SearchWindowController =>
+            Ioc.Default.GetRequiredService<ISearchWindowController>();
 
         public SearchResultsView()
         {
             InitializeComponent();
 
-            SearchState.Instance.PropertyChanged += (_, _) => UpdateSearchResultsProvider(SearchState.Instance);
-            EventDispatcher.Instance.GlobalKeyEvent += OnKeyPressed;
+            _searchState.PropertyChanged += (_, _) => UpdateSearchResultsProvider(_searchState);
+            WeakReferenceMessenger.Default.Register<GlobalKeyPressed>(this, (_, m) => OnKeyPressed(this, m.Args));
             SearchResultsListView.PreviewKeyDown += OnKeyPressed;
             SearchResultsListView.PreviewMouseLeftButtonDown += OnPreviewLeftMouseButtonDown;
 
@@ -76,7 +86,7 @@ namespace EverythingToolbar.Controls
         {
             _synchronizationContext = SynchronizationContext.Current ?? new SynchronizationContext();
 
-            UpdateSearchResultsProvider(SearchState.Instance);
+            UpdateSearchResultsProvider(_searchState);
 
             AutoSelectFirstResult();
             AttachToScrollViewer();
@@ -84,15 +94,20 @@ namespace EverythingToolbar.Controls
 
         private void UpdateSearchResultsProvider(SearchState searchState)
         {
-            if (ToolbarSettings.User.IsHideEmptySearchResults && string.IsNullOrEmpty(searchState.SearchTerm))
+            if (_searchOptions.IsHideEmptySearchResults && string.IsNullOrEmpty(searchState.SearchTerm))
             {
+                _searchResultsCollection?.Dispose();
                 _searchResultsCollection = null;
                 SearchResultsListView.ItemsSource = null;
                 TotalResultsCount = 0;
                 return;
             }
 
-            SearchResultProvider newProvider = new(searchState, _synchronizationContext);
+            EverythingItemsProvider newProvider = new(
+                _everythingClient,
+                searchState.BuildSearchQuery(),
+                _synchronizationContext
+            );
 
             if (_searchResultsCollection == null)
             {
@@ -244,10 +259,7 @@ namespace EverythingToolbar.Controls
             }
             else if (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == Key.Enter)
             {
-                if (SelectedItem == null)
-                    return;
-
-                SearchResultProvider.OpenSearchInEverything(SearchState.Instance, SelectedItem.FullPathAndFileName);
+                InvokeOnSelected(_actions.ShowInEverything);
                 SearchResultsListView.SelectedIndex = -1;
             }
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Enter)
@@ -274,11 +286,11 @@ namespace EverythingToolbar.Controls
             }
             else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.C)
             {
-                SelectedItem?.CopyPathToClipboard();
+                InvokeOnSelected(_actions.CopyPathToClipboard);
             }
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.C)
             {
-                SelectedItem?.CopyToClipboard();
+                InvokeOnSelected(_actions.CopyToClipboard);
             }
             else if (e.Key == Key.Up)
             {
@@ -297,33 +309,33 @@ namespace EverythingToolbar.Controls
             }
             else if (e.Key == Key.I && Keyboard.Modifiers == ModifierKeys.Control)
             {
-                ToolbarSettings.User.IsMatchCase = !ToolbarSettings.User.IsMatchCase;
+                _matchOptions.IsMatchCase = !_matchOptions.IsMatchCase;
             }
             else if (e.Key == Key.B && Keyboard.Modifiers == ModifierKeys.Control)
             {
-                ToolbarSettings.User.IsMatchWholeWord = !ToolbarSettings.User.IsMatchWholeWord;
+                _matchOptions.IsMatchWholeWord = !_matchOptions.IsMatchWholeWord;
             }
             else if (e.Key == Key.U && Keyboard.Modifiers == ModifierKeys.Control)
             {
-                ToolbarSettings.User.IsMatchPath = !ToolbarSettings.User.IsMatchPath;
+                _matchOptions.IsMatchPath = !_matchOptions.IsMatchPath;
             }
             else if (e.Key == Key.R && Keyboard.Modifiers == ModifierKeys.Control)
             {
-                ToolbarSettings.User.IsRegExEnabled = !ToolbarSettings.User.IsRegExEnabled;
+                _matchOptions.IsRegExEnabled = !_matchOptions.IsRegExEnabled;
             }
         }
 
-        private static bool KeepSearchBoxFocused =>
-            ToolbarSettings.User.IsAutoSelectFirstResult && ToolbarSettings.User.IsSearchAsYouType;
+        private bool KeepSearchBoxFocused =>
+            _searchOptions.IsAutoSelectFirstResult && _searchOptions.IsSearchAsYouType;
 
-        private static FocusBehavior EffectiveListFocusBehavior =>
-            KeepSearchBoxFocused && ToolbarSettings.User.ListFocusBehavior == FocusBehavior.RepeatWithSearch
+        private FocusBehavior EffectiveListFocusBehavior =>
+            KeepSearchBoxFocused && _searchOptions.ListFocusBehavior == FocusBehavior.RepeatWithSearch
                 ? FocusBehavior.Repeat
-                : ToolbarSettings.User.ListFocusBehavior;
+                : _searchOptions.ListFocusBehavior;
 
         private void AutoSelectFirstResult()
         {
-            if (ToolbarSettings.User.IsAutoSelectFirstResult)
+            if (_searchOptions.IsAutoSelectFirstResult)
                 SelectNthSearchResult(0);
             else
                 SearchResultsListView.SelectedIndex = -1;
@@ -363,7 +375,7 @@ namespace EverythingToolbar.Controls
         private void FocusSearchBox()
         {
             SearchResultsListView.SelectedIndex = -1;
-            EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
+            WeakReferenceMessenger.Default.Send(new FocusSearchBoxRequest());
         }
 
         private void HandleUpNavigation()
@@ -384,7 +396,7 @@ namespace EverythingToolbar.Controls
                         break;
                     case FocusBehavior.Clamp:
                     default:
-                        if (!ToolbarSettings.User.IsAutoSelectFirstResult)
+                        if (!_searchOptions.IsAutoSelectFirstResult)
                             FocusSearchBox();
                         break;
                 }
@@ -464,54 +476,60 @@ namespace EverythingToolbar.Controls
                 return;
 
             if (!CustomActions.HandleAction(SelectedItem))
-                SelectedItem?.Open();
+                InvokeOnSelected(_actions.Open);
 
-            SearchWindow.Instance.Hide();
+            SearchWindowController.Hide();
         }
 
         private void OpenFilePath(object sender, RoutedEventArgs e)
         {
-            SelectedItem?.OpenPath();
-            SearchWindow.Instance.Hide();
+            InvokeOnSelected(_actions.OpenPath);
+            SearchWindowController.Hide();
+        }
+
+        private void InvokeOnSelected(Action<SearchResult> action)
+        {
+            if (SelectedItem is { } item)
+                action(item);
         }
 
         private void PreviewSelectedFile()
         {
-            SelectedItem?.PreviewInQuickLook();
-            SelectedItem?.PreviewInSeer();
+            InvokeOnSelected(_actions.PreviewInQuickLook);
+            InvokeOnSelected(_actions.PreviewInSeer);
         }
 
         private void CopyPathToClipBoard(object sender, RoutedEventArgs e)
         {
-            SelectedItem?.CopyPathToClipboard();
+            InvokeOnSelected(_actions.CopyPathToClipboard);
         }
 
         private void OpenWith(object sender, RoutedEventArgs e)
         {
-            SelectedItem?.OpenWith();
-            SearchWindow.Instance.Hide();
+            InvokeOnSelected(_actions.OpenWith);
+            SearchWindowController.Hide();
         }
 
         private void ShowInEverything(object sender, RoutedEventArgs e)
         {
-            SelectedItem?.ShowInEverything();
-            SearchWindow.Instance.Hide();
+            InvokeOnSelected(_actions.ShowInEverything);
+            SearchWindowController.Hide();
         }
 
         private void CopyFile(object sender, RoutedEventArgs e)
         {
-            SelectedItem?.CopyToClipboard();
+            InvokeOnSelected(_actions.CopyToClipboard);
         }
 
         private void SingleClickSearchResult(object sender, MouseEventArgs e)
         {
-            if (!ToolbarSettings.User.IsDoubleClickToOpen)
+            if (!_searchOptions.IsDoubleClickToOpen)
                 OpenWithMouseClick();
         }
 
         private void DoubleClickSearchResult(object sender, MouseEventArgs e)
         {
-            if (ToolbarSettings.User.IsDoubleClickToOpen)
+            if (_searchOptions.IsDoubleClickToOpen)
                 OpenWithMouseClick();
         }
 
@@ -525,16 +543,16 @@ namespace EverythingToolbar.Controls
             switch (Keyboard.Modifiers)
             {
                 case ModifierKeys.Alt:
-                    SelectedItem?.ShowProperties();
-                    SearchWindow.Instance.Hide();
+                    InvokeOnSelected(_actions.ShowProperties);
+                    SearchWindowController.Hide();
                     break;
                 case ModifierKeys.Control:
-                    SelectedItem?.OpenPath();
-                    SearchWindow.Instance.Hide();
+                    InvokeOnSelected(_actions.OpenPath);
+                    SearchWindowController.Hide();
                     break;
                 case ModifierKeys.Shift:
-                    SelectedItem?.ShowInEverything();
-                    SearchWindow.Instance.Hide();
+                    InvokeOnSelected(_actions.ShowInEverything);
+                    SearchWindowController.Hide();
                     break;
                 default:
                     OpenSelectedSearchResult();
@@ -545,19 +563,19 @@ namespace EverythingToolbar.Controls
 
         private void RunAsAdmin(object sender, RoutedEventArgs e)
         {
-            SelectedItem?.RunAsAdmin();
-            SearchWindow.Instance.Hide();
+            InvokeOnSelected(_actions.RunAsAdmin);
+            SearchWindowController.Hide();
         }
 
         private void ShowFileProperties(object sender, RoutedEventArgs e)
         {
-            SelectedItem?.ShowProperties();
-            SearchWindow.Instance.Hide();
+            InvokeOnSelected(_actions.ShowProperties);
+            SearchWindowController.Hide();
         }
 
         private void ShowFileWindowsContextMenu(object sender, RoutedEventArgs e)
         {
-            SelectedItem?.ShowWindowsContextMenu();
+            InvokeOnSelected(_actions.ShowWindowsContextMenu);
         }
 
         private void OnOpenWithMenuLoaded(object sender, RoutedEventArgs e)
@@ -668,9 +686,9 @@ namespace EverythingToolbar.Controls
             if (SelectedItem == null)
                 return;
 
-            if (ToolbarSettings.User.IsSystemContextMenuDefault != (Keyboard.Modifiers == ModifierKeys.Shift))
+            if (_searchOptions.IsSystemContextMenuDefault != (Keyboard.Modifiers == ModifierKeys.Shift))
             {
-                SelectedItem.ShowWindowsContextMenu();
+                _actions.ShowWindowsContextMenu(SelectedItem);
                 e.Handled = true;
             }
         }

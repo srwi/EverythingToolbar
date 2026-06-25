@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Interop;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Helpers;
 using NLog;
 
@@ -13,6 +14,8 @@ namespace EverythingToolbar
     public partial class TaskbarWindow
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<TaskbarWindow>();
+        private readonly TaskbarWindowOptions _taskbarWindowOptions = Ioc.Default.GetRequiredService<TaskbarWindowOptions>();
+        private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
 
         private IntPtr _taskbarHandle;
 
@@ -29,10 +32,9 @@ namespace EverythingToolbar
         public TaskbarWindow()
         {
             InitializeComponent();
-            DataContext = ToolbarSettings.User;
 
             Loaded += OnLoaded;
-            ToolbarSettings.User.PropertyChanged += OnSettingsChanged;
+            _taskbarWindowOptions.PropertyChanged += OnSettingsChanged;
             Microsoft.Win32.SystemEvents.DisplaySettingsChanged += OnDisplaySettingsChanged;
         }
 
@@ -106,7 +108,7 @@ namespace EverythingToolbar
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ToolbarSettings.User.TaskbarWindowAlignment))
+            if (e.PropertyName == nameof(_taskbarWindowOptions.TaskbarWindowAlignment))
             {
                 UpdatePosition();
             }
@@ -114,7 +116,7 @@ namespace EverythingToolbar
 
         private void UpdatePosition()
         {
-            if (!IsLoaded || !ToolbarSettings.User.TaskbarWindowEnabled)
+            if (!IsLoaded || !_taskbarWindowOptions.TaskbarWindowEnabled)
                 return;
 
             try
@@ -192,8 +194,8 @@ namespace EverythingToolbar
         {
             int padding = (int)(8 * dpiScale);
             int taskbarWidth = taskbarRect.Right - taskbarRect.Left;
-            string alignment = ToolbarSettings.User.TaskbarWindowAlignment;
-            bool isTaskbarCentered = Utils.IsTaskbarCenterAligned();
+            string alignment = _taskbarWindowOptions.TaskbarWindowAlignment;
+            bool isTaskbarCentered = _windowsPolicy.IsTaskbarCenterAligned();
 
             if (anchors.WidgetsRect.HasValue)
             {
@@ -309,7 +311,7 @@ namespace EverythingToolbar
 
         protected override void OnClosed(EventArgs e)
         {
-            ToolbarSettings.User.PropertyChanged -= OnSettingsChanged;
+            _taskbarWindowOptions.PropertyChanged -= OnSettingsChanged;
             Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= OnDisplaySettingsChanged;
             base.OnClosed(e);
         }

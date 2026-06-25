@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
 
@@ -123,6 +124,8 @@ namespace EverythingToolbar.Controls
             SHOWWINDOW = 64,
         }
 
+        private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
+
         public bool IsAcrylicEnabled
         {
             get => (bool)GetValue(IsAcrylicEnabledProperty);
@@ -165,7 +168,7 @@ namespace EverythingToolbar.Controls
         protected AcrylicWindow()
         {
             // Use layered window when Windows transparency is disabled to prevent white flash on open
-            if (!Utils.IsWindowsTransparencyEnabled())
+            if (!SystemSettings.IsWindowsTransparencyEnabled())
             {
                 WindowStyle = WindowStyle.None;
                 AllowsTransparency = true;
@@ -192,7 +195,7 @@ namespace EverythingToolbar.Controls
 
         private void OnThemeChanged(object? sender, ResourcesChangedEventArgs e)
         {
-            if (!Utils.IsWindowsTransparencyEnabled())
+            if (!SystemSettings.IsWindowsTransparencyEnabled())
                 UpdateBackgroundColor();
         }
 
@@ -243,10 +246,10 @@ namespace EverythingToolbar.Controls
             return IntPtr.Zero;
         }
 
-        private static Color GetThemeBackgroundColor()
+        private Color GetThemeBackgroundColor()
         {
-            var isLightTheme = Utils.IsLightTheme();
-            var isWindows11 = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows11;
+            var isLightTheme = _windowsPolicy.IsLightTheme();
+            var isWindows11 = _windowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11;
 
             if (isWindows11)
                 return isLightTheme ? Color.FromRgb(0xf0, 0xf0, 0xf0) : Color.FromRgb(0x25, 0x25, 0x25);
@@ -293,7 +296,7 @@ namespace EverythingToolbar.Controls
                     DataSize = (uint)Marshal.SizeOf<AccentPolicy>(),
                 };
 
-                hwndSource.CompositionTarget!.BackgroundColor = Utils.IsWindowsTransparencyEnabled()
+                hwndSource.CompositionTarget!.BackgroundColor = SystemSettings.IsWindowsTransparencyEnabled()
                     ? Colors.Transparent
                     : GetThemeBackgroundColor();
 
@@ -338,7 +341,7 @@ namespace EverythingToolbar.Controls
             var handle = hwndSource!.Handle;
 
             // Determine corner style based on Windows version
-            var windowsVersion = Utils.GetWindowsVersion();
+            var windowsVersion = _windowsPolicy.GetWindowsVersion();
             var cornerStyle =
                 windowsVersion >= Utils.WindowsVersion.Windows11 ? WindowCorner.Round : WindowCorner.RoundSmall;
 

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Controls;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
@@ -15,6 +16,11 @@ namespace EverythingToolbar.Settings
         private bool _checkingForUpdatesVisible;
         private bool _noUpdatesBannerOpen;
         private string _latestVersionUrl = "";
+
+        public UpdateOptions UpdateOptions { get; } = Ioc.Default.GetRequiredService<UpdateOptions>();
+        public EverythingOptions EverythingOptions { get; } = Ioc.Default.GetRequiredService<EverythingOptions>();
+        public StartMenuOptions StartMenuOptions { get; } = Ioc.Default.GetRequiredService<StartMenuOptions>();
+        public ThemeOptions ThemeOptions { get; } = Ioc.Default.GetRequiredService<ThemeOptions>();
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -84,7 +90,7 @@ namespace EverythingToolbar.Settings
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            SearchResultProvider.SetInstanceName(ToolbarSettings.User.InstanceName);
+            Ioc.Default.GetRequiredService<IEverythingClient>().SetInstanceName(EverythingOptions.InstanceName);
         }
 
         private async void OnCheckForUpdatesClicked(object sender, RoutedEventArgs e)

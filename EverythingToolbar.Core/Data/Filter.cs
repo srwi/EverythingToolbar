@@ -34,19 +34,23 @@ namespace EverythingToolbar.Data
             Macro = "";
         }
 
-        public string GetSearchPrefix()
+        public string GetSearchPrefix(
+            bool currentIsMatchCase,
+            bool currentIsMatchWholeWord,
+            bool currentIsMatchPath,
+            bool currentIsRegExEnabled)
         {
             if (string.IsNullOrEmpty(Search))
                 return "";
 
             var modifiers = "";
-            if (IsMatchCase != ToolbarSettings.User.IsMatchCase)
+            if (IsMatchCase != currentIsMatchCase)
                 modifiers += IsMatchCase ? "case:" : "nocase:";
-            if (IsMatchWholeWord != ToolbarSettings.User.IsMatchWholeWord)
+            if (IsMatchWholeWord != currentIsMatchWholeWord)
                 modifiers += IsMatchWholeWord ? "ww:" : "noww:";
-            if (IsMatchPath != ToolbarSettings.User.IsMatchPath)
+            if (IsMatchPath != currentIsMatchPath)
                 modifiers += IsMatchPath ? "path:" : "nopath:";
-            if (IsRegExEnabled != ToolbarSettings.User.IsRegExEnabled)
+            if (IsRegExEnabled != currentIsRegExEnabled)
                 modifiers += IsRegExEnabled ? "regex:" : "noregex:";
 
             if (string.IsNullOrEmpty(modifiers))

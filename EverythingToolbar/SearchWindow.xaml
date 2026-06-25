@@ -48,13 +48,13 @@
                     </Grid.ColumnDefinitions>
 
                     <controls:FilterSelector x:Name="FilterSelector"
-                                             SelectedFilter="{Binding Source={x:Static search:SearchState.Instance}, Path=Filter, Mode=TwoWay}"/>
+                                             SelectedFilter="{Binding Source={h:Service {x:Type search:SearchState}}, Path=Filter, Mode=TwoWay}"/>
 
                     <Border Grid.Column="1">
                         <Button Style="{DynamicResource TabBarButtonStyle}"
                                 Content="{Binding ElementName=SearchResultsView, Path=TotalResultsCount,
                                                   Converter={c:SearchResultsCountConverter}}"
-                                Visibility="{Binding Source={x:Static local:ToolbarSettings.User},
+                                Visibility="{Binding Source={h:Service {x:Type local:SearchOptions}},
                                                      Path=IsShowResultsCount,
                                                      Converter={c:BoolToVisibilityConverter}}"
                                 Click="OpenSearchInEverything" />
@@ -83,7 +83,7 @@
                             <Setter Property="Visibility"
                                     Value="Collapsed" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsPreviewPaneEnabled}"
+                                <DataTrigger Binding="{Binding Source={h:Service {x:Type local:SearchOptions}}, Path=IsPreviewPaneEnabled}"
                                              Value="True">
                                     <Setter Property="Visibility"
                                             Value="Visible" />
@@ -104,13 +104,12 @@
             </Grid>
 
             <controls:SearchBox x:Name="SearchBox"
-                                SearchTerm="{Binding Source={x:Static search:SearchState.Instance}, Path=SearchTerm, Mode=TwoWay}"
+                                SearchTerm="{Binding Source={h:Service {x:Type search:SearchState}}, Path=SearchTerm, Mode=TwoWay}"
                                 TabIndex="999"
                                 Grid.Row="{DynamicResource SearchBoxGridRow}"
                                 Height="40"
                                 Margin="{DynamicResource SearchBoxMargin}"
-                                RespondsInIconMode="True"
-                                Visibility="{Binding Source={x:Static h:TaskbarStateManager.Instance},
+                                Visibility="{Binding Source={h:Service {x:Type h:TaskbarStateManager}},
                                                      Path=IsIcon,
                                                      Converter={c:BoolToVisibilityConverter},
                                                      ConverterParameter=false}" />

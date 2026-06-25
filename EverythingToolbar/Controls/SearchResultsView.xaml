@@ -162,12 +162,16 @@
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ElementName=SpinnerOverlay, Path=Visibility}" Value="Visible">
                                     <DataTrigger.EnterActions>
-                                        <BeginStoryboard>
+                                        <BeginStoryboard x:Name="SpinnerStoryboard">
                                             <Storyboard>
                                                 <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="360" Duration="0:0:1" RepeatBehavior="Forever" />
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <!-- Without stopping it, the Forever animation clock keeps ticking every frame while the spinner is collapsed -->
+                                        <StopStoryboard BeginStoryboardName="SpinnerStoryboard" />
+                                    </DataTrigger.ExitActions>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>

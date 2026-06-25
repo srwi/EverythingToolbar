@@ -8,7 +8,6 @@ namespace EverythingToolbar.Search
 {
     public sealed class SearchState : INotifyPropertyChanged
     {
-        public static readonly SearchState Instance = new();
 
         private string _searchTerm = "";
         public string SearchTerm
@@ -24,8 +23,8 @@ namespace EverythingToolbar.Search
             }
         }
 
-        private int _sortBy = ToolbarSettings.User.SortBy;
-        public int SortBy
+        private SortBy _sortBy;
+        public SortBy SortBy
         {
             get => _sortBy;
             private set
@@ -38,7 +37,7 @@ namespace EverythingToolbar.Search
             }
         }
 
-        private bool _isSortDescending = ToolbarSettings.User.IsSortDescending;
+        private bool _isSortDescending;
         public bool IsSortDescending
         {
             get => _isSortDescending;
@@ -52,7 +51,7 @@ namespace EverythingToolbar.Search
             }
         }
 
-        private bool _isMatchCase = ToolbarSettings.User.IsMatchCase;
+        private bool _isMatchCase;
         public bool IsMatchCase
         {
             get => _isMatchCase;
@@ -66,7 +65,7 @@ namespace EverythingToolbar.Search
             }
         }
 
-        private bool _isMatchPath = ToolbarSettings.User.IsMatchPath;
+        private bool _isMatchPath;
         public bool IsMatchPath
         {
             get => _isMatchPath;
@@ -80,7 +79,7 @@ namespace EverythingToolbar.Search
             }
         }
 
-        private bool _isMatchWholeWord = ToolbarSettings.User.IsMatchWholeWord;
+        private bool _isMatchWholeWord;
         public bool IsMatchWholeWord
         {
             get => _isMatchWholeWord;
@@ -94,7 +93,7 @@ namespace EverythingToolbar.Search
             }
         }
 
-        private bool _isRegExEnabled = ToolbarSettings.User.IsRegExEnabled;
+        private bool _isRegExEnabled;
         public bool IsRegExEnabled
         {
             get => _isRegExEnabled;
@@ -108,7 +107,7 @@ namespace EverythingToolbar.Search
             }
         }
 
-        private Filter _currentFilter = FilterLoader.Instance.GetInitialFilter();
+        private Filter _currentFilter;
         public Filter Filter
         {
             get => _currentFilter;
@@ -117,48 +116,80 @@ namespace EverythingToolbar.Search
                 if (!_currentFilter.Equals(value))
                 {
                     _currentFilter = value;
-                    ToolbarSettings.User.LastFilter = value.Name;
+                    _filterOptions.LastFilter = value.Name;
                     OnPropertyChanged();
                 }
             }
         }
 
-        private SearchState()
+        private readonly HistoryManager _history;
+        private readonly FilterLoader _filterLoader;
+        private readonly FilterOptions _filterOptions;
+        private readonly MatchOptions _matchOptions;
+        private readonly SortOptions _sortOptions;
+        private readonly SearchOptions _searchOptions;
+
+        public SearchState(HistoryManager history, FilterLoader filterLoader, FilterOptions filterOptions,
+            MatchOptions matchOptions, SortOptions sortOptions, SearchOptions searchOptions)
         {
-            ToolbarSettings.User.PropertyChanged += OnSettingsChanged;
+            _history = history;
+            _filterLoader = filterLoader;
+            _filterOptions = filterOptions;
+            _matchOptions = matchOptions;
+            _sortOptions = sortOptions;
+            _searchOptions = searchOptions;
+
+            _sortBy = (SortBy)_sortOptions.SortBy;
+            _isSortDescending = _sortOptions.IsSortDescending;
+            _isMatchCase = _matchOptions.IsMatchCase;
+            _isMatchPath = _matchOptions.IsMatchPath;
+            _isMatchWholeWord = _matchOptions.IsMatchWholeWord;
+            _isRegExEnabled = _matchOptions.IsRegExEnabled;
+
+            _currentFilter = _filterLoader.GetInitialFilter();
+
+            _matchOptions.PropertyChanged += OnMatchOptionsChanged;
+            _sortOptions.PropertyChanged += OnSortOptionsChanged;
+            _searchOptions.PropertyChanged += OnSearchOptionsChanged;
         }
 
         public void Reset()
         {
-            if (ToolbarSettings.User.IsEnableHistory)
-                HistoryManager.Instance.AddToHistory(SearchTerm);
+            if (_searchOptions.IsEnableHistory)
+                _history.AddToHistory(SearchTerm);
             else
                 SearchTerm = "";
 
-            Filter = FilterLoader.Instance.GetInitialFilter();
+            Filter = _filterLoader.GetInitialFilter();
         }
+
+        public string GetPreviousSearchTerm() => _history.GetPreviousItem();
+
+        public string GetNextSearchTerm() => _history.GetNextItem();
+
+        public void ClearHistory() => _history.ClearHistory();
 
         public void CycleFilters(int offset = 1)
         {
-            var filterCount = FilterLoader.Instance.Filters.Count;
-            var currentIndex = FilterLoader.Instance.Filters.IndexOf(Filter);
+            var filterCount = _filterLoader.Filters.Count;
+            var currentIndex = _filterLoader.Filters.IndexOf(Filter);
             var newIndex = (currentIndex + offset + filterCount) % filterCount;
-            Filter = FilterLoader.Instance.Filters[newIndex];
+            Filter = _filterLoader.Filters[newIndex];
         }
 
         public void SelectFilterFromIndex(int index)
         {
-            if (index < 0 || index >= FilterLoader.Instance.Filters.Count)
+            if (index < 0 || index >= _filterLoader.Filters.Count)
                 return;
 
-            Filter = FilterLoader.Instance.Filters[index];
+            Filter = _filterLoader.Filters[index];
         }
 
         private string ApplyMacros(string searchTerm)
         {
             var result = searchTerm;
 
-            foreach (var f in FilterLoader.Instance.Filters)
+            foreach (var f in _filterLoader.Filters)
             {
                 if (string.IsNullOrEmpty(f.Macro))
                     continue;
@@ -182,37 +213,62 @@ namespace EverythingToolbar.Search
 
         public string BuildSearchTerm()
         {
-            var rawSearchTerm = Filter.GetSearchPrefix() + SearchTerm;
+            var rawSearchTerm = Filter.GetSearchPrefix(IsMatchCase, IsMatchWholeWord, IsMatchPath, IsRegExEnabled) + SearchTerm;
             var searchTermWithAppliedMacros = ApplyMacros(rawSearchTerm);
             return searchTermWithAppliedMacros;
         }
 
-        private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
+        public SearchQuery BuildSearchQuery()
+        {
+            return new SearchQuery(
+                BuildSearchTerm(),
+                SortBy,
+                IsSortDescending,
+                IsMatchCase,
+                IsMatchPath,
+                IsMatchWholeWord,
+                IsRegExEnabled
+            );
+        }
+
+        private void OnMatchOptionsChanged(object? sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case nameof(ToolbarSettings.User.SortBy):
-                    SortBy = ToolbarSettings.User.SortBy;
+                case nameof(MatchOptions.IsMatchCase):
+                    IsMatchCase = _matchOptions.IsMatchCase;
                     break;
-                case nameof(ToolbarSettings.User.IsSortDescending):
-                    IsSortDescending = ToolbarSettings.User.IsSortDescending;
+                case nameof(MatchOptions.IsMatchPath):
+                    IsMatchPath = _matchOptions.IsMatchPath;
                     break;
-                case nameof(ToolbarSettings.User.IsMatchCase):
-                    IsMatchCase = ToolbarSettings.User.IsMatchCase;
+                case nameof(MatchOptions.IsMatchWholeWord):
+                    IsMatchWholeWord = _matchOptions.IsMatchWholeWord;
                     break;
-                case nameof(ToolbarSettings.User.IsMatchPath):
-                    IsMatchPath = ToolbarSettings.User.IsMatchPath;
+                case nameof(MatchOptions.IsRegExEnabled):
+                    IsRegExEnabled = _matchOptions.IsRegExEnabled;
                     break;
-                case nameof(ToolbarSettings.User.IsMatchWholeWord):
-                    IsMatchWholeWord = ToolbarSettings.User.IsMatchWholeWord;
+            }
+        }
+
+        private void OnSortOptionsChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(SortOptions.SortBy):
+                    SortBy = (SortBy)_sortOptions.SortBy;
                     break;
-                case nameof(ToolbarSettings.User.IsRegExEnabled):
-                    IsRegExEnabled = ToolbarSettings.User.IsRegExEnabled;
+                case nameof(SortOptions.IsSortDescending):
+                    IsSortDescending = _sortOptions.IsSortDescending;
                     break;
-                case nameof(ToolbarSettings.User.IsHideEmptySearchResults):
-                    SearchTerm = "";
-                    OnPropertyChanged(nameof(SearchTerm));
-                    break;
+            }
+        }
+
+        private void OnSearchOptionsChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SearchOptions.IsHideEmptySearchResults))
+            {
+                SearchTerm = "";
+                OnPropertyChanged(nameof(SearchTerm));
             }
         }
 

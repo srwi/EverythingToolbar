@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:c="clr-namespace:EverythingToolbar.Converters;assembly=EverythingToolbar">
+                    xmlns:h="clr-namespace:EverythingToolbar.Helpers;assembly=EverythingToolbar">
     
     <DataTemplate x:Key="SearchResultsViewTemplate">
         <Grid x:Name="ListViewItem" Margin="3">
@@ -12,11 +12,13 @@
             <Image Source="{Binding Icon}"
                    Width="16"
                    Height="16" />
-            <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, ConverterParameter=9, Mode=OneTime}"
-                            Grid.Column="1"
-                            Margin="2, 0"
-                            ToolTip="{Binding FileName}"
-                            Foreground="{DynamicResource SearchResultFileName}" />
+            <TextBlock h:HighlightedText.Source="{Binding HighlightedFileName, Mode=OneTime}"
+                       TextTrimming="CharacterEllipsis"
+                       FontSize="9pt"
+                       Grid.Column="1"
+                       Margin="2, 0"
+                       ToolTip="{Binding FileName}"
+                       Foreground="{DynamicResource SearchResultFileName}" />
             <TextBlock Grid.Column="2"
                        FontSize="9pt"
                        Margin="2, 0"

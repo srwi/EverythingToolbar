@@ -1,4 +1,5 @@
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
 using Wpf.Ui.Appearance;
@@ -12,6 +13,7 @@ namespace EverythingToolbar.Behaviors
             @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize",
             "AppsUseLightTheme"
         );
+        private readonly ThemeOptions _themeOptions = Ioc.Default.GetRequiredService<ThemeOptions>();
 
         protected override void OnAttached()
         {
@@ -41,12 +43,12 @@ namespace EverythingToolbar.Behaviors
 
         private Theme GetThemeFromRegistryValue(int registryValue)
         {
-            if (ToolbarSettings.User.ThemeOverride.ToLower() == "light")
+            if (_themeOptions.ThemeOverride.ToLower() == "light")
             {
                 return Theme.Light;
             }
 
-            if (ToolbarSettings.User.ThemeOverride.ToLower() == "dark")
+            if (_themeOptions.ThemeOverride.ToLower() == "dark")
             {
                 return Theme.Dark;
             }

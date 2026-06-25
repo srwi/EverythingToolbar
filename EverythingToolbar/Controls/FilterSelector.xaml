@@ -5,8 +5,7 @@
              xmlns:converters="clr-namespace:EverythingToolbar.Converters"
              xmlns:local="clr-namespace:EverythingToolbar"
              x:Name="Root"
-             Background="Transparent"
-             DataContext="{Binding Source={x:Static helpers:FilterLoader.Instance}}">
+             Background="Transparent">
     <UserControl.OpacityMask>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
             <GradientStop Color="Black" Offset="0"/>
@@ -22,7 +21,7 @@
             <TabControl.ItemsSource>
                 <MultiBinding Converter="{converters:TakeItemsMultiConverter}">
                     <Binding Path="Filters" />
-                    <Binding Source="{x:Static local:ToolbarSettings.User}" Path="MaxTabItems" Mode="TwoWay" />
+                    <Binding Source="{helpers:Service {x:Type local:FilterOptions}}" Path="MaxTabItems" Mode="TwoWay" />
                 </MultiBinding>
             </TabControl.ItemsSource>
         </TabControl>
@@ -35,7 +34,7 @@
             <ComboBox.ItemsSource>
                 <MultiBinding Converter="{converters:SkipItemsMultiConverter}">
                     <Binding Path="Filters" />
-                    <Binding Source="{x:Static local:ToolbarSettings.User}" Path="MaxTabItems" Mode="TwoWay" />
+                    <Binding Source="{helpers:Service {x:Type local:FilterOptions}}" Path="MaxTabItems" Mode="TwoWay" />
                 </MultiBinding>
             </ComboBox.ItemsSource>
         </ComboBox>

@@ -204,7 +204,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="Config.Net" Version="4.13.7" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="NLog" Version="5.1.1" />
@@ -213,6 +215,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EverythingSDK\EverythingSDK.vcxproj" />
+    <ProjectReference Include="..\EverythingToolbar.Core\EverythingToolbar.Core.csproj" />
+    <ProjectReference Include="..\EverythingToolbar.Platform\EverythingToolbar.Platform.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\AboutBannerBackground.png">
@@ -249,7 +253,7 @@
       <Output TaskParameter="Assemblies" ItemName="Targets" />
     </GetAssemblyIdentity>
     <ItemGroup>
-      <VersionNumber Include="@(Targets-&gt;'%(Version)')" />
+      <VersionNumber Include="@(Targets->'%(Version)')" />
     </ItemGroup>
   </Target>
   <PropertyGroup>

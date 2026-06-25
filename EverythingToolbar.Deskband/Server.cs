@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
@@ -23,26 +25,35 @@ namespace EverythingToolbar.Deskband
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<Server>();
         private static ToolbarControl? _toolbarControl;
+        private TaskbarStateManager _taskbarState = null!;
         protected override UIElement UIElement => _toolbarControl!;
 
         public Server()
         {
             try
             {
+                AppServices.Initialize();
+
+                _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
+
                 // Apply saved UI language
-                CultureHelper.ApplyUILanguage(ToolbarSettings.User.UILanguage);
+                CultureHelper.ApplyUILanguage(Ioc.Default.GetRequiredService<LanguageOptions>().UILanguage);
 
                 _toolbarControl = new ToolbarControl();
 
                 Options.MinHorizontalSize = new Size(24, 30);
                 Options.MinVerticalSize = new Size(24, 30);
 
-                EventDispatcher.Instance.FocusRequested += OnFocusRequested;
-                EventDispatcher.Instance.UnfocusRequested += OnUnfocusRequested;
+                WeakReferenceMessenger.Default.Register<ToolbarFocusChanged>(this, (_, m) => UpdateFocus(m.IsFocused));
+                WeakReferenceMessenger.Default.Register<SearchWindowActiveChanged>(this, (_, m) =>
+                {
+                    if (m.IsActive)
+                        UpdateFocus(true);
+                });
                 TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
                 TaskbarInfo.TaskbarSizeChanged += OnTaskbarSizeChanged;
 
-                TaskbarStateManager.Instance.TaskbarEdge = (Helpers.Edge)TaskbarInfo.Edge;
+                _taskbarState.TaskbarEdge = (Helpers.Edge)TaskbarInfo.Edge;
             }
             catch (Exception e)
             {
@@ -63,29 +74,20 @@ namespace EverythingToolbar.Deskband
 
         public void Dummy() { }
 
-        private void OnUnfocusRequested(object? sender, EventArgs e)
-        {
-            UpdateFocus(false);
-        }
-
-        private void OnFocusRequested(object? sender, EventArgs e)
-        {
-            UpdateFocus(true);
-        }
-
         private void OnTaskbarEdgeChanged(object? sender, TaskbarEdgeChangedEventArgs e)
         {
-            TaskbarStateManager.Instance.TaskbarEdge = (Helpers.Edge)e.Edge;
+            _taskbarState.TaskbarEdge = (Helpers.Edge)e.Edge;
         }
 
         private void OnTaskbarSizeChanged(object? sender, TaskbarSizeChangedEventArgs e)
         {
-            TaskbarStateManager.Instance.TaskbarSize = new Size(e.Size.Width, e.Size.Height);
+            _taskbarState.TaskbarSize = new Size(e.Size.Width, e.Size.Height);
         }
 
         protected override void DeskbandOnClosed()
         {
-            StartMenuIntegration.Instance.Disable();
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+            Ioc.Default.GetRequiredService<StartMenuIntegration>().Disable();
 
             base.DeskbandOnClosed();
 

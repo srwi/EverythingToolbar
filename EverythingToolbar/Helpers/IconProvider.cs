@@ -215,24 +215,28 @@ namespace EverythingToolbar.Helpers
             {
                 Task.Run(() =>
                 {
-                    int exactIconIndex = GetIconIndex(path, IconIndexType.ByFilePath);
-                    var exactIconCacheKey = exactIconIndex + "_" + iconSize;
-                    if (IconByIndexAndScaleCache.TryGetValue(exactIconCacheKey, out var cachedExactIcon))
-                    {
-                        onUpdated.Invoke(cachedExactIcon);
-                        return;
-                    }
-
-                    ImageSource? exactIcon = GetIconFromSystemImageList(exactIconIndex, iconSize);
+                    ImageSource? exactIcon = GetExactImage(path, iconSize);
                     if (exactIcon != null)
-                    {
-                        IconByIndexAndScaleCache.TryAdd(exactIconCacheKey, exactIcon);
                         onUpdated.Invoke(exactIcon);
-                    }
                 });
             }
 
             return iconByExtAndScale;
+        }
+
+        // Can block on network paths (SHGetFileInfo touches the file system) - do not call on the UI thread.
+        public static ImageSource? GetExactImage(string path, int iconSize)
+        {
+            int exactIconIndex = GetIconIndex(path, IconIndexType.ByFilePath);
+            var exactIconCacheKey = exactIconIndex + "_" + iconSize;
+            if (IconByIndexAndScaleCache.TryGetValue(exactIconCacheKey, out var cachedExactIcon))
+                return cachedExactIcon;
+
+            ImageSource? exactIcon = GetIconFromSystemImageList(exactIconIndex, iconSize);
+            if (exactIcon != null)
+                IconByIndexAndScaleCache.TryAdd(exactIconCacheKey, exactIcon);
+
+            return exactIcon;
         }
 
         private static int GetIconIndex(string path, IconIndexType indexType)

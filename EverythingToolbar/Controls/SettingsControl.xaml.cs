@@ -2,6 +2,9 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using EverythingToolbar.Data;
+using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
 using EverythingToolbar.Settings;
 
@@ -9,16 +12,24 @@ namespace EverythingToolbar.Controls
 {
     public partial class SettingsControl
     {
+        private static ISearchWindowController SearchWindowController =>
+            Ioc.Default.GetRequiredService<ISearchWindowController>();
+
+        public MatchOptions MatchOptions { get; } = Ioc.Default.GetRequiredService<MatchOptions>();
+        public SearchOptions SearchOptions { get; } = Ioc.Default.GetRequiredService<SearchOptions>();
+        public SortOptions SortOptions { get; } = Ioc.Default.GetRequiredService<SortOptions>();
+
         public SettingsControl()
         {
             InitializeComponent();
+            DataContext = this;
 
             SelectSortType();
         }
 
         private void OpenSettingsWindow(object sender, RoutedEventArgs e)
         {
-            SearchWindow.Instance.Hide();
+            SearchWindowController.Hide();
             Window settings = new SettingsWindow();
             settings.Show();
         }
@@ -32,11 +43,11 @@ namespace EverythingToolbar.Controls
 
             int[] fastSortExceptions = [4, 8];
             if (
-                SearchResultProvider.GetIsFastSort(selectedIndex, ToolbarSettings.User.IsSortDescending)
+                Ioc.Default.GetRequiredService<IEverythingClient>().GetIsFastSort((SortBy)selectedIndex, SortOptions.IsSortDescending)
                 || fastSortExceptions.Contains(selectedIndex)
             )
             {
-                ToolbarSettings.User.SortBy = selectedIndex;
+                SortOptions.SortBy = selectedIndex;
             }
             else
             {
@@ -53,13 +64,13 @@ namespace EverythingToolbar.Controls
 
         private void OnSortAscendingClicked(object sender, RoutedEventArgs e)
         {
-            ToolbarSettings.User.IsSortDescending = false;
+            SortOptions.IsSortDescending = false;
             SelectSortType();
         }
 
         private void OnSortDescendingClicked(object sender, RoutedEventArgs e)
         {
-            ToolbarSettings.User.IsSortDescending = true;
+            SortOptions.IsSortDescending = true;
             SelectSortType();
         }
 
@@ -71,10 +82,10 @@ namespace EverythingToolbar.Controls
                     menuItem.IsChecked = false;
             }
 
-            if (SortByMenu.Items[ToolbarSettings.User.SortBy] is MenuItem sortByMenuItem)
+            if (SortByMenu.Items[SortOptions.SortBy] is MenuItem sortByMenuItem)
                 sortByMenuItem.IsChecked = true;
 
-            if (ToolbarSettings.User.IsSortDescending)
+            if (SortOptions.IsSortDescending)
                 SortDescendingMenuItem.IsChecked = true;
             else
                 SortAscendingMenuItem.IsChecked = true;
@@ -95,7 +106,7 @@ namespace EverythingToolbar.Controls
 
         private void TogglePreviewPane(object sender, RoutedEventArgs e)
         {
-            ToolbarSettings.User.IsPreviewPaneEnabled = !ToolbarSettings.User.IsPreviewPaneEnabled;
+            SearchOptions.IsPreviewPaneEnabled = !SearchOptions.IsPreviewPaneEnabled;
         }
     }
 }

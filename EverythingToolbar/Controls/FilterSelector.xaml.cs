@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 
@@ -30,10 +31,14 @@ namespace EverythingToolbar.Controls
             set => SetValue(SelectedFilterProperty, value);
         }
 
+        private readonly FilterLoader _filterLoader = Ioc.Default.GetRequiredService<FilterLoader>();
+        private readonly FilterOptions _filterOptions = Ioc.Default.GetRequiredService<FilterOptions>();
+
         public FilterSelector()
         {
             InitializeComponent();
 
+            DataContext = _filterLoader;
             Loaded += (_, _) => UpdateSelectedItems();
         }
 
@@ -45,8 +50,8 @@ namespace EverythingToolbar.Controls
             TabControl.SelectionChanged -= OnTabItemSelected;
             ComboBox.SelectionChanged -= OnComboBoxItemSelected;
 
-            int filterIndex = FilterLoader.Instance.Filters.IndexOf(SelectedFilter);
-            int maxTabItems = ToolbarSettings.User.MaxTabItems;
+            int filterIndex = _filterLoader.Filters.IndexOf(SelectedFilter);
+            int maxTabItems = _filterOptions.MaxTabItems;
 
             TabControl.SelectedIndex = filterIndex < maxTabItems ? filterIndex : -1;
             ComboBox.SelectedIndex = filterIndex >= maxTabItems ? filterIndex - maxTabItems : -1;

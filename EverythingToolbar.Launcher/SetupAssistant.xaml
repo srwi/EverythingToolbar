@@ -7,8 +7,7 @@
                  xmlns:properties="clr-namespace:EverythingToolbar.Launcher.Properties"
                  xmlns:sprops="clr-namespace:EverythingToolbar.Properties;assembly=EverythingToolbar"
                  xmlns:controls="clr-namespace:EverythingToolbar.Controls;assembly=EverythingToolbar"
-                 xmlns:c="clr-namespace:EverythingToolbar.Converters;assembly=EverythingToolbar"
-                 xmlns:local="clr-namespace:EverythingToolbar;assembly=EverythingToolbar"
+                  xmlns:c="clr-namespace:EverythingToolbar.Converters;assembly=EverythingToolbar"
                  WindowBackdropType="Mica"
                  ExtendsContentIntoTitleBar="True"
                  WindowCornerPreference="Round"
@@ -205,7 +204,7 @@
                                                   HelpText="{x:Static properties:Resources.SetupAssistantTaskbarWindowAlternativeHelp}"
                                                   Margin="0, 16, 0, 0">
                                 <controls:SettingItem.SettingContent>
-                                    <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowEnabled, Mode=TwoWay}" />
+                                    <ui:ToggleSwitch IsChecked="{Binding TaskbarWindowOptions.TaskbarWindowEnabled, Mode=TwoWay}" />
                                 </controls:SettingItem.SettingContent>
                             </controls:SettingItem>
                         </StackPanel>
@@ -222,10 +221,10 @@
                                           ItemsSource="{Binding TaskbarWindowAlignmentOptions}"
                                           DisplayMemberPath="Key"
                                           SelectedValuePath="Value"
-                                          SelectedValue="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowAlignment, Mode=TwoWay}">
+                                          SelectedValue="{Binding TaskbarWindowOptions.TaskbarWindowAlignment, Mode=TwoWay}">
                                     <ComboBox.IsEnabled>
                                         <MultiBinding Converter="{c:BooleanAndConverter}">
-                                            <Binding Source="{x:Static local:ToolbarSettings.User}" Path="TaskbarWindowEnabled" />
+                                            <Binding Path="TaskbarWindowOptions.TaskbarWindowEnabled" />
                                             <Binding Path="AllowLeftAlignment" />
                                         </MultiBinding>
                                     </ComboBox.IsEnabled>
@@ -263,7 +262,7 @@
                         <controls:SettingItem Title="{x:Static properties:Resources.SetupAssistantEnableSystemTray}"
                                               HelpText="{x:Static properties:Resources.SetupAssistantEnableSystemTrayHelp}">
                             <controls:SettingItem.SettingContent>
-                                <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsTrayIconEnabled, Mode=TwoWay}" />
+                                <ui:ToggleSwitch IsChecked="{Binding LauncherOptions.IsTrayIconEnabled, Mode=TwoWay}" />
                             </controls:SettingItem.SettingContent>
                         </controls:SettingItem>
                     </Border>

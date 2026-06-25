@@ -21,6 +21,5 @@
     </i:Interaction.Behaviors>
 
     <controls:ToolbarControl x:Name="ToolbarControl"
-                             IsFixedLayout="True"
-                             AddPlacementBehavior="False" />
+                             IsFixedLayout="True" />
 </Window>

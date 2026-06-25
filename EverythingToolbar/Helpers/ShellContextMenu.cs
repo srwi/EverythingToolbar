@@ -5,7 +5,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar;
+using EverythingToolbar.Helpers;
 using Microsoft.Win32;
 
 namespace Peter
@@ -615,7 +617,7 @@ namespace Peter
         /// </summary>
         private static bool ShouldUseDarkMode()
         {
-            return !EverythingToolbar.Helpers.Utils.IsLightTheme();
+            return !Ioc.Default.GetRequiredService<WindowsPolicy>().IsLightTheme();
         }
 
         /// <summary>

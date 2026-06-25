@@ -8,7 +8,7 @@ namespace EverythingToolbar.Helpers
 {
     public sealed class RegistryValueWatcher : IDisposable
     {
-        private static readonly ILogger Logger = ToolbarLogger.GetLogger<RegistryValueWatcher>();
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
         private const int REG_NOTIFY_CHANGE_LAST_SET = 0x00000004;
 

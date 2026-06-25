@@ -36,25 +36,15 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\EverythingToolbar\EverythingToolbar.csproj" />
+    <ProjectReference Include="..\EverythingToolbar.Core\EverythingToolbar.Core.csproj" />
+    <ProjectReference Include="..\EverythingToolbar.Platform\EverythingToolbar.Platform.csproj" />
   </ItemGroup>
-  <Target
-    Name="AddRuntimeDependenciesToContent"
-    Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp'"
-    BeforeTargets="GetCopyToOutputDirectoryItems"
-  >
+  <Target Name="AddRuntimeDependenciesToContent" Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp'" BeforeTargets="GetCopyToOutputDirectoryItems">
     <!-- Include MSBuild.deps.json and MSBuild.runtimeconfig.json in ContentWithTargetPath so they will be copied to the output folder of projects
        that reference this one. (https://github.com/dotnet/sdk/issues/1675#issuecomment-346135772) -->
     <ItemGroup>
-      <ContentWithTargetPath
-        Include="$(ProjectDepsFilePath)"
-        CopyToOutputDirectory="PreserveNewest"
-        TargetPath="$(ProjectDepsFileName)"
-      />
-      <ContentWithTargetPath
-        Include="$(ProjectRuntimeConfigFilePath)"
-        CopyToOutputDirectory="PreserveNewest"
-        TargetPath="$(ProjectRuntimeConfigFileName)"
-      />
+      <ContentWithTargetPath Include="$(ProjectDepsFilePath)" CopyToOutputDirectory="PreserveNewest" TargetPath="$(ProjectDepsFileName)" />
+      <ContentWithTargetPath Include="$(ProjectRuntimeConfigFilePath)" CopyToOutputDirectory="PreserveNewest" TargetPath="$(ProjectRuntimeConfigFileName)" />
     </ItemGroup>
   </Target>
   <ItemGroup>

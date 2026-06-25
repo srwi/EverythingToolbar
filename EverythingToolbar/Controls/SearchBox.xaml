@@ -3,15 +3,13 @@
              xmlns:c="clr-namespace:EverythingToolbar.Converters"
              xmlns:properties="clr-namespace:EverythingToolbar.Properties"
              xmlns:controls="clr-namespace:EverythingToolbar.Controls"
-             xmlns:local="clr-namespace:EverythingToolbar"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              SizeChanged="OnSizeChanged">
 
     <Grid>
         <TextBox Name="TextBox"
                  Tag="{x:Static properties:Resources.TextBoxWatermark}"
-                 Text="{Binding Path=SearchTerm, Mode=OneWay}"
-                 DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:SearchBox}}}"
+                 Text="{Binding SearchTerm, Mode=OneWay}"
                  CaretBrush="{DynamicResource TextBoxForegroundActive}"
                  TextChanged="OnTextChanged"
                  GotKeyboardFocus="OnGotKeyboardFocus"
@@ -23,17 +21,17 @@
                 <ContextMenu>
                     <MenuItem Header="{x:Static properties:Resources.SettingsRegularExpressions}"
                               IsCheckable="True"
-                              IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsRegExEnabled, Mode=TwoWay}" />
+                              IsChecked="{Binding MatchOptions.IsRegExEnabled, Mode=TwoWay}" />
                     <MenuItem Header="{x:Static properties:Resources.SettingsMatchCase}"
                               IsCheckable="True"
-                              IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsMatchCase, Mode=TwoWay}" />
+                              IsChecked="{Binding MatchOptions.IsMatchCase, Mode=TwoWay}" />
                     <MenuItem Header="{x:Static properties:Resources.SettingsMatchPath}"
                               IsCheckable="True"
-                              IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsMatchPath, Mode=TwoWay}" />
+                              IsChecked="{Binding MatchOptions.IsMatchPath, Mode=TwoWay}" />
                     <MenuItem Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
                               IsCheckable="True"
-                              IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsMatchWholeWord, Mode=TwoWay}"
-                              IsEnabled="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={c:NotConverter}}" />
+                              IsChecked="{Binding MatchOptions.IsMatchWholeWord, Mode=TwoWay}"
+                              IsEnabled="{Binding MatchOptions.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={c:NotConverter}}" />
                     <Separator />
                     <MenuItem Header="{x:Static properties:Resources.ContextMenuCut}"
                               Click="OnCutClicked"
@@ -57,13 +55,13 @@
                     Background="Transparent">
             <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
                           ToolTip="{x:Static properties:Resources.SettingsMatchCase}"
-                          IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsMatchCase}"
+                          IsChecked="{Binding MatchOptions.IsMatchCase}"
                           Content="Aa"
                           Margin="1" />
             <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
                           ToolTip="{x:Static properties:Resources.SettingsMatchWholeWord}"
-                          IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsMatchWholeWord}"
-                          IsEnabled="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={c:NotConverter}}"
+                          IsChecked="{Binding MatchOptions.IsMatchWholeWord}"
+                          IsEnabled="{Binding MatchOptions.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={c:NotConverter}}"
                           Margin="1">
                 <TextBlock TextDecorations="Underline,OverLine"
                            Text="Abl"
@@ -73,7 +71,7 @@
             </ToggleButton>
             <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
                           ToolTip="{x:Static properties:Resources.SettingsMatchPath}"
-                          IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsMatchPath}"
+                          IsChecked="{Binding MatchOptions.IsMatchPath}"
                           Margin="1">
                 <TextBlock Text="..\"
                            FontSize="12pt"
@@ -81,7 +79,7 @@
             </ToggleButton>
             <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
                           ToolTip="{x:Static properties:Resources.SettingsRegularExpressions}"
-                          IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsRegExEnabled}"
+                          IsChecked="{Binding MatchOptions.IsRegExEnabled}"
                           TextBlock.FontWeight="Bold"
                           Content=".*"
                           Margin="1" />

@@ -756,7 +756,7 @@ namespace EverythingToolbar
     public abstract class ToolbarSettings
     {
         private static readonly IToolbarSettings UserSettings = new ConfigurationBuilder<IToolbarSettings>()
-            .UseIniFile(Path.Combine(Utils.GetConfigDirectory(), "settings.ini"))
+            .UseIniFile(Path.Combine(ConfigPaths.GetConfigDirectory(), "settings.ini"))
             .Build();
 
         public static readonly ToolbarSettingsWrapper User = new(UserSettings);

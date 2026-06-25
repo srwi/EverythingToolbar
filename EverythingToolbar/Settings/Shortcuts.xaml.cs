@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Settings
@@ -15,6 +16,8 @@ namespace EverythingToolbar.Settings
         private ModifierKeys Modifiers { get; set; }
         private ModifierKeys OriginalModifiers { get; set; }
         private ModifierKeys TempMods { get; set; }
+
+        private readonly ShortcutOptions _shortcutOptions = Ioc.Default.GetRequiredService<ShortcutOptions>();
 
         private static event EventHandler<WinKeyEventArgs>? WinKeyEventHandler;
 
@@ -166,11 +169,11 @@ namespace EverythingToolbar.Settings
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            StartMenuIntegration.Instance.Disable();
+            Ioc.Default.GetRequiredService<StartMenuIntegration>().Disable();
             ShortcutManager.IsEnabled = false;
 
-            Modifiers = (ModifierKeys)ToolbarSettings.User.ShortcutModifiers;
-            Key = (Key)ToolbarSettings.User.ShortcutKey;
+            Modifiers = (ModifierKeys)_shortcutOptions.ShortcutModifiers;
+            Key = (Key)_shortcutOptions.ShortcutKey;
 
             OriginalKey = Key;
             OriginalModifiers = Modifiers;
@@ -182,7 +185,7 @@ namespace EverythingToolbar.Settings
         {
             ShortcutManager.IsEnabled = true;
             ReleaseKeyboard();
-            StartMenuIntegration.Instance.Initialize();
+            Ioc.Default.GetRequiredService<StartMenuIntegration>().Initialize();
 
             if (Key != OriginalKey || Modifiers != OriginalModifiers)
             {

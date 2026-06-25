@@ -14,9 +14,7 @@ namespace EverythingToolbar.Helpers
 
     public class TaskbarStateManager : INotifyPropertyChanged
     {
-        public static readonly TaskbarStateManager Instance = new TaskbarStateManager();
-
-        private TaskbarStateManager() { }
+        public TaskbarStateManager() { }
 
         private Edge _taskbarEdge = Edge.Bottom;
         public Edge TaskbarEdge

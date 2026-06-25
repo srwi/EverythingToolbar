@@ -5,18 +5,23 @@ using EverythingToolbar.Data;
 
 namespace EverythingToolbar.Helpers
 {
-    internal class FilterLoader : INotifyPropertyChanged
+    public class FilterLoader : INotifyPropertyChanged
     {
+        private readonly DefaultFilterLoader _defaultLoader;
+        private readonly EverythingFilterLoader _everythingLoader;
+        private readonly FilterOptions _options;
+        private readonly MatchOptions _matchOptions;
+
         public ObservableCollection<Filter> Filters
         {
             get
             {
-                if (ToolbarSettings.User.IsRegExEnabled)
+                if (_matchOptions.IsRegExEnabled)
                     return new ObservableCollection<Filter>([DefaultFilterLoader.AllFilter]);
 
-                if (ToolbarSettings.User.IsImportFilters)
+                if (_options.IsImportFilters)
                 {
-                    var everythingFilters = EverythingFilterLoader.Instance.Filters;
+                    var everythingFilters = _everythingLoader.Filters;
 
                     if (everythingFilters?.Count > 0)
                         return everythingFilters;
@@ -24,22 +29,27 @@ namespace EverythingToolbar.Helpers
                     return new ObservableCollection<Filter>([DefaultFilterLoader.AllFilter]);
                 }
 
-                return DefaultFilterLoader.Instance.Filters;
+                return _defaultLoader.Filters;
             }
         }
 
-        public static readonly FilterLoader Instance = new();
-
-        private FilterLoader()
+        public FilterLoader(DefaultFilterLoader defaultLoader, EverythingFilterLoader everythingLoader,
+            FilterOptions options, MatchOptions matchOptions)
         {
-            ToolbarSettings.User.PropertyChanged += OnSettingsChanged;
-            EverythingFilterLoader.Instance.PropertyChanged += OnEverythingFiltersChanged;
-            DefaultFilterLoader.Instance.PropertyChanged += OnDefaultFiltersChanged;
+            _defaultLoader = defaultLoader;
+            _everythingLoader = everythingLoader;
+            _options = options;
+            _matchOptions = matchOptions;
+
+            _matchOptions.PropertyChanged += OnSettingsChanged;
+            _options.PropertyChanged += OnSettingsChanged;
+            _everythingLoader.PropertyChanged += OnEverythingFiltersChanged;
+            _defaultLoader.PropertyChanged += OnDefaultFiltersChanged;
         }
 
         private void OnDefaultFiltersChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(DefaultFilterLoader.Instance.Filters))
+            if (e.PropertyName == nameof(DefaultFilterLoader.Filters))
             {
                 NotifyPropertyChanged(nameof(Filters));
             }
@@ -47,7 +57,7 @@ namespace EverythingToolbar.Helpers
 
         private void OnEverythingFiltersChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(EverythingFilterLoader.Instance.Filters))
+            if (e.PropertyName == nameof(EverythingFilterLoader.Filters))
             {
                 NotifyPropertyChanged(nameof(Filters));
             }
@@ -57,8 +67,8 @@ namespace EverythingToolbar.Helpers
         {
             switch (e.PropertyName)
             {
-                case nameof(ToolbarSettings.User.IsRegExEnabled):
-                case nameof(ToolbarSettings.User.IsImportFilters):
+                case nameof(MatchOptions.IsRegExEnabled):
+                case nameof(FilterOptions.IsImportFilters):
                     NotifyPropertyChanged(nameof(Filters));
                     break;
             }
@@ -66,11 +76,11 @@ namespace EverythingToolbar.Helpers
 
         public Filter GetInitialFilter()
         {
-            if (ToolbarSettings.User.IsRememberFilter)
+            if (_options.IsRememberFilter)
             {
                 foreach (var filter in Filters)
                 {
-                    if (filter.Name == ToolbarSettings.User.LastFilter)
+                    if (filter.Name == _options.LastFilter)
                         return filter;
                 }
             }

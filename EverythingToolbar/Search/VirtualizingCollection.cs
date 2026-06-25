@@ -10,7 +10,12 @@ using System.Threading.Tasks;
 
 namespace EverythingToolbar.Search
 {
-    public sealed class VirtualizingCollection<T> : IList<T>, IList, INotifyCollectionChanged, INotifyPropertyChanged
+    public sealed class VirtualizingCollection<T>
+        : IList<T>,
+            IList,
+            INotifyCollectionChanged,
+            INotifyPropertyChanged,
+            IDisposable
     {
         public VirtualizingCollection(
             IItemsProvider<T> itemsProvider,
@@ -29,7 +34,9 @@ namespace EverythingToolbar.Search
         }
 
         private readonly TaskScheduler _taskScheduler;
-        private int _providerVersion;
+
+        // Canceled when the provider is replaced or the collection disposed, so abandoned fetches can't deliver stale results.
+        private CancellationTokenSource _cancellationTokenSource = new();
 
         private int PageSize { get; }
 
@@ -40,6 +47,15 @@ namespace EverythingToolbar.Search
             private set
             {
                 _count = value;
+
+                // Drop placeholders beyond the new count; a page load will never replace them.
+                if (_displayedItems.Count > 0)
+                {
+                    var staleIndices = _displayedItems.Keys.Where(index => index >= _count).ToList();
+                    foreach (var index in staleIndices)
+                        _displayedItems.Remove(index);
+                }
+
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
                 OnPropertyChanged();
             }
@@ -65,18 +81,26 @@ namespace EverythingToolbar.Search
             if (ItemsProvider == newProvider)
                 return;
 
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
+            _cancellationTokenSource = new CancellationTokenSource();
+
             _pages = new Dictionary<int, List<T>?>();
             _pageAccessOrder.Clear();
             _pageAccessNodes.Clear();
-            _displayedItems.Clear();
+
 
             ItemsProvider.PropertyChanged -= OnItemsProviderPropertyChanged;
             ItemsProvider = newProvider;
             ItemsProvider.PropertyChanged += OnItemsProviderPropertyChanged;
 
-            _providerVersion++;
-
             LoadCount();
+        }
+
+        public void Dispose()
+        {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
         }
 
         private void OnItemsProviderPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -103,16 +127,17 @@ namespace EverythingToolbar.Search
 
         private void LoadCount()
         {
-            var currentProviderVersion = _providerVersion;
+            var cancellationToken = _cancellationTokenSource.Token;
 
             if (IsAsync)
             {
                 ItemsProvider
-                    .FetchCount(PageSize, isAsync: true)
+                    .FetchCount(PageSize, isAsync: true, cancellationToken)
                     .ContinueWith(
                         task =>
                         {
-                            if (currentProviderVersion != _providerVersion || task.IsCanceled)
+                            // A canceled token means this fetch belongs to an abandoned search.
+                            if (cancellationToken.IsCancellationRequested || task.IsCanceled)
                                 return;
 
                             Count = task.Result;
@@ -124,35 +149,41 @@ namespace EverythingToolbar.Search
             }
             else
             {
-                Count = ItemsProvider.FetchCount(PageSize, isAsync: false).GetAwaiter().GetResult();
+                Count = ItemsProvider
+                    .FetchCount(PageSize, isAsync: false, cancellationToken)
+                    .GetAwaiter()
+                    .GetResult();
             }
         }
 
         private List<T> LoadPage(int index)
         {
-            var items = ItemsProvider.FetchRange(index * PageSize, PageSize, isAsync: false).GetAwaiter().GetResult();
+            var items = ItemsProvider
+                .FetchRange(index * PageSize, PageSize, isAsync: false, _cancellationTokenSource.Token)
+                .GetAwaiter()
+                .GetResult();
             var page = new List<T>(items);
             return page;
         }
 
         private void LoadPageAsync(int index)
         {
-            var currentProviderVersion = _providerVersion;
+            var cancellationToken = _cancellationTokenSource.Token;
 
             ItemsProvider
-                .FetchRange(index * PageSize, PageSize, isAsync: true)
+                .FetchRange(index * PageSize, PageSize, isAsync: true, cancellationToken)
                 .ContinueWith(
                     task =>
                     {
+                        if (cancellationToken.IsCancellationRequested)
+                            return;
+
                         if (task.IsCanceled)
                         {
                             _pages.Remove(index); // Page needs to be loaded again in the future
                             RemovePageTracking(index);
                             return;
                         }
-
-                        if (currentProviderVersion != _providerVersion)
-                            return;
 
                         List<T>? newItems = task.Result as List<T>;
                         _pages[index] = newItems;
@@ -167,6 +198,9 @@ namespace EverythingToolbar.Search
 
                                 if (_displayedItems.TryGetValue(itemIndex, out var oldItem))
                                 {
+                                    // Keep in sync so a later Replace reports the correct oldItem.
+                                    _displayedItems[itemIndex] = newItems[i];
+
                                     OnCollectionChanged(
                                         new NotifyCollectionChangedEventArgs(
                                             NotifyCollectionChangedAction.Replace,

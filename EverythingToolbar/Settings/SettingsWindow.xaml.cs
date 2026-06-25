@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Web;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Search;
 using Wpf.Ui.Controls;
 
@@ -70,7 +71,7 @@ namespace EverythingToolbar.Settings
         private void OnReportABugClicked(object sender, RoutedEventArgs e)
         {
             string version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "";
-            string everythingVersion = SearchResultProvider.GetEverythingVersion().ToString();
+            string everythingVersion = Ioc.Default.GetRequiredService<IEverythingClient>().GetEverythingVersion().ToString();
             string osVersion = Environment.OSVersion.ToString();
 
             string url =

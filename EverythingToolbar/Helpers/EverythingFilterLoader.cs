@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using System.Windows.Threading;
 using EverythingToolbar.Controls;
 using EverythingToolbar.Data;
 using EverythingToolbar.Properties;
@@ -14,28 +15,31 @@ using NLog;
 
 namespace EverythingToolbar.Helpers
 {
-    internal class EverythingFilterLoader : INotifyPropertyChanged
+    public class EverythingFilterLoader : INotifyPropertyChanged
     {
         private ObservableCollection<Filter>? _filters;
         public ObservableCollection<Filter>? Filters => _filters ??= LoadFilters();
 
-        public static readonly EverythingFilterLoader Instance = new();
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<EverythingFilterLoader>();
         private FileSystemWatcher? _watcher;
+        private readonly FilterOptions _options;
+        private readonly Dispatcher _dispatcher;
 
-        private EverythingFilterLoader()
+        public EverythingFilterLoader(FilterOptions options)
         {
-            ToolbarSettings.User.PropertyChanged += OnSettingsChanged;
+            _options = options;
+            _dispatcher = Dispatcher.CurrentDispatcher;
+            _options.PropertyChanged += OnSettingsChanged;
 
-            if (ToolbarSettings.User.IsImportFilters)
+            if (_options.IsImportFilters)
                 CreateFileWatcher();
         }
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ToolbarSettings.User.IsImportFilters))
+            if (e.PropertyName == nameof(FilterOptions.IsImportFilters))
             {
-                if (ToolbarSettings.User.IsImportFilters)
+                if (_options.IsImportFilters)
                 {
                     CreateFileWatcher();
                 }
@@ -45,9 +49,9 @@ namespace EverythingToolbar.Helpers
                 }
                 ResetFilters();
             }
-            else if (e.PropertyName == nameof(ToolbarSettings.User.FiltersPath))
+            else if (e.PropertyName == nameof(FilterOptions.FiltersPath))
             {
-                if (ToolbarSettings.User.IsImportFilters)
+                if (_options.IsImportFilters)
                 {
                     CreateFileWatcher();
                     ResetFilters();
@@ -65,39 +69,39 @@ namespace EverythingToolbar.Helpers
         {
             var filters = new ObservableCollection<Filter>();
 
-            if (string.IsNullOrWhiteSpace(ToolbarSettings.User.FiltersPath))
-                ToolbarSettings.User.FiltersPath = Path.Combine(
+            if (string.IsNullOrWhiteSpace(_options.FiltersPath))
+                _options.FiltersPath = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                     "Everything",
                     "Filters.csv"
                 );
 
-            if (!File.Exists(ToolbarSettings.User.FiltersPath))
+            if (!File.Exists(_options.FiltersPath))
             {
-                Logger.Info("Filters.csv could not be found at " + ToolbarSettings.User.FiltersPath);
+                Logger.Info("Filters.csv could not be found at " + _options.FiltersPath);
 
                 FluentMessageBox
                     .CreateRegular(Resources.MessageBoxSelectFiltersCsv, Resources.MessageBoxSelectFiltersCsvTitle)
                     .ShowDialogAsync();
                 using var openFileDialog = new OpenFileDialog();
-                openFileDialog.InitialDirectory = Path.Combine(ToolbarSettings.User.FiltersPath, "..");
+                openFileDialog.InitialDirectory = Path.Combine(_options.FiltersPath, "..");
                 openFileDialog.Filter = "Filters.csv|Filters.csv|All files (*.*)|*.*";
                 openFileDialog.FilterIndex = 1;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    ToolbarSettings.User.FiltersPath = openFileDialog.FileName;
+                    _options.FiltersPath = openFileDialog.FileName;
                 }
                 else
                 {
-                    ToolbarSettings.User.IsImportFilters = false;
+                    _options.IsImportFilters = false;
                     return null;
                 }
             }
 
             try
             {
-                using var csvParser = new TextFieldParser(ToolbarSettings.User.FiltersPath);
+                using var csvParser = new TextFieldParser(_options.FiltersPath);
                 csvParser.CommentTokens = ["#"];
                 csvParser.SetDelimiters(",");
                 csvParser.HasFieldsEnclosedInQuotes = true;
@@ -166,13 +170,13 @@ namespace EverythingToolbar.Helpers
         {
             StopFileWatcher();
 
-            if (!File.Exists(ToolbarSettings.User.FiltersPath))
+            if (!File.Exists(_options.FiltersPath))
                 return;
 
             _watcher = new FileSystemWatcher
             {
-                Path = Path.GetDirectoryName(ToolbarSettings.User.FiltersPath)!,
-                Filter = Path.GetFileName(ToolbarSettings.User.FiltersPath),
+                Path = Path.GetDirectoryName(_options.FiltersPath)!,
+                Filter = Path.GetFileName(_options.FiltersPath),
                 NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite,
             };
 
@@ -186,7 +190,9 @@ namespace EverythingToolbar.Helpers
 
         private void OnFileRenamed(object sender, RenamedEventArgs e)
         {
-            ToolbarSettings.User.FiltersPath = e.FullPath;
+            // FileSystemWatcher callbacks run on a thread-pool thread, but writes to the
+            // settings store must raise PropertyChanged on the UI thread (§9.2).
+            _dispatcher.BeginInvoke(() => _options.FiltersPath = e.FullPath);
         }
 
         private void OnFileChanged(object source, FileSystemEventArgs e)

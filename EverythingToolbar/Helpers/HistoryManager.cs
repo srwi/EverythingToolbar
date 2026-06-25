@@ -11,8 +11,6 @@ namespace EverythingToolbar.Helpers
 {
     public class HistoryManager
     {
-        public static readonly HistoryManager Instance = new();
-
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<HistoryManager>();
         private static readonly string HistoryPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -25,20 +23,22 @@ namespace EverythingToolbar.Helpers
         private int _currentHistorySize;
         private int _currentIndex;
         private readonly List<string> _history;
+        private readonly SearchOptions _searchOptions;
 
-        private HistoryManager()
+        public HistoryManager(SearchOptions searchOptions)
         {
+            _searchOptions = searchOptions;
             _history = LoadHistory();
             _currentIndex = _history.Count;
-            _currentHistorySize = ToolbarSettings.User.IsEnableHistory ? MaxHistorySize : 0;
-            ToolbarSettings.User.PropertyChanged += OnSettingChanged;
+            _currentHistorySize = _searchOptions.IsEnableHistory ? MaxHistorySize : 0;
+            _searchOptions.PropertyChanged += OnSettingChanged;
         }
 
         private void OnSettingChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ToolbarSettings.User.IsEnableHistory))
+            if (e.PropertyName == nameof(SearchOptions.IsEnableHistory))
             {
-                if (ToolbarSettings.User.IsEnableHistory)
+                if (_searchOptions.IsEnableHistory)
                 {
                     _currentHistorySize = MaxHistorySize;
                 }

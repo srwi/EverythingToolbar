@@ -8,6 +8,8 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Shell;
 using System.Windows.Threading;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Behaviors;
 using EverythingToolbar.Controls;
 using EverythingToolbar.Helpers;
@@ -31,7 +33,13 @@ namespace EverythingToolbar.Launcher
         private class LauncherWindow : Window
         {
             private TaskbarWindow? _taskbarWindow;
+            private readonly SearchWindow _searchWindow;
+            private readonly TaskbarStateManager _taskbarState;
             private readonly SearchWindowPlacement? _searchWindowPlacementBehavior;
+            private readonly WindowsPolicy _windowsPolicy;
+            private readonly LauncherOptions _launcherOptions;
+            private readonly IconOptions _iconOptions;
+            private readonly TaskbarWindowOptions _taskbarWindowOptions;
             private bool _temporarilyInIconMode;
             private bool _closingTaskbarWindowIntentionally;
             private uint _taskbarCreatedMsg;
@@ -39,6 +47,13 @@ namespace EverythingToolbar.Launcher
             public LauncherWindow(NotifyIcon icon)
             {
                 ToolbarLogger.Initialize("Launcher");
+
+                _searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();
+                _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
+                _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
+                _launcherOptions = Ioc.Default.GetRequiredService<LauncherOptions>();
+                _iconOptions = Ioc.Default.GetRequiredService<IconOptions>();
+                _taskbarWindowOptions = Ioc.Default.GetRequiredService<TaskbarWindowOptions>();
 
                 _notifyIcon = icon;
 
@@ -57,39 +72,41 @@ namespace EverythingToolbar.Launcher
                 WindowStyle = WindowStyle.None;
 
                 _searchWindowPlacementBehavior = new SearchWindowPlacement();
-                Interaction.GetBehaviors(SearchWindow.Instance).Add(_searchWindowPlacementBehavior);
+                Interaction.GetBehaviors(_searchWindow).Add(_searchWindowPlacementBehavior);
 
-                if (Helpers.Utils.IsTaskbarWindowActive())
+                if (_windowsPolicy.IsTaskbarWindowActive())
                     CreateTaskbarWindow();
                 else
-                    TaskbarStateManager.Instance.IsIcon = true;
+                    _taskbarState.IsIcon = true;
 
                 StartToggleListener();
 
                 if (
                     !Utils.IsTaskbarPinned()
-                    && !Helpers.Utils.IsTaskbarWindowActive()
-                    && (!ToolbarSettings.User.IsSetupAssistantDisabled || !ToolbarSettings.User.IsTrayIconEnabled)
+                    && !_windowsPolicy.IsTaskbarWindowActive()
+                    && (!_launcherOptions.IsSetupAssistantDisabled || !_launcherOptions.IsTrayIconEnabled)
                 )
                     new SetupAssistant(icon).Show();
 
                 ShortcutManager.Initialize(FocusSearchBox);
 
-                StartMenuIntegration.Instance.Initialize();
+                Ioc.Default.GetRequiredService<StartMenuIntegration>().Initialize();
 
                 SetupSettingsCallbacks();
 
-                SearchWindow.Instance.Hiding += OnSearchWindowHiding;
-                SearchWindow.Instance.Hidden += OnSearchWindowHidden;
+                _searchWindow.Hiding += OnSearchWindowHiding;
+                _searchWindow.Hidden += OnSearchWindowHidden;
 
-                ToolbarSettings.User.PropertyChanged += async (_, e) =>
+                Dispatcher.BeginInvoke(_searchWindow.PreWarm, DispatcherPriority.ApplicationIdle);
+
+                _launcherOptions.PropertyChanged += async (_, e) =>
                 {
-                    if (e.PropertyName == nameof(ToolbarSettings.User.IsTrayIconEnabled))
+                    if (e.PropertyName == nameof(_launcherOptions.IsTrayIconEnabled))
                     {
                         if (
-                            !ToolbarSettings.User.IsTrayIconEnabled
+                            !_launcherOptions.IsTrayIconEnabled
                             && !Utils.IsTaskbarPinned()
-                            && !Helpers.Utils.IsTaskbarWindowActive()
+                            && !_windowsPolicy.IsTaskbarWindowActive()
                         )
                         {
                             await FluentMessageBox
@@ -99,13 +116,17 @@ namespace EverythingToolbar.Launcher
                                 )
                                 .ShowDialogAsync();
 
-                            ToolbarSettings.User.IsTrayIconEnabled = true;
+                            _launcherOptions.IsTrayIconEnabled = true;
                             return;
                         }
 
-                        _notifyIcon.Visible = ToolbarSettings.User.IsTrayIconEnabled;
+                        _notifyIcon.Visible = _launcherOptions.IsTrayIconEnabled;
                     }
-                    else if (e.PropertyName == nameof(ToolbarSettings.User.IconName))
+                };
+
+                _iconOptions.PropertyChanged += async (_, e) =>
+                {
+                    if (e.PropertyName == nameof(_iconOptions.IconName))
                     {
                         var restartExplorer =
                             await FluentMessageBox
@@ -114,23 +135,27 @@ namespace EverythingToolbar.Launcher
                                     Properties.Resources.SetupAssistantRestartExplorerDialogTitle
                                 )
                                 .ShowDialogAsync() == MessageBoxResult.Primary;
-                        Utils.ChangeTaskbarPinIcon(ToolbarSettings.User.IconName, restartExplorer);
+                        Utils.ChangeTaskbarPinIcon(_iconOptions.IconName, restartExplorer);
                     }
-                    else if (e.PropertyName == nameof(ToolbarSettings.User.TaskbarWindowEnabled))
+                };
+
+                _taskbarWindowOptions.PropertyChanged += async (_, e) =>
+                {
+                    if (e.PropertyName == nameof(_taskbarWindowOptions.TaskbarWindowEnabled))
                     {
-                        if (Helpers.Utils.IsTaskbarWindowActive())
+                        if (_windowsPolicy.IsTaskbarWindowActive())
                         {
                             CreateTaskbarWindow();
                         }
                         else
                         {
-                            if (SearchWindow.Instance.IsVisible)
-                                SearchWindow.Instance.Hide();
+                            if (_searchWindow.IsVisible)
+                                _searchWindow.Hide();
 
                             // Never leave the user with no way into search or settings.
-                            if (!Utils.IsTaskbarPinned() && !ToolbarSettings.User.IsTrayIconEnabled)
+                            if (!Utils.IsTaskbarPinned() && !_launcherOptions.IsTrayIconEnabled)
                             {
-                                ToolbarSettings.User.IsTrayIconEnabled = true;
+                                _launcherOptions.IsTrayIconEnabled = true;
                                 await FluentMessageBox
                                     .CreateRegular(
                                         Properties.Resources.TaskbarWindowDisabledTrayEnabledText,
@@ -161,7 +186,7 @@ namespace EverythingToolbar.Launcher
 
             private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
             {
-                if (_taskbarCreatedMsg != 0 && msg == _taskbarCreatedMsg && Helpers.Utils.IsTaskbarWindowActive())
+                if (_taskbarCreatedMsg != 0 && msg == _taskbarCreatedMsg && _windowsPolicy.IsTaskbarWindowActive())
                 {
                     // Delay so the new taskbar's UIA tree (Widgets button / tray) is ready for positioning.
                     var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
@@ -179,7 +204,7 @@ namespace EverythingToolbar.Launcher
 
             private void CreateTaskbarWindow()
             {
-                if (!Helpers.Utils.IsTaskbarWindowActive() || _taskbarWindow != null)
+                if (!_windowsPolicy.IsTaskbarWindowActive() || _taskbarWindow != null)
                     return;
 
                 _taskbarWindow = new TaskbarWindow();
@@ -193,7 +218,7 @@ namespace EverythingToolbar.Launcher
                 }
 
                 _taskbarWindow.Show();
-                TaskbarStateManager.Instance.IsIcon = false;
+                _taskbarState.IsIcon = false;
                 if (_searchWindowPlacementBehavior != null)
                     _searchWindowPlacementBehavior.PlacementTarget = _taskbarWindow.PlacementTarget;
             }
@@ -218,7 +243,7 @@ namespace EverythingToolbar.Launcher
                     }
                 }
 
-                TaskbarStateManager.Instance.IsIcon = true;
+                _taskbarState.IsIcon = true;
                 if (_searchWindowPlacementBehavior != null)
                     _searchWindowPlacementBehavior.PlacementTarget = null;
             }
@@ -229,7 +254,7 @@ namespace EverythingToolbar.Launcher
                     return;
 
                 _taskbarWindow = null;
-                TaskbarStateManager.Instance.IsIcon = true;
+                _taskbarState.IsIcon = true;
                 if (_searchWindowPlacementBehavior != null)
                     _searchWindowPlacementBehavior.PlacementTarget = null;
             }
@@ -244,7 +269,7 @@ namespace EverythingToolbar.Launcher
             {
                 if (_temporarilyInIconMode && _taskbarWindow != null)
                 {
-                    TaskbarStateManager.Instance.IsIcon = false;
+                    _taskbarState.IsIcon = false;
                     _temporarilyInIconMode = false;
                 }
             }
@@ -253,14 +278,14 @@ namespace EverythingToolbar.Launcher
             {
                 if (_taskbarWindow is { IsLoaded: true })
                 {
-                    if (SearchWindow.Instance.IsVisible)
-                        SearchWindow.Instance.Hide();
+                    if (_searchWindow.IsVisible)
+                        _searchWindow.Hide();
                     else
-                        EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
+                        WeakReferenceMessenger.Default.Send(new FocusSearchBoxRequest());
                 }
                 else
                 {
-                    SearchWindow.Instance.Toggle();
+                    _searchWindow.Toggle();
                 }
             }
 
@@ -269,11 +294,11 @@ namespace EverythingToolbar.Launcher
                 if (_taskbarWindow != null && _searchWindowPlacementBehavior != null)
                 {
                     _temporarilyInIconMode = true;
-                    TaskbarStateManager.Instance.IsIcon = true;
+                    _taskbarState.IsIcon = true;
                     _searchWindowPlacementBehavior.UseCursorPlacement = true;
                 }
 
-                SearchWindow.Instance.Show();
+                _searchWindow.Show();
             }
 
             private void StartToggleListener()
@@ -322,8 +347,8 @@ namespace EverythingToolbar.Launcher
 
                 Dispatcher?.Invoke(() =>
                 {
-                    if (SearchWindow.Instance.IsVisible)
-                        SearchWindow.Instance.Hide();
+                    if (_searchWindow.IsVisible)
+                        _searchWindow.Hide();
                     else
                         ShowAsLauncher();
                 });
@@ -383,8 +408,10 @@ namespace EverythingToolbar.Launcher
             {
                 if (createdNew)
                 {
+                    AppServices.Initialize();
+
                     // Apply saved UI language
-                    CultureHelper.ApplyUILanguage(ToolbarSettings.User.UILanguage);
+                    CultureHelper.ApplyUILanguage(Ioc.Default.GetRequiredService<LanguageOptions>().UILanguage);
 
                     using var trayIcon = new NotifyIcon();
                     var app = new Application();
@@ -408,7 +435,7 @@ namespace EverythingToolbar.Launcher
                         }
                     );
                     trayIcon.ContextMenuStrip.Items.Add(quitItem);
-                    trayIcon.Visible = ToolbarSettings.User.IsTrayIconEnabled;
+                    trayIcon.Visible = Ioc.Default.GetRequiredService<LauncherOptions>().IsTrayIconEnabled;
                     app.Run(new LauncherWindow(trayIcon));
                 }
                 else

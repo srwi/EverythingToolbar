@@ -20,6 +20,8 @@
   <ItemGroup>
     <ProjectReference Include="..\EverythingToolbar.Deskband\EverythingToolbar.Deskband.csproj" />
     <ProjectReference Include="..\EverythingToolbar\EverythingToolbar.csproj" />
+    <ProjectReference Include="..\EverythingToolbar.Core\EverythingToolbar.Core.csproj" />
+    <ProjectReference Include="..\EverythingToolbar.Platform\EverythingToolbar.Platform.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icons\Light.ico">

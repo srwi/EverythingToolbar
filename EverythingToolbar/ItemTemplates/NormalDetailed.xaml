@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:c="clr-namespace:EverythingToolbar.Converters;assembly=EverythingToolbar">
+                    xmlns:h="clr-namespace:EverythingToolbar.Helpers;assembly=EverythingToolbar">
 
     <DataTemplate x:Key="SearchResultsViewTemplate">
         <Grid x:Name="ListViewItem" Margin="0, 0, 0, 4">
@@ -19,19 +19,23 @@
                    Height="24" 
                    VerticalAlignment="Center" 
                    HorizontalAlignment="Center" />
-            <ContentControl Content="{Binding HighlightedFileName, Converter={c:HighlightedTextConverter}, ConverterParameter=12, Mode=OneTime}"
-                            Grid.Column="1"
-                            VerticalAlignment="Bottom"
-                            Margin="0, 7, 0, 4"
-                            ToolTip="{Binding FileName}"
-                            Foreground="{DynamicResource SearchResultFileName}" />
-            <ContentControl Content="{Binding HighlightedPath, Converter={c:HighlightedTextConverter}, ConverterParameter=10, Mode=OneTime}"
-                            ToolTip="{Binding Path}"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            VerticalAlignment="Top"
-                            Margin="0, 0, 0, 4"
-                            Foreground="{DynamicResource SearchResultPath}" />
+            <TextBlock h:HighlightedText.Source="{Binding HighlightedFileName, Mode=OneTime}"
+                       TextTrimming="CharacterEllipsis"
+                       FontSize="12pt"
+                       Grid.Column="1"
+                       VerticalAlignment="Bottom"
+                       Margin="0, 7, 0, 4"
+                       ToolTip="{Binding FileName}"
+                       Foreground="{DynamicResource SearchResultFileName}" />
+            <TextBlock h:HighlightedText.Source="{Binding HighlightedPath, Mode=OneTime}"
+                       TextTrimming="CharacterEllipsis"
+                       FontSize="10pt"
+                       ToolTip="{Binding Path}"
+                       Grid.Column="1"
+                       Grid.Row="1"
+                       VerticalAlignment="Top"
+                       Margin="0, 0, 0, 4"
+                       Foreground="{DynamicResource SearchResultPath}" />
             <TextBlock Grid.Column="2"
                        VerticalAlignment="Bottom"
                        Margin="10, 5, 10, 6"

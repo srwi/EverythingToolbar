@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using EverythingToolbar.Helpers;
 using Res = EverythingToolbar.Properties.Resources;
 
 namespace EverythingToolbar.Launcher.Settings
@@ -14,6 +16,13 @@ namespace EverythingToolbar.Launcher.Settings
         private readonly string _taskbarShortcutPath = Utils.GetTaskbarShortcutPath();
         private FileSystemWatcher? _watcher;
         private Helpers.RegistryValueWatcher? _taskbarAlignmentWatcher;
+        private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
+        private readonly TaskbarWindowOptions _taskbarWindowOptions = Ioc.Default.GetRequiredService<TaskbarWindowOptions>();
+        private readonly LauncherOptions _launcherOptions = Ioc.Default.GetRequiredService<LauncherOptions>();
+        private readonly IconOptions _iconOptions = Ioc.Default.GetRequiredService<IconOptions>();
+
+        public TaskbarWindowOptions TaskbarWindowOptions => _taskbarWindowOptions;
+        public LauncherOptions LauncherOptions => _launcherOptions;
 
         private bool _isTaskbarIconPinned;
 
@@ -31,7 +40,7 @@ namespace EverythingToolbar.Launcher.Settings
         }
 
         public bool ShowTaskbarWindowSettings =>
-            Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11;
+            _windowsPolicy.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11;
 
         public List<KeyValuePair<string, string>> TaskbarWindowAlignmentOptions { get; } =
             [
@@ -39,7 +48,7 @@ namespace EverythingToolbar.Launcher.Settings
                 new(Res.SettingsTaskbarWindowAlignmentRight, "Right"),
             ];
 
-        public bool AllowLeftAlignment => Helpers.Utils.IsTaskbarCenterAligned();
+        public bool AllowLeftAlignment => _windowsPolicy.IsTaskbarCenterAligned();
 
         public List<IconItem> IconItems { get; } =
             [
@@ -65,18 +74,18 @@ namespace EverythingToolbar.Launcher.Settings
 
         public IconItem? SelectedIconItem
         {
-            get => IconItems.FirstOrDefault(item => item.Value == ToolbarSettings.User.IconName);
+            get => IconItems.FirstOrDefault(item => item.Value == _iconOptions.IconName);
             set
             {
                 if (value != null)
                 {
-                    ToolbarSettings.User.IconName = value.Value;
+                    _iconOptions.IconName = value.Value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        private bool _isWindowsSearchHidden = !Helpers.Utils.GetWindowsSearchEnabledState();
+        private bool _isWindowsSearchHidden = !Helpers.SystemSettings.GetWindowsSearchEnabledState();
         public bool IsWindowsSearchHidden
         {
             get => _isWindowsSearchHidden;
@@ -85,7 +94,7 @@ namespace EverythingToolbar.Launcher.Settings
                 if (_isWindowsSearchHidden != value)
                 {
                     _isWindowsSearchHidden = value;
-                    Helpers.Utils.SetWindowsSearchEnabledState(!value);
+                    Helpers.SystemSettings.SetWindowsSearchEnabledState(!value);
                     OnPropertyChanged();
                 }
             }
@@ -93,8 +102,8 @@ namespace EverythingToolbar.Launcher.Settings
 
         public TaskbarIntegration()
         {
-            if (!AllowLeftAlignment && ToolbarSettings.User.TaskbarWindowAlignment == "Left")
-                ToolbarSettings.User.TaskbarWindowAlignment = "Right";
+            if (!AllowLeftAlignment && _taskbarWindowOptions.TaskbarWindowAlignment == "Left")
+                _taskbarWindowOptions.TaskbarWindowAlignment = "Right";
 
             _isTaskbarIconPinned = File.Exists(_taskbarShortcutPath);
 

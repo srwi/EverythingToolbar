@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Settings
@@ -22,6 +23,7 @@ namespace EverythingToolbar.Settings
         private ObservableCollection<FilterOrderItem> _filterOrderItems = new();
         private bool _isDragging;
         private Point _startPoint;
+        private readonly FilterOptions _filterOptions = Ioc.Default.GetRequiredService<FilterOptions>();
 
         public ObservableCollection<FilterOrderItem> FilterOrderItems
         {
@@ -43,10 +45,11 @@ namespace EverythingToolbar.Settings
 
         private void LoadFilterOrder()
         {
-            var defaultFilters = DefaultFilterLoader.Instance.DefaultFilters;
+            var defaultFilterLoader = Ioc.Default.GetRequiredService<DefaultFilterLoader>();
+            var defaultFilters = defaultFilterLoader.DefaultFilters;
 
             // Use the validation logic from DefaultFilterLoader
-            var validOrder = DefaultFilterLoader.Instance.GetValidFilterOrder();
+            var validOrder = defaultFilterLoader.GetValidFilterOrder();
 
             FilterOrderItems = new ObservableCollection<FilterOrderItem>(
                 validOrder.Select(i => new FilterOrderItem { Name = defaultFilters[i].Name, OriginalIndex = i })
@@ -56,7 +59,7 @@ namespace EverythingToolbar.Settings
         private void SaveOrder()
         {
             var orderString = string.Join(",", FilterOrderItems.Select(item => item.OriginalIndex));
-            ToolbarSettings.User.FilterOrder = orderString;
+            _filterOptions.FilterOrder = orderString;
         }
 
         private void OnOrderListItemMouseDown(object sender, MouseButtonEventArgs e)

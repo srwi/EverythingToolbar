@@ -2,7 +2,7 @@ using Microsoft.Win32;
 
 namespace EverythingToolbar.Helpers
 {
-    internal class RegistryEntry(string hive, string keyPath, string valueName)
+    public class RegistryEntry(string hive, string keyPath, string valueName)
     {
         public string Hive = hive;
         public string KeyPath = keyPath;

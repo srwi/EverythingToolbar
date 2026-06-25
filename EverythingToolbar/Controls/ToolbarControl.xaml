@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
+             xmlns:helpers="clr-namespace:EverythingToolbar.Helpers"
              xmlns:search="clr-namespace:EverythingToolbar.Search"
              xmlns:controls="clr-namespace:EverythingToolbar.Controls"
              xmlns:converters="clr-namespace:EverythingToolbar.Converters"
@@ -42,7 +43,7 @@
                             Visibility="{Binding Path=ActualWidth,
                                                  RelativeSource={RelativeSource Self},
                                                  Converter={StaticResource SearchBoxDoubleToVisibilityConverter}}"
-                            SearchTerm="{Binding Source={x:Static search:SearchState.Instance}, Path=SearchTerm, Mode=TwoWay}"
+                            SearchTerm="{Binding Source={helpers:Service {x:Type search:SearchState}}, Path=SearchTerm, Mode=TwoWay}"
                             GotKeyboardFocus="OnSearchBoxGotKeyboardFocus"
                             LostKeyboardFocus="OnSearchBoxLostKeyboardFocus"/>
 

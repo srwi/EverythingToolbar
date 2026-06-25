@@ -2,6 +2,8 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
@@ -23,38 +25,15 @@ namespace EverythingToolbar.Controls
             set => SetValue(IsFixedLayoutProperty, value);
         }
 
-        public static readonly DependencyProperty AddPlacementBehaviorProperty = DependencyProperty.Register(
-            nameof(AddPlacementBehavior),
-            typeof(bool),
-            typeof(ToolbarControl),
-            new PropertyMetadata(false)
-        );
-
-        public bool AddPlacementBehavior
-        {
-            get => (bool)GetValue(AddPlacementBehaviorProperty);
-            set => SetValue(AddPlacementBehaviorProperty, value);
-        }
-
-        private bool _placementBehaviorAdded;
+        private readonly TaskbarStateManager _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
+        private static ISearchWindowController SearchWindowController =>
+            Ioc.Default.GetRequiredService<ISearchWindowController>();
 
         public ToolbarControl()
         {
             InitializeComponent();
 
-            Loaded += OnLoaded;
-            Loaded += (_, _) => SearchWindow.Instance.Hiding += OnSearchWindowHiding;
-            Unloaded += (_, _) => SearchWindow.Instance.Hiding -= OnSearchWindowHiding;
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            if (AddPlacementBehavior && !_placementBehaviorAdded)
-            {
-                var behavior = new SearchWindowPlacement { PlacementTarget = this };
-                Interaction.GetBehaviors(SearchWindow.Instance).Add(behavior);
-                _placementBehaviorAdded = true;
-            }
+            WeakReferenceMessenger.Default.Register<SearchWindowHidingMessage>(this, (_, _) => OnSearchWindowHiding());
         }
 
         private static void OnIsFixedLayoutChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -86,14 +65,14 @@ namespace EverythingToolbar.Controls
             UpdateLayoutMode();
         }
 
-        private void OnSearchWindowHiding(object? sender, EventArgs e)
+        private void OnSearchWindowHiding()
         {
             Keyboard.Focus(KeyboardFocusCapture);
         }
 
         private void OnSearchBoxLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            EventDispatcher.Instance.InvokeUnfocusRequested(sender, e);
+            WeakReferenceMessenger.Default.Send(new ToolbarFocusChanged(false));
 
             if (e.NewFocus == null) // New focus outside application
             {
@@ -103,22 +82,22 @@ namespace EverythingToolbar.Controls
 
         private void OnSearchBoxGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            SearchWindow.Instance.Show();
+            SearchWindowController.Show();
         }
 
         public void FocusSearchBox()
         {
-            if (TaskbarStateManager.Instance.IsIcon)
+            if (_taskbarState.IsIcon)
             {
-                SearchWindow.Instance.Toggle();
+                SearchWindowController.Toggle();
             }
             else if (SearchBox.IsKeyboardFocusWithin)
             {
-                SearchWindow.Instance.Hide();
+                SearchWindowController.Hide();
             }
             else
             {
-                EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
+                WeakReferenceMessenger.Default.Send(new FocusSearchBoxRequest());
             }
         }
 
@@ -133,7 +112,7 @@ namespace EverythingToolbar.Controls
 
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
-            EventDispatcher.Instance.InvokeFocusRequested(sender, e);
+            WeakReferenceMessenger.Default.Send(new ToolbarFocusChanged(true));
         }
     }
 }

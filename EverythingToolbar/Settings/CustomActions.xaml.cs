@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Xml;
 using System.Xml.Serialization;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Controls;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
@@ -16,18 +17,20 @@ namespace EverythingToolbar.Settings
     public partial class CustomActions
     {
         private static List<Rule> _actions = new();
-        private static string CustomActionsPath => Path.Combine(Utils.GetConfigDirectory(), "rules.xml");
+        private static string CustomActionsPath => Path.Combine(ConfigPaths.GetConfigDirectory(), "rules.xml");
+
+        public CustomActionsOptions CustomActionsOptions { get; } = Ioc.Default.GetRequiredService<CustomActionsOptions>();
 
         public CustomActions()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             _actions = LoadCustomActions();
             DataGrid.ItemsSource = _actions;
-            AutoApplyCustomActionsCheckbox.IsChecked = ToolbarSettings.User.IsAutoApplyCustomActions;
             UpdateUi();
         }
 
@@ -36,7 +39,7 @@ namespace EverythingToolbar.Settings
             var autoApply = AutoApplyCustomActionsCheckbox.IsChecked == true;
             if (SaveCustomActions(_actions, autoApply))
             {
-                ToolbarSettings.User.IsAutoApplyCustomActions = autoApply;
+                CustomActionsOptions.IsAutoApplyCustomActions = autoApply;
             }
         }
 
@@ -185,7 +188,7 @@ namespace EverythingToolbar.Settings
             if (searchResult == null)
                 return false;
 
-            if (ToolbarSettings.User.IsAutoApplyCustomActions && string.IsNullOrEmpty(command))
+            if (Ioc.Default.GetRequiredService<CustomActionsOptions>().IsAutoApplyCustomActions && string.IsNullOrEmpty(command))
             {
                 foreach (var r in LoadCustomActions())
                 {

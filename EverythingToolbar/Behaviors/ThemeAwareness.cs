@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
 using NLog;
@@ -29,6 +30,7 @@ namespace EverythingToolbar.Behaviors
         public static event EventHandler<ResourcesChangedEventArgs>? ResourceChanged;
 
         private readonly List<ResourceDictionary> _addedDictionaries = new();
+        private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
         private UISettings? _settings;
         private readonly RegistryValueWatcher _systemThemeWatcher;
         private static readonly RegistryEntry SystemThemeRegistryEntry = new(
@@ -37,6 +39,7 @@ namespace EverythingToolbar.Behaviors
             "SystemUsesLightTheme"
         );
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<ThemeAwareness>();
+        private readonly ThemeOptions _themeOptions = Ioc.Default.GetRequiredService<ThemeOptions>();
 
         protected override void OnAttached()
         {
@@ -57,7 +60,7 @@ namespace EverythingToolbar.Behaviors
         protected override void OnDetaching()
         {
             _systemThemeWatcher.Dispose();
-            ToolbarSettings.User.PropertyChanged -= OnSettingsChanged;
+            _themeOptions.PropertyChanged -= OnSettingsChanged;
             base.OnDetaching();
         }
 
@@ -81,16 +84,16 @@ namespace EverythingToolbar.Behaviors
                 Logger.Info("Could not apply accent color automatically.");
             }
 
-            ToolbarSettings.User.PropertyChanged += OnSettingsChanged;
+            _themeOptions.PropertyChanged += OnSettingsChanged;
         }
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (
                 e.PropertyName
-                is nameof(ToolbarSettings.User.ItemTemplate)
-                    or nameof(ToolbarSettings.User.ThemeOverride)
-                    or nameof(ToolbarSettings.User.ForceWin10Behavior)
+                is nameof(ThemeOptions.ItemTemplate)
+                    or nameof(ThemeOptions.ThemeOverride)
+                    or nameof(ThemeOptions.ForceWin10Behavior)
             )
             {
                 AutoApplyTheme();
@@ -99,12 +102,12 @@ namespace EverythingToolbar.Behaviors
 
         private Theme GetThemeFromRegistryValue(int registryValue)
         {
-            if (ToolbarSettings.User.ThemeOverride.ToLower() == "light")
+            if (_themeOptions.ThemeOverride.ToLower() == "light")
             {
                 return Theme.Light;
             }
 
-            if (ToolbarSettings.User.ThemeOverride.ToLower() == "dark")
+            if (_themeOptions.ThemeOverride.ToLower() == "dark")
             {
                 return Theme.Dark;
             }
@@ -135,7 +138,7 @@ namespace EverythingToolbar.Behaviors
             }
 
             var themeLocation = assemblyLocation;
-            if (Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
+            if (_windowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
                 themeLocation = Path.Combine(themeLocation, "Themes", "Win11");
             else
                 themeLocation = Path.Combine(themeLocation, "Themes", "Win10");
@@ -153,7 +156,7 @@ namespace EverythingToolbar.Behaviors
             var dataTemplateLocation = Path.Combine(
                 assemblyLocation,
                 "ItemTemplates",
-                ToolbarSettings.User.ItemTemplate + ".xaml"
+                _themeOptions.ItemTemplate + ".xaml"
             );
             AddResource(
                 dataTemplateLocation,

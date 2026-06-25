@@ -5,7 +5,6 @@
 
     <!-- Use the unified ToolbarControl from main project in responsive mode -->
     <controls:ToolbarControl x:Name="UnifiedToolbarControl"
-                            IsFixedLayout="False"
-                            AddPlacementBehavior="True" />
+                            IsFixedLayout="False" />
     
 </UserControl>

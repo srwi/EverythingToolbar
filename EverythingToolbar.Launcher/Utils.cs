@@ -57,8 +57,6 @@ namespace EverythingToolbar.Launcher
             return Path.Combine(taskBarPath, "EverythingToolbar.lnk");
         }
 
-        public static bool IsTaskbarCenterAligned() => Helpers.Utils.IsTaskbarCenterAligned();
-
         public static bool GetAutostartState()
         {
             using var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");

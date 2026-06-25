@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
 using NLog;
@@ -22,6 +23,9 @@ namespace EverythingToolbar.Behaviors
         public bool UseCursorPlacement { get; set; }
 
         private double _dpiScalingFactor = 1.0;
+        private readonly TaskbarStateManager _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
+        private readonly PlacementOptions _placement = Ioc.Default.GetRequiredService<PlacementOptions>();
+        private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
 
         protected override void OnAttached()
         {
@@ -51,7 +55,7 @@ namespace EverythingToolbar.Behaviors
 
         private void OnHiding(object? sender, EventArgs e)
         {
-            AssociatedObject.AnimateHide(TaskbarStateManager.Instance.TaskbarEdge);
+            AssociatedObject.AnimateHide(_taskbarState.TaskbarEdge);
         }
 
         private void OnShowing(object? sender, EventArgs e)
@@ -68,7 +72,7 @@ namespace EverythingToolbar.Behaviors
                 position.Top * _dpiScalingFactor,
                 (position.Right - position.Left) * _dpiScalingFactor,
                 (position.Bottom - position.Top) * _dpiScalingFactor,
-                TaskbarStateManager.Instance.TaskbarEdge
+                _taskbarState.TaskbarEdge
             );
         }
 
@@ -90,11 +94,11 @@ namespace EverythingToolbar.Behaviors
             var workingArea = screen.WorkingArea;
             var screenBounds = screen.Bounds;
             var windowSize = GetTargetWindowSize();
-            var taskbarSize = TaskbarStateManager.Instance.TaskbarSize;
+            var taskbarSize = _taskbarState.TaskbarSize;
             var margin = GetMargin();
 
             var windowPosition = new Rect();
-            switch (TaskbarStateManager.Instance.TaskbarEdge)
+            switch (_taskbarState.TaskbarEdge)
             {
                 case Edge.Bottom:
                 case Edge.Top:
@@ -192,14 +196,14 @@ namespace EverythingToolbar.Behaviors
                 );
             }
 
-            TaskbarStateManager.Instance.TaskbarEdge = taskbar.Edge;
+            _taskbarState.TaskbarEdge = taskbar.Edge;
 
             return windowPosition;
         }
 
         private Size GetTargetWindowSize()
         {
-            var windowSize = new Size(ToolbarSettings.User.PopupWidth, ToolbarSettings.User.PopupHeight);
+            var windowSize = new Size(_placement.PopupWidth, _placement.PopupHeight);
             windowSize.Width = Math.Max(windowSize.Width, AssociatedObject.MinWidth) / _dpiScalingFactor;
             windowSize.Height = Math.Max(windowSize.Height, AssociatedObject.MinHeight) / _dpiScalingFactor;
             return windowSize;
@@ -212,7 +216,7 @@ namespace EverythingToolbar.Behaviors
             int margin
         )
         {
-            if (Utils.IsTaskbarCenterAligned())
+            if (_windowsPolicy.IsTaskbarCenterAligned())
             {
                 windowPosition.Left = screenWorkingArea.Left + (int)((screenWorkingArea.Width - windowSize.Width) / 2);
                 windowPosition.Left = Math.Max(screenWorkingArea.Left + margin, windowPosition.Left);
@@ -315,7 +319,7 @@ namespace EverythingToolbar.Behaviors
 
         private int GetMargin()
         {
-            var marginDip = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows11 ? 12 : 0;
+            var marginDip = _windowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11 ? 12 : 0;
             return (int)Math.Round(marginDip / GetScalingFactor());
         }
 

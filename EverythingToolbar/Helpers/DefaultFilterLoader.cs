@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -7,12 +8,12 @@ using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Helpers
 {
-    internal class DefaultFilterLoader : INotifyPropertyChanged
+    public class DefaultFilterLoader : INotifyPropertyChanged
     {
         public static readonly Filter AllFilter = new()
         {
             Name = Resources.DefaultFilterAll,
-            Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE71D" : "",
+            Icon = Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? "\xE71D" : "",
         };
 
         public readonly ObservableCollection<Filter> DefaultFilters =
@@ -21,19 +22,19 @@ namespace EverythingToolbar.Helpers
             new()
             {
                 Name = Resources.DefaultFilterFile,
-                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE7C3" : "",
+                Icon = Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? "\xE7C3" : "",
                 Search = "file:",
             },
             new()
             {
                 Name = Resources.DefaultFilterFolder,
-                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE8B7" : "",
+                Icon = Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? "\xE8B7" : "",
                 Search = "folder:",
             },
             new()
             {
                 Name = Resources.UserFilterAudio,
-                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE8D6" : "",
+                Icon = Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? "\xE8D6" : "",
                 Macro = "audio",
                 Search =
                     "ext:aac;ac3;aif;aifc;aiff;au;cda;dts;fla;flac;it;m1a;m2a;m3u;m4a;mid;"
@@ -42,7 +43,7 @@ namespace EverythingToolbar.Helpers
             new()
             {
                 Name = Resources.UserFilterCompressed,
-                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE7B8" : "",
+                Icon = Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? "\xE7B8" : "",
                 Macro = "zip",
                 Search =
                     "ext:7z;ace;arj;bz2;cab;gz;gzip;jar;r00;r01;r02;r03;r04;r05;r06;r07;"
@@ -52,7 +53,7 @@ namespace EverythingToolbar.Helpers
             new()
             {
                 Name = Resources.UserFilterDocument,
-                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xF585" : "",
+                Icon = Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? "\xF585" : "",
                 Macro = "doc",
                 Search =
                     "ext:c;chm;cpp;csv;cxx;doc;docm;docx;dot;dotm;dotx;h;hpp;htm;html;hxx;"
@@ -62,21 +63,21 @@ namespace EverythingToolbar.Helpers
             new()
             {
                 Name = Resources.UserFilterExecutable,
-                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xECAA" : "",
+                Icon = Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? "\xECAA" : "",
                 Macro = "exe",
                 Search = "ext:bat;cmd;exe;msi;msp;scr",
             },
             new()
             {
                 Name = Resources.UserFilterPicture,
-                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE8B9" : "",
+                Icon = Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? "\xE8B9" : "",
                 Macro = "pic",
                 Search = "ext:ani;bmp;gif;ico;jpe;jpeg;jpg;pcx;png;psd;tga;tif;tiff;webp;wmf",
             },
             new()
             {
                 Name = Resources.UserFilterVideo,
-                Icon = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows10 ? "\xE714" : "",
+                Icon = Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? "\xE714" : "",
                 Macro = "video",
                 Search =
                     "ext:3g2;3gp;3gp2;3gpp;amr;amv;asf;avi;bdmv;bik;d2v;divx;drc;dsa;dsm;"
@@ -89,16 +90,17 @@ namespace EverythingToolbar.Helpers
 
         public ObservableCollection<Filter> Filters => GetReorderedFilters();
 
-        public static readonly DefaultFilterLoader Instance = new();
+        private readonly FilterOptions _options;
 
-        private DefaultFilterLoader()
+        public DefaultFilterLoader(FilterOptions options)
         {
-            ToolbarSettings.User.PropertyChanged += OnSettingsChanged;
+            _options = options;
+            _options.PropertyChanged += OnSettingsChanged;
         }
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ToolbarSettings.User.FilterOrder))
+            if (e.PropertyName == nameof(FilterOptions.FilterOrder))
             {
                 NotifyPropertyChanged(nameof(Filters));
             }
@@ -113,20 +115,13 @@ namespace EverythingToolbar.Helpers
 
         public int[] GetValidFilterOrder()
         {
-            var order = ToolbarSettings.User.FilterOrder;
-            var defaultOrder = Enumerable.Range(0, DefaultFilters.Count);
-            if (string.IsNullOrWhiteSpace(order))
-                return defaultOrder.ToArray();
+            var order = _options.FilterOrder;
+            var validOrder = FilterOrderValidator.GetValidFilterOrder(order, DefaultFilters.Count);
 
-            var indices = order.Split(',').Select(s => int.TryParse(s, out var idx) ? idx : -1).ToArray();
+            if (!string.IsNullOrWhiteSpace(order) && validOrder.SequenceEqual(Enumerable.Range(0, DefaultFilters.Count)))
+                _options.FilterOrder = string.Empty;
 
-            if (!indices.OrderBy(i => i).SequenceEqual(Enumerable.Range(0, DefaultFilters.Count)))
-            {
-                ToolbarSettings.User.FilterOrder = string.Empty;
-                return defaultOrder.ToArray();
-            }
-
-            return indices;
+            return validOrder;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

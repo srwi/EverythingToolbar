@@ -1,4 +1,8 @@
+using CommunityToolkit.Mvvm.DependencyInjection;
+using EverythingToolbar;
+using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
+using Microsoft.Xaml.Behaviors;
 
 namespace EverythingToolbar.Deskband
 {
@@ -8,9 +12,13 @@ namespace EverythingToolbar.Deskband
         {
             InitializeComponent();
 
-            TaskbarStateManager.Instance.IsIcon = false;
+            Ioc.Default.GetRequiredService<TaskbarStateManager>().IsIcon = false;
             ShortcutManager.Initialize(UnifiedToolbarControl.FocusSearchBox);
-            StartMenuIntegration.Instance.Initialize();
+            Ioc.Default.GetRequiredService<StartMenuIntegration>().Initialize();
+
+            var searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();
+            Interaction.GetBehaviors(searchWindow).Add(
+                new SearchWindowPlacement { PlacementTarget = UnifiedToolbarControl });
         }
     }
 }

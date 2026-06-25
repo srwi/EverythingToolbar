@@ -1,7 +1,8 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
 
@@ -9,30 +10,30 @@ namespace EverythingToolbar.Controls
 {
     public partial class SearchButton
     {
+        private readonly TaskbarStateManager _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
+        private static ISearchWindowController SearchWindowController =>
+            Ioc.Default.GetRequiredService<ISearchWindowController>();
+
         public SearchButton()
         {
             InitializeComponent();
 
-            SearchWindow.Instance.Activated += OnSearchWindowActivated;
-            SearchWindow.Instance.Deactivated += OnSearchWindowDeactivated;
+            WeakReferenceMessenger.Default.Register<SearchWindowActiveChanged>(
+                this,
+                (_, m) => OnSearchWindowActiveChanged(m.IsActive)
+            );
 
             ThemeAwareness.ResourceChanged += UpdateTheme;
         }
 
-        private void OnSearchWindowDeactivated(object? sender, EventArgs e)
+        private void OnSearchWindowActiveChanged(bool isActive)
         {
             if (Template.FindName("OuterBorder", this) is not Border border)
                 return;
 
-            border.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-        }
-
-        private void OnSearchWindowActivated(object? sender, EventArgs e)
-        {
-            if (Template.FindName("OuterBorder", this) is not Border border)
-                return;
-
-            border.Background = new SolidColorBrush(Color.FromArgb(64, 255, 255, 255));
+            border.Background = isActive
+                ? new SolidColorBrush(Color.FromArgb(64, 255, 255, 255))
+                : new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
         }
 
         private void UpdateTheme(Theme newTheme)
@@ -65,12 +66,12 @@ namespace EverythingToolbar.Controls
 
         private void OnClick(object? sender, RoutedEventArgs e)
         {
-            SearchWindow.Instance.Toggle();
+            SearchWindowController.Toggle();
         }
 
         private void OnIsVisibleChanged(object? sender, DependencyPropertyChangedEventArgs e)
         {
-            TaskbarStateManager.Instance.IsIcon = (bool)e.NewValue;
+            _taskbarState.IsIcon = (bool)e.NewValue;
         }
     }
 }

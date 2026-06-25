@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
 
@@ -28,19 +30,6 @@ namespace EverythingToolbar.Controls
             set => SetValue(SearchTermProperty, value);
         }
 
-        public static readonly DependencyProperty RespondsInIconModeProperty = DependencyProperty.Register(
-            nameof(RespondsInIconMode),
-            typeof(bool),
-            typeof(SearchBox),
-            new PropertyMetadata(false)
-        );
-
-        public bool RespondsInIconMode
-        {
-            get => (bool)GetValue(RespondsInIconModeProperty);
-            set => SetValue(RespondsInIconModeProperty, value);
-        }
-
         private static void OnSearchTermPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is SearchBox searchBox && e.NewValue is string newValue)
@@ -54,15 +43,22 @@ namespace EverythingToolbar.Controls
         }
 
         private bool _isInternalTextChange;
+        private readonly SearchState _searchState = Ioc.Default.GetRequiredService<SearchState>();
+        private readonly SearchOptions _searchOptions = Ioc.Default.GetRequiredService<SearchOptions>();
+        public MatchOptions MatchOptions { get; } = Ioc.Default.GetRequiredService<MatchOptions>();
+
+        private static ISearchWindowController SearchWindowController =>
+            Ioc.Default.GetRequiredService<ISearchWindowController>();
 
         public SearchBox()
         {
             InitializeComponent();
+            DataContext = this;
 
             InputMethod.SetPreferredImeState(this, InputMethodState.DoNotCare);
 
-            ToolbarSettings.User.PropertyChanged += OnSettingsChanged;
-            EventDispatcher.Instance.SearchBoxFocusRequested += OnFocusRequested;
+            _searchOptions.PropertyChanged += OnSettingsChanged;
+            WeakReferenceMessenger.Default.Register<FocusSearchBoxRequest>(this, (_, _) => OnFocusRequested());
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
@@ -70,15 +66,15 @@ namespace EverythingToolbar.Controls
             if (_isInternalTextChange)
                 return;
 
-            if (ToolbarSettings.User.IsSearchAsYouType)
+            if (_searchOptions.IsSearchAsYouType)
             {
                 SearchTerm = TextBox.Text;
             }
         }
 
-        private void OnFocusRequested(object? sender, EventArgs e)
+        private void OnFocusRequested()
         {
-            if (Visibility == Visibility.Visible && RespondsInIconMode == TaskbarStateManager.Instance.IsIcon)
+            if (Visibility == Visibility.Visible)
             {
                 Focus();
             }
@@ -88,18 +84,18 @@ namespace EverythingToolbar.Controls
         {
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Up)
             {
-                UpdateSearchTerm(HistoryManager.Instance.GetPreviousItem());
+                UpdateSearchTerm(_searchState.GetPreviousSearchTerm());
                 e.Handled = true;
             }
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Down)
             {
-                UpdateSearchTerm(HistoryManager.Instance.GetNextItem());
+                UpdateSearchTerm(_searchState.GetNextSearchTerm());
                 e.Handled = true;
             }
             else if (
                 Keyboard.Modifiers == ModifierKeys.None
                 && e.Key == Key.Enter
-                && !ToolbarSettings.User.IsSearchAsYouType
+                && !_searchOptions.IsSearchAsYouType
             )
             {
                 SearchTerm = TextBox.Text;
@@ -108,7 +104,7 @@ namespace EverythingToolbar.Controls
             else if (
                 e.Key is Key.Home or Key.End
                     && Keyboard.Modifiers != ModifierKeys.Shift
-                    && ToolbarSettings.User.IsHomeEndNavigateResults
+                    && _searchOptions.IsHomeEndNavigateResults
                 || e.Key == Key.PageDown
                 || e.Key == Key.PageUp
                 || e.Key == Key.Up
@@ -122,7 +118,7 @@ namespace EverythingToolbar.Controls
                 )
             )
             {
-                EventDispatcher.Instance.InvokeGlobalKeyEvent(this, e);
+                WeakReferenceMessenger.Default.Send(new GlobalKeyPressed(e));
                 e.Handled = true;
             }
             else if (e.Key == Key.Tab)
@@ -137,7 +133,7 @@ namespace EverythingToolbar.Controls
             if (e.Key == Key.Tab)
             {
                 var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
-                SearchState.Instance.CycleFilters(offset);
+                _searchState.CycleFilters(offset);
                 e.Handled = true;
             }
         }
@@ -153,7 +149,7 @@ namespace EverythingToolbar.Controls
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ToolbarSettings.User.IsShowQuickToggles))
+            if (e.PropertyName == nameof(SearchOptions.IsShowQuickToggles))
                 UpdateQuickTogglesVisibility();
         }
 
@@ -164,7 +160,7 @@ namespace EverythingToolbar.Controls
 
         private void UpdateQuickTogglesVisibility()
         {
-            if (ToolbarSettings.User.IsShowQuickToggles && ActualWidth > 200)
+            if (_searchOptions.IsShowQuickToggles && ActualWidth > 200)
             {
                 QuickToggleButtons.Visibility = Visibility.Visible;
                 TextBox.Padding = new Thickness(37, 0, 130, 0);
@@ -190,14 +186,14 @@ namespace EverythingToolbar.Controls
         private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             TextBox.SelectAll();
-            EventDispatcher.Instance.InvokeSearchBoxFocusedNotification(this, EventArgs.Empty);
+            WeakReferenceMessenger.Default.Send(new SearchBoxFocusedNotification());
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (e.NewFocus == null) // New focus outside application
             {
-                SearchWindow.Instance.Hide();
+                SearchWindowController.Hide();
             }
         }
 

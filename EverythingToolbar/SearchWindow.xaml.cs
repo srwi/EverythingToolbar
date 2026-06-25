@@ -5,35 +5,61 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
 
 namespace EverythingToolbar
 {
-    public partial class SearchWindow
+    public partial class SearchWindow : ISearchWindowController
     {
-        public static readonly SearchWindow Instance = new();
         public event EventHandler<EventArgs>? Hiding;
         public event EventHandler<EventArgs>? Hidden;
         public event EventHandler<EventArgs>? Showing;
 
-        private bool _dwmFlushOnRender;
         private bool _isFirstShow = true;
+        private bool _isRenderingHooked;
+        private readonly SearchState _searchState = Ioc.Default.GetRequiredService<SearchState>();
+        private readonly TaskbarStateManager _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
+        private readonly EverythingSearchLauncher _launcher = Ioc.Default.GetRequiredService<EverythingSearchLauncher>();
+        private readonly PlacementOptions _placement = Ioc.Default.GetRequiredService<PlacementOptions>();
+        private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
 
-        private SearchWindow()
+        public SearchWindow()
         {
             InitializeComponent();
 
+            WeakReferenceMessenger.Default.Register<GlobalKeyPressed>(this, (_, m) => OnPreviewKeyDown(this, m.Args));
+
+            Deactivated += (_, _) => WeakReferenceMessenger.Default.Send(new SearchWindowActiveChanged(false));
+        }
+
+        // Forces a render every frame, so only hook this while the hide animation needs DwmFlush sync.
+        private void HookRendering()
+        {
+            if (_isRenderingHooked)
+                return;
+
+            _isRenderingHooked = true;
             CompositionTarget.Rendering += OnCompositionTargetRendering;
-            EventDispatcher.Instance.GlobalKeyEvent += OnPreviewKeyDown;
+        }
+
+        private void UnhookRendering()
+        {
+            if (!_isRenderingHooked)
+                return;
+
+            _isRenderingHooked = false;
+            CompositionTarget.Rendering -= OnCompositionTargetRendering;
         }
 
         private void OnActivated(object? sender, EventArgs e)
         {
-            if (TaskbarStateManager.Instance.IsIcon)
-                EventDispatcher.Instance.InvokeSearchBoxFocused(this, EventArgs.Empty);
+            WeakReferenceMessenger.Default.Send(new SearchWindowActiveChanged(true));
 
-            EventDispatcher.Instance.InvokeFocusRequested(this, EventArgs.Empty);
+            if (_taskbarState.IsIcon)
+                WeakReferenceMessenger.Default.Send(new FocusSearchBoxRequest());
         }
 
         private void OnPreviewKeyDown(object? sender, KeyEventArgs e)
@@ -41,7 +67,7 @@ namespace EverythingToolbar
             if (e.Key is >= Key.D0 and <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control)
             {
                 var index = e.Key == Key.D0 ? 9 : e.Key - Key.D1;
-                SearchState.Instance.SelectFilterFromIndex(index);
+                _searchState.SelectFilterFromIndex(index);
             }
             else if (e.Key == Key.Escape)
             {
@@ -64,7 +90,7 @@ namespace EverythingToolbar
 
         private void OpenSearchInEverything(object? sender, RoutedEventArgs e)
         {
-            SearchResultProvider.OpenSearchInEverything(SearchState.Instance);
+            _launcher.OpenSearchInEverything(_searchState);
         }
 
         public new void Hide()
@@ -73,14 +99,15 @@ namespace EverythingToolbar
                 return;
 
             Hiding?.Invoke(this, EventArgs.Empty);
+            WeakReferenceMessenger.Default.Send(new SearchWindowHidingMessage());
         }
 
         private void OnHidden(object? sender, EventArgs e)
         {
-            if ((int)Height != ToolbarSettings.User.PopupHeight || (int)Width != ToolbarSettings.User.PopupWidth)
+            if ((int)Height != _placement.PopupHeight || (int)Width != _placement.PopupWidth)
             {
-                ToolbarSettings.User.PopupHeight = (int)Height;
-                ToolbarSettings.User.PopupWidth = (int)Width;
+                _placement.PopupHeight = (int)Height;
+                _placement.PopupWidth = (int)Width;
             }
 
             // Push outside of screens to hide Windows' closing animation
@@ -90,16 +117,33 @@ namespace EverythingToolbar
 
             base.Hide();
 
-            _dwmFlushOnRender = false;
+            UnhookRendering();
 
-            SearchState.Instance.Reset();
+            _searchState.Reset();
 
             Hidden?.Invoke(this, EventArgs.Empty);
         }
 
+        public void PreWarm()
+        {
+            if (!_isFirstShow || Visibility == Visibility.Visible)
+                return;
+
+            _isFirstShow = false;
+
+            // Park off-screen so the warm-up show can never flash on screen.
+            Top = 100000;
+            Left = 100000;
+
+            ShowActivated = false;
+            base.Show(); // Intentionally without firing Showing - no placement, no animation
+            UpdateLayout();
+            base.Hide(); // Intentionally without firing Hiding - no animation, no state reset
+        }
+
         public new void Show()
         {
-            var activate = TaskbarStateManager.Instance.IsIcon;
+            var activate = _taskbarState.IsIcon;
 
             if (Visibility == Visibility.Visible)
             {
@@ -162,6 +206,9 @@ namespace EverythingToolbar
 
         public void AnimateShow(double left, double top, double width, double height, Edge taskbarEdge)
         {
+            // A running hide animation's Completed handler (OnHidden) may never fire if we interrupt it; unhook here.
+            UnhookRendering();
+
             // Clearing all animations allows us to set the corresponding properties again
             ClearAnimations();
 
@@ -178,7 +225,7 @@ namespace EverythingToolbar
             SetTopmostBelowTaskbar();
 
             // Animate window along primary axis position
-            if (Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
+            if (_windowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
                 AnimateShowWin11(left, top, width, height, taskbarEdge);
             else
                 AnimateShowWin10(left, top, taskbarEdge);
@@ -186,7 +233,7 @@ namespace EverythingToolbar
 
         private void AnimateShowWin10(double left, double top, Edge taskbarEdge)
         {
-            if (Utils.IsEffectiveAnimationsDisabled)
+            if (_windowsPolicy.IsEffectiveAnimationsDisabled)
             {
                 Opacity = 1;
                 Left = left;
@@ -272,7 +319,7 @@ namespace EverythingToolbar
 
         private void AnimateShowWin11(double left, double top, double width, double height, Edge taskbarEdge)
         {
-            if (Utils.IsEffectiveAnimationsDisabled)
+            if (_windowsPolicy.IsEffectiveAnimationsDisabled)
             {
                 Opacity = 1;
                 Left = left;
@@ -347,7 +394,7 @@ namespace EverythingToolbar
 
         private void AnimateHideWin10(Edge taskbarEdge)
         {
-            if (Utils.IsEffectiveAnimationsDisabled)
+            if (_windowsPolicy.IsEffectiveAnimationsDisabled)
             {
                 Dispatcher.BeginInvoke(() => OnHidden(this, EventArgs.Empty));
                 return;
@@ -391,7 +438,7 @@ namespace EverythingToolbar
 
         private void AnimateHideWin11(Edge taskbarEdge)
         {
-            if (Utils.IsEffectiveAnimationsDisabled)
+            if (_windowsPolicy.IsEffectiveAnimationsDisabled)
             {
                 Dispatcher.BeginInvoke(() => OnHidden(this, EventArgs.Empty));
                 return;
@@ -437,9 +484,9 @@ namespace EverythingToolbar
 
         public void AnimateHide(Edge taskbarEdge)
         {
-            _dwmFlushOnRender = true;
+            HookRendering();
 
-            if (Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
+            if (_windowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
                 AnimateHideWin11(taskbarEdge);
             else
                 AnimateHideWin10(taskbarEdge);
@@ -447,8 +494,7 @@ namespace EverythingToolbar
 
         private void OnCompositionTargetRendering(object? sender, EventArgs e)
         {
-            if (_dwmFlushOnRender)
-                NativeMethods.DwmFlush();
+            NativeMethods.DwmFlush();
         }
 
         private void SetTopmostBelowTaskbar()

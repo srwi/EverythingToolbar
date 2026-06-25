@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Controls;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
@@ -25,6 +26,10 @@ namespace EverythingToolbar.Settings
 
     public class UserInterfaceViewModel : INotifyPropertyChanged
     {
+        public SearchOptions SearchOptions { get; } = Ioc.Default.GetRequiredService<SearchOptions>();
+        public ThemeOptions ThemeOptions { get; } = Ioc.Default.GetRequiredService<ThemeOptions>();
+        public LanguageOptions LanguageOptions { get; } = Ioc.Default.GetRequiredService<LanguageOptions>();
+
         public List<KeyValuePair<string, string>> ItemTemplates { get; } =
             [
                 new(Resources.ItemTemplateCompact, "Compact"),
@@ -36,12 +41,12 @@ namespace EverythingToolbar.Settings
 
         public string SelectedLanguage
         {
-            get => ToolbarSettings.User.UILanguage;
+            get => LanguageOptions.UILanguage;
             set
             {
-                if (ToolbarSettings.User.UILanguage != value)
+                if (LanguageOptions.UILanguage != value)
                 {
-                    ToolbarSettings.User.UILanguage = value;
+                    LanguageOptions.UILanguage = value;
                     OnPropertyChanged();
                     OnUILanguageChanged();
                 }
@@ -57,18 +62,22 @@ namespace EverythingToolbar.Settings
             BitmapImage imageSource = new(
                 new Uri("pack://application:,,,/EverythingToolbar;component/Images/AppIcon.ico")
             );
-            SampleSearchResult = new SearchResult
+            SampleSearchResult = new SearchResult(
+                new SearchResultData(
+                    HighlightedPath: @"C:\Program Files\EverythingToolbar\Everything*Toolbar*.exe",
+                    HighlightedFileName: "Everything*Toolbar*",
+                    FullPathAndFileName: @"C:\Program Files\EverythingToolbar\EverythingToolbar.exe",
+                    IsFile: true,
+                    FileSize: 12345678,
+                    DateModified: new FILETIME
+                    {
+                        dwHighDateTime = DateTimeToFileTime(DateTime.Now).dwHighDateTime,
+                        dwLowDateTime = DateTimeToFileTime(DateTime.Now).dwLowDateTime,
+                    }
+                )
+            )
             {
-                HighlightedPath = @"C:\Program Files\EverythingToolbar\Everything*Toolbar*.exe",
-                HighlightedFileName = "Everything*Toolbar*",
-                IsFile = true,
-                FileSize = 12345678,
                 Icon = imageSource,
-                DateModified = new FILETIME
-                {
-                    dwHighDateTime = DateTimeToFileTime(DateTime.Now).dwHighDateTime,
-                    dwLowDateTime = DateTimeToFileTime(DateTime.Now).dwLowDateTime,
-                },
             };
         }
 

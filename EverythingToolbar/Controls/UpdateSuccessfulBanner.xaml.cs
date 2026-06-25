@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace EverythingToolbar.Controls
 {
@@ -9,6 +10,7 @@ namespace EverythingToolbar.Controls
     {
         private static readonly string DonateUrl = "https://github.com/srwi/EverythingToolbar#-support";
         private static readonly string CurrentVersion = GetCurrentVersion();
+        private readonly UpdateOptions _updateOptions = Ioc.Default.GetRequiredService<UpdateOptions>();
 
         public UpdateSuccessfulBanner()
         {
@@ -22,13 +24,13 @@ namespace EverythingToolbar.Controls
                 : "";
         }
 
-        private static bool ShouldShowUpdateNotification()
+        private bool ShouldShowUpdateNotification()
         {
-            string versionBeforeUpdate = ToolbarSettings.User.VersionBeforeUpdate;
+            string versionBeforeUpdate = _updateOptions.VersionBeforeUpdate;
 
             if (string.IsNullOrEmpty(versionBeforeUpdate))
             {
-                ToolbarSettings.User.VersionBeforeUpdate = CurrentVersion;
+                _updateOptions.VersionBeforeUpdate = CurrentVersion;
                 return false;
             }
 
@@ -57,7 +59,7 @@ namespace EverythingToolbar.Controls
 
         private void OnDismissClicked(object sender, EventArgs e)
         {
-            ToolbarSettings.User.VersionBeforeUpdate = CurrentVersion;
+            _updateOptions.VersionBeforeUpdate = CurrentVersion;
             Visibility = Visibility.Collapsed;
         }
     }
