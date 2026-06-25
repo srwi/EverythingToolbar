@@ -265,10 +265,10 @@
     <value>Desativar animações</value>
   </data>
   <data name="SettingsEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>Ativar início automático</value>
   </data>
   <data name="SettingsEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Inicia automaticamente o EverythingToolbar quando o Windows inicia</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>Ativar histórico de pesquisa</value>
@@ -313,7 +313,7 @@
     <value>Habilitar miniaturas</value>
   </data>
   <data name="SettingsSystemContextMenuDefault" xml:space="preserve">
-    <value>Use system context menu by default</value>
+    <value>Usar menu de contexto do sistema por padrão</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Usar filtros do Everything</value>
@@ -556,7 +556,7 @@
     <value>Mostrar miniaturas para arquivos de imagens</value>
   </data>
   <data name="SettingsSystemContextMenuDefaultHelp" xml:space="preserve">
-    <value>Show the Windows context menu when right-clicking a result</value>
+    <value>Mostrar o menu de contexto Windows ao clicar com o botão direito em um resultado</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
     <value>Exibir o número total de resultados de pesquisa</value>
