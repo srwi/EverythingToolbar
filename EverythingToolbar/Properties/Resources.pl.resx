@@ -673,10 +673,10 @@
     <value>Otwórz systemowe menu kontekstowe</value>
   </data>
   <data name="SettingsListFocusBehavior" xml:space="preserve">
-    <value>Result list focus</value>
+    <value>Wyróżnienie listy wyników</value>
   </data>
   <data name="SettingsListFocusBehaviorHelp" xml:space="preserve">
-    <value>Controls how the focus behaves when navigating the result list</value>
+    <value>Określa sposób zachowania wyróżnienia podczas poruszania się po liście wyników</value>
   </data>
   <data name="FocusBehaviorClamp" xml:space="preserve">
     <value>Clamp</value>
