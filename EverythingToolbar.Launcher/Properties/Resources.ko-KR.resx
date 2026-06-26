@@ -163,7 +163,7 @@
     <value>자동 시작 사용함</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Windows가 시작되면 EverythingToolbar가 자동으로 시작됩니다</value>
+    <value>Windows가 시작되면 EverythingToolbar를 자동으로 시작합니다</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>완료</value>
