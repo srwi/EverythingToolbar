@@ -268,7 +268,7 @@
     <value>자동 시작 사용</value>
   </data>
   <data name="SettingsEnableAutostartHelp" xml:space="preserve">
-    <value>Windows가 시작되면 EverythingToolbar가 자동으로 시작됩니다</value>
+    <value>Windows가 시작되면 EverythingToolbar를 자동으로 시작합니다</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>검색 기록 사용함</value>
@@ -517,7 +517,7 @@
     <value>Everything 인스턴스 이름</value>
   </data>
   <data name="SettingsInstanceNameHelp" xml:space="preserve">
-    <value>사용할 Everything 인스턴스의 이름 설정</value>
+    <value>사용할 Everything 인스턴스의 이름을 설정합니다</value>
   </data>
   <data name="SettingsDefaultInstance" xml:space="preserve">
     <value>기본 인스턴스</value>
@@ -604,10 +604,10 @@
     <value>향후 검색에 가장 최근에 사용된 필터 기억</value>
   </data>
   <data name="SettingsUpdatesHelp" xml:space="preserve">
-    <value>새 버전이 사용 가능할 때 알림</value>
+    <value>새 버전이 사용 가능할 때 알립니다</value>
   </data>
   <data name="SettingsReplaceStartMenuHelp" xml:space="preserve">
-    <value>기본 Windows 시작 메뉴 검색을 EverythingToolbar로 교체</value>
+    <value>기본 Windows 시작 메뉴 검색을 EverythingToolbar로 교체합니다</value>
   </data>
   <data name="MessageBoxOk" xml:space="preserve">
     <value>확인</value>
@@ -628,7 +628,7 @@
     <value>Windows 검색 아이콘 숨기기</value>
   </data>
   <data name="SettingsHideWindowsSearchIconHelp" xml:space="preserve">
-    <value>작업 표시줄에서 원래 Windows 검색 아이콘 숨기기</value>
+    <value>작업 표시줄에서 원래 Windows 검색 아이콘을 숨김니다</value>
   </data>
   <data name="SettingsEnableSystemTrayIcon" xml:space="preserve">
     <value>트레이 아이콘 사용함</value>
@@ -637,7 +637,7 @@
     <value>시스템 트레이 아이콘을 통해 EverythingToolbar를 쉽게 종료할 수 있도록 합니다</value>
   </data>
   <data name="SettingsSearchIcon" xml:space="preserve">
-    <value>아이콘 검색</value>
+    <value>검색 아이콘</value>
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
     <value>작업 표시줄 아이콘의 스타일을 변경합니다 (탐색기 재시작 필요)</value>
@@ -676,7 +676,7 @@
     <value>결과 목록 집중</value>
   </data>
   <data name="SettingsListFocusBehaviorHelp" xml:space="preserve">
-    <value>결과 목록을 탐색할 때 초점이 어떻게 작동하는지 제어합니다</value>
+    <value>결과 목록을 탐색할 때 초점이 어떻게 작동하는지 제어</value>
   </data>
   <data name="FocusBehaviorClamp" xml:space="preserve">
     <value>고정</value>
