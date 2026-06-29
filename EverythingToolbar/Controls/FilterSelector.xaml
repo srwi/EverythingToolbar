@@ -4,6 +4,7 @@
              xmlns:helpers="clr-namespace:EverythingToolbar.Helpers"
              xmlns:converters="clr-namespace:EverythingToolbar.Converters"
              xmlns:local="clr-namespace:EverythingToolbar"
+             xmlns:app="clr-namespace:EverythingToolbar;assembly=EverythingToolbar.App"
              x:Name="Root"
              Background="Transparent">
     <UserControl.OpacityMask>
@@ -21,7 +22,7 @@
             <TabControl.ItemsSource>
                 <MultiBinding Converter="{converters:TakeItemsMultiConverter}">
                     <Binding Path="Filters" />
-                    <Binding Source="{helpers:Service {x:Type local:FilterOptions}}" Path="MaxTabItems" Mode="TwoWay" />
+                    <Binding Source="{helpers:Service {x:Type app:FilterOptions}}" Path="MaxTabItems" Mode="TwoWay" />
                 </MultiBinding>
             </TabControl.ItemsSource>
         </TabControl>
@@ -34,7 +35,7 @@
             <ComboBox.ItemsSource>
                 <MultiBinding Converter="{converters:SkipItemsMultiConverter}">
                     <Binding Path="Filters" />
-                    <Binding Source="{helpers:Service {x:Type local:FilterOptions}}" Path="MaxTabItems" Mode="TwoWay" />
+                    <Binding Source="{helpers:Service {x:Type app:FilterOptions}}" Path="MaxTabItems" Mode="TwoWay" />
                 </MultiBinding>
             </ComboBox.ItemsSource>
         </ComboBox>

@@ -23,7 +23,7 @@ namespace EverythingToolbar.Settings
         private ObservableCollection<FilterOrderItem> _filterOrderItems = new();
         private bool _isDragging;
         private Point _startPoint;
-        private readonly FilterOptions _filterOptions = Ioc.Default.GetRequiredService<FilterOptions>();
+        public FilterOptions FilterOptions { get; } = Ioc.Default.GetRequiredService<FilterOptions>();
 
         public ObservableCollection<FilterOrderItem> FilterOrderItems
         {
@@ -59,7 +59,7 @@ namespace EverythingToolbar.Settings
         private void SaveOrder()
         {
             var orderString = string.Join(",", FilterOrderItems.Select(item => item.OriginalIndex));
-            _filterOptions.FilterOrder = orderString;
+            FilterOptions.FilterOrder = orderString;
         }
 
         private void OnOrderListItemMouseDown(object sender, MouseButtonEventArgs e)

@@ -16,6 +16,9 @@
     <AssemblyOriginatorKeyFile>..\EverythingToolbar.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Config.Net" Version="4.13.7" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\EverythingToolbar.Core\EverythingToolbar.Core.csproj" />
   </ItemGroup>
 </Project>

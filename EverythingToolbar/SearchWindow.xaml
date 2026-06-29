@@ -8,6 +8,7 @@
         xmlns:c="clr-namespace:EverythingToolbar.Converters"
         xmlns:h="clr-namespace:EverythingToolbar.Helpers"
         xmlns:local="clr-namespace:EverythingToolbar"
+        xmlns:app="clr-namespace:EverythingToolbar;assembly=EverythingToolbar.App"
         xmlns:search="clr-namespace:EverythingToolbar.Search"
         xmlns:controls="clr-namespace:EverythingToolbar.Controls"
         MinWidth="600"
@@ -54,7 +55,7 @@
                         <Button Style="{DynamicResource TabBarButtonStyle}"
                                 Content="{Binding ElementName=SearchResultsView, Path=TotalResultsCount,
                                                   Converter={c:SearchResultsCountConverter}}"
-                                Visibility="{Binding Source={h:Service {x:Type local:SearchOptions}},
+                                Visibility="{Binding Source={h:Service {x:Type app:SearchOptions}},
                                                      Path=IsShowResultsCount,
                                                      Converter={c:BoolToVisibilityConverter}}"
                                 Click="OpenSearchInEverything" />
@@ -83,7 +84,7 @@
                             <Setter Property="Visibility"
                                     Value="Collapsed" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Source={h:Service {x:Type local:SearchOptions}}, Path=IsPreviewPaneEnabled}"
+                                <DataTrigger Binding="{Binding Source={h:Service {x:Type app:SearchOptions}}, Path=IsPreviewPaneEnabled}"
                                              Value="True">
                                     <Setter Property="Visibility"
                                             Value="Visible" />
