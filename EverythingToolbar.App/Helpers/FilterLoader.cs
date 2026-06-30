@@ -17,7 +17,7 @@ namespace EverythingToolbar.Helpers
             get
             {
                 if (_matchOptions.IsRegExEnabled)
-                    return new ObservableCollection<Filter>([DefaultFilterLoader.AllFilter]);
+                    return new ObservableCollection<Filter>([_defaultLoader.AllFilter]);
 
                 if (_options.IsImportFilters)
                 {
@@ -26,7 +26,7 @@ namespace EverythingToolbar.Helpers
                     if (everythingFilters?.Count > 0)
                         return everythingFilters;
 
-                    return new ObservableCollection<Filter>([DefaultFilterLoader.AllFilter]);
+                    return new ObservableCollection<Filter>([_defaultLoader.AllFilter]);
                 }
 
                 return _defaultLoader.Filters;

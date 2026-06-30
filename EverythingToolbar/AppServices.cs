@@ -19,6 +19,7 @@ namespace EverythingToolbar
             var services = new ServiceCollection();
             services.AddSingleton<HistoryManager>();
             services.AddSingleton<TaskbarStateManager>();
+            services.AddSingleton<IFilterNames, FilterNames>();
             services.AddSingleton<DefaultFilterLoader>();
             services.AddSingleton<EverythingFilterLoader>();
             services.AddSingleton<FilterLoader>();

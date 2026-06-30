@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using System.Windows;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -12,6 +11,7 @@ namespace EverythingToolbar.Helpers
     {
         private static readonly string DebugFlagFileName = Path.Combine(ConfigPaths.GetConfigDirectory(), "debug.txt");
         private static readonly LogFactory LogFactory = new LogFactory();
+        private static ILogger? _rootLogger;
 
         public static ILogger GetLogger(string name)
         {
@@ -50,14 +50,6 @@ namespace EverythingToolbar.Helpers
                 logger.Error((Exception)args.ExceptionObject, "Unhandled exception");
             };
 
-            if (Application.Current != null)
-            {
-                // Not applicable for deskband
-                Application.Current.DispatcherUnhandledException += (_, args) =>
-                {
-                    logger.Error(args.Exception, "Unhandled exception on UI thread");
-                };
-            }
         }
 
         private static void ConfigureLogger()
@@ -83,9 +75,12 @@ namespace EverythingToolbar.Helpers
         {
             ConfigureLogger();
 
-            var logger = GetLogger(name);
-            LogVersionInformation(logger);
-            InitializeExceptionLoggers(logger);
+            _rootLogger = GetLogger(name);
+            LogVersionInformation(_rootLogger);
+            InitializeExceptionLoggers(_rootLogger);
         }
+
+        public static void LogUiThreadException(Exception exception) =>
+            _rootLogger?.Error(exception, "Unhandled exception on UI thread");
     }
 }

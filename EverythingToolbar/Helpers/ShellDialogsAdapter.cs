@@ -30,5 +30,18 @@ namespace EverythingToolbar.Helpers
             arrFi[0] = new FileInfo(filePath);
             menu.ShowContextMenu(arrFi, screenPosition);
         }
+
+        public string? BrowseForFile(string filterLabel, string filterPattern, string? initialDirectory)
+        {
+            using var openFileDialog = new OpenFileDialog
+            {
+                Filter = $"{filterLabel}|{filterPattern}|All files (*.*)|*.*",
+                FilterIndex = 1,
+            };
+            if (initialDirectory != null)
+                openFileDialog.InitialDirectory = initialDirectory;
+
+            return openFileDialog.ShowDialog() == DialogResult.OK ? openFileDialog.FileName : null;
+        }
     }
 }

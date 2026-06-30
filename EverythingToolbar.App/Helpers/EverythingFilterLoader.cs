@@ -5,11 +5,9 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows.Forms;
-using System.Windows.Threading;
-using EverythingToolbar.Controls;
+using System.Threading;
 using EverythingToolbar.Data;
-using EverythingToolbar.Properties;
+using EverythingToolbar.Platform;
 using Microsoft.VisualBasic.FileIO;
 using NLog;
 
@@ -23,12 +21,18 @@ namespace EverythingToolbar.Helpers
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<EverythingFilterLoader>();
         private FileSystemWatcher? _watcher;
         private readonly FilterOptions _options;
-        private readonly Dispatcher _dispatcher;
+        private readonly IFilterNames _names;
+        private readonly INotifier _notifier;
+        private readonly IShellDialogs _shellDialogs;
+        private readonly SynchronizationContext? _syncContext;
 
-        public EverythingFilterLoader(FilterOptions options)
+        public EverythingFilterLoader(IFilterNames names, INotifier notifier, IShellDialogs shellDialogs, FilterOptions options)
         {
+            _names = names;
+            _notifier = notifier;
+            _shellDialogs = shellDialogs;
             _options = options;
-            _dispatcher = Dispatcher.CurrentDispatcher;
+            _syncContext = SynchronizationContext.Current;
             _options.PropertyChanged += OnSettingsChanged;
 
             if (_options.IsImportFilters)
@@ -80,17 +84,13 @@ namespace EverythingToolbar.Helpers
             {
                 Logger.Info("Filters.csv could not be found at " + _options.FiltersPath);
 
-                FluentMessageBox
-                    .CreateRegular(Resources.MessageBoxSelectFiltersCsv, Resources.MessageBoxSelectFiltersCsvTitle)
-                    .ShowDialogAsync();
-                using var openFileDialog = new OpenFileDialog();
-                openFileDialog.InitialDirectory = Path.Combine(_options.FiltersPath, "..");
-                openFileDialog.Filter = "Filters.csv|Filters.csv|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 1;
+                _notifier.ShowInformation("MessageBoxSelectFiltersCsv");
+                var pickedPath = _shellDialogs.BrowseForFile(
+                    "Filters.csv", "Filters.csv", Path.Combine(_options.FiltersPath, ".."));
 
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                if (pickedPath != null)
                 {
-                    _options.FiltersPath = openFileDialog.FileName;
+                    _options.FiltersPath = pickedPath;
                 }
                 else
                 {
@@ -118,17 +118,16 @@ namespace EverythingToolbar.Helpers
                     var filterDict = header.Zip(fields, (h, f) => new { h, f }).ToDictionary(x => x.h, x => x.f);
                     var filter = ParseFilterFromDict(filterDict);
 
-                    // Everything's default filters are uppercase and can be localized
                     filter.Name = filter
-                        .Name.Replace("EVERYTHING", Resources.DefaultFilterAll)
-                        .Replace("FOLDER", Resources.DefaultFilterFolder)
-                        .Replace("FILE", Resources.DefaultFilterFile)
-                        .Replace("AUDIO", Resources.UserFilterAudio)
-                        .Replace("COMPRESSED", Resources.UserFilterCompressed)
-                        .Replace("DOCUMENT", Resources.UserFilterDocument)
-                        .Replace("EXECUTABLE", Resources.UserFilterExecutable)
-                        .Replace("PICTURE", Resources.UserFilterPicture)
-                        .Replace("VIDEO", Resources.UserFilterVideo);
+                        .Name.Replace("EVERYTHING", _names.All)
+                        .Replace("FOLDER", _names.Folder)
+                        .Replace("FILE", _names.File)
+                        .Replace("AUDIO", _names.Audio)
+                        .Replace("COMPRESSED", _names.Compressed)
+                        .Replace("DOCUMENT", _names.Document)
+                        .Replace("EXECUTABLE", _names.Executable)
+                        .Replace("PICTURE", _names.Picture)
+                        .Replace("VIDEO", _names.Video);
                     filters.Add(filter);
                 }
 
@@ -190,9 +189,11 @@ namespace EverythingToolbar.Helpers
 
         private void OnFileRenamed(object sender, RenamedEventArgs e)
         {
-            // FileSystemWatcher callbacks run on a thread-pool thread, but writes to the
-            // settings store must raise PropertyChanged on the UI thread (§9.2).
-            _dispatcher.BeginInvoke(() => _options.FiltersPath = e.FullPath);
+            // Marshal to the thread that captured _syncContext; this callback runs on a thread-pool thread.
+            if (_syncContext != null)
+                _syncContext.Post(_ => _options.FiltersPath = e.FullPath, null);
+            else
+                _options.FiltersPath = e.FullPath;
         }
 
         private void OnFileChanged(object source, FileSystemEventArgs e)

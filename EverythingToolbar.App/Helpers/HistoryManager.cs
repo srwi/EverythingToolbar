@@ -57,7 +57,7 @@ namespace EverythingToolbar.Helpers
 
             try
             {
-                var serializer = new XmlSerializer(_history.GetType());
+                var serializer = new XmlSerializer(typeof(List<string>));
                 using var reader = XmlReader.Create(HistoryPath);
                 return serializer.Deserialize(reader) as List<string> ?? [];
             }
@@ -76,7 +76,7 @@ namespace EverythingToolbar.Helpers
                 if (Path.GetDirectoryName(HistoryPath) is { } path)
                     Directory.CreateDirectory(path);
 
-                var serializer = new XmlSerializer(_history.GetType());
+                var serializer = new XmlSerializer(typeof(List<string>));
                 using var writer = XmlWriter.Create(HistoryPath);
                 serializer.Serialize(writer, _history);
             }

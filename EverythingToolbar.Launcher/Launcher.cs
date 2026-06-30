@@ -48,6 +48,12 @@ namespace EverythingToolbar.Launcher
             {
                 ToolbarLogger.Initialize("Launcher");
 
+                if (Application.Current != null)
+                {
+                    Application.Current.DispatcherUnhandledException += (_, args) =>
+                        ToolbarLogger.LogUiThreadException(args.Exception);
+                }
+
                 _searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();
                 _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
                 _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
