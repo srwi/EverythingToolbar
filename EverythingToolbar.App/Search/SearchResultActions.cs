@@ -1,10 +1,4 @@
 using System;
-using System.IO;
-using System.IO.Pipes;
-using System.Runtime.InteropServices;
-using System.Security.Principal;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Platform;
@@ -18,6 +12,7 @@ namespace EverythingToolbar.Search
         IShellDialogs shellDialogs,
         INotifier notifier,
         IFileLauncher fileLauncher,
+        IFilePreviewer previewer,
         SearchState searchState,
         EverythingSearchLauncher launcher)
     {
@@ -111,7 +106,7 @@ namespace EverythingToolbar.Search
 
         public void ShowWindowsContextMenu(SearchResult r)
         {
-            shellDialogs.ShowWindowsContextMenu(r.FullPathAndFileName, Control.MousePosition);
+            shellDialogs.ShowWindowsContextMenu(r.FullPathAndFileName);
         }
 
         public void ShowInEverything(SearchResult r)
@@ -119,61 +114,8 @@ namespace EverythingToolbar.Search
             launcher.OpenSearchInEverything(searchState, filenameToHighlight: r.FullPathAndFileName);
         }
 
-        public void PreviewInQuickLook(SearchResult r)
-        {
-            Task.Run(() =>
-            {
-                try
-                {
-                    using var client = new NamedPipeClientStream(
-                        ".",
-                        "QuickLook.App.Pipe." + WindowsIdentity.GetCurrent().User?.Value,
-                        PipeDirection.Out
-                    );
-                    client.Connect(1000);
+        public void PreviewInQuickLook(SearchResult r) => previewer.PreviewInQuickLook(r.FullPathAndFileName);
 
-                    using var writer = new StreamWriter(client);
-                    writer.WriteLine($"QuickLook.App.PipeMessages.Toggle|{r.FullPathAndFileName}");
-                    writer.Flush();
-                }
-                catch (TimeoutException)
-                {
-                    Logger.Info("Opening QuickLook preview timed out. Is QuickLook running?");
-                }
-                catch (Exception e)
-                {
-                    Logger.Error(e, "Failed to open QuickLook preview.");
-                }
-            });
-        }
-
-        public void PreviewInSeer(SearchResult r)
-        {
-            Task.Run(() =>
-            {
-                try
-                {
-                    var seer = NativeMethods.FindWindowEx(IntPtr.Zero, IntPtr.Zero, "SeerWindowClass", null);
-
-                    const int seerInvokeW32 = 5000;
-                    const int wmCopydata = 0x004A;
-
-                    var cd = new NativeMethods.Copydatastruct
-                    {
-                        cbData = (r.FullPathAndFileName.Length + 1) * 2,
-                        lpData = Marshal.StringToHGlobalUni(r.FullPathAndFileName),
-                        dwData = new IntPtr(seerInvokeW32),
-                    };
-
-                    NativeMethods.SendMessage(seer, wmCopydata, IntPtr.Zero, ref cd);
-
-                    Marshal.FreeHGlobal(cd.lpData);
-                }
-                catch (Exception e)
-                {
-                    Logger.Error(e, "Failed to open Seer preview.");
-                }
-            });
-        }
+        public void PreviewInSeer(SearchResult r) => previewer.PreviewInSeer(r.FullPathAndFileName);
     }
 }

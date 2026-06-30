@@ -15,9 +15,7 @@ namespace EverythingToolbar.Controls
         private static ISearchWindowController SearchWindowController =>
             Ioc.Default.GetRequiredService<ISearchWindowController>();
 
-        public MatchOptions MatchOptions { get; } = Ioc.Default.GetRequiredService<MatchOptions>();
-        public SearchOptions SearchOptions { get; } = Ioc.Default.GetRequiredService<SearchOptions>();
-        public SortOptions SortOptions { get; } = Ioc.Default.GetRequiredService<SortOptions>();
+        public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
 
         public SettingsControl()
         {
@@ -43,11 +41,11 @@ namespace EverythingToolbar.Controls
 
             int[] fastSortExceptions = [4, 8];
             if (
-                Ioc.Default.GetRequiredService<IEverythingClient>().GetIsFastSort((SortBy)selectedIndex, SortOptions.IsSortDescending)
+                Ioc.Default.GetRequiredService<IEverythingClient>().GetIsFastSort((SortBy)selectedIndex, Settings.IsSortDescending)
                 || fastSortExceptions.Contains(selectedIndex)
             )
             {
-                SortOptions.SortBy = selectedIndex;
+                Settings.SortBy = selectedIndex;
             }
             else
             {
@@ -64,13 +62,13 @@ namespace EverythingToolbar.Controls
 
         private void OnSortAscendingClicked(object sender, RoutedEventArgs e)
         {
-            SortOptions.IsSortDescending = false;
+            Settings.IsSortDescending = false;
             SelectSortType();
         }
 
         private void OnSortDescendingClicked(object sender, RoutedEventArgs e)
         {
-            SortOptions.IsSortDescending = true;
+            Settings.IsSortDescending = true;
             SelectSortType();
         }
 
@@ -82,10 +80,10 @@ namespace EverythingToolbar.Controls
                     menuItem.IsChecked = false;
             }
 
-            if (SortByMenu.Items[SortOptions.SortBy] is MenuItem sortByMenuItem)
+            if (SortByMenu.Items[Settings.SortBy] is MenuItem sortByMenuItem)
                 sortByMenuItem.IsChecked = true;
 
-            if (SortOptions.IsSortDescending)
+            if (Settings.IsSortDescending)
                 SortDescendingMenuItem.IsChecked = true;
             else
                 SortAscendingMenuItem.IsChecked = true;
@@ -106,7 +104,7 @@ namespace EverythingToolbar.Controls
 
         private void TogglePreviewPane(object sender, RoutedEventArgs e)
         {
-            SearchOptions.IsPreviewPaneEnabled = !SearchOptions.IsPreviewPaneEnabled;
+            Settings.IsPreviewPaneEnabled = !Settings.IsPreviewPaneEnabled;
         }
     }
 }

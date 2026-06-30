@@ -13,7 +13,7 @@ namespace EverythingToolbar.Behaviors
             @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize",
             "AppsUseLightTheme"
         );
-        private readonly ThemeOptions _themeOptions = Ioc.Default.GetRequiredService<ThemeOptions>();
+        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
 
         protected override void OnAttached()
         {
@@ -43,12 +43,12 @@ namespace EverythingToolbar.Behaviors
 
         private Theme GetThemeFromRegistryValue(int registryValue)
         {
-            if (_themeOptions.ThemeOverride.ToLower() == "light")
+            if (_settings.ThemeOverride.ToLower() == "light")
             {
                 return Theme.Light;
             }
 
-            if (_themeOptions.ThemeOverride.ToLower() == "dark")
+            if (_settings.ThemeOverride.ToLower() == "dark")
             {
                 return Theme.Dark;
             }

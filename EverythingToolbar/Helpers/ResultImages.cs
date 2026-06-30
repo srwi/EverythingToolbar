@@ -68,7 +68,7 @@ namespace EverythingToolbar.Helpers
                 return;
             _iconLoadStarted = true;
 
-            var useThumbnail = Ioc.Default.GetRequiredService<ThemeOptions>().IsThumbnailsEnabled && IsImageFile;
+            var useThumbnail = Ioc.Default.GetRequiredService<ISettings>().IsThumbnailsEnabled && IsImageFile;
             Icon = IconProvider.GetImage(_result.FullPathAndFileName, _result.IsFile, useThumbnail ? IconSize : 32);
             IconLoader.Enqueue(this, useThumbnail);
         }

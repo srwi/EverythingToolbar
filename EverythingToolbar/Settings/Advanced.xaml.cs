@@ -17,10 +17,7 @@ namespace EverythingToolbar.Settings
         private bool _noUpdatesBannerOpen;
         private string _latestVersionUrl = "";
 
-        public UpdateOptions UpdateOptions { get; } = Ioc.Default.GetRequiredService<UpdateOptions>();
-        public EverythingOptions EverythingOptions { get; } = Ioc.Default.GetRequiredService<EverythingOptions>();
-        public StartMenuOptions StartMenuOptions { get; } = Ioc.Default.GetRequiredService<StartMenuOptions>();
-        public ThemeOptions ThemeOptions { get; } = Ioc.Default.GetRequiredService<ThemeOptions>();
+        public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -90,7 +87,7 @@ namespace EverythingToolbar.Settings
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            Ioc.Default.GetRequiredService<IEverythingClient>().SetInstanceName(EverythingOptions.InstanceName);
+            Ioc.Default.GetRequiredService<IEverythingClient>().SetInstanceName(Settings.InstanceName);
         }
 
         private async void OnCheckForUpdatesClicked(object sender, RoutedEventArgs e)

@@ -7,5 +7,7 @@ namespace EverythingToolbar.Platform
         void OpenAsAdmin(string path);
 
         void OpenWithArguments(string path, string arguments);
+
+        void RunCommand(string commandLine, string? workingDirectory = null);
     }
 }

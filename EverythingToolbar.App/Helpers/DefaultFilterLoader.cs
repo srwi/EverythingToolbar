@@ -15,11 +15,11 @@ namespace EverythingToolbar.Helpers
 
         public ObservableCollection<Filter> Filters => GetReorderedFilters();
 
-        private readonly FilterOptions _options;
+        private readonly ISettings _settings;
 
-        public DefaultFilterLoader(IFilterNames names, FilterOptions options)
+        public DefaultFilterLoader(IFilterNames names, ISettings settings)
         {
-            _options = options;
+            _settings = settings;
 
             AllFilter = new Filter { Name = names.All, Icon = Glyph("\xE71D") };
 
@@ -95,7 +95,7 @@ namespace EverythingToolbar.Helpers
                 },
             ];
 
-            _options.PropertyChanged += OnSettingsChanged;
+            _settings.PropertyChanged += OnSettingsChanged;
         }
 
         private static string Glyph(string glyph) =>
@@ -103,7 +103,7 @@ namespace EverythingToolbar.Helpers
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(FilterOptions.FilterOrder))
+            if (e.PropertyName == nameof(ISettings.FilterOrder))
             {
                 NotifyPropertyChanged(nameof(Filters));
             }
@@ -118,11 +118,11 @@ namespace EverythingToolbar.Helpers
 
         public int[] GetValidFilterOrder()
         {
-            var order = _options.FilterOrder;
+            var order = _settings.FilterOrder;
             var validOrder = FilterOrderValidator.GetValidFilterOrder(order, DefaultFilters.Count);
 
             if (!string.IsNullOrWhiteSpace(order) && validOrder.SequenceEqual(Enumerable.Range(0, DefaultFilters.Count)))
-                _options.FilterOrder = string.Empty;
+                _settings.FilterOrder = string.Empty;
 
             return validOrder;
         }

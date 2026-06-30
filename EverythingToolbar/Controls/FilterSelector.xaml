@@ -22,7 +22,7 @@
             <TabControl.ItemsSource>
                 <MultiBinding Converter="{converters:TakeItemsMultiConverter}">
                     <Binding Path="Filters" />
-                    <Binding Source="{helpers:Service {x:Type app:FilterOptions}}" Path="MaxTabItems" Mode="TwoWay" />
+                    <Binding Source="{helpers:Service {x:Type app:ISettings}}" Path="MaxTabItems" Mode="TwoWay" />
                 </MultiBinding>
             </TabControl.ItemsSource>
         </TabControl>
@@ -35,7 +35,7 @@
             <ComboBox.ItemsSource>
                 <MultiBinding Converter="{converters:SkipItemsMultiConverter}">
                     <Binding Path="Filters" />
-                    <Binding Source="{helpers:Service {x:Type app:FilterOptions}}" Path="MaxTabItems" Mode="TwoWay" />
+                    <Binding Source="{helpers:Service {x:Type app:ISettings}}" Path="MaxTabItems" Mode="TwoWay" />
                 </MultiBinding>
             </ComboBox.ItemsSource>
         </ComboBox>

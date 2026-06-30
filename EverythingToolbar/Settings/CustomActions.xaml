@@ -5,6 +5,7 @@
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:core="clr-namespace:System;assembly=mscorlib"
       xmlns:data="clr-namespace:EverythingToolbar.Data"
+      xmlns:appdata="clr-namespace:EverythingToolbar.Data;assembly=EverythingToolbar.App"
       xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
       xmlns:properties="clr-namespace:EverythingToolbar.Properties"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -21,7 +22,7 @@
                             MethodName="GetValues"
                             ObjectType="{x:Type core:Enum}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type Type="data:FileType" />
+                <x:Type Type="appdata:FileType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
@@ -77,7 +78,7 @@
                 CornerRadius="8, 8, 0, 0">
                 <CheckBox Name="AutoApplyCustomActionsCheckbox"
                           Click="CheckBox_Click"
-                          IsChecked="{Binding CustomActionsOptions.IsAutoApplyCustomActions, Mode=TwoWay}"
+                          IsChecked="{Binding Settings.IsAutoApplyCustomActions, Mode=TwoWay}"
                           Content="{x:Static properties:Resources.CustomActionsAutoApply}"/>
             </Border>
             <Border

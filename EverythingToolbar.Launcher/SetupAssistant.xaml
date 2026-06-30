@@ -204,7 +204,7 @@
                                                   HelpText="{x:Static properties:Resources.SetupAssistantTaskbarWindowAlternativeHelp}"
                                                   Margin="0, 16, 0, 0">
                                 <controls:SettingItem.SettingContent>
-                                    <ui:ToggleSwitch IsChecked="{Binding TaskbarWindowOptions.TaskbarWindowEnabled, Mode=TwoWay}" />
+                                    <ui:ToggleSwitch IsChecked="{Binding Settings.TaskbarWindowEnabled, Mode=TwoWay}" />
                                 </controls:SettingItem.SettingContent>
                             </controls:SettingItem>
                         </StackPanel>
@@ -221,10 +221,10 @@
                                           ItemsSource="{Binding TaskbarWindowAlignmentOptions}"
                                           DisplayMemberPath="Key"
                                           SelectedValuePath="Value"
-                                          SelectedValue="{Binding TaskbarWindowOptions.TaskbarWindowAlignment, Mode=TwoWay}">
+                                          SelectedValue="{Binding Settings.TaskbarWindowAlignment, Mode=TwoWay}">
                                     <ComboBox.IsEnabled>
                                         <MultiBinding Converter="{c:BooleanAndConverter}">
-                                            <Binding Path="TaskbarWindowOptions.TaskbarWindowEnabled" />
+                                            <Binding Path="Settings.TaskbarWindowEnabled" />
                                             <Binding Path="AllowLeftAlignment" />
                                         </MultiBinding>
                                     </ComboBox.IsEnabled>
@@ -262,7 +262,7 @@
                         <controls:SettingItem Title="{x:Static properties:Resources.SetupAssistantEnableSystemTray}"
                                               HelpText="{x:Static properties:Resources.SetupAssistantEnableSystemTrayHelp}">
                             <controls:SettingItem.SettingContent>
-                                <ui:ToggleSwitch IsChecked="{Binding LauncherOptions.IsTrayIconEnabled, Mode=TwoWay}" />
+                                <ui:ToggleSwitch IsChecked="{Binding Settings.IsTrayIconEnabled, Mode=TwoWay}" />
                             </controls:SettingItem.SettingContent>
                         </controls:SettingItem>
                     </Border>

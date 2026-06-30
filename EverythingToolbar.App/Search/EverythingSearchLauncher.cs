@@ -1,5 +1,4 @@
 using System.IO;
-using System.Windows.Forms;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Platform;
@@ -9,25 +8,22 @@ namespace EverythingToolbar.Search
 {
     public sealed class EverythingSearchLauncher(
         INotifier notifier,
+        IShellDialogs shellDialogs,
         IFileLauncher fileLauncher,
-        EverythingOptions everythingOptions)
+        ISettings settings)
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<EverythingSearchLauncher>();
 
         public void OpenSearchInEverything(SearchState searchState, string filenameToHighlight = "")
         {
-            if (!File.Exists(everythingOptions.EverythingPath))
+            if (!File.Exists(settings.EverythingPath))
             {
                 notifier.ShowInformation("MessageBoxSelectEverythingExe");
 
-                using var openFileDialog = new OpenFileDialog();
-                openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "Everything.exe|Everything.exe|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 1;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                var pickedPath = shellDialogs.BrowseForFile("Everything.exe", "Everything.exe", "c:\\");
+                if (pickedPath != null)
                 {
-                    everythingOptions.EverythingPath = openFileDialog.FileName;
+                    settings.EverythingPath = pickedPath;
                 }
                 else
                 {
@@ -37,8 +33,8 @@ namespace EverythingToolbar.Search
 
             var searchTerm = searchState.BuildSearchTerm();
             var args = "";
-            if (!string.IsNullOrEmpty(everythingOptions.InstanceName))
-                args += " -instance \"" + everythingOptions.InstanceName + "\"";
+            if (!string.IsNullOrEmpty(settings.InstanceName))
+                args += " -instance \"" + settings.InstanceName + "\"";
             if (!string.IsNullOrEmpty(filenameToHighlight))
                 args += " -select \"" + filenameToHighlight + "\"";
             args += " -sort \"" + searchState.SortBy.ToCliName() + "\"";
@@ -50,7 +46,7 @@ namespace EverythingToolbar.Search
             args += " -s \"" + searchTerm.Replace("\"", "\"\"") + "\"";
 
             Logger.Debug("Showing in Everything with args: " + args);
-            fileLauncher.OpenWithArguments(everythingOptions.EverythingPath, args);
+            fileLauncher.OpenWithArguments(settings.EverythingPath, args);
         }
     }
 }

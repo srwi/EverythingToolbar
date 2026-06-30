@@ -26,9 +26,7 @@ namespace EverythingToolbar.Settings
 
     public class UserInterfaceViewModel : INotifyPropertyChanged
     {
-        public SearchOptions SearchOptions { get; } = Ioc.Default.GetRequiredService<SearchOptions>();
-        public ThemeOptions ThemeOptions { get; } = Ioc.Default.GetRequiredService<ThemeOptions>();
-        public LanguageOptions LanguageOptions { get; } = Ioc.Default.GetRequiredService<LanguageOptions>();
+        public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
 
         public List<KeyValuePair<string, string>> ItemTemplates { get; } =
             [
@@ -41,12 +39,12 @@ namespace EverythingToolbar.Settings
 
         public string SelectedLanguage
         {
-            get => LanguageOptions.UILanguage;
+            get => Settings.UILanguage;
             set
             {
-                if (LanguageOptions.UILanguage != value)
+                if (Settings.UILanguage != value)
                 {
-                    LanguageOptions.UILanguage = value;
+                    Settings.UILanguage = value;
                     OnPropertyChanged();
                     OnUILanguageChanged();
                 }

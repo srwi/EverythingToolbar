@@ -10,7 +10,7 @@ namespace EverythingToolbar.Controls
     {
         private static readonly string DonateUrl = "https://github.com/srwi/EverythingToolbar#-support";
         private static readonly string CurrentVersion = GetCurrentVersion();
-        private readonly UpdateOptions _updateOptions = Ioc.Default.GetRequiredService<UpdateOptions>();
+        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
 
         public UpdateSuccessfulBanner()
         {
@@ -26,11 +26,11 @@ namespace EverythingToolbar.Controls
 
         private bool ShouldShowUpdateNotification()
         {
-            string versionBeforeUpdate = _updateOptions.VersionBeforeUpdate;
+            string versionBeforeUpdate = _settings.VersionBeforeUpdate;
 
             if (string.IsNullOrEmpty(versionBeforeUpdate))
             {
-                _updateOptions.VersionBeforeUpdate = CurrentVersion;
+                _settings.VersionBeforeUpdate = CurrentVersion;
                 return false;
             }
 
@@ -59,7 +59,7 @@ namespace EverythingToolbar.Controls
 
         private void OnDismissClicked(object sender, EventArgs e)
         {
-            _updateOptions.VersionBeforeUpdate = CurrentVersion;
+            _settings.VersionBeforeUpdate = CurrentVersion;
             Visibility = Visibility.Collapsed;
         }
     }

@@ -37,7 +37,7 @@ namespace EverythingToolbar.Deskband
                 _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
 
                 // Apply saved UI language
-                CultureHelper.ApplyUILanguage(Ioc.Default.GetRequiredService<LanguageOptions>().UILanguage);
+                CultureHelper.ApplyUILanguage(Ioc.Default.GetRequiredService<ISettings>().UILanguage);
 
                 _toolbarControl = new ToolbarControl();
 

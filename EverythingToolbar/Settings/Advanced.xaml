@@ -42,7 +42,7 @@
                                 <ui:Button Content="{x:Static properties:Resources.SettingsDownloadLatestVersion}"
                                            Click="OnDownloadUpdateClicked"
                                            Visibility="{Binding DownloadUpdateButtonVisible, RelativeSource={RelativeSource AncestorType={x:Type Page}}, Converter={c:BoolToVisibilityConverter}}" />
-                                <ui:ToggleSwitch IsChecked="{Binding UpdateOptions.IsUpdateNotificationsEnabled, Mode=TwoWay}"
+                                <ui:ToggleSwitch IsChecked="{Binding Settings.IsUpdateNotificationsEnabled, Mode=TwoWay}"
                                                  Margin="15, 0, 0, 0" />
                             </StackPanel>
                         </controls:SettingItem.SettingContent>
@@ -63,7 +63,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsInstanceName}"
                                       HelpText="{x:Static properties:Resources.SettingsInstanceNameHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:TextBox Text="{Binding EverythingOptions.InstanceName, Mode=TwoWay}"
+                        <ui:TextBox Text="{Binding Settings.InstanceName, Mode=TwoWay}"
                                     HorizontalAlignment="Right"
                                     Width="200"
                                     PlaceholderText="{x:Static properties:Resources.SettingsDefaultInstance}" />
@@ -81,7 +81,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsReplaceStartMenuSearch}"
                                       HelpText="{x:Static properties:Resources.SettingsReplaceStartMenuHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding StartMenuOptions.IsReplaceStartMenuSearch, Mode=TwoWay}" />
+                        <ui:ToggleSwitch IsChecked="{Binding Settings.IsReplaceStartMenuSearch, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
@@ -107,7 +107,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsForceWin10Styles}"
                                       HelpText="{x:Static properties:Resources.SettingsForceWin10StylesHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding ThemeOptions.ForceWin10Behavior, Mode=TwoWay}" />
+                        <ui:ToggleSwitch IsChecked="{Binding Settings.ForceWin10Behavior, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>

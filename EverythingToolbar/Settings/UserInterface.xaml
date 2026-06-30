@@ -35,7 +35,7 @@
                                       ItemsSource="{Binding ItemTemplates}"
                                       DisplayMemberPath="Key"
                                       SelectedValuePath="Value"
-                                      SelectedValue="{Binding ThemeOptions.ItemTemplate, Mode=TwoWay}" />
+                                      SelectedValue="{Binding Settings.ItemTemplate, Mode=TwoWay}" />
                         </controls:SettingItem.SettingContent>
                     </controls:SettingItem>
                     <Border Margin="0,17,0,0"
@@ -75,7 +75,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsThumbnailsEnabled}"
                                       HelpText="{x:Static properties:Resources.SettingsThumbnailsHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding ThemeOptions.IsThumbnailsEnabled, Mode=TwoWay}" />
+                        <ui:ToggleSwitch IsChecked="{Binding Settings.IsThumbnailsEnabled, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
@@ -87,7 +87,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsSystemContextMenuDefault}"
                                       HelpText="{x:Static properties:Resources.SettingsSystemContextMenuDefaultHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding SearchOptions.IsSystemContextMenuDefault, Mode=TwoWay}" />
+                        <ui:ToggleSwitch IsChecked="{Binding Settings.IsSystemContextMenuDefault, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
@@ -99,7 +99,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsPreviewPaneEnabled}"
                                       HelpText="{x:Static properties:Resources.SettingsPreviewPaneHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding SearchOptions.IsPreviewPaneEnabled, Mode=TwoWay}" />
+                        <ui:ToggleSwitch IsChecked="{Binding Settings.IsPreviewPaneEnabled, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
@@ -111,7 +111,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsShowResultsCount}"
                                       HelpText="{x:Static properties:Resources.SettingsResultsCountHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding SearchOptions.IsShowResultsCount, Mode=TwoWay}" />
+                        <ui:ToggleSwitch IsChecked="{Binding Settings.IsShowResultsCount, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
@@ -123,7 +123,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsShowQuickToggles}"
                                       HelpText="{x:Static properties:Resources.SettingsQuickTogglesHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding SearchOptions.IsShowQuickToggles, Mode=TwoWay}" />
+                        <ui:ToggleSwitch IsChecked="{Binding Settings.IsShowQuickToggles, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
@@ -139,7 +139,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsDisableAnimations}"
                                       HelpText="{x:Static properties:Resources.SettingsAnimationsHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding ThemeOptions.IsAnimationsDisabled, Mode=TwoWay}" />
+                        <ui:ToggleSwitch IsChecked="{Binding Settings.IsAnimationsDisabled, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>

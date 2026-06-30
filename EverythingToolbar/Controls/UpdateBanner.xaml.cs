@@ -21,7 +21,7 @@ namespace EverythingToolbar.Controls
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<UpdateBanner>();
         private static readonly string ApiUrl = "https://api.github.com/repos/srwi/EverythingToolbar/releases";
         private static readonly string LatestReleaseUrl = "https://github.com/srwi/EverythingToolbar/releases/latest";
-        private readonly UpdateOptions _updateOptions = Ioc.Default.GetRequiredService<UpdateOptions>();
+        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
 
         public UpdateBanner()
         {
@@ -62,7 +62,7 @@ namespace EverythingToolbar.Controls
         {
             try
             {
-                if (!_updateOptions.IsUpdateNotificationsEnabled)
+                if (!_settings.IsUpdateNotificationsEnabled)
                     return;
 
                 var latestVersion = await CheckForUpdateAsync();
@@ -87,7 +87,7 @@ namespace EverythingToolbar.Controls
         {
             try
             {
-                return new Version(_updateOptions.SkippedUpdate);
+                return new Version(_settings.SkippedUpdate);
             }
             catch
             {
@@ -104,7 +104,7 @@ namespace EverythingToolbar.Controls
         {
             if (_latestVersion != null)
             {
-                _updateOptions.SkippedUpdate = _latestVersion.ToString();
+                _settings.SkippedUpdate = _latestVersion.ToString();
             }
             Visibility = Visibility.Collapsed;
         }

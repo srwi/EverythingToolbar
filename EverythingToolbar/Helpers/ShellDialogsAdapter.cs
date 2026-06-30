@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using EverythingToolbar.Platform;
@@ -23,12 +22,12 @@ namespace EverythingToolbar.Helpers
             ShellUtils.ShowFileProperties(filePath);
         }
 
-        public void ShowWindowsContextMenu(string filePath, Point screenPosition)
+        public void ShowWindowsContextMenu(string filePath)
         {
             var menu = new ShellContextMenu();
             var arrFi = new FileInfo[1];
             arrFi[0] = new FileInfo(filePath);
-            menu.ShowContextMenu(arrFi, screenPosition);
+            menu.ShowContextMenu(arrFi, Control.MousePosition);
         }
 
         public string? BrowseForFile(string filterLabel, string filterPattern, string? initialDirectory)

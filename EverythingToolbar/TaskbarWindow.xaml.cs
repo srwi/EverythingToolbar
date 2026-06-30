@@ -14,7 +14,7 @@ namespace EverythingToolbar
     public partial class TaskbarWindow
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<TaskbarWindow>();
-        private readonly TaskbarWindowOptions _taskbarWindowOptions = Ioc.Default.GetRequiredService<TaskbarWindowOptions>();
+        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
         private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
 
         private IntPtr _taskbarHandle;
@@ -34,7 +34,7 @@ namespace EverythingToolbar
             InitializeComponent();
 
             Loaded += OnLoaded;
-            _taskbarWindowOptions.PropertyChanged += OnSettingsChanged;
+            _settings.PropertyChanged += OnSettingsChanged;
             Microsoft.Win32.SystemEvents.DisplaySettingsChanged += OnDisplaySettingsChanged;
         }
 
@@ -108,7 +108,7 @@ namespace EverythingToolbar
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(_taskbarWindowOptions.TaskbarWindowAlignment))
+            if (e.PropertyName == nameof(_settings.TaskbarWindowAlignment))
             {
                 UpdatePosition();
             }
@@ -116,7 +116,7 @@ namespace EverythingToolbar
 
         private void UpdatePosition()
         {
-            if (!IsLoaded || !_taskbarWindowOptions.TaskbarWindowEnabled)
+            if (!IsLoaded || !_settings.TaskbarWindowEnabled)
                 return;
 
             try
@@ -194,7 +194,7 @@ namespace EverythingToolbar
         {
             int padding = (int)(8 * dpiScale);
             int taskbarWidth = taskbarRect.Right - taskbarRect.Left;
-            string alignment = _taskbarWindowOptions.TaskbarWindowAlignment;
+            string alignment = _settings.TaskbarWindowAlignment;
             bool isTaskbarCentered = _windowsPolicy.IsTaskbarCenterAligned();
 
             if (anchors.WidgetsRect.HasValue)
@@ -311,7 +311,7 @@ namespace EverythingToolbar
 
         protected override void OnClosed(EventArgs e)
         {
-            _taskbarWindowOptions.PropertyChanged -= OnSettingsChanged;
+            _settings.PropertyChanged -= OnSettingsChanged;
             Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= OnDisplaySettingsChanged;
             base.OnClosed(e);
         }

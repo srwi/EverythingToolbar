@@ -20,30 +20,30 @@ namespace EverythingToolbar.Helpers
 
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<EverythingFilterLoader>();
         private FileSystemWatcher? _watcher;
-        private readonly FilterOptions _options;
+        private readonly ISettings _settings;
         private readonly IFilterNames _names;
         private readonly INotifier _notifier;
         private readonly IShellDialogs _shellDialogs;
         private readonly SynchronizationContext? _syncContext;
 
-        public EverythingFilterLoader(IFilterNames names, INotifier notifier, IShellDialogs shellDialogs, FilterOptions options)
+        public EverythingFilterLoader(IFilterNames names, INotifier notifier, IShellDialogs shellDialogs, ISettings settings)
         {
             _names = names;
             _notifier = notifier;
             _shellDialogs = shellDialogs;
-            _options = options;
+            _settings = settings;
             _syncContext = SynchronizationContext.Current;
-            _options.PropertyChanged += OnSettingsChanged;
+            _settings.PropertyChanged += OnSettingsChanged;
 
-            if (_options.IsImportFilters)
+            if (_settings.IsImportFilters)
                 CreateFileWatcher();
         }
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(FilterOptions.IsImportFilters))
+            if (e.PropertyName == nameof(ISettings.IsImportFilters))
             {
-                if (_options.IsImportFilters)
+                if (_settings.IsImportFilters)
                 {
                     CreateFileWatcher();
                 }
@@ -53,9 +53,9 @@ namespace EverythingToolbar.Helpers
                 }
                 ResetFilters();
             }
-            else if (e.PropertyName == nameof(FilterOptions.FiltersPath))
+            else if (e.PropertyName == nameof(ISettings.FiltersPath))
             {
-                if (_options.IsImportFilters)
+                if (_settings.IsImportFilters)
                 {
                     CreateFileWatcher();
                     ResetFilters();
@@ -73,35 +73,35 @@ namespace EverythingToolbar.Helpers
         {
             var filters = new ObservableCollection<Filter>();
 
-            if (string.IsNullOrWhiteSpace(_options.FiltersPath))
-                _options.FiltersPath = Path.Combine(
+            if (string.IsNullOrWhiteSpace(_settings.FiltersPath))
+                _settings.FiltersPath = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                     "Everything",
                     "Filters.csv"
                 );
 
-            if (!File.Exists(_options.FiltersPath))
+            if (!File.Exists(_settings.FiltersPath))
             {
-                Logger.Info("Filters.csv could not be found at " + _options.FiltersPath);
+                Logger.Info("Filters.csv could not be found at " + _settings.FiltersPath);
 
                 _notifier.ShowInformation("MessageBoxSelectFiltersCsv");
                 var pickedPath = _shellDialogs.BrowseForFile(
-                    "Filters.csv", "Filters.csv", Path.Combine(_options.FiltersPath, ".."));
+                    "Filters.csv", "Filters.csv", Path.Combine(_settings.FiltersPath, ".."));
 
                 if (pickedPath != null)
                 {
-                    _options.FiltersPath = pickedPath;
+                    _settings.FiltersPath = pickedPath;
                 }
                 else
                 {
-                    _options.IsImportFilters = false;
+                    _settings.IsImportFilters = false;
                     return null;
                 }
             }
 
             try
             {
-                using var csvParser = new TextFieldParser(_options.FiltersPath);
+                using var csvParser = new TextFieldParser(_settings.FiltersPath);
                 csvParser.CommentTokens = ["#"];
                 csvParser.SetDelimiters(",");
                 csvParser.HasFieldsEnclosedInQuotes = true;
@@ -169,13 +169,13 @@ namespace EverythingToolbar.Helpers
         {
             StopFileWatcher();
 
-            if (!File.Exists(_options.FiltersPath))
+            if (!File.Exists(_settings.FiltersPath))
                 return;
 
             _watcher = new FileSystemWatcher
             {
-                Path = Path.GetDirectoryName(_options.FiltersPath)!,
-                Filter = Path.GetFileName(_options.FiltersPath),
+                Path = Path.GetDirectoryName(_settings.FiltersPath)!,
+                Filter = Path.GetFileName(_settings.FiltersPath),
                 NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite,
             };
 
@@ -191,9 +191,9 @@ namespace EverythingToolbar.Helpers
         {
             // Marshal to the thread that captured _syncContext; this callback runs on a thread-pool thread.
             if (_syncContext != null)
-                _syncContext.Post(_ => _options.FiltersPath = e.FullPath, null);
+                _syncContext.Post(_ => _settings.FiltersPath = e.FullPath, null);
             else
-                _options.FiltersPath = e.FullPath;
+                _settings.FiltersPath = e.FullPath;
         }
 
         private void OnFileChanged(object source, FileSystemEventArgs e)

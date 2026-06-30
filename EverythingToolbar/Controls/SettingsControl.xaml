@@ -66,7 +66,7 @@
                 </ContextMenu>
             </Button.ContextMenu>
         </Button>
-        <Button Content="{Binding SearchOptions.IsPreviewPaneEnabled, Converter={converters:PreviewPaneToggleIconConverter}}"
+        <Button Content="{Binding Settings.IsPreviewPaneEnabled, Converter={converters:PreviewPaneToggleIconConverter}}"
                 Click="TogglePreviewPane"
                 ToolTip="{x:Static properties:Resources.SettingsPreviewPaneEnabled}"
                 FontSize="12pt"
@@ -84,17 +84,17 @@
                 <ContextMenu FontFamily="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=FontFamily}">
                     <MenuItem IsCheckable="True"
                               Header="{x:Static properties:Resources.SettingsRegularExpressions}"
-                              IsChecked="{Binding MatchOptions.IsRegExEnabled, Mode=TwoWay}" />
+                              IsChecked="{Binding Settings.IsRegExEnabled, Mode=TwoWay}" />
                     <MenuItem IsCheckable="True"
                               Header="{x:Static properties:Resources.SettingsMatchCase}"
-                              IsChecked="{Binding MatchOptions.IsMatchCase, Mode=TwoWay}" />
+                              IsChecked="{Binding Settings.IsMatchCase, Mode=TwoWay}" />
                     <MenuItem IsCheckable="True"
                               Header="{x:Static properties:Resources.SettingsMatchPath}"
-                              IsChecked="{Binding MatchOptions.IsMatchPath, Mode=TwoWay}" />
+                              IsChecked="{Binding Settings.IsMatchPath, Mode=TwoWay}" />
                     <MenuItem IsCheckable="True"
                               Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
-                              IsChecked="{Binding MatchOptions.IsMatchWholeWord, Mode=TwoWay}"
-                              IsEnabled="{Binding MatchOptions.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={converters:NotConverter}}" />
+                              IsChecked="{Binding Settings.IsMatchWholeWord, Mode=TwoWay}"
+                              IsEnabled="{Binding Settings.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={converters:NotConverter}}" />
                     <Separator />
                     <MenuItem Header="{x:Static properties:Resources.SettingsPreferences}"
                               Click="OpenSettingsWindow"

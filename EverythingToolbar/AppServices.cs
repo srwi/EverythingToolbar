@@ -17,6 +17,7 @@ namespace EverythingToolbar
             _initialized = true;
 
             var services = new ServiceCollection();
+            services.AddSingleton<ISettings>(_ => ToolbarSettings.User);
             services.AddSingleton<HistoryManager>();
             services.AddSingleton<TaskbarStateManager>();
             services.AddSingleton<IFilterNames, FilterNames>();
@@ -26,21 +27,7 @@ namespace EverythingToolbar
             services.AddSingleton<SearchState>();
             services.AddSingleton<SearchSession>();
             services.AddSingleton<SearchCommands>();
-            services.AddSingleton<EverythingOptions>();
-            services.AddSingleton<PlacementOptions>();
-            services.AddSingleton<FilterOptions>();
-            services.AddSingleton<MatchOptions>();
-            services.AddSingleton<SortOptions>();
-            services.AddSingleton<SearchOptions>();
-            services.AddSingleton<ThemeOptions>();
-            services.AddSingleton<StartMenuOptions>();
-            services.AddSingleton<UpdateOptions>();
-            services.AddSingleton<TaskbarWindowOptions>();
-            services.AddSingleton<CustomActionsOptions>();
-            services.AddSingleton<ShortcutOptions>();
-            services.AddSingleton<LanguageOptions>();
-            services.AddSingleton<LauncherOptions>();
-            services.AddSingleton<IconOptions>();
+            services.AddSingleton<CustomActionService>();
             services.AddSingleton<WindowsPolicy>();
             services.AddSingleton<StartMenuIntegration>();
             services.AddSingleton<SearchWindow>();
@@ -50,13 +37,14 @@ namespace EverythingToolbar
             services.AddSingleton<IShellDialogs, ShellDialogsAdapter>();
             services.AddSingleton<INotifier, NotifierAdapter>();
             services.AddSingleton<IFileLauncher, FileLauncherAdapter>();
+            services.AddSingleton<IFilePreviewer, FilePreviewerAdapter>();
             services.AddSingleton<SearchResultActions>();
             services.AddSingleton<EverythingSearchLauncher>();
 
             var provider = services.BuildServiceProvider();
             Ioc.Default.ConfigureServices(provider);
 
-            provider.GetRequiredService<IEverythingClient>().SetInstanceName(provider.GetRequiredService<EverythingOptions>().InstanceName);
+            provider.GetRequiredService<IEverythingClient>().SetInstanceName(provider.GetRequiredService<ISettings>().InstanceName);
         }
     }
 }

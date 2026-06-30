@@ -1,12 +1,7 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Xml;
-using System.Xml.Serialization;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Controls;
 using EverythingToolbar.Data;
@@ -16,10 +11,10 @@ namespace EverythingToolbar.Settings
 {
     public partial class CustomActions
     {
-        private static List<Rule> _actions = new();
-        private static string CustomActionsPath => Path.Combine(ConfigPaths.GetConfigDirectory(), "rules.xml");
+        private readonly CustomActionService _service = Ioc.Default.GetRequiredService<CustomActionService>();
+        private List<Rule> _actions = new();
 
-        public CustomActionsOptions CustomActionsOptions { get; } = Ioc.Default.GetRequiredService<CustomActionsOptions>();
+        public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
 
         public CustomActions()
         {
@@ -29,7 +24,7 @@ namespace EverythingToolbar.Settings
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _actions = LoadCustomActions();
+            _actions = _service.Load();
             DataGrid.ItemsSource = _actions;
             UpdateUi();
         }
@@ -37,32 +32,15 @@ namespace EverythingToolbar.Settings
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             var autoApply = AutoApplyCustomActionsCheckbox.IsChecked == true;
-            if (SaveCustomActions(_actions, autoApply))
+            if (TrySave(autoApply))
             {
-                CustomActionsOptions.IsAutoApplyCustomActions = autoApply;
+                Settings.IsAutoApplyCustomActions = autoApply;
             }
         }
 
-        public static List<Rule> LoadCustomActions()
+        private bool TrySave(bool isAutoApplyCustomActions)
         {
-            if (!File.Exists(CustomActionsPath))
-                return [];
-
-            XmlSerializer serializer = new(_actions.GetType());
-            using XmlReader reader = XmlReader.Create(CustomActionsPath);
-            try
-            {
-                return serializer.Deserialize(reader) as List<Rule> ?? [];
-            }
-            catch
-            {
-                return [];
-            }
-        }
-
-        private static bool SaveCustomActions(List<Rule> newActions, bool isAutoApplyCustomActions)
-        {
-            if (newActions.Any(r => string.IsNullOrEmpty(r.Name)))
+            if (_actions.Any(r => string.IsNullOrEmpty(r.Name)))
             {
                 FluentMessageBox
                     .CreateError(
@@ -72,7 +50,7 @@ namespace EverythingToolbar.Settings
                     .ShowDialogAsync();
                 return false;
             }
-            if (isAutoApplyCustomActions && newActions.Any(r => !r.ExpressionValid))
+            if (isAutoApplyCustomActions && _actions.Any(r => !r.ExpressionValid))
             {
                 FluentMessageBox
                     .CreateError(Properties.Resources.MessageBoxRegExInvalid, Properties.Resources.MessageBoxErrorTitle)
@@ -80,13 +58,7 @@ namespace EverythingToolbar.Settings
                 return false;
             }
 
-            if (Path.GetDirectoryName(CustomActionsPath) is { } parent)
-                Directory.CreateDirectory(parent);
-
-            var serializer = new XmlSerializer(newActions.GetType());
-            using var writer = XmlWriter.Create(CustomActionsPath);
-            serializer.Serialize(writer, newActions);
-
+            _service.Save(_actions);
             return true;
         }
 
@@ -181,52 +153,6 @@ namespace EverythingToolbar.Settings
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
             UpdateUi();
-        }
-
-        public static bool HandleAction(SearchResult? searchResult, string command = "")
-        {
-            if (searchResult == null)
-                return false;
-
-            if (Ioc.Default.GetRequiredService<CustomActionsOptions>().IsAutoApplyCustomActions && string.IsNullOrEmpty(command))
-            {
-                foreach (var r in LoadCustomActions())
-                {
-                    var regexCond =
-                        !string.IsNullOrEmpty(r.Expression)
-                        && Regex.IsMatch(searchResult.FullPathAndFileName, r.Expression);
-                    var typeCond =
-                        searchResult.IsFile && r.Type != FileType.Folder
-                        || !searchResult.IsFile && r.Type != FileType.File;
-                    if (regexCond && typeCond)
-                    {
-                        command = r.Command;
-                    }
-                }
-            }
-
-            if (!string.IsNullOrEmpty(command))
-            {
-                command = command.Replace("%file%", "\"" + searchResult.FullPathAndFileName + "\"");
-                command = command.Replace("%filename%", "\"" + searchResult.FileName + "\"");
-                command = command.Replace("%path%", "\"" + searchResult.Path + "\"");
-                try
-                {
-                    ShellUtils.CreateProcessFromCommandLine(command, searchResult.Path);
-                    return true;
-                }
-                catch (Win32Exception)
-                {
-                    FluentMessageBox
-                        .CreateError(
-                            Properties.Resources.MessageBoxFailedToRunCommand + " " + command,
-                            Properties.Resources.MessageBoxErrorTitle
-                        )
-                        .ShowDialogAsync();
-                }
-            }
-
-            return false;
         }
     }
 }

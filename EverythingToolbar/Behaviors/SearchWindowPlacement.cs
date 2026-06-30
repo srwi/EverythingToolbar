@@ -24,7 +24,7 @@ namespace EverythingToolbar.Behaviors
 
         private double _dpiScalingFactor = 1.0;
         private readonly TaskbarStateManager _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
-        private readonly PlacementOptions _placement = Ioc.Default.GetRequiredService<PlacementOptions>();
+        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
         private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
 
         protected override void OnAttached()
@@ -203,7 +203,7 @@ namespace EverythingToolbar.Behaviors
 
         private Size GetTargetWindowSize()
         {
-            var windowSize = new Size(_placement.PopupWidth, _placement.PopupHeight);
+            var windowSize = new Size(_settings.PopupWidth, _settings.PopupHeight);
             windowSize.Width = Math.Max(windowSize.Width, AssociatedObject.MinWidth) / _dpiScalingFactor;
             windowSize.Height = Math.Max(windowSize.Height, AssociatedObject.MinHeight) / _dpiScalingFactor;
             return windowSize;

@@ -17,7 +17,7 @@ namespace EverythingToolbar.Settings
         private ModifierKeys OriginalModifiers { get; set; }
         private ModifierKeys TempMods { get; set; }
 
-        private readonly ShortcutOptions _shortcutOptions = Ioc.Default.GetRequiredService<ShortcutOptions>();
+        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
 
         private static event EventHandler<WinKeyEventArgs>? WinKeyEventHandler;
 
@@ -172,8 +172,8 @@ namespace EverythingToolbar.Settings
             Ioc.Default.GetRequiredService<StartMenuIntegration>().Disable();
             ShortcutManager.IsEnabled = false;
 
-            Modifiers = (ModifierKeys)_shortcutOptions.ShortcutModifiers;
-            Key = (Key)_shortcutOptions.ShortcutKey;
+            Modifiers = (ModifierKeys)_settings.ShortcutModifiers;
+            Key = (Key)_settings.ShortcutKey;
 
             OriginalKey = Key;
             OriginalModifiers = Modifiers;

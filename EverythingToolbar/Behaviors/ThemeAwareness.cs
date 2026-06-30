@@ -31,7 +31,7 @@ namespace EverythingToolbar.Behaviors
 
         private readonly List<ResourceDictionary> _addedDictionaries = new();
         private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
-        private UISettings? _settings;
+        private UISettings? _uiSettings;
         private readonly RegistryValueWatcher _systemThemeWatcher;
         private static readonly RegistryEntry SystemThemeRegistryEntry = new(
             "HKEY_CURRENT_USER",
@@ -39,7 +39,7 @@ namespace EverythingToolbar.Behaviors
             "SystemUsesLightTheme"
         );
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<ThemeAwareness>();
-        private readonly ThemeOptions _themeOptions = Ioc.Default.GetRequiredService<ThemeOptions>();
+        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
 
         protected override void OnAttached()
         {
@@ -60,7 +60,7 @@ namespace EverythingToolbar.Behaviors
         protected override void OnDetaching()
         {
             _systemThemeWatcher.Dispose();
-            _themeOptions.PropertyChanged -= OnSettingsChanged;
+            _settings.PropertyChanged -= OnSettingsChanged;
             base.OnDetaching();
         }
 
@@ -73,8 +73,8 @@ namespace EverythingToolbar.Behaviors
 
             try
             {
-                _settings = new UISettings();
-                _settings.ColorValuesChanged += (sender, args) =>
+                _uiSettings = new UISettings();
+                _uiSettings.ColorValuesChanged += (sender, args) =>
                 {
                     Dispatcher.Invoke(AutoApplyTheme);
                 };
@@ -84,16 +84,16 @@ namespace EverythingToolbar.Behaviors
                 Logger.Info("Could not apply accent color automatically.");
             }
 
-            _themeOptions.PropertyChanged += OnSettingsChanged;
+            _settings.PropertyChanged += OnSettingsChanged;
         }
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (
                 e.PropertyName
-                is nameof(ThemeOptions.ItemTemplate)
-                    or nameof(ThemeOptions.ThemeOverride)
-                    or nameof(ThemeOptions.ForceWin10Behavior)
+                is nameof(ISettings.ItemTemplate)
+                    or nameof(ISettings.ThemeOverride)
+                    or nameof(ISettings.ForceWin10Behavior)
             )
             {
                 AutoApplyTheme();
@@ -102,12 +102,12 @@ namespace EverythingToolbar.Behaviors
 
         private Theme GetThemeFromRegistryValue(int registryValue)
         {
-            if (_themeOptions.ThemeOverride.ToLower() == "light")
+            if (_settings.ThemeOverride.ToLower() == "light")
             {
                 return Theme.Light;
             }
 
-            if (_themeOptions.ThemeOverride.ToLower() == "dark")
+            if (_settings.ThemeOverride.ToLower() == "dark")
             {
                 return Theme.Dark;
             }
@@ -156,7 +156,7 @@ namespace EverythingToolbar.Behaviors
             var dataTemplateLocation = Path.Combine(
                 assemblyLocation,
                 "ItemTemplates",
-                _themeOptions.ItemTemplate + ".xaml"
+                _settings.ItemTemplate + ".xaml"
             );
             AddResource(
                 dataTemplateLocation,
@@ -164,12 +164,12 @@ namespace EverythingToolbar.Behaviors
             );
 
             // Apply accent color
-            if (_settings != null)
+            if (_uiSettings != null)
             {
                 if (theme == Theme.Light)
-                    SetAccentColor(GetBrush(_settings.GetColorValue(UIColorType.AccentDark1)));
+                    SetAccentColor(GetBrush(_uiSettings.GetColorValue(UIColorType.AccentDark1)));
                 else
-                    SetAccentColor(GetBrush(_settings.GetColorValue(UIColorType.AccentLight2)));
+                    SetAccentColor(GetBrush(_uiSettings.GetColorValue(UIColorType.AccentLight2)));
             }
             else
             {

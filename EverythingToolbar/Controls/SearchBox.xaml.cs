@@ -44,8 +44,8 @@ namespace EverythingToolbar.Controls
 
         private bool _isInternalTextChange;
         private readonly SearchState _searchState = Ioc.Default.GetRequiredService<SearchState>();
-        private readonly SearchOptions _searchOptions = Ioc.Default.GetRequiredService<SearchOptions>();
-        public MatchOptions MatchOptions { get; } = Ioc.Default.GetRequiredService<MatchOptions>();
+        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
+        public ISettings Settings => _settings;
 
         private static ISearchWindowController SearchWindowController =>
             Ioc.Default.GetRequiredService<ISearchWindowController>();
@@ -59,7 +59,7 @@ namespace EverythingToolbar.Controls
 
             InputMethod.SetPreferredImeState(this, InputMethodState.DoNotCare);
 
-            _searchOptions.PropertyChanged += OnSettingsChanged;
+            _settings.PropertyChanged += OnSettingsChanged;
             WeakReferenceMessenger.Default.Register<FocusSearchBoxRequest>(this, (_, _) => OnFocusRequested());
         }
 
@@ -68,7 +68,7 @@ namespace EverythingToolbar.Controls
             if (_isInternalTextChange)
                 return;
 
-            if (_searchOptions.IsSearchAsYouType)
+            if (_settings.IsSearchAsYouType)
             {
                 SearchTerm = TextBox.Text;
             }
@@ -96,7 +96,7 @@ namespace EverythingToolbar.Controls
                 e.Handled = true;
                 return;
             }
-            if (Keyboard.Modifiers == ModifierKeys.None && e.Key == Key.Enter && !_searchOptions.IsSearchAsYouType)
+            if (Keyboard.Modifiers == ModifierKeys.None && e.Key == Key.Enter && !_settings.IsSearchAsYouType)
             {
                 SearchTerm = TextBox.Text;
                 e.Handled = true;
@@ -139,7 +139,7 @@ namespace EverythingToolbar.Controls
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SearchOptions.IsShowQuickToggles))
+            if (e.PropertyName == nameof(ISettings.IsShowQuickToggles))
                 UpdateQuickTogglesVisibility();
         }
 
@@ -150,7 +150,7 @@ namespace EverythingToolbar.Controls
 
         private void UpdateQuickTogglesVisibility()
         {
-            if (_searchOptions.IsShowQuickToggles && ActualWidth > 200)
+            if (_settings.IsShowQuickToggles && ActualWidth > 200)
             {
                 QuickToggleButtons.Visibility = Visibility.Visible;
                 TextBox.Padding = new Thickness(37, 0, 130, 0);

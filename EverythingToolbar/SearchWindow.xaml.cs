@@ -23,7 +23,7 @@ namespace EverythingToolbar
         private readonly SearchState _searchState = Ioc.Default.GetRequiredService<SearchState>();
         private readonly TaskbarStateManager _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
         private readonly EverythingSearchLauncher _launcher = Ioc.Default.GetRequiredService<EverythingSearchLauncher>();
-        private readonly PlacementOptions _placement = Ioc.Default.GetRequiredService<PlacementOptions>();
+        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
         private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
 
         public SearchWindow()
@@ -92,10 +92,10 @@ namespace EverythingToolbar
 
         private void OnHidden(object? sender, EventArgs e)
         {
-            if ((int)Height != _placement.PopupHeight || (int)Width != _placement.PopupWidth)
+            if ((int)Height != _settings.PopupHeight || (int)Width != _settings.PopupWidth)
             {
-                _placement.PopupHeight = (int)Height;
-                _placement.PopupWidth = (int)Width;
+                _settings.PopupHeight = (int)Height;
+                _settings.PopupWidth = (int)Width;
             }
 
             // Push outside of screens to hide Windows' closing animation

@@ -23,22 +23,22 @@ namespace EverythingToolbar.Helpers
         private int _currentHistorySize;
         private int _currentIndex;
         private readonly List<string> _history;
-        private readonly SearchOptions _searchOptions;
+        private readonly ISettings _settings;
 
-        public HistoryManager(SearchOptions searchOptions)
+        public HistoryManager(ISettings settings)
         {
-            _searchOptions = searchOptions;
+            _settings = settings;
             _history = LoadHistory();
             _currentIndex = _history.Count;
-            _currentHistorySize = _searchOptions.IsEnableHistory ? MaxHistorySize : 0;
-            _searchOptions.PropertyChanged += OnSettingChanged;
+            _currentHistorySize = _settings.IsEnableHistory ? MaxHistorySize : 0;
+            _settings.PropertyChanged += OnSettingChanged;
         }
 
         private void OnSettingChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SearchOptions.IsEnableHistory))
+            if (e.PropertyName == nameof(ISettings.IsEnableHistory))
             {
-                if (_searchOptions.IsEnableHistory)
+                if (_settings.IsEnableHistory)
                 {
                     _currentHistorySize = MaxHistorySize;
                 }

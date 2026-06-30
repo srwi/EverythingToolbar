@@ -26,7 +26,7 @@ namespace EverythingToolbar.Helpers
         private static bool _isInterceptingKeys;
         private static bool? _animationsToRestore;
         private readonly DispatcherTimer _cleanupTimer = new() { Interval = TimeSpan.FromSeconds(1) };
-        private readonly StartMenuOptions _options;
+        private readonly ISettings _settings;
 
         private const int WhKeyboardLl = 13;
         private const int WmKeyDown = 0x0100;
@@ -34,24 +34,24 @@ namespace EverythingToolbar.Helpers
         private const int InputKeyboard = 1;
         private const uint KeyeventFKeyup = 0x0002;
 
-        public StartMenuIntegration(StartMenuOptions options)
+        public StartMenuIntegration(ISettings settings)
         {
-            _options = options;
+            _settings = settings;
             _cleanupTimer.Tick += OnCleanupTimerElapsed;
-            _options.PropertyChanged += OnSettingsChanged;
+            _settings.PropertyChanged += OnSettingsChanged;
         }
 
         public void Initialize()
         {
-            if (_options.IsReplaceStartMenuSearch)
+            if (_settings.IsReplaceStartMenuSearch)
                 Enable();
         }
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(StartMenuOptions.IsReplaceStartMenuSearch))
+            if (e.PropertyName == nameof(ISettings.IsReplaceStartMenuSearch))
             {
-                if (_options.IsReplaceStartMenuSearch)
+                if (_settings.IsReplaceStartMenuSearch)
                     Enable();
                 else
                     Disable();

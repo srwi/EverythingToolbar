@@ -91,12 +91,13 @@ namespace EverythingToolbar.Controls
         public ObservableCollection<PreviewActionItem> PreviewActions { get; } = [];
 
         private readonly SearchResultActions _actions = Ioc.Default.GetRequiredService<SearchResultActions>();
-        private readonly ThemeOptions _themeOptions = Ioc.Default.GetRequiredService<ThemeOptions>();
+        private readonly CustomActionService _customActions = Ioc.Default.GetRequiredService<CustomActionService>();
+        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
 
         public SearchResultPreviewPane()
         {
             InitializeComponent();
-            _themeOptions.PropertyChanged += OnToolbarSettingsPropertyChanged;
+            _settings.PropertyChanged += OnToolbarSettingsPropertyChanged;
             Unloaded += OnUnloaded;
         }
 
@@ -108,13 +109,13 @@ namespace EverythingToolbar.Controls
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            _themeOptions.PropertyChanged -= OnToolbarSettingsPropertyChanged;
+            _settings.PropertyChanged -= OnToolbarSettingsPropertyChanged;
             Unloaded -= OnUnloaded;
         }
 
         private void OnToolbarSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ThemeOptions.ItemTemplate))
+            if (e.PropertyName == nameof(ISettings.ItemTemplate))
                 RefreshActions();
         }
 
@@ -138,7 +139,7 @@ namespace EverythingToolbar.Controls
                 "\uE8A5",
                 result =>
                 {
-                    if (!CustomActions.HandleAction(result))
+                    if (!_customActions.TryRun(result))
                         _actions.Open(result);
                 }
             );
@@ -150,7 +151,7 @@ namespace EverythingToolbar.Controls
 
         private void UpdateFileInfoVisibility()
         {
-            var template = _themeOptions.ItemTemplate ?? "";
+            var template = _settings.ItemTemplate ?? "";
             bool isDetailed =
                 template.Equals("NormalDetailed", StringComparison.OrdinalIgnoreCase)
                 || template.Equals("CompactDetailed", StringComparison.OrdinalIgnoreCase);

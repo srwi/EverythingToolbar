@@ -29,7 +29,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsHideEmptyResults}"
                                       HelpText="{x:Static properties:Resources.SettingsHideEmptyResultsHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding SearchOptions.IsHideEmptySearchResults, Mode=TwoWay}" />
+                        <ui:ToggleSwitch IsChecked="{Binding Settings.IsHideEmptySearchResults, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
@@ -41,7 +41,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsSearchAsYouType}"
                                       HelpText="{x:Static properties:Resources.SettingsSearchAsYouTypeHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding SearchOptions.IsSearchAsYouType, Mode=TwoWay}" />
+                        <ui:ToggleSwitch IsChecked="{Binding Settings.IsSearchAsYouType, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
@@ -53,7 +53,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsSelectFirstResult}"
                                       HelpText="{x:Static properties:Resources.SettingsSelectFirstResultHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding SearchOptions.IsAutoSelectFirstResult, Mode=TwoWay}" />
+                        <ui:ToggleSwitch IsChecked="{Binding Settings.IsAutoSelectFirstResult, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
@@ -65,7 +65,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsHomeEndNavigateResults}"
                                       HelpText="{x:Static properties:Resources.SettingsHomeEndNavigateResultsHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding SearchOptions.IsHomeEndNavigateResults, Mode=TwoWay}" />
+                        <ui:ToggleSwitch IsChecked="{Binding Settings.IsHomeEndNavigateResults, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
@@ -81,7 +81,7 @@
                                   ItemsSource="{Binding FocusBehaviorItems}"
                                   DisplayMemberPath="Key"
                                   SelectedValuePath="Value"
-                                  SelectedValue="{Binding SearchOptions.ListFocusBehavior, Mode=TwoWay}" />
+                                  SelectedValue="{Binding Settings.ListFocusBehavior, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
@@ -93,7 +93,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsDoubleClickToOpen}"
                                       HelpText="{x:Static properties:Resources.SettingsDoubleClickHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding SearchOptions.IsDoubleClickToOpen, Mode=TwoWay}" />
+                        <ui:ToggleSwitch IsChecked="{Binding Settings.IsDoubleClickToOpen, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
@@ -111,7 +111,7 @@
                     <controls:SettingItem.SettingContent>
                         <StackPanel Orientation="Horizontal">
                             <ui:Button Content="{x:Static properties:Resources.SettingsClearHistoryNow}" HorizontalAlignment="Right" Click="OnClearHistoryClicked" />
-                            <ui:ToggleSwitch IsChecked="{Binding SearchOptions.IsEnableHistory, Mode=TwoWay}"
+                            <ui:ToggleSwitch IsChecked="{Binding Settings.IsEnableHistory, Mode=TwoWay}"
                                              Margin="15, 0, 0, 0"/>
                         </StackPanel>
                     </controls:SettingItem.SettingContent>

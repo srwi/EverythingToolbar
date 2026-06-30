@@ -56,7 +56,8 @@ namespace EverythingToolbar.Controls
         private const int BusyIndicatorDelayMilliseconds = 2000;
         private readonly SearchSession _session = Ioc.Default.GetRequiredService<SearchSession>();
         private readonly SearchResultActions _actions = Ioc.Default.GetRequiredService<SearchResultActions>();
-        private readonly SearchOptions _searchOptions = Ioc.Default.GetRequiredService<SearchOptions>();
+        private readonly CustomActionService _customActions = Ioc.Default.GetRequiredService<CustomActionService>();
+        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
 
         private static ISearchWindowController SearchWindowController =>
             Ioc.Default.GetRequiredService<ISearchWindowController>();
@@ -271,7 +272,7 @@ namespace EverythingToolbar.Controls
             if (SelectedItem == null)
                 return;
 
-            if (!CustomActions.HandleAction(SelectedItem))
+            if (!_customActions.TryRun(SelectedItem))
                 InvokeOnSelected(_actions.Open);
 
             SearchWindowController.Hide();
@@ -313,13 +314,13 @@ namespace EverythingToolbar.Controls
 
         private void SingleClickSearchResult(object sender, MouseEventArgs e)
         {
-            if (!_searchOptions.IsDoubleClickToOpen)
+            if (!_settings.IsDoubleClickToOpen)
                 OpenWithMouseClick();
         }
 
         private void DoubleClickSearchResult(object sender, MouseEventArgs e)
         {
-            if (_searchOptions.IsDoubleClickToOpen)
+            if (_settings.IsDoubleClickToOpen)
                 OpenWithMouseClick();
         }
 
@@ -376,7 +377,7 @@ namespace EverythingToolbar.Controls
             while (menuItem.Items.Count > 2)
                 menuItem.Items.RemoveAt(0);
 
-            List<Rule> actions = CustomActions.LoadCustomActions();
+            List<Rule> actions = _customActions.Load();
 
             if (actions.Count == 0)
             {
@@ -396,11 +397,10 @@ namespace EverythingToolbar.Controls
                     Tag = action.Command,
                     DataContext = action,
                 };
-                if (action.Icon != null)
+                var actionIcon = CustomActionIcons.Load(action.Command);
+                if (actionIcon != null)
                 {
-                    Image iconImage = new() { Width = 16, Height = 16 };
-                    iconImage.SetBinding(Image.SourceProperty, new Binding("Icon"));
-                    actionMenuItem.Icon = iconImage;
+                    actionMenuItem.Icon = new Image { Width = 16, Height = 16, Source = actionIcon };
                 }
                 actionMenuItem.Click += OpenWithCustomAction;
                 menuItem.Items.Insert(i, actionMenuItem);
@@ -414,7 +414,7 @@ namespace EverythingToolbar.Controls
 
             var menuItem = sender as MenuItem;
             var command = menuItem?.Tag?.ToString() ?? "";
-            CustomActions.HandleAction(SelectedItem, command);
+            _customActions.TryRun(SelectedItem, command);
         }
 
         private void OnListViewItemMouseDown(object sender, MouseButtonEventArgs e)
@@ -476,7 +476,7 @@ namespace EverythingToolbar.Controls
             if (SelectedItem == null)
                 return;
 
-            if (_searchOptions.IsSystemContextMenuDefault != (Keyboard.Modifiers == ModifierKeys.Shift))
+            if (_settings.IsSystemContextMenuDefault != (Keyboard.Modifiers == ModifierKeys.Shift))
             {
                 _actions.ShowWindowsContextMenu(SelectedItem);
                 e.Handled = true;

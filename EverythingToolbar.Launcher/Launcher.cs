@@ -37,9 +37,7 @@ namespace EverythingToolbar.Launcher
             private readonly TaskbarStateManager _taskbarState;
             private readonly SearchWindowPlacement? _searchWindowPlacementBehavior;
             private readonly WindowsPolicy _windowsPolicy;
-            private readonly LauncherOptions _launcherOptions;
-            private readonly IconOptions _iconOptions;
-            private readonly TaskbarWindowOptions _taskbarWindowOptions;
+            private readonly ISettings _settings;
             private bool _temporarilyInIconMode;
             private bool _closingTaskbarWindowIntentionally;
             private uint _taskbarCreatedMsg;
@@ -57,9 +55,7 @@ namespace EverythingToolbar.Launcher
                 _searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();
                 _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
                 _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
-                _launcherOptions = Ioc.Default.GetRequiredService<LauncherOptions>();
-                _iconOptions = Ioc.Default.GetRequiredService<IconOptions>();
-                _taskbarWindowOptions = Ioc.Default.GetRequiredService<TaskbarWindowOptions>();
+                _settings = Ioc.Default.GetRequiredService<ISettings>();
 
                 _notifyIcon = icon;
 
@@ -90,7 +86,7 @@ namespace EverythingToolbar.Launcher
                 if (
                     !Utils.IsTaskbarPinned()
                     && !_windowsPolicy.IsTaskbarWindowActive()
-                    && (!_launcherOptions.IsSetupAssistantDisabled || !_launcherOptions.IsTrayIconEnabled)
+                    && (!_settings.IsSetupAssistantDisabled || !_settings.IsTrayIconEnabled)
                 )
                     new SetupAssistant(icon).Show();
 
@@ -105,12 +101,12 @@ namespace EverythingToolbar.Launcher
 
                 Dispatcher.BeginInvoke(_searchWindow.PreWarm, DispatcherPriority.ApplicationIdle);
 
-                _launcherOptions.PropertyChanged += async (_, e) =>
+                _settings.PropertyChanged += async (_, e) =>
                 {
-                    if (e.PropertyName == nameof(_launcherOptions.IsTrayIconEnabled))
+                    if (e.PropertyName == nameof(_settings.IsTrayIconEnabled))
                     {
                         if (
-                            !_launcherOptions.IsTrayIconEnabled
+                            !_settings.IsTrayIconEnabled
                             && !Utils.IsTaskbarPinned()
                             && !_windowsPolicy.IsTaskbarWindowActive()
                         )
@@ -122,17 +118,17 @@ namespace EverythingToolbar.Launcher
                                 )
                                 .ShowDialogAsync();
 
-                            _launcherOptions.IsTrayIconEnabled = true;
+                            _settings.IsTrayIconEnabled = true;
                             return;
                         }
 
-                        _notifyIcon.Visible = _launcherOptions.IsTrayIconEnabled;
+                        _notifyIcon.Visible = _settings.IsTrayIconEnabled;
                     }
                 };
 
-                _iconOptions.PropertyChanged += async (_, e) =>
+                _settings.PropertyChanged += async (_, e) =>
                 {
-                    if (e.PropertyName == nameof(_iconOptions.IconName))
+                    if (e.PropertyName == nameof(_settings.IconName))
                     {
                         var restartExplorer =
                             await FluentMessageBox
@@ -141,13 +137,13 @@ namespace EverythingToolbar.Launcher
                                     Properties.Resources.SetupAssistantRestartExplorerDialogTitle
                                 )
                                 .ShowDialogAsync() == MessageBoxResult.Primary;
-                        Utils.ChangeTaskbarPinIcon(_iconOptions.IconName, restartExplorer);
+                        Utils.ChangeTaskbarPinIcon(_settings.IconName, restartExplorer);
                     }
                 };
 
-                _taskbarWindowOptions.PropertyChanged += async (_, e) =>
+                _settings.PropertyChanged += async (_, e) =>
                 {
-                    if (e.PropertyName == nameof(_taskbarWindowOptions.TaskbarWindowEnabled))
+                    if (e.PropertyName == nameof(_settings.TaskbarWindowEnabled))
                     {
                         if (_windowsPolicy.IsTaskbarWindowActive())
                         {
@@ -159,9 +155,9 @@ namespace EverythingToolbar.Launcher
                                 _searchWindow.Hide();
 
                             // Never leave the user with no way into search or settings.
-                            if (!Utils.IsTaskbarPinned() && !_launcherOptions.IsTrayIconEnabled)
+                            if (!Utils.IsTaskbarPinned() && !_settings.IsTrayIconEnabled)
                             {
-                                _launcherOptions.IsTrayIconEnabled = true;
+                                _settings.IsTrayIconEnabled = true;
                                 await FluentMessageBox
                                     .CreateRegular(
                                         Properties.Resources.TaskbarWindowDisabledTrayEnabledText,
@@ -417,7 +413,7 @@ namespace EverythingToolbar.Launcher
                     AppServices.Initialize();
 
                     // Apply saved UI language
-                    CultureHelper.ApplyUILanguage(Ioc.Default.GetRequiredService<LanguageOptions>().UILanguage);
+                    CultureHelper.ApplyUILanguage(Ioc.Default.GetRequiredService<ISettings>().UILanguage);
 
                     using var trayIcon = new NotifyIcon();
                     var app = new Application();
@@ -441,7 +437,7 @@ namespace EverythingToolbar.Launcher
                         }
                     );
                     trayIcon.ContextMenuStrip.Items.Add(quitItem);
-                    trayIcon.Visible = Ioc.Default.GetRequiredService<LauncherOptions>().IsTrayIconEnabled;
+                    trayIcon.Visible = Ioc.Default.GetRequiredService<ISettings>().IsTrayIconEnabled;
                     app.Run(new LauncherWindow(trayIcon));
                 }
                 else

@@ -17,12 +17,9 @@ namespace EverythingToolbar.Launcher.Settings
         private FileSystemWatcher? _watcher;
         private Helpers.RegistryValueWatcher? _taskbarAlignmentWatcher;
         private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
-        private readonly TaskbarWindowOptions _taskbarWindowOptions = Ioc.Default.GetRequiredService<TaskbarWindowOptions>();
-        private readonly LauncherOptions _launcherOptions = Ioc.Default.GetRequiredService<LauncherOptions>();
-        private readonly IconOptions _iconOptions = Ioc.Default.GetRequiredService<IconOptions>();
+        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
 
-        public TaskbarWindowOptions TaskbarWindowOptions => _taskbarWindowOptions;
-        public LauncherOptions LauncherOptions => _launcherOptions;
+        public ISettings Settings => _settings;
 
         private bool _isTaskbarIconPinned;
 
@@ -74,12 +71,12 @@ namespace EverythingToolbar.Launcher.Settings
 
         public IconItem? SelectedIconItem
         {
-            get => IconItems.FirstOrDefault(item => item.Value == _iconOptions.IconName);
+            get => IconItems.FirstOrDefault(item => item.Value == _settings.IconName);
             set
             {
                 if (value != null)
                 {
-                    _iconOptions.IconName = value.Value;
+                    _settings.IconName = value.Value;
                     OnPropertyChanged();
                 }
             }
@@ -102,8 +99,8 @@ namespace EverythingToolbar.Launcher.Settings
 
         public TaskbarIntegration()
         {
-            if (!AllowLeftAlignment && _taskbarWindowOptions.TaskbarWindowAlignment == "Left")
-                _taskbarWindowOptions.TaskbarWindowAlignment = "Right";
+            if (!AllowLeftAlignment && _settings.TaskbarWindowAlignment == "Left")
+                _settings.TaskbarWindowAlignment = "Right";
 
             _isTaskbarIconPinned = File.Exists(_taskbarShortcutPath);
 

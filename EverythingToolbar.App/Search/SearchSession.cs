@@ -14,17 +14,17 @@ namespace EverythingToolbar.Search
 
         private readonly SearchState _searchState;
         private readonly IEverythingClient _everythingClient;
-        private readonly SearchOptions _searchOptions;
+        private readonly ISettings _settings;
 
         private SynchronizationContext _synchronizationContext = new();
         private VirtualizingCollection<SearchResult>? _collection;
         private bool _started;
 
-        public SearchSession(SearchState searchState, IEverythingClient everythingClient, SearchOptions searchOptions)
+        public SearchSession(SearchState searchState, IEverythingClient everythingClient, ISettings settings)
         {
             _searchState = searchState;
             _everythingClient = everythingClient;
-            _searchOptions = searchOptions;
+            _settings = settings;
 
             _searchState.PropertyChanged += (_, _) => Rebuild();
         }
@@ -60,16 +60,16 @@ namespace EverythingToolbar.Search
         public int VisiblePageCount { get; set; } = 1;
 
         private bool KeepSearchBoxFocused =>
-            _searchOptions.IsAutoSelectFirstResult && _searchOptions.IsSearchAsYouType;
+            _settings.IsAutoSelectFirstResult && _settings.IsSearchAsYouType;
 
         private FocusBehavior EffectiveListFocusBehavior =>
-            KeepSearchBoxFocused && _searchOptions.ListFocusBehavior == FocusBehavior.RepeatWithSearch
+            KeepSearchBoxFocused && _settings.ListFocusBehavior == FocusBehavior.RepeatWithSearch
                 ? FocusBehavior.Repeat
-                : _searchOptions.ListFocusBehavior;
+                : _settings.ListFocusBehavior;
 
         public void AutoSelect()
         {
-            SelectedIndex = _searchOptions.IsAutoSelectFirstResult && TotalCount > 0 ? 0 : -1;
+            SelectedIndex = _settings.IsAutoSelectFirstResult && TotalCount > 0 ? 0 : -1;
         }
 
         public void ClearSelection() => SelectedIndex = -1;
@@ -118,7 +118,7 @@ namespace EverythingToolbar.Search
                         break;
                     case FocusBehavior.Clamp:
                     default:
-                        if (!_searchOptions.IsAutoSelectFirstResult)
+                        if (!_settings.IsAutoSelectFirstResult)
                             SelectedIndex = -1;
                         break;
                 }
@@ -176,7 +176,7 @@ namespace EverythingToolbar.Search
             if (!_started)
                 return;
 
-            if (_searchOptions.IsHideEmptySearchResults && string.IsNullOrEmpty(_searchState.SearchTerm))
+            if (_settings.IsHideEmptySearchResults && string.IsNullOrEmpty(_searchState.SearchTerm))
             {
                 _collection?.Dispose();
                 _collection = null;

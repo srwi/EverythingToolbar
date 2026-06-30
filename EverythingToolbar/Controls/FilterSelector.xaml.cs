@@ -32,7 +32,7 @@ namespace EverythingToolbar.Controls
         }
 
         private readonly FilterLoader _filterLoader = Ioc.Default.GetRequiredService<FilterLoader>();
-        private readonly FilterOptions _filterOptions = Ioc.Default.GetRequiredService<FilterOptions>();
+        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
 
         public FilterSelector()
         {
@@ -51,7 +51,7 @@ namespace EverythingToolbar.Controls
             ComboBox.SelectionChanged -= OnComboBoxItemSelected;
 
             int filterIndex = _filterLoader.Filters.IndexOf(SelectedFilter);
-            int maxTabItems = _filterOptions.MaxTabItems;
+            int maxTabItems = _settings.MaxTabItems;
 
             TabControl.SelectedIndex = filterIndex < maxTabItems ? filterIndex : -1;
             ComboBox.SelectedIndex = filterIndex >= maxTabItems ? filterIndex - maxTabItems : -1;

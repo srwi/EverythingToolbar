@@ -29,7 +29,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsRememberFilter}"
                                       HelpText="{x:Static properties:Resources.SettingsRememberFilterHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding FilterOptions.IsRememberFilter, Mode=TwoWay}" />
+                        <ui:ToggleSwitch IsChecked="{Binding Settings.IsRememberFilter, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
@@ -41,7 +41,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsUseEverythingFilters}"
                                       HelpText="{x:Static properties:Resources.SettingsEverythingFiltersHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding FilterOptions.IsImportFilters, Mode=TwoWay}" />
+                        <ui:ToggleSwitch IsChecked="{Binding Settings.IsImportFilters, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>
@@ -54,7 +54,7 @@
                     <Style TargetType="Border">
                         <Setter Property="Height" Value="Auto"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding FilterOptions.IsImportFilters}" Value="True">
+                            <DataTrigger Binding="{Binding Settings.IsImportFilters}" Value="True">
                                 <Setter Property="Height" Value="0"/>
                                 <Setter Property="IsEnabled" Value="False"/>
                             </DataTrigger>
@@ -119,7 +119,7 @@
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsMaxTabItems}"
                                       HelpText="{x:Static properties:Resources.SettingsMaxTabItemsHelp}">
                     <controls:SettingItem.SettingContent>
-                        <ui:NumberBox Value="{Binding FilterOptions.MaxTabItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        <ui:NumberBox Value="{Binding Settings.MaxTabItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Minimum="0"
                                       Width="120" />
                     </controls:SettingItem.SettingContent>

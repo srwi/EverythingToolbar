@@ -4,11 +4,11 @@ using Wpf.Ui.Appearance;
 
 namespace EverythingToolbar.Helpers
 {
-    public sealed class WindowsPolicy(ThemeOptions themeOptions, TaskbarWindowOptions taskbarWindowOptions)
+    public sealed class WindowsPolicy(ISettings settings)
     {
         public Version GetWindowsVersion()
         {
-            if (themeOptions.ForceWin10Behavior)
+            if (settings.ForceWin10Behavior)
                 return Utils.WindowsVersion.Windows10Anniversary;
 
             return Environment.OSVersion.Version;
@@ -16,23 +16,23 @@ namespace EverythingToolbar.Helpers
 
         public bool IsLightTheme()
         {
-            if (themeOptions.ThemeOverride.ToLower() == "light")
+            if (settings.ThemeOverride.ToLower() == "light")
                 return true;
-            if (themeOptions.ThemeOverride.ToLower() == "dark")
+            if (settings.ThemeOverride.ToLower() == "dark")
                 return false;
 
             return SystemThemeManager.GetCachedSystemTheme() == SystemTheme.Light;
         }
 
         public bool IsEffectiveAnimationsDisabled =>
-            themeOptions.IsAnimationsDisabled || !SystemSettings.GetSystemAnimationsEnabled();
+            settings.IsAnimationsDisabled || !SystemSettings.GetSystemAnimationsEnabled();
 
         public bool IsTaskbarWindowActive() =>
-            taskbarWindowOptions.TaskbarWindowEnabled && GetWindowsVersion() >= Utils.WindowsVersion.Windows11;
+            settings.TaskbarWindowEnabled && GetWindowsVersion() >= Utils.WindowsVersion.Windows11;
 
         public bool IsTaskbarCenterAligned()
         {
-            if (taskbarWindowOptions.IsForceCenterAlignment)
+            if (settings.IsForceCenterAlignment)
                 return true;
 
             if (GetWindowsVersion() < Utils.WindowsVersion.Windows11)

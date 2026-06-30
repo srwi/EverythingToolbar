@@ -25,13 +25,10 @@ namespace EverythingToolbar.Launcher
         private FileSystemWatcher? _watcher;
         private RegistryValueWatcher? _taskbarAlignmentWatcher;
         private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
-        private readonly TaskbarWindowOptions _taskbarWindowOptions = Ioc.Default.GetRequiredService<TaskbarWindowOptions>();
-        private readonly LauncherOptions _launcherOptions = Ioc.Default.GetRequiredService<LauncherOptions>();
-        private readonly IconOptions _iconOptions = Ioc.Default.GetRequiredService<IconOptions>();
+        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<SetupAssistant>();
 
-        public TaskbarWindowOptions TaskbarWindowOptions => _taskbarWindowOptions;
-        public LauncherOptions LauncherOptions => _launcherOptions;
+        public ISettings Settings => _settings;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -59,12 +56,12 @@ namespace EverythingToolbar.Launcher
             _windowsPolicy.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11;
 
         public bool PreferencesUnlocked =>
-            CurrentStep == 1 || (IsTaskbarWindowSupported && _taskbarWindowOptions.TaskbarWindowEnabled);
+            CurrentStep == 1 || (IsTaskbarWindowSupported && _settings.TaskbarWindowEnabled);
 
         public bool IsPinned => CurrentStep == 1;
 
-        public bool IsPinOptionAvailable => IsPinned || !_taskbarWindowOptions.TaskbarWindowEnabled;
-        public bool IsWindowOptionAvailable => _taskbarWindowOptions.TaskbarWindowEnabled || !IsPinned;
+        public bool IsPinOptionAvailable => IsPinned || !_settings.TaskbarWindowEnabled;
+        public bool IsWindowOptionAvailable => _settings.TaskbarWindowEnabled || !IsPinned;
 
         // Display text is localized; the stored value stays the invariant "Left"/"Right".
         public List<KeyValuePair<string, string>> TaskbarWindowAlignmentOptions { get; } =
@@ -95,8 +92,8 @@ namespace EverythingToolbar.Launcher
 
         public SetupAssistant(NotifyIcon icon)
         {
-            if (!AllowLeftAlignment && _taskbarWindowOptions.TaskbarWindowAlignment == "Left")
-                _taskbarWindowOptions.TaskbarWindowAlignment = "Right";
+            if (!AllowLeftAlignment && _settings.TaskbarWindowAlignment == "Left")
+                _settings.TaskbarWindowAlignment = "Right";
 
             InitializeComponent();
 
@@ -109,7 +106,7 @@ namespace EverythingToolbar.Launcher
             _icon = icon;
             _icon.Visible = false;
 
-            _taskbarWindowOptions.PropertyChanged += OnToolbarSettingsChanged;
+            _settings.PropertyChanged += OnToolbarSettingsChanged;
 
             CreateFileWatcher(_taskbarShortcutPath);
             CreateTaskbarAlignmentWatcher();
@@ -130,7 +127,7 @@ namespace EverythingToolbar.Launcher
 
         private void OnToolbarSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(_taskbarWindowOptions.TaskbarWindowEnabled))
+            if (e.PropertyName == nameof(_settings.TaskbarWindowEnabled))
             {
                 OnPropertyChanged(nameof(PreferencesUnlocked));
                 OnPropertyChanged(nameof(IsPinOptionAvailable));
@@ -232,7 +229,7 @@ namespace EverythingToolbar.Launcher
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {
-            if (CurrentStep == 0 && !(IsTaskbarWindowSupported && _taskbarWindowOptions.TaskbarWindowEnabled))
+            if (CurrentStep == 0 && !(IsTaskbarWindowSupported && _settings.TaskbarWindowEnabled))
             {
                 var result = await FluentMessageBox
                     .CreateYesNo(
@@ -243,9 +240,9 @@ namespace EverythingToolbar.Launcher
                 var disableSetupAssistant = result == MessageBoxResult.Primary;
                 if (disableSetupAssistant)
                 {
-                    _launcherOptions.IsSetupAssistantDisabled = disableSetupAssistant;
+                    _settings.IsSetupAssistantDisabled = disableSetupAssistant;
                     // Ensuring the user can access the setup assistant
-                    _launcherOptions.IsTrayIconEnabled = disableSetupAssistant;
+                    _settings.IsTrayIconEnabled = disableSetupAssistant;
                 }
                 else
                 {
@@ -254,7 +251,7 @@ namespace EverythingToolbar.Launcher
             }
             else if (_iconUpdateRequired)
             {
-                _iconOptions.IconName = Utils.GetThemedAppIconPath();
+                _settings.IconName = Utils.GetThemedAppIconPath();
             }
         }
 
@@ -265,9 +262,9 @@ namespace EverythingToolbar.Launcher
 
         private void OnClosed(object sender, EventArgs e)
         {
-            _taskbarWindowOptions.PropertyChanged -= OnToolbarSettingsChanged;
+            _settings.PropertyChanged -= OnToolbarSettingsChanged;
 
-            _icon.Visible = _launcherOptions.IsTrayIconEnabled;
+            _icon.Visible = _settings.IsTrayIconEnabled;
 
             if (_watcher != null)
             {

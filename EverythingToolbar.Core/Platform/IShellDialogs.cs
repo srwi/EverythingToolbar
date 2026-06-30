@@ -1,5 +1,3 @@
-using System.Drawing;
-
 namespace EverythingToolbar.Platform
 {
     public interface IShellDialogs
@@ -7,7 +5,8 @@ namespace EverythingToolbar.Platform
         void OpenWith(string filePath);
         void OpenParentFolderAndSelect(string filePath);
         void ShowFileProperties(string filePath);
-        void ShowWindowsContextMenu(string filePath, Point screenPosition);
+
+        void ShowWindowsContextMenu(string filePath);
 
         string? BrowseForFile(string filterLabel, string filterPattern, string? initialDirectory);
     }

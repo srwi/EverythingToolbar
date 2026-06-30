@@ -23,7 +23,7 @@ namespace EverythingToolbar.Settings
 
     public class SearchViewModel
     {
-        public SearchOptions SearchOptions { get; } = Ioc.Default.GetRequiredService<SearchOptions>();
+        public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
 
         public List<KeyValuePair<string, FocusBehavior>> FocusBehaviorItems { get; } =
             [

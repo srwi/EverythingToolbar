@@ -10,25 +10,25 @@ namespace EverythingToolbar.Search
     {
         private readonly SearchSession _session;
         private readonly SearchResultActions _actions;
+        private readonly CustomActionService _customActions;
         private readonly ISearchWindowController _controller;
-        private readonly MatchOptions _matchOptions;
-        private readonly SearchOptions _searchOptions;
+        private readonly ISettings _settings;
         private readonly SearchState _searchState;
 
         public SearchCommands(
             SearchSession session,
             SearchResultActions actions,
+            CustomActionService customActions,
             ISearchWindowController controller,
-            MatchOptions matchOptions,
-            SearchOptions searchOptions,
+            ISettings settings,
             SearchState searchState
         )
         {
             _session = session;
             _actions = actions;
+            _customActions = customActions;
             _controller = controller;
-            _matchOptions = matchOptions;
-            _searchOptions = searchOptions;
+            _settings = settings;
             _searchState = searchState;
         }
 
@@ -62,22 +62,22 @@ namespace EverythingToolbar.Search
 
             if (modifiers == ModifierKeys.Control && key == Key.I)
             {
-                _matchOptions.IsMatchCase = !_matchOptions.IsMatchCase;
+                _settings.IsMatchCase = !_settings.IsMatchCase;
                 return true;
             }
             if (modifiers == ModifierKeys.Control && key == Key.B)
             {
-                _matchOptions.IsMatchWholeWord = !_matchOptions.IsMatchWholeWord;
+                _settings.IsMatchWholeWord = !_settings.IsMatchWholeWord;
                 return true;
             }
             if (modifiers == ModifierKeys.Control && key == Key.U)
             {
-                _matchOptions.IsMatchPath = !_matchOptions.IsMatchPath;
+                _settings.IsMatchPath = !_settings.IsMatchPath;
                 return true;
             }
             if (modifiers == ModifierKeys.Control && key == Key.R)
             {
-                _matchOptions.IsRegExEnabled = !_matchOptions.IsRegExEnabled;
+                _settings.IsRegExEnabled = !_settings.IsRegExEnabled;
                 return true;
             }
 
@@ -122,7 +122,7 @@ namespace EverythingToolbar.Search
         }
 
         private bool CanHomeEndNavigate(ModifierKeys modifiers, bool fromSearchBox) =>
-            !fromSearchBox || (modifiers != ModifierKeys.Shift && _searchOptions.IsHomeEndNavigateResults);
+            !fromSearchBox || (modifiers != ModifierKeys.Shift && _settings.IsHomeEndNavigateResults);
 
 
         public void OpenSelected()
@@ -134,7 +134,7 @@ namespace EverythingToolbar.Search
                 return;
             }
 
-            if (!CustomActions.HandleAction(item))
+            if (!_customActions.TryRun(item))
                 _actions.Open(item);
 
             _controller.Hide();
