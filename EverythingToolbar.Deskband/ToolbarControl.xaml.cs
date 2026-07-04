@@ -1,3 +1,5 @@
+using EverythingToolbar.Helpers;
+
 namespace EverythingToolbar.Deskband
 {
     public partial class ToolbarControl
@@ -5,7 +7,12 @@ namespace EverythingToolbar.Deskband
         public ToolbarControl()
         {
             InitializeComponent();
-            // The unified ToolbarControl with AddPlacementBehavior="True" handles SearchWindowPlacement
+
+            // Host owns global initialization; the unified ToolbarControl is a passive control.
+            // AddPlacementBehavior="True" on the unified control handles SearchWindowPlacement.
+            TaskbarStateManager.Instance.IsIcon = false;
+            ShortcutManager.Initialize(UnifiedToolbarControl.FocusSearchBox);
+            StartMenuIntegration.Instance.Initialize();
         }
     }
 }

@@ -32,29 +32,27 @@ namespace EverythingToolbar.Controls
             set => SetValue(AddPlacementBehaviorProperty, value);
         }
 
+        private bool _placementBehaviorAdded;
+
         public ToolbarControl()
         {
             InitializeComponent();
 
-            SearchWindow.Instance.Hiding += OnSearchWindowHiding;
-            ShortcutManager.Initialize(FocusSearchBox);
-
-            StartMenuIntegration.Instance.Initialize();
-
-            // Set TaskbarStateManager to indicate we're not in icon mode
-            // (this hides the SearchBox in SearchWindow)
-            TaskbarStateManager.Instance.IsIcon = false;
-
+            // Global initialization (hotkey handler, start menu integration, icon-mode state)
+            // is owned by the host (deskband/launcher), not by this passive control.
             Loaded += OnLoaded;
+            Loaded += (_, _) => SearchWindow.Instance.Hiding += OnSearchWindowHiding;
+            Unloaded += (_, _) => SearchWindow.Instance.Hiding -= OnSearchWindowHiding;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            // Add SearchWindowPlacement behavior if requested
-            if (AddPlacementBehavior)
+            // Add SearchWindowPlacement behavior if requested (only once, even if Loaded refires)
+            if (AddPlacementBehavior && !_placementBehaviorAdded)
             {
                 var behavior = new SearchWindowPlacement { PlacementTarget = this };
                 Interaction.GetBehaviors(SearchWindow.Instance).Add(behavior);
+                _placementBehaviorAdded = true;
             }
         }
 
@@ -138,7 +136,7 @@ namespace EverythingToolbar.Controls
             SearchWindow.Instance.Show();
         }
 
-        private void FocusSearchBox()
+        public void FocusSearchBox()
         {
             if (TaskbarStateManager.Instance.IsIcon)
             {

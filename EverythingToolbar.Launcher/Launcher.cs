@@ -58,7 +58,7 @@ namespace EverythingToolbar.Launcher
                 {
                     _taskbarWindow = new TaskbarWindow();
                     _taskbarWindow.Show();
-                    // TaskbarWindow sets IsIcon = false in its setup
+                    TaskbarStateManager.Instance.IsIcon = false;
                 }
                 else
                 {
@@ -130,7 +130,7 @@ namespace EverythingToolbar.Launcher
                             {
                                 _taskbarWindow = new TaskbarWindow();
                                 _taskbarWindow.Show();
-                                // TaskbarWindow sets IsIcon = false in its setup
+                                TaskbarStateManager.Instance.IsIcon = false;
                             }
                             // Update placement to use TaskbarWindow's control
                             if (_searchWindowPlacementBehavior != null)
