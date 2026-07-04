@@ -124,6 +124,8 @@
                         <ComboBox HorizontalAlignment="Right"
                                   IsEnabled="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowEnabled}"
                                   ItemsSource="{Binding TaskbarWindowAlignmentOptions}"
+                                  DisplayMemberPath="Key"
+                                  SelectedValuePath="Value"
                                   SelectedValue="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowAlignment, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>

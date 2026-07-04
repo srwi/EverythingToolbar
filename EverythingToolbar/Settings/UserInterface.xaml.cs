@@ -55,10 +55,12 @@ namespace EverythingToolbar.Settings
             }
         }
 
-        public List<string> TaskbarWindowAlignmentOptions { get; } =
+        // Display text is localized; the stored value stays the invariant "Left"/"Right"
+        // (compared literally in TaskbarWindow.CalculateHorizontalPosition).
+        public List<KeyValuePair<string, string>> TaskbarWindowAlignmentOptions { get; } =
             [
-                "Left",
-                "Right",
+                new(Resources.SettingsTaskbarWindowAlignmentLeft, "Left"),
+                new(Resources.SettingsTaskbarWindowAlignmentRight, "Right"),
             ];
 
         public List<IconItem> IconItems { get; } =

@@ -1273,7 +1273,25 @@ namespace EverythingToolbar.Properties {
                 return ResourceManager.GetString("SettingsTaskbarWindowAlignmentHelp", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Left.
+        /// </summary>
+        public static string SettingsTaskbarWindowAlignmentLeft {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarWindowAlignmentLeft", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Right.
+        /// </summary>
+        public static string SettingsTaskbarWindowAlignmentRight {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarWindowAlignmentRight", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Select first result.
         /// </summary>
