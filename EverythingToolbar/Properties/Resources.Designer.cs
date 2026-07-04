@@ -1239,78 +1239,6 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Taskbar Window.
-        /// </summary>
-        public static string SettingsTaskbarWindow {
-            get {
-                return ResourceManager.GetString("SettingsTaskbarWindow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show a search box directly on the taskbar for Windows 11 (requires restart).
-        /// </summary>
-        public static string SettingsTaskbarWindowHelp {
-            get {
-                return ResourceManager.GetString("SettingsTaskbarWindowHelp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Taskbar Window Alignment.
-        /// </summary>
-        public static string SettingsTaskbarWindowAlignment {
-            get {
-                return ResourceManager.GetString("SettingsTaskbarWindowAlignment", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Left: Aligns to the left edge if taskbar is centered, otherwise right. Right: Aligns to the right edge (system tray area).
-        /// </summary>
-        public static string SettingsTaskbarWindowAlignmentHelp {
-            get {
-                return ResourceManager.GetString("SettingsTaskbarWindowAlignmentHelp", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Left.
-        /// </summary>
-        public static string SettingsTaskbarWindowAlignmentLeft {
-            get {
-                return ResourceManager.GetString("SettingsTaskbarWindowAlignmentLeft", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Right.
-        /// </summary>
-        public static string SettingsTaskbarWindowAlignmentRight {
-            get {
-                return ResourceManager.GetString("SettingsTaskbarWindowAlignmentRight", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Taskbar icon.
-        /// </summary>
-        public static string SettingsTaskbarIcon {
-            get {
-                return ResourceManager.GetString("SettingsTaskbarIcon", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Taskbar search box.
-        /// </summary>
-        public static string SettingsTaskbarSearchBox {
-            get {
-                return ResourceManager.GetString("SettingsTaskbarSearchBox", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Select first result.
         /// </summary>
         public static string SettingsSelectFirstResult {
@@ -1383,11 +1311,101 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Taskbar icon.
+        /// </summary>
+        public static string SettingsTaskbarIcon {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarIcon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not pinned to taskbar.
+        /// </summary>
+        public static string SettingsTaskbarIconStatusNotPinned {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarIconStatusNotPinned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pinned to taskbar.
+        /// </summary>
+        public static string SettingsTaskbarIconStatusPinned {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarIconStatusPinned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Taskbar integration.
         /// </summary>
         public static string SettingsTaskbarIntegration {
             get {
                 return ResourceManager.GetString("SettingsTaskbarIntegration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Taskbar search box.
+        /// </summary>
+        public static string SettingsTaskbarSearchBox {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarSearchBox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show search box.
+        /// </summary>
+        public static string SettingsTaskbarWindow {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search box alignment.
+        /// </summary>
+        public static string SettingsTaskbarWindowAlignment {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarWindowAlignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Controls the search box alignment in the taskbar.
+        /// </summary>
+        public static string SettingsTaskbarWindowAlignmentHelp {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarWindowAlignmentHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left.
+        /// </summary>
+        public static string SettingsTaskbarWindowAlignmentLeft {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarWindowAlignmentLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right.
+        /// </summary>
+        public static string SettingsTaskbarWindowAlignmentRight {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarWindowAlignmentRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show a search box on the taskbar.
+        /// </summary>
+        public static string SettingsTaskbarWindowHelp {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarWindowHelp", resourceCulture);
             }
         }
         
@@ -1858,7 +1876,7 @@ namespace EverythingToolbar.Properties {
                 return ResourceManager.GetString("UserFilterPlaceholder", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Video.
         /// </summary>

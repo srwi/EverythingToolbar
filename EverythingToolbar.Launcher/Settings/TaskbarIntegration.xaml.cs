@@ -1,15 +1,33 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using Res = EverythingToolbar.Properties.Resources;
 
 namespace EverythingToolbar.Launcher.Settings
 {
     public partial class TaskbarIntegration : INotifyPropertyChanged
     {
-        public bool IsTaskbarIconPinned => Utils.IsTaskbarPinned();
+        private readonly string _taskbarShortcutPath = Utils.GetTaskbarShortcutPath();
+        private FileSystemWatcher? _watcher;
+
+        private bool _isTaskbarIconPinned;
+
+        public bool IsTaskbarIconPinned
+        {
+            get => _isTaskbarIconPinned;
+            private set
+            {
+                if (_isTaskbarIconPinned != value)
+                {
+                    _isTaskbarIconPinned = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool ShowTaskbarWindowSettings =>
             Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11;
@@ -78,8 +96,59 @@ namespace EverythingToolbar.Launcher.Settings
             if (!AllowLeftAlignment && ToolbarSettings.User.TaskbarWindowAlignment == "Left")
                 ToolbarSettings.User.TaskbarWindowAlignment = "Right";
 
+            _isTaskbarIconPinned = File.Exists(_taskbarShortcutPath);
+
             InitializeComponent();
             DataContext = this;
+
+            Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            IsTaskbarIconPinned = File.Exists(_taskbarShortcutPath);
+            CreateFileWatcher();
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (_watcher != null)
+            {
+                _watcher.EnableRaisingEvents = false;
+                _watcher.Dispose();
+                _watcher = null;
+            }
+        }
+
+        private void CreateFileWatcher()
+        {
+            if (_watcher != null)
+                return;
+
+            var pinnedIconName = Path.GetFileName(_taskbarShortcutPath);
+            if (Path.GetDirectoryName(_taskbarShortcutPath) is not { } pinnedIconsDir)
+                return;
+
+            try
+            {
+                // The directory might not exist on some systems (#523).
+                Directory.CreateDirectory(pinnedIconsDir);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return;
+            }
+
+            _watcher = new FileSystemWatcher
+            {
+                Path = pinnedIconsDir,
+                Filter = pinnedIconName,
+                NotifyFilter = NotifyFilters.FileName,
+                EnableRaisingEvents = true,
+            };
+            _watcher.Created += (_, _) => Dispatcher.Invoke(() => IsTaskbarIconPinned = true);
+            _watcher.Deleted += (_, _) => Dispatcher.Invoke(() => IsTaskbarIconPinned = false);
         }
 
         private void OnPropertyChanged([CallerMemberName] string? name = null)

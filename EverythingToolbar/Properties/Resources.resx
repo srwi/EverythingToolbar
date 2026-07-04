@@ -643,16 +643,16 @@
     <value>Changes the style of the taskbar icon (requires explorer restart)</value>
   </data>
   <data name="SettingsTaskbarWindow" xml:space="preserve">
-    <value>Taskbar Window</value>
+    <value>Show search box</value>
   </data>
   <data name="SettingsTaskbarWindowHelp" xml:space="preserve">
-    <value>Show a search box directly on the taskbar for Windows 11 (requires restart)</value>
+    <value>Show a search box on the taskbar</value>
   </data>
   <data name="SettingsTaskbarWindowAlignment" xml:space="preserve">
-    <value>Taskbar Window Alignment</value>
+    <value>Search box alignment</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentHelp" xml:space="preserve">
-    <value>Left: Aligns to the left edge if taskbar is centered, otherwise right. Right: Aligns to the right edge (system tray area)</value>
+    <value>Controls the search box alignment in the taskbar</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
     <value>Left</value>
@@ -665,6 +665,12 @@
   </data>
   <data name="SettingsTaskbarSearchBox" xml:space="preserve">
     <value>Taskbar search box</value>
+  </data>
+  <data name="SettingsTaskbarIconStatusPinned" xml:space="preserve">
+    <value>Pinned to taskbar</value>
+  </data>
+  <data name="SettingsTaskbarIconStatusNotPinned" xml:space="preserve">
+    <value>Not pinned to taskbar</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>Filter order</value>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -58,6 +59,27 @@ namespace EverythingToolbar.Launcher
         public bool PreferencesUnlocked =>
             CurrentStep == 1 || (IsTaskbarWindowSupported && ToolbarSettings.User.TaskbarWindowEnabled);
 
+        /// <summary>
+        /// True once the taskbar icon is pinned. Drives the "Pin to taskbar" option's status
+        /// indicator and its instructions/image (shown only while not yet pinned).
+        /// </summary>
+        public bool IsPinned => CurrentStep == 1;
+
+        // The two options read as an either/or choice, so pick one and the other grays out.
+        // Only gray out in the XOR case: if both are already active (or neither is), leave both
+        // enabled so the user can freely toggle either without a box appearing disabled.
+        public bool IsPinOptionAvailable => IsPinned || !ToolbarSettings.User.TaskbarWindowEnabled;
+        public bool IsWindowOptionAvailable => ToolbarSettings.User.TaskbarWindowEnabled || !IsPinned;
+
+        // Display text is localized; the stored value stays the invariant "Left"/"Right".
+        public List<KeyValuePair<string, string>> TaskbarWindowAlignmentOptions { get; } =
+            [
+                new(EverythingToolbar.Properties.Resources.SettingsTaskbarWindowAlignmentLeft, "Left"),
+                new(EverythingToolbar.Properties.Resources.SettingsTaskbarWindowAlignmentRight, "Right"),
+            ];
+
+        public bool AllowLeftAlignment => Helpers.Utils.IsTaskbarCenterAligned();
+
         private int _currentStep;
         public int CurrentStep
         {
@@ -68,6 +90,9 @@ namespace EverythingToolbar.Launcher
                 {
                     _currentStep = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(IsPinned));
+                    OnPropertyChanged(nameof(IsPinOptionAvailable));
+                    OnPropertyChanged(nameof(IsWindowOptionAvailable));
                     OnPropertyChanged(nameof(PreferencesUnlocked));
                 }
             }
@@ -75,6 +100,10 @@ namespace EverythingToolbar.Launcher
 
         public SetupAssistant(NotifyIcon icon)
         {
+            // A left-aligned Windows taskbar makes "Left" alignment meaningless, so force "Right".
+            if (!AllowLeftAlignment && ToolbarSettings.User.TaskbarWindowAlignment == "Left")
+                ToolbarSettings.User.TaskbarWindowAlignment = "Right";
+
             InitializeComponent();
 
             DataContext = this;
@@ -103,7 +132,11 @@ namespace EverythingToolbar.Launcher
         private void OnToolbarSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(ToolbarSettings.User.TaskbarWindowEnabled))
+            {
                 OnPropertyChanged(nameof(PreferencesUnlocked));
+                OnPropertyChanged(nameof(IsPinOptionAvailable));
+                OnPropertyChanged(nameof(IsWindowOptionAvailable));
+            }
         }
 
         private void FlashTaskbarIcon()
@@ -171,6 +204,9 @@ namespace EverythingToolbar.Launcher
             };
         }
 
+        // While neither option is active (setup not yet completed either way), the preferences
+        // section is disabled. Clicking it wiggles the option cards to point the user back to the
+        // choice they still need to make.
         private void OnSecondStepClicked(object sender, MouseButtonEventArgs e)
         {
             if (!PreferencesUnlocked)

@@ -41,7 +41,6 @@ namespace EverythingToolbar.Launcher
                 ToolbarLogger.Initialize("Launcher");
 
                 _notifyIcon = icon;
-                SetupJumpList();
 
                 _searchWindowRecentlyClosedTimer = new Timer(500);
                 _searchWindowRecentlyClosedTimer.AutoReset = false;
@@ -95,7 +94,7 @@ namespace EverythingToolbar.Launcher
                         {
                             await FluentMessageBox
                                 .CreateError(
-                                    Properties.Resources.TrayIconDisableErrorText,
+                                    Properties.Resources.TrayIconDisableErrorMessage,
                                     Properties.Resources.TrayIconDisableErrorTitle
                                 )
                                 .ShowDialogAsync();
@@ -146,21 +145,6 @@ namespace EverythingToolbar.Launcher
                         }
                     }
                 };
-            }
-
-            private void SetupJumpList()
-            {
-                var jumpList = new JumpList();
-                jumpList.JumpItems.Add(
-                    new JumpTask
-                    {
-                        Title = Properties.Resources.ContextMenuRunSetupAssistant,
-                        Description = Properties.Resources.ContextMenuRunSetupAssistant,
-                        ApplicationPath = Environment.ProcessPath,
-                        Arguments = "--run-setup-assistant",
-                    }
-                );
-                JumpList.SetJumpList(Application.Current, jumpList);
             }
 
             protected override void OnSourceInitialized(EventArgs e)
@@ -395,15 +379,6 @@ namespace EverythingToolbar.Launcher
                     var app = new Application();
                     trayIcon.Icon = new Icon(Utils.GetThemedAppIconPath(absolute: true));
                     trayIcon.ContextMenuStrip = new ContextMenuStrip();
-                    var setupItem = new ToolStripMenuItem(
-                        Resources.ContextMenuRunSetupAssistant,
-                        null,
-                        (_, _) =>
-                        {
-                            new SetupAssistant(trayIcon).Show();
-                        }
-                    );
-                    trayIcon.ContextMenuStrip.Items.Add(setupItem);
                     var settingsItem = new ToolStripMenuItem(
                         Resources.ContextMenuSettings,
                         null,
