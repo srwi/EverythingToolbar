@@ -15,6 +15,11 @@ namespace EverythingToolbar
 
         private IntPtr _taskbarHandle;
 
+        // Fixed box dimensions (in DIP), intentionally independent of the search box content.
+        private const double WidgetWidthDip = 300;
+        private const double MinWidgetHeightDip = 32;
+        private const double WidgetVerticalMarginDip = 6;
+
         /// <summary>
         /// Gets the ToolbarControl for placement target purposes.
         /// </summary>
@@ -152,9 +157,12 @@ namespace EverythingToolbar
             int taskbarHeight = taskbarRect.Bottom - taskbarRect.Top;
             int screenCenter = taskbarRect.Left + taskbarWidth / 2;
 
-            Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-            int widgetWidth = (int)(Math.Max(DesiredSize.Width, 250) * dpiScale);
-            int widgetHeight = (int)(Math.Max(DesiredSize.Height, 32) * dpiScale);
+            // Size is derived from the taskbar geometry, not the search box content, so the box
+            // stays constant regardless of quick toggles or placeholder text. The content
+            // stretches to fill the window.
+            int verticalMargin = (int)(WidgetVerticalMarginDip * dpiScale);
+            int widgetHeight = Math.Max(taskbarHeight - 2 * verticalMargin, (int)(MinWidgetHeightDip * dpiScale));
+            int widgetWidth = (int)(WidgetWidthDip * dpiScale);
 
             int top = (taskbarHeight - widgetHeight) / 2;
             int left = CalculateHorizontalPosition(taskbarRect, widgetWidth, screenCenter, dpiScale);
