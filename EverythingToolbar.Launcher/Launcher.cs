@@ -1,10 +1,13 @@
 using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Interop;
 using System.Windows.Shell;
+using System.Windows.Threading;
 using EverythingToolbar.Behaviors;
 using EverythingToolbar.Controls;
 using EverythingToolbar.Helpers;
@@ -30,6 +33,8 @@ namespace EverythingToolbar.Launcher
             private TaskbarWindow? _taskbarWindow;
             private SearchWindowPlacement? _searchWindowPlacementBehavior;
             private bool _temporarilyInIconMode;
+            private bool _closingTaskbarWindowIntentionally;
+            private uint _taskbarCreatedMsg;
 
             public LauncherWindow(NotifyIcon icon)
             {
@@ -52,26 +57,15 @@ namespace EverythingToolbar.Launcher
                 ResizeMode = ResizeMode.NoResize;
                 WindowStyle = WindowStyle.None;
 
-                // Initialize TaskbarWindow for Windows 11+ if enabled
-                if (ToolbarSettings.User.TaskbarWindowEnabled && 
-                    Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11)
-                {
-                    _taskbarWindow = new TaskbarWindow();
-                    _taskbarWindow.Show();
-                    TaskbarStateManager.Instance.IsIcon = false;
-                }
-                else
-                {
-                    // Set IsIcon to true for launcher mode (no taskbar window)
-                    TaskbarStateManager.Instance.IsIcon = true;
-                }
-
-                // Create placement behavior with optional target from TaskbarWindow
-                _searchWindowPlacementBehavior = new SearchWindowPlacement
-                {
-                    PlacementTarget = _taskbarWindow?.PlacementTarget
-                };
+                // Placement behavior is created first so CreateTaskbarWindow can point it at the surface.
+                _searchWindowPlacementBehavior = new SearchWindowPlacement();
                 Interaction.GetBehaviors(SearchWindow.Instance).Add(_searchWindowPlacementBehavior);
+
+                // Initialize TaskbarWindow for Windows 11+ if enabled
+                if (Helpers.Utils.IsTaskbarWindowActive())
+                    CreateTaskbarWindow();
+                else
+                    TaskbarStateManager.Instance.IsIcon = true;
 
                 StartToggleListener();
 
@@ -124,19 +118,9 @@ namespace EverythingToolbar.Launcher
                     }
                     else if (e.PropertyName == nameof(ToolbarSettings.User.TaskbarWindowEnabled))
                     {
-                        // Handle TaskbarWindow enable/disable
-                        if (ToolbarSettings.User.TaskbarWindowEnabled && 
-                            Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11)
+                        if (Helpers.Utils.IsTaskbarWindowActive())
                         {
-                            if (_taskbarWindow == null)
-                            {
-                                _taskbarWindow = new TaskbarWindow();
-                                _taskbarWindow.Show();
-                                TaskbarStateManager.Instance.IsIcon = false;
-                            }
-                            // Update placement to use TaskbarWindow's control
-                            if (_searchWindowPlacementBehavior != null)
-                                _searchWindowPlacementBehavior.PlacementTarget = _taskbarWindow.PlacementTarget;
+                            CreateTaskbarWindow();
                         }
                         else
                         {
@@ -157,13 +141,7 @@ namespace EverythingToolbar.Launcher
                                     .ShowDialogAsync();
                             }
 
-                            _taskbarWindow?.Close();
-                            _taskbarWindow = null;
-                            // Restore launcher mode
-                            TaskbarStateManager.Instance.IsIcon = true;
-                            // Update placement to use cursor-based positioning
-                            if (_searchWindowPlacementBehavior != null)
-                                _searchWindowPlacementBehavior.PlacementTarget = null;
+                            CloseTaskbarWindow();
                         }
                     }
                 };
@@ -182,6 +160,86 @@ namespace EverythingToolbar.Launcher
                     }
                 );
                 JumpList.SetJumpList(Application.Current, jumpList);
+            }
+
+            protected override void OnSourceInitialized(EventArgs e)
+            {
+                base.OnSourceInitialized(e);
+
+                // Listen for the shell's "TaskbarCreated" broadcast so we can rebuild the taskbar
+                // child window after explorer restarts (which destroys our Shell_TrayWnd child).
+                _taskbarCreatedMsg = RegisterWindowMessage("TaskbarCreated");
+                if (PresentationSource.FromVisual(this) is HwndSource source)
+                    source.AddHook(WndProc);
+            }
+
+            private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+            {
+                if (_taskbarCreatedMsg != 0 && msg == _taskbarCreatedMsg && Helpers.Utils.IsTaskbarWindowActive())
+                {
+                    // Delay so the new taskbar's UIA tree (Widgets button / tray) is ready for positioning.
+                    var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
+                    timer.Tick += (_, _) =>
+                    {
+                        timer.Stop();
+                        CloseTaskbarWindow();
+                        CreateTaskbarWindow();
+                    };
+                    timer.Start();
+                }
+
+                return IntPtr.Zero;
+            }
+
+            private void CreateTaskbarWindow()
+            {
+                if (!Helpers.Utils.IsTaskbarWindowActive() || _taskbarWindow != null)
+                    return;
+
+                _taskbarWindow = new TaskbarWindow();
+                _taskbarWindow.Closed += OnTaskbarWindowClosed;
+                _taskbarWindow.Show();
+                TaskbarStateManager.Instance.IsIcon = false;
+                if (_searchWindowPlacementBehavior != null)
+                    _searchWindowPlacementBehavior.PlacementTarget = _taskbarWindow.PlacementTarget;
+            }
+
+            private void CloseTaskbarWindow()
+            {
+                if (_taskbarWindow != null)
+                {
+                    _closingTaskbarWindowIntentionally = true;
+                    try
+                    {
+                        _taskbarWindow.Close();
+                    }
+                    catch
+                    {
+                        // Window may already be destroyed (e.g. explorer restarted); ignore.
+                    }
+                    finally
+                    {
+                        _taskbarWindow = null;
+                        _closingTaskbarWindowIntentionally = false;
+                    }
+                }
+
+                TaskbarStateManager.Instance.IsIcon = true;
+                if (_searchWindowPlacementBehavior != null)
+                    _searchWindowPlacementBehavior.PlacementTarget = null;
+            }
+
+            private void OnTaskbarWindowClosed(object? sender, EventArgs e)
+            {
+                if (_closingTaskbarWindowIntentionally)
+                    return;
+
+                // Window was destroyed externally (explorer took its Shell_TrayWnd child with it).
+                // Fall back to launcher-popup behavior; recreation is handled by TaskbarCreated.
+                _taskbarWindow = null;
+                TaskbarStateManager.Instance.IsIcon = true;
+                if (_searchWindowPlacementBehavior != null)
+                    _searchWindowPlacementBehavior.PlacementTarget = null;
             }
 
             private void OnSearchWindowHiding(object? sender, EventArgs e)
@@ -203,9 +261,10 @@ namespace EverythingToolbar.Launcher
 
             private void FocusSearchBox()
             {
-                // Global hotkey: when a taskbar search box exists, jump keyboard focus into it
+                // Global hotkey: when a live taskbar search box exists, jump keyboard focus into it
                 // (results anchored to the box), mirroring the deskband. Otherwise toggle the popup.
-                if (_taskbarWindow != null)
+                // The IsLoaded check guards against a dead-but-not-yet-nulled window eating the hotkey.
+                if (_taskbarWindow is { IsLoaded: true })
                 {
                     if (SearchWindow.Instance.IsVisible)
                         SearchWindow.Instance.Hide();
@@ -289,12 +348,13 @@ namespace EverythingToolbar.Launcher
 
             protected override void OnClosed(EventArgs e)
             {
-                _taskbarWindow?.Close();
-                _taskbarWindow = null;
                 // Ensure IsIcon is restored to true when launcher closes
-                TaskbarStateManager.Instance.IsIcon = true;
+                CloseTaskbarWindow();
                 base.OnClosed(e);
             }
+
+            [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+            private static extern uint RegisterWindowMessage(string lpString);
         }
 
         private static void OpenSettingsWindow()
