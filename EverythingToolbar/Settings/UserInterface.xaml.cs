@@ -63,6 +63,11 @@ namespace EverythingToolbar.Settings
                 new(Resources.SettingsTaskbarWindowAlignmentRight, "Right"),
             ];
 
+        // "Left" alignment only has a distinct effect when the Windows taskbar is center-aligned;
+        // with a left-aligned taskbar it collapses to the same placement as "Right". In that case
+        // the setting is forced to "Right" (in the constructor) and the combo box is disabled.
+        public bool AllowLeftAlignment => Helpers.Utils.IsTaskbarCenterAligned();
+
         public List<IconItem> IconItems { get; } =
             [
                 new()
@@ -111,6 +116,10 @@ namespace EverythingToolbar.Settings
 
         public UserInterfaceViewModel()
         {
+            // A left-aligned Windows taskbar makes "Left" alignment meaningless, so force "Right".
+            if (!AllowLeftAlignment && ToolbarSettings.User.TaskbarWindowAlignment == "Left")
+                ToolbarSettings.User.TaskbarWindowAlignment = "Right";
+
             BitmapImage imageSource = new(
                 new Uri("pack://application:,,,/EverythingToolbar;component/Images/AppIcon.ico")
             );
