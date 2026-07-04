@@ -104,7 +104,7 @@
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,0"
                     CornerRadius="0,0,0,0"
-                    Visibility="{Binding IsLauncher, Converter={c:BoolToVisibilityConverter}}">
+                    Visibility="{Binding ShowTaskbarWindowSettings, Converter={c:BoolToVisibilityConverter}}">
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindow}"
                                       HelpText="{x:Static properties:Resources.SettingsTaskbarWindowHelp}">
                     <controls:SettingItem.SettingContent>
@@ -117,11 +117,12 @@
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,0"
                     CornerRadius="0,0,0,0"
-                    Visibility="{Binding IsLauncher, Converter={c:BoolToVisibilityConverter}}">
+                    Visibility="{Binding ShowTaskbarWindowSettings, Converter={c:BoolToVisibilityConverter}}">
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindowAlignment}"
                                       HelpText="{x:Static properties:Resources.SettingsTaskbarWindowAlignmentHelp}">
                     <controls:SettingItem.SettingContent>
                         <ComboBox HorizontalAlignment="Right"
+                                  IsEnabled="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowEnabled}"
                                   ItemsSource="{Binding TaskbarWindowAlignmentOptions}"
                                   SelectedValue="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowAlignment, Mode=TwoWay}" />
                     </controls:SettingItem.SettingContent>

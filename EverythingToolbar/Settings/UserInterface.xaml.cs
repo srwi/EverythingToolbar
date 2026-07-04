@@ -100,6 +100,13 @@ namespace EverythingToolbar.Settings
 
         public bool IsLauncher => Application.Current != null;
 
+        /// <summary>
+        /// The taskbar window settings only apply to the launcher on Windows 11+, where the
+        /// feature is actually effective. Hidden elsewhere to avoid a no-op toggle.
+        /// </summary>
+        public bool ShowTaskbarWindowSettings =>
+            IsLauncher && Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11;
+
         public UserInterfaceViewModel()
         {
             BitmapImage imageSource = new(
