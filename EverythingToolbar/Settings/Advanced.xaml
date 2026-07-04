@@ -22,36 +22,6 @@
                           Text="{x:Static properties:Resources.SettingsAdvanced}"
                           Margin="0, 0, 0, 0" />
 
-            <StackPanel Visibility="{Binding IsLauncher, Converter={c:BoolToVisibilityConverter}}">
-                <ui:TextBlock FontTypography="BodyStrong"
-                              Text="{x:Static properties:Resources.SettingsTaskbarIntegration}"
-                              Margin="0, 25, 0, 7"/>
-                <Border Padding="16"
-                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1,1,1,0"
-                        CornerRadius="8,8,0,0">
-                    <controls:SettingItem Title="{x:Static properties:Resources.SettingsHideWindowsSearchIcon}"
-                                          HelpText="{x:Static properties:Resources.SettingsHideWindowsSearchIconHelp}">
-                        <controls:SettingItem.SettingContent>
-                            <ui:ToggleSwitch IsChecked="{Binding IsWindowsSearchHidden, Mode=TwoWay}" />
-                        </controls:SettingItem.SettingContent>
-                    </controls:SettingItem>
-                </Border>
-                <Border Padding="16"
-                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1,1,1,1"
-                        CornerRadius="0,0,8,8">
-                    <controls:SettingItem Title="{x:Static properties:Resources.SettingsEnableSystemTrayIcon}"
-                                          HelpText="{x:Static properties:Resources.SettingsEnableSystemTrayIconHelp}">
-                        <controls:SettingItem.SettingContent>
-                            <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=IsTrayIconEnabled, Mode=TwoWay}" />
-                        </controls:SettingItem.SettingContent>
-                    </controls:SettingItem>
-                </Border>
-            </StackPanel>
-
             <ui:TextBlock FontTypography="BodyStrong"
                           Text="{x:Static properties:Resources.SettingsUpdates}"
                           Margin="0, 25, 0, 7" />

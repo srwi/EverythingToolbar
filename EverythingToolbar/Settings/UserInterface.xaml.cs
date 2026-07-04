@@ -55,83 +55,12 @@ namespace EverythingToolbar.Settings
             }
         }
 
-        // Display text is localized; the stored value stays the invariant "Left"/"Right"
-        // (compared literally in TaskbarWindow.CalculateHorizontalPosition).
-        public List<KeyValuePair<string, string>> TaskbarWindowAlignmentOptions { get; } =
-            [
-                new(Resources.SettingsTaskbarWindowAlignmentLeft, "Left"),
-                new(Resources.SettingsTaskbarWindowAlignmentRight, "Right"),
-            ];
-
-        // "Left" alignment only has a distinct effect when the Windows taskbar is center-aligned;
-        // with a left-aligned taskbar it collapses to the same placement as "Right". In that case
-        // the setting is forced to "Right" (in the constructor) and the combo box is disabled.
-        public bool AllowLeftAlignment => Helpers.Utils.IsTaskbarCenterAligned();
-
-        public List<IconItem> IconItems { get; } =
-            [
-                new()
-                {
-                    DisplayName = "Light",
-                    IconPath = "pack://siteoforigin:,,,/Icons/Dark.ico",
-                    Value = "Icons/Dark.ico",
-                },
-                new()
-                {
-                    DisplayName = "Dark",
-                    IconPath = "pack://siteoforigin:,,,/Icons/Light.ico",
-                    Value = "Icons/Light.ico",
-                },
-                new()
-                {
-                    DisplayName = "Blue",
-                    IconPath = "pack://siteoforigin:,,,/Icons/Medium.ico",
-                    Value = "Icons/Medium.ico",
-                },
-            ];
-
         public SearchResult SampleSearchResult { get; }
-
-        public IconItem? SelectedIconItem
-        {
-            get => IconItems.FirstOrDefault(item => item.Value == ToolbarSettings.User.IconName);
-            set
-            {
-                if (value != null)
-                {
-                    ToolbarSettings.User.IconName = value.Value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedIconItem)));
-                }
-            }
-        }
 
         public bool IsLauncher => Application.Current != null;
 
-        /// <summary>
-        /// Provides the taskbar pin state. Set by the launcher (which owns the Shell logic to detect
-        /// pinning); left null in hosts where the taskbar-icon section is not shown anyway.
-        /// </summary>
-        public static Func<bool>? GetTaskbarPinnedCallback { get; set; }
-
-        /// <summary>
-        /// The search icon only affects the pinned taskbar icon, so its option is disabled when the
-        /// icon is not pinned. Defaults to enabled when the pin state cannot be determined.
-        /// </summary>
-        public bool IsTaskbarIconPinned => GetTaskbarPinnedCallback?.Invoke() ?? true;
-
-        /// <summary>
-        /// The taskbar window settings only apply to the launcher on Windows 11+, where the
-        /// feature is actually effective. Hidden elsewhere to avoid a no-op toggle.
-        /// </summary>
-        public bool ShowTaskbarWindowSettings =>
-            IsLauncher && Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11;
-
         public UserInterfaceViewModel()
         {
-            // A left-aligned Windows taskbar makes "Left" alignment meaningless, so force "Right".
-            if (!AllowLeftAlignment && ToolbarSettings.User.TaskbarWindowAlignment == "Left")
-                ToolbarSettings.User.TaskbarWindowAlignment = "Right";
-
             BitmapImage imageSource = new(
                 new Uri("pack://application:,,,/EverythingToolbar;component/Images/AppIcon.ico")
             );

@@ -61,6 +61,10 @@
                     Icon="{ui:SymbolIcon WindowSettings20}"
                     TargetPageType="{x:Type settings:UserInterface}" />
                 <ui:NavigationViewItem
+                    Content="{x:Static properties:Resources.SettingsTaskbarIntegration}"
+                    Icon="{ui:SymbolIcon Pin24}"
+                    TargetPageType="{x:Type settings:TaskbarIntegration}" />
+                <ui:NavigationViewItem
                     Content="{x:Static properties:Resources.SettingsFilters}"
                     Icon="{ui:SymbolIcon DataFunnel24}"
                     TargetPageType="{x:Type settings:Filters}" />

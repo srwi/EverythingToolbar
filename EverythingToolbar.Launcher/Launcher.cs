@@ -321,7 +321,7 @@ namespace EverythingToolbar.Launcher
             {
                 Settings.Advanced.GetAutostartStateCallback = () => Utils.GetAutostartState();
                 Settings.Advanced.SetAutostartStateCallback = (state) => Utils.SetAutostartState(state);
-                Settings.UserInterfaceViewModel.GetTaskbarPinnedCallback = () => Utils.IsTaskbarPinned();
+                Settings.TaskbarIntegration.GetTaskbarPinnedCallback = () => Utils.IsTaskbarPinned();
             }
 
             private void ToggleWindow()
