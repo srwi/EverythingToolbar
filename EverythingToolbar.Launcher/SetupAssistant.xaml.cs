@@ -51,6 +51,13 @@ namespace EverythingToolbar.Launcher
         public bool IsTaskbarWindowSupported =>
             Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11;
 
+        /// <summary>
+        /// The preferences pane unlocks once the icon is pinned OR the user opts into the
+        /// taskbar search box (a full alternative to pinning), so setup can complete either way.
+        /// </summary>
+        public bool PreferencesUnlocked =>
+            CurrentStep == 1 || (IsTaskbarWindowSupported && ToolbarSettings.User.TaskbarWindowEnabled);
+
         private int _currentStep;
         public int CurrentStep
         {
@@ -61,6 +68,7 @@ namespace EverythingToolbar.Launcher
                 {
                     _currentStep = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(PreferencesUnlocked));
                 }
             }
         }
@@ -73,6 +81,8 @@ namespace EverythingToolbar.Launcher
 
             _icon = icon;
             _icon.Visible = false;
+
+            ToolbarSettings.User.PropertyChanged += OnToolbarSettingsChanged;
 
             CreateFileWatcher(_taskbarShortcutPath);
 
@@ -88,6 +98,12 @@ namespace EverythingToolbar.Launcher
                 SetAppIcon();
                 Loaded += (_, _) => FlashTaskbarIcon();
             }
+        }
+
+        private void OnToolbarSettingsChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ToolbarSettings.User.TaskbarWindowEnabled))
+                OnPropertyChanged(nameof(PreferencesUnlocked));
         }
 
         private void FlashTaskbarIcon()
@@ -157,7 +173,7 @@ namespace EverythingToolbar.Launcher
 
         private void OnSecondStepClicked(object sender, MouseButtonEventArgs e)
         {
-            if (CurrentStep == 0)
+            if (!PreferencesUnlocked)
             {
                 var storyboard = (Storyboard)FindResource("WiggleStoryboard");
                 storyboard.Begin();
@@ -168,7 +184,9 @@ namespace EverythingToolbar.Launcher
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {
-            if (CurrentStep == 0)
+            // A user who enabled the taskbar search box has completed setup via the alternative
+            // path, so no "you have not pinned" warning and no forced tray icon.
+            if (CurrentStep == 0 && !(IsTaskbarWindowSupported && ToolbarSettings.User.TaskbarWindowEnabled))
             {
                 var result = await FluentMessageBox
                     .CreateYesNo(
@@ -201,6 +219,8 @@ namespace EverythingToolbar.Launcher
 
         private void OnClosed(object sender, EventArgs e)
         {
+            ToolbarSettings.User.PropertyChanged -= OnToolbarSettingsChanged;
+
             _icon.Visible = ToolbarSettings.User.IsTrayIconEnabled;
 
             if (_watcher != null)

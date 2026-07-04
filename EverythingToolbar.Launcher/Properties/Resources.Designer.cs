@@ -151,20 +151,20 @@ namespace EverythingToolbar.Launcher.Properties {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Show search box on the taskbar.
+        ///   Looks up a localized string similar to Alternatively: show a search box in the taskbar.
         /// </summary>
-        public static string SetupAssistantTaskbarWindow {
+        public static string SetupAssistantTaskbarWindowAlternative {
             get {
-                return ResourceManager.GetString("SetupAssistantTaskbarWindow", resourceCulture);
+                return ResourceManager.GetString("SetupAssistantTaskbarWindowAlternative", resourceCulture);
             }
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Adds an Everything search box directly to the Windows 11 taskbar.
+        ///   Looks up a localized string similar to Embeds a search box directly in the taskbar instead of a pinned icon. (Windows 11 and later).
         /// </summary>
-        public static string SetupAssistantTaskbarWindowHelp {
+        public static string SetupAssistantTaskbarWindowAlternativeHelp {
             get {
-                return ResourceManager.GetString("SetupAssistantTaskbarWindowHelp", resourceCulture);
+                return ResourceManager.GetString("SetupAssistantTaskbarWindowAlternativeHelp", resourceCulture);
             }
         }
 

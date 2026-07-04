@@ -71,6 +71,7 @@ namespace EverythingToolbar.Launcher
 
                 if (
                     !Utils.IsTaskbarPinned()
+                    && !Helpers.Utils.IsTaskbarWindowActive()
                     && (!ToolbarSettings.User.IsSetupAssistantDisabled || !ToolbarSettings.User.IsTrayIconEnabled)
                 )
                     new SetupAssistant(icon).Show();
