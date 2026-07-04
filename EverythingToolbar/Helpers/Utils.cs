@@ -169,6 +169,14 @@ namespace EverythingToolbar.Helpers
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool SystemParametersInfo(int uiAction, int uiParam, bool pvParam, int fWinIni);
 
+        /// <summary>
+        /// True when the taskbar search box is both enabled and supported on this OS.
+        /// This is the only form in which the taskbar window counts as a usable access surface.
+        /// </summary>
+        public static bool IsTaskbarWindowActive() =>
+            ToolbarSettings.User.TaskbarWindowEnabled
+            && GetWindowsVersion() >= WindowsVersion.Windows11;
+
         public static bool IsTaskbarCenterAligned()
         {
             if (ToolbarSettings.User.IsForceCenterAlignment)

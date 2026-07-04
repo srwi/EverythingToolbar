@@ -183,4 +183,10 @@
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>Cannot disable system tray icon</value>
   </data>
+  <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
+    <value>The tray icon has been enabled so that EverythingToolbar remains accessible, because the taskbar icon is not pinned.</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
+    <value>Tray icon enabled</value>
+  </data>
 </root>

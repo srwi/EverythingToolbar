@@ -94,7 +94,9 @@ namespace EverythingToolbar.Launcher
                 {
                     if (e.PropertyName == nameof(ToolbarSettings.User.IsTrayIconEnabled))
                     {
-                        if (!ToolbarSettings.User.IsTrayIconEnabled && !Utils.IsTaskbarPinned())
+                        if (!ToolbarSettings.User.IsTrayIconEnabled
+                            && !Utils.IsTaskbarPinned()
+                            && !Helpers.Utils.IsTaskbarWindowActive())
                         {
                             await FluentMessageBox
                                 .CreateError(
@@ -138,6 +140,23 @@ namespace EverythingToolbar.Launcher
                         }
                         else
                         {
+                            // Hide any popup anchored to the vanishing taskbar box before teardown.
+                            if (SearchWindow.Instance.IsVisible)
+                                SearchWindow.Instance.Hide();
+
+                            // Enforce the access-surface invariant: never leave the user with no
+                            // visible way into search or settings.
+                            if (!Utils.IsTaskbarPinned() && !ToolbarSettings.User.IsTrayIconEnabled)
+                            {
+                                ToolbarSettings.User.IsTrayIconEnabled = true;
+                                await FluentMessageBox
+                                    .CreateRegular(
+                                        Properties.Resources.TaskbarWindowDisabledTrayEnabledText,
+                                        Properties.Resources.TaskbarWindowDisabledTrayEnabledTitle
+                                    )
+                                    .ShowDialogAsync();
+                            }
+
                             _taskbarWindow?.Close();
                             _taskbarWindow = null;
                             // Restore launcher mode

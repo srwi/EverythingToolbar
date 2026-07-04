@@ -257,5 +257,23 @@ namespace EverythingToolbar.Launcher.Properties {
                 return ResourceManager.GetString("TrayIconDisableErrorTitle", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The tray icon has been enabled so that EverythingToolbar remains accessible, because the taskbar icon is not pinned..
+        /// </summary>
+        public static string TaskbarWindowDisabledTrayEnabledText {
+            get {
+                return ResourceManager.GetString("TaskbarWindowDisabledTrayEnabledText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Tray icon enabled.
+        /// </summary>
+        public static string TaskbarWindowDisabledTrayEnabledTitle {
+            get {
+                return ResourceManager.GetString("TaskbarWindowDisabledTrayEnabledTitle", resourceCulture);
+            }
+        }
     }
 }
