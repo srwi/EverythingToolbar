@@ -15,20 +15,6 @@
         <b:WpfUiBehavior />
     </i:Interaction.Behaviors>
 
-    <Page.Resources>
-        <DataTemplate x:Key="IconItemTemplate">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding IconPath}"
-                       Width="24"
-                       Height="24"
-                       Margin="0,0,8,0"
-                       RenderOptions.BitmapScalingMode="Fant" />
-                <TextBlock Text="{Binding DisplayName}"
-                           VerticalAlignment="Center" />
-            </StackPanel>
-        </DataTemplate>
-    </Page.Resources>
-
     <ScrollViewer>
         <StackPanel Margin="40">
             <ui:TextBlock FontTypography="Title"

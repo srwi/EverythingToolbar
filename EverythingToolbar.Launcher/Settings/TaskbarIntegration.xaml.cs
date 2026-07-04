@@ -3,47 +3,24 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows;
-using EverythingToolbar.Helpers;
-using EverythingToolbar.Properties;
+using Res = EverythingToolbar.Properties.Resources;
 
-namespace EverythingToolbar.Settings
+namespace EverythingToolbar.Launcher.Settings
 {
     public partial class TaskbarIntegration : INotifyPropertyChanged
     {
-        public bool IsLauncher => Application.Current != null;
+        public bool IsTaskbarIconPinned => Utils.IsTaskbarPinned();
 
-        /// <summary>
-        /// Provides the taskbar pin state. Set by the launcher (which owns the Shell logic to detect
-        /// pinning); left null in hosts where the taskbar-icon section is not shown anyway.
-        /// </summary>
-        public static Func<bool>? GetTaskbarPinnedCallback { get; set; }
-
-        /// <summary>
-        /// The search icon only affects the pinned taskbar icon, so its option is disabled when the
-        /// icon is not pinned. Defaults to enabled when the pin state cannot be determined.
-        /// </summary>
-        public bool IsTaskbarIconPinned => GetTaskbarPinnedCallback?.Invoke() ?? true;
-
-        /// <summary>
-        /// The taskbar window settings only apply to the launcher on Windows 11+, where the
-        /// feature is actually effective. Hidden elsewhere to avoid a no-op toggle.
-        /// </summary>
         public bool ShowTaskbarWindowSettings =>
-            IsLauncher && Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows11;
+            Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11;
 
-        // Display text is localized; the stored value stays the invariant "Left"/"Right"
-        // (compared literally in TaskbarWindow.CalculateHorizontalPosition).
         public List<KeyValuePair<string, string>> TaskbarWindowAlignmentOptions { get; } =
             [
-                new(Properties.Resources.SettingsTaskbarWindowAlignmentLeft, "Left"),
-                new(Properties.Resources.SettingsTaskbarWindowAlignmentRight, "Right"),
+                new(Res.SettingsTaskbarWindowAlignmentLeft, "Left"),
+                new(Res.SettingsTaskbarWindowAlignmentRight, "Right"),
             ];
 
-        // "Left" alignment only has a distinct effect when the Windows taskbar is center-aligned;
-        // with a left-aligned taskbar it collapses to the same placement as "Right". In that case
-        // the setting is forced to "Right" (in the constructor) and the combo box is disabled.
-        public bool AllowLeftAlignment => Utils.IsTaskbarCenterAligned();
+        public bool AllowLeftAlignment => Helpers.Utils.IsTaskbarCenterAligned();
 
         public List<IconItem> IconItems { get; } =
             [
@@ -80,7 +57,7 @@ namespace EverythingToolbar.Settings
             }
         }
 
-        private bool _isWindowsSearchHidden = !Utils.GetWindowsSearchEnabledState();
+        private bool _isWindowsSearchHidden = !Helpers.Utils.GetWindowsSearchEnabledState();
         public bool IsWindowsSearchHidden
         {
             get => _isWindowsSearchHidden;
@@ -89,7 +66,7 @@ namespace EverythingToolbar.Settings
                 if (_isWindowsSearchHidden != value)
                 {
                     _isWindowsSearchHidden = value;
-                    Utils.SetWindowsSearchEnabledState(!value);
+                    Helpers.Utils.SetWindowsSearchEnabledState(!value);
                     OnPropertyChanged();
                 }
             }
@@ -111,5 +88,12 @@ namespace EverythingToolbar.Settings
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+    }
+
+    public class IconItem
+    {
+        public string DisplayName { get; set; } = "";
+        public string IconPath { get; set; } = "";
+        public string Value { get; set; } = "";
     }
 }

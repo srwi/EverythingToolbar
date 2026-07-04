@@ -23,13 +23,6 @@ namespace EverythingToolbar.Settings
         }
     }
 
-    public class IconItem
-    {
-        public string DisplayName { get; set; } = "";
-        public string IconPath { get; set; } = "";
-        public string Value { get; set; } = "";
-    }
-
     public class UserInterfaceViewModel : INotifyPropertyChanged
     {
         public List<KeyValuePair<string, string>> ItemTemplates { get; } =

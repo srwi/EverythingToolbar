@@ -319,9 +319,15 @@ namespace EverythingToolbar.Launcher
 
             private void SetupSettingsCallbacks()
             {
-                Settings.Advanced.GetAutostartStateCallback = () => Utils.GetAutostartState();
-                Settings.Advanced.SetAutostartStateCallback = (state) => Utils.SetAutostartState(state);
-                Settings.TaskbarIntegration.GetTaskbarPinnedCallback = () => Utils.IsTaskbarPinned();
+                EverythingToolbar.Settings.Advanced.GetAutostartStateCallback = () => Utils.GetAutostartState();
+                EverythingToolbar.Settings.Advanced.SetAutostartStateCallback = (state) => Utils.SetAutostartState(state);
+
+                EverythingToolbar.Settings.SettingsWindow.RegisterPage(
+                    new EverythingToolbar.Settings.SettingsPageDescriptor(
+                        EverythingToolbar.Properties.Resources.SettingsTaskbarIntegration,
+                        Wpf.Ui.Controls.SymbolRegular.Pin24,
+                        typeof(Settings.TaskbarIntegration),
+                        typeof(EverythingToolbar.Settings.UserInterface)));
             }
 
             private void ToggleWindow()
