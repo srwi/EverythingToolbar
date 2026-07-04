@@ -80,7 +80,7 @@ namespace EverythingToolbar.Launcher
 
                 StartMenuIntegration.Instance.Initialize();
 
-                SetupAutostartStateCallback();
+                SetupSettingsCallbacks();
 
                 SearchWindow.Instance.Hiding += OnSearchWindowHiding;
                 SearchWindow.Instance.Hidden += OnSearchWindowHidden;
@@ -317,10 +317,11 @@ namespace EverythingToolbar.Launcher
                 });
             }
 
-            private void SetupAutostartStateCallback()
+            private void SetupSettingsCallbacks()
             {
                 Settings.Advanced.GetAutostartStateCallback = () => Utils.GetAutostartState();
                 Settings.Advanced.SetAutostartStateCallback = (state) => Utils.SetAutostartState(state);
+                Settings.UserInterfaceViewModel.GetTaskbarPinnedCallback = () => Utils.IsTaskbarPinned();
             }
 
             private void ToggleWindow()

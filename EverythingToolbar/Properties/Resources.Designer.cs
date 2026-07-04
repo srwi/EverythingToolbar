@@ -1293,6 +1293,24 @@ namespace EverythingToolbar.Properties {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Taskbar icon.
+        /// </summary>
+        public static string SettingsTaskbarIcon {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarIcon", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Taskbar search box.
+        /// </summary>
+        public static string SettingsTaskbarSearchBox {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarSearchBox", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Select first result.
         /// </summary>
         public static string SettingsSelectFirstResult {

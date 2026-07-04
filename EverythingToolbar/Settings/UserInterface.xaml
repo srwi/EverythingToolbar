@@ -34,6 +34,73 @@
             <ui:TextBlock FontTypography="Title"
                           Text="{x:Static properties:Resources.SettingsUserInterface}"
                           Margin="0, 0, 0, 25"/>
+
+            <StackPanel Margin="0, 0, 0, 25"
+                        Visibility="{Binding IsLauncher, Converter={c:BoolToVisibilityConverter}}">
+                <ui:TextBlock FontTypography="BodyStrong"
+                              Text="{x:Static properties:Resources.SettingsTaskbarIcon}"
+                              Margin="0, 0, 0, 7"/>
+                <Border Padding="16"
+                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1,1,1,1"
+                        CornerRadius="8,8,8,8">
+                    <controls:SettingItem Title="{x:Static properties:Resources.SettingsSearchIcon}"
+                                          HelpText="{x:Static properties:Resources.SettingsSearchIconHelp}">
+                        <controls:SettingItem.SettingContent>
+                            <ComboBox HorizontalAlignment="Right"
+                                      MinWidth="150"
+                                      IsEnabled="{Binding IsTaskbarIconPinned}"
+                                      ItemsSource="{Binding IconItems}"
+                                      SelectedItem="{Binding SelectedIconItem, Mode=TwoWay}"
+                                      ItemTemplate="{StaticResource IconItemTemplate}" />
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Margin="0, 0, 0, 25"
+                        Visibility="{Binding ShowTaskbarWindowSettings, Converter={c:BoolToVisibilityConverter}}">
+                <ui:TextBlock FontTypography="BodyStrong"
+                              Text="{x:Static properties:Resources.SettingsTaskbarSearchBox}"
+                              Margin="0, 0, 0, 7"/>
+                <Border Padding="16"
+                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1,1,1,0"
+                        CornerRadius="8,8,0,0">
+                    <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindow}"
+                                          HelpText="{x:Static properties:Resources.SettingsTaskbarWindowHelp}">
+                        <controls:SettingItem.SettingContent>
+                            <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowEnabled, Mode=TwoWay}" />
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                </Border>
+                <Border Padding="16"
+                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1,1,1,1"
+                        CornerRadius="0,0,8,8">
+                    <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindowAlignment}"
+                                          HelpText="{x:Static properties:Resources.SettingsTaskbarWindowAlignmentHelp}">
+                        <controls:SettingItem.SettingContent>
+                            <ComboBox HorizontalAlignment="Right"
+                                      ItemsSource="{Binding TaskbarWindowAlignmentOptions}"
+                                      DisplayMemberPath="Key"
+                                      SelectedValuePath="Value"
+                                      SelectedValue="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowAlignment, Mode=TwoWay}">
+                            <ComboBox.IsEnabled>
+                                <MultiBinding Converter="{c:BooleanAndConverter}">
+                                    <Binding Source="{x:Static local:ToolbarSettings.User}" Path="TaskbarWindowEnabled" />
+                                    <Binding Path="AllowLeftAlignment" />
+                                </MultiBinding>
+                            </ComboBox.IsEnabled>
+                            </ComboBox>
+                        </controls:SettingItem.SettingContent>
+                    </controls:SettingItem>
+                </Border>
+            </StackPanel>
+
             <ui:TextBlock FontTypography="BodyStrong"
                           Text="{x:Static properties:Resources.SettingsAppearance}"
                           Margin="0, 0, 0, 7"/>
@@ -79,60 +146,6 @@
                                   DisplayMemberPath="Key"
                                   SelectedValuePath="Value"
                                   SelectedValue="{Binding SelectedLanguage, Mode=TwoWay}" />
-                    </controls:SettingItem.SettingContent>
-                </controls:SettingItem>
-            </Border>
-            <Border Padding="16"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1,1,1,0"
-                    CornerRadius="0,0,0,0"
-                    Visibility="{Binding IsLauncher, Converter={c:BoolToVisibilityConverter}}">
-                <controls:SettingItem Title="{x:Static properties:Resources.SettingsSearchIcon}"
-                                      HelpText="{x:Static properties:Resources.SettingsSearchIconHelp}">
-                    <controls:SettingItem.SettingContent>
-                        <ComboBox HorizontalAlignment="Right"
-                                  MinWidth="150"
-                                  ItemsSource="{Binding IconItems}"
-                                  SelectedItem="{Binding SelectedIconItem, Mode=TwoWay}"
-                                  ItemTemplate="{StaticResource IconItemTemplate}" />
-                    </controls:SettingItem.SettingContent>
-                </controls:SettingItem>
-            </Border>
-            <Border Padding="16"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1,1,1,0"
-                    CornerRadius="0,0,0,0"
-                    Visibility="{Binding ShowTaskbarWindowSettings, Converter={c:BoolToVisibilityConverter}}">
-                <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindow}"
-                                      HelpText="{x:Static properties:Resources.SettingsTaskbarWindowHelp}">
-                    <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowEnabled, Mode=TwoWay}" />
-                    </controls:SettingItem.SettingContent>
-                </controls:SettingItem>
-            </Border>
-            <Border Padding="16"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1,1,1,0"
-                    CornerRadius="0,0,0,0"
-                    Visibility="{Binding ShowTaskbarWindowSettings, Converter={c:BoolToVisibilityConverter}}">
-                <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindowAlignment}"
-                                      HelpText="{x:Static properties:Resources.SettingsTaskbarWindowAlignmentHelp}">
-                    <controls:SettingItem.SettingContent>
-                        <ComboBox HorizontalAlignment="Right"
-                                  ItemsSource="{Binding TaskbarWindowAlignmentOptions}"
-                                  DisplayMemberPath="Key"
-                                  SelectedValuePath="Value"
-                                  SelectedValue="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowAlignment, Mode=TwoWay}">
-                            <ComboBox.IsEnabled>
-                                <MultiBinding Converter="{c:BooleanAndConverter}">
-                                    <Binding Source="{x:Static local:ToolbarSettings.User}" Path="TaskbarWindowEnabled" />
-                                    <Binding Path="AllowLeftAlignment" />
-                                </MultiBinding>
-                            </ComboBox.IsEnabled>
-                        </ComboBox>
                     </controls:SettingItem.SettingContent>
                 </controls:SettingItem>
             </Border>

@@ -660,6 +660,12 @@
   <data name="SettingsTaskbarWindowAlignmentRight" xml:space="preserve">
     <value>Right</value>
   </data>
+  <data name="SettingsTaskbarIcon" xml:space="preserve">
+    <value>Taskbar icon</value>
+  </data>
+  <data name="SettingsTaskbarSearchBox" xml:space="preserve">
+    <value>Taskbar search box</value>
+  </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>Filter order</value>
   </data>

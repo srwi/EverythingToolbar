@@ -108,6 +108,18 @@ namespace EverythingToolbar.Settings
         public bool IsLauncher => Application.Current != null;
 
         /// <summary>
+        /// Provides the taskbar pin state. Set by the launcher (which owns the Shell logic to detect
+        /// pinning); left null in hosts where the taskbar-icon section is not shown anyway.
+        /// </summary>
+        public static Func<bool>? GetTaskbarPinnedCallback { get; set; }
+
+        /// <summary>
+        /// The search icon only affects the pinned taskbar icon, so its option is disabled when the
+        /// icon is not pinned. Defaults to enabled when the pin state cannot be determined.
+        /// </summary>
+        public bool IsTaskbarIconPinned => GetTaskbarPinnedCallback?.Invoke() ?? true;
+
+        /// <summary>
         /// The taskbar window settings only apply to the launcher on Windows 11+, where the
         /// feature is actually effective. Hidden elsewhere to avoid a no-op toggle.
         /// </summary>
