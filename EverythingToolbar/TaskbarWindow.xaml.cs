@@ -27,6 +27,18 @@ namespace EverythingToolbar
 
             Loaded += OnLoaded;
             ToolbarSettings.User.PropertyChanged += OnSettingsChanged;
+            Microsoft.Win32.SystemEvents.DisplaySettingsChanged += OnDisplaySettingsChanged;
+        }
+
+        private void OnDisplaySettingsChanged(object? sender, EventArgs e)
+        {
+            // SystemEvents raises on a worker thread; marshal back to the UI thread.
+            // Reset the cached taskbar handle so a stale one is re-resolved after the change.
+            Dispatcher.BeginInvoke(() =>
+            {
+                _taskbarHandle = IntPtr.Zero;
+                UpdatePosition();
+            });
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -264,6 +276,7 @@ namespace EverythingToolbar
         protected override void OnClosed(EventArgs e)
         {
             ToolbarSettings.User.PropertyChanged -= OnSettingsChanged;
+            Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= OnDisplaySettingsChanged;
             base.OnClosed(e);
         }
 
