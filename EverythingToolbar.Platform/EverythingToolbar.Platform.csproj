@@ -8,6 +8,8 @@
     <Nullable>enable</Nullable>
     <Platforms>x64;ARM64</Platforms>
     <RootNamespace>EverythingToolbar</RootNamespace>
+    <!-- CsWin32's friendly overloads (out/ref/SafeHandle wrappers) are generated as unsafe code. -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -21,5 +23,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NLog" Version="5.1.1" />
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.298">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>

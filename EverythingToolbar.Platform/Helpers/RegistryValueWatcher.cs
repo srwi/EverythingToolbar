@@ -1,25 +1,16 @@
 using System;
-using System.Runtime.InteropServices;
 using System.Threading;
 using Microsoft.Win32;
 using NLog;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.System.Registry;
 
 namespace EverythingToolbar.Helpers
 {
     public sealed class RegistryValueWatcher : IDisposable
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
-
-        private const int REG_NOTIFY_CHANGE_LAST_SET = 0x00000004;
-
-        [DllImport("advapi32.dll", SetLastError = true)]
-        private static extern int RegNotifyChangeKeyValue(
-            IntPtr hKey,
-            bool bWatchSubtree,
-            int dwNotifyFilter,
-            IntPtr hEvent,
-            bool fAsynchronous
-        );
 
         private readonly RegistryKey? _key;
         private readonly AutoResetEvent _changedEvent = new(false);
@@ -46,14 +37,14 @@ namespace EverythingToolbar.Helpers
             var handles = new WaitHandle[] { _stopEvent, _changedEvent };
             while (_key != null)
             {
-                int result = RegNotifyChangeKeyValue(
-                    _key.Handle.DangerousGetHandle(),
+                var result = PInvoke.RegNotifyChangeKeyValue(
+                    (HKEY)_key.Handle.DangerousGetHandle(),
                     false,
-                    REG_NOTIFY_CHANGE_LAST_SET,
-                    _changedEvent.SafeWaitHandle.DangerousGetHandle(),
+                    REG_NOTIFY_FILTER.REG_NOTIFY_CHANGE_LAST_SET,
+                    (HANDLE)_changedEvent.SafeWaitHandle.DangerousGetHandle(),
                     true
                 );
-                if (result != 0)
+                if (result != WIN32_ERROR.ERROR_SUCCESS)
                 {
                     Logger.Warn("RegNotifyChangeKeyValue failed with code {Result}", result);
                     return;

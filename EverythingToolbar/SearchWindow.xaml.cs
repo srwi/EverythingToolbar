@@ -9,6 +9,9 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace EverythingToolbar
 {
@@ -489,21 +492,20 @@ namespace EverythingToolbar
         {
             const int hwndTopmost = -1;
 
-            const int swpNoactivate = 0x0010;
-            const int swpShowwindow = 0x0040;
-            const int swpNomove = 0x0002;
-            const int swpNosize = 0x0001;
-
-            const uint flags = swpNomove | swpNosize | swpNoactivate | swpShowwindow;
+            const SET_WINDOW_POS_FLAGS flags =
+                SET_WINDOW_POS_FLAGS.SWP_NOMOVE
+                | SET_WINDOW_POS_FLAGS.SWP_NOSIZE
+                | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE
+                | SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW;
 
             var hwnd = new WindowInteropHelper(this).Handle;
             var taskbarHwnd = NativeMethods.FindTaskbarHandle();
 
-            NativeMethods.SetWindowPos(hwnd, hwndTopmost, 0, 0, 0, 0, flags);
+            PInvoke.SetWindowPos((HWND)hwnd, (HWND)(IntPtr)hwndTopmost, 0, 0, 0, 0, flags);
 
             // The taskbar should always be above the search window
             if (taskbarHwnd != IntPtr.Zero)
-                NativeMethods.SetWindowPos(taskbarHwnd, hwndTopmost, 0, 0, 0, 0, flags);
+                PInvoke.SetWindowPos((HWND)taskbarHwnd, (HWND)(IntPtr)hwndTopmost, 0, 0, 0, 0, flags);
         }
     }
 }

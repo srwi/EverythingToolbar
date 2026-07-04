@@ -1,7 +1,9 @@
 using System;
-using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using NLog;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace EverythingToolbar.Helpers
 {
@@ -48,27 +50,21 @@ namespace EverythingToolbar.Helpers
             }
         }
 
-        private const int SpiGetclientareaanimation = 0x1042;
-        private const int SpiSetclientareaanimation = 0x1043;
-        private const int SpifSendchange = 0x0002;
-
-        public static bool GetSystemAnimationsEnabled()
+        public static unsafe bool GetSystemAnimationsEnabled()
         {
-            SystemParametersInfo(SpiGetclientareaanimation, 0, out var enabled, 0);
+            BOOL enabled = default;
+            PInvoke.SystemParametersInfo(SYSTEM_PARAMETERS_INFO_ACTION.SPI_GETCLIENTAREAANIMATION, 0, &enabled, 0);
             return enabled;
         }
 
-        public static void SetSystemAnimationsEnabled(bool enabled)
+        public static unsafe void SetSystemAnimationsEnabled(bool enabled)
         {
-            SystemParametersInfo(SpiSetclientareaanimation, 0, enabled, SpifSendchange);
+            PInvoke.SystemParametersInfo(
+                SYSTEM_PARAMETERS_INFO_ACTION.SPI_SETCLIENTAREAANIMATION,
+                0,
+                (void*)(nint)(enabled ? 1 : 0),
+                SYSTEM_PARAMETERS_INFO_UPDATE_FLAGS.SPIF_SENDCHANGE
+            );
         }
-
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SystemParametersInfo(int uiAction, int uiParam, out bool pvParam, int fWinIni);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SystemParametersInfo(int uiAction, int uiParam, bool pvParam, int fWinIni);
     }
 }

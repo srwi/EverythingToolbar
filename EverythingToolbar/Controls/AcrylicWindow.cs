@@ -6,35 +6,18 @@ using System.Windows.Media;
 using System.Windows.Shell;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Helpers;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.Graphics.Dwm;
+using Windows.Win32.UI.Controls;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace EverythingToolbar.Controls
 {
     public class AcrylicWindow : Window
     {
-        [DllImport("DWMAPI")]
-        private static extern IntPtr DwmExtendFrameIntoClientArea(IntPtr hwnd, ref Margins margins);
-
-        [DllImport("DWMAPI")]
-        private static extern IntPtr DwmSetWindowAttribute(
-            IntPtr hwnd,
-            DwmWindowAttribute attribute,
-            ref int value,
-            uint dataSize
-        );
-
         [DllImport("User32")]
         private static extern bool SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
-
-        [DllImport("User32")]
-        private static extern bool SetWindowPos(
-            IntPtr hwnd,
-            IntPtr hwndInsertAfter,
-            int x,
-            int y,
-            int width,
-            int height,
-            SetWindowPosFlags flags
-        );
 
         [StructLayout(LayoutKind.Sequential)]
         private struct WindowCompositionAttributeData
@@ -51,15 +34,6 @@ namespace EverythingToolbar.Controls
             public AccentFlags AccentFlags;
             public int GradientColor;
             public int AnimationId;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct Margins
-        {
-            public int LeftWidth;
-            public int RightWidth;
-            public int TopHeight;
-            public int BottomHeight;
         }
 
         private enum AccentState
@@ -90,37 +64,12 @@ namespace EverythingToolbar.Controls
             WcaAccentPolicy = 19,
         }
 
-        private enum DwmWindowAttribute
-        {
-            WINDOW_CORNER_PREFERENCE = 33,
-        }
-
         private enum WindowCorner
         {
             Default = 0,
             DoNotRound = 1,
             Round = 2,
             RoundSmall = 3,
-        }
-
-        [Flags]
-        private enum SetWindowPosFlags
-        {
-            ASYNCWINDOWPOS = 16384,
-            DEFERERASE = 8192,
-            DRAWFRAME = 32,
-            FRAMECHANGED = 32,
-            HIDEWINDOW = 128,
-            NOACTIVATE = 16,
-            NOCOPYBITS = 256,
-            NOMOVE = 2,
-            NOOWNERZORDER = 512,
-            NOREDRAW = 8,
-            NOREPOSITION = 512,
-            NOSENDCHANGING = 1024,
-            NOSIZE = 1,
-            NOZORDER = 4,
-            SHOWWINDOW = 64,
         }
 
         private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
@@ -300,30 +249,24 @@ namespace EverythingToolbar.Controls
                     ? Colors.Transparent
                     : GetThemeBackgroundColor();
 
-                var margins = new Margins
-                {
-                    LeftWidth = 0,
-                    RightWidth = 0,
-                    TopHeight = 0,
-                    BottomHeight = 0,
-                };
+                var margins = default(MARGINS);
 
-                DwmExtendFrameIntoClientArea(handle, ref margins);
+                PInvoke.DwmExtendFrameIntoClientArea((HWND)handle, in margins);
                 SetWindowCompositionAttribute(handle, ref windowCompositionAttributeData);
 
-                SetWindowPos(
-                    handle,
-                    IntPtr.Zero,
+                PInvoke.SetWindowPos(
+                    (HWND)handle,
+                    (HWND)IntPtr.Zero,
                     0,
                     0,
                     0,
                     0,
-                    SetWindowPosFlags.DRAWFRAME
-                        | SetWindowPosFlags.NOACTIVATE
-                        | SetWindowPosFlags.NOMOVE
-                        | SetWindowPosFlags.NOOWNERZORDER
-                        | SetWindowPosFlags.NOSIZE
-                        | SetWindowPosFlags.NOZORDER
+                    SET_WINDOW_POS_FLAGS.SWP_DRAWFRAME
+                        | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE
+                        | SET_WINDOW_POS_FLAGS.SWP_NOMOVE
+                        | SET_WINDOW_POS_FLAGS.SWP_NOOWNERZORDER
+                        | SET_WINDOW_POS_FLAGS.SWP_NOSIZE
+                        | SET_WINDOW_POS_FLAGS.SWP_NOZORDER
                 );
             }
             finally
@@ -347,7 +290,15 @@ namespace EverythingToolbar.Controls
 
             var corner = (int)cornerStyle;
 
-            DwmSetWindowAttribute(handle, DwmWindowAttribute.WINDOW_CORNER_PREFERENCE, ref corner, sizeof(int));
+            unsafe
+            {
+                PInvoke.DwmSetWindowAttribute(
+                    (HWND)handle,
+                    DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE,
+                    &corner,
+                    sizeof(int)
+                );
+            }
         }
 
         private static int CreateColorInteger(Color color)

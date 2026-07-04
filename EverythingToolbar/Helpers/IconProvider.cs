@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Windows.Win32;
+using Windows.Win32.UI.Shell;
 
 namespace EverythingToolbar.Helpers
 {
@@ -14,7 +16,7 @@ namespace EverythingToolbar.Helpers
     {
         public static int GetScaledSize(int logicalSize)
         {
-            double dpi = GetDpiForSystem();
+            double dpi = PInvoke.GetDpiForSystem();
             if (dpi < 96)
                 dpi = 96;
             return (int)Math.Ceiling(logicalSize * dpi / 96.0);
@@ -25,7 +27,7 @@ namespace EverythingToolbar.Helpers
             double targetLogicalSize = logicalSize;
             if (downOnly)
             {
-                double systemDpi = GetDpiForSystem();
+                double systemDpi = PInvoke.GetDpiForSystem();
                 if (systemDpi < 96)
                     systemDpi = 96;
 
@@ -59,38 +61,10 @@ namespace EverythingToolbar.Helpers
             result.Freeze();
             return result;
         }
-
-        [DllImport("user32.dll")]
-        private static extern uint GetDpiForSystem();
     }
 
     public static class ThumbnailProvider
     {
-        [DllImport("shell32.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
-        private static extern void SHCreateItemFromParsingName(
-            [MarshalAs(UnmanagedType.LPWStr)] string pszPath,
-            IntPtr pbc,
-            [MarshalAs(UnmanagedType.LPStruct)] Guid riid,
-            [MarshalAs(UnmanagedType.Interface)] out IShellItemImageFactory shellItem
-        );
-
-        [ComImport]
-        [Guid("BCC18B79-BA16-442F-80C4-8A59C30C463B")]
-        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        private interface IShellItemImageFactory
-        {
-            void GetImage([In] Size size, [In] int flags, [Out] out IntPtr phbm);
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct Size
-        {
-            public int cx;
-            public int cy;
-        }
-
-        private const int SiigbfResizetofit = 0x00;
-
         public static ImageSource? GetImage(string filePath, int imageSize, bool allowUpscaling = true)
         {
             IShellItemImageFactory? imageFactory = null;
@@ -98,16 +72,19 @@ namespace EverythingToolbar.Helpers
             {
                 int scaledSize = ImageScalingHelper.GetScaledSize(imageSize);
 
-                Guid shellItemImageFactoryGuid = new("BCC18B79-BA16-442F-80C4-8A59C30C463B");
-                SHCreateItemFromParsingName(filePath, IntPtr.Zero, shellItemImageFactoryGuid, out imageFactory);
+                PInvoke.SHCreateItemFromParsingName(filePath, null, out IShellItemImageFactory factory);
+                imageFactory = factory;
 
-                Size size = new() { cx = scaledSize, cy = scaledSize };
-                imageFactory.GetImage(size, SiigbfResizetofit, out IntPtr hBitmap);
+                factory.GetImage(
+                    new System.Drawing.Size(scaledSize, scaledSize),
+                    SIIGBF.SIIGBF_RESIZETOFIT,
+                    out var hBitmap
+                );
 
                 try
                 {
                     var imageSource = Imaging.CreateBitmapSourceFromHBitmap(
-                        hBitmap,
+                        hBitmap.DangerousGetHandle(),
                         IntPtr.Zero,
                         Int32Rect.Empty,
                         BitmapSizeOptions.FromEmptyOptions()
@@ -117,7 +94,7 @@ namespace EverythingToolbar.Helpers
                 }
                 finally
                 {
-                    DeleteObject(hBitmap);
+                    hBitmap.Dispose();
                 }
             }
             catch
@@ -130,9 +107,6 @@ namespace EverythingToolbar.Helpers
                     Marshal.ReleaseComObject(imageFactory);
             }
         }
-
-        [DllImport("gdi32.dll")]
-        private static extern bool DeleteObject(IntPtr hObject);
     }
 
     public static class IconProvider
@@ -169,9 +143,6 @@ namespace EverythingToolbar.Helpers
             uint cbSizeFileInfo,
             uint uFlags
         );
-
-        [DllImport("user32.dll")]
-        private static extern bool DestroyIcon(IntPtr hIcon);
 
         private const uint ShgfiSmallicon = 0x000000001;
         private const uint ShgfiSysiconindex = 0x000004000;
@@ -271,27 +242,27 @@ namespace EverythingToolbar.Helpers
         private const int ShilExtralarge = 2;
         private const int ShilJumbo = 4;
 
-        private static ImageSource? GetIconFromSystemImageList(int iconIndex, int iconSize)
+        private static unsafe ImageSource? GetIconFromSystemImageList(int iconIndex, int iconSize)
         {
             int scaledSize = ImageScalingHelper.GetScaledSize(iconSize);
 
-            IImageList? imageList = null;
+            Windows.Win32.UI.Controls.IImageList? imageList = null;
             try
             {
                 int imageListType = GetImageListType(scaledSize);
-                Guid iImageListGuid = new("46EB5926-582E-4017-9FDF-E8998DAA0950");
-                int hr = SHGetImageList(imageListType, iImageListGuid, out imageList);
-                if (hr != 0)
+                Guid iid = typeof(Windows.Win32.UI.Controls.IImageList).GUID;
+                if (PInvoke.SHGetImageList(imageListType, &iid, out var ppv).Failed)
                     return null;
+                imageList = (Windows.Win32.UI.Controls.IImageList)ppv;
 
-                hr = imageList.GetIcon(iconIndex, IldTransparent, out IntPtr hIcon);
-                if (hr != 0 || hIcon == IntPtr.Zero)
+                imageList.GetIcon(iconIndex, (uint)IldTransparent, out var hIcon);
+                if (hIcon == null || hIcon.IsInvalid)
                     return null;
 
                 try
                 {
                     var imageSource = Imaging.CreateBitmapSourceFromHIcon(
-                        hIcon,
+                        hIcon.DangerousGetHandle(),
                         Int32Rect.Empty,
                         BitmapSizeOptions.FromEmptyOptions()
                     );
@@ -300,7 +271,7 @@ namespace EverythingToolbar.Helpers
                 }
                 finally
                 {
-                    DestroyIcon(hIcon);
+                    hIcon.Dispose();
                 }
             }
             catch
@@ -325,41 +296,5 @@ namespace EverythingToolbar.Helpers
             return ShilJumbo;
         }
 
-        [DllImport("shell32.dll", PreserveSig = true)]
-        private static extern int SHGetImageList(
-            int iImageList,
-            [MarshalAs(UnmanagedType.LPStruct)] Guid riid,
-            [MarshalAs(UnmanagedType.Interface)] out IImageList ppv
-        );
-
-        [ComImport]
-        [Guid("46EB5926-582E-4017-9FDF-E8998DAA0950")]
-        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        private interface IImageList
-        {
-            [PreserveSig]
-            int Add(IntPtr hbmImage, IntPtr hbmMask, ref int pi);
-
-            [PreserveSig]
-            int ReplaceIcon(int i, IntPtr hicon, ref int pi);
-
-            [PreserveSig]
-            int SetOverlayImage(int iImage, int iOverlay);
-
-            [PreserveSig]
-            int Replace(int i, IntPtr hbmImage, IntPtr hbmMask);
-
-            [PreserveSig]
-            int AddMasked(IntPtr hbmImage, int crMask, ref int pi);
-
-            [PreserveSig]
-            int Draw(IntPtr pimldp);
-
-            [PreserveSig]
-            int Remove(int i);
-
-            [PreserveSig]
-            int GetIcon(int i, int flags, out IntPtr picon);
-        }
     }
 }

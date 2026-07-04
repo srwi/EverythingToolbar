@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
@@ -20,7 +19,7 @@ namespace EverythingToolbar.Launcher
     public partial class SetupAssistant : INotifyPropertyChanged
     {
         private readonly string _taskbarShortcutPath = Utils.GetTaskbarShortcutPath();
-        private readonly NotifyIcon _icon;
+        private readonly TrayIcon _icon;
         private bool _iconUpdateRequired;
         private FileSystemWatcher? _watcher;
         private RegistryValueWatcher? _taskbarAlignmentWatcher;
@@ -91,7 +90,7 @@ namespace EverythingToolbar.Launcher
             }
         }
 
-        public SetupAssistant(NotifyIcon icon)
+        internal SetupAssistant(TrayIcon icon)
         {
             if (!AllowLeftAlignment && _settings.TaskbarWindowAlignment == "Left")
                 _settings.TaskbarWindowAlignment = "Right";
@@ -105,7 +104,7 @@ namespace EverythingToolbar.Launcher
             DataContext = this;
 
             _icon = icon;
-            _icon.Visible = false;
+            _icon.Hide();
 
             _settings.PropertyChanged += OnToolbarSettingsChanged;
 
@@ -265,7 +264,10 @@ namespace EverythingToolbar.Launcher
         {
             _settings.PropertyChanged -= OnToolbarSettingsChanged;
 
-            _icon.Visible = _settings.IsTrayIconEnabled;
+            if (_settings.IsTrayIconEnabled)
+                _icon.Show();
+            else
+                _icon.Hide();
 
             if (_watcher != null)
             {

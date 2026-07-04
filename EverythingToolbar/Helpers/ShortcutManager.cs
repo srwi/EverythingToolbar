@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Threading;
 using NLog;
+using Windows.Win32;
 
 namespace EverythingToolbar.Helpers
 {
@@ -162,9 +163,6 @@ namespace EverythingToolbar.Helpers
             NativeMethods.keybd_event(VkControl, 0, KeyeventfKeyup, IntPtr.Zero);
         }
 
-        private static bool IsKeyDown(int vk) => (GetAsyncKeyState(vk) & 0x8000) != 0;
-
-        [DllImport("user32.dll")]
-        private static extern short GetAsyncKeyState(int vKey);
+        private static bool IsKeyDown(int vk) => (PInvoke.GetAsyncKeyState(vk) & 0x8000) != 0;
     }
 }

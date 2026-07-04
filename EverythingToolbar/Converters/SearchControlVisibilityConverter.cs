@@ -4,6 +4,8 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
+using Windows.Win32;
+using Windows.Win32.UI.Shell;
 
 namespace EverythingToolbar.Converters
 {
@@ -23,11 +25,11 @@ namespace EverythingToolbar.Converters
         private void SetTaskbarAutoHideState()
         {
             const uint ABS_AUTOHIDE = 0x0000001;
-            var autoHideData = new APPBARDATA { hWnd = IntPtr.Zero, cbSize = Marshal.SizeOf<APPBARDATA>() };
-            var autoHideState = SHAppBarMessage(APPBARMESSAGE.ABM_GETSTATE, ref autoHideData);
-            if (autoHideState != IntPtr.Zero)
+            var autoHideData = new APPBARDATA { cbSize = (uint)Marshal.SizeOf<APPBARDATA>() };
+            var autoHideState = PInvoke.SHAppBarMessage(PInvoke.ABM_GETSTATE, ref autoHideData);
+            if (autoHideState != 0)
             {
-                _isTaskbarAutoHiding = ((int)autoHideState.ToInt64() & ABS_AUTOHIDE) == ABS_AUTOHIDE;
+                _isTaskbarAutoHiding = ((uint)autoHideState & ABS_AUTOHIDE) == ABS_AUTOHIDE;
             }
         }
 
@@ -53,43 +55,5 @@ namespace EverythingToolbar.Converters
         {
             return this;
         }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct APPBARDATA
-        {
-            public int cbSize;
-            public IntPtr hWnd;
-            public uint uCallbackMessage;
-            public uint uEdge;
-            public RECT rc;
-            public IntPtr lParam;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct RECT
-        {
-            public int Left;
-            public int Top;
-            public int Right;
-            public int Bottom;
-        }
-
-        private enum APPBARMESSAGE : uint
-        {
-            ABM_NEW = 0x00000000,
-            ABM_REMOVE = 0x00000001,
-            ABM_QUERYPOS = 0x00000002,
-            ABM_SETPOS = 0x00000003,
-            ABM_GETSTATE = 0x00000004,
-            ABM_GETTASKBARPOS = 0x00000005,
-            ABM_ACTIVATE = 0x00000006,
-            ABM_GETAUTOHIDEBAR = 0x00000007,
-            ABM_SETAUTOHIDEBAR = 0x00000008,
-            ABM_WINDOWPOSCHANGED = 0x00000009,
-            ABM_SETSTATE = 0x0000000A,
-        }
-
-        [DllImport("shell32.dll", CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr SHAppBarMessage(APPBARMESSAGE dwMessage, ref APPBARDATA pData);
     }
 }

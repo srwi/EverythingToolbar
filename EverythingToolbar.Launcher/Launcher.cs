@@ -1,10 +1,7 @@
 using System;
-using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Shell;
 using System.Windows.Threading;
@@ -13,8 +10,10 @@ using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Behaviors;
 using EverythingToolbar.Controls;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Launcher.Properties;
 using Microsoft.Xaml.Behaviors;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
 using Application = System.Windows.Application;
 using MessageBoxResult = Wpf.Ui.Controls.MessageBoxResult;
 using Timer = System.Timers.Timer;
@@ -28,7 +27,7 @@ namespace EverythingToolbar.Launcher
         private const string MutexName = "EverythingToolbar.Launcher";
         private static bool _searchWindowRecentlyClosed;
         private static Timer? _searchWindowRecentlyClosedTimer;
-        private static NotifyIcon? _notifyIcon;
+        private static TrayIcon? _trayIcon;
 
         private class LauncherWindow : Window
         {
@@ -42,7 +41,9 @@ namespace EverythingToolbar.Launcher
             private bool _closingTaskbarWindowIntentionally;
             private uint _taskbarCreatedMsg;
 
-            public LauncherWindow(NotifyIcon icon)
+            private bool _suppressInitialTrayIcon;
+
+            public LauncherWindow(TrayIcon icon)
             {
                 ToolbarLogger.Initialize("Launcher");
 
@@ -57,7 +58,7 @@ namespace EverythingToolbar.Launcher
                 _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
                 _settings = Ioc.Default.GetRequiredService<ISettings>();
 
-                _notifyIcon = icon;
+                _trayIcon = icon;
 
                 _searchWindowRecentlyClosedTimer = new Timer(500);
                 _searchWindowRecentlyClosedTimer.AutoReset = false;
@@ -88,7 +89,10 @@ namespace EverythingToolbar.Launcher
                     && !_windowsPolicy.IsTaskbarWindowActive()
                     && (!_settings.IsSetupAssistantDisabled || !_settings.IsTrayIconEnabled)
                 )
+                {
+                    _suppressInitialTrayIcon = true;
                     new SetupAssistant(icon).Show();
+                }
 
                 ShortcutManager.Initialize(FocusSearchBox);
 
@@ -120,7 +124,7 @@ namespace EverythingToolbar.Launcher
                             return;
                         }
 
-                        _notifyIcon.Visible = _settings.IsTrayIconEnabled;
+                        SetTrayIconVisible(_settings.IsTrayIconEnabled);
                     }
                 };
 
@@ -174,29 +178,58 @@ namespace EverythingToolbar.Launcher
             {
                 base.OnSourceInitialized(e);
 
-                _taskbarCreatedMsg = RegisterWindowMessage("TaskbarCreated");
+                _taskbarCreatedMsg = PInvoke.RegisterWindowMessage("TaskbarCreated");
                 if (PresentationSource.FromVisual(this) is HwndSource source)
                 {
                     source.AddHook(WndProc);
 
                     if (_taskbarCreatedMsg != 0)
-                        ChangeWindowMessageFilterEx(source.Handle, _taskbarCreatedMsg, MSGFLT_ALLOW, IntPtr.Zero);
+                        unsafe
+                        {
+                            PInvoke.ChangeWindowMessageFilterEx(
+                                (HWND)source.Handle,
+                                _taskbarCreatedMsg,
+                                WINDOW_MESSAGE_FILTER_ACTION.MSGFLT_ALLOW,
+                                null
+                            );
+                        }
                 }
+
+                Application.Current.MainWindow = this;
+                if (!_suppressInitialTrayIcon)
+                    SetTrayIconVisible(_settings.IsTrayIconEnabled);
+            }
+
+            private static void SetTrayIconVisible(bool visible)
+            {
+                if (_trayIcon == null)
+                    return;
+
+                if (visible)
+                    _trayIcon.Show();
+                else
+                    _trayIcon.Hide();
             }
 
             private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
             {
-                if (_taskbarCreatedMsg != 0 && msg == _taskbarCreatedMsg && _windowsPolicy.IsTaskbarWindowActive())
+                if (_taskbarCreatedMsg != 0 && msg == _taskbarCreatedMsg)
                 {
-                    // Delay so the new taskbar's UIA tree (Widgets button / tray) is ready for positioning.
-                    var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
-                    timer.Tick += (_, _) =>
+                    // Explorer restarted and dropped the tray icon; TaskbarCreated signals it's ready again.
+                    _trayIcon?.HandleExplorerRestart();
+
+                    if (_windowsPolicy.IsTaskbarWindowActive())
                     {
-                        timer.Stop();
-                        CloseTaskbarWindow();
-                        CreateTaskbarWindow();
-                    };
-                    timer.Start();
+                        // Delay so the new taskbar's UIA tree (Widgets button / tray) is ready for positioning.
+                        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
+                        timer.Tick += (_, _) =>
+                        {
+                            timer.Stop();
+                            CloseTaskbarWindow();
+                            CreateTaskbarWindow();
+                        };
+                        timer.Start();
+                    }
                 }
 
                 return IntPtr.Zero;
@@ -342,8 +375,8 @@ namespace EverythingToolbar.Launcher
             {
                 Dispatcher?.Invoke(() =>
                 {
-                    if (_notifyIcon != null)
-                        new SetupAssistant(_notifyIcon).Show();
+                    if (_trayIcon != null)
+                        new SetupAssistant(_trayIcon).Show();
                 });
             }
 
@@ -352,19 +385,6 @@ namespace EverythingToolbar.Launcher
                 CloseTaskbarWindow();
                 base.OnClosed(e);
             }
-
-            [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-            private static extern uint RegisterWindowMessage(string lpString);
-
-            private const uint MSGFLT_ALLOW = 1;
-
-            [DllImport("user32.dll", SetLastError = true)]
-            private static extern bool ChangeWindowMessageFilterEx(
-                IntPtr hwnd,
-                uint message,
-                uint action,
-                IntPtr pChangeFilterStruct
-            );
         }
 
         private static void OpenSettingsWindow()
@@ -397,29 +417,17 @@ namespace EverythingToolbar.Launcher
                     // Apply saved UI language
                     CultureHelper.ApplyUILanguage(Ioc.Default.GetRequiredService<ISettings>().UILanguage);
 
-                    using var trayIcon = new NotifyIcon();
+                    EverythingToolbar.Settings.SettingsWindow.RegisterPage(
+                        new EverythingToolbar.Settings.SettingsPageDescriptor(
+                            EverythingToolbar.Properties.Resources.SettingsTaskbarIntegration,
+                            Wpf.Ui.Controls.SymbolRegular.Pin24,
+                            typeof(Settings.TaskbarIntegration),
+                            typeof(EverythingToolbar.Settings.About)
+                        )
+                    );
+
                     var app = new Application();
-                    trayIcon.Icon = new Icon(Utils.GetThemedAppIconPath(absolute: true));
-                    trayIcon.ContextMenuStrip = new ContextMenuStrip();
-                    var settingsItem = new ToolStripMenuItem(
-                        Resources.ContextMenuSettings,
-                        null,
-                        (_, _) =>
-                        {
-                            OpenSettingsWindow();
-                        }
-                    );
-                    trayIcon.ContextMenuStrip.Items.Add(settingsItem);
-                    var quitItem = new ToolStripMenuItem(
-                        Resources.ContextMenuQuit,
-                        null,
-                        (_, _) =>
-                        {
-                            app.Shutdown();
-                        }
-                    );
-                    trayIcon.ContextMenuStrip.Items.Add(quitItem);
-                    trayIcon.Visible = Ioc.Default.GetRequiredService<ISettings>().IsTrayIconEnabled;
+                    using var trayIcon = new TrayIcon(OpenSettingsWindow, app.Shutdown);
                     app.Run(new LauncherWindow(trayIcon));
                 }
                 else

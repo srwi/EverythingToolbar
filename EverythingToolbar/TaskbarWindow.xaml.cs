@@ -8,6 +8,9 @@ using System.Windows.Interop;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Helpers;
 using NLog;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace EverythingToolbar
 {
@@ -93,11 +96,11 @@ namespace EverythingToolbar
                     return;
                 }
 
-                int style = GetWindowLong(hwnd, GWL_STYLE);
+                int style = PInvoke.GetWindowLong((HWND)hwnd, (WINDOW_LONG_PTR_INDEX)GWL_STYLE);
                 style = (style & ~WS_POPUP) | WS_CHILD;
-                SetWindowLong(hwnd, GWL_STYLE, style);
+                PInvoke.SetWindowLong((HWND)hwnd, (WINDOW_LONG_PTR_INDEX)GWL_STYLE, style);
 
-                SetParent(hwnd, _taskbarHandle);
+                PInvoke.SetParent((HWND)hwnd, (HWND)_taskbarHandle);
                 IsAttachedToTaskbar = true;
             }
             catch (Exception ex)
@@ -134,8 +137,8 @@ namespace EverythingToolbar
                     return;
                 }
 
-                if (GetParent(hwnd) != _taskbarHandle)
-                    SetParent(hwnd, _taskbarHandle);
+                if ((IntPtr)PInvoke.GetParent((HWND)hwnd) != _taskbarHandle)
+                    PInvoke.SetParent((HWND)hwnd, (HWND)_taskbarHandle);
 
                 var taskbarHandle = _taskbarHandle;
                 var generation = ++_positionGeneration;
@@ -161,10 +164,10 @@ namespace EverythingToolbar
         {
             double dpiScale = NativeMethods.GetDpiForWindow(taskbarHandle) / 96.0;
 
-            if (!GetWindowRect(taskbarHandle, out RECT taskbarRect))
+            if (!PInvoke.GetWindowRect((HWND)taskbarHandle, out var taskbarRect))
                 return;
 
-            int taskbarHeight = taskbarRect.Bottom - taskbarRect.Top;
+            int taskbarHeight = taskbarRect.bottom - taskbarRect.top;
 
             int verticalMargin = (int)(WidgetVerticalMarginDip * dpiScale);
             int widgetHeight = Math.Max(taskbarHeight - 2 * verticalMargin, (int)(MinWidgetHeightDip * dpiScale));
@@ -173,14 +176,14 @@ namespace EverythingToolbar
             int top = (taskbarHeight - widgetHeight) / 2;
             int left = CalculateHorizontalPosition(taskbarHandle, taskbarRect, anchors, widgetWidth, dpiScale);
 
-            NativeMethods.SetWindowPos(
-                hwnd,
-                IntPtr.Zero,
+            PInvoke.SetWindowPos(
+                (HWND)hwnd,
+                (HWND)IntPtr.Zero,
                 left,
                 top,
                 widgetWidth,
                 widgetHeight,
-                SWP_NOZORDER | SWP_NOACTIVATE | SWP_SHOWWINDOW
+                SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE | SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW
             );
         }
 
@@ -193,20 +196,19 @@ namespace EverythingToolbar
         )
         {
             int padding = (int)(8 * dpiScale);
-            int taskbarWidth = taskbarRect.Right - taskbarRect.Left;
+            int taskbarWidth = taskbarRect.right - taskbarRect.left;
             string alignment = _settings.TaskbarWindowAlignment;
             bool isTaskbarCentered = _windowsPolicy.IsTaskbarCenterAligned();
 
             if (anchors.WidgetsRect.HasValue)
             {
-                POINT pt = new() { X = (int)anchors.WidgetsRect.Value.Left, Y = 0 };
-                ScreenToClient(taskbarHandle, ref pt);
+                var pt = new System.Drawing.Point((int)anchors.WidgetsRect.Value.Left, 0);
+                PInvoke.ScreenToClient((HWND)taskbarHandle, ref pt);
                 int widgetsLeftRelative = pt.X;
 
-                pt = new POINT { X = (int)anchors.WidgetsRect.Value.Right, Y = 0 };
-                ScreenToClient(taskbarHandle, ref pt);
+                pt = new System.Drawing.Point((int)anchors.WidgetsRect.Value.Right, 0);
+                PInvoke.ScreenToClient((HWND)taskbarHandle, ref pt);
                 int widgetsRightRelative = pt.X;
-
                 if (alignment == "Left" && isTaskbarCentered)
                 {
                     return widgetsRightRelative + padding;
@@ -219,8 +221,8 @@ namespace EverythingToolbar
 
             if (anchors.SystemTrayRect.HasValue)
             {
-                POINT pt = new() { X = (int)anchors.SystemTrayRect.Value.Left, Y = 0 };
-                ScreenToClient(taskbarHandle, ref pt);
+                var pt = new System.Drawing.Point((int)anchors.SystemTrayRect.Value.Left, 0);
+                PInvoke.ScreenToClient((HWND)taskbarHandle, ref pt);
                 int trayLeftRelative = pt.X;
 
                 if (alignment == "Left" && isTaskbarCentered)
@@ -316,45 +318,8 @@ namespace EverythingToolbar
             base.OnClosed(e);
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct RECT
-        {
-            public int Left,
-                Top,
-                Right,
-                Bottom;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct POINT
-        {
-            public int X,
-                Y;
-        }
-
         private const int GWL_STYLE = -16;
         private const int WS_CHILD = 0x40000000;
         private const int WS_POPUP = unchecked((int)0x80000000);
-        private const uint SWP_NOZORDER = 0x0004;
-        private const uint SWP_NOACTIVATE = 0x0010;
-        private const uint SWP_SHOWWINDOW = 0x0040;
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-
-        [DllImport("user32.dll")]
-        private static extern bool ScreenToClient(IntPtr hWnd, ref POINT lpPoint);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr GetParent(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
-        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
-        [DllImport("user32.dll")]
-        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
     }
 }

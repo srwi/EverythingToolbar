@@ -8,6 +8,10 @@ using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using NLog;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.System.Threading;
+using Windows.Win32.UI.Accessibility;
 
 namespace EverythingToolbar.Helpers
 {
@@ -16,9 +20,9 @@ namespace EverythingToolbar.Helpers
         private static readonly Queue<Input> RecordedInputs = new();
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<StartMenuIntegration>();
 
-        private static WinEventDelegate? _focusedWindowChangedCallback;
+        private static WINEVENTPROC? _focusedWindowChangedCallback;
         private static NativeMethods.LowLevelKeyboardProc? _startMenuKeyboardHookCallback;
-        private static IntPtr _focusedWindowChangedHookId = IntPtr.Zero;
+        private static HWINEVENTHOOK _focusedWindowChangedHookId;
         private static IntPtr _startMenuKeyboardHookId = IntPtr.Zero;
 
         private static IntPtr _searchAppHwnd = IntPtr.Zero;
@@ -60,23 +64,31 @@ namespace EverythingToolbar.Helpers
 
         private void Enable()
         {
-            UnhookWinEvent(_focusedWindowChangedHookId);
+            PInvoke.UnhookWinEvent(_focusedWindowChangedHookId);
             _focusedWindowChangedCallback = OnFocusedWindowChanged;
-            _focusedWindowChangedHookId = SetWinEventHook(3, 3, IntPtr.Zero, _focusedWindowChangedCallback, 0, 0, 0);
+            _focusedWindowChangedHookId = PInvoke.SetWinEventHook(
+                3,
+                3,
+                default(HMODULE),
+                _focusedWindowChangedCallback,
+                0,
+                0,
+                0
+            );
             CancelCleanupTimer();
         }
 
         public void Disable()
         {
-            UnhookWinEvent(_focusedWindowChangedHookId);
-            _focusedWindowChangedHookId = IntPtr.Zero;
+            PInvoke.UnhookWinEvent(_focusedWindowChangedHookId);
+            _focusedWindowChangedHookId = default;
             ResetHandoverState();
         }
 
         private void OnFocusedWindowChanged(
-            IntPtr hWinEventHook,
+            HWINEVENTHOOK hWinEventHook,
             uint eventType,
-            IntPtr hwnd,
+            HWND hwnd,
             int idObject,
             int idChild,
             uint dwEventThread,
@@ -234,7 +246,7 @@ namespace EverythingToolbar.Helpers
             {
                 _animationsToRestore ??= SystemSettings.GetSystemAnimationsEnabled();
                 SystemSettings.SetSystemAnimationsEnabled(false);
-                PostMessage(_searchAppHwnd, 0x0010, 0, 0);
+                PInvoke.PostMessage((HWND)_searchAppHwnd, 0x0010, (WPARAM)0, (LPARAM)0);
                 _searchAppHwnd = IntPtr.Zero;
             }
         }
@@ -281,48 +293,17 @@ namespace EverythingToolbar.Helpers
         {
             foregroundHwnd = NativeMethods.GetForegroundWindow();
             NativeMethods.GetWindowThreadProcessId(foregroundHwnd, out var processId);
-            var processHandle = OpenProcess(0x0410, false, processId);
-            var processNameBuilder = new StringBuilder(1000);
-            GetModuleFileNameEx(processHandle, IntPtr.Zero, processNameBuilder, processNameBuilder.Capacity);
-            CloseHandle(processHandle);
-            foregroundProcessName = processNameBuilder.ToString();
+
+            using var processHandle = PInvoke.OpenProcess_SafeHandle(
+                PROCESS_ACCESS_RIGHTS.PROCESS_QUERY_INFORMATION | PROCESS_ACCESS_RIGHTS.PROCESS_VM_READ,
+                false,
+                processId
+            );
+
+            Span<char> nameBuffer = new char[1000];
+            uint length = PInvoke.GetModuleFileNameEx(processHandle, default, nameBuffer);
+            foregroundProcessName = nameBuffer[..(int)length].ToString();
         }
-
-        private delegate void WinEventDelegate(
-            IntPtr hWinEventHook,
-            uint eventType,
-            IntPtr hwnd,
-            int idObject,
-            int idChild,
-            uint dwEventThread,
-            uint dwmsEventTime
-        );
-
-        [DllImport("kernel32.dll")]
-        static extern IntPtr OpenProcess(uint dwDesiredAccess, bool bInheritHandle, uint dwProcessId);
-
-        [DllImport("kernel32.dll")]
-        static extern bool CloseHandle(IntPtr handle);
-
-        [DllImport("user32.dll")]
-        static extern IntPtr SetWinEventHook(
-            uint eventMin,
-            uint eventMax,
-            IntPtr hmodWinEventProc,
-            WinEventDelegate? lpfnWinEventProc,
-            uint idProcess,
-            uint idThread,
-            uint dwFlags
-        );
-
-        [DllImport("user32.dll")]
-        static extern bool UnhookWinEvent(IntPtr hWinEventHook);
-
-        [DllImport("user32.Dll")]
-        static extern int PostMessage(IntPtr hWnd, UInt32 msg, int wParam, int lParam);
-
-        [DllImport("psapi.dll")]
-        static extern uint GetModuleFileNameEx(IntPtr hWnd, IntPtr hModule, StringBuilder lpFileName, int nSize);
 
         [StructLayout(LayoutKind.Sequential)]
         private struct Input
