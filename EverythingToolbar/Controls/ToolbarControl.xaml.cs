@@ -66,46 +66,21 @@ namespace EverythingToolbar.Controls
 
         private void UpdateLayoutMode()
         {
-            if (IsFixedLayout)
-            {
-                // Fixed layout mode - show search icon, remove responsive visibility
-                SearchIcon.Visibility = Visibility.Visible;
-                SearchBox.ClearValue(VisibilityProperty);
-                SearchBox.Visibility = Visibility.Visible;
-                SearchBox.MinWidth = 200;
-                SearchBox.MaxWidth = 400;
-                SearchButton.Visibility = Visibility.Collapsed;
-                
-                // Use fixed layout grid style
-                var grid = (Grid)Content;
-                grid.Margin = new Thickness(4, 2, 4, 2);
-            }
-            else
-            {
-                // Responsive layout mode - hide search icon, use responsive visibility
-                SearchIcon.Visibility = Visibility.Collapsed;
-                SearchBox.ClearValue(MinWidthProperty);
-                SearchBox.ClearValue(MaxWidthProperty);
-                
-                // Restore responsive bindings
-                var searchBoxBinding = new System.Windows.Data.Binding("ActualWidth")
-                {
-                    RelativeSource = new System.Windows.Data.RelativeSource(System.Windows.Data.RelativeSourceMode.Self),
-                    Converter = FindResource("SearchBoxDoubleToVisibilityConverter") as System.Windows.Data.IValueConverter
-                };
-                SearchBox.SetBinding(VisibilityProperty, searchBoxBinding);
+            // Only fixed-layout hosts (taskbar window) need code-driven overrides. Responsive
+            // hosts (deskband) already get their visibility bindings and zero margin from XAML,
+            // and IsFixedLayout is set once from XAML and never toggled at runtime.
+            if (!IsFixedLayout)
+                return;
 
-                var searchButtonBinding = new System.Windows.Data.Binding("ActualWidth")
-                {
-                    RelativeSource = new System.Windows.Data.RelativeSource(System.Windows.Data.RelativeSourceMode.Self),
-                    Converter = FindResource("SearchButtonDoubleToVisibilityConverter") as System.Windows.Data.IValueConverter
-                };
-                SearchButton.SetBinding(VisibilityProperty, searchButtonBinding);
-                
-                // Use responsive layout grid style
-                var grid = (Grid)Content;
-                grid.Margin = new Thickness(0);
-            }
+            SearchIcon.Visibility = Visibility.Visible;
+            SearchBox.ClearValue(VisibilityProperty);
+            SearchBox.Visibility = Visibility.Visible;
+            SearchBox.MinWidth = 200;
+            SearchBox.MaxWidth = 400;
+            SearchButton.Visibility = Visibility.Collapsed;
+
+            var grid = (Grid)Content;
+            grid.Margin = new Thickness(4, 2, 4, 2);
         }
 
         protected override void OnInitialized(EventArgs e)

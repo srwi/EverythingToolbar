@@ -23,17 +23,9 @@
             x:Key="SearchBoxDoubleToVisibilityConverter"
             VisibilityThreshold="70"
             AlwaysVisibleWithAutoHidingTaskbar="False" />
-        
-        <Style x:Key="FixedLayoutGrid" TargetType="Grid">
-            <Setter Property="Margin" Value="4,2"/>
-        </Style>
-        
-        <Style x:Key="ResponsiveLayoutGrid" TargetType="Grid">
-            <Setter Property="Margin" Value="0"/>
-        </Style>
     </UserControl.Resources>
 
-    <Grid Style="{DynamicResource ResponsiveLayoutGrid}">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
