@@ -155,7 +155,12 @@ namespace EverythingToolbar.Launcher
                 // child window after explorer restarts (which destroys our Shell_TrayWnd child).
                 _taskbarCreatedMsg = RegisterWindowMessage("TaskbarCreated");
                 if (PresentationSource.FromVisual(this) is HwndSource source)
+                {
                     source.AddHook(WndProc);
+
+                    if (_taskbarCreatedMsg != 0)
+                        ChangeWindowMessageFilterEx(source.Handle, _taskbarCreatedMsg, MSGFLT_ALLOW, IntPtr.Zero);
+                }
             }
 
             private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -183,6 +188,14 @@ namespace EverythingToolbar.Launcher
 
                 _taskbarWindow = new TaskbarWindow();
                 _taskbarWindow.Closed += OnTaskbarWindowClosed;
+
+                new WindowInteropHelper(_taskbarWindow).EnsureHandle();
+                if (!_taskbarWindow.IsAttachedToTaskbar)
+                {
+                    CloseTaskbarWindow();
+                    return;
+                }
+
                 _taskbarWindow.Show();
                 TaskbarStateManager.Instance.IsIcon = false;
                 if (_searchWindowPlacementBehavior != null)
@@ -347,6 +360,11 @@ namespace EverythingToolbar.Launcher
 
             [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
             private static extern uint RegisterWindowMessage(string lpString);
+
+            private const uint MSGFLT_ALLOW = 1;
+
+            [DllImport("user32.dll", SetLastError = true)]
+            private static extern bool ChangeWindowMessageFilterEx(IntPtr hwnd, uint message, uint action, IntPtr pChangeFilterStruct);
         }
 
         private static void OpenSettingsWindow()

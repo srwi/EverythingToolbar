@@ -24,6 +24,8 @@ namespace EverythingToolbar
 
         public FrameworkElement PlacementTarget => ToolbarControl;
 
+        public bool IsAttachedToTaskbar { get; private set; }
+
         public TaskbarWindow()
         {
             InitializeComponent();
@@ -94,6 +96,7 @@ namespace EverythingToolbar
                 SetWindowLong(hwnd, GWL_STYLE, style);
 
                 SetParent(hwnd, _taskbarHandle);
+                IsAttachedToTaskbar = true;
             }
             catch (Exception ex)
             {
@@ -231,16 +234,10 @@ namespace EverythingToolbar
             return new AnchorRects(widgetsRect, systemTrayRect);
         }
 
-        private readonly struct AnchorRects
+        private readonly struct AnchorRects(Rect? widgetsRect, Rect? systemTrayRect)
         {
-            public AnchorRects(Rect? widgetsRect, Rect? systemTrayRect)
-            {
-                WidgetsRect = widgetsRect;
-                SystemTrayRect = systemTrayRect;
-            }
-
-            public Rect? WidgetsRect { get; }
-            public Rect? SystemTrayRect { get; }
+            public Rect? WidgetsRect { get; } = widgetsRect;
+            public Rect? SystemTrayRect { get; } = systemTrayRect;
         }
 
         private static Rect? GetWidgetsButtonRect(IntPtr taskbarHandle)
@@ -302,8 +299,6 @@ namespace EverythingToolbar
             base.OnClosed(e);
         }
 
-        #region Win32 Interop
-
         [StructLayout(LayoutKind.Sequential)]
         private struct RECT
         {
@@ -349,7 +344,5 @@ namespace EverythingToolbar
 
         [DllImport("user32.dll")]
         private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-
-        #endregion
     }
 }
