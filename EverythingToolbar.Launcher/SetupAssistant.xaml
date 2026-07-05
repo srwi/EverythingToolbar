@@ -108,9 +108,37 @@
                         <StackPanel>
                             <controls:SettingItem Title="{x:Static properties:Resources.SetupAssistantPinToTaskbar}"
                                                   HelpText="{x:Static properties:Resources.SetupAssistantPinToTaskbarHelp}" />
-                            <Image Source="Images/PinToTaskbar.png"
-                                   Margin="0, 16, 0, 0"
-                                   RenderOptions.BitmapScalingMode="Fant" />
+                            <Grid Margin="0, 16, 0, 0">
+                                <Image Source="Images/PinToTaskbar.png"
+                                       RenderOptions.BitmapScalingMode="Fant">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Opacity" Value="1" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsPinned}" Value="True">
+                                                    <Setter Property="Opacity" Value="0.2" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <ui:SymbolIcon Symbol="Checkmark24"
+                                               FontSize="64"
+                                               Foreground="{ui:ThemeResource AccentTextFillColorPrimaryBrush}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center">
+                                    <ui:SymbolIcon.Style>
+                                        <Style TargetType="ui:SymbolIcon">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsPinned}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ui:SymbolIcon.Style>
+                                </ui:SymbolIcon>
+                            </Grid>
                         </StackPanel>
                     </Border>
                     <Border Padding="16"
