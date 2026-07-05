@@ -72,7 +72,6 @@ namespace EverythingToolbar.Controls
             if (!IsFixedLayout)
                 return;
 
-            SearchIcon.Visibility = Visibility.Visible;
             SearchBox.ClearValue(VisibilityProperty);
             SearchBox.Visibility = Visibility.Visible;
             SearchBox.MinWidth = 200;

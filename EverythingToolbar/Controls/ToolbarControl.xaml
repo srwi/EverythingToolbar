@@ -37,16 +37,6 @@
                  Name="KeyboardFocusCapture"
                  Grid.ColumnSpan="3" />
 
-        <!-- Search Icon - only visible in fixed layout mode -->
-        <Image x:Name="SearchIcon"
-               Grid.Column="0" 
-               Source="/Images/Icons/Search.png"
-               Width="16" 
-               Height="16" 
-               Margin="4,0,6,0"
-               VerticalAlignment="Center"
-               Visibility="Collapsed" />
-
         <controls:SearchBox x:Name="SearchBox"
                             Grid.Column="1"
                             Visibility="{Binding Path=ActualWidth,
