@@ -226,7 +226,7 @@ namespace EverythingToolbar.Launcher
             {
                 var result = await FluentMessageBox
                     .CreateYesNo(
-                        Properties.Resources.SetupAssistantDisableWarningText,
+                        Properties.Resources.SetupAssistantExitWarningText,
                         Properties.Resources.SetupAssistantDisableWarningTitle
                     )
                     .ShowDialogAsync();

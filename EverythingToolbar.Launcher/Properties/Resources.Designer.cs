@@ -96,11 +96,11 @@ namespace EverythingToolbar.Launcher.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to exit the setup assistant? EverythingToolbar will only be accessible using the keyboard shortcut. You can access the setup assistant again via the system tray icon to pin the search icon to the taskbar..
+        ///   Looks up a localized string similar to Are you sure you want to exit the setup assistant? The tray icon will be enabled so you can still open EverythingToolbar's settings and set up taskbar integration later. You can also open search anytime with the keyboard shortcut..
         /// </summary>
-        public static string SetupAssistantDisableWarningText {
+        public static string SetupAssistantExitWarningText {
             get {
-                return ResourceManager.GetString("SetupAssistantDisableWarningText", resourceCulture);
+                return ResourceManager.GetString("SetupAssistantExitWarningText", resourceCulture);
             }
         }
         
@@ -267,7 +267,7 @@ namespace EverythingToolbar.Launcher.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The tray icon has been enabled so that EverythingToolbar remains accessible after unpinning the taskbar icon..
+        ///   Looks up a localized string similar to The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box..
         /// </summary>
         public static string TaskbarWindowDisabledTrayEnabledText {
             get {
