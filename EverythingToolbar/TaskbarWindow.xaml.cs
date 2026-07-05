@@ -64,8 +64,6 @@ namespace EverythingToolbar
                 case 0x0018: // WM_SHOWWINDOW
                 case 0x0046: // WM_WINDOWPOSCHANGING
                 case 0x0083: // WM_NCCALCSIZE
-                case 0x0281: // WM_IME_SETCONTEXT
-                case 0x0282: // WM_IME_NOTIFY
                     handled = true;
                     return IntPtr.Zero;
             }
