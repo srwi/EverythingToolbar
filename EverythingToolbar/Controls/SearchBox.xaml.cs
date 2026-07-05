@@ -28,12 +28,6 @@ namespace EverythingToolbar.Controls
             set => SetValue(SearchTermProperty, value);
         }
 
-        /// <summary>
-        /// Determines when this SearchBox should respond to focus requests.
-        /// When true, responds when IsIcon=true (icon/launcher mode - SearchWindow's search box).
-        /// When false, responds when IsIcon=false (toolbar mode - ToolbarControl's search box).
-        /// This allows having multiple visible SearchBoxes while only the appropriate one gets focus.
-        /// </summary>
         public static readonly DependencyProperty RespondsInIconModeProperty = DependencyProperty.Register(
             nameof(RespondsInIconMode),
             typeof(bool),
@@ -87,8 +81,7 @@ namespace EverythingToolbar.Controls
             // Only respond if visible AND this SearchBox matches the current mode
             // - RespondsInIconMode=true: responds when IsIcon=true (SearchWindow's search box)
             // - RespondsInIconMode=false: responds when IsIcon=false (toolbar search boxes)
-            if (Visibility == Visibility.Visible && 
-                RespondsInIconMode == TaskbarStateManager.Instance.IsIcon)
+            if (Visibility == Visibility.Visible && RespondsInIconMode == TaskbarStateManager.Instance.IsIcon)
             {
                 Focus();
             }

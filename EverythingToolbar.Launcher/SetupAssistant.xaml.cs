@@ -22,6 +22,7 @@ namespace EverythingToolbar.Launcher
         private readonly NotifyIcon _icon;
         private bool _iconUpdateRequired;
         private FileSystemWatcher? _watcher;
+        private RegistryValueWatcher? _taskbarAlignmentWatcher;
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<SetupAssistant>();
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -46,23 +47,12 @@ namespace EverythingToolbar.Launcher
             }
         }
 
-        /// <summary>
-        /// The taskbar search box is only available on Windows 11 and later.
-        /// </summary>
         public bool IsTaskbarWindowSupported =>
             Helpers.Utils.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11;
 
-        /// <summary>
-        /// The preferences pane unlocks once the icon is pinned OR the user opts into the
-        /// taskbar search box (a full alternative to pinning), so setup can complete either way.
-        /// </summary>
         public bool PreferencesUnlocked =>
             CurrentStep == 1 || (IsTaskbarWindowSupported && ToolbarSettings.User.TaskbarWindowEnabled);
 
-        /// <summary>
-        /// True once the taskbar icon is pinned. Drives the "Pin to taskbar" option's status
-        /// indicator and its instructions/image (shown only while not yet pinned).
-        /// </summary>
         public bool IsPinned => CurrentStep == 1;
 
         // The two options read as an either/or choice, so pick one and the other grays out.
@@ -106,6 +96,10 @@ namespace EverythingToolbar.Launcher
 
             InitializeComponent();
 
+            const double edgeMargin = 40;
+            double available = SystemParameters.WorkArea.Width - edgeMargin;
+            Width = Math.Min(IsTaskbarWindowSupported ? 960 : 600, available);
+
             DataContext = this;
 
             _icon = icon;
@@ -114,6 +108,7 @@ namespace EverythingToolbar.Launcher
             ToolbarSettings.User.PropertyChanged += OnToolbarSettingsChanged;
 
             CreateFileWatcher(_taskbarShortcutPath);
+            CreateTaskbarAlignmentWatcher();
 
             if (File.Exists(_taskbarShortcutPath))
             {
@@ -142,6 +137,22 @@ namespace EverythingToolbar.Launcher
         private void FlashTaskbarIcon()
         {
             NativeMethods.FlashWindow(new WindowInteropHelper(this).Handle, true);
+        }
+
+        private void CreateTaskbarAlignmentWatcher()
+        {
+            if (!IsTaskbarWindowSupported)
+                return;
+
+            _taskbarAlignmentWatcher = new Helpers.RegistryValueWatcher(
+                @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+            );
+            _taskbarAlignmentWatcher.Changed += OnTaskbarAlignmentChanged;
+        }
+
+        private void OnTaskbarAlignmentChanged()
+        {
+            Dispatcher.BeginInvoke(() => OnPropertyChanged(nameof(AllowLeftAlignment)));
         }
 
         private void SetAppIcon()
@@ -189,7 +200,7 @@ namespace EverythingToolbar.Launcher
             _watcher.Created += (_, _) =>
             {
                 _iconUpdateRequired = true;
-                Dispatcher.Invoke(() =>
+                Dispatcher.BeginInvoke(() =>
                 {
                     CurrentStep = 1;
                 });
@@ -197,16 +208,13 @@ namespace EverythingToolbar.Launcher
             _watcher.Deleted += (_, _) =>
             {
                 _iconUpdateRequired = false;
-                Dispatcher.Invoke(() =>
+                Dispatcher.BeginInvoke(() =>
                 {
                     CurrentStep = 0;
                 });
             };
         }
 
-        // While neither option is active (setup not yet completed either way), the preferences
-        // section is disabled. Clicking it wiggles the option cards to point the user back to the
-        // choice they still need to make.
         private void OnSecondStepClicked(object sender, MouseButtonEventArgs e)
         {
             if (!PreferencesUnlocked)
@@ -220,8 +228,6 @@ namespace EverythingToolbar.Launcher
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {
-            // A user who enabled the taskbar search box has completed setup via the alternative
-            // path, so no "you have not pinned" warning and no forced tray icon.
             if (CurrentStep == 0 && !(IsTaskbarWindowSupported && ToolbarSettings.User.TaskbarWindowEnabled))
             {
                 var result = await FluentMessageBox
@@ -263,6 +269,13 @@ namespace EverythingToolbar.Launcher
             {
                 _watcher.EnableRaisingEvents = false;
                 _watcher.Dispose();
+            }
+
+            if (_taskbarAlignmentWatcher != null)
+            {
+                _taskbarAlignmentWatcher.Changed -= OnTaskbarAlignmentChanged;
+                _taskbarAlignmentWatcher.Dispose();
+                _taskbarAlignmentWatcher = null;
             }
         }
 

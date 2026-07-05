@@ -69,15 +69,6 @@ namespace EverythingToolbar.Launcher.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Run setup assistant....
-        /// </summary>
-        public static string ContextMenuRunSetupAssistant {
-            get {
-                return ResourceManager.GetString("ContextMenuRunSetupAssistant", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Settings....
         /// </summary>
         public static string ContextMenuSettings {
@@ -231,16 +222,7 @@ namespace EverythingToolbar.Launcher.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alternatively: show a search box in the taskbar.
-        /// </summary>
-        public static string SetupAssistantTaskbarWindowAlternative {
-            get {
-                return ResourceManager.GetString("SetupAssistantTaskbarWindowAlternative", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Embeds a search box in the taskbar.
+        ///   Looks up a localized string similar to Embeds a search box on the taskbar.
         /// </summary>
         public static string SetupAssistantTaskbarWindowAlternativeHelp {
             get {

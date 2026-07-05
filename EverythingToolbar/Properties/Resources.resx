@@ -652,7 +652,7 @@
     <value>Search box alignment</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentHelp" xml:space="preserve">
-    <value>Controls the search box alignment in the taskbar</value>
+    <value>Controls the search box alignment on the taskbar</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
     <value>Left</value>

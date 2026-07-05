@@ -31,7 +31,7 @@ namespace EverythingToolbar.Launcher
         private class LauncherWindow : Window
         {
             private TaskbarWindow? _taskbarWindow;
-            private SearchWindowPlacement? _searchWindowPlacementBehavior;
+            private readonly SearchWindowPlacement? _searchWindowPlacementBehavior;
             private bool _temporarilyInIconMode;
             private bool _closingTaskbarWindowIntentionally;
             private uint _taskbarCreatedMsg;
@@ -88,9 +88,11 @@ namespace EverythingToolbar.Launcher
                 {
                     if (e.PropertyName == nameof(ToolbarSettings.User.IsTrayIconEnabled))
                     {
-                        if (!ToolbarSettings.User.IsTrayIconEnabled
+                        if (
+                            !ToolbarSettings.User.IsTrayIconEnabled
                             && !Utils.IsTaskbarPinned()
-                            && !Helpers.Utils.IsTaskbarWindowActive())
+                            && !Helpers.Utils.IsTaskbarWindowActive()
+                        )
                         {
                             await FluentMessageBox
                                 .CreateError(
@@ -259,9 +261,6 @@ namespace EverythingToolbar.Launcher
 
             private void FocusSearchBox()
             {
-                // Global hotkey: when a live taskbar search box exists, jump keyboard focus into it
-                // (results anchored to the box), mirroring the deskband. Otherwise toggle the popup.
-                // The IsLoaded check guards against a dead-but-not-yet-nulled window eating the hotkey.
                 if (_taskbarWindow is { IsLoaded: true })
                 {
                     if (SearchWindow.Instance.IsVisible)
@@ -275,11 +274,6 @@ namespace EverythingToolbar.Launcher
                 }
             }
 
-            /// <summary>
-            /// Opens the classic launcher popup: cursor-positioned with its own search box.
-            /// When a taskbar window surface exists (IsIcon is normally false), temporarily
-            /// switch to icon mode for this show; it is restored in OnSearchWindowHidden.
-            /// </summary>
             private void ShowAsLauncher()
             {
                 if (_taskbarWindow != null && _searchWindowPlacementBehavior != null)
@@ -317,14 +311,17 @@ namespace EverythingToolbar.Launcher
             private void SetupSettingsCallbacks()
             {
                 EverythingToolbar.Settings.Advanced.GetAutostartStateCallback = () => Utils.GetAutostartState();
-                EverythingToolbar.Settings.Advanced.SetAutostartStateCallback = (state) => Utils.SetAutostartState(state);
+                EverythingToolbar.Settings.Advanced.SetAutostartStateCallback = (state) =>
+                    Utils.SetAutostartState(state);
 
                 EverythingToolbar.Settings.SettingsWindow.RegisterPage(
                     new EverythingToolbar.Settings.SettingsPageDescriptor(
                         EverythingToolbar.Properties.Resources.SettingsTaskbarIntegration,
                         Wpf.Ui.Controls.SymbolRegular.Pin24,
                         typeof(Settings.TaskbarIntegration),
-                        typeof(EverythingToolbar.Settings.UserInterface)));
+                        typeof(EverythingToolbar.Settings.About)
+                    )
+                );
             }
 
             private void ToggleWindow()
@@ -353,7 +350,6 @@ namespace EverythingToolbar.Launcher
 
             protected override void OnClosed(EventArgs e)
             {
-                // Ensure IsIcon is restored to true when launcher closes
                 CloseTaskbarWindow();
                 base.OnClosed(e);
             }
@@ -364,18 +360,25 @@ namespace EverythingToolbar.Launcher
             private const uint MSGFLT_ALLOW = 1;
 
             [DllImport("user32.dll", SetLastError = true)]
-            private static extern bool ChangeWindowMessageFilterEx(IntPtr hwnd, uint message, uint action, IntPtr pChangeFilterStruct);
+            private static extern bool ChangeWindowMessageFilterEx(
+                IntPtr hwnd,
+                uint message,
+                uint action,
+                IntPtr pChangeFilterStruct
+            );
         }
 
         private static void OpenSettingsWindow()
         {
-            // Tray-menu escape hatch: Settings is otherwise only reachable via the
-            // SearchWindow gear button, so this guarantees it stays accessible.
             foreach (Window window in Application.Current.Windows)
             {
                 if (window is EverythingToolbar.Settings.SettingsWindow existing)
                 {
+                    if (existing.WindowState == WindowState.Minimized)
+                        existing.WindowState = WindowState.Normal;
+
                     existing.Activate();
+
                     return;
                 }
             }

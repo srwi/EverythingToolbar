@@ -20,8 +20,7 @@
                  ResizeMode="NoResize"
                  Title="{x:Static properties:Resources.SetupAssistantTitle}"
                  Closed="OnClosed"
-                 Closing="OnClosing"
-                 Width="960">
+                 Closing="OnClosing">
 
     <ui:FluentWindow.Resources>
         <Storyboard x:Key="WiggleStoryboard">
@@ -106,9 +105,7 @@
                             BorderThickness="1,1,1,0"
                             CornerRadius="8,8,0,0">
                         <StackPanel>
-                            <controls:SettingItem Title="{x:Static properties:Resources.SetupAssistantPinToTaskbar}"
-                                                  HelpText="{x:Static properties:Resources.SetupAssistantPinToTaskbarHelp}" />
-                            <Grid Margin="0, 16, 0, 0">
+                            <Grid>
                                 <Image Source="Images/PinToTaskbar.png"
                                        RenderOptions.BitmapScalingMode="Fant">
                                     <Image.Style>
@@ -139,6 +136,9 @@
                                     </ui:SymbolIcon.Style>
                                 </ui:SymbolIcon>
                             </Grid>
+                            <controls:SettingItem Margin="0, 16, 0, 0"
+                                                  Title="{x:Static properties:Resources.SetupAssistantPinToTaskbar}"
+                                                  HelpText="{x:Static properties:Resources.SetupAssistantPinToTaskbarHelp}" />
                         </StackPanel>
                     </Border>
                     <Border Padding="16"
@@ -199,15 +199,15 @@
                             BorderThickness="1,1,1,0"
                             CornerRadius="8,8,0,0">
                         <StackPanel>
+                            <Image Source="Images/TaskbarSearchBox.png"
+                                   RenderOptions.BitmapScalingMode="Fant" />
                             <controls:SettingItem Title="{x:Static properties:Resources.SetupAssistantTaskbarWindowOption}"
-                                                  HelpText="{x:Static properties:Resources.SetupAssistantTaskbarWindowAlternativeHelp}">
+                                                  HelpText="{x:Static properties:Resources.SetupAssistantTaskbarWindowAlternativeHelp}"
+                                                  Margin="0, 16, 0, 0">
                                 <controls:SettingItem.SettingContent>
                                     <ui:ToggleSwitch IsChecked="{Binding Source={x:Static local:ToolbarSettings.User}, Path=TaskbarWindowEnabled, Mode=TwoWay}" />
                                 </controls:SettingItem.SettingContent>
                             </controls:SettingItem>
-                            <Image Source="Images/TaskbarSearchBox.png"
-                                   Margin="0, 16, 0, 0"
-                                   RenderOptions.BitmapScalingMode="Fant" />
                         </StackPanel>
                     </Border>
                     <Border Padding="16"

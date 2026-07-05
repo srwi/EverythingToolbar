@@ -9,25 +9,17 @@ using Wpf.Ui.Controls;
 
 namespace EverythingToolbar.Settings
 {
-    /// <summary>
-    /// Describes a settings page contributed by a host variant (e.g. the launcher), so that
-    /// variant-specific pages can live in their own project instead of the shared library.
-    /// </summary>
     public readonly record struct SettingsPageDescriptor(
         string Title,
         SymbolRegular Icon,
         Type PageType,
-        Type? InsertAfterPageType);
+        Type? InsertAfterPageType
+    );
 
     public partial class SettingsWindow
     {
         private static readonly List<SettingsPageDescriptor> ExternalPages = new();
 
-        /// <summary>
-        /// Registers a settings page to be shown in the navigation pane. Call before the settings
-        /// window is opened (e.g. at host startup). Pages appear after <see
-        /// cref="SettingsPageDescriptor.InsertAfterPageType"/>, or at the end when it is null.
-        /// </summary>
         public static void RegisterPage(SettingsPageDescriptor descriptor)
         {
             ExternalPages.Add(descriptor);
@@ -57,8 +49,10 @@ namespace EverythingToolbar.Settings
                 {
                     for (var i = 0; i < ThisNavigationView.MenuItems.Count; i++)
                     {
-                        if (ThisNavigationView.MenuItems[i] is NavigationViewItem existing
-                            && existing.TargetPageType == descriptor.InsertAfterPageType)
+                        if (
+                            ThisNavigationView.MenuItems[i] is NavigationViewItem existing
+                            && existing.TargetPageType == descriptor.InsertAfterPageType
+                        )
                         {
                             index = i + 1;
                             break;

@@ -171,13 +171,24 @@ namespace EverythingToolbar
             int top = (taskbarHeight - widgetHeight) / 2;
             int left = CalculateHorizontalPosition(taskbarHandle, taskbarRect, anchors, widgetWidth, dpiScale);
 
-            SetWindowPos(hwnd, IntPtr.Zero,
-                left, top,
-                widgetWidth, widgetHeight,
-                SWP_NOZORDER | SWP_NOACTIVATE | SWP_SHOWWINDOW);
+            SetWindowPos(
+                hwnd,
+                IntPtr.Zero,
+                left,
+                top,
+                widgetWidth,
+                widgetHeight,
+                SWP_NOZORDER | SWP_NOACTIVATE | SWP_SHOWWINDOW
+            );
         }
 
-        private int CalculateHorizontalPosition(IntPtr taskbarHandle, RECT taskbarRect, AnchorRects anchors, int widgetWidth, double dpiScale)
+        private int CalculateHorizontalPosition(
+            IntPtr taskbarHandle,
+            RECT taskbarRect,
+            AnchorRects anchors,
+            int widgetWidth,
+            double dpiScale
+        )
         {
             int padding = (int)(8 * dpiScale);
             int taskbarWidth = taskbarRect.Right - taskbarRect.Left;
@@ -248,8 +259,10 @@ namespace EverythingToolbar
                 if (taskbarElement == null)
                     return null;
 
-                var widgetsButton = taskbarElement.FindFirst(TreeScope.Descendants,
-                    new PropertyCondition(AutomationElement.AutomationIdProperty, "WidgetsButton"));
+                var widgetsButton = taskbarElement.FindFirst(
+                    TreeScope.Descendants,
+                    new PropertyCondition(AutomationElement.AutomationIdProperty, "WidgetsButton")
+                );
 
                 if (widgetsButton != null)
                 {
@@ -274,8 +287,10 @@ namespace EverythingToolbar
                 if (taskbarElement == null)
                     return null;
 
-                var systemTray = taskbarElement.FindFirst(TreeScope.Descendants,
-                    new PropertyCondition(AutomationElement.AutomationIdProperty, "SystemTrayIcon"));
+                var systemTray = taskbarElement.FindFirst(
+                    TreeScope.Descendants,
+                    new PropertyCondition(AutomationElement.AutomationIdProperty, "SystemTrayIcon")
+                );
 
                 if (systemTray != null)
                 {
@@ -302,13 +317,17 @@ namespace EverythingToolbar
         [StructLayout(LayoutKind.Sequential)]
         private struct RECT
         {
-            public int Left, Top, Right, Bottom;
+            public int Left,
+                Top,
+                Right,
+                Bottom;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         private struct POINT
         {
-            public int X, Y;
+            public int X,
+                Y;
         }
 
         private const int GWL_STYLE = -16;
@@ -328,7 +347,15 @@ namespace EverythingToolbar
         private static extern uint GetDpiForWindow(IntPtr hWnd);
 
         [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+        private static extern bool SetWindowPos(
+            IntPtr hWnd,
+            IntPtr hWndInsertAfter,
+            int X,
+            int Y,
+            int cx,
+            int cy,
+            uint uFlags
+        );
 
         [DllImport("user32.dll")]
         private static extern bool ScreenToClient(IntPtr hWnd, ref POINT lpPoint);

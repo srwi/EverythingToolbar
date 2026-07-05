@@ -1374,7 +1374,7 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Controls the search box alignment in the taskbar.
+        ///   Looks up a localized string similar to Controls the search box alignment on the taskbar.
         /// </summary>
         public static string SettingsTaskbarWindowAlignmentHelp {
             get {

@@ -93,7 +93,7 @@ namespace EverythingToolbar
             _dwmFlushOnRender = false;
 
             SearchState.Instance.Reset();
-            
+
             // Fire Hidden event after animation is complete and window is actually hidden
             Hidden?.Invoke(this, EventArgs.Empty);
         }

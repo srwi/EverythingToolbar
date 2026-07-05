@@ -13,6 +13,7 @@ namespace EverythingToolbar.Launcher.Settings
     {
         private readonly string _taskbarShortcutPath = Utils.GetTaskbarShortcutPath();
         private FileSystemWatcher? _watcher;
+        private Helpers.RegistryValueWatcher? _taskbarAlignmentWatcher;
 
         private bool _isTaskbarIconPinned;
 
@@ -109,6 +110,7 @@ namespace EverythingToolbar.Launcher.Settings
         {
             IsTaskbarIconPinned = File.Exists(_taskbarShortcutPath);
             CreateFileWatcher();
+            CreateTaskbarAlignmentWatcher();
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
@@ -119,6 +121,29 @@ namespace EverythingToolbar.Launcher.Settings
                 _watcher.Dispose();
                 _watcher = null;
             }
+
+            if (_taskbarAlignmentWatcher != null)
+            {
+                _taskbarAlignmentWatcher.Changed -= OnTaskbarAlignmentChanged;
+                _taskbarAlignmentWatcher.Dispose();
+                _taskbarAlignmentWatcher = null;
+            }
+        }
+
+        private void CreateTaskbarAlignmentWatcher()
+        {
+            if (!ShowTaskbarWindowSettings || _taskbarAlignmentWatcher != null)
+                return;
+
+            _taskbarAlignmentWatcher = new Helpers.RegistryValueWatcher(
+                @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+            );
+            _taskbarAlignmentWatcher.Changed += OnTaskbarAlignmentChanged;
+        }
+
+        private void OnTaskbarAlignmentChanged()
+        {
+            Dispatcher.BeginInvoke(() => OnPropertyChanged(nameof(AllowLeftAlignment)));
         }
 
         private void CreateFileWatcher()
@@ -147,8 +172,8 @@ namespace EverythingToolbar.Launcher.Settings
                 NotifyFilter = NotifyFilters.FileName,
                 EnableRaisingEvents = true,
             };
-            _watcher.Created += (_, _) => Dispatcher.Invoke(() => IsTaskbarIconPinned = true);
-            _watcher.Deleted += (_, _) => Dispatcher.Invoke(() => IsTaskbarIconPinned = false);
+            _watcher.Created += (_, _) => Dispatcher.BeginInvoke(() => IsTaskbarIconPinned = true);
+            _watcher.Deleted += (_, _) => Dispatcher.BeginInvoke(() => IsTaskbarIconPinned = false);
         }
 
         private void OnPropertyChanged([CallerMemberName] string? name = null)

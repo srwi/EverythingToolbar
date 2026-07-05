@@ -13,25 +13,12 @@ using Size = System.Windows.Size;
 
 namespace EverythingToolbar.Behaviors
 {
-    /// <summary>
-    /// Behavior that positions the SearchWindow relative to a placement target (deskband/taskbar window mode)
-    /// or based on cursor/taskbar location (launcher icon mode).
-    /// </summary>
     public class SearchWindowPlacement : Behavior<SearchWindow>
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<SearchWindowPlacement>();
 
-        /// <summary>
-        /// Optional placement target. When set, SearchWindow positions relative to this element (deskband/taskbar window mode).
-        /// When null, positions based on cursor/taskbar location (launcher icon mode).
-        /// </summary>
         public FrameworkElement? PlacementTarget { get; set; }
 
-        /// <summary>
-        /// When true, the next show uses cursor/taskbar placement even if a PlacementTarget
-        /// is set. The launcher icon/tray use this to open the classic launcher popup while a
-        /// taskbar window surface exists. Reset automatically after each show.
-        /// </summary>
         public bool UseCursorPlacement { get; set; }
 
         private double _dpiScalingFactor = 1.0;
@@ -77,9 +64,7 @@ namespace EverythingToolbar.Behaviors
             var useCursor = UseCursorPlacement || PlacementTarget == null;
             UseCursorPlacement = false;
 
-            var position = useCursor
-                ? CalculatePositionFromTaskbar()
-                : CalculatePositionFromTarget();
+            var position = useCursor ? CalculatePositionFromTaskbar() : CalculatePositionFromTarget();
 
             AssociatedObject.AnimateShow(
                 position.Left * _dpiScalingFactor,
@@ -90,13 +75,12 @@ namespace EverythingToolbar.Behaviors
             );
         }
 
-        /// <summary>
-        /// Calculate position relative to PlacementTarget (deskband/taskbar window mode).
-        /// </summary>
         private Rect CalculatePositionFromTarget()
         {
-            if (PlacementTarget == null ||
-                PresentationSource.FromVisual(PlacementTarget) as HwndSource is not { } hwndSource)
+            if (
+                PlacementTarget == null
+                || PresentationSource.FromVisual(PlacementTarget) as HwndSource is not { } hwndSource
+            )
             {
                 Logger.Error("Failed to get HwndSource from PlacementTarget. Cannot calculate window position.");
                 return new Rect();
@@ -122,7 +106,6 @@ namespace EverythingToolbar.Behaviors
                     var topDockPos = Math.Max(workingArea.Top, screenBounds.Top + (int)taskbarSize.Height);
                     var bottomDockPos = Math.Min(workingArea.Bottom, screenBounds.Bottom - (int)taskbarSize.Height);
 
-                    // Calculate horizontal position
                     windowPosition.Right = Math.Min(
                         placementTarget.Left + (int)windowSize.Width,
                         workingArea.Right - margin
@@ -131,19 +114,10 @@ namespace EverythingToolbar.Behaviors
                         workingArea.Left + margin,
                         windowPosition.Right - (int)windowSize.Width
                     );
-                    // Ensure width is preserved
                     windowPosition.Right = windowPosition.Left + (int)windowSize.Width;
 
-                    // Calculate vertical position - derive Top from Bottom to preserve height
-                    windowPosition.Bottom = Math.Min(
-                        placementTarget.Top - margin,
-                        bottomDockPos - margin
-                    );
-                    windowPosition.Top = Math.Max(
-                        topDockPos + margin,
-                        windowPosition.Bottom - (int)windowSize.Height
-                    );
-                    // Ensure height is preserved (recalculate Bottom based on Top)
+                    windowPosition.Bottom = Math.Min(placementTarget.Top - margin, bottomDockPos - margin);
+                    windowPosition.Top = Math.Max(topDockPos + margin, windowPosition.Bottom - (int)windowSize.Height);
                     windowPosition.Bottom = windowPosition.Top + (int)windowSize.Height;
                     break;
                 case Edge.Left:
@@ -151,7 +125,6 @@ namespace EverythingToolbar.Behaviors
                     var leftDockPos = Math.Max(workingArea.Left, screenBounds.Left + (int)taskbarSize.Width);
                     var rightDockPos = Math.Min(workingArea.Right, screenBounds.Right - (int)taskbarSize.Width);
 
-                    // Calculate vertical position
                     windowPosition.Bottom = Math.Min(
                         placementTarget.Top + (int)windowSize.Height,
                         workingArea.Bottom - margin
@@ -160,28 +133,16 @@ namespace EverythingToolbar.Behaviors
                         workingArea.Top + margin,
                         windowPosition.Bottom - (int)windowSize.Height
                     );
-                    // Ensure height is preserved
                     windowPosition.Bottom = windowPosition.Top + (int)windowSize.Height;
 
-                    // Calculate horizontal position - derive Left from Right to preserve width
-                    windowPosition.Right = Math.Min(
-                        placementTarget.Left - margin,
-                        rightDockPos - margin
-                    );
-                    windowPosition.Left = Math.Max(
-                        leftDockPos + margin,
-                        windowPosition.Right - (int)windowSize.Width
-                    );
-                    // Ensure width is preserved (recalculate Right based on Left)
+                    windowPosition.Right = Math.Min(placementTarget.Left - margin, rightDockPos - margin);
+                    windowPosition.Left = Math.Max(leftDockPos + margin, windowPosition.Right - (int)windowSize.Width);
                     windowPosition.Right = windowPosition.Left + (int)windowSize.Width;
                     break;
             }
             return windowPosition;
         }
 
-        /// <summary>
-        /// Calculate position based on cursor/taskbar location (launcher icon mode).
-        /// </summary>
         private Rect CalculatePositionFromTaskbar()
         {
             var screen = Screen.FromPoint(Cursor.Position);
@@ -360,7 +321,8 @@ namespace EverythingToolbar.Behaviors
 
         private int GetMargin()
         {
-            return Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows11 ? 12 : 0;
+            var marginDip = Utils.GetWindowsVersion() >= Utils.WindowsVersion.Windows11 ? 12 : 0;
+            return (int)Math.Round(marginDip / GetScalingFactor());
         }
 
         [DllImport("user32")]

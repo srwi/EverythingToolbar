@@ -11,9 +11,12 @@ namespace EverythingToolbar.Controls
     public partial class ToolbarControl
     {
         // Dependency property to control layout mode
-        public static readonly DependencyProperty IsFixedLayoutProperty = 
-            DependencyProperty.Register(nameof(IsFixedLayout), typeof(bool), typeof(ToolbarControl),
-                new PropertyMetadata(false, OnIsFixedLayoutChanged));
+        public static readonly DependencyProperty IsFixedLayoutProperty = DependencyProperty.Register(
+            nameof(IsFixedLayout),
+            typeof(bool),
+            typeof(ToolbarControl),
+            new PropertyMetadata(false, OnIsFixedLayoutChanged)
+        );
 
         public bool IsFixedLayout
         {
@@ -22,9 +25,12 @@ namespace EverythingToolbar.Controls
         }
 
         // Dependency property to control whether to add SearchWindowPlacement behavior
-        public static readonly DependencyProperty AddPlacementBehaviorProperty = 
-            DependencyProperty.Register(nameof(AddPlacementBehavior), typeof(bool), typeof(ToolbarControl),
-                new PropertyMetadata(false));
+        public static readonly DependencyProperty AddPlacementBehaviorProperty = DependencyProperty.Register(
+            nameof(AddPlacementBehavior),
+            typeof(bool),
+            typeof(ToolbarControl),
+            new PropertyMetadata(false)
+        );
 
         public bool AddPlacementBehavior
         {
