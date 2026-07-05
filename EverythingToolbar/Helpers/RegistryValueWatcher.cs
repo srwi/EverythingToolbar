@@ -6,11 +6,6 @@ using NLog;
 
 namespace EverythingToolbar.Helpers
 {
-    /// <summary>
-    /// Watches an HKCU registry key for value changes and raises <see cref="Changed"/> (on a
-    /// background thread) whenever a value under it is written. A cheap alternative to polling,
-    /// used to react to Windows taskbar setting changes (e.g. TaskbarAl) while a window is open.
-    /// </summary>
     public sealed class RegistryValueWatcher : IDisposable
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<RegistryValueWatcher>();
@@ -31,7 +26,6 @@ namespace EverythingToolbar.Helpers
         private readonly ManualResetEvent _stopEvent = new(false);
         private readonly Thread? _thread;
 
-        /// <summary>Raised on a background thread when a value under the watched key changes.</summary>
         public event Action? Changed;
 
         public RegistryValueWatcher(string subKey)

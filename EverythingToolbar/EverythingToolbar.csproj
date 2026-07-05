@@ -208,7 +208,6 @@
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="NLog" Version="5.1.1" />
-    <PackageReference Include="System.Management" Version="9.0.4" />
     <PackageReference Include="WindowsAPICodePackShell" Version="8.0.8" />
     <PackageReference Include="WPF-UI" Version="4.0.3" />
   </ItemGroup>
