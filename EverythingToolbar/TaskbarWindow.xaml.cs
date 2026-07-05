@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Interop;
@@ -9,20 +10,18 @@ using NLog;
 
 namespace EverythingToolbar
 {
-    public partial class TaskbarWindow : Window
+    public partial class TaskbarWindow
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<TaskbarWindow>();
 
         private IntPtr _taskbarHandle;
 
-        // Fixed box dimensions (in DIP), intentionally independent of the search box content.
+        private int _positionGeneration;
+
         private const double WidgetWidthDip = 300;
         private const double MinWidgetHeightDip = 32;
         private const double WidgetVerticalMarginDip = 6;
 
-        /// <summary>
-        /// Gets the ToolbarControl for placement target purposes.
-        /// </summary>
         public FrameworkElement PlacementTarget => ToolbarControl;
 
         public TaskbarWindow()
@@ -60,7 +59,6 @@ namespace EverythingToolbar
         {
             switch (msg)
             {
-                case 0x003D: // WM_GETOBJECT
                 case 0x0018: // WM_SHOWWINDOW
                 case 0x0046: // WM_WINDOWPOSCHANGING
                 case 0x0083: // WM_NCCALCSIZE
@@ -105,8 +103,6 @@ namespace EverythingToolbar
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            // Window lifecycle (enable/disable) is owned by the Launcher, which creates and
-            // closes the TaskbarWindow. Here we only react to changes affecting placement.
             if (e.PropertyName == nameof(ToolbarSettings.User.TaskbarWindowAlignment))
             {
                 UpdatePosition();
@@ -136,7 +132,19 @@ namespace EverythingToolbar
                 if (GetParent(hwnd) != _taskbarHandle)
                     SetParent(hwnd, _taskbarHandle);
 
-                CalculateAndSetPosition(hwnd);
+                var taskbarHandle = _taskbarHandle;
+                var generation = ++_positionGeneration;
+                Task.Run(() =>
+                {
+                    var anchors = ResolveAnchorRects(taskbarHandle);
+                    Dispatcher.BeginInvoke(() =>
+                    {
+                        // Drop stale results if a newer UpdatePosition ran or the box went away.
+                        if (generation != _positionGeneration || !IsLoaded)
+                            return;
+                        ApplyPosition(hwnd, taskbarHandle, anchors);
+                    });
+                });
             }
             catch (Exception ex)
             {
@@ -144,26 +152,21 @@ namespace EverythingToolbar
             }
         }
 
-        private void CalculateAndSetPosition(IntPtr hwnd)
+        private void ApplyPosition(IntPtr hwnd, IntPtr taskbarHandle, AnchorRects anchors)
         {
-            double dpiScale = GetDpiForWindow(_taskbarHandle) / 96.0;
+            double dpiScale = GetDpiForWindow(taskbarHandle) / 96.0;
 
-            if (!GetWindowRect(_taskbarHandle, out RECT taskbarRect))
+            if (!GetWindowRect(taskbarHandle, out RECT taskbarRect))
                 return;
 
-            int taskbarWidth = taskbarRect.Right - taskbarRect.Left;
             int taskbarHeight = taskbarRect.Bottom - taskbarRect.Top;
-            int screenCenter = taskbarRect.Left + taskbarWidth / 2;
 
-            // Size is derived from the taskbar geometry, not the search box content, so the box
-            // stays constant regardless of quick toggles or placeholder text. The content
-            // stretches to fill the window.
             int verticalMargin = (int)(WidgetVerticalMarginDip * dpiScale);
             int widgetHeight = Math.Max(taskbarHeight - 2 * verticalMargin, (int)(MinWidgetHeightDip * dpiScale));
             int widgetWidth = (int)(WidgetWidthDip * dpiScale);
 
             int top = (taskbarHeight - widgetHeight) / 2;
-            int left = CalculateHorizontalPosition(taskbarRect, widgetWidth, screenCenter, dpiScale);
+            int left = CalculateHorizontalPosition(taskbarHandle, taskbarRect, anchors, widgetWidth, dpiScale);
 
             SetWindowPos(hwnd, IntPtr.Zero,
                 left, top,
@@ -171,26 +174,23 @@ namespace EverythingToolbar
                 SWP_NOZORDER | SWP_NOACTIVATE | SWP_SHOWWINDOW);
         }
 
-        private int CalculateHorizontalPosition(RECT taskbarRect, int widgetWidth, int screenCenter, double dpiScale)
+        private int CalculateHorizontalPosition(IntPtr taskbarHandle, RECT taskbarRect, AnchorRects anchors, int widgetWidth, double dpiScale)
         {
             int padding = (int)(8 * dpiScale);
             int taskbarWidth = taskbarRect.Right - taskbarRect.Left;
             string alignment = ToolbarSettings.User.TaskbarWindowAlignment;
             bool isTaskbarCentered = Utils.IsTaskbarCenterAligned();
 
-            var widgetsRect = GetWidgetsButtonRect();
-            if (widgetsRect.HasValue)
+            if (anchors.WidgetsRect.HasValue)
             {
-                POINT pt = new() { X = (int)widgetsRect.Value.Left, Y = 0 };
-                ScreenToClient(_taskbarHandle, ref pt);
+                POINT pt = new() { X = (int)anchors.WidgetsRect.Value.Left, Y = 0 };
+                ScreenToClient(taskbarHandle, ref pt);
                 int widgetsLeftRelative = pt.X;
 
-                pt = new POINT { X = (int)widgetsRect.Value.Right, Y = 0 };
-                ScreenToClient(_taskbarHandle, ref pt);
+                pt = new POINT { X = (int)anchors.WidgetsRect.Value.Right, Y = 0 };
+                ScreenToClient(taskbarHandle, ref pt);
                 int widgetsRightRelative = pt.X;
 
-                // Left setting + center taskbar: widget is on left, place on right of widget
-                // Otherwise (right setting or left taskbar): place on left of widget
                 if (alignment == "Left" && isTaskbarCentered)
                 {
                     return widgetsRightRelative + padding;
@@ -201,15 +201,12 @@ namespace EverythingToolbar
                 }
             }
 
-            var systemTrayRect = GetSystemTrayRect();
-            if (systemTrayRect.HasValue)
+            if (anchors.SystemTrayRect.HasValue)
             {
-                POINT pt = new() { X = (int)systemTrayRect.Value.Left, Y = 0 };
-                ScreenToClient(_taskbarHandle, ref pt);
+                POINT pt = new() { X = (int)anchors.SystemTrayRect.Value.Left, Y = 0 };
+                ScreenToClient(taskbarHandle, ref pt);
                 int trayLeftRelative = pt.X;
 
-                // Left setting + center taskbar: place at very left edge
-                // Otherwise (right setting or left taskbar): place on left of system tray
                 if (alignment == "Left" && isTaskbarCentered)
                 {
                     return 0;
@@ -227,11 +224,30 @@ namespace EverythingToolbar
                 return 0;
         }
 
-        private Rect? GetWidgetsButtonRect()
+        private static AnchorRects ResolveAnchorRects(IntPtr taskbarHandle)
+        {
+            var widgetsRect = GetWidgetsButtonRect(taskbarHandle);
+            var systemTrayRect = widgetsRect.HasValue ? null : GetSystemTrayRect(taskbarHandle);
+            return new AnchorRects(widgetsRect, systemTrayRect);
+        }
+
+        private readonly struct AnchorRects
+        {
+            public AnchorRects(Rect? widgetsRect, Rect? systemTrayRect)
+            {
+                WidgetsRect = widgetsRect;
+                SystemTrayRect = systemTrayRect;
+            }
+
+            public Rect? WidgetsRect { get; }
+            public Rect? SystemTrayRect { get; }
+        }
+
+        private static Rect? GetWidgetsButtonRect(IntPtr taskbarHandle)
         {
             try
             {
-                var taskbarElement = AutomationElement.FromHandle(_taskbarHandle);
+                var taskbarElement = AutomationElement.FromHandle(taskbarHandle);
                 if (taskbarElement == null)
                     return null;
 
@@ -253,11 +269,11 @@ namespace EverythingToolbar
             return null;
         }
 
-        private Rect? GetSystemTrayRect()
+        private static Rect? GetSystemTrayRect(IntPtr taskbarHandle)
         {
             try
             {
-                var taskbarElement = AutomationElement.FromHandle(_taskbarHandle);
+                var taskbarElement = AutomationElement.FromHandle(taskbarHandle);
                 if (taskbarElement == null)
                     return null;
 
