@@ -4,9 +4,9 @@ namespace EverythingToolbar.Helpers
 {
     public class RegistryEntry(string hive, string keyPath, string valueName)
     {
-        public string Hive = hive;
-        public string KeyPath = keyPath;
-        public string ValueName = valueName;
+        public readonly string Hive = hive;
+        public readonly string KeyPath = keyPath;
+        public readonly string ValueName = valueName;
 
         public object? GetValue(object? defaultValue = null)
         {

@@ -28,7 +28,7 @@ namespace EverythingToolbar.Helpers
 
             if (commandLine.StartsWith("\""))
             {
-                int endQuote = commandLine.IndexOf("\"", 1);
+                int endQuote = commandLine.IndexOf('"', 1);
                 return endQuote > 0 ? commandLine.Substring(1, endQuote - 1) : commandLine.Substring(1);
             }
 

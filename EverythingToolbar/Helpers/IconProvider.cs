@@ -114,7 +114,7 @@ namespace EverythingToolbar.Helpers
         private static readonly ConcurrentDictionary<string, ImageSource> IconByIndexAndScaleCache = new();
         private static readonly ConcurrentDictionary<string, int> ExtensionToIndexMap = new();
 
-        private static int _fallbackDirectoryIconIndex;
+        private static readonly int _fallbackDirectoryIconIndex;
 
         static IconProvider()
         {
@@ -255,7 +255,7 @@ namespace EverythingToolbar.Helpers
                     return null;
                 imageList = (Windows.Win32.UI.Controls.IImageList)ppv;
 
-                imageList.GetIcon(iconIndex, (uint)IldTransparent, out var hIcon);
+                imageList.GetIcon(iconIndex, IldTransparent, out var hIcon);
                 if (hIcon == null || hIcon.IsInvalid)
                     return null;
 

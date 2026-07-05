@@ -62,7 +62,7 @@ namespace EverythingToolbar.Helpers
             PInvoke.SystemParametersInfo(
                 SYSTEM_PARAMETERS_INFO_ACTION.SPI_SETCLIENTAREAANIMATION,
                 0,
-                (void*)(nint)(enabled ? 1 : 0),
+                (void*)(enabled ? 1 : 0),
                 SYSTEM_PARAMETERS_INFO_UPDATE_FLAGS.SPIF_SENDCHANGE
             );
         }

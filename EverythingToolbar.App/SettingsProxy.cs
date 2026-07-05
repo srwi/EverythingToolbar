@@ -21,7 +21,7 @@ namespace EverythingToolbar
         public static ISettings Create(IToolbarSettings store)
         {
             var proxy = Create<ISettings, SettingsProxy>();
-            ((SettingsProxy)(object)proxy)._store = store;
+            ((SettingsProxy)proxy)._store = store;
             return proxy;
         }
 

@@ -1,6 +1,4 @@
 using System;
-using System.IO;
-using System.Runtime.InteropServices;
 using EverythingToolbar.Helpers;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 

@@ -2,14 +2,14 @@ namespace EverythingToolbar.Data
 {
     public class Filter
     {
-        public string Name { get; set; } = "";
-        public string Icon { get; set; } = "";
-        public string Search { get; set; } = "";
-        public string Macro { get; set; } = "";
-        public bool IsMatchCase { get; set; }
-        public bool IsMatchWholeWord { get; set; }
-        public bool IsMatchPath { get; set; }
-        public bool IsRegExEnabled { get; set; }
+        public string Name { get; init; } = "";
+        public string Icon { get; init; } = "";
+        public string Search { get; init; } = "";
+        public string Macro { get; init; } = "";
+        public bool IsMatchCase { get; init; }
+        public bool IsMatchWholeWord { get; init; }
+        public bool IsMatchPath { get; init; }
+        public bool IsRegExEnabled { get; init; }
 
         public override bool Equals(object? obj)
         {
@@ -22,16 +22,6 @@ namespace EverythingToolbar.Data
         public override int GetHashCode()
         {
             return Name.GetHashCode();
-        }
-
-        public void Reset()
-        {
-            IsMatchCase = false;
-            IsMatchWholeWord = false;
-            IsMatchPath = false;
-            IsRegExEnabled = false;
-            Search = "";
-            Macro = "";
         }
 
         public string GetSearchPrefix(

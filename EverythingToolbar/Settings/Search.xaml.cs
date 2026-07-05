@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Data;
-using EverythingToolbar.Properties;
 using EverythingToolbar.Search;
 
 namespace EverythingToolbar.Settings

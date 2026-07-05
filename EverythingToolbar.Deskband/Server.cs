@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using EverythingToolbar;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using NLog;

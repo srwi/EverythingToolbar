@@ -269,7 +269,7 @@ namespace EverythingToolbar.Helpers
             }
             else
             {
-                brush = (SolidColorBrush)Brushes.DimGray;
+                brush = Brushes.DimGray;
             }
 
             var resDict = new ResourceDictionary { ["AccentColor"] = brush };

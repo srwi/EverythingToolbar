@@ -6,15 +6,12 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
-using EverythingToolbar.Settings;
 using SearchResult = EverythingToolbar.Data.SearchResult;
 
 namespace EverythingToolbar.Controls
@@ -36,7 +33,7 @@ namespace EverythingToolbar.Controls
 
         private SearchResult? SelectedItem => SelectedSearchResult;
         private Point _dragStart;
-        private bool _isScrollBarDragging;
+        private int _lastScrolledIndex = -1;
         private int? _touchId;
         private readonly DispatcherTimer _busyIndicatorTimer;
         private const int BusyIndicatorDelayMilliseconds = 2000;
@@ -59,6 +56,10 @@ namespace EverythingToolbar.Controls
             SearchResultsListView.SelectionChanged += OnListSelectionChanged;
             SearchResultsListView.PreviewMouseLeftButtonDown += OnPreviewLeftMouseButtonDown;
 
+            SearchResultsListView.AddHandler(ScrollViewer.ScrollChangedEvent, new ScrollChangedEventHandler(OnScrollChanged));
+            SearchResultsListView.AddHandler(Thumb.DragStartedEvent, new DragStartedEventHandler(OnScrollBarDragStarted));
+            SearchResultsListView.AddHandler(Thumb.DragCompletedEvent, new DragCompletedEventHandler(OnScrollBarDragCompleted));
+
             _busyIndicatorTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(BusyIndicatorDelayMilliseconds),
@@ -71,7 +72,6 @@ namespace EverythingToolbar.Controls
             _session.Start(SynchronizationContext.Current ?? new SynchronizationContext());
 
             _session.AutoSelect();
-            AttachToScrollViewer();
         }
 
         private void OnSessionPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -82,8 +82,15 @@ namespace EverythingToolbar.Controls
 
         private void OnListSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SearchResultsListView.SelectedIndex >= 0 && SearchResultsListView.SelectedItem != null)
-                SearchResultsListView.ScrollIntoView(SearchResultsListView.SelectedItem);
+            var selectedIndex = SearchResultsListView.SelectedIndex;
+            if (selectedIndex < 0 || SearchResultsListView.SelectedItem == null)
+                return;
+
+            if (selectedIndex == _lastScrolledIndex)
+                return;
+
+            _lastScrolledIndex = selectedIndex;
+            SearchResultsListView.ScrollIntoView(SearchResultsListView.SelectedItem);
         }
 
         private void OnResultsReset()
@@ -119,68 +126,19 @@ namespace EverythingToolbar.Controls
             SearchResultsListView.Opacity = 0.3;
         }
 
-        private void AttachToScrollViewer()
+        private void OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            var listViewBorder = VisualTreeHelper.GetChild(SearchResultsListView, 0) as Decorator;
-
-            var scrollViewer = listViewBorder?.Child as ScrollViewer;
-            if (scrollViewer == null)
-                return;
-
-            scrollViewer.ScrollChanged += (_, e) =>
-                _session.VisiblePageCount = Math.Max(1, (int)e.ViewportHeight);
-
-            var verticalScrollBar = FindVisualChild<ScrollBar>(
-                scrollViewer,
-                s => s.Orientation == Orientation.Vertical
-            );
-            if (verticalScrollBar == null)
-                return;
-
-            verticalScrollBar.PreviewMouseLeftButtonDown += ScrollBar_PreviewMouseLeftButtonDown;
-            verticalScrollBar.PreviewMouseLeftButtonUp += ScrollBar_PreviewMouseLeftButtonUp;
-            verticalScrollBar.MouseLeave += ScrollBar_MouseLeave;
+            _session.VisiblePageCount = Math.Max(1, (int)e.ViewportHeight);
         }
 
-        private void ScrollBar_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void OnScrollBarDragStarted(object sender, DragStartedEventArgs e)
         {
-            _isScrollBarDragging = true;
             _session.IsAsync = false;
         }
 
-        private void ScrollBar_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void OnScrollBarDragCompleted(object sender, DragCompletedEventArgs e)
         {
-            ResetScrollBarDragging();
-        }
-
-        private void ScrollBar_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ResetScrollBarDragging();
-        }
-
-        private void ResetScrollBarDragging()
-        {
-            if (_isScrollBarDragging)
-            {
-                _isScrollBarDragging = false;
-                _session.IsAsync = true;
-            }
-        }
-
-        private static T? FindVisualChild<T>(DependencyObject parent, Func<T, bool>? condition = null)
-            where T : DependencyObject
-        {
-            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
-            {
-                var child = VisualTreeHelper.GetChild(parent, i);
-                if (child is T typedChild && (condition == null || condition(typedChild)))
-                    return typedChild;
-
-                var result = FindVisualChild(child, condition);
-                if (result != null)
-                    return result;
-            }
-            return null;
+            _session.IsAsync = true;
         }
 
         private void OnPreviewLeftMouseButtonDown(object sender, MouseButtonEventArgs e)
@@ -258,8 +216,7 @@ namespace EverythingToolbar.Controls
 
         private void OpenWith(object sender, RoutedEventArgs e)
         {
-            InvokeOnSelected(_actions.OpenWith);
-            _searchWindowController.Hide();
+            _commands.OpenSelectedWith();
         }
 
         private void ShowInEverything(object sender, RoutedEventArgs e)
@@ -327,7 +284,7 @@ namespace EverythingToolbar.Controls
 
         private void ShowFileWindowsContextMenu(object sender, RoutedEventArgs e)
         {
-            InvokeOnSelected(_actions.ShowWindowsContextMenu);
+            _commands.ShowSelectedWindowsContextMenu();
         }
 
         private void OnOpenWithMenuLoaded(object sender, RoutedEventArgs e)
@@ -439,7 +396,7 @@ namespace EverythingToolbar.Controls
 
             if (_settings.IsSystemContextMenuDefault != (Keyboard.Modifiers == ModifierKeys.Shift))
             {
-                _actions.ShowWindowsContextMenu(SelectedItem);
+                _commands.ShowSelectedWindowsContextMenu();
                 e.Handled = true;
             }
         }
@@ -459,14 +416,6 @@ namespace EverythingToolbar.Controls
                 SelectedItem.IsFile && extensions.Any(ext => SelectedItem.FullPathAndFileName.EndsWith(ext));
 
             mi.Visibility = isExecutable ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private void FocusSelectedItem()
-        {
-            var selectedItem = (ListViewItem)
-                SearchResultsListView.ItemContainerGenerator.ContainerFromItem(SelectedItem);
-            if (selectedItem != null)
-                Keyboard.Focus(selectedItem);
         }
     }
 }

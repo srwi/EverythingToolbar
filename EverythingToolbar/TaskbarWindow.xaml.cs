@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
@@ -56,7 +55,7 @@ namespace EverythingToolbar
         {
             base.OnSourceInitialized(e);
 
-            var source = (HwndSource)PresentationSource.FromDependencyObject(this);
+            var source = PresentationSource.FromDependencyObject(this) as HwndSource;
             source?.AddHook(WndProc);
 
             SetupAsTaskbarChild();
@@ -137,7 +136,7 @@ namespace EverythingToolbar
                     return;
                 }
 
-                if ((IntPtr)PInvoke.GetParent((HWND)hwnd) != _taskbarHandle)
+                if (PInvoke.GetParent((HWND)hwnd) != _taskbarHandle)
                     PInvoke.SetParent((HWND)hwnd, (HWND)_taskbarHandle);
 
                 var taskbarHandle = _taskbarHandle;

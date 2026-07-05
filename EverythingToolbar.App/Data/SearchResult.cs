@@ -1,13 +1,7 @@
-using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
-
 namespace EverythingToolbar.Data
 {
     public class SearchResult
     {
-        public SearchResult()
-        {
-        }
-
         public SearchResult(SearchResultData data)
         {
             Data = data;
@@ -26,10 +20,6 @@ namespace EverythingToolbar.Data
         public string FileName => Data.FileName;
 
         public string HighlightedFileName => Data.HighlightedFileName;
-
-        public long FileSize => Data.FileSize;
-
-        public FILETIME DateModified => Data.DateModified;
 
         public string HumanReadableFileSize => Data.HumanReadableFileSize;
 

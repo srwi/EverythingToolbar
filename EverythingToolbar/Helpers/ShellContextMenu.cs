@@ -276,7 +276,7 @@ namespace Peter
         /// </summary>
         /// <param name="arrFI">Array of FileInfo</param>
         /// <returns>Array of PIDLs</returns>
-        protected IntPtr[]? GetPIDLs(FileInfo[] arrFI)
+        private IntPtr[]? GetPIDLs(FileInfo[] arrFI)
         {
             if (null == arrFI || 0 == arrFI.Length)
             {
@@ -328,7 +328,7 @@ namespace Peter
         /// </summary>
         /// <param name="arrFI">Array of DirectoryInfo</param>
         /// <returns>Array of PIDLs</returns>
-        protected IntPtr[]? GetPIDLs(DirectoryInfo[] arrFI)
+        private IntPtr[]? GetPIDLs(DirectoryInfo[] arrFI)
         {
             if (null == arrFI || 0 == arrFI.Length)
             {
@@ -381,7 +381,7 @@ namespace Peter
         /// Free the PIDLs
         /// </summary>
         /// <param name="arrPIDLs">Array of PIDLs (IntPtr)</param>
-        protected void FreePIDLs(IntPtr[] arrPIDLs)
+        private void FreePIDLs(IntPtr[] arrPIDLs)
         {
             if (null != arrPIDLs)
             {

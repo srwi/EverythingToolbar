@@ -34,10 +34,10 @@ namespace EverythingToolbar.Launcher
 
         public bool WindowsSearchHidden
         {
-            get => !Helpers.SystemSettings.GetWindowsSearchEnabledState();
+            get => !SystemSettings.GetWindowsSearchEnabledState();
             set
             {
-                Helpers.SystemSettings.SetWindowsSearchEnabledState(!value);
+                SystemSettings.SetWindowsSearchEnabledState(!value);
                 OnPropertyChanged();
             }
         }
@@ -145,7 +145,7 @@ namespace EverythingToolbar.Launcher
             if (!IsTaskbarWindowSupported)
                 return;
 
-            _taskbarAlignmentWatcher = new Helpers.RegistryValueWatcher(
+            _taskbarAlignmentWatcher = new RegistryValueWatcher(
                 @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
             );
             _taskbarAlignmentWatcher.Changed += OnTaskbarAlignmentChanged;

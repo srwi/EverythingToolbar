@@ -116,19 +116,7 @@ namespace EverythingToolbar.Helpers
                         continue;
 
                     var filterDict = header.Zip(fields, (h, f) => new { h, f }).ToDictionary(x => x.h, x => x.f);
-                    var filter = ParseFilterFromDict(filterDict);
-
-                    filter.Name = filter
-                        .Name.Replace("EVERYTHING", _names.All)
-                        .Replace("FOLDER", _names.Folder)
-                        .Replace("FILE", _names.File)
-                        .Replace("AUDIO", _names.Audio)
-                        .Replace("COMPRESSED", _names.Compressed)
-                        .Replace("DOCUMENT", _names.Document)
-                        .Replace("EXECUTABLE", _names.Executable)
-                        .Replace("PICTURE", _names.Picture)
-                        .Replace("VIDEO", _names.Video);
-                    filters.Add(filter);
+                    filters.Add(ParseFilterFromDict(filterDict));
                 }
 
                 return filters;
@@ -145,7 +133,7 @@ namespace EverythingToolbar.Helpers
         {
             return new Filter
             {
-                Name = dict["Name"],
+                Name = LocalizeName(dict["Name"]),
                 IsMatchCase = dict["Case"] == "1",
                 IsMatchWholeWord = dict["Whole Word"] == "1",
                 IsMatchPath = dict["Path"] == "1",
@@ -154,6 +142,17 @@ namespace EverythingToolbar.Helpers
                 Macro = dict["Macro"],
             };
         }
+
+        private string LocalizeName(string name) =>
+            name.Replace("EVERYTHING", _names.All)
+                .Replace("FOLDER", _names.Folder)
+                .Replace("FILE", _names.File)
+                .Replace("AUDIO", _names.Audio)
+                .Replace("COMPRESSED", _names.Compressed)
+                .Replace("DOCUMENT", _names.Document)
+                .Replace("EXECUTABLE", _names.Executable)
+                .Replace("PICTURE", _names.Picture)
+                .Replace("VIDEO", _names.Video);
 
         private void StopFileWatcher()
         {

@@ -1,5 +1,4 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar;
 using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;

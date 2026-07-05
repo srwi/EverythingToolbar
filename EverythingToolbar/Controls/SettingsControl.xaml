@@ -14,7 +14,7 @@
                 Padding="10, 4, 10, 4">
             <Button.ContextMenu>
                 <ContextMenu Name="SortByMenu"
-                             FontFamily="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=FontFamily}">
+                             FontFamily="Segoe UI Variable Text, Segoe UI">
                     <MenuItem IsCheckable="True"
                               Header="{x:Static properties:Resources.SortByName}"
                               Click="OnSortByClicked" />
@@ -81,7 +81,7 @@
                 Style="{DynamicResource TabBarButtonStyle}"
                 Padding="10, 4, 10, 4">
             <Button.ContextMenu>
-                <ContextMenu FontFamily="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=FontFamily}">
+                <ContextMenu FontFamily="Segoe UI Variable Text, Segoe UI">
                     <MenuItem IsCheckable="True"
                               Header="{x:Static properties:Resources.SettingsRegularExpressions}"
                               IsChecked="{Binding Settings.IsRegExEnabled, Mode=TwoWay}" />

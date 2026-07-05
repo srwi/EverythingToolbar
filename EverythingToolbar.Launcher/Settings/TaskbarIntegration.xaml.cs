@@ -15,7 +15,7 @@ namespace EverythingToolbar.Launcher.Settings
     {
         private readonly string _taskbarShortcutPath = Utils.GetTaskbarShortcutPath();
         private FileSystemWatcher? _watcher;
-        private Helpers.RegistryValueWatcher? _taskbarAlignmentWatcher;
+        private RegistryValueWatcher? _taskbarAlignmentWatcher;
         private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
         private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
 
@@ -82,7 +82,7 @@ namespace EverythingToolbar.Launcher.Settings
             }
         }
 
-        private bool _isWindowsSearchHidden = !Helpers.SystemSettings.GetWindowsSearchEnabledState();
+        private bool _isWindowsSearchHidden = !SystemSettings.GetWindowsSearchEnabledState();
         public bool IsWindowsSearchHidden
         {
             get => _isWindowsSearchHidden;
@@ -91,7 +91,7 @@ namespace EverythingToolbar.Launcher.Settings
                 if (_isWindowsSearchHidden != value)
                 {
                     _isWindowsSearchHidden = value;
-                    Helpers.SystemSettings.SetWindowsSearchEnabledState(!value);
+                    SystemSettings.SetWindowsSearchEnabledState(!value);
                     OnPropertyChanged();
                 }
             }
@@ -140,7 +140,7 @@ namespace EverythingToolbar.Launcher.Settings
             if (!ShowTaskbarWindowSettings || _taskbarAlignmentWatcher != null)
                 return;
 
-            _taskbarAlignmentWatcher = new Helpers.RegistryValueWatcher(
+            _taskbarAlignmentWatcher = new RegistryValueWatcher(
                 @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
             );
             _taskbarAlignmentWatcher.Changed += OnTaskbarAlignmentChanged;
@@ -192,6 +192,6 @@ namespace EverythingToolbar.Launcher.Settings
     {
         public string DisplayName { get; set; } = "";
         public string IconPath { get; set; } = "";
-        public string Value { get; set; } = "";
+        public string Value { get; init; } = "";
     }
 }

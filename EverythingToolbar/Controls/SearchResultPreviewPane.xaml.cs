@@ -7,7 +7,6 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
-using EverythingToolbar.Settings;
 
 namespace EverythingToolbar.Controls
 {

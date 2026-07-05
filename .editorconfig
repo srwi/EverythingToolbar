@@ -4,6 +4,16 @@ root = true
 # C# files
 [*.cs]
 
+# ── Static-analysis severities: keep dead code / unused usings from re-accumulating ──
+# Enforced at build time via EnforceCodeStyleInBuild (see Directory.Build.props).
+# These are the zero-false-positive rules (they only fire on truly-unreferenced code).
+# Unnecessary using directive
+dotnet_diagnostic.IDE0005.severity = warning
+# Unused private member (method / field / property)
+dotnet_diagnostic.IDE0051.severity = warning
+# Private member that is assigned but never read
+dotnet_diagnostic.IDE0052.severity = warning
+
 #### Core EditorConfig Options ####
 
 # Indentation and spacing
@@ -231,3 +241,9 @@ dotnet_naming_style.begins_with_i.required_prefix = I
 dotnet_naming_style.begins_with_i.required_suffix =
 dotnet_naming_style.begins_with_i.word_separator =
 dotnet_naming_style.begins_with_i.capitalization = pascal_case
+
+# Vendored third-party code — do not enforce the dead-code style rules here
+[**/{CSDeskBand,ShellContextMenu}.cs]
+dotnet_diagnostic.IDE0005.severity = none
+dotnet_diagnostic.IDE0051.severity = none
+dotnet_diagnostic.IDE0052.severity = none

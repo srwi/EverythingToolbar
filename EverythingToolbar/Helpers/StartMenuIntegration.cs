@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows.Input;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
@@ -246,7 +244,7 @@ namespace EverythingToolbar.Helpers
             {
                 _animationsToRestore ??= SystemSettings.GetSystemAnimationsEnabled();
                 SystemSettings.SetSystemAnimationsEnabled(false);
-                PInvoke.PostMessage((HWND)_searchAppHwnd, 0x0010, (WPARAM)0, (LPARAM)0);
+                PInvoke.PostMessage((HWND)_searchAppHwnd, 0x0010, 0, 0);
                 _searchAppHwnd = IntPtr.Zero;
             }
         }
