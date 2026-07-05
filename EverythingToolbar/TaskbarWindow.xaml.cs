@@ -84,7 +84,7 @@ namespace EverythingToolbar
                 if (hwnd == IntPtr.Zero)
                     return;
 
-                _taskbarHandle = FindWindow("Shell_TrayWnd", null);
+                _taskbarHandle = NativeMethods.FindTaskbarHandle();
                 if (_taskbarHandle == IntPtr.Zero)
                 {
                     Logger.Warn("Could not find taskbar handle");
@@ -124,7 +124,7 @@ namespace EverythingToolbar
                     return;
 
                 if (_taskbarHandle == IntPtr.Zero)
-                    _taskbarHandle = FindWindow("Shell_TrayWnd", null);
+                    _taskbarHandle = NativeMethods.FindTaskbarHandle();
 
                 if (_taskbarHandle == IntPtr.Zero)
                 {
@@ -157,7 +157,7 @@ namespace EverythingToolbar
 
         private void ApplyPosition(IntPtr hwnd, IntPtr taskbarHandle, AnchorRects anchors)
         {
-            double dpiScale = GetDpiForWindow(taskbarHandle) / 96.0;
+            double dpiScale = NativeMethods.GetDpiForWindow(taskbarHandle) / 96.0;
 
             if (!GetWindowRect(taskbarHandle, out RECT taskbarRect))
                 return;
@@ -171,7 +171,7 @@ namespace EverythingToolbar
             int top = (taskbarHeight - widgetHeight) / 2;
             int left = CalculateHorizontalPosition(taskbarHandle, taskbarRect, anchors, widgetWidth, dpiScale);
 
-            SetWindowPos(
+            NativeMethods.SetWindowPos(
                 hwnd,
                 IntPtr.Zero,
                 left,
@@ -338,24 +338,7 @@ namespace EverythingToolbar
         private const uint SWP_SHOWWINDOW = 0x0040;
 
         [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr FindWindow(string lpClassName, string? lpWindowName);
-
-        [DllImport("user32.dll", SetLastError = true)]
         private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-
-        [DllImport("user32.dll")]
-        private static extern uint GetDpiForWindow(IntPtr hWnd);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool SetWindowPos(
-            IntPtr hWnd,
-            IntPtr hWndInsertAfter,
-            int X,
-            int Y,
-            int cx,
-            int cy,
-            uint uFlags
-        );
 
         [DllImport("user32.dll")]
         private static extern bool ScreenToClient(IntPtr hWnd, ref POINT lpPoint);

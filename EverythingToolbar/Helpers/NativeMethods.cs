@@ -1,17 +1,34 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using NLog;
 
 namespace EverythingToolbar.Helpers
 {
-    public class NativeMethods
+    public static class NativeMethods
     {
-        private static readonly ILogger Logger = ToolbarLogger.GetLogger<NativeMethods>();
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger(nameof(NativeMethods));
+
+        #region Window discovery
 
         public static IntPtr FindTaskbarHandle()
         {
             return FindWindow("Shell_TrayWnd", null);
         }
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr FindWindow(string lpClassName, string? lpWindowName);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr FindWindowEx(
+            IntPtr parentHandle,
+            IntPtr childAfter,
+            string className,
+            string? windowTitle
+        );
+
+        #endregion
+
+        #region Foreground & activation
 
         public static void FocusTaskbarWindow()
         {
@@ -56,37 +73,24 @@ namespace EverythingToolbar.Helpers
         public static extern uint FlashWindow(IntPtr hWnd, bool bInvert);
 
         [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
+        public static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
 
         [DllImport("user32.dll")]
-        private static extern bool BringWindowToTop(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
         private static extern IntPtr SetActiveWindow(IntPtr hWnd);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr FindWindowEx(
-            IntPtr parentHandle,
-            IntPtr childAfter,
-            string className,
-            string? windowTitle
-        );
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr FindWindow(string lpClassName, string? lpWindowName);
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, ref Copydatastruct lParam);
-
-        [DllImport("user32.dll")]
-        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
         [DllImport("user32.dll")]
         private static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+
+        #endregion
+
+        #region Window position & DPI
 
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -100,16 +104,14 @@ namespace EverythingToolbar.Helpers
             uint uFlags
         );
 
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmFlush();
+        [DllImport("user32.dll")]
+        public static extern uint GetDpiForWindow(IntPtr hWnd);
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct Copydatastruct
-        {
-            public IntPtr dwData;
-            public int cbData;
-            public IntPtr lpData;
-        }
+        #endregion
+
+        #region Message-only window & window procedure
+
+        public delegate IntPtr WndProcDelegate(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr CreateWindowEx(
@@ -133,6 +135,48 @@ namespace EverythingToolbar.Helpers
         [DllImport("user32.dll")]
         public static extern IntPtr DefWindowProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam);
 
-        public delegate IntPtr WndProcDelegate(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+        [DllImport("user32.dll")]
+        public static extern IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, ref Copydatastruct lParam);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Copydatastruct
+        {
+            public IntPtr dwData;
+            public int cbData;
+            public IntPtr lpData;
+        }
+
+        #endregion
+
+        #region Low-level keyboard hook
+
+        public delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr SetWindowsHookEx(
+            int idHook,
+            LowLevelKeyboardProc? lpfn,
+            IntPtr hMod,
+            uint dwThreadId
+        );
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool UnhookWindowsHookEx(IntPtr hhk);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, IntPtr dwExtraInfo);
+
+        #endregion
+
+        #region Desktop Window Manager
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmFlush();
+
+        #endregion
     }
 }
