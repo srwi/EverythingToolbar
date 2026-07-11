@@ -265,7 +265,7 @@
     <value>Animationen deaktivieren</value>
   </data>
   <data name="SettingsEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>Autostart aktivieren</value>
   </data>
   <data name="SettingsEnableAutostartHelp" xml:space="preserve">
     <value>Automatically starts EverythingToolbar when Windows starts</value>
