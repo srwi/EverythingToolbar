@@ -65,7 +65,20 @@ namespace EverythingToolbar
 
         private void OnPreviewKeyDown(object? sender, KeyEventArgs e)
         {
-            if (Keyboard.Modifiers == ModifierKeys.Alt && e.SystemKey == Key.Space)
+            if (e.Key is >= Key.D0 and <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                var index = e.Key == Key.D0 ? 9 : e.Key - Key.D1;
+                _searchState.SelectFilterFromIndex(index);
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Escape)
+            {
+                Keyboard.ClearFocus();
+                NativeMethods.FocusTaskbarWindow();
+                Hide();
+                e.Handled = true;
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.Alt && e.SystemKey == Key.Space)
             {
                 e.Handled = true;
             }

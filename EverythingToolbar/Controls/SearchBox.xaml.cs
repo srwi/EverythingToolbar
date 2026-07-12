@@ -107,6 +107,8 @@ namespace EverythingToolbar.Controls
             }
             if (e.Key == Key.Escape)
             {
+                Keyboard.ClearFocus();
+                NativeMethods.FocusTaskbarWindow();
                 _searchWindowController.Hide();
                 e.Handled = true;
                 return;
