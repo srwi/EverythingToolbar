@@ -78,7 +78,6 @@
                 CornerRadius="8, 8, 0, 0">
                 <CheckBox Name="AutoApplyCustomActionsCheckbox"
                           Click="CheckBox_Click"
-                          IsChecked="{Binding Settings.IsAutoApplyCustomActions, Mode=TwoWay}"
                           Content="{x:Static properties:Resources.CustomActionsAutoApply}"/>
             </Border>
             <Border

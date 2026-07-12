@@ -26,6 +26,7 @@ namespace EverythingToolbar.Settings
         {
             _actions = _service.Load();
             DataGrid.ItemsSource = _actions;
+            AutoApplyCustomActionsCheckbox.IsChecked = Settings.IsAutoApplyCustomActions;
             UpdateUi();
         }
 
