@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Helpers;
 using Res = EverythingToolbar.Properties.Resources;
 
@@ -77,6 +78,7 @@ namespace EverythingToolbar.Launcher.Settings
                 if (value != null)
                 {
                     _settings.IconName = value.Value;
+                    WeakReferenceMessenger.Default.Send(new TaskbarPinIconChanged(value.Value));
                     OnPropertyChanged();
                 }
             }

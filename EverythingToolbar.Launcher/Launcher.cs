@@ -127,20 +127,17 @@ namespace EverythingToolbar.Launcher
                     }
                 };
 
-                _settings.PropertyChanged += async (_, e) =>
+                WeakReferenceMessenger.Default.Register<TaskbarPinIconChanged>(this, async (_, message) =>
                 {
-                    if (e.PropertyName == nameof(_settings.IconName))
-                    {
-                        var restartExplorer =
-                            await FluentMessageBox
-                                .CreateYesNo(
-                                    Properties.Resources.SetupAssistantRestartExplorerDialogText,
-                                    Properties.Resources.SetupAssistantRestartExplorerDialogTitle
-                                )
-                                .ShowDialogAsync() == MessageBoxResult.Primary;
-                        Utils.ChangeTaskbarPinIcon(_settings.IconName, restartExplorer);
-                    }
-                };
+                    var restartExplorer =
+                        await FluentMessageBox
+                            .CreateYesNo(
+                                Properties.Resources.SetupAssistantRestartExplorerDialogText,
+                                Properties.Resources.SetupAssistantRestartExplorerDialogTitle
+                            )
+                            .ShowDialogAsync() == MessageBoxResult.Primary;
+                    Utils.ChangeTaskbarPinIcon(message.IconName, restartExplorer);
+                });
 
                 _settings.PropertyChanged += async (_, e) =>
                 {

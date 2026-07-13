@@ -9,6 +9,7 @@ using System.Windows.Interop;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Controls;
 using EverythingToolbar.Helpers;
 using NLog;
@@ -252,6 +253,7 @@ namespace EverythingToolbar.Launcher
             else if (_iconUpdateRequired)
             {
                 _settings.IconName = Utils.GetThemedAppIconPath();
+                WeakReferenceMessenger.Default.Send(new TaskbarPinIconChanged(_settings.IconName));
             }
         }
 
