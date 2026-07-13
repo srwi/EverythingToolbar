@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using EverythingToolbar.Helpers;
 using NLog;
 using Windows.Win32;
 using Windows.Win32.Foundation;

@@ -5,8 +5,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using EverythingToolbar.Helpers;
-using EverythingToolbar.Search;
 using EverythingToolbar.ViewModels;
 
 namespace EverythingToolbar.Controls

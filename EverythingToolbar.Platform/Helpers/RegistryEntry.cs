@@ -1,6 +1,6 @@
 using Microsoft.Win32;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Platform.Helpers
 {
     public class RegistryEntry(string hive, string keyPath, string valueName)
     {

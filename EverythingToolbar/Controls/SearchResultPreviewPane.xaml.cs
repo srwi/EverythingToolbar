@@ -4,9 +4,6 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar.Data;
-using EverythingToolbar.Helpers;
-using EverythingToolbar.Search;
 
 namespace EverythingToolbar.Controls
 {

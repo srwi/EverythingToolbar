@@ -1,6 +1,5 @@
 using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
 
 namespace EverythingToolbar.Behaviors

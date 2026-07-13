@@ -1,8 +1,8 @@
 using System;
 using EverythingToolbar.App.Data;
 using EverythingToolbar.App.Helpers;
-using EverythingToolbar.Platform;
-using EverythingToolbar.Search;
+using EverythingToolbar.Core.Platform;
+using EverythingToolbar.Core.Search;
 using NLog;
 
 namespace EverythingToolbar.App.Search

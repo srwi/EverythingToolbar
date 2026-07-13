@@ -1,5 +1,5 @@
 using System.ComponentModel;
-using EverythingToolbar.Data;
+using EverythingToolbar.Core.Data;
 
 namespace EverythingToolbar.App
 {

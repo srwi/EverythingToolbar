@@ -11,7 +11,6 @@ using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Controls;
-using EverythingToolbar.Helpers;
 using NLog;
 using MessageBoxResult = Wpf.Ui.Controls.MessageBoxResult;
 
@@ -54,7 +53,7 @@ namespace EverythingToolbar.Launcher
         }
 
         public bool IsTaskbarWindowSupported =>
-            _windowsPolicy.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11;
+            _windowsPolicy.GetWindowsVersion() >= Core.Helpers.Utils.WindowsVersion.Windows11;
 
         public bool PreferencesUnlocked =>
             CurrentStep == 1 || (IsTaskbarWindowSupported && _settings.TaskbarWindowEnabled);

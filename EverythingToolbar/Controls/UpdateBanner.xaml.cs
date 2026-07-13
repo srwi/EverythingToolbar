@@ -7,7 +7,6 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar.Helpers;
 using NLog;
 
 namespace EverythingToolbar.Controls

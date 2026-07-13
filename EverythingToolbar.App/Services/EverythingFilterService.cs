@@ -7,8 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using EverythingToolbar.App.Helpers;
-using EverythingToolbar.Data;
-using EverythingToolbar.Platform;
+using EverythingToolbar.Core.Data;
+using EverythingToolbar.Core.Platform;
 using Microsoft.VisualBasic.FileIO;
 using NLog;
 

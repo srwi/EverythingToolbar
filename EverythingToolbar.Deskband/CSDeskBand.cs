@@ -3,7 +3,6 @@
 // VERSION 3.1
 // LICENSE: https://raw.githubusercontent.com/dsafa/CSDeskBand/master/LICENSE
 
-using EverythingToolbar.Helpers;
 using Microsoft.Win32;
 using NLog;
 using System;

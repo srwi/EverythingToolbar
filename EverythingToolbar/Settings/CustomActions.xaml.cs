@@ -4,8 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Controls;
-using EverythingToolbar.Data;
-using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Settings
 {

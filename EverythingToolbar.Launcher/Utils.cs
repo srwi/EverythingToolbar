@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using EverythingToolbar.Helpers;
 using IWshRuntimeLibrary;
 using Microsoft.Win32;
 using NLog;

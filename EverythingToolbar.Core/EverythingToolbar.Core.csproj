@@ -7,7 +7,7 @@
     <LangVersion>12</LangVersion>
     <Nullable>enable</Nullable>
     <Platforms>x64;ARM64</Platforms>
-    <RootNamespace>EverythingToolbar</RootNamespace>
+    <RootNamespace>EverythingToolbar.Core</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using EverythingToolbar.Data;
+using EverythingToolbar.Core.Data;
 
-namespace EverythingToolbar.Search
+namespace EverythingToolbar.Core.Search
 {
     public interface IEverythingClient
     {

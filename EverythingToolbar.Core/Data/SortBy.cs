@@ -1,4 +1,4 @@
-namespace EverythingToolbar.Data
+namespace EverythingToolbar.Core.Data
 {
     public enum SortBy
     {

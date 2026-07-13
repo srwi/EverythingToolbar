@@ -3,8 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar.Data;
-using EverythingToolbar.Search;
+using EverythingToolbar.Core.Data;
 using EverythingToolbar.Settings;
 using EverythingToolbar.ViewModels;
 

@@ -3,8 +3,6 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
 using NLog;
 using Windows.Win32;

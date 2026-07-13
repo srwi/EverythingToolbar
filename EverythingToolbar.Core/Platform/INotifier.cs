@@ -1,4 +1,4 @@
-namespace EverythingToolbar.Platform
+namespace EverythingToolbar.Core.Platform
 {
     public interface INotifier
     {

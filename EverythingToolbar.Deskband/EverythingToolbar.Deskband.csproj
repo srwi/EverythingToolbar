@@ -45,6 +45,12 @@
     <Using Include="EverythingToolbar.App.Helpers" />
     <Using Include="EverythingToolbar.App.Search" />
     <Using Include="EverythingToolbar.Services" />
+    <!-- Core (contracts, data, pure helpers) and Platform (Win32) layers. -->
+    <Using Include="EverythingToolbar.Core.Helpers" />
+    <Using Include="EverythingToolbar.Core.Search" />
+    <Using Include="EverythingToolbar.Core.Services" />
+    <Using Include="EverythingToolbar.Platform.Helpers" />
+    <Using Include="EverythingToolbar.Platform.Search" />
   </ItemGroup>
   <Target Name="AddRuntimeDependenciesToContent" Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp'" BeforeTargets="GetCopyToOutputDirectoryItems">
     <!-- Include MSBuild.deps.json and MSBuild.runtimeconfig.json in ContentWithTargetPath so they will be copied to the output folder of projects

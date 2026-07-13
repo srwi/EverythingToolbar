@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Core.Helpers
 {
     public static class FilterOrderValidator
     {

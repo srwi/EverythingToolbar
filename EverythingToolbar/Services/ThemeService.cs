@@ -6,7 +6,6 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
-using EverythingToolbar.Helpers;
 using NLog;
 using Windows.UI.ViewManagement;
 using Wpf.Ui.Appearance;

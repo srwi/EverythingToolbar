@@ -3,8 +3,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Linq;
-using EverythingToolbar.Data;
-using EverythingToolbar.Helpers;
+using EverythingToolbar.Core.Data;
+using EverythingToolbar.Core.Helpers;
 
 namespace EverythingToolbar.App.Services
 {

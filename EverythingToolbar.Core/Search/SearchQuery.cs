@@ -1,6 +1,6 @@
-using EverythingToolbar.Data;
+using EverythingToolbar.Core.Data;
 
-namespace EverythingToolbar.Search
+namespace EverythingToolbar.Core.Search
 {
     public sealed record SearchQuery(
         string SearchText,

@@ -1,4 +1,4 @@
-namespace EverythingToolbar.Services
+namespace EverythingToolbar.Core.Services
 {
     public interface IFilterNames
     {

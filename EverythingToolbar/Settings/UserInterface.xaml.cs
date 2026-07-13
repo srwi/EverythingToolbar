@@ -6,7 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Behaviors;
 using EverythingToolbar.Controls;
-using EverythingToolbar.Data;
+using EverythingToolbar.Core.Data;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;

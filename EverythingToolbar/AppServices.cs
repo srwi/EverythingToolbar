@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar.Platform;
+using EverythingToolbar.Core.Platform;
 using EverythingToolbar.Search;
 using EverythingToolbar.ViewModels;
 using Microsoft.Extensions.DependencyInjection;

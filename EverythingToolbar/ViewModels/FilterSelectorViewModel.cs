@@ -1,5 +1,3 @@
-﻿using EverythingToolbar.Data;
-using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.ViewModels
 {

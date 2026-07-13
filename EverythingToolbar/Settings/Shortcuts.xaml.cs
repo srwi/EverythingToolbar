@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Settings
 {

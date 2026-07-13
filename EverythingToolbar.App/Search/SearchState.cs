@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using EverythingToolbar.Data;
-using EverythingToolbar.Search;
+using EverythingToolbar.Core.Data;
+using EverythingToolbar.Core.Search;
 
 namespace EverythingToolbar.App.Search
 {

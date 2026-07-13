@@ -9,9 +9,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
-using EverythingToolbar.Search;
 using EverythingToolbar.ViewModels;
 using SearchResult = EverythingToolbar.App.Data.SearchResult;
 

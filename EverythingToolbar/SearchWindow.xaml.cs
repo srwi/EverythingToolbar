@@ -6,8 +6,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.Messaging;
-using EverythingToolbar.Helpers;
-using EverythingToolbar.Search;
 using EverythingToolbar.ViewModels;
 using Windows.Win32;
 using Windows.Win32.Foundation;

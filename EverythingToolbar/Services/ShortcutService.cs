@@ -2,7 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Threading;
-using EverythingToolbar.Helpers;
 using NLog;
 using Windows.Win32;
 

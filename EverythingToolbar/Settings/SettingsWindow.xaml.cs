@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Web;
 using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar.Search;
 using Wpf.Ui.Controls;
 
 namespace EverythingToolbar.Settings

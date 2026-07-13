@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using EverythingToolbar.Data;
+using EverythingToolbar.Core.Data;
 using NLog;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
-namespace EverythingToolbar.Search
+namespace EverythingToolbar.Platform.Search
 {
     public sealed class EverythingIpcClient : IEverythingClient
     {

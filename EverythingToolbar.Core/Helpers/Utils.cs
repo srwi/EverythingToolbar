@@ -1,6 +1,6 @@
 using System;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Core.Helpers
 {
     public static class Utils
     {

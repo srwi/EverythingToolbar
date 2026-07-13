@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
-using EverythingToolbar.Data;
+using EverythingToolbar.Core.Data;
 
 namespace EverythingToolbar.App.Services
 {

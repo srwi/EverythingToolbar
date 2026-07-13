@@ -4,7 +4,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Controls
 {

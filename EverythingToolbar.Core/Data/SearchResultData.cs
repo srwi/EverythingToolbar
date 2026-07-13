@@ -1,8 +1,8 @@
 using System;
-using EverythingToolbar.Helpers;
+using EverythingToolbar.Core.Helpers;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
-namespace EverythingToolbar.Data
+namespace EverythingToolbar.Core.Data
 {
     public sealed record SearchResultData(
         string HighlightedPath,

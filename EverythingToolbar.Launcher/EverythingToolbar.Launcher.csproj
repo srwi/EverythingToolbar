@@ -31,6 +31,12 @@
     <Using Include="EverythingToolbar.App.Helpers" />
     <Using Include="EverythingToolbar.App.Search" />
     <Using Include="EverythingToolbar.Services" />
+    <!-- Core (contracts, data, pure helpers) and Platform (Win32) layers. -->
+    <Using Include="EverythingToolbar.Core.Helpers" />
+    <Using Include="EverythingToolbar.Core.Search" />
+    <Using Include="EverythingToolbar.Core.Services" />
+    <Using Include="EverythingToolbar.Platform.Helpers" />
+    <Using Include="EverythingToolbar.Platform.Search" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icons\Light.ico">

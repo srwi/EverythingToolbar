@@ -7,7 +7,6 @@ using System.Threading;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar;
-using EverythingToolbar.Helpers;
 using Microsoft.Win32;
 
 namespace Peter

@@ -7,7 +7,7 @@ using Windows.Win32.System.Threading;
 using Windows.Win32.UI.Shell;
 using Windows.Win32.UI.Shell.Common;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Platform.Helpers
 {
     public static class ShellUtils
     {

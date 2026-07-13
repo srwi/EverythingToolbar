@@ -7,7 +7,7 @@
     <LangVersion>12</LangVersion>
     <Nullable>enable</Nullable>
     <Platforms>x64;ARM64</Platforms>
-    <RootNamespace>EverythingToolbar</RootNamespace>
+    <RootNamespace>EverythingToolbar.Platform</RootNamespace>
     <!-- CsWin32's friendly overloads (out/ref/SafeHandle wrappers) are generated as unsafe code. -->
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -28,6 +28,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Using Include="EverythingToolbar.Services" />
+    <!-- EverythingIpcClient implements Core's IEverythingClient (Core.Search). -->
+    <Using Include="EverythingToolbar.Core.Search" />
   </ItemGroup>
 </Project>

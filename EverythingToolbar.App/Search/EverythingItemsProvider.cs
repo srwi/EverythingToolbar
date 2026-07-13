@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using EverythingToolbar.Data;
+using EverythingToolbar.Core.Data;
 using EverythingToolbar.App.Data;
-using EverythingToolbar.Search;
+using EverythingToolbar.Core.Search;
 
 namespace EverythingToolbar.App.Search
 {

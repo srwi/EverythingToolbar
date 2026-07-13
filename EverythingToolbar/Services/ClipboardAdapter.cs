@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows;
-using EverythingToolbar.Platform;
+using EverythingToolbar.Core.Platform;
 
 namespace EverythingToolbar.Services
 {

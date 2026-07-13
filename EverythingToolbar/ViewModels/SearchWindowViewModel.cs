@@ -1,5 +1,3 @@
-﻿using EverythingToolbar.Helpers;
-using EverythingToolbar.Search;
 
 namespace EverythingToolbar.ViewModels
 {

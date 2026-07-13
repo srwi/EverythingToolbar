@@ -1,6 +1,6 @@
 using System.IO;
 using Config.Net;
-using EverythingToolbar.Data;
+using EverythingToolbar.Core.Data;
 using EverythingToolbar.App.Helpers;
 
 namespace EverythingToolbar.App

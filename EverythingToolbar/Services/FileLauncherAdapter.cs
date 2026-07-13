@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.IO;
-using EverythingToolbar.Helpers;
-using EverythingToolbar.Platform;
+using EverythingToolbar.Core.Platform;
 
 namespace EverythingToolbar.Services
 {

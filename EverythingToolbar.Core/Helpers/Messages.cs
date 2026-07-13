@@ -1,4 +1,4 @@
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Core.Helpers
 {
 
     public sealed record FocusSearchBoxRequest;

@@ -4,8 +4,8 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Threading;
-using EverythingToolbar.Data;
-using EverythingToolbar.Search;
+using EverythingToolbar.Core.Data;
+using EverythingToolbar.Core.Search;
 using SearchResult = EverythingToolbar.App.Data.SearchResult;
 
 namespace EverythingToolbar.App.Search

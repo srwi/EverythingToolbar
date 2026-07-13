@@ -1,7 +1,6 @@
 using System.IO;
 using System.Windows.Forms;
-using EverythingToolbar.Helpers;
-using EverythingToolbar.Platform;
+using EverythingToolbar.Core.Platform;
 using Peter;
 
 namespace EverythingToolbar.Services

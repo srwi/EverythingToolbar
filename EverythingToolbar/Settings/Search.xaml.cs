@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar.Data;
-using EverythingToolbar.Search;
+using EverythingToolbar.Core.Data;
 
 namespace EverythingToolbar.Settings
 {

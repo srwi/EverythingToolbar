@@ -3,7 +3,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Controls
 {

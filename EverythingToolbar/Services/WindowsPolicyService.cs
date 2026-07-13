@@ -1,5 +1,4 @@
 using System;
-using EverythingToolbar.Helpers;
 using Microsoft.Win32;
 
 namespace EverythingToolbar.Services

@@ -1,6 +1,6 @@
 using System;
 using EverythingToolbar.Controls;
-using EverythingToolbar.Platform;
+using EverythingToolbar.Core.Platform;
 using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Services

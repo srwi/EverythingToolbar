@@ -7,7 +7,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using EverythingToolbar.Helpers;
 using Res = EverythingToolbar.Properties.Resources;
 
 namespace EverythingToolbar.Launcher.Settings
@@ -38,7 +37,7 @@ namespace EverythingToolbar.Launcher.Settings
         }
 
         public bool ShowTaskbarWindowSettings =>
-            _windowsPolicy.GetWindowsVersion() >= Helpers.Utils.WindowsVersion.Windows11;
+            _windowsPolicy.GetWindowsVersion() >= Core.Helpers.Utils.WindowsVersion.Windows11;
 
         public List<KeyValuePair<string, string>> TaskbarWindowAlignmentOptions { get; } =
             [

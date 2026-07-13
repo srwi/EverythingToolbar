@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EverythingToolbar.Search
+namespace EverythingToolbar.Core.Search
 {
     public interface IItemsProvider<T> : INotifyPropertyChanged
     {

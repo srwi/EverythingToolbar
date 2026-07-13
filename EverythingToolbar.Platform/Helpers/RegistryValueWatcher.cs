@@ -6,7 +6,7 @@ using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.System.Registry;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Platform.Helpers
 {
     public sealed class RegistryValueWatcher : IDisposable
     {

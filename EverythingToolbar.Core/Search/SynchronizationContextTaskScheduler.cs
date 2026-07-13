@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EverythingToolbar.Search
+namespace EverythingToolbar.Core.Search
 {
     public class SynchronizationContextTaskScheduler(SynchronizationContext? synchronizationContext) : TaskScheduler
     {

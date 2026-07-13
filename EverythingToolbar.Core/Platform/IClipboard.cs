@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace EverythingToolbar.Platform
+namespace EverythingToolbar.Core.Platform
 {
     public interface IClipboard
     {

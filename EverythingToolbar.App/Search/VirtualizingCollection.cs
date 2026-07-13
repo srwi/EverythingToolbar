@@ -7,7 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EverythingToolbar.Search;
+using EverythingToolbar.Core.Search;
 
 namespace EverythingToolbar.App.Search
 {

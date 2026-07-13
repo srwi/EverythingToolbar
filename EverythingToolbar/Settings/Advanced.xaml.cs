@@ -5,8 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Controls;
-using EverythingToolbar.Helpers;
-using EverythingToolbar.Search;
 
 namespace EverythingToolbar.Settings
 {
