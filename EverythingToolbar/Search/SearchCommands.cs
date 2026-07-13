@@ -34,7 +34,10 @@ namespace EverythingToolbar.Search
         {
             if (key == Key.Enter && modifiers == ModifierKeys.None)
             {
-                OpenSelected();
+                if (_session.SelectedResult == null)
+                    _session.MoveDown();
+                else
+                    OpenSelected();
                 return true;
             }
             if (key == Key.Enter && modifiers == ModifierKeys.Control)
@@ -122,65 +125,51 @@ namespace EverythingToolbar.Search
         private bool CanHomeEndNavigate(ModifierKeys modifiers, bool fromSearchBox) =>
             !fromSearchBox || (modifiers != ModifierKeys.Shift && _settings.IsHomeEndNavigateResults);
 
+        public void OpenSelected(SearchResult? target = null) =>
+            Act(target, RunOrOpen, hide: true, clearSelection: true);
 
-        public void OpenSelected()
+        public void OpenSelectedPath(SearchResult? target = null) =>
+            Act(target, _actions.OpenPath, hide: true, clearSelection: true);
+
+        public void RunSelectedAsAdmin(SearchResult? target = null) =>
+            Act(target, _actions.RunAsAdmin, hide: true, clearSelection: true);
+
+        public void ShowSelectedProperties(SearchResult? target = null) =>
+            Act(target, _actions.ShowProperties, hide: true, clearSelection: true);
+
+        public void OpenSelectedWith(SearchResult? target = null) =>
+            Act(target, _actions.OpenWith, hide: true, clearSelection: true);
+
+        public void ShowSelectedInEverything(SearchResult? target = null) =>
+            Act(target, _actions.ShowInEverything, hide: true, clearSelection: true);
+
+        public void CopySelected(SearchResult? target = null) =>
+            Act(target, _actions.CopyToClipboard, hide: false, clearSelection: false);
+
+        public void CopySelectedPath(SearchResult? target = null) =>
+            Act(target, _actions.CopyPathToClipboard, hide: false, clearSelection: false);
+
+        public void ShowSelectedWindowsContextMenu(SearchResult? target = null) =>
+            Act(target, _actions.ShowWindowsContextMenu, hide: false, clearSelection: false);
+
+        public void PreviewSelected(SearchResult? target = null) =>
+            Act(target, _actions.Preview, hide: false, clearSelection: false);
+
+        private void RunOrOpen(SearchResult item)
         {
-            var item = _session.SelectedResult;
-            if (item == null)
-            {
-                _session.MoveDown();
-                return;
-            }
-
             if (!_customActions.TryRun(item))
                 _actions.Open(item);
-
-            _controller.Hide();
-            _session.ClearSelection();
         }
 
-        public void OpenSelectedPath() => InvokeAndHide(_actions.OpenPath);
-
-        public void RunSelectedAsAdmin() => InvokeAndHide(_actions.RunAsAdmin);
-
-        public void ShowSelectedProperties() => InvokeAndHide(_actions.ShowProperties);
-
-        public void OpenSelectedWith() => InvokeAndHide(_actions.OpenWith);
-
-        public void ShowSelectedInEverything()
+        private void Act(SearchResult? target, Action<SearchResult> action, bool hide, bool clearSelection)
         {
-            if (_session.SelectedResult is { } item)
-                _actions.ShowInEverything(item);
-            _session.ClearSelection();
-        }
-
-        public void CopySelected() => Invoke(_actions.CopyToClipboard);
-
-        public void CopySelectedPath() => Invoke(_actions.CopyPathToClipboard);
-
-        public void ShowSelectedWindowsContextMenu() => Invoke(_actions.ShowWindowsContextMenu);
-
-        public void PreviewSelected()
-        {
-            if (_session.SelectedResult is { } item)
-            {
-                _actions.PreviewInQuickLook(item);
-                _actions.PreviewInSeer(item);
-            }
-        }
-
-        private void InvokeAndHide(Action<SearchResult> action)
-        {
-            if (_session.SelectedResult is { } item)
+            var item = target ?? _session.SelectedResult;
+            if (item != null)
                 action(item);
-            _controller.Hide();
-            _session.ClearSelection();
-        }
-
-        private void Invoke(Action<SearchResult> action)
-        {
-            if (_session.SelectedResult is { } item)
-                action(item);
+            if (hide)
+                _controller.Hide();
+            if (clearSelection)
+                _session.ClearSelection();
         }
     }
 }

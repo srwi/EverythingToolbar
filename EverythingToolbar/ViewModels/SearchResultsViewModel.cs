@@ -45,12 +45,7 @@ namespace EverythingToolbar.ViewModels
         public void CopySelectedPath() => _commands.CopySelectedPath();
         public void PreviewSelected() => _commands.PreviewSelected();
         public void ShowSelectedWindowsContextMenu() => _commands.ShowSelectedWindowsContextMenu();
-
-        public void ShowSelectedInEverything()
-        {
-            _commands.ShowSelectedInEverything();
-            _controller.Hide();
-        }
+        public void ShowSelectedInEverything() => _commands.ShowSelectedInEverything();
 
         public List<Rule> LoadCustomActions() => _customActions.Load();
         public bool TryRunCustomAction(SearchResult item, string command = "") => _customActions.TryRun(item, command);

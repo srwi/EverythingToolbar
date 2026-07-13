@@ -115,8 +115,10 @@ namespace EverythingToolbar.App.Search
             launcher.OpenSearchInEverything(searchState, filenameToHighlight: r.FullPathAndFileName);
         }
 
-        public void PreviewInQuickLook(SearchResult r) => previewer.PreviewInQuickLook(r.FullPathAndFileName);
-
-        public void PreviewInSeer(SearchResult r) => previewer.PreviewInSeer(r.FullPathAndFileName);
+        public void Preview(SearchResult r)
+        {
+            previewer.PreviewInQuickLook(r.FullPathAndFileName);
+            previewer.PreviewInSeer(r.FullPathAndFileName);
+        }
     }
 }
