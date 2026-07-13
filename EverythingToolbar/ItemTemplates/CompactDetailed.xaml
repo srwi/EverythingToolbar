@@ -3,7 +3,7 @@
                     xmlns:h="clr-namespace:EverythingToolbar.Helpers"
                     xmlns:b="clr-namespace:EverythingToolbar.Behaviors">
     
-    <DataTemplate x:Key="SearchResultsViewTemplate">
+    <DataTemplate x:Key="CompactDetailed">
         <Grid x:Name="ListViewItem" Margin="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20" />

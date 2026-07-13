@@ -26,6 +26,13 @@ namespace EverythingToolbar.Helpers
         System,
     }
 
+    public enum ThemedSurface
+    {
+        AppWindow,
+
+        TaskbarSurface,
+    }
+
     public sealed class ThemeChangedEventArgs : EventArgs
     {
         public Theme SystemTheme { get; init; }
@@ -50,20 +57,10 @@ namespace EverythingToolbar.Helpers
             "AppsUseLightTheme"
         );
 
-        private static readonly HashSet<string> KnownItemTemplates = new(StringComparer.OrdinalIgnoreCase)
-        {
-            "Normal",
-            "NormalDetailed",
-            "Compact",
-            "CompactDetailed",
-        };
-
         private sealed class Registration
         {
             public required WeakReference<FrameworkElement> Root { get; init; }
-            public bool ApplyWpfUi { get; init; }
-            public bool ApplyCustomResources { get; init; }
-            public ThemeFlavor Flavor { get; init; }
+            public ThemedSurface Surface { get; init; }
             public List<ResourceDictionary> AddedDictionaries { get; } = new();
         }
 
@@ -74,6 +71,8 @@ namespace EverythingToolbar.Helpers
         private readonly Dispatcher _dispatcher;
         private readonly List<Registration> _registrations = new();
         private int _applyScheduled;
+
+        private ControlsDictionary? _controlsDictionary;
 
         public event EventHandler<ThemeChangedEventArgs>? ThemeChanged;
 
@@ -89,7 +88,7 @@ namespace EverythingToolbar.Helpers
             try
             {
                 _uiSettings = new UISettings();
-                _uiSettings.ColorValuesChanged += (_, _) => ScheduleApply();
+                _uiSettings.ColorValuesChanged += OnColorValuesChanged;
             }
             catch
             {
@@ -115,29 +114,23 @@ namespace EverythingToolbar.Helpers
 
         public bool IsLightTheme() => GetEffectiveTheme(ThemeFlavor.System) == Theme.Light;
 
-        public void Register(FrameworkElement root, bool applyWpfUi, bool applyCustomResources, ThemeFlavor flavor)
+        public void Register(FrameworkElement root, ThemedSurface surface)
         {
             RemoveRegistration(root);
             var registration = new Registration
             {
                 Root = new WeakReference<FrameworkElement>(root),
-                ApplyWpfUi = applyWpfUi,
-                ApplyCustomResources = applyCustomResources,
-                Flavor = flavor,
+                Surface = surface,
             };
             _registrations.Add(registration);
 
             var systemTheme = GetEffectiveTheme(ThemeFlavor.System);
             var appTheme = GetEffectiveTheme(ThemeFlavor.App);
 
-            if (registration.ApplyWpfUi && registration.Flavor == ThemeFlavor.App)
-            {
-                ApplicationThemeManager.Apply(
-                    appTheme == Theme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark
-                );
-            }
+            if (surface == ThemedSurface.AppWindow)
+                ApplyGlobalWpfUiTheme(appTheme);
 
-            ApplyTo(registration, systemTheme, appTheme);
+            ApplyTo(registration, systemTheme);
         }
 
         public void Unregister(FrameworkElement root)
@@ -153,6 +146,8 @@ namespace EverythingToolbar.Helpers
                     _registrations.RemoveAt(i);
             }
         }
+
+        private void OnColorValuesChanged(UISettings sender, object args) => ScheduleApply();
 
         // Coalesces bursts from watcher/UISettings background threads into one apply pass on the UI thread.
         private void ScheduleApply()
@@ -174,8 +169,7 @@ namespace EverythingToolbar.Helpers
         {
             if (
                 e.PropertyName
-                is nameof(ISettings.ItemTemplate)
-                    or nameof(ISettings.ThemeOverride)
+                is nameof(ISettings.ThemeOverride)
                     or nameof(ISettings.ForceWin10Behavior)
             )
             {
@@ -191,34 +185,33 @@ namespace EverythingToolbar.Helpers
 
             _registrations.RemoveAll(r => !r.Root.TryGetTarget(out _));
 
-            if (_registrations.Any(r => r.ApplyWpfUi && r.Flavor == ThemeFlavor.App))
-            {
-                ApplicationThemeManager.Apply(
-                    appTheme == Theme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark
-                );
-            }
+            if (_registrations.Any(r => r.Surface == ThemedSurface.AppWindow))
+                ApplyGlobalWpfUiTheme(appTheme);
 
             foreach (var registration in _registrations)
             {
-                ApplyTo(registration, systemTheme, appTheme);
+                ApplyTo(registration, systemTheme);
             }
 
             ThemeChanged?.Invoke(this, new ThemeChangedEventArgs { SystemTheme = systemTheme, AppTheme = appTheme });
         }
 
-        private void ApplyTo(Registration registration, Theme systemTheme, Theme appTheme)
+        private static void ApplyGlobalWpfUiTheme(Theme appTheme) =>
+            ApplicationThemeManager.Apply(appTheme == Theme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark);
+
+        private void ApplyTo(Registration registration, Theme systemTheme)
         {
             if (!registration.Root.TryGetTarget(out var root))
                 return;
 
-            if (registration.ApplyWpfUi && registration.Flavor == ThemeFlavor.App)
+            switch (registration.Surface)
             {
-                ApplicationThemeManager.Apply(root);
-            }
-
-            if (registration.ApplyCustomResources)
-            {
-                ApplyCustomLayers(registration, root, systemTheme);
+                case ThemedSurface.AppWindow:
+                    ApplicationThemeManager.Apply(root);
+                    break;
+                case ThemedSurface.TaskbarSurface:
+                    ApplyCustomLayers(registration, root, systemTheme);
+                    break;
             }
         }
 
@@ -231,32 +224,26 @@ namespace EverythingToolbar.Helpers
             var profile =
                 _windowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11 ? "Win11" : "Win10";
 
-            if (registration.Flavor == ThemeFlavor.System)
-            {
-                AddWpfUiBase(registration, root, systemTheme);
-            }
+            AddWpfUiBase(registration, root, systemTheme);
 
             AddResource(registration, root, $"Themes/{profile}/{(systemTheme == Theme.Light ? "Light" : "Dark")}.xaml");
 
             AddResource(registration, root, $"Themes/{profile}/Controls.xaml");
 
-            var template = KnownItemTemplates.Contains(_settings.ItemTemplate) ? _settings.ItemTemplate : "Normal";
-            AddResource(registration, root, $"ItemTemplates/{template}.xaml");
-
             AddAccentColor(registration, root, systemTheme);
         }
 
-        private static void AddWpfUiBase(Registration registration, FrameworkElement root, Theme theme)
+        private void AddWpfUiBase(Registration registration, FrameworkElement root, Theme theme)
         {
             var applicationTheme = theme == Theme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark;
 
-            var controlsDictionary = new ControlsDictionary();
+            _controlsDictionary ??= new ControlsDictionary();
             var themesDictionary = new ThemesDictionary { Theme = applicationTheme };
 
-            root.Resources.MergedDictionaries.Add(controlsDictionary);
+            root.Resources.MergedDictionaries.Add(_controlsDictionary);
             root.Resources.MergedDictionaries.Add(themesDictionary);
 
-            registration.AddedDictionaries.Add(controlsDictionary);
+            registration.AddedDictionaries.Add(_controlsDictionary);
             registration.AddedDictionaries.Add(themesDictionary);
         }
 
@@ -282,7 +269,7 @@ namespace EverythingToolbar.Helpers
             }
             else
             {
-                brush = new SolidColorBrush(Colors.DimGray);
+                brush = (SolidColorBrush)Brushes.DimGray;
             }
 
             var resDict = new ResourceDictionary { ["AccentColor"] = brush };
@@ -292,12 +279,16 @@ namespace EverythingToolbar.Helpers
 
         private static SolidColorBrush GetBrush(Color color)
         {
-            return new SolidColorBrush(System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B));
+            var brush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B));
+            brush.Freeze();
+            return brush;
         }
 
         public void Dispose()
         {
             _settings.PropertyChanged -= OnSettingsChanged;
+            if (_uiSettings != null)
+                _uiSettings.ColorValuesChanged -= OnColorValuesChanged;
             _personalizeWatcher.Dispose();
         }
     }

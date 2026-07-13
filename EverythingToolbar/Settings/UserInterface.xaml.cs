@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Controls;
 using EverythingToolbar.Data;
@@ -24,7 +23,7 @@ namespace EverythingToolbar.Settings
         }
     }
 
-    public class UserInterfaceViewModel : INotifyPropertyChanged
+    public partial class UserInterfaceViewModel : ObservableObject
     {
         public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
 
@@ -125,11 +124,5 @@ namespace EverythingToolbar.Settings
             }
         }
 
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }

@@ -20,7 +20,7 @@
         Title="{x:Static properties:Resources.SettingsPreferences}">
     
     <i:Interaction.Behaviors>
-        <behaviors:Themed ApplyWpfUi="True" />
+        <behaviors:Themed Surface="AppWindow" />
     </i:Interaction.Behaviors>
     
     <Grid>

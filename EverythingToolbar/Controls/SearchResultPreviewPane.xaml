@@ -6,7 +6,8 @@
              xmlns:properties="clr-namespace:EverythingToolbar.Properties"
              x:Name="Root">
     <UserControl.Resources>
-        <c:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <c:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibilityConverter" />
     </UserControl.Resources>
 
     <Border Margin="{DynamicResource SearchResultPreviewPaneMargin}"
@@ -140,7 +141,7 @@
                        VerticalAlignment="Center"
                        Foreground="{DynamicResource SearchResultPath}"
                        FontSize="16"
-                       Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=true}" />
+                        Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={StaticResource InvertedBoolToVisibilityConverter}}" />
         </Grid>
     </Border>
 </UserControl>

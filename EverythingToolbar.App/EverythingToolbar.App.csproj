@@ -16,6 +16,7 @@
     <AssemblyOriginatorKeyFile>..\EverythingToolbar.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="Config.Net" Version="4.13.7" />
     <PackageReference Include="NLog" Version="5.1.1" />
   </ItemGroup>

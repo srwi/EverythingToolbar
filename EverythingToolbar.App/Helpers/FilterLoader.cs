@@ -1,11 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using EverythingToolbar.Data;
 
 namespace EverythingToolbar.Helpers
 {
-    public class FilterLoader : INotifyPropertyChanged
+    public class FilterLoader : ObservableObject
     {
         private readonly DefaultFilterLoader _defaultLoader;
         private readonly EverythingFilterLoader _everythingLoader;
@@ -32,6 +33,10 @@ namespace EverythingToolbar.Helpers
             }
         }
 
+        public ObservableCollection<Filter> VisibleFilters => new(Filters.Take(_settings.MaxTabItems));
+
+        public ObservableCollection<Filter> OverflowFilters => new(Filters.Skip(_settings.MaxTabItems));
+
         public FilterLoader(DefaultFilterLoader defaultLoader, EverythingFilterLoader everythingLoader,
             ISettings settings)
         {
@@ -48,7 +53,7 @@ namespace EverythingToolbar.Helpers
         {
             if (e.PropertyName == nameof(DefaultFilterLoader.Filters))
             {
-                NotifyPropertyChanged(nameof(Filters));
+                NotifyFilterCollectionsChanged();
             }
         }
 
@@ -56,7 +61,7 @@ namespace EverythingToolbar.Helpers
         {
             if (e.PropertyName == nameof(EverythingFilterLoader.Filters))
             {
-                NotifyPropertyChanged(nameof(Filters));
+                NotifyFilterCollectionsChanged();
             }
         }
 
@@ -66,9 +71,17 @@ namespace EverythingToolbar.Helpers
             {
                 case nameof(ISettings.IsRegExEnabled):
                 case nameof(ISettings.IsImportFilters):
-                    NotifyPropertyChanged(nameof(Filters));
+                case nameof(ISettings.MaxTabItems):
+                    NotifyFilterCollectionsChanged();
                     break;
             }
+        }
+
+        private void NotifyFilterCollectionsChanged()
+        {
+            OnPropertyChanged(nameof(Filters));
+            OnPropertyChanged(nameof(VisibleFilters));
+            OnPropertyChanged(nameof(OverflowFilters));
         }
 
         public Filter GetInitialFilter()
@@ -83,13 +96,6 @@ namespace EverythingToolbar.Helpers
             }
 
             return Filters[0];
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

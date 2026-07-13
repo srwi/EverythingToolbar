@@ -12,8 +12,7 @@ namespace EverythingToolbar.Controls
 {
     public partial class SettingsControl
     {
-        private static ISearchWindowController SearchWindowController =>
-            Ioc.Default.GetRequiredService<ISearchWindowController>();
+        private readonly ISearchWindowController _searchWindowController = Ioc.Default.GetRequiredService<ISearchWindowController>();
 
         public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
 
@@ -27,7 +26,7 @@ namespace EverythingToolbar.Controls
 
         private void OpenSettingsWindow(object sender, RoutedEventArgs e)
         {
-            SearchWindowController.Hide();
+            _searchWindowController.Hide();
             Window settings = new SettingsWindow();
             settings.Show();
         }

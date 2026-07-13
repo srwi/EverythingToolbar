@@ -1,27 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using CommunityToolkit.Mvvm.ComponentModel;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Search
 {
-    public sealed class SearchState : INotifyPropertyChanged
+    public sealed partial class SearchState : ObservableObject
     {
-
+        [ObservableProperty]
         private string _searchTerm = "";
-        public string SearchTerm
-        {
-            get => _searchTerm;
-            set
-            {
-                if (_searchTerm != value)
-                {
-                    _searchTerm = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
 
         public SortBy SortBy => (SortBy)_settings.SortBy;
         public bool IsSortDescending => _settings.IsSortDescending;
@@ -36,11 +24,9 @@ namespace EverythingToolbar.Search
             get => _currentFilter;
             set
             {
-                if (!_currentFilter.Equals(value))
+                if (SetProperty(ref _currentFilter, value))
                 {
-                    _currentFilter = value;
                     _settings.LastFilter = value.Name;
-                    OnPropertyChanged();
                 }
             }
         }
@@ -167,11 +153,5 @@ namespace EverythingToolbar.Search
             }
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace EverythingToolbar.Data
 {
@@ -13,48 +13,20 @@ namespace EverythingToolbar.Data
     }
 
     [Serializable]
-    public class Rule : INotifyPropertyChanged
+    public partial class Rule : ObservableObject
     {
-        [field: NonSerialized]
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected void NotifyPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
+        [ObservableProperty]
         private string _name = "";
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                _name = value;
-                NotifyPropertyChanged();
-            }
-        }
 
-        private FileType _filetype;
-        public FileType Type
-        {
-            get => _filetype;
-            set
-            {
-                _filetype = value;
-                NotifyPropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private FileType _type;
 
+        [ObservableProperty]
         private string _expression = "";
-        public string Expression
+
+        partial void OnExpressionChanged(string? oldValue, string newValue)
         {
-            get => _expression;
-            set
-            {
-                _expression = value;
-                NotifyPropertyChanged();
-                NotifyPropertyChanged(nameof(ExpressionValid));
-            }
+            OnPropertyChanged(nameof(ExpressionValid));
         }
 
         public bool ExpressionValid
@@ -73,15 +45,7 @@ namespace EverythingToolbar.Data
             }
         }
 
+        [ObservableProperty]
         private string _command = "";
-        public string Command
-        {
-            get => _command;
-            set
-            {
-                _command = value;
-                NotifyPropertyChanged();
-            }
-        }
     }
 }

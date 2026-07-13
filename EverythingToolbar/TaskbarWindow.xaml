@@ -16,7 +16,7 @@
         Height="32">
 
     <i:Interaction.Behaviors>
-        <b:Themed ApplyCustomResources="True" Flavor="System" />
+        <b:Themed Surface="TaskbarSurface" />
     </i:Interaction.Behaviors>
 
     <controls:ToolbarControl x:Name="ToolbarControl"

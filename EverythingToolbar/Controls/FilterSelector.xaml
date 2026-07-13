@@ -1,10 +1,6 @@
 ﻿<UserControl x:Class="EverythingToolbar.Controls.FilterSelector"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:helpers="clr-namespace:EverythingToolbar.Helpers"
-             xmlns:converters="clr-namespace:EverythingToolbar.Converters"
-             xmlns:local="clr-namespace:EverythingToolbar"
-             xmlns:app="clr-namespace:EverythingToolbar;assembly=EverythingToolbar.App"
              x:Name="Root"
              Background="Transparent">
     <UserControl.OpacityMask>
@@ -16,28 +12,16 @@
     </UserControl.OpacityMask>
     <StackPanel Orientation="Horizontal">
         <TabControl x:Name="TabControl"
+                    ItemsSource="{Binding VisibleFilters}"
                     SelectedIndex="-1"
                     SelectionChanged="OnTabItemSelected"
-                    FocusVisualStyle="{x:Null}">
-            <TabControl.ItemsSource>
-                <MultiBinding Converter="{converters:TakeItemsMultiConverter}">
-                    <Binding Path="Filters" />
-                    <Binding Source="{helpers:Service {x:Type app:ISettings}}" Path="MaxTabItems" Mode="TwoWay" />
-                </MultiBinding>
-            </TabControl.ItemsSource>
-        </TabControl>
+                    FocusVisualStyle="{x:Null}" />
 
         <ComboBox Name="ComboBox"
+                  ItemsSource="{Binding OverflowFilters}"
                   DisplayMemberPath="Name"
                   SelectedIndex="-1"
                   SelectionChanged="OnComboBoxItemSelected"
-                  FocusVisualStyle="{x:Null}">
-            <ComboBox.ItemsSource>
-                <MultiBinding Converter="{converters:SkipItemsMultiConverter}">
-                    <Binding Path="Filters" />
-                    <Binding Source="{helpers:Service {x:Type app:ISettings}}" Path="MaxTabItems" Mode="TwoWay" />
-                </MultiBinding>
-            </ComboBox.ItemsSource>
-        </ComboBox>
+                  FocusVisualStyle="{x:Null}" />
     </StackPanel>
 </UserControl>

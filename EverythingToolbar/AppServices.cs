@@ -32,13 +32,14 @@ namespace EverythingToolbar
             services.AddSingleton<ThemeService>();
             services.AddSingleton<StartMenuIntegration>();
             services.AddSingleton<SearchWindow>();
-            services.AddSingleton<ISearchWindowController>(sp => sp.GetRequiredService<SearchWindow>());
+            services.AddSingleton<ISearchWindowController, SearchWindowController>();
             services.AddSingleton<IEverythingClient, EverythingIpcClient>();
             services.AddSingleton<IClipboard, ClipboardAdapter>();
             services.AddSingleton<IShellDialogs, ShellDialogsAdapter>();
             services.AddSingleton<INotifier, NotifierAdapter>();
             services.AddSingleton<IFileLauncher, FileLauncherAdapter>();
             services.AddSingleton<IFilePreviewer, FilePreviewerAdapter>();
+            services.AddSingleton<IAutostartService, AutostartService>();
             services.AddSingleton<SearchResultActions>();
             services.AddSingleton<EverythingSearchLauncher>();
 

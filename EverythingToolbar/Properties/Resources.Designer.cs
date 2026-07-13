@@ -564,6 +564,24 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string MessageBoxNo {
+            get {
+                return ResourceManager.GetString("MessageBoxNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string MessageBoxYes {
+            get {
+                return ResourceManager.GetString("MessageBoxYes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to At least one regular expression is invalid..
         /// </summary>
         public static string MessageBoxRegExInvalid {

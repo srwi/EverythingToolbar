@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using EverythingToolbar.Data;
 
 namespace EverythingToolbar.Helpers
 {
-    public class DefaultFilterLoader : INotifyPropertyChanged
+    public class DefaultFilterLoader : ObservableObject
     {
         public Filter AllFilter { get; }
 
@@ -105,7 +105,7 @@ namespace EverythingToolbar.Helpers
         {
             if (e.PropertyName == nameof(ISettings.FilterOrder))
             {
-                NotifyPropertyChanged(nameof(Filters));
+                OnPropertyChanged(nameof(Filters));
             }
         }
 
@@ -127,11 +127,5 @@ namespace EverythingToolbar.Helpers
             return validOrder;
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

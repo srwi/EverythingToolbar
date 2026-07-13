@@ -13,8 +13,7 @@ namespace EverythingToolbar.Controls
 {
     public partial class SearchResultPreviewPane
     {
-        private static ISearchWindowController SearchWindowController =>
-            Ioc.Default.GetRequiredService<ISearchWindowController>();
+        private readonly ISearchWindowController _searchWindowController = Ioc.Default.GetRequiredService<ISearchWindowController>();
 
         public sealed class PreviewActionItem
         {
@@ -179,7 +178,7 @@ namespace EverythingToolbar.Controls
                 return;
 
             item.Action(SelectedResult);
-            SearchWindowController.Hide();
+            _searchWindowController.Hide();
         }
     }
 }

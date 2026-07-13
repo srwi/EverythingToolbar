@@ -612,6 +612,12 @@
   <data name="MessageBoxOk" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="MessageBoxYes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="MessageBoxNo" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="ContextMenuOpenWithNoCustomActions" xml:space="preserve">
     <value>No actions defined</value>
   </data>

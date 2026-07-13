@@ -5,12 +5,13 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Data;
 
 namespace EverythingToolbar.Helpers
 {
-    public sealed class ResultImages : INotifyPropertyChanged
+    public sealed class ResultImages : ObservableObject
     {
         private static readonly HashSet<string> ImageExtensions = new(StringComparer.OrdinalIgnoreCase)
         {
@@ -48,7 +49,7 @@ namespace EverythingToolbar.Helpers
             private set
             {
                 _icon = value;
-                PropertyChanged?.Invoke(this, IconChangedArgs);
+                OnPropertyChanged(IconChangedArgs);
             }
         }
 
@@ -58,7 +59,7 @@ namespace EverythingToolbar.Helpers
             private set
             {
                 _previewImage = value;
-                PropertyChanged?.Invoke(this, PreviewImageChangedArgs);
+                OnPropertyChanged(PreviewImageChangedArgs);
             }
         }
 
@@ -130,8 +131,6 @@ namespace EverythingToolbar.Helpers
         }
 
         private bool IsImageFile => ImageExtensions.Contains(Path.GetExtension(_result.FullPathAndFileName));
-
-        public event PropertyChangedEventHandler? PropertyChanged;
     }
 
     internal static class ResultImageCache

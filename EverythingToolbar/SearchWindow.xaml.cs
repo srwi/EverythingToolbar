@@ -12,7 +12,7 @@ using EverythingToolbar.Search;
 
 namespace EverythingToolbar
 {
-    public partial class SearchWindow : ISearchWindowController
+    public partial class SearchWindow
     {
         public event EventHandler<EventArgs>? Hiding;
         public event EventHandler<EventArgs>? Hidden;

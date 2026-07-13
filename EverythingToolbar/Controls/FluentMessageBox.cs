@@ -55,8 +55,8 @@ namespace EverythingToolbar.Controls
         {
             var messageBox = CreateRegular(content, title);
 
-            messageBox.PrimaryButtonText = "Yes";
-            messageBox.SecondaryButtonText = "No";
+            messageBox.PrimaryButtonText = Properties.Resources.MessageBoxYes;
+            messageBox.SecondaryButtonText = Properties.Resources.MessageBoxNo;
             messageBox.IsCloseButtonEnabled = false;
 
             return messageBox;

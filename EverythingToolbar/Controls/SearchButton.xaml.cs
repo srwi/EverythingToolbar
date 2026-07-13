@@ -11,8 +11,7 @@ namespace EverythingToolbar.Controls
     {
         private readonly TaskbarStateManager _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
         private readonly ThemeService _themeService = Ioc.Default.GetRequiredService<ThemeService>();
-        private static ISearchWindowController SearchWindowController =>
-            Ioc.Default.GetRequiredService<ISearchWindowController>();
+        private readonly ISearchWindowController _searchWindowController = Ioc.Default.GetRequiredService<ISearchWindowController>();
 
         public SearchButton()
         {
@@ -72,7 +71,7 @@ namespace EverythingToolbar.Controls
 
         private void OnClick(object? sender, RoutedEventArgs e)
         {
-            SearchWindowController.Toggle();
+            _searchWindowController.Toggle();
         }
 
         private void OnIsVisibleChanged(object? sender, DependencyPropertyChangedEventArgs e)

@@ -12,7 +12,7 @@
       Unloaded="OnUnloaded">
 
     <i:Interaction.Behaviors>
-        <b:Themed ApplyWpfUi="True" />
+        <b:Themed Surface="AppWindow" />
     </i:Interaction.Behaviors>
 
     <Page.Resources>

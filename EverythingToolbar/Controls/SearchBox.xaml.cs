@@ -47,10 +47,9 @@ namespace EverythingToolbar.Controls
         private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
         public ISettings Settings => _settings;
 
-        private static ISearchWindowController SearchWindowController =>
+        private readonly ISearchWindowController _searchWindowController =
             Ioc.Default.GetRequiredService<ISearchWindowController>();
-
-        private static SearchCommands Commands => Ioc.Default.GetRequiredService<SearchCommands>();
+        private readonly SearchCommands _commands = Ioc.Default.GetRequiredService<SearchCommands>();
 
         public SearchBox()
         {
@@ -109,12 +108,12 @@ namespace EverythingToolbar.Controls
             }
             if (e.Key == Key.Escape)
             {
-                SearchWindowController.Hide();
+                _searchWindowController.Hide();
                 e.Handled = true;
                 return;
             }
 
-            if (Commands.TranslateResultsGesture(e.Key, e.SystemKey, Keyboard.Modifiers, fromSearchBox: true))
+            if (_commands.TranslateResultsGesture(e.Key, e.SystemKey, Keyboard.Modifiers, fromSearchBox: true))
                 e.Handled = true;
         }
 
@@ -183,7 +182,7 @@ namespace EverythingToolbar.Controls
         {
             if (e.NewFocus == null) // New focus outside application
             {
-                SearchWindowController.Hide();
+                _searchWindowController.Hide();
             }
         }
 

@@ -11,7 +11,7 @@
       ScrollViewer.CanContentScroll="False">
 
     <i:Interaction.Behaviors>
-        <b:Themed ApplyWpfUi="True" />
+        <b:Themed Surface="AppWindow" />
     </i:Interaction.Behaviors>
 
     <ScrollViewer>
@@ -44,10 +44,10 @@
                             BorderThickness="1"
                             CornerRadius="4">
                         <i:Interaction.Behaviors>
-                            <b:Themed ApplyCustomResources="True" Flavor="System" />
+                            <b:Themed Surface="TaskbarSurface" />
                         </i:Interaction.Behaviors>
                         <ContentControl Content="{Binding SampleSearchResult}" FontSize="15"
-                                        ContentTemplate="{DynamicResource SearchResultsViewTemplate}" />
+                                        ContentTemplate="{Binding Settings.ItemTemplate, Converter={c:ItemTemplateConverter}}" />
                     </Border>
                 </StackPanel>
             </Border>

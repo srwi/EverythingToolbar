@@ -57,41 +57,6 @@ namespace EverythingToolbar.Launcher
             return Path.Combine(taskBarPath, "EverythingToolbar.lnk");
         }
 
-        public static bool GetAutostartState()
-        {
-            using var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
-            var registryValue = key?.GetValue("EverythingToolbar") as string;
-
-            if (string.IsNullOrEmpty(registryValue))
-                return false;
-
-            return File.Exists(registryValue.Trim('"'));
-        }
-
-        public static void SetAutostartState(bool enabled)
-        {
-            using var key = Registry.CurrentUser.OpenSubKey(
-                @"Software\Microsoft\Windows\CurrentVersion\Run",
-                RegistryKeyPermissionCheck.ReadWriteSubTree
-            );
-            try
-            {
-                if (enabled)
-                {
-                    if (GetExecutablePath() is { } executableFilename)
-                        key?.SetValue("EverythingToolbar", "\"" + executableFilename + "\"");
-                }
-                else
-                {
-                    key?.DeleteValue("EverythingToolbar", false);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e, "Failed to set autostart state.");
-            }
-        }
-
         public static void ChangeTaskbarPinIcon(string iconName, bool restartExplorer)
         {
             if (GetExecutablePath() is not { } executableFilename)

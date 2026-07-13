@@ -26,8 +26,12 @@
 
     <i:Interaction.Behaviors>
         <b:FlowDirectionAwareness />
-        <b:Themed ApplyCustomResources="True" Flavor="System" />
+        <b:Themed Surface="TaskbarSurface" />
     </i:Interaction.Behaviors>
+
+    <controls:AcrylicWindow.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </controls:AcrylicWindow.Resources>
 
     <Border Background="{DynamicResource SearchResultsViewHeader}">
 
@@ -54,11 +58,11 @@
 
                     <Border Grid.Column="1">
                         <Button Style="{DynamicResource TabBarButtonStyle}"
-                                Content="{Binding ElementName=SearchResultsView, Path=TotalResultsCount,
+                                Content="{Binding Source={h:Service {x:Type appsearch:SearchSession}}, Path=TotalCount,
                                                   Converter={c:SearchResultsCountConverter}}"
                                 Visibility="{Binding Source={h:Service {x:Type app:ISettings}},
                                                      Path=IsShowResultsCount,
-                                                     Converter={c:BoolToVisibilityConverter}}"
+                                                     Converter={StaticResource BoolToVisibilityConverter}}"
                                 Click="OpenSearchInEverything" />
                     </Border>
 
@@ -113,8 +117,7 @@
                                 Margin="{DynamicResource SearchBoxMargin}"
                                 Visibility="{Binding Source={h:Service {x:Type h:TaskbarStateManager}},
                                                      Path=IsIcon,
-                                                     Converter={c:BoolToVisibilityConverter},
-                                                     ConverterParameter=false}" />
+                                                     Converter={StaticResource BoolToVisibilityConverter}}" />
         </Grid>
     </Border>
 

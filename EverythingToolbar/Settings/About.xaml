@@ -9,7 +9,7 @@
       ScrollViewer.CanContentScroll="False">
     
     <b:Interaction.Behaviors>
-        <behaviors:Themed ApplyWpfUi="True" />
+        <behaviors:Themed Surface="AppWindow" />
     </b:Interaction.Behaviors>
 
     <ScrollViewer>

@@ -26,8 +26,7 @@ namespace EverythingToolbar.Controls
         }
 
         private readonly TaskbarStateManager _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
-        private static ISearchWindowController SearchWindowController =>
-            Ioc.Default.GetRequiredService<ISearchWindowController>();
+        private readonly ISearchWindowController _searchWindowController = Ioc.Default.GetRequiredService<ISearchWindowController>();
 
         public ToolbarControl()
         {
@@ -82,18 +81,18 @@ namespace EverythingToolbar.Controls
 
         private void OnSearchBoxGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            SearchWindowController.Show();
+            _searchWindowController.Show();
         }
 
         public void FocusSearchBox()
         {
             if (_taskbarState.IsIcon)
             {
-                SearchWindowController.Toggle();
+                _searchWindowController.Toggle();
             }
             else if (SearchBox.IsKeyboardFocusWithin)
             {
-                SearchWindowController.Hide();
+                _searchWindowController.Hide();
             }
             else
             {

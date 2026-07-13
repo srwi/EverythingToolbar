@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using EverythingToolbar.Data;
 using EverythingToolbar.Platform;
@@ -13,7 +13,7 @@ using NLog;
 
 namespace EverythingToolbar.Helpers
 {
-    public class EverythingFilterLoader : INotifyPropertyChanged
+    public class EverythingFilterLoader : ObservableObject
     {
         private ObservableCollection<Filter>? _filters;
         public ObservableCollection<Filter>? Filters => _filters ??= LoadFilters();
@@ -66,7 +66,7 @@ namespace EverythingToolbar.Helpers
         private void ResetFilters()
         {
             _filters = null;
-            NotifyPropertyChanged(nameof(Filters));
+            OnPropertyChanged(nameof(Filters));
         }
 
         private ObservableCollection<Filter>? LoadFilters()
@@ -201,11 +201,5 @@ namespace EverythingToolbar.Helpers
             ResetFilters();
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

@@ -12,8 +12,13 @@
       Unloaded="OnUnloaded">
 
     <i:Interaction.Behaviors>
-        <b:Themed ApplyWpfUi="True" />
+        <b:Themed Surface="AppWindow" />
     </i:Interaction.Behaviors>
+
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <c:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibilityConverter" />
+    </Page.Resources>
 
     <ScrollViewer>
         <StackPanel Margin="40">
@@ -35,13 +40,13 @@
                         <controls:SettingItem.SettingContent>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <ui:ProgressRing IsIndeterminate="True" Width="24" Height="24" Margin="0,0,15,0"
-                                                 Visibility="{Binding CheckingForUpdatesVisible, RelativeSource={RelativeSource AncestorType={x:Type Page}}, Converter={c:BoolToVisibilityConverter}}" />
+                                                 Visibility="{Binding CheckingForUpdatesVisible, RelativeSource={RelativeSource AncestorType={x:Type Page}}, Converter={StaticResource BoolToVisibilityConverter}}" />
                                 <ui:Button Content="{x:Static properties:Resources.SettingsCheckNow}"
                                            Click="OnCheckForUpdatesClicked"
-                                           Visibility="{Binding DownloadUpdateButtonVisible, RelativeSource={RelativeSource AncestorType={x:Type Page}}, Converter={c:BoolToVisibilityConverter}, ConverterParameter=true}" />
+                                           Visibility="{Binding DownloadUpdateButtonVisible, RelativeSource={RelativeSource AncestorType={x:Type Page}}, Converter={StaticResource InvertedBoolToVisibilityConverter}}" />
                                 <ui:Button Content="{x:Static properties:Resources.SettingsDownloadLatestVersion}"
                                            Click="OnDownloadUpdateClicked"
-                                           Visibility="{Binding DownloadUpdateButtonVisible, RelativeSource={RelativeSource AncestorType={x:Type Page}}, Converter={c:BoolToVisibilityConverter}}" />
+                                           Visibility="{Binding DownloadUpdateButtonVisible, RelativeSource={RelativeSource AncestorType={x:Type Page}}, Converter={StaticResource BoolToVisibilityConverter}}" />
                                 <ui:ToggleSwitch IsChecked="{Binding Settings.IsUpdateNotificationsEnabled, Mode=TwoWay}"
                                                  Margin="15, 0, 0, 0" />
                             </StackPanel>
@@ -90,7 +95,7 @@
                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,0,1,1"
                     CornerRadius="0,0,0,0"
-                    Visibility="{Binding IsLauncher, Converter={c:BoolToVisibilityConverter}}">
+                    Visibility="{Binding IsLauncher, Converter={StaticResource BoolToVisibilityConverter}}">
                 <controls:SettingItem Title="{x:Static properties:Resources.SettingsEnableAutostart}"
                                       HelpText="{x:Static properties:Resources.SettingsEnableAutostartHelp}">
                     <controls:SettingItem.SettingContent>

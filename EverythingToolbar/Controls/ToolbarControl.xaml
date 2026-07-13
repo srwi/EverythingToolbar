@@ -13,7 +13,7 @@
              GotFocus="OnGotFocus">
     
     <i:Interaction.Behaviors>
-        <b:Themed ApplyCustomResources="True" Flavor="System" />
+        <b:Themed Surface="TaskbarSurface" />
     </i:Interaction.Behaviors>
 
     <UserControl.Resources>

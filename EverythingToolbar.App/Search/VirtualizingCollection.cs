@@ -3,18 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace EverythingToolbar.Search
 {
-    public sealed class VirtualizingCollection<T>
-        : IList<T>,
+    public sealed partial class VirtualizingCollection<T>
+        : ObservableObject,
+            IList<T>,
             IList,
             INotifyCollectionChanged,
-            INotifyPropertyChanged,
             IDisposable
     {
         public VirtualizingCollection(
@@ -57,20 +57,12 @@ namespace EverythingToolbar.Search
                 }
 
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(Count));
             }
         }
 
+        [ObservableProperty]
         private bool _isAsync = true;
-        public bool IsAsync
-        {
-            get => _isAsync;
-            set
-            {
-                _isAsync = value;
-                OnPropertyChanged();
-            }
-        }
 
         private IItemsProvider<T> ItemsProvider { get; set; }
 
@@ -109,13 +101,6 @@ namespace EverythingToolbar.Search
             {
                 OnPropertyChanged(nameof(IsBusy));
             }
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event NotifyCollectionChangedEventHandler? CollectionChanged;

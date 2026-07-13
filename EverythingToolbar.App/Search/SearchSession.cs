@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Threading;
 using EverythingToolbar.Data;
 using SearchResult = EverythingToolbar.Data.SearchResult;
 
 namespace EverythingToolbar.Search
 {
-    public sealed class SearchSession : INotifyPropertyChanged, IDisposable
+    public sealed partial class SearchSession : ObservableObject, IDisposable
     {
         private const int PageSize = 256;
 
@@ -38,23 +38,12 @@ namespace EverythingToolbar.Search
         public event Action? ResultsReset;
 
 
+        [ObservableProperty]
         private int _selectedIndex = -1;
 
-        public int SelectedIndex
-        {
-            get => _selectedIndex;
-            set
-            {
-                if (_selectedIndex == value)
-                    return;
-                _selectedIndex = value;
-                OnPropertyChanged();
-            }
-        }
-
         public SearchResult? SelectedResult =>
-            _collection != null && _selectedIndex >= 0 && _selectedIndex < _collection.Count
-                ? _collection[_selectedIndex]
+            _collection != null && SelectedIndex >= 0 && SelectedIndex < _collection.Count
+                ? _collection[SelectedIndex]
                 : null;
 
         public int VisiblePageCount { get; set; } = 1;
@@ -233,11 +222,5 @@ namespace EverythingToolbar.Search
             _collection = null;
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

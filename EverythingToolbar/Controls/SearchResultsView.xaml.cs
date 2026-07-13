@@ -28,19 +28,6 @@ namespace EverythingToolbar.Controls
             new PropertyMetadata(null)
         );
 
-        public static readonly DependencyProperty TotalResultsCountProperty = DependencyProperty.Register(
-            nameof(TotalResultsCount),
-            typeof(int),
-            typeof(SearchResultsView),
-            new PropertyMetadata(0)
-        );
-
-        public int TotalResultsCount
-        {
-            get => (int)GetValue(TotalResultsCountProperty);
-            set => SetValue(TotalResultsCountProperty, value);
-        }
-
         public SearchResult? SelectedSearchResult
         {
             get => (SearchResult?)GetValue(SelectedSearchResultProperty);
@@ -50,7 +37,6 @@ namespace EverythingToolbar.Controls
         private SearchResult? SelectedItem => SelectedSearchResult;
         private Point _dragStart;
         private bool _isScrollBarDragging;
-        private bool _syncingSelection;
         private int? _touchId;
         private readonly DispatcherTimer _busyIndicatorTimer;
         private const int BusyIndicatorDelayMilliseconds = 2000;
@@ -59,10 +45,9 @@ namespace EverythingToolbar.Controls
         private readonly CustomActionService _customActions = Ioc.Default.GetRequiredService<CustomActionService>();
         private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
 
-        private static ISearchWindowController SearchWindowController =>
+        private readonly ISearchWindowController _searchWindowController =
             Ioc.Default.GetRequiredService<ISearchWindowController>();
-
-        private static SearchCommands Commands => Ioc.Default.GetRequiredService<SearchCommands>();
+        private readonly SearchCommands _commands = Ioc.Default.GetRequiredService<SearchCommands>();
 
         public SearchResultsView()
         {
@@ -91,38 +76,14 @@ namespace EverythingToolbar.Controls
 
         private void OnSessionPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            switch (e.PropertyName)
-            {
-                case nameof(SearchSession.Results):
-                    SearchResultsListView.ItemsSource = _session.Results as System.Collections.IEnumerable;
-                    break;
-                case nameof(SearchSession.TotalCount):
-                    TotalResultsCount = _session.TotalCount;
-                    break;
-                case nameof(SearchSession.IsBusy):
-                    OnCollectionIsBusyChanged();
-                    break;
-                case nameof(SearchSession.SelectedIndex):
-                    ApplySelectionFromSession();
-                    break;
-            }
-        }
-
-        private void ApplySelectionFromSession()
-        {
-            _syncingSelection = true;
-            SearchResultsListView.SelectedIndex = _session.SelectedIndex;
-            if (_session.SelectedIndex >= 0 && SearchResultsListView.SelectedItem != null)
-                SearchResultsListView.ScrollIntoView(SearchResultsListView.SelectedItem);
-            _syncingSelection = false;
+            if (e.PropertyName == nameof(SearchSession.IsBusy))
+                OnCollectionIsBusyChanged();
         }
 
         private void OnListSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (_syncingSelection)
-                return;
-
-            _session.SelectedIndex = SearchResultsListView.SelectedIndex;
+            if (SearchResultsListView.SelectedIndex >= 0 && SearchResultsListView.SelectedItem != null)
+                SearchResultsListView.ScrollIntoView(SearchResultsListView.SelectedItem);
         }
 
         private void OnResultsReset()
@@ -240,30 +201,30 @@ namespace EverythingToolbar.Controls
         {
             if (e.Key == Key.Space)
             {
-                Commands.PreviewSelected();
+                _commands.PreviewSelected();
                 e.Handled = true;
                 return;
             }
             if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.C)
             {
-                Commands.CopySelectedPath();
+                _commands.CopySelectedPath();
                 e.Handled = true;
                 return;
             }
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.C)
             {
-                Commands.CopySelected();
+                _commands.CopySelected();
                 e.Handled = true;
                 return;
             }
             if (e.Key == Key.Escape)
             {
-                SearchWindowController.Hide();
+                _searchWindowController.Hide();
                 e.Handled = true;
                 return;
             }
 
-            if (Commands.TranslateResultsGesture(e.Key, e.SystemKey, Keyboard.Modifiers, fromSearchBox: false))
+            if (_commands.TranslateResultsGesture(e.Key, e.SystemKey, Keyboard.Modifiers, fromSearchBox: false))
                 e.Handled = true;
         }
 
@@ -275,13 +236,13 @@ namespace EverythingToolbar.Controls
             if (!_customActions.TryRun(SelectedItem))
                 InvokeOnSelected(_actions.Open);
 
-            SearchWindowController.Hide();
+            _searchWindowController.Hide();
         }
 
         private void OpenFilePath(object sender, RoutedEventArgs e)
         {
             InvokeOnSelected(_actions.OpenPath);
-            SearchWindowController.Hide();
+            _searchWindowController.Hide();
         }
 
         private void InvokeOnSelected(Action<SearchResult> action)
@@ -298,13 +259,13 @@ namespace EverythingToolbar.Controls
         private void OpenWith(object sender, RoutedEventArgs e)
         {
             InvokeOnSelected(_actions.OpenWith);
-            SearchWindowController.Hide();
+            _searchWindowController.Hide();
         }
 
         private void ShowInEverything(object sender, RoutedEventArgs e)
         {
             InvokeOnSelected(_actions.ShowInEverything);
-            SearchWindowController.Hide();
+            _searchWindowController.Hide();
         }
 
         private void CopyFile(object sender, RoutedEventArgs e)
@@ -335,15 +296,15 @@ namespace EverythingToolbar.Controls
             {
                 case ModifierKeys.Alt:
                     InvokeOnSelected(_actions.ShowProperties);
-                    SearchWindowController.Hide();
+                    _searchWindowController.Hide();
                     break;
                 case ModifierKeys.Control:
                     InvokeOnSelected(_actions.OpenPath);
-                    SearchWindowController.Hide();
+                    _searchWindowController.Hide();
                     break;
                 case ModifierKeys.Shift:
                     InvokeOnSelected(_actions.ShowInEverything);
-                    SearchWindowController.Hide();
+                    _searchWindowController.Hide();
                     break;
                 default:
                     OpenSelectedSearchResult();
@@ -355,13 +316,13 @@ namespace EverythingToolbar.Controls
         private void RunAsAdmin(object sender, RoutedEventArgs e)
         {
             InvokeOnSelected(_actions.RunAsAdmin);
-            SearchWindowController.Hide();
+            _searchWindowController.Hide();
         }
 
         private void ShowFileProperties(object sender, RoutedEventArgs e)
         {
             InvokeOnSelected(_actions.ShowProperties);
-            SearchWindowController.Hide();
+            _searchWindowController.Hide();
         }
 
         private void ShowFileWindowsContextMenu(object sender, RoutedEventArgs e)

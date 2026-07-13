@@ -26,6 +26,7 @@ namespace EverythingToolbar.Launcher
         private RegistryValueWatcher? _taskbarAlignmentWatcher;
         private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
         private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
+        private readonly IAutostartService _autostartService = Ioc.Default.GetRequiredService<IAutostartService>();
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<SetupAssistant>();
 
         public ISettings Settings => _settings;
@@ -44,10 +45,10 @@ namespace EverythingToolbar.Launcher
 
         public bool AutostartEnabled
         {
-            get => Utils.GetAutostartState();
+            get => _autostartService.IsEnabled;
             set
             {
-                Utils.SetAutostartState(value);
+                _autostartService.IsEnabled = value;
                 OnPropertyChanged();
             }
         }

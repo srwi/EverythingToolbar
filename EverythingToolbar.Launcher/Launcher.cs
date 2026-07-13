@@ -94,8 +94,6 @@ namespace EverythingToolbar.Launcher
 
                 Ioc.Default.GetRequiredService<StartMenuIntegration>().Initialize();
 
-                SetupSettingsCallbacks();
-
                 _searchWindow.Hiding += OnSearchWindowHiding;
                 _searchWindow.Hidden += OnSearchWindowHidden;
 
@@ -323,22 +321,6 @@ namespace EverythingToolbar.Launcher
                         OpenSetupAssistant();
                     }
                 });
-            }
-
-            private void SetupSettingsCallbacks()
-            {
-                EverythingToolbar.Settings.Advanced.GetAutostartStateCallback = () => Utils.GetAutostartState();
-                EverythingToolbar.Settings.Advanced.SetAutostartStateCallback = (state) =>
-                    Utils.SetAutostartState(state);
-
-                EverythingToolbar.Settings.SettingsWindow.RegisterPage(
-                    new EverythingToolbar.Settings.SettingsPageDescriptor(
-                        EverythingToolbar.Properties.Resources.SettingsTaskbarIntegration,
-                        Wpf.Ui.Controls.SymbolRegular.Pin24,
-                        typeof(Settings.TaskbarIntegration),
-                        typeof(EverythingToolbar.Settings.About)
-                    )
-                );
             }
 
             private void ToggleWindow()

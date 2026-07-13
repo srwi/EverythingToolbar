@@ -6,19 +6,14 @@ using System.Windows.Markup;
 
 namespace EverythingToolbar.Converters
 {
-    public class BoolToVisibilityConverter : MarkupExtension, IValueConverter
+    public class InvertedBoolToVisibilityConverter : MarkupExtension, IValueConverter
     {
         public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            bool invert = System.Convert.ToBoolean(parameter);
+            if (value is bool boolean && boolean)
+                return Visibility.Collapsed;
 
-            if (value == null)
-                return invert ? Visibility.Visible : Visibility.Collapsed;
-
-            if ((bool)value)
-                return invert ? Visibility.Collapsed : Visibility.Visible;
-
-            return invert ? Visibility.Visible : Visibility.Collapsed;
+            return Visibility.Visible;
         }
 
         public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

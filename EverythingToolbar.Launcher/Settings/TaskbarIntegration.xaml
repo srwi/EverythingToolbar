@@ -12,7 +12,7 @@
       ScrollViewer.CanContentScroll="False">
 
     <i:Interaction.Behaviors>
-        <b:Themed ApplyWpfUi="True" />
+        <b:Themed Surface="AppWindow" />
     </i:Interaction.Behaviors>
 
     <Page.Resources>
@@ -27,6 +27,8 @@
                            VerticalAlignment="Center" />
             </StackPanel>
         </DataTemplate>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <c:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibilityConverter" />
     </Page.Resources>
 
     <ScrollViewer>
@@ -50,7 +52,7 @@
                             <Grid VerticalAlignment="Center">
                                 <StackPanel Orientation="Horizontal"
                                             VerticalAlignment="Center"
-                                            Visibility="{Binding IsTaskbarIconPinned, Converter={c:BoolToVisibilityConverter}}">
+                                            Visibility="{Binding IsTaskbarIconPinned, Converter={StaticResource BoolToVisibilityConverter}}">
                                     <ui:SymbolIcon Symbol="Checkmark24"
                                                    FontSize="18"
                                                    Margin="0, 0, 6, 0"
@@ -63,7 +65,7 @@
                                             VerticalAlignment="Center"
                                             ToolTipService.ShowDuration="60000"
                                             ToolTipService.InitialShowDelay="100"
-                                            Visibility="{Binding IsTaskbarIconPinned, Converter={c:BoolToVisibilityConverter}, ConverterParameter=true}">
+                                            Visibility="{Binding IsTaskbarIconPinned, Converter={StaticResource InvertedBoolToVisibilityConverter}}">
                                     <StackPanel.ToolTip>
                                         <ToolTip MaxWidth="600">
                                             <Image Source="pack://application:,,,/EverythingToolbar.Launcher;component/Images/PinToTaskbar.png"
@@ -117,7 +119,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Visibility="{Binding ShowTaskbarWindowSettings, Converter={c:BoolToVisibilityConverter}}">
+            <StackPanel Visibility="{Binding ShowTaskbarWindowSettings, Converter={StaticResource BoolToVisibilityConverter}}">
                 <ui:TextBlock FontTypography="BodyStrong"
                               Text="{x:Static properties:Resources.SettingsTaskbarSearchBox}"
                               Margin="0, 25, 0, 7"/>

@@ -10,11 +10,7 @@ namespace EverythingToolbar.Behaviors
         // Service-locator reach: behaviors cannot be constructor-injected from XAML.
         private static ThemeService ThemeService => Ioc.Default.GetRequiredService<ThemeService>();
 
-        public ThemeFlavor Flavor { get; set; } = ThemeFlavor.App;
-
-        public bool ApplyWpfUi { get; set; }
-
-        public bool ApplyCustomResources { get; set; }
+        public ThemedSurface Surface { get; set; } = ThemedSurface.AppWindow;
 
         protected override void OnAttached()
         {
@@ -35,6 +31,6 @@ namespace EverythingToolbar.Behaviors
 
         private void OnLoaded(object sender, RoutedEventArgs e) => Register();
 
-        private void Register() => ThemeService.Register(AssociatedObject, ApplyWpfUi, ApplyCustomResources, Flavor);
+        private void Register() => ThemeService.Register(AssociatedObject, Surface);
     }
 }

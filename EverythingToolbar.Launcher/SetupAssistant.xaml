@@ -34,11 +34,12 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </ui:FluentWindow.Resources>
 
     <i:Interaction.Behaviors>
         <b:FlowDirectionAwareness />
-        <b:Themed ApplyWpfUi="True" />
+        <b:Themed Surface="AppWindow" />
     </i:Interaction.Behaviors>
 
     <Grid>
@@ -62,7 +63,7 @@
             <ui:TextBlock FontTypography="BodyStrong"
                           Text="{x:Static properties:Resources.SetupAssistantChooseAccess}"
                           Margin="0, 0, 0, 10"
-                          Visibility="{Binding IsTaskbarWindowSupported, Converter={c:BoolToVisibilityConverter}}" />
+                          Visibility="{Binding IsTaskbarWindowSupported, Converter={StaticResource BoolToVisibilityConverter}}" />
 
             <!-- Two ways to open EverythingToolbar, presented side by side as a choice. -->
             <Grid>
@@ -157,7 +158,7 @@
                 <!-- Vertical "or" divider -->
                 <Grid Grid.Column="1"
                       Margin="16, 0, 16, 0"
-                      Visibility="{Binding IsTaskbarWindowSupported, Converter={c:BoolToVisibilityConverter}}">
+                      Visibility="{Binding IsTaskbarWindowSupported, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
@@ -181,7 +182,7 @@
                 <!-- Option 2: taskbar search box (+ its related settings), Windows 11+ -->
                 <StackPanel Grid.Column="2"
                             VerticalAlignment="Top"
-                            Visibility="{Binding IsTaskbarWindowSupported, Converter={c:BoolToVisibilityConverter}}">
+                            Visibility="{Binding IsTaskbarWindowSupported, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel.Style>
                         <Style TargetType="StackPanel">
                             <Style.Triggers>
