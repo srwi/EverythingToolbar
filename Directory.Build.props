@@ -7,6 +7,20 @@
     <PublishReadyToRun>true</PublishReadyToRun>
   </PropertyGroup>
 
+  <!-- Common properties shared by every C# project (the C++ SDK ignores these). Individual
+       .csproj files override or add only what is genuinely project-specific (OutputType,
+       RootNamespace, UseWPF/UseWindowsForms, AllowUnsafeBlocks, COM hosting, …). -->
+  <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.csproj'">
+    <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatform>windows</SupportedOSPlatform>
+    <LangVersion>12</LangVersion>
+    <Nullable>enable</Nullable>
+    <Platforms>x64;ARM64</Platforms>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)EverythingToolbar.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
   <!-- Static-analysis enforcement: keep dead code and unused usings from re-accumulating.
        Runs the IDE code-style analyzers (IDExxxx) during command-line / MSBuild builds, not just
        in the IDE. GenerateDocumentationFile is required for IDE0005 (unused usings) to be reported

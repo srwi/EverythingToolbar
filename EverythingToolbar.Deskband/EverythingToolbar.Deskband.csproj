@@ -1,17 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
-    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
-    <LangVersion>12</LangVersion>
-    <SupportedOSPlatform>windows</SupportedOSPlatform>
     <OutputType>Library</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <EnableComHosting>true</EnableComHosting>
     <GenerateComInterfaceMetadata>true</GenerateComInterfaceMetadata>
-    <Nullable>enable</Nullable>
-    <Platforms>x64;ARM64</Platforms>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
@@ -27,12 +21,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
     <DefineConstants>TRACE;DEBUG;DESKBAND_WPF</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\EverythingToolbar.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\EverythingToolbar\EverythingToolbar.csproj" />
@@ -61,8 +49,8 @@
     </ItemGroup>
   </Target>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
-    <PackageReference Include="NLog" Version="5.1.1" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" />
+    <PackageReference Include="NLog" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Platform)'=='x64'">
     <PreBuildEvent>taskkill /f /im explorer.exe
