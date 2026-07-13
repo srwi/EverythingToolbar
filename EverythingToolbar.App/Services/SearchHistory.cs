@@ -10,9 +10,9 @@ using NLog;
 
 namespace EverythingToolbar.App.Services
 {
-    public class SearchHistoryService
+    public class SearchHistory
     {
-        private static readonly ILogger Logger = ToolbarLogger.GetLogger<SearchHistoryService>();
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<SearchHistory>();
         private static readonly string HistoryPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "EverythingToolbar",
@@ -26,7 +26,7 @@ namespace EverythingToolbar.App.Services
         private readonly List<string> _history;
         private readonly ISettings _settings;
 
-        public SearchHistoryService(ISettings settings)
+        public SearchHistory(ISettings settings)
         {
             _settings = settings;
             _history = LoadHistory();

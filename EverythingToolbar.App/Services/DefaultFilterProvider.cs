@@ -8,7 +8,7 @@ using EverythingToolbar.Core.Helpers;
 
 namespace EverythingToolbar.App.Services
 {
-    public class DefaultFilterService : ObservableObject
+    public class DefaultFilterProvider : ObservableObject
     {
         public Filter AllFilter { get; }
 
@@ -18,7 +18,7 @@ namespace EverythingToolbar.App.Services
 
         private readonly ISettings _settings;
 
-        public DefaultFilterService(IFilterNames names, ISettings settings)
+        public DefaultFilterProvider(IFilterNames names, ISettings settings)
         {
             _settings = settings;
 

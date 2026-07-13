@@ -11,7 +11,7 @@ namespace EverythingToolbar.Services
         Bottom,
     }
 
-    public sealed partial class TaskbarStateService : ObservableObject
+    public sealed partial class TaskbarInfoProvider : ObservableObject
     {
         [ObservableProperty]
         private Edge _taskbarEdge = Edge.Bottom;

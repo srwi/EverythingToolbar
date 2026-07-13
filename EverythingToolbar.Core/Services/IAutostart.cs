@@ -1,6 +1,6 @@
 namespace EverythingToolbar.Core.Services
 {
-    public interface IAutostartService
+    public interface IAutostart
     {
         bool IsEnabled { get; set; }
     }

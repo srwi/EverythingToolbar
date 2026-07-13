@@ -15,7 +15,7 @@ namespace EverythingToolbar
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<TaskbarWindow>();
         private readonly ISettings _settings;
-        private readonly WindowsPolicyService _windowsPolicy;
+        private readonly WindowsPolicy _windowsPolicy;
 
         private IntPtr _taskbarHandle;
 
@@ -29,7 +29,7 @@ namespace EverythingToolbar
 
         public bool IsAttachedToTaskbar { get; private set; }
 
-        public TaskbarWindow(WindowsPolicyService windowsPolicy, ISettings settings)
+        public TaskbarWindow(WindowsPolicy windowsPolicy, ISettings settings)
         {
             _windowsPolicy = windowsPolicy;
             _settings = settings;

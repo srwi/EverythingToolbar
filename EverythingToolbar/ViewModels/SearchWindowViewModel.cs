@@ -6,25 +6,25 @@ namespace EverythingToolbar.ViewModels
         private readonly EverythingSearchLauncher _launcher;
         private readonly ISettings _settings;
 
-        public WindowsPolicyService WindowsPolicyService { get; }
+        public WindowsPolicy WindowsPolicy { get; }
         public ThemeService ThemeService { get; }
 
         public SearchWindowViewModel(
             SearchState searchState,
             EverythingSearchLauncher launcher,
             ISettings settings,
-            WindowsPolicyService windowsPolicy,
+            WindowsPolicy windowsPolicy,
             ThemeService themeService)
         {
             _searchState = searchState;
             _launcher = launcher;
             _settings = settings;
-            WindowsPolicyService = windowsPolicy;
+            WindowsPolicy = windowsPolicy;
             ThemeService = themeService;
         }
 
-        public bool AnimationsDisabled => WindowsPolicyService.IsEffectiveAnimationsDisabled;
-        public bool IsWindows11OrGreater => WindowsPolicyService.GetWindowsVersion() >= Utils.WindowsVersion.Windows11;
+        public bool AnimationsDisabled => WindowsPolicy.IsEffectiveAnimationsDisabled;
+        public bool IsWindows11OrGreater => WindowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11;
 
         public void SelectFilterFromIndex(int index) => _searchState.SelectFilterFromIndex(index);
 

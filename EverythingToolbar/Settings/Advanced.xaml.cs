@@ -16,7 +16,7 @@ namespace EverythingToolbar.Settings
         private string _latestVersionUrl = "";
 
         public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
-        private readonly IAutostartService _autostartService = Ioc.Default.GetRequiredService<IAutostartService>();
+        private readonly IAutostart _autostart = Ioc.Default.GetRequiredService<IAutostart>();
         private readonly IEverythingClient _everythingClient = Ioc.Default.GetRequiredService<IEverythingClient>();
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -69,7 +69,7 @@ namespace EverythingToolbar.Settings
                 if (_isAutostartEnabled != value)
                 {
                     _isAutostartEnabled = value;
-                    _autostartService.IsEnabled = value;
+                    _autostart.IsEnabled = value;
                     OnPropertyChanged();
                 }
             }
@@ -78,7 +78,7 @@ namespace EverythingToolbar.Settings
         public Advanced()
         {
             InitializeComponent();
-            _isAutostartEnabled = _autostartService.IsEnabled;
+            _isAutostartEnabled = _autostart.IsEnabled;
             DataContext = this;
         }
 

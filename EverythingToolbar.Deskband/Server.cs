@@ -24,7 +24,7 @@ namespace EverythingToolbar.Deskband
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<Server>();
         private static ToolbarControl? _toolbarControl;
-        private TaskbarStateService _taskbarState = null!;
+        private TaskbarInfoProvider _taskbarState = null!;
         private SearchWindowController _controller = null!;
         protected override UIElement UIElement => _toolbarControl!;
 
@@ -34,7 +34,7 @@ namespace EverythingToolbar.Deskband
             {
                 AppServices.Initialize();
 
-                _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateService>();
+                _taskbarState = Ioc.Default.GetRequiredService<TaskbarInfoProvider>();
 
                 // Apply saved UI language
                 CultureHelper.ApplyUILanguage(Ioc.Default.GetRequiredService<ISettings>().UILanguage);
@@ -91,7 +91,7 @@ namespace EverythingToolbar.Deskband
         {
             WeakReferenceMessenger.Default.UnregisterAll(this);
             _controller.ActiveChanged -= OnSearchWindowActiveChanged;
-            Ioc.Default.GetRequiredService<StartMenuService>().Disable();
+            Ioc.Default.GetRequiredService<StartMenuSearchInterceptor>().Disable();
 
             base.DeskbandOnClosed();
 

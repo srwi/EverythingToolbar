@@ -14,12 +14,12 @@ using NLog;
 
 namespace EverythingToolbar.App.Services
 {
-    public class EverythingFilterService : ObservableObject
+    public class EverythingFilterProvider : ObservableObject
     {
         private ObservableCollection<Filter>? _filters;
         public ObservableCollection<Filter>? Filters => _filters ??= LoadFilters();
 
-        private static readonly ILogger Logger = ToolbarLogger.GetLogger<EverythingFilterService>();
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<EverythingFilterProvider>();
         private FileSystemWatcher? _watcher;
         private readonly ISettings _settings;
         private readonly IFilterNames _names;
@@ -27,7 +27,7 @@ namespace EverythingToolbar.App.Services
         private readonly IShellDialogs _shellDialogs;
         private readonly SynchronizationContext? _syncContext;
 
-        public EverythingFilterService(IFilterNames names, INotifier notifier, IShellDialogs shellDialogs, ISettings settings)
+        public EverythingFilterProvider(IFilterNames names, INotifier notifier, IShellDialogs shellDialogs, ISettings settings)
         {
             _names = names;
             _notifier = notifier;

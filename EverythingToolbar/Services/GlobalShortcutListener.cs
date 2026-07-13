@@ -7,21 +7,23 @@ using Windows.Win32;
 
 namespace EverythingToolbar.Services
 {
-    public class ShortcutService
+    public class GlobalShortcutListener
     {
-        private static readonly ILogger Logger = ToolbarLogger.GetLogger<ShortcutService>();
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<GlobalShortcutListener>();
 
-        private static Action? _handler;
-        private static Dispatcher? _dispatcher;
+        private readonly ISettings _settings;
 
-        private static int _triggerVk;
-        private static ModifierKeys _modifiers;
-        private static bool _hotkeyDown;
+        private Action? _handler;
+        private Dispatcher? _dispatcher;
 
-        public static bool IsEnabled { get; set; } = true;
+        private int _triggerVk;
+        private ModifierKeys _modifiers;
+        private bool _hotkeyDown;
 
-        private static NativeMethods.LowLevelKeyboardProc? _hookCallback;
-        private static IntPtr _hookId = IntPtr.Zero;
+        public bool IsEnabled { get; set; } = true;
+
+        private NativeMethods.LowLevelKeyboardProc? _hookCallback;
+        private IntPtr _hookId = IntPtr.Zero;
 
         private const int WhKeyboardLl = 13;
         private const int WmKeydown = 0x0100;
@@ -38,15 +40,20 @@ namespace EverythingToolbar.Services
         private const int LlkhfInjected = 0x10;
         private const uint KeyeventfKeyup = 0x0002;
 
-        public static void Initialize(Action handler)
+        public GlobalShortcutListener(ISettings settings)
+        {
+            _settings = settings;
+        }
+
+        public void Initialize(Action handler)
         {
             _handler = handler;
             _dispatcher = Dispatcher.CurrentDispatcher;
 
-            SetShortcut((Key)ToolbarSettings.User.ShortcutKey, (ModifierKeys)ToolbarSettings.User.ShortcutModifiers);
+            SetShortcut((Key)_settings.ShortcutKey, (ModifierKeys)_settings.ShortcutModifiers);
         }
 
-        public static void SetShortcut(Key key, ModifierKeys modifiers)
+        public void SetShortcut(Key key, ModifierKeys modifiers)
         {
             _triggerVk = key == Key.None ? 0 : KeyInterop.VirtualKeyFromKey(key);
             _modifiers = modifiers;
@@ -60,13 +67,13 @@ namespace EverythingToolbar.Services
                 InstallHook();
         }
 
-        private static void UpdateSettings(Key key, ModifierKeys mods)
+        private void UpdateSettings(Key key, ModifierKeys mods)
         {
-            ToolbarSettings.User.ShortcutKey = (int)key;
-            ToolbarSettings.User.ShortcutModifiers = (int)mods;
+            _settings.ShortcutKey = (int)key;
+            _settings.ShortcutModifiers = (int)mods;
         }
 
-        private static void InstallHook()
+        private void InstallHook()
         {
             if (_hookId != IntPtr.Zero)
                 return;
@@ -78,7 +85,7 @@ namespace EverythingToolbar.Services
                 Logger.Error("Failed to install the keyboard hook for the global shortcut.");
         }
 
-        private static void RemoveHook()
+        private void RemoveHook()
         {
             if (_hookId == IntPtr.Zero)
                 return;
@@ -88,7 +95,7 @@ namespace EverythingToolbar.Services
             _hookCallback = null;
         }
 
-        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             try
             {
@@ -150,7 +157,7 @@ namespace EverythingToolbar.Services
             return modifiers;
         }
 
-        private static void DisguiseModifiersIfNeeded()
+        private void DisguiseModifiersIfNeeded()
         {
             // Tapping the Windows key opens the Start menu and tapping Alt activates the window
             // menu, both on key up. Because we swallow the actual trigger key, Windows would treat

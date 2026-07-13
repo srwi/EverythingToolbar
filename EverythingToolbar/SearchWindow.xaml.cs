@@ -32,7 +32,7 @@ namespace EverythingToolbar
         private readonly SearchWindowAnimator _animator;
 
         public SearchWindow(SearchWindowViewModel viewModel, SearchWindowController controller)
-            : base(viewModel.ThemeService, viewModel.WindowsPolicyService)
+            : base(viewModel.ThemeService, viewModel.WindowsPolicy)
         {
             _viewModel = viewModel;
             _controller = controller;

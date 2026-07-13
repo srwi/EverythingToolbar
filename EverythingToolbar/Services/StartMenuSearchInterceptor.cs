@@ -11,20 +11,20 @@ using Windows.Win32.UI.Accessibility;
 
 namespace EverythingToolbar.Services
 {
-    public class StartMenuService
+    public class StartMenuSearchInterceptor
     {
-        private static readonly Queue<Input> RecordedInputs = new();
-        private static readonly ILogger Logger = ToolbarLogger.GetLogger<StartMenuService>();
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<StartMenuSearchInterceptor>();
 
-        private static WINEVENTPROC? _focusedWindowChangedCallback;
-        private static NativeMethods.LowLevelKeyboardProc? _startMenuKeyboardHookCallback;
-        private static HWINEVENTHOOK _focusedWindowChangedHookId;
-        private static IntPtr _startMenuKeyboardHookId = IntPtr.Zero;
+        private readonly Queue<Input> _recordedInputs = new();
+        private WINEVENTPROC? _focusedWindowChangedCallback;
+        private NativeMethods.LowLevelKeyboardProc? _startMenuKeyboardHookCallback;
+        private HWINEVENTHOOK _focusedWindowChangedHookId;
+        private IntPtr _startMenuKeyboardHookId = IntPtr.Zero;
 
-        private static IntPtr _searchAppHwnd = IntPtr.Zero;
-        private static bool _isNativeSearchActive;
-        private static bool _isInterceptingKeys;
-        private static bool? _animationsToRestore;
+        private IntPtr _searchAppHwnd = IntPtr.Zero;
+        private bool _isNativeSearchActive;
+        private bool _isInterceptingKeys;
+        private bool? _animationsToRestore;
         private readonly DispatcherTimer _cleanupTimer = new() { Interval = TimeSpan.FromSeconds(1) };
         private readonly Dispatcher _dispatcher = Dispatcher.CurrentDispatcher;
         private readonly ISettings _settings;
@@ -36,7 +36,7 @@ namespace EverythingToolbar.Services
         private const int InputKeyboard = 1;
         private const uint KeyeventFKeyup = 0x0002;
 
-        public StartMenuService(ISettings settings, SearchWindowController controller)
+        public StartMenuSearchInterceptor(ISettings settings, SearchWindowController controller)
         {
             _settings = settings;
             _controller = controller;
@@ -155,7 +155,7 @@ namespace EverythingToolbar.Services
 
                 // Queue keypress for replay in EverythingToolbar
                 _isInterceptingKeys = true;
-                RecordedInputs.Enqueue(
+                _recordedInputs.Enqueue(
                     new Input
                     {
                         type = InputKeyboard,
@@ -188,7 +188,7 @@ namespace EverythingToolbar.Services
             Logger.Debug("Search box got keyboard focus. Replaying recorded inputs...");
 
             UnhookStartMenuInput();
-            ReplayRecordedInputs();
+            Replay_recordedInputs();
             _isInterceptingKeys = false;
             _searchAppHwnd = IntPtr.Zero;
         }
@@ -224,11 +224,11 @@ namespace EverythingToolbar.Services
             );
         }
 
-        private void ReplayRecordedInputs()
+        private void Replay_recordedInputs()
         {
-            while (RecordedInputs.Count > 0)
+            while (_recordedInputs.Count > 0)
             {
-                var input = RecordedInputs.Dequeue();
+                var input = _recordedInputs.Dequeue();
                 NativeMethods.keybd_event(
                     (byte)input.u.ki.wVk,
                     (byte)input.u.ki.wScan,
@@ -252,7 +252,7 @@ namespace EverythingToolbar.Services
         private void ResetHandoverState()
         {
             CancelCleanupTimer();
-            RecordedInputs.Clear();
+            _recordedInputs.Clear();
             UnhookStartMenuInput();
             _controller.SearchBoxFocused -= OnAnySearchBoxGotKeyboardFocus;
             _searchAppHwnd = IntPtr.Zero;
@@ -261,7 +261,7 @@ namespace EverythingToolbar.Services
             RestoreAnimations();
         }
 
-        private static void RestoreAnimations()
+        private void RestoreAnimations()
         {
             if (_animationsToRestore is not bool enabled)
                 return;

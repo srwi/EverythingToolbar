@@ -31,7 +31,7 @@ namespace EverythingToolbar.Launcher
             private readonly SearchWindow _searchWindow;
             private readonly SearchWindowController _controller;
             private readonly SearchWindowPlacement? _searchWindowPlacementBehavior;
-            private readonly WindowsPolicyService _windowsPolicy;
+            private readonly WindowsPolicy _windowsPolicy;
             private readonly ISettings _settings;
             private bool _closingTaskbarWindowIntentionally;
             private uint _taskbarCreatedMsg;
@@ -50,7 +50,7 @@ namespace EverythingToolbar.Launcher
 
                 _searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();
                 _controller = Ioc.Default.GetRequiredService<SearchWindowController>();
-                _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicyService>();
+                _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
                 _settings = Ioc.Default.GetRequiredService<ISettings>();
 
                 _trayIcon = icon;
@@ -63,9 +63,9 @@ namespace EverythingToolbar.Launcher
                 WindowStyle = WindowStyle.None;
 
                 _searchWindowPlacementBehavior = new SearchWindowPlacement(
-                    Ioc.Default.GetRequiredService<TaskbarStateService>(),
+                    Ioc.Default.GetRequiredService<TaskbarInfoProvider>(),
                     Ioc.Default.GetRequiredService<ISettings>(),
-                    Ioc.Default.GetRequiredService<WindowsPolicyService>());
+                    Ioc.Default.GetRequiredService<WindowsPolicy>());
                 Interaction.GetBehaviors(_searchWindow).Add(_searchWindowPlacementBehavior);
 
                 if (_windowsPolicy.IsTaskbarWindowActive())
@@ -85,9 +85,9 @@ namespace EverythingToolbar.Launcher
                     new SetupAssistant(icon).Show();
                 }
 
-                ShortcutService.Initialize(_controller.ToggleSearchUi);
+                Ioc.Default.GetRequiredService<GlobalShortcutListener>().Initialize(_controller.ToggleSearchUi);
 
-                Ioc.Default.GetRequiredService<StartMenuService>().Initialize();
+                Ioc.Default.GetRequiredService<StartMenuSearchInterceptor>().Initialize();
 
                 Dispatcher.BeginInvoke(_controller.PreWarm, DispatcherPriority.ApplicationIdle);
 

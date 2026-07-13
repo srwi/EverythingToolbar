@@ -12,15 +12,15 @@ namespace EverythingToolbar.Deskband
 
             var controller = Ioc.Default.GetRequiredService<SearchWindowController>();
             controller.SetIconMode(false);
-            ShortcutService.Initialize(controller.ToggleSearchUi);
-            Ioc.Default.GetRequiredService<StartMenuService>().Initialize();
+            Ioc.Default.GetRequiredService<GlobalShortcutListener>().Initialize(controller.ToggleSearchUi);
+            Ioc.Default.GetRequiredService<StartMenuSearchInterceptor>().Initialize();
 
             var searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();
             Interaction.GetBehaviors(searchWindow).Add(
                 new SearchWindowPlacement(
-                    Ioc.Default.GetRequiredService<TaskbarStateService>(),
+                    Ioc.Default.GetRequiredService<TaskbarInfoProvider>(),
                     Ioc.Default.GetRequiredService<ISettings>(),
-                    Ioc.Default.GetRequiredService<WindowsPolicyService>())
+                    Ioc.Default.GetRequiredService<WindowsPolicy>())
                 { PlacementTarget = UnifiedToolbarControl });
         }
     }

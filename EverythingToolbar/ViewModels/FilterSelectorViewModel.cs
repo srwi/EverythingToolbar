@@ -6,16 +6,16 @@ namespace EverythingToolbar.ViewModels
     {
         private readonly ISettings _settings;
 
-        public FilterService FilterService { get; }
+        public FilterProvider FilterProvider { get; }
 
         public int MaxTabItems => _settings.MaxTabItems;
 
-        public FilterSelectorViewModel(FilterService filterService, ISettings settings)
+        public FilterSelectorViewModel(FilterProvider filterProvider, ISettings settings)
         {
-            FilterService = filterService;
+            FilterProvider = filterProvider;
             _settings = settings;
         }
 
-        public int IndexOf(Filter filter) => FilterService.Filters.IndexOf(filter);
+        public int IndexOf(Filter filter) => FilterProvider.Filters.IndexOf(filter);
     }
 }

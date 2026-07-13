@@ -23,9 +23,9 @@ namespace EverythingToolbar.Launcher
         private bool _iconUpdateRequired;
         private FileSystemWatcher? _watcher;
         private RegistryValueWatcher? _taskbarAlignmentWatcher;
-        private readonly WindowsPolicyService _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicyService>();
+        private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
         private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
-        private readonly IAutostartService _autostartService = Ioc.Default.GetRequiredService<IAutostartService>();
+        private readonly IAutostart _autostart = Ioc.Default.GetRequiredService<IAutostart>();
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<SetupAssistant>();
 
         public ISettings Settings => _settings;
@@ -44,10 +44,10 @@ namespace EverythingToolbar.Launcher
 
         public bool AutostartEnabled
         {
-            get => _autostartService.IsEnabled;
+            get => _autostart.IsEnabled;
             set
             {
-                _autostartService.IsEnabled = value;
+                _autostart.IsEnabled = value;
                 OnPropertyChanged();
             }
         }

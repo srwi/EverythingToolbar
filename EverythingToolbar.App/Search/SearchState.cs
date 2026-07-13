@@ -31,17 +31,17 @@ namespace EverythingToolbar.App.Search
             }
         }
 
-        private readonly SearchHistoryService _history;
-        private readonly FilterService _filterService;
+        private readonly SearchHistory _history;
+        private readonly FilterProvider _filterProvider;
         private readonly ISettings _settings;
 
-        public SearchState(SearchHistoryService history, FilterService filterService, ISettings settings)
+        public SearchState(SearchHistory history, FilterProvider filterProvider, ISettings settings)
         {
             _history = history;
-            _filterService = filterService;
+            _filterProvider = filterProvider;
             _settings = settings;
 
-            _currentFilter = _filterService.GetInitialFilter();
+            _currentFilter = _filterProvider.GetInitialFilter();
 
             _settings.PropertyChanged += OnSettingsChanged;
         }
@@ -53,7 +53,7 @@ namespace EverythingToolbar.App.Search
             else
                 SearchTerm = "";
 
-            Filter = _filterService.GetInitialFilter();
+            Filter = _filterProvider.GetInitialFilter();
         }
 
         public string GetPreviousSearchTerm() => _history.GetPreviousItem();
@@ -64,25 +64,25 @@ namespace EverythingToolbar.App.Search
 
         public void CycleFilters(int offset = 1)
         {
-            var filterCount = _filterService.Filters.Count;
-            var currentIndex = _filterService.Filters.IndexOf(Filter);
+            var filterCount = _filterProvider.Filters.Count;
+            var currentIndex = _filterProvider.Filters.IndexOf(Filter);
             var newIndex = (currentIndex + offset + filterCount) % filterCount;
-            Filter = _filterService.Filters[newIndex];
+            Filter = _filterProvider.Filters[newIndex];
         }
 
         public void SelectFilterFromIndex(int index)
         {
-            if (index < 0 || index >= _filterService.Filters.Count)
+            if (index < 0 || index >= _filterProvider.Filters.Count)
                 return;
 
-            Filter = _filterService.Filters[index];
+            Filter = _filterProvider.Filters[index];
         }
 
         private string ApplyMacros(string searchTerm)
         {
             var result = searchTerm;
 
-            foreach (var f in _filterService.Filters)
+            foreach (var f in _filterProvider.Filters)
             {
                 if (string.IsNullOrEmpty(f.Macro))
                     continue;

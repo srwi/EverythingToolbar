@@ -3,7 +3,7 @@ using Microsoft.Win32;
 
 namespace EverythingToolbar.Services
 {
-    public sealed class WindowsPolicyService(ISettings settings)
+    public sealed class WindowsPolicy(ISettings settings)
     {
         public Version GetWindowsVersion()
         {

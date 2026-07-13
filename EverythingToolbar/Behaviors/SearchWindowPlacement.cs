@@ -20,11 +20,11 @@ namespace EverythingToolbar.Behaviors
         public FrameworkElement? PlacementTarget { get; set; }
 
         private double _dpiScalingFactor = 1.0;
-        private readonly TaskbarStateService _taskbarState;
+        private readonly TaskbarInfoProvider _taskbarState;
         private readonly ISettings _settings;
-        private readonly WindowsPolicyService _windowsPolicy;
+        private readonly WindowsPolicy _windowsPolicy;
 
-        public SearchWindowPlacement(TaskbarStateService taskbarState, ISettings settings, WindowsPolicyService windowsPolicy)
+        public SearchWindowPlacement(TaskbarInfoProvider taskbarState, ISettings settings, WindowsPolicy windowsPolicy)
         {
             _taskbarState = taskbarState;
             _settings = settings;

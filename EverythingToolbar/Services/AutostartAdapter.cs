@@ -5,12 +5,12 @@ using NLog;
 
 namespace EverythingToolbar.Services
 {
-    public sealed class AutostartService : IAutostartService
+    public sealed class AutostartAdapter : IAutostart
     {
         private const string RegistryKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Run";
         private const string RegistryValueName = "EverythingToolbar";
 
-        private static readonly ILogger Logger = ToolbarLogger.GetLogger<AutostartService>();
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<AutostartAdapter>();
 
         public bool IsEnabled
         {

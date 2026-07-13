@@ -6,10 +6,10 @@ using EverythingToolbar.Core.Data;
 
 namespace EverythingToolbar.App.Services
 {
-    public class FilterService : ObservableObject
+    public class FilterProvider : ObservableObject
     {
-        private readonly DefaultFilterService _defaultLoader;
-        private readonly EverythingFilterService _everythingLoader;
+        private readonly DefaultFilterProvider _defaultLoader;
+        private readonly EverythingFilterProvider _everythingLoader;
         private readonly ISettings _settings;
 
         public ObservableCollection<Filter> Filters
@@ -37,7 +37,7 @@ namespace EverythingToolbar.App.Services
 
         public ObservableCollection<Filter> OverflowFilters => new(Filters.Skip(_settings.MaxTabItems));
 
-        public FilterService(DefaultFilterService defaultLoader, EverythingFilterService everythingLoader,
+        public FilterProvider(DefaultFilterProvider defaultLoader, EverythingFilterProvider everythingLoader,
             ISettings settings)
         {
             _defaultLoader = defaultLoader;
@@ -51,7 +51,7 @@ namespace EverythingToolbar.App.Services
 
         private void OnDefaultFiltersChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(DefaultFilterService.Filters))
+            if (e.PropertyName == nameof(DefaultFilterProvider.Filters))
             {
                 NotifyFilterCollectionsChanged();
             }
@@ -59,7 +59,7 @@ namespace EverythingToolbar.App.Services
 
         private void OnEverythingFiltersChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(EverythingFilterService.Filters))
+            if (e.PropertyName == nameof(EverythingFilterProvider.Filters))
             {
                 NotifyFilterCollectionsChanged();
             }
