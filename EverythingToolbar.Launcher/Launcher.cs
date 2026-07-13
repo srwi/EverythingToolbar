@@ -6,10 +6,8 @@ using System.Windows.Interop;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using EverythingToolbar.Behaviors;
 using EverythingToolbar.Controls;
 using EverythingToolbar.Helpers;
-using Microsoft.Xaml.Behaviors;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
@@ -30,7 +28,7 @@ namespace EverythingToolbar.Launcher
             private TaskbarWindow? _taskbarWindow;
             private readonly SearchWindow _searchWindow;
             private readonly SearchWindowController _controller;
-            private readonly SearchWindowPlacement? _searchWindowPlacementBehavior;
+            private readonly SearchHost _searchHost;
             private readonly WindowsPolicy _windowsPolicy;
             private readonly ISettings _settings;
             private bool _closingTaskbarWindowIntentionally;
@@ -50,6 +48,7 @@ namespace EverythingToolbar.Launcher
 
                 _searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();
                 _controller = Ioc.Default.GetRequiredService<SearchWindowController>();
+                _searchHost = Ioc.Default.GetRequiredService<SearchHost>();
                 _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
                 _settings = Ioc.Default.GetRequiredService<ISettings>();
 
@@ -62,16 +61,10 @@ namespace EverythingToolbar.Launcher
                 ResizeMode = ResizeMode.NoResize;
                 WindowStyle = WindowStyle.None;
 
-                _searchWindowPlacementBehavior = new SearchWindowPlacement(
-                    Ioc.Default.GetRequiredService<TaskbarInfoProvider>(),
-                    Ioc.Default.GetRequiredService<ISettings>(),
-                    Ioc.Default.GetRequiredService<WindowsPolicy>());
-                Interaction.GetBehaviors(_searchWindow).Add(_searchWindowPlacementBehavior);
+                _searchHost.Attach(placementTarget: null, iconMode: !_windowsPolicy.IsTaskbarWindowActive());
 
                 if (_windowsPolicy.IsTaskbarWindowActive())
                     CreateTaskbarWindow();
-                else
-                    _controller.SetIconMode(true);
 
                 StartToggleListener();
 
@@ -84,10 +77,6 @@ namespace EverythingToolbar.Launcher
                     _suppressInitialTrayIcon = true;
                     new SetupAssistant(icon).Show();
                 }
-
-                Ioc.Default.GetRequiredService<GlobalShortcutListener>().Initialize(_controller.ToggleSearchUi);
-
-                Ioc.Default.GetRequiredService<StartMenuSearchInterceptor>().Initialize();
 
                 Dispatcher.BeginInvoke(_controller.PreWarm, DispatcherPriority.ApplicationIdle);
 
@@ -237,8 +226,7 @@ namespace EverythingToolbar.Launcher
 
                 _taskbarWindow.Show();
                 _controller.SetIconMode(false);
-                if (_searchWindowPlacementBehavior != null)
-                    _searchWindowPlacementBehavior.PlacementTarget = _taskbarWindow.PlacementTarget;
+                _searchHost.SetPlacementTarget(_taskbarWindow.PlacementTarget);
             }
 
             private void CloseTaskbarWindow()
@@ -262,8 +250,7 @@ namespace EverythingToolbar.Launcher
                 }
 
                 _controller.SetIconMode(true);
-                if (_searchWindowPlacementBehavior != null)
-                    _searchWindowPlacementBehavior.PlacementTarget = null;
+                _searchHost.SetPlacementTarget(null);
             }
 
             private void OnTaskbarWindowClosed(object? sender, EventArgs e)
@@ -273,8 +260,7 @@ namespace EverythingToolbar.Launcher
 
                 _taskbarWindow = null;
                 _controller.SetIconMode(true);
-                if (_searchWindowPlacementBehavior != null)
-                    _searchWindowPlacementBehavior.PlacementTarget = null;
+                _searchHost.SetPlacementTarget(null);
             }
 
             private void StartToggleListener()

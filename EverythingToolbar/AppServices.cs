@@ -12,7 +12,7 @@ namespace EverythingToolbar
 
         public static void Initialize()
         {
-            if (_initialized) // idempotent: guards double-init / repeat COM activation
+            if (_initialized)
                 return;
             _initialized = true;
 
@@ -79,7 +79,8 @@ namespace EverythingToolbar
                 .AddSingleton<GlobalShortcutListener>()
                 .AddSingleton<SearchWindow>()
                 .AddSingleton<SearchWindowController>()
-                .AddSingleton<ISearchWindowController>(sp => sp.GetRequiredService<SearchWindowController>());
+                .AddSingleton<ISearchWindowController>(sp => sp.GetRequiredService<SearchWindowController>())
+                .AddSingleton<SearchHost>();
         }
 
         public static IServiceCollection AddViewModels(this IServiceCollection services)

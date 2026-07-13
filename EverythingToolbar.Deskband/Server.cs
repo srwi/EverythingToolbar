@@ -91,7 +91,7 @@ namespace EverythingToolbar.Deskband
         {
             WeakReferenceMessenger.Default.UnregisterAll(this);
             _controller.ActiveChanged -= OnSearchWindowActiveChanged;
-            Ioc.Default.GetRequiredService<StartMenuSearchInterceptor>().Disable();
+            Ioc.Default.GetRequiredService<SearchHost>().Detach();
 
             base.DeskbandOnClosed();
 
