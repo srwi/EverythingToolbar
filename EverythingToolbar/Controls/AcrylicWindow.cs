@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
+using System.Windows.Threading;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
@@ -137,7 +138,6 @@ namespace EverythingToolbar.Controls
 
             Background = Brushes.Transparent;
 
-            Loaded += OnWindowLoaded;
             SourceInitialized += OnSourceInitialized;
             Closed += OnClosed;
 
@@ -164,42 +164,10 @@ namespace EverythingToolbar.Controls
             }
         }
 
-        private void OnWindowLoaded(object sender, RoutedEventArgs e)
-        {
-            ApplyAcrylicEffect();
-        }
-
         private void OnSourceInitialized(object? sender, EventArgs e)
         {
             ApplyAcrylicEffect();
             ApplyWindowCorner();
-
-            // Reject Direct Manipulation to ensure precision touchpad scroll
-            // generates WM_MOUSEWHEEL instead of being consumed by the DM infrastructure.
-            // When WPF runs inside Explorer's process (deskband), WPF's DM conflicts with
-            // Explorer's own DM manager, causing touchpad scroll events to be silently lost.
-            if (PresentationSource.FromVisual(this) is HwndSource hwndSource)
-            {
-                hwndSource.AddHook(RejectDirectManipulation);
-            }
-        }
-
-        private static IntPtr RejectDirectManipulation(
-            IntPtr hwnd,
-            int msg,
-            IntPtr wParam,
-            IntPtr lParam,
-            ref bool handled
-        )
-        {
-            const int DM_POINTERHITTEST = 0x0250;
-            if (msg == DM_POINTERHITTEST)
-            {
-                handled = true;
-                return IntPtr.Zero;
-            }
-
-            return IntPtr.Zero;
         }
 
         private Color GetThemeBackgroundColor()
