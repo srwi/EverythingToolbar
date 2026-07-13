@@ -12,30 +12,37 @@ namespace EverythingToolbar.App.Services
         private readonly EverythingFilterProvider _everythingLoader;
         private readonly ISettings _settings;
 
-        public ObservableCollection<Filter> Filters
+        // Cached so repeated reads return the same instances; invalidated (nulled) whenever an input
+        // changes, via NotifyFilterCollectionsChanged. Previously every get allocated a fresh collection.
+        private ObservableCollection<Filter>? _filters;
+        private ObservableCollection<Filter>? _visibleFilters;
+        private ObservableCollection<Filter>? _overflowFilters;
+
+        public ObservableCollection<Filter> Filters => _filters ??= BuildFilters();
+
+        public ObservableCollection<Filter> VisibleFilters =>
+            _visibleFilters ??= new ObservableCollection<Filter>(Filters.Take(_settings.MaxTabItems));
+
+        public ObservableCollection<Filter> OverflowFilters =>
+            _overflowFilters ??= new ObservableCollection<Filter>(Filters.Skip(_settings.MaxTabItems));
+
+        private ObservableCollection<Filter> BuildFilters()
         {
-            get
+            if (_settings.IsRegExEnabled)
+                return new ObservableCollection<Filter>([_defaultLoader.AllFilter]);
+
+            if (_settings.IsImportFilters)
             {
-                if (_settings.IsRegExEnabled)
-                    return new ObservableCollection<Filter>([_defaultLoader.AllFilter]);
+                var everythingFilters = _everythingLoader.Filters;
 
-                if (_settings.IsImportFilters)
-                {
-                    var everythingFilters = _everythingLoader.Filters;
+                if (everythingFilters?.Count > 0)
+                    return everythingFilters;
 
-                    if (everythingFilters?.Count > 0)
-                        return everythingFilters;
-
-                    return new ObservableCollection<Filter>([_defaultLoader.AllFilter]);
-                }
-
-                return _defaultLoader.Filters;
+                return new ObservableCollection<Filter>([_defaultLoader.AllFilter]);
             }
+
+            return _defaultLoader.Filters;
         }
-
-        public ObservableCollection<Filter> VisibleFilters => new(Filters.Take(_settings.MaxTabItems));
-
-        public ObservableCollection<Filter> OverflowFilters => new(Filters.Skip(_settings.MaxTabItems));
 
         public FilterProvider(DefaultFilterProvider defaultLoader, EverythingFilterProvider everythingLoader,
             ISettings settings)
@@ -79,6 +86,10 @@ namespace EverythingToolbar.App.Services
 
         private void NotifyFilterCollectionsChanged()
         {
+            _filters = null;
+            _visibleFilters = null;
+            _overflowFilters = null;
+
             OnPropertyChanged(nameof(Filters));
             OnPropertyChanged(nameof(VisibleFilters));
             OnPropertyChanged(nameof(OverflowFilters));
