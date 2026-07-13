@@ -1,0 +1,19 @@
+<!-- Aggregates all Win10 control style dictionaries so ThemeService can merge one
+     compiled dictionary instead of scanning a directory (THEMING-REFACTOR-PLAN.md §2.3). -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Controls/ContextMenu.xaml" />
+        <ResourceDictionary Source="Controls/FilterSelector.xaml" />
+        <ResourceDictionary Source="Controls/ToolTip.xaml" />
+        <ResourceDictionary Source="Controls/ListViewItem.xaml" />
+        <ResourceDictionary Source="Controls/QuickSettingsToggle.xaml" />
+        <ResourceDictionary Source="Controls/Scrollbar.xaml" />
+        <ResourceDictionary Source="Controls/SearchBox.xaml" />
+        <ResourceDictionary Source="Controls/SearchResultPreviewPane.xaml" />
+        <ResourceDictionary Source="Controls/SearchWindow.xaml" />
+        <ResourceDictionary Source="Controls/TabBarButton.xaml" />
+        <ResourceDictionary Source="Controls/TextBox.xaml" />
+        <ResourceDictionary Source="Controls/UpdateBanner.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
