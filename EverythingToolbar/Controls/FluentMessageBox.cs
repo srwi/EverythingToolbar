@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using EverythingToolbar.Helpers;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 using MessageBox = Wpf.Ui.Controls.MessageBox;
@@ -18,11 +20,9 @@ namespace EverythingToolbar.Controls
                 MinWidth = 300,
             };
 
-            // We need to apply resources before setting the content on the base message box
+            var appTheme = Ioc.Default.GetRequiredService<ThemeService>().GetEffectiveTheme(ThemeFlavor.App);
             ApplicationThemeManager.Apply(
-                SystemThemeManager.GetCachedSystemTheme() == SystemTheme.Light
-                    ? ApplicationTheme.Light
-                    : ApplicationTheme.Dark
+                appTheme == Theme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark
             );
             ApplicationThemeManager.Apply(messageBox);
 

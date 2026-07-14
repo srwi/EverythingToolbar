@@ -3,7 +3,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Controls
@@ -11,6 +10,7 @@ namespace EverythingToolbar.Controls
     public partial class SearchButton
     {
         private readonly TaskbarStateManager _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
+        private readonly ThemeService _themeService = Ioc.Default.GetRequiredService<ThemeService>();
         private static ISearchWindowController SearchWindowController =>
             Ioc.Default.GetRequiredService<ISearchWindowController>();
 
@@ -23,7 +23,13 @@ namespace EverythingToolbar.Controls
                 (_, m) => OnSearchWindowActiveChanged(m.IsActive)
             );
 
-            ThemeAwareness.ResourceChanged += UpdateTheme;
+            _themeService.ThemeChanged += UpdateTheme;
+            Unloaded += OnUnloaded;
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            _themeService.ThemeChanged -= UpdateTheme;
         }
 
         private void OnSearchWindowActiveChanged(bool isActive)
@@ -53,14 +59,14 @@ namespace EverythingToolbar.Controls
             }
         }
 
-        private void UpdateTheme(object? sender, ResourcesChangedEventArgs e)
+        private void UpdateTheme(object? sender, ThemeChangedEventArgs e)
         {
             if (IsLoaded)
-                UpdateTheme(e.NewTheme);
+                UpdateTheme(e.SystemTheme);
             else
                 Loaded += (_, _) =>
                 {
-                    UpdateTheme(e.NewTheme);
+                    UpdateTheme(e.SystemTheme);
                 };
         }
 

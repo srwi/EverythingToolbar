@@ -617,7 +617,7 @@ namespace Peter
         /// </summary>
         private static bool ShouldUseDarkMode()
         {
-            return !Ioc.Default.GetRequiredService<WindowsPolicy>().IsLightTheme();
+            return !Ioc.Default.GetRequiredService<ThemeService>().IsLightTheme();
         }
 
         /// <summary>

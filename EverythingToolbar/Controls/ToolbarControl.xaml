@@ -13,7 +13,7 @@
              GotFocus="OnGotFocus">
     
     <i:Interaction.Behaviors>
-        <b:ThemeAwareness />
+        <b:Themed ApplyCustomResources="True" Flavor="System" />
     </i:Interaction.Behaviors>
 
     <UserControl.Resources>

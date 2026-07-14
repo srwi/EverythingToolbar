@@ -29,6 +29,7 @@ namespace EverythingToolbar
             services.AddSingleton<SearchCommands>();
             services.AddSingleton<CustomActionService>();
             services.AddSingleton<WindowsPolicy>();
+            services.AddSingleton<ThemeService>();
             services.AddSingleton<StartMenuIntegration>();
             services.AddSingleton<SearchWindow>();
             services.AddSingleton<ISearchWindowController>(sp => sp.GetRequiredService<SearchWindow>());

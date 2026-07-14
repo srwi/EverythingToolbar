@@ -1,6 +1,5 @@
 using System;
 using Microsoft.Win32;
-using Wpf.Ui.Appearance;
 
 namespace EverythingToolbar.Helpers
 {
@@ -14,15 +13,6 @@ namespace EverythingToolbar.Helpers
             return Environment.OSVersion.Version;
         }
 
-        public bool IsLightTheme()
-        {
-            if (settings.ThemeOverride.ToLower() == "light")
-                return true;
-            if (settings.ThemeOverride.ToLower() == "dark")
-                return false;
-
-            return SystemThemeManager.GetCachedSystemTheme() == SystemTheme.Light;
-        }
 
         public bool IsEffectiveAnimationsDisabled =>
             settings.IsAnimationsDisabled || !SystemSettings.GetSystemAnimationsEnabled();

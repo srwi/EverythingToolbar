@@ -5,7 +5,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Controls
@@ -125,6 +124,7 @@ namespace EverythingToolbar.Controls
         }
 
         private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
+        private readonly ThemeService _themeService = Ioc.Default.GetRequiredService<ThemeService>();
 
         public bool IsAcrylicEnabled
         {
@@ -189,11 +189,17 @@ namespace EverythingToolbar.Controls
 
             Loaded += OnWindowLoaded;
             SourceInitialized += OnSourceInitialized;
+            Closed += OnClosed;
 
-            ThemeAwareness.ResourceChanged += OnThemeChanged;
+            _themeService.ThemeChanged += OnThemeChanged;
         }
 
-        private void OnThemeChanged(object? sender, ResourcesChangedEventArgs e)
+        private void OnClosed(object? sender, EventArgs e)
+        {
+            _themeService.ThemeChanged -= OnThemeChanged;
+        }
+
+        private void OnThemeChanged(object? sender, ThemeChangedEventArgs e)
         {
             if (!SystemSettings.IsWindowsTransparencyEnabled())
                 UpdateBackgroundColor();
@@ -248,13 +254,7 @@ namespace EverythingToolbar.Controls
 
         private Color GetThemeBackgroundColor()
         {
-            var isLightTheme = _windowsPolicy.IsLightTheme();
-            var isWindows11 = _windowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11;
-
-            if (isWindows11)
-                return isLightTheme ? Color.FromRgb(0xf0, 0xf0, 0xf0) : Color.FromRgb(0x25, 0x25, 0x25);
-            else
-                return isLightTheme ? Color.FromRgb(0xee, 0xee, 0xee) : Color.FromRgb(0x22, 0x22, 0x22);
+            return TryFindResource("AcrylicWindowBackgroundFallback") as Color? ?? Colors.Transparent;
         }
 
         private static void OnAcrylicPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

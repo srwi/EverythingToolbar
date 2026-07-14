@@ -1,0 +1,304 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Threading;
+using NLog;
+using Windows.UI.ViewManagement;
+using Wpf.Ui.Appearance;
+using Wpf.Ui.Markup;
+using Color = Windows.UI.Color;
+
+namespace EverythingToolbar.Helpers
+{
+    public enum Theme
+    {
+        Dark,
+        Light,
+    }
+
+    public enum ThemeFlavor
+    {
+        App,
+        System,
+    }
+
+    public sealed class ThemeChangedEventArgs : EventArgs
+    {
+        public Theme SystemTheme { get; init; }
+        public Theme AppTheme { get; init; }
+    }
+
+    public sealed class ThemeService : IDisposable
+    {
+        private const string PersonalizeSubKey = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
+
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<ThemeService>();
+
+        private static readonly RegistryEntry SystemThemeRegistryEntry = new(
+            "HKEY_CURRENT_USER",
+            PersonalizeSubKey,
+            "SystemUsesLightTheme"
+        );
+
+        private static readonly RegistryEntry AppsThemeRegistryEntry = new(
+            "HKEY_CURRENT_USER",
+            PersonalizeSubKey,
+            "AppsUseLightTheme"
+        );
+
+        private static readonly HashSet<string> KnownItemTemplates = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "Normal",
+            "NormalDetailed",
+            "Compact",
+            "CompactDetailed",
+        };
+
+        private sealed class Registration
+        {
+            public required WeakReference<FrameworkElement> Root { get; init; }
+            public bool ApplyWpfUi { get; init; }
+            public bool ApplyCustomResources { get; init; }
+            public ThemeFlavor Flavor { get; init; }
+            public List<ResourceDictionary> AddedDictionaries { get; } = new();
+        }
+
+        private readonly ISettings _settings;
+        private readonly WindowsPolicy _windowsPolicy;
+        private readonly RegistryValueWatcher _personalizeWatcher;
+        private readonly UISettings? _uiSettings;
+        private readonly Dispatcher _dispatcher;
+        private readonly List<Registration> _registrations = new();
+        private int _applyScheduled;
+
+        public event EventHandler<ThemeChangedEventArgs>? ThemeChanged;
+
+        public ThemeService(ISettings settings, WindowsPolicy windowsPolicy)
+        {
+            _settings = settings;
+            _windowsPolicy = windowsPolicy;
+            _dispatcher = Dispatcher.CurrentDispatcher;
+
+            _personalizeWatcher = new RegistryValueWatcher(PersonalizeSubKey);
+            _personalizeWatcher.Changed += ScheduleApply;
+
+            try
+            {
+                _uiSettings = new UISettings();
+                _uiSettings.ColorValuesChanged += (_, _) => ScheduleApply();
+            }
+            catch
+            {
+                Logger.Info("Could not apply accent color automatically.");
+            }
+
+            _settings.PropertyChanged += OnSettingsChanged;
+        }
+
+        public Theme GetEffectiveTheme(ThemeFlavor flavor)
+        {
+            switch (_settings.ThemeOverride.ToLowerInvariant())
+            {
+                case "light":
+                    return Theme.Light;
+                case "dark":
+                    return Theme.Dark;
+            }
+
+            var entry = flavor == ThemeFlavor.System ? SystemThemeRegistryEntry : AppsThemeRegistryEntry;
+            return (int)(entry.GetValue(0) ?? 0) == 1 ? Theme.Light : Theme.Dark;
+        }
+
+        public bool IsLightTheme() => GetEffectiveTheme(ThemeFlavor.System) == Theme.Light;
+
+        public void Register(FrameworkElement root, bool applyWpfUi, bool applyCustomResources, ThemeFlavor flavor)
+        {
+            RemoveRegistration(root);
+            var registration = new Registration
+            {
+                Root = new WeakReference<FrameworkElement>(root),
+                ApplyWpfUi = applyWpfUi,
+                ApplyCustomResources = applyCustomResources,
+                Flavor = flavor,
+            };
+            _registrations.Add(registration);
+
+            var systemTheme = GetEffectiveTheme(ThemeFlavor.System);
+            var appTheme = GetEffectiveTheme(ThemeFlavor.App);
+
+            if (registration.ApplyWpfUi && registration.Flavor == ThemeFlavor.App)
+            {
+                ApplicationThemeManager.Apply(
+                    appTheme == Theme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark
+                );
+            }
+
+            ApplyTo(registration, systemTheme, appTheme);
+        }
+
+        public void Unregister(FrameworkElement root)
+        {
+            RemoveRegistration(root);
+        }
+
+        private void RemoveRegistration(FrameworkElement root)
+        {
+            for (var i = _registrations.Count - 1; i >= 0; i--)
+            {
+                if (!_registrations[i].Root.TryGetTarget(out var target) || ReferenceEquals(target, root))
+                    _registrations.RemoveAt(i);
+            }
+        }
+
+        // Coalesces bursts from watcher/UISettings background threads into one apply pass on the UI thread.
+        private void ScheduleApply()
+        {
+            if (Interlocked.Exchange(ref _applyScheduled, 1) == 1)
+                return;
+
+            _dispatcher.BeginInvoke(
+                DispatcherPriority.Background,
+                () =>
+                {
+                    Interlocked.Exchange(ref _applyScheduled, 0);
+                    ApplyAll();
+                }
+            );
+        }
+
+        private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (
+                e.PropertyName
+                is nameof(ISettings.ItemTemplate)
+                    or nameof(ISettings.ThemeOverride)
+                    or nameof(ISettings.ForceWin10Behavior)
+            )
+            {
+                ScheduleApply();
+            }
+        }
+
+        private void ApplyAll()
+        {
+            var systemTheme = GetEffectiveTheme(ThemeFlavor.System);
+            var appTheme = GetEffectiveTheme(ThemeFlavor.App);
+            Logger.Debug("Applying theme (system: {system}, app: {app})", systemTheme, appTheme);
+
+            _registrations.RemoveAll(r => !r.Root.TryGetTarget(out _));
+
+            if (_registrations.Any(r => r.ApplyWpfUi && r.Flavor == ThemeFlavor.App))
+            {
+                ApplicationThemeManager.Apply(
+                    appTheme == Theme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark
+                );
+            }
+
+            foreach (var registration in _registrations)
+            {
+                ApplyTo(registration, systemTheme, appTheme);
+            }
+
+            ThemeChanged?.Invoke(this, new ThemeChangedEventArgs { SystemTheme = systemTheme, AppTheme = appTheme });
+        }
+
+        private void ApplyTo(Registration registration, Theme systemTheme, Theme appTheme)
+        {
+            if (!registration.Root.TryGetTarget(out var root))
+                return;
+
+            if (registration.ApplyWpfUi && registration.Flavor == ThemeFlavor.App)
+            {
+                ApplicationThemeManager.Apply(root);
+            }
+
+            if (registration.ApplyCustomResources)
+            {
+                ApplyCustomLayers(registration, root, systemTheme);
+            }
+        }
+
+        private void ApplyCustomLayers(Registration registration, FrameworkElement root, Theme systemTheme)
+        {
+            foreach (var dict in registration.AddedDictionaries)
+                root.Resources.MergedDictionaries.Remove(dict);
+            registration.AddedDictionaries.Clear();
+
+            var profile =
+                _windowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11 ? "Win11" : "Win10";
+
+            if (registration.Flavor == ThemeFlavor.System)
+            {
+                AddWpfUiBase(registration, root, systemTheme);
+            }
+
+            AddResource(registration, root, $"Themes/{profile}/{(systemTheme == Theme.Light ? "Light" : "Dark")}.xaml");
+
+            AddResource(registration, root, $"Themes/{profile}/Controls.xaml");
+
+            var template = KnownItemTemplates.Contains(_settings.ItemTemplate) ? _settings.ItemTemplate : "Normal";
+            AddResource(registration, root, $"ItemTemplates/{template}.xaml");
+
+            AddAccentColor(registration, root, systemTheme);
+        }
+
+        private static void AddWpfUiBase(Registration registration, FrameworkElement root, Theme theme)
+        {
+            var applicationTheme = theme == Theme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark;
+
+            var controlsDictionary = new ControlsDictionary();
+            var themesDictionary = new ThemesDictionary { Theme = applicationTheme };
+
+            root.Resources.MergedDictionaries.Add(controlsDictionary);
+            root.Resources.MergedDictionaries.Add(themesDictionary);
+
+            registration.AddedDictionaries.Add(controlsDictionary);
+            registration.AddedDictionaries.Add(themesDictionary);
+        }
+
+        private static void AddResource(Registration registration, FrameworkElement root, string relativePath)
+        {
+            var resDict = new ResourceDictionary
+            {
+                Source = new Uri("pack://application:,,,/EverythingToolbar;component/" + relativePath),
+            };
+            root.Resources.MergedDictionaries.Add(resDict);
+            registration.AddedDictionaries.Add(resDict);
+        }
+
+        private void AddAccentColor(Registration registration, FrameworkElement root, Theme systemTheme)
+        {
+            SolidColorBrush brush;
+            if (_uiSettings != null)
+            {
+                var color = _uiSettings.GetColorValue(
+                    systemTheme == Theme.Light ? UIColorType.AccentDark1 : UIColorType.AccentLight2
+                );
+                brush = GetBrush(color);
+            }
+            else
+            {
+                brush = new SolidColorBrush(Colors.DimGray);
+            }
+
+            var resDict = new ResourceDictionary { ["AccentColor"] = brush };
+            root.Resources.MergedDictionaries.Add(resDict);
+            registration.AddedDictionaries.Add(resDict);
+        }
+
+        private static SolidColorBrush GetBrush(Color color)
+        {
+            return new SolidColorBrush(System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B));
+        }
+
+        public void Dispose()
+        {
+            _settings.PropertyChanged -= OnSettingsChanged;
+            _personalizeWatcher.Dispose();
+        }
+    }
+}
