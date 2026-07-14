@@ -20,23 +20,32 @@ namespace EverythingToolbar.Services
 
         private static bool GetAutostartState()
         {
-            using var key = Registry.CurrentUser.OpenSubKey(RegistryKeyPath);
-            var registryValue = key?.GetValue(RegistryValueName) as string;
+            try
+            {
+                using var key = Registry.CurrentUser.OpenSubKey(RegistryKeyPath);
+                var registryValue = key?.GetValue(RegistryValueName) as string;
 
-            if (string.IsNullOrEmpty(registryValue))
+                if (string.IsNullOrEmpty(registryValue))
+                    return false;
+
+                return File.Exists(registryValue.Trim('"'));
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Failed to read autostart state.");
                 return false;
-
-            return File.Exists(registryValue.Trim('"'));
+            }
         }
 
         private static void SetAutostartState(bool enabled)
         {
-            using var key = Registry.CurrentUser.OpenSubKey(
-                RegistryKeyPath,
-                RegistryKeyPermissionCheck.ReadWriteSubTree
-            );
             try
             {
+                using var key = Registry.CurrentUser.OpenSubKey(
+                    RegistryKeyPath,
+                    RegistryKeyPermissionCheck.ReadWriteSubTree
+                );
+
                 if (enabled)
                 {
                     var executablePath = Environment.ProcessPath;
