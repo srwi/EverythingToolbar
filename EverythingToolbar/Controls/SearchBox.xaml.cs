@@ -50,6 +50,8 @@ namespace EverythingToolbar.Controls
         private static ISearchWindowController SearchWindowController =>
             Ioc.Default.GetRequiredService<ISearchWindowController>();
 
+        private static SearchCommands Commands => Ioc.Default.GetRequiredService<SearchCommands>();
+
         public SearchBox()
         {
             InitializeComponent();
@@ -86,46 +88,34 @@ namespace EverythingToolbar.Controls
             {
                 UpdateSearchTerm(_searchState.GetPreviousSearchTerm());
                 e.Handled = true;
+                return;
             }
-            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Down)
+            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Down)
             {
                 UpdateSearchTerm(_searchState.GetNextSearchTerm());
                 e.Handled = true;
+                return;
             }
-            else if (
-                Keyboard.Modifiers == ModifierKeys.None
-                && e.Key == Key.Enter
-                && !_searchOptions.IsSearchAsYouType
-            )
+            if (Keyboard.Modifiers == ModifierKeys.None && e.Key == Key.Enter && !_searchOptions.IsSearchAsYouType)
             {
                 SearchTerm = TextBox.Text;
                 e.Handled = true;
+                return;
             }
-            else if (
-                e.Key is Key.Home or Key.End
-                    && Keyboard.Modifiers != ModifierKeys.Shift
-                    && _searchOptions.IsHomeEndNavigateResults
-                || e.Key == Key.PageDown
-                || e.Key == Key.PageUp
-                || e.Key == Key.Up
-                || e.Key == Key.Down
-                || e.Key == Key.Escape
-                || e.Key == Key.Enter
-                || e.SystemKey == Key.Enter // When Alt is held
-                || (
-                    e.Key is >= Key.D0 and <= Key.D9 or Key.I or Key.B or Key.U or Key.R
-                    && Keyboard.Modifiers == ModifierKeys.Control
-                )
-            )
+            if (e.Key == Key.Tab)
             {
-                WeakReferenceMessenger.Default.Send(new GlobalKeyPressed(e));
                 e.Handled = true;
+                return;
             }
-            else if (e.Key == Key.Tab)
+            if (e.Key == Key.Escape)
             {
-                // The down stroke of the Tab key is not always consistent. Therefore it's handled by the up stroke event.
+                SearchWindowController.Hide();
                 e.Handled = true;
+                return;
             }
+
+            if (Commands.TranslateResultsGesture(e.Key, e.SystemKey, Keyboard.Modifiers, fromSearchBox: true))
+                e.Handled = true;
         }
 
         private void OnPreviewKeyUp(object sender, KeyEventArgs e)

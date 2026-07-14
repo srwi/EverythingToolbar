@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
@@ -49,30 +48,29 @@ namespace EverythingToolbar.Controls
         }
 
         private SearchResult? SelectedItem => SelectedSearchResult;
-        private const int PageSize = 256;
         private Point _dragStart;
         private bool _isScrollBarDragging;
+        private bool _syncingSelection;
         private int? _touchId;
-        private VirtualizingCollection<SearchResult>? _searchResultsCollection;
-        private SynchronizationContext _synchronizationContext = new();
         private readonly DispatcherTimer _busyIndicatorTimer;
         private const int BusyIndicatorDelayMilliseconds = 2000;
-        private readonly SearchState _searchState = Ioc.Default.GetRequiredService<SearchState>();
+        private readonly SearchSession _session = Ioc.Default.GetRequiredService<SearchSession>();
         private readonly SearchResultActions _actions = Ioc.Default.GetRequiredService<SearchResultActions>();
-        private readonly IEverythingClient _everythingClient = Ioc.Default.GetRequiredService<IEverythingClient>();
         private readonly SearchOptions _searchOptions = Ioc.Default.GetRequiredService<SearchOptions>();
-        private readonly MatchOptions _matchOptions = Ioc.Default.GetRequiredService<MatchOptions>();
 
         private static ISearchWindowController SearchWindowController =>
             Ioc.Default.GetRequiredService<ISearchWindowController>();
+
+        private static SearchCommands Commands => Ioc.Default.GetRequiredService<SearchCommands>();
 
         public SearchResultsView()
         {
             InitializeComponent();
 
-            _searchState.PropertyChanged += (_, _) => UpdateSearchResultsProvider(_searchState);
-            WeakReferenceMessenger.Default.Register<GlobalKeyPressed>(this, (_, m) => OnKeyPressed(this, m.Args));
+            _session.PropertyChanged += OnSessionPropertyChanged;
+            _session.ResultsReset += OnResultsReset;
             SearchResultsListView.PreviewKeyDown += OnKeyPressed;
+            SearchResultsListView.SelectionChanged += OnListSelectionChanged;
             SearchResultsListView.PreviewMouseLeftButtonDown += OnPreviewLeftMouseButtonDown;
 
             _busyIndicatorTimer = new DispatcherTimer
@@ -84,65 +82,56 @@ namespace EverythingToolbar.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _synchronizationContext = SynchronizationContext.Current ?? new SynchronizationContext();
+            _session.Start(SynchronizationContext.Current ?? new SynchronizationContext());
 
-            UpdateSearchResultsProvider(_searchState);
-
-            AutoSelectFirstResult();
+            _session.AutoSelect();
             AttachToScrollViewer();
         }
 
-        private void UpdateSearchResultsProvider(SearchState searchState)
+        private void OnSessionPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (_searchOptions.IsHideEmptySearchResults && string.IsNullOrEmpty(searchState.SearchTerm))
+            switch (e.PropertyName)
             {
-                _searchResultsCollection?.Dispose();
-                _searchResultsCollection = null;
-                SearchResultsListView.ItemsSource = null;
-                TotalResultsCount = 0;
+                case nameof(SearchSession.Results):
+                    SearchResultsListView.ItemsSource = _session.Results as System.Collections.IEnumerable;
+                    break;
+                case nameof(SearchSession.TotalCount):
+                    TotalResultsCount = _session.TotalCount;
+                    break;
+                case nameof(SearchSession.IsBusy):
+                    OnCollectionIsBusyChanged();
+                    break;
+                case nameof(SearchSession.SelectedIndex):
+                    ApplySelectionFromSession();
+                    break;
+            }
+        }
+
+        private void ApplySelectionFromSession()
+        {
+            _syncingSelection = true;
+            SearchResultsListView.SelectedIndex = _session.SelectedIndex;
+            if (_session.SelectedIndex >= 0 && SearchResultsListView.SelectedItem != null)
+                SearchResultsListView.ScrollIntoView(SearchResultsListView.SelectedItem);
+            _syncingSelection = false;
+        }
+
+        private void OnListSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_syncingSelection)
                 return;
-            }
 
-            EverythingItemsProvider newProvider = new(
-                _everythingClient,
-                searchState.BuildSearchQuery(),
-                _synchronizationContext
-            );
+            _session.SelectedIndex = SearchResultsListView.SelectedIndex;
+        }
 
-            if (_searchResultsCollection == null)
-            {
-                _searchResultsCollection = new VirtualizingCollection<SearchResult>(
-                    newProvider,
-                    PageSize,
-                    _synchronizationContext
-                );
-                _searchResultsCollection.CollectionChanged += (_, args) =>
-                {
-                    if (args.Action == NotifyCollectionChangedAction.Reset)
-                    {
-                        TotalResultsCount = _searchResultsCollection.Count;
-                        Dispatcher.BeginInvoke(AutoSelectFirstResult);
-                    }
-                };
-                _searchResultsCollection.PropertyChanged += (_, args) =>
-                {
-                    if (args.PropertyName == nameof(VirtualizingCollection<SearchResult>.IsBusy))
-                    {
-                        OnCollectionIsBusyChanged();
-                    }
-                };
-            }
-            else
-            {
-                _searchResultsCollection?.UpdateProvider(newProvider);
-            }
-
-            SearchResultsListView.ItemsSource = _searchResultsCollection;
+        private void OnResultsReset()
+        {
+            Dispatcher.BeginInvoke(_session.AutoSelect);
         }
 
         private void OnCollectionIsBusyChanged()
         {
-            if (_searchResultsCollection is { IsBusy: true })
+            if (_session.IsBusy)
             {
                 if (!_busyIndicatorTimer.IsEnabled)
                 {
@@ -161,7 +150,7 @@ namespace EverythingToolbar.Controls
         {
             _busyIndicatorTimer.Stop();
 
-            if (_searchResultsCollection is not { IsBusy: true })
+            if (!_session.IsBusy)
                 return;
 
             SpinnerOverlay.Visibility = Visibility.Visible;
@@ -175,6 +164,9 @@ namespace EverythingToolbar.Controls
             var scrollViewer = listViewBorder?.Child as ScrollViewer;
             if (scrollViewer == null)
                 return;
+
+            scrollViewer.ScrollChanged += (_, e) =>
+                _session.VisiblePageCount = Math.Max(1, (int)e.ViewportHeight);
 
             var verticalScrollBar = FindVisualChild<ScrollBar>(
                 scrollViewer,
@@ -190,11 +182,8 @@ namespace EverythingToolbar.Controls
 
         private void ScrollBar_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (_searchResultsCollection != null)
-            {
-                _isScrollBarDragging = true;
-                _searchResultsCollection.IsAsync = false;
-            }
+            _isScrollBarDragging = true;
+            _session.IsAsync = false;
         }
 
         private void ScrollBar_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -209,10 +198,10 @@ namespace EverythingToolbar.Controls
 
         private void ResetScrollBarDragging()
         {
-            if (_isScrollBarDragging && _searchResultsCollection != null)
+            if (_isScrollBarDragging)
             {
                 _isScrollBarDragging = false;
-                _searchResultsCollection.IsAsync = true;
+                _session.IsAsync = true;
             }
         }
 
@@ -250,224 +239,31 @@ namespace EverythingToolbar.Controls
         {
             if (e.Key == Key.Space)
             {
-                PreviewSelectedFile();
-            }
-            else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.Enter)
-            {
-                RunAsAdmin(this, new RoutedEventArgs());
-                SearchResultsListView.SelectedIndex = -1;
-            }
-            else if (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == Key.Enter)
-            {
-                InvokeOnSelected(_actions.ShowInEverything);
-                SearchResultsListView.SelectedIndex = -1;
-            }
-            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Enter)
-            {
-                OpenFilePath(this, new RoutedEventArgs());
-                SearchResultsListView.SelectedIndex = -1;
-            }
-            else if (Keyboard.Modifiers == ModifierKeys.Alt && (e.Key == Key.Enter || e.SystemKey == Key.Enter))
-            {
-                ShowFileProperties(this, new RoutedEventArgs());
-                SearchResultsListView.SelectedIndex = -1;
-            }
-            else if (e.Key == Key.Enter)
-            {
-                if (SearchResultsListView.SelectedIndex >= 0)
-                {
-                    OpenSelectedSearchResult();
-                    SearchResultsListView.SelectedIndex = -1;
-                }
-                else
-                {
-                    SelectNextSearchResult();
-                }
-            }
-            else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.C)
-            {
-                InvokeOnSelected(_actions.CopyPathToClipboard);
-            }
-            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.C)
-            {
-                InvokeOnSelected(_actions.CopyToClipboard);
-            }
-            else if (e.Key == Key.Up)
-            {
-                HandleUpNavigation();
+                Commands.PreviewSelected();
                 e.Handled = true;
-            }
-            else if (e.Key == Key.Down)
-            {
-                HandleDownNavigation();
-                e.Handled = true;
-            }
-            else if (e.Key == Key.PageUp || e.Key == Key.PageDown || e.Key == Key.Home || e.Key == Key.End)
-            {
-                var restoreFocus = e.Key is Key.Home or Key.End && KeepSearchBoxFocused;
-                e.Handled = ForwardKeyPressToControl(SearchResultsListView, e.Key, restoreFocus: restoreFocus);
-            }
-            else if (e.Key == Key.I && Keyboard.Modifiers == ModifierKeys.Control)
-            {
-                _matchOptions.IsMatchCase = !_matchOptions.IsMatchCase;
-            }
-            else if (e.Key == Key.B && Keyboard.Modifiers == ModifierKeys.Control)
-            {
-                _matchOptions.IsMatchWholeWord = !_matchOptions.IsMatchWholeWord;
-            }
-            else if (e.Key == Key.U && Keyboard.Modifiers == ModifierKeys.Control)
-            {
-                _matchOptions.IsMatchPath = !_matchOptions.IsMatchPath;
-            }
-            else if (e.Key == Key.R && Keyboard.Modifiers == ModifierKeys.Control)
-            {
-                _matchOptions.IsRegExEnabled = !_matchOptions.IsRegExEnabled;
-            }
-        }
-
-        private bool KeepSearchBoxFocused =>
-            _searchOptions.IsAutoSelectFirstResult && _searchOptions.IsSearchAsYouType;
-
-        private FocusBehavior EffectiveListFocusBehavior =>
-            KeepSearchBoxFocused && _searchOptions.ListFocusBehavior == FocusBehavior.RepeatWithSearch
-                ? FocusBehavior.Repeat
-                : _searchOptions.ListFocusBehavior;
-
-        private void AutoSelectFirstResult()
-        {
-            if (_searchOptions.IsAutoSelectFirstResult)
-                SelectNthSearchResult(0);
-            else
-                SearchResultsListView.SelectedIndex = -1;
-        }
-
-        private void SelectNextSearchResult()
-        {
-            SelectNthSearchResult(SearchResultsListView.SelectedIndex + 1);
-        }
-
-        private void SelectPreviousSearchResult()
-        {
-            SelectNthSearchResult(SearchResultsListView.SelectedIndex - 1);
-        }
-
-        private void SelectNthSearchResult(int n)
-        {
-            if (n < 0 || n >= SearchResultsListView.Items.Count)
                 return;
-
-            SearchResultsListView.SelectedIndex = n;
-            if (SelectedItem != null)
-                SearchResultsListView.ScrollIntoView(SelectedItem);
-
-            if (!KeepSearchBoxFocused)
-                FocusSelectedItem();
-        }
-
-        private void JumpToEnd()
-        {
-            // Capture focus before calling Focus() on the ListView so we can restore it afterwards.
-            var originalFocus = Keyboard.FocusedElement;
-            SearchResultsListView.Focus();
-            ForwardKeyPressToControl(SearchResultsListView, Key.End, originalFocus, restoreFocus: KeepSearchBoxFocused);
-        }
-
-        private void FocusSearchBox()
-        {
-            SearchResultsListView.SelectedIndex = -1;
-            WeakReferenceMessenger.Default.Send(new FocusSearchBoxRequest());
-        }
-
-        private void HandleUpNavigation()
-        {
-            if (SearchResultsListView.SelectedIndex > 0)
-            {
-                SelectPreviousSearchResult();
             }
-            else if (SearchResultsListView.SelectedIndex == 0)
+            if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.C)
             {
-                switch (EffectiveListFocusBehavior)
-                {
-                    case FocusBehavior.Repeat:
-                        JumpToEnd();
-                        break;
-                    case FocusBehavior.RepeatWithSearch:
-                        FocusSearchBox();
-                        break;
-                    case FocusBehavior.Clamp:
-                    default:
-                        if (!_searchOptions.IsAutoSelectFirstResult)
-                            FocusSearchBox();
-                        break;
-                }
+                Commands.CopySelectedPath();
+                e.Handled = true;
+                return;
             }
-            else
+            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.C)
             {
-                if (EffectiveListFocusBehavior != FocusBehavior.Clamp)
-                    JumpToEnd();
+                Commands.CopySelected();
+                e.Handled = true;
+                return;
             }
-        }
-
-        private void HandleDownNavigation()
-        {
-            if (SearchResultsListView.SelectedIndex == SearchResultsListView.Items.Count - 1)
+            if (e.Key == Key.Escape)
             {
-                switch (EffectiveListFocusBehavior)
-                {
-                    case FocusBehavior.Repeat:
-                        SelectNthSearchResult(0);
-                        break;
-                    case FocusBehavior.RepeatWithSearch:
-                        FocusSearchBox();
-                        break;
-                    case FocusBehavior.Clamp:
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                SelectNextSearchResult();
-            }
-        }
-
-        private bool ForwardKeyPressToControl(
-            Control control,
-            Key key,
-            IInputElement? originalFocus = null,
-            bool restoreFocus = false
-        )
-        {
-            var presentationSource = PresentationSource.FromVisual(control);
-            if (presentationSource == null)
-                return false;
-
-            // Capture focus state before raising the event
-            originalFocus ??= Keyboard.FocusedElement;
-            var caretIndex = originalFocus is TextBox textBox ? textBox.CaretIndex : -1;
-
-            var args = new KeyEventArgs(Keyboard.PrimaryDevice, presentationSource, 0, key)
-            {
-                RoutedEvent = Keyboard.KeyDownEvent,
-            };
-            control.RaiseEvent(args);
-
-            // Restore focus to SearchBox if requested and it was previously focused
-            if (restoreFocus && originalFocus is TextBox restoredTextBox && caretIndex >= 0)
-            {
-                Dispatcher.BeginInvoke(
-                    (Action)(
-                        () =>
-                        {
-                            originalFocus.Focus();
-                            restoredTextBox.CaretIndex = Math.Min(caretIndex, restoredTextBox.Text.Length);
-                        }
-                    ),
-                    DispatcherPriority.Send
-                );
+                SearchWindowController.Hide();
+                e.Handled = true;
+                return;
             }
 
-            return args.Handled;
+            if (Commands.TranslateResultsGesture(e.Key, e.SystemKey, Keyboard.Modifiers, fromSearchBox: false))
+                e.Handled = true;
         }
 
         private void OpenSelectedSearchResult()
@@ -491,12 +287,6 @@ namespace EverythingToolbar.Controls
         {
             if (SelectedItem is { } item)
                 action(item);
-        }
-
-        private void PreviewSelectedFile()
-        {
-            InvokeOnSelected(_actions.PreviewInQuickLook);
-            InvokeOnSelected(_actions.PreviewInSeer);
         }
 
         private void CopyPathToClipBoard(object sender, RoutedEventArgs e)

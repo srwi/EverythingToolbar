@@ -30,8 +30,6 @@ namespace EverythingToolbar
         {
             InitializeComponent();
 
-            WeakReferenceMessenger.Default.Register<GlobalKeyPressed>(this, (_, m) => OnPreviewKeyDown(this, m.Args));
-
             Deactivated += (_, _) => WeakReferenceMessenger.Default.Send(new SearchWindowActiveChanged(false));
         }
 
@@ -64,17 +62,7 @@ namespace EverythingToolbar
 
         private void OnPreviewKeyDown(object? sender, KeyEventArgs e)
         {
-            if (e.Key is >= Key.D0 and <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control)
-            {
-                var index = e.Key == Key.D0 ? 9 : e.Key - Key.D1;
-                _searchState.SelectFilterFromIndex(index);
-            }
-            else if (e.Key == Key.Escape)
-            {
-                Keyboard.ClearFocus();
-                NativeMethods.FocusTaskbarWindow();
-            }
-            else if (Keyboard.Modifiers == ModifierKeys.Alt && e.SystemKey == Key.Space)
+            if (Keyboard.Modifiers == ModifierKeys.Alt && e.SystemKey == Key.Space)
             {
                 e.Handled = true;
             }

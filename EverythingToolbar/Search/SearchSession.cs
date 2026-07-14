@@ -1,0 +1,243 @@
+using System;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using EverythingToolbar.Data;
+using SearchResult = EverythingToolbar.Data.SearchResult;
+
+namespace EverythingToolbar.Search
+{
+    public sealed class SearchSession : INotifyPropertyChanged, IDisposable
+    {
+        private const int PageSize = 256;
+
+        private readonly SearchState _searchState;
+        private readonly IEverythingClient _everythingClient;
+        private readonly SearchOptions _searchOptions;
+
+        private SynchronizationContext _synchronizationContext = new();
+        private VirtualizingCollection<SearchResult>? _collection;
+        private bool _started;
+
+        public SearchSession(SearchState searchState, IEverythingClient everythingClient, SearchOptions searchOptions)
+        {
+            _searchState = searchState;
+            _everythingClient = everythingClient;
+            _searchOptions = searchOptions;
+
+            _searchState.PropertyChanged += (_, _) => Rebuild();
+        }
+
+        public object? Results => _collection;
+
+        public int TotalCount { get; private set; }
+
+        public bool IsBusy => _collection is { IsBusy: true };
+
+        public event Action? ResultsReset;
+
+
+        private int _selectedIndex = -1;
+
+        public int SelectedIndex
+        {
+            get => _selectedIndex;
+            set
+            {
+                if (_selectedIndex == value)
+                    return;
+                _selectedIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public SearchResult? SelectedResult =>
+            _collection != null && _selectedIndex >= 0 && _selectedIndex < _collection.Count
+                ? _collection[_selectedIndex]
+                : null;
+
+        public int VisiblePageCount { get; set; } = 1;
+
+        private bool KeepSearchBoxFocused =>
+            _searchOptions.IsAutoSelectFirstResult && _searchOptions.IsSearchAsYouType;
+
+        private FocusBehavior EffectiveListFocusBehavior =>
+            KeepSearchBoxFocused && _searchOptions.ListFocusBehavior == FocusBehavior.RepeatWithSearch
+                ? FocusBehavior.Repeat
+                : _searchOptions.ListFocusBehavior;
+
+        public void AutoSelect()
+        {
+            SelectedIndex = _searchOptions.IsAutoSelectFirstResult && TotalCount > 0 ? 0 : -1;
+        }
+
+        public void ClearSelection() => SelectedIndex = -1;
+
+        public void MoveDown()
+        {
+            if (TotalCount == 0)
+                return;
+
+            if (SelectedIndex == TotalCount - 1)
+            {
+                switch (EffectiveListFocusBehavior)
+                {
+                    case FocusBehavior.Repeat:
+                        SelectedIndex = 0;
+                        break;
+                    case FocusBehavior.RepeatWithSearch:
+                        SelectedIndex = -1;
+                        break;
+                }
+            }
+            else
+            {
+                SelectedIndex += 1; // from -1 → 0 (select first), otherwise next
+            }
+        }
+
+        public void MoveUp()
+        {
+            if (TotalCount == 0)
+                return;
+
+            if (SelectedIndex > 0)
+            {
+                SelectedIndex -= 1;
+            }
+            else if (SelectedIndex == 0)
+            {
+                switch (EffectiveListFocusBehavior)
+                {
+                    case FocusBehavior.Repeat:
+                        SelectedIndex = TotalCount - 1; // jump to end
+                        break;
+                    case FocusBehavior.RepeatWithSearch:
+                        SelectedIndex = -1;
+                        break;
+                    case FocusBehavior.Clamp:
+                    default:
+                        if (!_searchOptions.IsAutoSelectFirstResult)
+                            SelectedIndex = -1;
+                        break;
+                }
+            }
+            else // no selection
+            {
+                if (EffectiveListFocusBehavior != FocusBehavior.Clamp)
+                    SelectedIndex = TotalCount - 1; // jump to end
+            }
+        }
+
+        public void SelectFirst()
+        {
+            if (TotalCount > 0)
+                SelectedIndex = 0;
+        }
+
+        public void SelectLast()
+        {
+            if (TotalCount > 0)
+                SelectedIndex = TotalCount - 1;
+        }
+
+        public void PageDown() => SelectByOffset(VisiblePageCount);
+
+        public void PageUp() => SelectByOffset(-VisiblePageCount);
+
+        private void SelectByOffset(int offset)
+        {
+            if (TotalCount == 0)
+                return;
+
+            var baseIndex = SelectedIndex < 0 ? 0 : SelectedIndex;
+            SelectedIndex = Math.Clamp(baseIndex + offset, 0, TotalCount - 1);
+        }
+
+        public bool IsAsync
+        {
+            set
+            {
+                if (_collection != null)
+                    _collection.IsAsync = value;
+            }
+        }
+
+        public void Start(SynchronizationContext synchronizationContext)
+        {
+            _synchronizationContext = synchronizationContext;
+            _started = true;
+            Rebuild();
+        }
+
+        private void Rebuild()
+        {
+            if (!_started)
+                return;
+
+            if (_searchOptions.IsHideEmptySearchResults && string.IsNullOrEmpty(_searchState.SearchTerm))
+            {
+                _collection?.Dispose();
+                _collection = null;
+                TotalCount = 0;
+                OnPropertyChanged(nameof(Results));
+                OnPropertyChanged(nameof(TotalCount));
+                OnPropertyChanged(nameof(IsBusy));
+                return;
+            }
+
+            var newProvider = new EverythingItemsProvider(
+                _everythingClient,
+                _searchState.BuildSearchQuery(),
+                _synchronizationContext
+            );
+
+            if (_collection == null)
+            {
+                _collection = new VirtualizingCollection<SearchResult>(
+                    newProvider,
+                    PageSize,
+                    _synchronizationContext
+                );
+                _collection.CollectionChanged += OnCollectionChanged;
+                _collection.PropertyChanged += OnCollectionPropertyChanged;
+            }
+            else
+            {
+                _collection.UpdateProvider(newProvider);
+            }
+
+            OnPropertyChanged(nameof(Results));
+        }
+
+        private void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action != NotifyCollectionChangedAction.Reset)
+                return;
+
+            TotalCount = _collection?.Count ?? 0;
+            OnPropertyChanged(nameof(TotalCount));
+            ResultsReset?.Invoke();
+        }
+
+        private void OnCollectionPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(VirtualizingCollection<SearchResult>.IsBusy))
+                OnPropertyChanged(nameof(IsBusy));
+        }
+
+        public void Dispose()
+        {
+            _collection?.Dispose();
+            _collection = null;
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+}

@@ -75,10 +75,9 @@ namespace EverythingToolbar.Settings
                         dwLowDateTime = DateTimeToFileTime(DateTime.Now).dwLowDateTime,
                     }
                 )
-            )
-            {
-                Icon = imageSource,
-            };
+            );
+
+            ResultImageCache.Get(SampleSearchResult).SetFixedIcon(imageSource);
         }
 
         private static FILETIME DateTimeToFileTime(DateTime dateTime)
