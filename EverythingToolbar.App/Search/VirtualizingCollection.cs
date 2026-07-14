@@ -214,8 +214,6 @@ namespace EverythingToolbar.Search
                         }
                         catch (Exception)
                         {
-                            // For various internal reasons, the collection changed event can throw exceptions.
-                            // Whenever this happens, we reset the collection to recover from the error.
                             OnCollectionChanged(
                                 new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset)
                             );
@@ -252,7 +250,6 @@ namespace EverythingToolbar.Search
                     return page[pageOffset];
                 }
 
-                // Page is null (is currently loading)
                 if (_displayedItems.TryGetValue(index, out var displayedItem))
                 {
                     return displayedItem;
@@ -269,7 +266,6 @@ namespace EverythingToolbar.Search
 
                 LoadPageAsync(pageIndex);
 
-                // Return the old item and let the async operation update it later
                 if (_displayedItems.TryGetValue(index, out var displayedItem))
                     return displayedItem;
 
@@ -336,7 +332,6 @@ namespace EverythingToolbar.Search
 
         public IEnumerator<T> GetEnumerator()
         {
-            // We return an empty enumerator to prevent WPF internals from iterating through the collection.
             return Enumerable.Empty<T>().GetEnumerator();
         }
 
@@ -377,8 +372,6 @@ namespace EverythingToolbar.Search
 
         public int IndexOf(T item)
         {
-            // We want to prevent WPF internals from searching for an item by iterating through the collection.
-            // Returning -1 would trigger a full collection scan, but returning 0 is sufficient to prevent that.
             return 0;
         }
 

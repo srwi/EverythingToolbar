@@ -23,6 +23,8 @@ namespace EverythingToolbar
             services.AddSingleton<EverythingFilterLoader>();
             services.AddSingleton<FilterLoader>();
             services.AddSingleton<SearchState>();
+            services.AddSingleton<SearchSession>();
+            services.AddSingleton<SearchCommands>();
             services.AddSingleton<EverythingOptions>();
             services.AddSingleton<PlacementOptions>();
             services.AddSingleton<FilterOptions>();
