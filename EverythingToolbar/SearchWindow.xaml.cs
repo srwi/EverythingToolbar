@@ -125,6 +125,11 @@ namespace EverythingToolbar
             Hiding?.Invoke(this, EventArgs.Empty);
         }
 
+        internal void FocusSearchBox()
+        {
+            SearchBox.Focus();
+        }
+
         private void OnHidden()
         {
             _viewModel.SavePopupSize((int)Width, (int)Height);

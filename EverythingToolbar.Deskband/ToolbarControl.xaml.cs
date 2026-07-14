@@ -10,8 +10,9 @@ namespace EverythingToolbar.Deskband
         {
             InitializeComponent();
 
-            Ioc.Default.GetRequiredService<TaskbarStateService>().IsIcon = false;
-            ShortcutService.Initialize(UnifiedToolbarControl.FocusSearchBox);
+            var controller = Ioc.Default.GetRequiredService<SearchWindowController>();
+            controller.SetIconMode(false);
+            ShortcutService.Initialize(controller.ToggleSearchUi);
             Ioc.Default.GetRequiredService<StartMenuService>().Initialize();
 
             var searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();

@@ -4,7 +4,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.ViewModels;
 
 namespace EverythingToolbar.Controls
@@ -51,7 +50,6 @@ namespace EverythingToolbar.Controls
             InputMethod.SetPreferredImeState(this, InputMethodState.DoNotCare);
 
             _viewModel.Settings.PropertyChanged += OnSettingsChanged;
-            WeakReferenceMessenger.Default.Register<FocusSearchBoxRequest>(this, (_, _) => OnFocusRequested());
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
@@ -62,14 +60,6 @@ namespace EverythingToolbar.Controls
             if (_viewModel.Settings.IsSearchAsYouType)
             {
                 SearchTerm = TextBox.Text;
-            }
-        }
-
-        private void OnFocusRequested()
-        {
-            if (Visibility == Visibility.Visible)
-            {
-                Focus();
             }
         }
 

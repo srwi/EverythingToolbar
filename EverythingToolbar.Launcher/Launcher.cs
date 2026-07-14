@@ -15,7 +15,6 @@ using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
 using Application = System.Windows.Application;
 using MessageBoxResult = Wpf.Ui.Controls.MessageBoxResult;
-using Timer = System.Timers.Timer;
 
 namespace EverythingToolbar.Launcher
 {
@@ -24,8 +23,6 @@ namespace EverythingToolbar.Launcher
         private const string ToggleEventName = "EverythingToolbarToggleEvent";
         private const string StartSetupAssistantEventName = "StartSetupAssistantEvent";
         private const string MutexName = "EverythingToolbar.Launcher";
-        private static bool _searchWindowRecentlyClosed;
-        private static Timer? _searchWindowRecentlyClosedTimer;
         private static TrayIcon? _trayIcon;
 
         private class LauncherWindow : Window
@@ -33,11 +30,9 @@ namespace EverythingToolbar.Launcher
             private TaskbarWindow? _taskbarWindow;
             private readonly SearchWindow _searchWindow;
             private readonly SearchWindowController _controller;
-            private readonly TaskbarStateService _taskbarState;
             private readonly SearchWindowPlacement? _searchWindowPlacementBehavior;
             private readonly WindowsPolicyService _windowsPolicy;
             private readonly ISettings _settings;
-            private bool _temporarilyInIconMode;
             private bool _closingTaskbarWindowIntentionally;
             private uint _taskbarCreatedMsg;
 
@@ -55,18 +50,10 @@ namespace EverythingToolbar.Launcher
 
                 _searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();
                 _controller = Ioc.Default.GetRequiredService<SearchWindowController>();
-                _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateService>();
                 _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicyService>();
                 _settings = Ioc.Default.GetRequiredService<ISettings>();
 
                 _trayIcon = icon;
-
-                _searchWindowRecentlyClosedTimer = new Timer(500);
-                _searchWindowRecentlyClosedTimer.AutoReset = false;
-                _searchWindowRecentlyClosedTimer.Elapsed += (_, _) =>
-                {
-                    _searchWindowRecentlyClosed = false;
-                };
 
                 Width = 0;
                 Height = 0;
@@ -84,7 +71,7 @@ namespace EverythingToolbar.Launcher
                 if (_windowsPolicy.IsTaskbarWindowActive())
                     CreateTaskbarWindow();
                 else
-                    _taskbarState.IsIcon = true;
+                    _controller.SetIconMode(true);
 
                 StartToggleListener();
 
@@ -98,12 +85,9 @@ namespace EverythingToolbar.Launcher
                     new SetupAssistant(icon).Show();
                 }
 
-                ShortcutService.Initialize(FocusSearchBox);
+                ShortcutService.Initialize(_controller.ToggleSearchUi);
 
                 Ioc.Default.GetRequiredService<StartMenuService>().Initialize();
-
-                _controller.Hiding += OnSearchWindowHiding;
-                _controller.Hidden += OnSearchWindowHidden;
 
                 Dispatcher.BeginInvoke(_controller.PreWarm, DispatcherPriority.ApplicationIdle);
 
@@ -252,7 +236,7 @@ namespace EverythingToolbar.Launcher
                 }
 
                 _taskbarWindow.Show();
-                _taskbarState.IsIcon = false;
+                _controller.SetIconMode(false);
                 if (_searchWindowPlacementBehavior != null)
                     _searchWindowPlacementBehavior.PlacementTarget = _taskbarWindow.PlacementTarget;
             }
@@ -277,7 +261,7 @@ namespace EverythingToolbar.Launcher
                     }
                 }
 
-                _taskbarState.IsIcon = true;
+                _controller.SetIconMode(true);
                 if (_searchWindowPlacementBehavior != null)
                     _searchWindowPlacementBehavior.PlacementTarget = null;
             }
@@ -288,53 +272,9 @@ namespace EverythingToolbar.Launcher
                     return;
 
                 _taskbarWindow = null;
-                _taskbarState.IsIcon = true;
+                _controller.SetIconMode(true);
                 if (_searchWindowPlacementBehavior != null)
                     _searchWindowPlacementBehavior.PlacementTarget = null;
-            }
-
-            private void OnSearchWindowHiding(object? sender, EventArgs e)
-            {
-                _searchWindowRecentlyClosed = true;
-                _searchWindowRecentlyClosedTimer?.Start();
-            }
-
-            private void OnSearchWindowHidden(object? sender, EventArgs e)
-            {
-                if (_temporarilyInIconMode && _taskbarWindow != null)
-                {
-                    _taskbarState.IsIcon = false;
-                    _temporarilyInIconMode = false;
-                }
-            }
-
-            private void FocusSearchBox()
-            {
-                if (_taskbarWindow is { IsLoaded: true })
-                {
-                    if (_searchWindow.IsVisible)
-                        _controller.Hide();
-                    else
-                        _controller.FocusSearchBox();
-                }
-                else
-                {
-                    _controller.Toggle();
-                }
-            }
-
-            private void ShowAsLauncher()
-            {
-                if (_taskbarWindow != null)
-                {
-                    _temporarilyInIconMode = true;
-                    _taskbarState.IsIcon = true;
-                    _controller.ShowAtCursor();
-                }
-                else
-                {
-                    _controller.Show();
-                }
             }
 
             private void StartToggleListener()
@@ -361,17 +301,7 @@ namespace EverythingToolbar.Launcher
 
             private void ToggleWindow()
             {
-                // Prevent search window from reappearing after clicking the icon to close
-                if (_searchWindowRecentlyClosed)
-                    return;
-
-                Dispatcher?.Invoke(() =>
-                {
-                    if (_searchWindow.IsVisible)
-                        _controller.Hide();
-                    else
-                        ShowAsLauncher();
-                });
+                _controller.TogglePopupAtCursor();
             }
 
             private void OpenSetupAssistant()

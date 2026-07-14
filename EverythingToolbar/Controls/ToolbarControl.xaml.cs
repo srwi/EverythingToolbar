@@ -22,8 +22,10 @@ namespace EverythingToolbar.Controls
             set => SetValue(IsFixedLayoutProperty, value);
         }
 
-        private readonly TaskbarStateService _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateService>();
         private readonly SearchWindowController _searchWindowController = Ioc.Default.GetRequiredService<SearchWindowController>();
+
+        private Action? _searchBoxFocus;
+        private Func<bool>? _searchBoxIsFocused;
 
         public ToolbarControl()
         {
@@ -66,11 +68,18 @@ namespace EverythingToolbar.Controls
         {
             _searchWindowController.Hiding -= OnSearchWindowHiding;
             _searchWindowController.Hiding += OnSearchWindowHiding;
+
+            _searchBoxFocus ??= SearchBox.Focus;
+            _searchBoxIsFocused ??= () => SearchBox.IsKeyboardFocusWithin;
+            _searchWindowController.RegisterToolbarSearchBox(_searchBoxIsFocused, _searchBoxFocus);
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             _searchWindowController.Hiding -= OnSearchWindowHiding;
+
+            if (_searchBoxFocus != null)
+                _searchWindowController.UnregisterToolbarSearchBox(_searchBoxFocus);
         }
 
         private void OnSearchWindowHiding(object? sender, EventArgs e)
@@ -91,22 +100,6 @@ namespace EverythingToolbar.Controls
         private void OnSearchBoxGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             _searchWindowController.Show();
-        }
-
-        public void FocusSearchBox()
-        {
-            if (_taskbarState.IsIcon)
-            {
-                _searchWindowController.Toggle();
-            }
-            else if (SearchBox.IsKeyboardFocusWithin)
-            {
-                _searchWindowController.Hide();
-            }
-            else
-            {
-                _searchWindowController.FocusSearchBox();
-            }
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)

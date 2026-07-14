@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -8,7 +7,6 @@ namespace EverythingToolbar.Controls
 {
     public partial class SearchButton
     {
-        private readonly TaskbarStateService _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateService>();
         private readonly ThemeService _themeService = Ioc.Default.GetRequiredService<ThemeService>();
         private readonly SearchWindowController _searchWindowController = Ioc.Default.GetRequiredService<SearchWindowController>();
 
@@ -73,7 +71,7 @@ namespace EverythingToolbar.Controls
 
         private void OnIsVisibleChanged(object? sender, DependencyPropertyChangedEventArgs e)
         {
-            _taskbarState.IsIcon = (bool)e.NewValue;
+            _searchWindowController.SetIconMode((bool)e.NewValue);
         }
     }
 }

@@ -1,10 +1,11 @@
 using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
+using NLog;
 
 namespace EverythingToolbar.Services
 {
-    public sealed class SearchWindowController : ISearchWindowController
+    public sealed class SearchWindowController : ObservableObject, ISearchWindowController
     {
         private enum WindowState
         {
@@ -13,9 +14,17 @@ namespace EverythingToolbar.Services
             HidingAnimation,
         }
 
-        private readonly TaskbarStateService _taskbarState;
+        private const double DebounceMs = 500;
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<SearchWindowController>();
+
         private SearchWindow? _window;
         private WindowState _state = WindowState.Hidden;
+        private bool _structuralIconMode;
+        private bool _temporaryPopupMode;
+        private DateTime _lastHideStart = DateTime.MinValue;
+
+        private Func<bool>? _toolbarBoxIsFocused;
+        private Action? _toolbarBoxFocus;
 
         public event EventHandler? Showing;
         public event EventHandler? Hiding;
@@ -23,12 +32,7 @@ namespace EverythingToolbar.Services
         public event EventHandler<bool>? ActiveChanged;
         public event EventHandler? SearchBoxFocused;
 
-        public SearchWindowController(TaskbarStateService taskbarState)
-        {
-            _taskbarState = taskbarState;
-        }
-
-        private bool IconMode => _taskbarState.IsIcon;
+        public bool IsIconMode => _structuralIconMode || _temporaryPopupMode;
 
         private SearchWindow Window
         {
@@ -47,20 +51,20 @@ namespace EverythingToolbar.Services
             }
         }
 
-        public void Show() => RunOnUi(() => ShowInternal(atCursor: false));
+        public void SetIconMode(bool isIcon)
+        {
+            if (_structuralIconMode == isIcon)
+                return;
 
-        // Interim entry point for the launcher's popup-at-cursor toggle; folded into TogglePopupAtCursor in phase 3.
-        public void ShowAtCursor() => RunOnUi(() => ShowInternal(atCursor: true));
+            _structuralIconMode = isIcon;
+            OnPropertyChanged(nameof(IsIconMode));
+        }
+
+        public void Show() => RunOnUi(() => ShowInternal(atCursor: false));
 
         public void Hide() => RunOnUi(HideInternal);
 
-        public void Toggle() => RunOnUi(() =>
-        {
-            if (_state == WindowState.Hidden)
-                ShowInternal(atCursor: false);
-            else
-                HideInternal();
-        });
+        public void Toggle() => RunOnUi(ToggleInternal);
 
         public void Dismiss() => RunOnUi(() =>
         {
@@ -68,7 +72,41 @@ namespace EverythingToolbar.Services
             HideInternal();
         });
 
-        public void FocusSearchBox() => RunOnUi(() => WeakReferenceMessenger.Default.Send(new FocusSearchBoxRequest()));
+        public void ToggleSearchUi() => RunOnUi(() =>
+        {
+            if (IsIconMode)
+                ToggleInternal();
+            else if (_toolbarBoxIsFocused?.Invoke() == true)
+                HideInternal();
+            else
+                _toolbarBoxFocus?.Invoke();
+        });
+
+        public void TogglePopupAtCursor() => RunOnUi(() =>
+        {
+            if (_state == WindowState.Visible)
+            {
+                HideInternal();
+                return;
+            }
+
+            // Ignore a toggle arriving right after a hide (e.g. clicking the icon to close reopens otherwise).
+            if ((DateTime.Now - _lastHideStart).TotalMilliseconds < DebounceMs)
+                return;
+
+            if (!_structuralIconMode)
+                SetTemporaryPopupMode(true);
+
+            ShowInternal(atCursor: true);
+        });
+
+        public void FocusSearchBox() => RunOnUi(() =>
+        {
+            if (IsIconMode)
+                Window.FocusSearchBox();
+            else
+                _toolbarBoxFocus?.Invoke();
+        });
 
         public void PreWarm() => RunOnUi(() => Window.PreWarm());
 
@@ -76,9 +114,27 @@ namespace EverythingToolbar.Services
 
         public void NotifySearchBoxFocused() => SearchBoxFocused?.Invoke(this, EventArgs.Empty);
 
+        public void RegisterToolbarSearchBox(Func<bool> isFocused, Action focus)
+        {
+            if (_toolbarBoxFocus != null)
+                Logger.Warn("A toolbar search box is already registered; overwriting.");
+
+            _toolbarBoxIsFocused = isFocused;
+            _toolbarBoxFocus = focus;
+        }
+
+        public void UnregisterToolbarSearchBox(Action focus)
+        {
+            if (!ReferenceEquals(_toolbarBoxFocus, focus))
+                return;
+
+            _toolbarBoxIsFocused = null;
+            _toolbarBoxFocus = null;
+        }
+
         private void ShowInternal(bool atCursor)
         {
-            Window.Show(new ShowOptions(IconMode, atCursor));
+            Window.Show(new ShowOptions(IsIconMode, atCursor));
             _state = WindowState.Visible;
         }
 
@@ -88,15 +144,33 @@ namespace EverythingToolbar.Services
                 return;
 
             _state = WindowState.HidingAnimation;
+            _lastHideStart = DateTime.Now;
             Window.HideAnimated();
             Hiding?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void ToggleInternal()
+        {
+            if (_state == WindowState.Hidden)
+                ShowInternal(atCursor: false);
+            else
+                HideInternal();
+        }
+
+        private void SetTemporaryPopupMode(bool value)
+        {
+            if (_temporaryPopupMode == value)
+                return;
+
+            _temporaryPopupMode = value;
+            OnPropertyChanged(nameof(IsIconMode));
         }
 
         private void OnWindowActivated(object? sender, EventArgs e)
         {
             ActiveChanged?.Invoke(this, true);
 
-            if (IconMode)
+            if (IsIconMode)
                 FocusSearchBox();
         }
 
@@ -113,6 +187,7 @@ namespace EverythingToolbar.Services
         private void OnWindowHidden(object? sender, EventArgs e)
         {
             _state = WindowState.Hidden;
+            SetTemporaryPopupMode(false);
             Hidden?.Invoke(this, EventArgs.Empty);
         }
 
