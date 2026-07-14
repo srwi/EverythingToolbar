@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Media;
 using System.Windows.Threading;
-using EverythingToolbar.Data;
 
 namespace EverythingToolbar.Helpers
 {
     public static class IconLoader
     {
-        private readonly record struct Request(WeakReference<SearchResult> Item, bool UseThumbnail);
+        private readonly record struct Request(WeakReference<ResultImages> Item, bool UseThumbnail);
 
         private const int WorkerCount = 2;
         private const int MaxBacklog = 128;
 
         private static readonly object Gate = new();
         private static readonly LinkedList<Request> Backlog = new();
-        private static readonly List<(SearchResult Item, ImageSource Icon)> CompletedBatch = new();
+        private static readonly List<(ResultImages Item, ImageSource Icon)> CompletedBatch = new();
         private static Dispatcher? _dispatcher;
         private static bool _flushScheduled;
         private static bool _workersStarted;
 
         // Must be called from the UI thread (the dispatcher is captured on first use)
-        public static void Enqueue(SearchResult item, bool useThumbnail)
+        public static void Enqueue(ResultImages item, bool useThumbnail)
         {
             lock (Gate)
             {
@@ -42,7 +41,7 @@ namespace EverythingToolbar.Helpers
                     }
                 }
 
-                Backlog.AddFirst(new Request(new WeakReference<SearchResult>(item), useThumbnail));
+                Backlog.AddFirst(new Request(new WeakReference<ResultImages>(item), useThumbnail));
 
                 while (Backlog.Count > MaxBacklog)
                     Backlog.RemoveLast();
@@ -96,16 +95,16 @@ namespace EverythingToolbar.Helpers
 
         private static void FlushCompleted()
         {
-            List<(SearchResult Item, ImageSource Icon)> batch;
+            List<(ResultImages Item, ImageSource Icon)> batch;
             lock (Gate)
             {
-                batch = new List<(SearchResult, ImageSource)>(CompletedBatch);
+                batch = new List<(ResultImages, ImageSource)>(CompletedBatch);
                 CompletedBatch.Clear();
                 _flushScheduled = false;
             }
 
             foreach (var (item, icon) in batch)
-                item.Icon = icon;
+                item.ApplyRefinedIcon(icon);
         }
     }
 }
