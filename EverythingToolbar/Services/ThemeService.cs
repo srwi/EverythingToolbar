@@ -71,8 +71,6 @@ namespace EverythingToolbar.Services
         private readonly List<Registration> _registrations = new();
         private int _applyScheduled;
 
-        private ControlsDictionary? _controlsDictionary;
-
         public event EventHandler<ThemeChangedEventArgs>? ThemeChanged;
 
         public ThemeService(ISettings settings, WindowsPolicy windowsPolicy)
@@ -220,17 +218,17 @@ namespace EverythingToolbar.Services
             AddAccentColor(registration, root, systemTheme);
         }
 
-        private void AddWpfUiBase(Registration registration, FrameworkElement root, Theme theme)
+        private static void AddWpfUiBase(Registration registration, FrameworkElement root, Theme theme)
         {
             var applicationTheme = theme == Theme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark;
 
-            _controlsDictionary ??= new ControlsDictionary();
+            var controlsDictionary = new ControlsDictionary();
             var themesDictionary = new ThemesDictionary { Theme = applicationTheme };
 
-            root.Resources.MergedDictionaries.Add(_controlsDictionary);
+            root.Resources.MergedDictionaries.Add(controlsDictionary);
             root.Resources.MergedDictionaries.Add(themesDictionary);
 
-            registration.AddedDictionaries.Add(_controlsDictionary);
+            registration.AddedDictionaries.Add(controlsDictionary);
             registration.AddedDictionaries.Add(themesDictionary);
         }
 

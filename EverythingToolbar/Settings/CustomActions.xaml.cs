@@ -5,11 +5,14 @@ using System.Windows;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Controls;
+using NLog;
 
 namespace EverythingToolbar.Settings
 {
     public partial class CustomActions
     {
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<CustomActions>();
+
         private readonly CustomActionService _service = Ioc.Default.GetRequiredService<CustomActionService>();
         private ObservableCollection<Rule> _actions = new();
 
@@ -58,7 +61,16 @@ namespace EverythingToolbar.Settings
                 return false;
             }
 
-            _service.Save(_actions.ToList());
+            try
+            {
+                _service.Save(_actions.ToList());
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Failed to save custom actions.");
+                return false;
+            }
+
             return true;
         }
 
