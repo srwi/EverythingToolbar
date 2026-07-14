@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:h="clr-namespace:EverythingToolbar.Helpers;assembly=EverythingToolbar"
-                    xmlns:b="clr-namespace:EverythingToolbar.Behaviors;assembly=EverythingToolbar">
+                    xmlns:h="clr-namespace:EverythingToolbar.Helpers"
+                    xmlns:b="clr-namespace:EverythingToolbar.Behaviors">
     
     <DataTemplate x:Key="SearchResultsViewTemplate">
         <Grid x:Name="ListViewItem" Margin="3">

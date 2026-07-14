@@ -16,8 +16,7 @@
         Height="32">
 
     <i:Interaction.Behaviors>
-        <b:ThemeAwareness />
-        <b:WpfUiBehavior />
+        <b:Themed ApplyCustomResources="True" Flavor="System" />
     </i:Interaction.Behaviors>
 
     <controls:ToolbarControl x:Name="ToolbarControl"

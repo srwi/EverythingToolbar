@@ -14,7 +14,7 @@
       Unloaded="OnUnloaded">
     
     <i:Interaction.Behaviors>
-        <b:WpfUiBehavior />
+        <b:Themed ApplyWpfUi="True" />
     </i:Interaction.Behaviors>
 
     <Page.Resources>        

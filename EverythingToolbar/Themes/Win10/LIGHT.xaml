@@ -30,6 +30,8 @@
     <SolidColorBrush x:Key="QuickSettingsToggleButtonBorderHover" Color="Transparent" />
     <SolidColorBrush x:Key="QuickSettingsToggleButtonBorderActive" Color="Transparent" />
 
+    <Color x:Key="AcrylicWindowBackgroundFallback">#EEEEEE</Color>
+
     <SolidColorBrush x:Key="SearchResultsViewBackground" Color="Transparent" />
     <SolidColorBrush x:Key="TabBarBottomBorder" Color="#b9b9b9" />
     <SolidColorBrush x:Key="SearchResultsViewHeader" Color="#ddeeeeee" />

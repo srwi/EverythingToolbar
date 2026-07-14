@@ -11,7 +11,7 @@
       ScrollViewer.CanContentScroll="False">
 
     <i:Interaction.Behaviors>
-        <b:WpfUiBehavior />
+        <b:Themed ApplyWpfUi="True" />
     </i:Interaction.Behaviors>
 
     <ScrollViewer>
@@ -44,7 +44,7 @@
                             BorderThickness="1"
                             CornerRadius="4">
                         <i:Interaction.Behaviors>
-                            <b:ThemeAwareness />
+                            <b:Themed ApplyCustomResources="True" Flavor="System" />
                         </i:Interaction.Behaviors>
                         <ContentControl Content="{Binding SampleSearchResult}" FontSize="15"
                                         ContentTemplate="{DynamicResource SearchResultsViewTemplate}" />

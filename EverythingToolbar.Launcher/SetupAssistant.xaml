@@ -38,7 +38,7 @@
 
     <i:Interaction.Behaviors>
         <b:FlowDirectionAwareness />
-        <b:WpfUiBehavior />
+        <b:Themed ApplyWpfUi="True" />
     </i:Interaction.Behaviors>
 
     <Grid>
