@@ -18,8 +18,5 @@ namespace EverythingToolbar.Services
 
         [ObservableProperty]
         private Size _taskbarSize;
-
-        [ObservableProperty]
-        private bool _isIcon;
     }
 }
