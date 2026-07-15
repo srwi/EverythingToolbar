@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
-using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Controls;
@@ -25,13 +24,12 @@ namespace EverythingToolbar.Launcher
 
         private class LauncherWindow : Window
         {
-            private TaskbarWindow? _taskbarWindow;
             private readonly SearchWindow _searchWindow;
             private readonly SearchWindowController _controller;
             private readonly SearchHost _searchHost;
             private readonly WindowsPolicy _windowsPolicy;
             private readonly ISettings _settings;
-            private bool _closingTaskbarWindowIntentionally;
+            private readonly TaskbarWindowHost _taskbarWindowHost;
             private uint _taskbarCreatedMsg;
 
             private bool _suppressInitialTrayIcon;
@@ -51,6 +49,7 @@ namespace EverythingToolbar.Launcher
                 _searchHost = Ioc.Default.GetRequiredService<SearchHost>();
                 _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
                 _settings = Ioc.Default.GetRequiredService<ISettings>();
+                _taskbarWindowHost = new TaskbarWindowHost(_windowsPolicy, _settings, _controller, _searchHost);
 
                 TrayIcon = icon;
 
@@ -64,7 +63,7 @@ namespace EverythingToolbar.Launcher
                 _searchHost.Attach(placementTarget: null, iconMode: !_windowsPolicy.IsTaskbarWindowActive());
 
                 if (_windowsPolicy.IsTaskbarWindowActive())
-                    CreateTaskbarWindow();
+                    _taskbarWindowHost.Create();
 
                 StartToggleListener();
 
@@ -124,7 +123,7 @@ namespace EverythingToolbar.Launcher
                     {
                         if (_windowsPolicy.IsTaskbarWindowActive())
                         {
-                            CreateTaskbarWindow();
+                            _taskbarWindowHost.Create();
                         }
                         else
                         {
@@ -143,7 +142,7 @@ namespace EverythingToolbar.Launcher
                                     .ShowDialogAsync();
                             }
 
-                            CloseTaskbarWindow();
+                            _taskbarWindowHost.Close();
                         }
                     }
                 };
@@ -192,76 +191,10 @@ namespace EverythingToolbar.Launcher
                 {
                     // Explorer restarted and dropped the tray icon; TaskbarCreated signals it's ready again.
                     TrayIcon?.HandleExplorerRestart();
-
-                    if (_windowsPolicy.IsTaskbarWindowActive())
-                    {
-                        // Delay so the new taskbar's UIA tree (Widgets button / tray) is ready for positioning.
-                        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
-                        timer.Tick += (_, _) =>
-                        {
-                            timer.Stop();
-                            CloseTaskbarWindow();
-                            CreateTaskbarWindow();
-                        };
-                        timer.Start();
-                    }
+                    _taskbarWindowHost.HandleExplorerRestart();
                 }
 
                 return IntPtr.Zero;
-            }
-
-            private void CreateTaskbarWindow()
-            {
-                if (!_windowsPolicy.IsTaskbarWindowActive() || _taskbarWindow != null)
-                    return;
-
-                _taskbarWindow = new TaskbarWindow(_windowsPolicy, _settings);
-                _taskbarWindow.Closed += OnTaskbarWindowClosed;
-
-                new WindowInteropHelper(_taskbarWindow).EnsureHandle();
-                if (!_taskbarWindow.IsAttachedToTaskbar)
-                {
-                    CloseTaskbarWindow();
-                    return;
-                }
-
-                _taskbarWindow.Show();
-                _controller.SetIconMode(false);
-                _searchHost.SetPlacementTarget(_taskbarWindow.PlacementTarget);
-            }
-
-            private void CloseTaskbarWindow()
-            {
-                if (_taskbarWindow != null)
-                {
-                    _closingTaskbarWindowIntentionally = true;
-                    try
-                    {
-                        _taskbarWindow.Close();
-                    }
-                    catch
-                    {
-                        // Window may already be destroyed (e.g. explorer restarted); ignore.
-                    }
-                    finally
-                    {
-                        _taskbarWindow = null;
-                        _closingTaskbarWindowIntentionally = false;
-                    }
-                }
-
-                _controller.SetIconMode(true);
-                _searchHost.SetPlacementTarget(null);
-            }
-
-            private void OnTaskbarWindowClosed(object? sender, EventArgs e)
-            {
-                if (_closingTaskbarWindowIntentionally)
-                    return;
-
-                _taskbarWindow = null;
-                _controller.SetIconMode(true);
-                _searchHost.SetPlacementTarget(null);
             }
 
             private void StartToggleListener()
@@ -302,7 +235,7 @@ namespace EverythingToolbar.Launcher
 
             protected override void OnClosed(EventArgs e)
             {
-                CloseTaskbarWindow();
+                _taskbarWindowHost.Close();
                 base.OnClosed(e);
             }
         }
