@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using NLog;
 using Windows.Win32;
@@ -15,11 +14,10 @@ namespace EverythingToolbar.Services
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<StartMenuSearchInterceptor>();
 
-        private readonly Queue<Input> _recordedInputs = new();
+        private readonly Queue<RecordedKey> _recordedInputs = new();
+        private readonly LowLevelKeyboardHook _keyboardHook;
         private WINEVENTPROC? _focusedWindowChangedCallback;
-        private NativeMethods.LowLevelKeyboardProc? _startMenuKeyboardHookCallback;
         private HWINEVENTHOOK _focusedWindowChangedHookId;
-        private IntPtr _startMenuKeyboardHookId = IntPtr.Zero;
 
         private IntPtr _searchAppHwnd = IntPtr.Zero;
         private bool _isNativeSearchActive;
@@ -30,16 +28,13 @@ namespace EverythingToolbar.Services
         private readonly ISettings _settings;
         private readonly SearchWindowController _controller;
 
-        private const int WhKeyboardLl = 13;
-        private const int WmKeyDown = 0x0100;
-        private const int WmSyskeyDown = 0x0104;
-        private const int InputKeyboard = 1;
         private const uint KeyeventFKeyup = 0x0002;
 
         public StartMenuSearchInterceptor(ISettings settings, SearchWindowController controller)
         {
             _settings = settings;
             _controller = controller;
+            _keyboardHook = new LowLevelKeyboardHook(OnKeyEvent);
             _cleanupTimer.Tick += OnCleanupTimerElapsed;
             _settings.PropertyChanged += OnSettingsChanged;
         }
@@ -133,49 +128,31 @@ namespace EverythingToolbar.Services
             }
         }
 
-        private IntPtr StartMenuKeyboardHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        private bool OnKeyEvent(int vk, bool isDown, bool isInjected)
         {
-            if (nCode >= 0 && !_isNativeSearchActive)
+            if (_isNativeSearchActive)
+                return false;
+
+            // We never want to block the Windows keys and Escape
+            if (vk == 0x5B || vk == 0x5C || vk == 0x1B)
             {
-                var virtualKeyCode = (uint)Marshal.ReadInt32(lParam);
-                var isKeyDown = wParam is WmKeyDown or WmSyskeyDown;
-
-                // We never want to block the Windows keys and Escape
-                if (virtualKeyCode == 0x5B || virtualKeyCode == 0x5C || virtualKeyCode == 0x1B)
-                {
-                    return NativeMethods.CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
-                }
-
-                // Check for exception key (LALT)
-                if (virtualKeyCode == 0xA4)
-                {
-                    _isNativeSearchActive = true;
-                    return NativeMethods.CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
-                }
-
-                // Queue keypress for replay in EverythingToolbar
-                _isInterceptingKeys = true;
-                _recordedInputs.Enqueue(
-                    new Input
-                    {
-                        type = InputKeyboard,
-                        u = new InputUnion
-                        {
-                            ki = new KeybdInput
-                            {
-                                wVk = (ushort)virtualKeyCode,
-                                dwFlags = isKeyDown ? 0 : KeyeventFKeyup,
-                            },
-                        },
-                    }
-                );
-
-                CloseStartMenu();
-
-                return 1;
+                return false;
             }
 
-            return NativeMethods.CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
+            // Check for exception key (LALT)
+            if (vk == 0xA4)
+            {
+                _isNativeSearchActive = true;
+                return false;
+            }
+
+            // Queue keypress for replay in EverythingToolbar
+            _isInterceptingKeys = true;
+            _recordedInputs.Enqueue(new RecordedKey((ushort)vk, isDown));
+
+            CloseStartMenu();
+
+            return true;
         }
 
         private void OnAnySearchBoxGotKeyboardFocus(object? sender, EventArgs e)
@@ -188,7 +165,7 @@ namespace EverythingToolbar.Services
             Logger.Debug("Search box got keyboard focus. Replaying recorded inputs...");
 
             UnhookStartMenuInput();
-            Replay_recordedInputs();
+            ReplayRecordedInputs();
             _isInterceptingKeys = false;
             _searchAppHwnd = IntPtr.Zero;
         }
@@ -224,16 +201,16 @@ namespace EverythingToolbar.Services
             );
         }
 
-        private void Replay_recordedInputs()
+        private void ReplayRecordedInputs()
         {
             while (_recordedInputs.Count > 0)
             {
                 var input = _recordedInputs.Dequeue();
                 NativeMethods.KeybdEvent(
-                    (byte)input.u.ki.wVk,
-                    (byte)input.u.ki.wScan,
-                    input.u.ki.dwFlags,
-                    input.u.ki.dwExtraInfo
+                    (byte)input.Vk,
+                    0,
+                    input.IsDown ? 0 : KeyeventFKeyup,
+                    IntPtr.Zero
                 );
             }
         }
@@ -273,19 +250,12 @@ namespace EverythingToolbar.Services
         private void HookStartMenuInput()
         {
             UnhookStartMenuInput();
-            _startMenuKeyboardHookCallback = StartMenuKeyboardHookCallback;
-            _startMenuKeyboardHookId = NativeMethods.SetWindowsHookEx(
-                WhKeyboardLl,
-                _startMenuKeyboardHookCallback,
-                IntPtr.Zero,
-                0
-            );
+            _keyboardHook.Install();
         }
 
         private void UnhookStartMenuInput()
         {
-            NativeMethods.UnhookWindowsHookEx(_startMenuKeyboardHookId);
-            _startMenuKeyboardHookId = IntPtr.Zero;
+            _keyboardHook.Uninstall();
         }
 
         private static void GetForegroundWindowAndProcess(out IntPtr foregroundHwnd, out string foregroundProcessName)
@@ -304,28 +274,6 @@ namespace EverythingToolbar.Services
             foregroundProcessName = nameBuffer[..(int)length].ToString();
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct Input
-        {
-            public int type;
-            public InputUnion u;
-        }
-
-        [StructLayout(LayoutKind.Explicit)]
-        private struct InputUnion
-        {
-            [FieldOffset(0)]
-            public KeybdInput ki;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct KeybdInput
-        {
-            public ushort wVk;
-            public ushort wScan;
-            public uint dwFlags;
-            public uint time;
-            public IntPtr dwExtraInfo;
-        }
+        private readonly record struct RecordedKey(ushort Vk, bool IsDown);
     }
 }

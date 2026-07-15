@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Threading;
 using NLog;
@@ -12,6 +11,7 @@ namespace EverythingToolbar.Services
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<GlobalShortcutListener>();
 
         private readonly ISettings _settings;
+        private readonly LowLevelKeyboardHook _keyboardHook;
 
         private Action? _handler;
         private Dispatcher? _dispatcher;
@@ -20,16 +20,7 @@ namespace EverythingToolbar.Services
         private ModifierKeys _modifiers;
         private bool _hotkeyDown;
 
-        public bool IsEnabled { get; set; } = true;
-
-        private NativeMethods.LowLevelKeyboardProc? _hookCallback;
-        private IntPtr _hookId = IntPtr.Zero;
-
-        private const int WhKeyboardLl = 13;
-        private const int WmKeydown = 0x0100;
-        private const int WmKeyup = 0x0101;
-        private const int WmSyskeydown = 0x0104;
-        private const int WmSyskeyup = 0x0105;
+        public bool IsEnabled{ get; set; } = true;
 
         private const int VkShift = 0x10;
         private const int VkControl = 0x11;
@@ -37,12 +28,12 @@ namespace EverythingToolbar.Services
         private const int VkLWin = 0x5B;
         private const int VkRWin = 0x5C;
 
-        private const int LlkhfInjected = 0x10;
         private const uint KeyeventfKeyup = 0x0002;
 
         public GlobalShortcutListener(ISettings settings)
         {
             _settings = settings;
+            _keyboardHook = new LowLevelKeyboardHook(OnKeyEvent);
         }
 
         public void Initialize(Action handler)
@@ -62,9 +53,9 @@ namespace EverythingToolbar.Services
             UpdateSettings(key, modifiers);
 
             if (key == Key.None && modifiers == ModifierKeys.None)
-                RemoveHook();
+                _keyboardHook.Uninstall();
             else
-                InstallHook();
+                _keyboardHook.Install();
         }
 
         private void UpdateSettings(Key key, ModifierKeys mods)
@@ -73,74 +64,46 @@ namespace EverythingToolbar.Services
             _settings.ShortcutModifiers = (int)mods;
         }
 
-        private void InstallHook()
-        {
-            if (_hookId != IntPtr.Zero)
-                return;
-
-            _hookCallback = HookCallback;
-            _hookId = NativeMethods.SetWindowsHookEx(WhKeyboardLl, _hookCallback, IntPtr.Zero, 0);
-
-            if (_hookId == IntPtr.Zero)
-                Logger.Error("Failed to install the keyboard hook for the global shortcut.");
-        }
-
-        private void RemoveHook()
-        {
-            if (_hookId == IntPtr.Zero)
-                return;
-
-            NativeMethods.UnhookWindowsHookEx(_hookId);
-            _hookId = IntPtr.Zero;
-            _hookCallback = null;
-        }
-
-        private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        private bool OnKeyEvent(int vk, bool isDown, bool isInjected)
         {
             try
             {
-                if (nCode < 0 || !IsEnabled || _triggerVk == 0)
-                    return NativeMethods.CallNextHookEx(_hookId, nCode, wParam, lParam);
+                if (!IsEnabled || _triggerVk == 0)
+                    return false;
 
-                if (Marshal.ReadInt32(lParam) != _triggerVk)
-                    return NativeMethods.CallNextHookEx(_hookId, nCode, wParam, lParam);
+                if (isInjected)
+                    return false;
 
-                // Ignore events we injected ourselves (e.g. the disguise keystroke below).
-                var flags = Marshal.ReadInt32(lParam, 8);
-                if ((flags & LlkhfInjected) != 0)
-                    return NativeMethods.CallNextHookEx(_hookId, nCode, wParam, lParam);
+                if (vk != _triggerVk)
+                    return false;
 
-                var message = (int)wParam;
-
-                if (message == WmKeyup || message == WmSyskeyup)
+                if (!isDown)
                 {
                     if (!_hotkeyDown)
-                        return NativeMethods.CallNextHookEx(_hookId, nCode, wParam, lParam);
+                        return false;
 
                     _hotkeyDown = false;
-                    return 1; // Swallow the key up matching a suppressed key down
+                    return true; // Swallow the key up matching a suppressed key down
                 }
 
-                if (message == WmKeydown || message == WmSyskeydown)
+                if (_hotkeyDown)
+                    return true; // Swallow auto-repeat while the hotkey is held
+
+                if (GetCurrentModifiers() == _modifiers)
                 {
-                    if (_hotkeyDown)
-                        return 1; // Swallow auto-repeat while the hotkey is held
-
-                    if (GetCurrentModifiers() == _modifiers)
-                    {
-                        _hotkeyDown = true;
-                        DisguiseModifiersIfNeeded();
-                        _dispatcher?.BeginInvoke(() => _handler?.Invoke());
-                        return 1; // Swallow the trigger key
-                    }
+                    _hotkeyDown = true;
+                    DisguiseModifiersIfNeeded();
+                    _dispatcher?.BeginInvoke(() => _handler?.Invoke());
+                    return true; // Swallow the trigger key
                 }
+
+                return false;
             }
             catch (Exception e)
             {
                 Logger.Error(e, "Error in the keyboard hook callback.");
+                return false;
             }
-
-            return NativeMethods.CallNextHookEx(_hookId, nCode, wParam, lParam);
         }
 
         private static ModifierKeys GetCurrentModifiers()

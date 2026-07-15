@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
@@ -10,6 +8,18 @@ namespace EverythingToolbar.Settings
 {
     public partial class Shortcuts
     {
+        private const int VkControl = 0x11;
+        private const int VkLcontrol = 0xA2;
+        private const int VkRcontrol = 0xA3;
+        private const int VkShift = 0x10;
+        private const int VkLshift = 0xA0;
+        private const int VkRshift = 0xA1;
+        private const int VkMenu = 0x12;
+        private const int VkLmenu = 0xA4;
+        private const int VkRmenu = 0xA5;
+        private const int VkLwin = 0x5B;
+        private const int VkRwin = 0x5C;
+
         private Key Key { get; set; }
         private Key OriginalKey { get; set; }
         private ModifierKeys Modifiers { get; set; }
@@ -22,47 +32,41 @@ namespace EverythingToolbar.Settings
         private readonly GlobalShortcutListener _shortcutListener =
             Ioc.Default.GetRequiredService<GlobalShortcutListener>();
 
-        private static event EventHandler<WinKeyEventArgs>? WinKeyEventHandler;
-
-        private static NativeMethods.LowLevelKeyboardProc? LlKeyboardHookCallback;
-        private static IntPtr LlKeyboardHookId = IntPtr.Zero;
-
-        private const int WhKeyboardLl = 13;
-        private const int WmKeydown = 0x0100;
-        private const int WmSyskeydown = 0x0104;
+        private LowLevelKeyboardHook? _keyboardHook;
 
         public Shortcuts()
         {
             InitializeComponent();
         }
 
-        private void OnKeyPressedReleased(object? sender, WinKeyEventArgs e)
+        private void OnKeyPressedReleased(int vk, bool isDown)
         {
-            switch (e.Key)
+            var key = MapVirtualKeyToKey(vk);
+            switch (key)
             {
                 case Key.LeftCtrl:
-                    TempMods = e.IsDown ? TempMods | ModifierKeys.Control : TempMods & ~ModifierKeys.Control;
+                    TempMods = isDown ? TempMods | ModifierKeys.Control : TempMods & ~ModifierKeys.Control;
                     break;
                 case Key.LWin:
-                    TempMods = e.IsDown ? TempMods | ModifierKeys.Windows : TempMods & ~ModifierKeys.Windows;
+                    TempMods = isDown ? TempMods | ModifierKeys.Windows : TempMods & ~ModifierKeys.Windows;
                     break;
                 case Key.LeftAlt:
-                    TempMods = e.IsDown ? TempMods | ModifierKeys.Alt : TempMods & ~ModifierKeys.Alt;
+                    TempMods = isDown ? TempMods | ModifierKeys.Alt : TempMods & ~ModifierKeys.Alt;
                     break;
                 case Key.LeftShift:
-                    TempMods = e.IsDown ? TempMods | ModifierKeys.Shift : TempMods & ~ModifierKeys.Shift;
+                    TempMods = isDown ? TempMods | ModifierKeys.Shift : TempMods & ~ModifierKeys.Shift;
                     break;
                 default:
-                    if (e.IsDown)
+                    if (isDown)
                     {
-                        if (TempMods == ModifierKeys.None && e.Key == Key.Escape)
+                        if (TempMods == ModifierKeys.None && key == Key.Escape)
                         {
                             Key = Key.None;
                             Modifiers = ModifierKeys.None;
                         }
                         else
                         {
-                            Key = e.Key;
+                            Key = key;
                             Modifiers = TempMods;
                         }
                     }
@@ -72,67 +76,35 @@ namespace EverythingToolbar.Settings
             UpdateTextBox();
         }
 
-        private static IntPtr KeyboardHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        private static Key MapVirtualKeyToKey(int vk)
         {
-            if (nCode < 0)
-                return NativeMethods.CallNextHookEx(LlKeyboardHookId, nCode, wParam, lParam);
-
-            var vkCode = (Keys)Marshal.ReadInt32(lParam);
-            var isDown = (int)wParam == WmKeydown || (int)wParam == WmSyskeydown;
-            switch (vkCode)
+            return vk switch
             {
-                case Keys.Control:
-                case Keys.ControlKey:
-                case Keys.LControlKey:
-                case Keys.RControlKey:
-                    WinKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LeftCtrl));
-                    break;
-                case Keys.Shift:
-                case Keys.ShiftKey:
-                case Keys.LShiftKey:
-                case Keys.RShiftKey:
-                    WinKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LeftShift));
-                    break;
-                case Keys.Alt:
-                    WinKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LeftAlt));
-                    break;
-                case Keys.LWin:
-                case Keys.RWin:
-                    WinKeyEventHandler?.Invoke(null, new WinKeyEventArgs(isDown, Key.LWin));
-                    break;
-                default:
-                    WinKeyEventHandler?.Invoke(
-                        null,
-                        new WinKeyEventArgs(isDown, KeyInterop.KeyFromVirtualKey((int)vkCode))
-                    );
-                    break;
-            }
-
-            return 1;
+                VkControl or VkLcontrol or VkRcontrol => Key.LeftCtrl,
+                VkShift or VkLshift or VkRshift => Key.LeftShift,
+                VkMenu or VkLmenu or VkRmenu => Key.LeftAlt,
+                VkLwin or VkRwin => Key.LWin,
+                _ => KeyInterop.KeyFromVirtualKey(vk)
+            };
         }
 
-        private static void CaptureKeyboard(EventHandler<WinKeyEventArgs> callback)
+        private bool OnKeyEvent(int vk, bool isDown, bool isInjected)
+        {
+            OnKeyPressedReleased(vk, isDown);
+            return true;
+        }
+
+        private void CaptureKeyboard()
         {
             ReleaseKeyboard();
-            WinKeyEventHandler += callback;
-            LlKeyboardHookCallback = KeyboardHookCallback;
-            LlKeyboardHookId = NativeMethods.SetWindowsHookEx(WhKeyboardLl, LlKeyboardHookCallback, IntPtr.Zero, 0);
+            _keyboardHook = new LowLevelKeyboardHook(OnKeyEvent);
+            _keyboardHook.Install();
         }
 
-        private static void ReleaseKeyboard()
+        private void ReleaseKeyboard()
         {
-            WinKeyEventHandler = null;
-            NativeMethods.UnhookWindowsHookEx(LlKeyboardHookId);
-        }
-
-        private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            CaptureKeyboard(OnKeyPressedReleased);
-        }
-
-        private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            ReleaseKeyboard();
+            _keyboardHook?.Uninstall();
+            _keyboardHook = null;
         }
 
         private void UpdateTextBox()
@@ -170,6 +142,16 @@ namespace EverythingToolbar.Settings
             ShortcutTextBox.Text = shortcutText.ToString();
         }
 
+        private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            CaptureKeyboard();
+        }
+
+        private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            ReleaseKeyboard();
+        }
+
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             _startMenuInterceptor.Disable();
@@ -194,12 +176,6 @@ namespace EverythingToolbar.Settings
             {
                 _shortcutListener.SetShortcut(Key, Modifiers);
             }
-        }
-
-        public class WinKeyEventArgs(bool isDown, Key key) : EventArgs
-        {
-            public bool IsDown { get; set; } = isDown;
-            public Key Key { get; set; } = key;
         }
     }
 }
