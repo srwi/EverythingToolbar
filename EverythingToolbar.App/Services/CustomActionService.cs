@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
 using EverythingToolbar.App.Data;
@@ -54,9 +53,7 @@ namespace EverythingToolbar.App.Services
             {
                 foreach (var r in Load())
                 {
-                    var regexCond =
-                        !string.IsNullOrEmpty(r.Expression)
-                        && Regex.IsMatch(searchResult.FullPathAndFileName, r.Expression);
+                    var regexCond = r.IsExpressionMatch(searchResult.FullPathAndFileName);
                     var typeCond =
                         searchResult.IsFile && r.Type != FileType.Folder
                         || !searchResult.IsFile && r.Type != FileType.File;
