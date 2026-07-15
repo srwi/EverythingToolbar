@@ -20,7 +20,7 @@ namespace EverythingToolbar.Controls
         private static string GetCurrentVersion()
         {
             return Assembly.GetExecutingAssembly().GetName().Version is { } version
-                ? $"{version.Major}.{version.Minor}.{version.MajorRevision}"
+                ? $"{version.Major}.{version.Minor}.{version.Build}"
                 : "";
         }
 
