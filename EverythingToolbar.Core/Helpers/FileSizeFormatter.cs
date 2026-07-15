@@ -4,53 +4,25 @@ namespace EverythingToolbar.Core.Helpers
     {
         public static string GetHumanReadableFileSize(long length)
         {
-            var absolute = length < 0 ? -length : length;
-
-            string suffix;
-            double readable;
-            if (absolute >= 0x1000000000000000)
+            string[] units = ["B", "KB", "MB", "GB", "TB", "PB", "EB"];
+            double size = length;
+            int unit = 0;
+            while (size >= 1024 && unit < units.Length - 1)
             {
-                suffix = "EB";
-                readable = length >> 50;
-            }
-            else if (absolute >= 0x4000000000000)
-            {
-                suffix = "PB";
-                readable = length >> 40;
-            }
-            else if (absolute >= 0x10000000000)
-            {
-                suffix = "TB";
-                readable = length >> 30;
-            }
-            else if (absolute >= 0x40000000)
-            {
-                suffix = "GB";
-                readable = length >> 20;
-            }
-            else if (absolute >= 0x100000)
-            {
-                suffix = "MB";
-                readable = length >> 10;
-            }
-            else if (absolute >= 0x400)
-            {
-                suffix = "KB";
-                readable = length;
-            }
-            else
-            {
-                return length.ToString("0 B");
+                size /= 1024;
+                unit++;
             }
 
-            readable /= 1024;
+            if (unit == 0)
+                return size.ToString("0 B");
 
-            if (readable >= 100)
-                return readable.ToString($"0 {suffix}");
-            if (readable >= 10)
-                return readable.ToString($"0.# {suffix}");
-            else
-                return readable.ToString($"0.## {suffix}");
+            string format = size switch
+            {
+                >= 100 => $"0 {units[unit]}",
+                >= 10 => $"0.# {units[unit]}",
+                _ => $"0.## {units[unit]}"
+            };
+            return size.ToString(format);
         }
     }
 }
