@@ -68,11 +68,6 @@ namespace EverythingToolbar.Controls
         {
             if (IsLoaded)
                 UpdateTheme(e.SystemTheme);
-            else
-                Loaded += (_, _) =>
-                {
-                    UpdateTheme(e.SystemTheme);
-                };
         }
 
         private void OnClick(object? sender, RoutedEventArgs e)
