@@ -12,16 +12,17 @@ namespace EverythingToolbar.Converters
     {
         public bool AlwaysVisibleWithAutoHidingTaskbar { get; set; }
         public double VisibilityThreshold { get; set; }
+        public bool Invert { get; set; }
 
-        private static bool IsTaskbarAutoHiding;
+        private readonly bool _isTaskbarAutoHiding;
 
         public SearchControlVisibilityConverter()
         {
             // We get the taskbar auto hide state only once for now as it is not expected to change often
-            SetTaskbarAutoHideState();
+            _isTaskbarAutoHiding = GetTaskbarAutoHideState();
         }
 
-        private void SetTaskbarAutoHideState()
+        private static bool GetTaskbarAutoHideState()
         {
             const uint ABS_AUTOHIDE = 0x0000001;
             var autoHideData = new Windows.Win32.UI.Shell.APPBARDATA
@@ -31,21 +32,21 @@ namespace EverythingToolbar.Converters
             var autoHideState = PInvoke.SHAppBarMessage(PInvoke.ABM_GETSTATE, ref autoHideData);
             if (autoHideState != 0)
             {
-                IsTaskbarAutoHiding = ((uint)autoHideState & ABS_AUTOHIDE) == ABS_AUTOHIDE;
+                return ((uint)autoHideState & ABS_AUTOHIDE) == ABS_AUTOHIDE;
             }
+            return false;
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (IsTaskbarAutoHiding)
+            if (_isTaskbarAutoHiding)
                 return AlwaysVisibleWithAutoHidingTaskbar ? Visibility.Visible : Visibility.Collapsed;
 
-            if (System.Convert.ToDouble(value) >= Math.Abs(VisibilityThreshold))
-            {
-                return VisibilityThreshold >= 0 ? Visibility.Visible : Visibility.Hidden;
-            }
+            var isAboveThreshold = System.Convert.ToDouble(value) >= Math.Abs(VisibilityThreshold);
+            if (Invert)
+                isAboveThreshold = !isAboveThreshold;
 
-            return VisibilityThreshold >= 0 ? Visibility.Hidden : Visibility.Visible;
+            return isAboveThreshold ? Visibility.Visible : Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

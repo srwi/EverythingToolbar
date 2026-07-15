@@ -20,10 +20,12 @@
     <converters:SearchControlVisibilityConverter
       x:Key="SearchButtonDoubleToVisibilityConverter"
       AlwaysVisibleWithAutoHidingTaskbar="True"
-      VisibilityThreshold="-70" />
+      Invert="True"
+      VisibilityThreshold="70" />
     <converters:SearchControlVisibilityConverter
       x:Key="SearchBoxDoubleToVisibilityConverter"
       AlwaysVisibleWithAutoHidingTaskbar="False"
+      Invert="False"
       VisibilityThreshold="70" />
   </UserControl.Resources>
 
