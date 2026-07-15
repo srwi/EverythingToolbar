@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -74,7 +73,7 @@ namespace EverythingToolbar.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _viewModel.Session.Start(SynchronizationContext.Current ?? new SynchronizationContext());
+            _viewModel.Session.Start();
 
             // Let keyboard navigation move focus onto the selected item (see SearchCommands.SyncFocusToSelection).
             _focusSelectedItem ??= FocusSelectedItem;

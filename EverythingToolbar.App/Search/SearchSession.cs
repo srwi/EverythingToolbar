@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EverythingToolbar.Core.Data;
 using EverythingToolbar.Core.Search;
@@ -17,7 +16,6 @@ namespace EverythingToolbar.App.Search
         private readonly IEverythingClient _everythingClient;
         private readonly ISettings _settings;
 
-        private SynchronizationContext _synchronizationContext = new();
         private VirtualizingCollection<SearchResult>? _collection;
         private bool _started;
 
@@ -152,9 +150,8 @@ namespace EverythingToolbar.App.Search
             }
         }
 
-        public void Start(SynchronizationContext synchronizationContext)
+        public void Start()
         {
-            _synchronizationContext = synchronizationContext;
             _started = true;
             Rebuild();
         }
@@ -175,15 +172,11 @@ namespace EverythingToolbar.App.Search
                 return;
             }
 
-            var newProvider = new EverythingItemsProvider(
-                _everythingClient,
-                _searchState.BuildSearchQuery(),
-                _synchronizationContext
-            );
+            var newProvider = new EverythingItemsProvider(_everythingClient, _searchState.BuildSearchQuery());
 
             if (_collection == null)
             {
-                _collection = new VirtualizingCollection<SearchResult>(newProvider, PageSize, _synchronizationContext);
+                _collection = new VirtualizingCollection<SearchResult>(newProvider, PageSize);
                 _collection.CollectionChanged += OnCollectionChanged;
                 _collection.PropertyChanged += OnCollectionPropertyChanged;
             }

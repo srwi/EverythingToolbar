@@ -11,7 +11,6 @@ namespace EverythingToolbar.App.Search
     {
         private readonly IEverythingClient _client;
         private readonly SearchQuery _query;
-        private readonly TaskScheduler _taskScheduler;
 
         private bool _isBusy;
         public bool IsBusy
@@ -29,15 +28,10 @@ namespace EverythingToolbar.App.Search
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public EverythingItemsProvider(
-            IEverythingClient client,
-            SearchQuery query,
-            SynchronizationContext synchronizationContext
-        )
+        public EverythingItemsProvider(IEverythingClient client, SearchQuery query)
         {
             _client = client;
             _query = query;
-            _taskScheduler = new SynchronizationContextTaskScheduler(synchronizationContext);
         }
 
         public Task<int> FetchCount(int pageSize, bool isAsync, CancellationToken cancellationToken)
@@ -65,15 +59,20 @@ namespace EverythingToolbar.App.Search
             return data;
         }
 
-        private Task<T> TrackBusyState<T>(Task<T> task)
+        private async Task<T> TrackBusyState<T>(Task<T> task)
         {
-            if (!task.IsCompleted)
-            {
-                IsBusy = true;
-                task.ContinueWith(_ => IsBusy = false, _taskScheduler);
-            }
+            if (task.IsCompleted)
+                return await task;
 
-            return task;
+            IsBusy = true;
+            try
+            {
+                return await task;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }

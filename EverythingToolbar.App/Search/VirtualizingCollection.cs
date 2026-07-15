@@ -7,7 +7,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using EverythingToolbar.App.Helpers;
 using EverythingToolbar.Core.Search;
+using NLog;
 
 namespace EverythingToolbar.App.Search
 {
@@ -18,14 +20,12 @@ namespace EverythingToolbar.App.Search
             INotifyCollectionChanged,
             IDisposable
     {
-        public VirtualizingCollection(
-            IItemsProvider<T> itemsProvider,
-            int pageSize,
-            SynchronizationContext currentSynchronizationContext
-        )
-        {
-            _taskScheduler = new SynchronizationContextTaskScheduler(currentSynchronizationContext);
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger(
+            "EverythingToolbar.App.Search.VirtualizingCollection"
+        );
 
+        public VirtualizingCollection(IItemsProvider<T> itemsProvider, int pageSize)
+        {
             PageSize = pageSize;
 
             ItemsProvider = itemsProvider;
@@ -33,8 +33,6 @@ namespace EverythingToolbar.App.Search
 
             LoadCount();
         }
-
-        private readonly TaskScheduler _taskScheduler;
 
         // Canceled when the provider is replaced or the collection disposed, so abandoned fetches can't deliver stale results.
         private CancellationTokenSource _cancellationTokenSource = new();
@@ -110,27 +108,23 @@ namespace EverythingToolbar.App.Search
             CollectionChanged?.Invoke(this, e);
         }
 
-        private void LoadCount()
+        private async void LoadCount()
         {
             var cancellationToken = _cancellationTokenSource.Token;
 
             if (IsAsync)
             {
-                ItemsProvider
-                    .FetchCount(PageSize, isAsync: true, cancellationToken)
-                    .ContinueWith(
-                        task =>
-                        {
-                            // A canceled token means this fetch belongs to an abandoned search.
-                            if (cancellationToken.IsCancellationRequested || task.IsCanceled)
-                                return;
-
-                            Count = task.Result;
-                        },
-                        CancellationToken.None,
-                        TaskContinuationOptions.None,
-                        _taskScheduler
-                    );
+                try
+                {
+                    int count = await ItemsProvider.FetchCount(PageSize, isAsync: true, cancellationToken);
+                    if (!cancellationToken.IsCancellationRequested)
+                        Count = count;
+                }
+                catch (OperationCanceledException) { }
+                catch (Exception e)
+                {
+                    Logger.Debug(e, "Failed to load the result count.");
+                }
             }
             else
             {
@@ -148,63 +142,73 @@ namespace EverythingToolbar.App.Search
             return page;
         }
 
-        private void LoadPageAsync(int index)
+        private async void LoadPageAsync(int index)
         {
             var cancellationToken = _cancellationTokenSource.Token;
 
-            ItemsProvider
-                .FetchRange(index * PageSize, PageSize, isAsync: true, cancellationToken)
-                .ContinueWith(
-                    task =>
+            // The provider can answer page 0 synchronously from the SDK's leftover result list. Without this
+            // yield the Replace notifications below would fire from inside the indexer, i.e. while WPF is
+            // realizing containers.
+            await Task.Yield();
+
+            try
+            {
+                var items = await ItemsProvider.FetchRange(
+                    index * PageSize,
+                    PageSize,
+                    isAsync: true,
+                    cancellationToken
+                );
+
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+
+                List<T>? newItems = items as List<T> ?? items?.ToList();
+                _pages[index] = newItems;
+                TouchPage(index);
+                TrimPages();
+
+                try
+                {
+                    for (int i = 0; i < newItems?.Count; i++)
                     {
-                        if (cancellationToken.IsCancellationRequested)
-                            return;
+                        var itemIndex = index * PageSize + i;
 
-                        if (task.IsCanceled)
+                        if (_displayedItems.TryGetValue(itemIndex, out var oldItem))
                         {
-                            _pages.Remove(index); // Page needs to be loaded again in the future
-                            RemovePageTracking(index);
-                            return;
-                        }
+                            // Keep in sync so a later Replace reports the correct oldItem.
+                            _displayedItems[itemIndex] = newItems[i];
 
-                        List<T>? newItems = task.Result as List<T>;
-                        _pages[index] = newItems;
-                        TouchPage(index);
-                        TrimPages();
-
-                        try
-                        {
-                            for (int i = 0; i < newItems?.Count; i++)
-                            {
-                                var itemIndex = index * PageSize + i;
-
-                                if (_displayedItems.TryGetValue(itemIndex, out var oldItem))
-                                {
-                                    // Keep in sync so a later Replace reports the correct oldItem.
-                                    _displayedItems[itemIndex] = newItems[i];
-
-                                    OnCollectionChanged(
-                                        new NotifyCollectionChangedEventArgs(
-                                            NotifyCollectionChangedAction.Replace,
-                                            newItems[i],
-                                            oldItem,
-                                            itemIndex
-                                        )
-                                    );
-                                }
-                            }
-                        }
-                        catch (Exception)
-                        {
                             OnCollectionChanged(
-                                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset)
+                                new NotifyCollectionChangedEventArgs(
+                                    NotifyCollectionChangedAction.Replace,
+                                    newItems[i],
+                                    oldItem,
+                                    itemIndex
+                                )
                             );
                         }
-                    },
-                    CancellationToken.None,
-                    TaskContinuationOptions.None,
-                    _taskScheduler
-                );
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.Debug(e, "Failed to notify page {0} item replacements; falling back to a reset.", index);
+                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+
+                _pages.Remove(index); // Page needs to be loaded again in the future
+                RemovePageTracking(index);
+            }
+            catch (Exception e)
+            {
+                // Leave the page marked as loading so the next access retries.
+                Logger.Debug(e, "Failed to load page {0}.", index);
+            }
         }
 
         public T this[int index]
