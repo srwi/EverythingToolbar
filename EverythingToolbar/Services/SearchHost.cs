@@ -16,6 +16,7 @@ namespace EverythingToolbar.Services
         private readonly WindowsPolicy _windowsPolicy;
 
         private SearchWindowPlacement? _placement;
+        private DispatcherOperation? _preWarmOperation;
 
         public SearchHost(
             SearchWindowController controller,
@@ -51,7 +52,10 @@ namespace EverythingToolbar.Services
             };
             Interaction.GetBehaviors(_searchWindow).Add(_placement);
 
-            _searchWindow.Dispatcher.BeginInvoke(_controller.PreWarm, DispatcherPriority.ApplicationIdle);
+            _preWarmOperation = _searchWindow.Dispatcher.BeginInvoke(
+                _controller.PreWarm,
+                DispatcherPriority.ApplicationIdle
+            );
         }
 
         public void SetPlacementTarget(FrameworkElement? target)
@@ -62,8 +66,13 @@ namespace EverythingToolbar.Services
 
         public void Detach()
         {
+            _preWarmOperation?.Abort();
+            _preWarmOperation = null;
+
             _shortcutListener.Disable();
             _startMenuInterceptor.Disable();
+
+            _controller.Hide();
 
             if (_placement != null)
             {

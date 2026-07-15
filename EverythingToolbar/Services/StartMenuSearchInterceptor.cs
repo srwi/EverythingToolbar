@@ -20,6 +20,7 @@ namespace EverythingToolbar.Services
         private HWINEVENTHOOK _focusedWindowChangedHookId;
 
         private IntPtr _searchAppHwnd = IntPtr.Zero;
+        private bool _isAttached;
         private bool _isNativeSearchActive;
         private bool _isInterceptingKeys;
         private bool? _animationsToRestore;
@@ -41,22 +42,36 @@ namespace EverythingToolbar.Services
 
         public void Initialize()
         {
+            _isAttached = true;
+
             if (_settings.IsReplaceStartMenuSearch)
-                Enable();
+                EnableHook();
+        }
+
+        // Called when the host detaches. The settings subscription lives for the lifetime of this
+        // singleton, so without the flag a later settings change would re-arm the hooks for a host
+        // that no longer exists.
+        public void Disable()
+        {
+            _isAttached = false;
+            DisableHook();
         }
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
+            if (!_isAttached)
+                return;
+
             if (e.PropertyName == nameof(ISettings.IsReplaceStartMenuSearch))
             {
                 if (_settings.IsReplaceStartMenuSearch)
-                    Enable();
+                    EnableHook();
                 else
-                    Disable();
+                    DisableHook();
             }
         }
 
-        private void Enable()
+        private void EnableHook()
         {
             PInvoke.UnhookWinEvent(_focusedWindowChangedHookId);
             _focusedWindowChangedCallback = OnFocusedWindowChanged;
@@ -72,10 +87,11 @@ namespace EverythingToolbar.Services
             CancelCleanupTimer();
         }
 
-        public void Disable()
+        private void DisableHook()
         {
             PInvoke.UnhookWinEvent(_focusedWindowChangedHookId);
             _focusedWindowChangedHookId = default;
+            _focusedWindowChangedCallback = null;
             ResetHandoverState();
         }
 
