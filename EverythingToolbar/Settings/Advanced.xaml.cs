@@ -23,7 +23,7 @@ namespace EverythingToolbar.Settings
 
         public bool IsLauncher => Application.Current != null;
 
-        public int WindowsBuildVersion => Environment.OSVersion.Version.Build;
+        public bool IsWindows11 => Environment.OSVersion.Version.Build >= 22000;
 
         public bool CheckingForUpdatesVisible
         {
