@@ -3,7 +3,7 @@ using EverythingToolbar.Controls;
 using EverythingToolbar.Platform;
 using EverythingToolbar.Properties;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Services
 {
     public sealed class NotifierAdapter : INotifier
     {

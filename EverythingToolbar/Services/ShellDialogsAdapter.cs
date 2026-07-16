@@ -1,9 +1,10 @@
 using System.IO;
 using System.Windows.Forms;
+using EverythingToolbar.Helpers;
 using EverythingToolbar.Platform;
 using Peter;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Services
 {
     public sealed class ShellDialogsAdapter : IShellDialogs
     {

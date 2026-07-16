@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using System.Windows;
 using EverythingToolbar.Platform;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Services
 {
     public sealed class ClipboardAdapter : IClipboard
     {

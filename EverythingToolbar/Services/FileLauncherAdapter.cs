@@ -1,8 +1,9 @@
 using System.Diagnostics;
 using System.IO;
+using EverythingToolbar.Helpers;
 using EverythingToolbar.Platform;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Services
 {
     public sealed class FileLauncherAdapter : IFileLauncher
     {

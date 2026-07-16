@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
+using EverythingToolbar.Helpers;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Services
 {
     public sealed class SearchWindowController : ISearchWindowController
     {

@@ -1,7 +1,6 @@
 using System;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using EverythingToolbar.Helpers;
 using EverythingToolbar.Launcher.Properties;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Markup;

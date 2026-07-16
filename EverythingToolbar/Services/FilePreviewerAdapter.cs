@@ -4,10 +4,11 @@ using System.IO.Pipes;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using EverythingToolbar.Helpers;
 using EverythingToolbar.Platform;
 using NLog;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Services
 {
     public sealed class FilePreviewerAdapter : IFilePreviewer
     {

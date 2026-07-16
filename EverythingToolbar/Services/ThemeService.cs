@@ -6,13 +6,14 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
+using EverythingToolbar.Helpers;
 using NLog;
 using Windows.UI.ViewManagement;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Markup;
 using Color = Windows.UI.Color;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Services
 {
     public enum Theme
     {
