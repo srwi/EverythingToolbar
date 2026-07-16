@@ -27,5 +27,6 @@ SHELLEXECUTEINFOW
 CreateProcess
 STARTUPINFOW
 PROCESS_INFORMATION
+CloseHandle
 SHOpenFolderAndSelectItems
 SHParseDisplayName

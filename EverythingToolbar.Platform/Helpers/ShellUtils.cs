@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using Windows.Win32;
+using Windows.Win32.System.Threading;
 using Windows.Win32.UI.Shell;
 using Windows.Win32.UI.Shell.Common;
 
@@ -28,6 +29,33 @@ namespace EverythingToolbar.Helpers
                     PInvoke.ShellExecuteEx(ref info);
                 }
             }
+        }
+
+        public static unsafe void CreateProcessFromCommandLine(string commandLine, string? workingDirectory = null)
+        {
+            var startupInfo = new STARTUPINFOW { cb = (uint)sizeof(STARTUPINFOW) };
+
+            Span<char> mutableCommandLine = new char[commandLine.Length + 1];
+            commandLine.CopyTo(mutableCommandLine);
+
+            if (
+                !PInvoke.CreateProcess(
+                    null,
+                    ref mutableCommandLine,
+                    null,
+                    null,
+                    false,
+                    0,
+                    null,
+                    workingDirectory,
+                    in startupInfo,
+                    out var processInformation
+                )
+            )
+                return;
+
+            PInvoke.CloseHandle(processInformation.hProcess);
+            PInvoke.CloseHandle(processInformation.hThread);
         }
 
         public static void OpenWithDialog(string path)

@@ -34,12 +34,7 @@ namespace EverythingToolbar.Helpers
 
         public void RunCommand(string commandLine, string? workingDirectory = null)
         {
-            Process.Start(new ProcessStartInfo("cmd.exe", "/c " + commandLine)
-            {
-                WorkingDirectory = workingDirectory,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-            });
+            ShellUtils.CreateProcessFromCommandLine(commandLine, workingDirectory);
         }
     }
 }
