@@ -24,9 +24,16 @@ namespace EverythingToolbar.Behaviors
         public bool UseCursorPlacement { get; set; }
 
         private double _dpiScalingFactor = 1.0;
-        private readonly TaskbarStateManager _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
-        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
-        private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
+        private readonly TaskbarStateManager _taskbarState;
+        private readonly ISettings _settings;
+        private readonly WindowsPolicy _windowsPolicy;
+
+        public SearchWindowPlacement(TaskbarStateManager taskbarState, ISettings settings, WindowsPolicy windowsPolicy)
+        {
+            _taskbarState = taskbarState;
+            _settings = settings;
+            _windowsPolicy = windowsPolicy;
+        }
 
         protected override void OnAttached()
         {

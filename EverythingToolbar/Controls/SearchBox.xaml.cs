@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
+using EverythingToolbar.ViewModels;
 
 namespace EverythingToolbar.Controls
 {
@@ -42,22 +43,16 @@ namespace EverythingToolbar.Controls
         }
 
         private bool _isInternalTextChange;
-        private readonly SearchState _searchState = Ioc.Default.GetRequiredService<SearchState>();
-        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
-        public ISettings Settings => _settings;
-
-        private readonly ISearchWindowController _searchWindowController =
-            Ioc.Default.GetRequiredService<ISearchWindowController>();
-        private readonly SearchCommands _commands = Ioc.Default.GetRequiredService<SearchCommands>();
+        private readonly SearchBoxViewModel _viewModel = Ioc.Default.GetRequiredService<SearchBoxViewModel>();
 
         public SearchBox()
         {
             InitializeComponent();
-            DataContext = this;
+            DataContext = _viewModel;
 
             InputMethod.SetPreferredImeState(this, InputMethodState.DoNotCare);
 
-            _settings.PropertyChanged += OnSettingsChanged;
+            _viewModel.Settings.PropertyChanged += OnSettingsChanged;
             WeakReferenceMessenger.Default.Register<FocusSearchBoxRequest>(this, (_, _) => OnFocusRequested());
         }
 
@@ -66,7 +61,7 @@ namespace EverythingToolbar.Controls
             if (_isInternalTextChange)
                 return;
 
-            if (_settings.IsSearchAsYouType)
+            if (_viewModel.Settings.IsSearchAsYouType)
             {
                 SearchTerm = TextBox.Text;
             }
@@ -84,17 +79,17 @@ namespace EverythingToolbar.Controls
         {
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Up)
             {
-                UpdateSearchTerm(_searchState.GetPreviousSearchTerm());
+                UpdateSearchTerm(_viewModel.SearchState.GetPreviousSearchTerm());
                 e.Handled = true;
                 return;
             }
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Down)
             {
-                UpdateSearchTerm(_searchState.GetNextSearchTerm());
+                UpdateSearchTerm(_viewModel.SearchState.GetNextSearchTerm());
                 e.Handled = true;
                 return;
             }
-            if (Keyboard.Modifiers == ModifierKeys.None && e.Key == Key.Enter && !_settings.IsSearchAsYouType)
+            if (Keyboard.Modifiers == ModifierKeys.None && e.Key == Key.Enter && !_viewModel.Settings.IsSearchAsYouType)
             {
                 SearchTerm = TextBox.Text;
                 e.Handled = true;
@@ -109,12 +104,12 @@ namespace EverythingToolbar.Controls
             {
                 Keyboard.ClearFocus();
                 NativeMethods.FocusTaskbarWindow();
-                _searchWindowController.Hide();
+                _viewModel.SearchWindowController.Hide();
                 e.Handled = true;
                 return;
             }
 
-            if (_commands.TranslateResultsGesture(e.Key, e.SystemKey, Keyboard.Modifiers, fromSearchBox: true))
+            if (_viewModel.Commands.TranslateResultsGesture(e.Key, e.SystemKey, Keyboard.Modifiers, fromSearchBox: true))
                 e.Handled = true;
         }
 
@@ -123,7 +118,7 @@ namespace EverythingToolbar.Controls
             if (e.Key == Key.Tab)
             {
                 var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
-                _searchState.CycleFilters(offset);
+                _viewModel.SearchState.CycleFilters(offset);
                 e.Handled = true;
             }
         }
@@ -150,7 +145,7 @@ namespace EverythingToolbar.Controls
 
         private void UpdateQuickTogglesVisibility()
         {
-            if (_settings.IsShowQuickToggles && ActualWidth > 200)
+            if (_viewModel.Settings.IsShowQuickToggles && ActualWidth > 200)
             {
                 QuickToggleButtons.Visibility = Visibility.Visible;
                 TextBox.Padding = new Thickness(37, 0, 130, 0);
@@ -183,7 +178,7 @@ namespace EverythingToolbar.Controls
         {
             if (e.NewFocus == null) // New focus outside application
             {
-                _searchWindowController.Hide();
+                _viewModel.SearchWindowController.Hide();
             }
         }
 

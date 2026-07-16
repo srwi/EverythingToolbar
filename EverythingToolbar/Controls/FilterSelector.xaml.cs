@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Data;
-using EverythingToolbar.Helpers;
+using EverythingToolbar.ViewModels;
 
 namespace EverythingToolbar.Controls
 {
@@ -31,14 +31,13 @@ namespace EverythingToolbar.Controls
             set => SetValue(SelectedFilterProperty, value);
         }
 
-        private readonly FilterLoader _filterLoader = Ioc.Default.GetRequiredService<FilterLoader>();
-        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
+        private readonly FilterSelectorViewModel _viewModel = Ioc.Default.GetRequiredService<FilterSelectorViewModel>();
 
         public FilterSelector()
         {
             InitializeComponent();
 
-            DataContext = _filterLoader;
+            DataContext = _viewModel;
             Loaded += (_, _) => UpdateSelectedItems();
         }
 
@@ -50,8 +49,8 @@ namespace EverythingToolbar.Controls
             TabControl.SelectionChanged -= OnTabItemSelected;
             ComboBox.SelectionChanged -= OnComboBoxItemSelected;
 
-            int filterIndex = _filterLoader.Filters.IndexOf(SelectedFilter);
-            int maxTabItems = _settings.MaxTabItems;
+            int filterIndex = _viewModel.FilterLoader.Filters.IndexOf(SelectedFilter);
+            int maxTabItems = _viewModel.Settings.MaxTabItems;
 
             TabControl.SelectedIndex = filterIndex < maxTabItems ? filterIndex : -1;
             ComboBox.SelectedIndex = filterIndex >= maxTabItems ? filterIndex - maxTabItems : -1;

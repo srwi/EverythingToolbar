@@ -1,7 +1,6 @@
 using System;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Launcher.Properties;
 using Wpf.Ui.Appearance;
@@ -13,11 +12,12 @@ namespace EverythingToolbar.Launcher
     internal sealed class TrayIcon : IDisposable
     {
         private readonly NotifyIcon _notifyIcon;
-        private readonly ThemeService _themeService = Ioc.Default.GetRequiredService<ThemeService>();
+        private readonly ThemeService _themeService;
         private readonly ThemesDictionary _menuTheme;
 
-        public TrayIcon(Action onOpenSettings, Action onQuit)
+        public TrayIcon(Action onOpenSettings, Action onQuit, ThemeService themeService)
         {
+            _themeService = themeService;
             var contextMenu = new ContextMenu();
 
             var settingsItem = new MenuItem { Header = Resources.ContextMenuSettings };

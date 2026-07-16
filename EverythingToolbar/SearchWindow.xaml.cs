@@ -5,10 +5,10 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
+using EverythingToolbar.ViewModels;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
@@ -23,14 +23,12 @@ namespace EverythingToolbar
 
         private bool _isFirstShow = true;
         private bool _isRenderingHooked;
-        private readonly SearchState _searchState = Ioc.Default.GetRequiredService<SearchState>();
-        private readonly TaskbarStateManager _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
-        private readonly EverythingSearchLauncher _launcher = Ioc.Default.GetRequiredService<EverythingSearchLauncher>();
-        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
-        private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
+        private readonly SearchWindowViewModel _viewModel;
 
-        public SearchWindow()
+        public SearchWindow(SearchWindowViewModel viewModel)
+            : base(viewModel.ThemeService, viewModel.WindowsPolicy)
         {
+            _viewModel = viewModel;
             InitializeComponent();
 
             Deactivated += (_, _) => WeakReferenceMessenger.Default.Send(new SearchWindowActiveChanged(false));
@@ -59,7 +57,7 @@ namespace EverythingToolbar
         {
             WeakReferenceMessenger.Default.Send(new SearchWindowActiveChanged(true));
 
-            if (_taskbarState.IsIcon)
+            if (_viewModel.TaskbarState.IsIcon)
                 WeakReferenceMessenger.Default.Send(new FocusSearchBoxRequest());
         }
 
@@ -68,7 +66,7 @@ namespace EverythingToolbar
             if (e.Key is >= Key.D0 and <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control)
             {
                 var index = e.Key == Key.D0 ? 9 : e.Key - Key.D1;
-                _searchState.SelectFilterFromIndex(index);
+                _viewModel.SearchState.SelectFilterFromIndex(index);
                 e.Handled = true;
             }
             else if (e.Key == Key.Escape)
@@ -94,7 +92,7 @@ namespace EverythingToolbar
 
         private void OpenSearchInEverything(object? sender, RoutedEventArgs e)
         {
-            _launcher.OpenSearchInEverything(_searchState);
+            _viewModel.Launcher.OpenSearchInEverything(_viewModel.SearchState);
         }
 
         public new void Hide()
@@ -108,10 +106,10 @@ namespace EverythingToolbar
 
         private void OnHidden(object? sender, EventArgs e)
         {
-            if ((int)Height != _settings.PopupHeight || (int)Width != _settings.PopupWidth)
+            if ((int)Height != _viewModel.Settings.PopupHeight || (int)Width != _viewModel.Settings.PopupWidth)
             {
-                _settings.PopupHeight = (int)Height;
-                _settings.PopupWidth = (int)Width;
+                _viewModel.Settings.PopupHeight = (int)Height;
+                _viewModel.Settings.PopupWidth = (int)Width;
             }
 
             // Push outside of screens to hide Windows' closing animation
@@ -123,7 +121,7 @@ namespace EverythingToolbar
 
             UnhookRendering();
 
-            _searchState.Reset();
+            _viewModel.SearchState.Reset();
 
             Hidden?.Invoke(this, EventArgs.Empty);
         }
@@ -147,7 +145,7 @@ namespace EverythingToolbar
 
         public new void Show()
         {
-            var activate = _taskbarState.IsIcon;
+            var activate = _viewModel.TaskbarState.IsIcon;
 
             if (Visibility == Visibility.Visible)
             {
@@ -229,7 +227,7 @@ namespace EverythingToolbar
             SetTopmostBelowTaskbar();
 
             // Animate window along primary axis position
-            if (_windowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
+            if (_viewModel.WindowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
                 AnimateShowWin11(left, top, width, height, taskbarEdge);
             else
                 AnimateShowWin10(left, top, taskbarEdge);
@@ -237,7 +235,7 @@ namespace EverythingToolbar
 
         private void AnimateShowWin10(double left, double top, Edge taskbarEdge)
         {
-            if (_windowsPolicy.IsEffectiveAnimationsDisabled)
+            if (_viewModel.WindowsPolicy.IsEffectiveAnimationsDisabled)
             {
                 Opacity = 1;
                 Left = left;
@@ -323,7 +321,7 @@ namespace EverythingToolbar
 
         private void AnimateShowWin11(double left, double top, double width, double height, Edge taskbarEdge)
         {
-            if (_windowsPolicy.IsEffectiveAnimationsDisabled)
+            if (_viewModel.WindowsPolicy.IsEffectiveAnimationsDisabled)
             {
                 Opacity = 1;
                 Left = left;
@@ -398,7 +396,7 @@ namespace EverythingToolbar
 
         private void AnimateHideWin10(Edge taskbarEdge)
         {
-            if (_windowsPolicy.IsEffectiveAnimationsDisabled)
+            if (_viewModel.WindowsPolicy.IsEffectiveAnimationsDisabled)
             {
                 Dispatcher.BeginInvoke(() => OnHidden(this, EventArgs.Empty));
                 return;
@@ -442,7 +440,7 @@ namespace EverythingToolbar
 
         private void AnimateHideWin11(Edge taskbarEdge)
         {
-            if (_windowsPolicy.IsEffectiveAnimationsDisabled)
+            if (_viewModel.WindowsPolicy.IsEffectiveAnimationsDisabled)
             {
                 Dispatcher.BeginInvoke(() => OnHidden(this, EventArgs.Empty));
                 return;
@@ -490,7 +488,7 @@ namespace EverythingToolbar
         {
             HookRendering();
 
-            if (_windowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
+            if (_viewModel.WindowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
                 AnimateHideWin11(taskbarEdge);
             else
                 AnimateHideWin10(taskbarEdge);

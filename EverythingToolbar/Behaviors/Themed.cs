@@ -8,7 +8,7 @@ namespace EverythingToolbar.Behaviors
     public class Themed : Behavior<FrameworkElement>
     {
         // Service-locator reach: behaviors cannot be constructor-injected from XAML.
-        private static ThemeService ThemeService => Ioc.Default.GetRequiredService<ThemeService>();
+        private static readonly ThemeService ThemeService = Ioc.Default.GetRequiredService<ThemeService>();
 
         public ThemedSurface Surface { get; set; } = ThemedSurface.AppWindow;
 

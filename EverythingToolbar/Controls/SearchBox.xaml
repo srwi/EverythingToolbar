@@ -9,7 +9,7 @@
     <Grid>
         <TextBox Name="TextBox"
                  Tag="{x:Static properties:Resources.TextBoxWatermark}"
-                 Text="{Binding SearchTerm, Mode=OneWay}"
+                 Text="{Binding SearchTerm, RelativeSource={RelativeSource AncestorType={x:Type controls:SearchBox}}, Mode=OneWay}"
                  CaretBrush="{DynamicResource TextBoxForegroundActive}"
                  TextChanged="OnTextChanged"
                  GotKeyboardFocus="OnGotKeyboardFocus"

@@ -4,29 +4,27 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Data;
-using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
 using EverythingToolbar.Settings;
+using EverythingToolbar.ViewModels;
 
 namespace EverythingToolbar.Controls
 {
     public partial class SettingsControl
     {
-        private readonly ISearchWindowController _searchWindowController = Ioc.Default.GetRequiredService<ISearchWindowController>();
-
-        public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
+        private readonly SettingsControlViewModel _viewModel = Ioc.Default.GetRequiredService<SettingsControlViewModel>();
 
         public SettingsControl()
         {
             InitializeComponent();
-            DataContext = this;
+            DataContext = _viewModel;
 
             SelectSortType();
         }
 
         private void OpenSettingsWindow(object sender, RoutedEventArgs e)
         {
-            _searchWindowController.Hide();
+            _viewModel.SearchWindowController.Hide();
             Window settings = new SettingsWindow();
             settings.Show();
         }
@@ -40,11 +38,11 @@ namespace EverythingToolbar.Controls
 
             int[] fastSortExceptions = [4, 8];
             if (
-                Ioc.Default.GetRequiredService<IEverythingClient>().GetIsFastSort((SortBy)selectedIndex, Settings.IsSortDescending)
+                _viewModel.EverythingClient.GetIsFastSort((SortBy)selectedIndex, _viewModel.Settings.IsSortDescending)
                 || fastSortExceptions.Contains(selectedIndex)
             )
             {
-                Settings.SortBy = selectedIndex;
+                _viewModel.Settings.SortBy = selectedIndex;
             }
             else
             {
@@ -61,13 +59,13 @@ namespace EverythingToolbar.Controls
 
         private void OnSortAscendingClicked(object sender, RoutedEventArgs e)
         {
-            Settings.IsSortDescending = false;
+            _viewModel.Settings.IsSortDescending = false;
             SelectSortType();
         }
 
         private void OnSortDescendingClicked(object sender, RoutedEventArgs e)
         {
-            Settings.IsSortDescending = true;
+            _viewModel.Settings.IsSortDescending = true;
             SelectSortType();
         }
 
@@ -79,10 +77,10 @@ namespace EverythingToolbar.Controls
                     menuItem.IsChecked = false;
             }
 
-            if (SortByMenu.Items[Settings.SortBy] is MenuItem sortByMenuItem)
+            if (SortByMenu.Items[_viewModel.Settings.SortBy] is MenuItem sortByMenuItem)
                 sortByMenuItem.IsChecked = true;
 
-            if (Settings.IsSortDescending)
+            if (_viewModel.Settings.IsSortDescending)
                 SortDescendingMenuItem.IsChecked = true;
             else
                 SortAscendingMenuItem.IsChecked = true;
@@ -103,7 +101,7 @@ namespace EverythingToolbar.Controls
 
         private void TogglePreviewPane(object sender, RoutedEventArgs e)
         {
-            Settings.IsPreviewPaneEnabled = !Settings.IsPreviewPaneEnabled;
+            _viewModel.Settings.IsPreviewPaneEnabled = !_viewModel.Settings.IsPreviewPaneEnabled;
         }
     }
 }

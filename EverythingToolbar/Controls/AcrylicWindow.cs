@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Helpers;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -72,8 +71,8 @@ namespace EverythingToolbar.Controls
             RoundSmall = 3,
         }
 
-        private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
-        private readonly ThemeService _themeService = Ioc.Default.GetRequiredService<ThemeService>();
+        private readonly WindowsPolicy _windowsPolicy;
+        private readonly ThemeService _themeService;
 
         public bool IsAcrylicEnabled
         {
@@ -114,8 +113,11 @@ namespace EverythingToolbar.Controls
             new PropertyMetadata(false, OnAcrylicPropertyChanged)
         );
 
-        protected AcrylicWindow()
+        protected AcrylicWindow(ThemeService themeService, WindowsPolicy windowsPolicy)
         {
+            _themeService = themeService;
+            _windowsPolicy = windowsPolicy;
+
             // Use layered window when Windows transparency is disabled to prevent white flash on open
             if (!SystemSettings.IsWindowsTransparencyEnabled())
             {

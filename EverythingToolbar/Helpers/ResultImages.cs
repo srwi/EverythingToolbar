@@ -25,6 +25,8 @@ namespace EverythingToolbar.Helpers
             ".webp",
         };
 
+        private static readonly ISettings Settings = Ioc.Default.GetRequiredService<ISettings>();
+
         private const int IconSize = 16;
         private const int PreviewIconSize = 64;
         private const int PreviewThumbnailSize = 380;
@@ -69,7 +71,7 @@ namespace EverythingToolbar.Helpers
                 return;
             _iconLoadStarted = true;
 
-            var useThumbnail = Ioc.Default.GetRequiredService<ISettings>().IsThumbnailsEnabled && IsImageFile;
+            var useThumbnail = Settings.IsThumbnailsEnabled && IsImageFile;
             Icon = IconProvider.GetImage(_result.FullPathAndFileName, _result.IsFile, useThumbnail ? IconSize : 32);
             IconLoader.Enqueue(this, useThumbnail);
         }

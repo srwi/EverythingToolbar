@@ -73,7 +73,10 @@ namespace EverythingToolbar.Launcher
                 ResizeMode = ResizeMode.NoResize;
                 WindowStyle = WindowStyle.None;
 
-                _searchWindowPlacementBehavior = new SearchWindowPlacement();
+                _searchWindowPlacementBehavior = new SearchWindowPlacement(
+                    Ioc.Default.GetRequiredService<TaskbarStateManager>(),
+                    Ioc.Default.GetRequiredService<ISettings>(),
+                    Ioc.Default.GetRequiredService<WindowsPolicy>());
                 Interaction.GetBehaviors(_searchWindow).Add(_searchWindowPlacementBehavior);
 
                 if (_windowsPolicy.IsTaskbarWindowActive())
@@ -423,7 +426,10 @@ namespace EverythingToolbar.Launcher
                     );
 
                     var app = new Application();
-                    using var trayIcon = new TrayIcon(OpenSettingsWindow, app.Shutdown);
+                    using var trayIcon = new TrayIcon(
+                        OpenSettingsWindow,
+                        app.Shutdown,
+                        Ioc.Default.GetRequiredService<ThemeService>());
                     app.Run(new LauncherWindow(trayIcon));
                 }
                 else

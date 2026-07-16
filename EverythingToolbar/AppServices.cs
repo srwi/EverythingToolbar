@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Platform;
 using EverythingToolbar.Search;
+using EverythingToolbar.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EverythingToolbar
@@ -42,6 +43,11 @@ namespace EverythingToolbar
             services.AddSingleton<IAutostartService, AutostartService>();
             services.AddSingleton<SearchResultActions>();
             services.AddSingleton<EverythingSearchLauncher>();
+            services.AddTransient<SearchResultsViewModel>();
+            services.AddTransient<SearchBoxViewModel>();
+            services.AddTransient<FilterSelectorViewModel>();
+            services.AddTransient<SettingsControlViewModel>();
+            services.AddTransient<SearchWindowViewModel>();
 
             var provider = services.BuildServiceProvider();
             Ioc.Default.ConfigureServices(provider);

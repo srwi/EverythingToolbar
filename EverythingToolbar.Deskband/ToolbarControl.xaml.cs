@@ -17,7 +17,11 @@ namespace EverythingToolbar.Deskband
 
             var searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();
             Interaction.GetBehaviors(searchWindow).Add(
-                new SearchWindowPlacement { PlacementTarget = UnifiedToolbarControl });
+                new SearchWindowPlacement(
+                    Ioc.Default.GetRequiredService<TaskbarStateManager>(),
+                    Ioc.Default.GetRequiredService<ISettings>(),
+                    Ioc.Default.GetRequiredService<WindowsPolicy>())
+                { PlacementTarget = UnifiedToolbarControl });
         }
     }
 }
