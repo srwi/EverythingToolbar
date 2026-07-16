@@ -5,10 +5,11 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
 using EverythingToolbar.App.Data;
+using EverythingToolbar.App.Helpers;
 using EverythingToolbar.Platform;
 using NLog;
 
-namespace EverythingToolbar.App.Helpers
+namespace EverythingToolbar.App.Services
 {
     public sealed class CustomActionService(
         ISettings settings,

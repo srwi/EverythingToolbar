@@ -21,7 +21,7 @@ namespace EverythingToolbar
             services.AddSingleton<ISettings>(_ => ToolbarSettings.User);
             services.AddSingleton<SearchHistoryService>();
             services.AddSingleton<TaskbarStateService>();
-            services.AddSingleton<IFilterNames, FilterNames>();
+            services.AddSingleton<IFilterNames, FilterNamesService>();
             services.AddSingleton<DefaultFilterService>();
             services.AddSingleton<EverythingFilterService>();
             services.AddSingleton<FilterService>();

@@ -1,9 +1,10 @@
 using System;
 using System.IO;
+using EverythingToolbar.Helpers;
 using Microsoft.Win32;
 using NLog;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Services
 {
     public sealed class AutostartService : IAutostartService
     {
