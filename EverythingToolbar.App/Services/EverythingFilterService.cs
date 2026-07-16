@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading;
 using EverythingToolbar.App.Helpers;
 using EverythingToolbar.Data;
-using EverythingToolbar.Helpers;
 using EverythingToolbar.Platform;
 using Microsoft.VisualBasic.FileIO;
 using NLog;

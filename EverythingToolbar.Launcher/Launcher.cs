@@ -96,7 +96,7 @@ namespace EverythingToolbar.Launcher
                     new SetupAssistant(icon).Show();
                 }
 
-                ShortcutManager.Initialize(FocusSearchBox);
+                ShortcutService.Initialize(FocusSearchBox);
 
                 Ioc.Default.GetRequiredService<StartMenuService>().Initialize();
 

@@ -1,9 +1,8 @@
-using EverythingToolbar.Helpers;
 using EverythingToolbar.Properties;
 
 namespace EverythingToolbar.Services
 {
-    public sealed class FilterNamesService : IFilterNames
+    public sealed class FilterNames : IFilterNames
     {
         public string All => Resources.DefaultFilterAll;
         public string File => Resources.DefaultFilterFile;

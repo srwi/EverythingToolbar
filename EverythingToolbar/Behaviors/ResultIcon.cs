@@ -2,7 +2,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using EverythingToolbar.Data;
-using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Behaviors
 {

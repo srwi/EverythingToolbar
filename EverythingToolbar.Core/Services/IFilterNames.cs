@@ -1,4 +1,4 @@
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Services
 {
     public interface IFilterNames
     {

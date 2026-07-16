@@ -7,6 +7,8 @@
         xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
         xmlns:c="clr-namespace:EverythingToolbar.Converters"
         xmlns:h="clr-namespace:EverythingToolbar.Helpers"
+        xmlns:markup="clr-namespace:EverythingToolbar.Markup"
+        xmlns:services="clr-namespace:EverythingToolbar.Services"
         xmlns:local="clr-namespace:EverythingToolbar"
         xmlns:app="clr-namespace:EverythingToolbar.App;assembly=EverythingToolbar.App"
         xmlns:search="clr-namespace:EverythingToolbar.Search"
@@ -50,13 +52,13 @@
                     </Grid.ColumnDefinitions>
 
                     <controls:FilterSelector x:Name="FilterSelector"
-                                             SelectedFilter="{Binding Source={h:Service {x:Type appsearch:SearchState}}, Path=Filter, Mode=TwoWay}"/>
+                                             SelectedFilter="{Binding Source={markup:Service {x:Type appsearch:SearchState}}, Path=Filter, Mode=TwoWay}"/>
 
                     <Border Grid.Column="1">
                         <Button Style="{DynamicResource TabBarButtonStyle}"
-                                Content="{Binding Source={h:Service {x:Type appsearch:SearchSession}}, Path=TotalCount,
+                                Content="{Binding Source={markup:Service {x:Type appsearch:SearchSession}}, Path=TotalCount,
                                                   Converter={c:SearchResultsCountConverter}}"
-                                Visibility="{Binding Source={h:Service {x:Type app:ISettings}},
+                                Visibility="{Binding Source={markup:Service {x:Type app:ISettings}},
                                                      Path=IsShowResultsCount,
                                                      Converter={c:BoolToVisibilityConverter}}"
                                 Click="OpenSearchInEverything" />
@@ -85,7 +87,7 @@
                             <Setter Property="Visibility"
                                     Value="Collapsed" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Source={h:Service {x:Type app:ISettings}}, Path=IsPreviewPaneEnabled}"
+                                <DataTrigger Binding="{Binding Source={markup:Service {x:Type app:ISettings}}, Path=IsPreviewPaneEnabled}"
                                              Value="True">
                                     <Setter Property="Visibility"
                                             Value="Visible" />
@@ -106,12 +108,12 @@
             </Grid>
 
             <controls:SearchBox x:Name="SearchBox"
-                                SearchTerm="{Binding Source={h:Service {x:Type appsearch:SearchState}}, Path=SearchTerm, Mode=TwoWay}"
+                                SearchTerm="{Binding Source={markup:Service {x:Type appsearch:SearchState}}, Path=SearchTerm, Mode=TwoWay}"
                                 TabIndex="999"
                                 Grid.Row="{DynamicResource SearchBoxGridRow}"
                                 Height="40"
                                 Margin="{DynamicResource SearchBoxMargin}"
-                                Visibility="{Binding Source={h:Service {x:Type h:TaskbarStateService}},
+                                Visibility="{Binding Source={markup:Service {x:Type services:TaskbarStateService}},
                                                      Path=IsIcon,
                                                      Converter={c:BoolToVisibilityConverter}}" />
         </Grid>

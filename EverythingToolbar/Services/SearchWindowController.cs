@@ -1,5 +1,4 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.Services
 {

@@ -8,8 +8,9 @@ using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Data;
+using EverythingToolbar.Helpers;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Behaviors
 {
     public sealed class ResultImages : ObservableObject
     {

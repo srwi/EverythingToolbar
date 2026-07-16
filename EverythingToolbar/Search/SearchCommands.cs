@@ -1,6 +1,5 @@
 using System;
 using System.Windows.Input;
-using EverythingToolbar.Helpers;
 using SearchResult = EverythingToolbar.App.Data.SearchResult;
 
 namespace EverythingToolbar.Search

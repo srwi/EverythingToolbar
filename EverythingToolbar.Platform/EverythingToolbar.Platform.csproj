@@ -27,4 +27,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Using Include="EverythingToolbar.Services" />
+  </ItemGroup>
 </Project>

@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Behaviors;
-using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
 
 namespace EverythingToolbar.Deskband
@@ -12,7 +11,7 @@ namespace EverythingToolbar.Deskband
             InitializeComponent();
 
             Ioc.Default.GetRequiredService<TaskbarStateService>().IsIcon = false;
-            ShortcutManager.Initialize(UnifiedToolbarControl.FocusSearchBox);
+            ShortcutService.Initialize(UnifiedToolbarControl.FocusSearchBox);
             Ioc.Default.GetRequiredService<StartMenuService>().Initialize();
 
             var searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();

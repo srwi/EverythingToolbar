@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-             xmlns:h="clr-namespace:EverythingToolbar.Helpers"
+             xmlns:markup="clr-namespace:EverythingToolbar.Markup"
              xmlns:c="clr-namespace:EverythingToolbar.Converters"
              xmlns:app="clr-namespace:EverythingToolbar.App;assembly=EverythingToolbar.App"
              xmlns:appsearch="clr-namespace:EverythingToolbar.App.Search;assembly=EverythingToolbar.App"
@@ -132,7 +132,7 @@
 
     <Grid>
         <ListView Name="SearchResultsListView"
-                  DataContext="{Binding Source={h:Service {x:Type appsearch:SearchSession}}}"
+                  DataContext="{Binding Source={markup:Service {x:Type appsearch:SearchSession}}}"
                   SelectionMode="Single"
                   ItemsSource="{Binding Results}"
                   SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
@@ -141,7 +141,7 @@
                   HorizontalContentAlignment="Stretch"
                   ContextMenuOpening="OnContextMenuOpening"
                   Background="{DynamicResource SearchResultsViewBackground}"
-                  ItemTemplate="{Binding Source={h:Service {x:Type app:ISettings}}, Path=ItemTemplate, Converter={c:ItemTemplateConverter}}"
+                  ItemTemplate="{Binding Source={markup:Service {x:Type app:ISettings}}, Path=ItemTemplate, Converter={c:ItemTemplateConverter}}"
                   ItemContainerStyle="{StaticResource ListViewItemStyle}"
                   IsTextSearchEnabled="False"
                   IsSynchronizedWithCurrentItem="True"

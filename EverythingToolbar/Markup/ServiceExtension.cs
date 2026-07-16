@@ -3,7 +3,7 @@ using System.Windows.Markup;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Markup
 {
     public sealed class ServiceExtension : MarkupExtension
     {

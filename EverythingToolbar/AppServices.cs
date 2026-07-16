@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar.Helpers;
 using EverythingToolbar.Platform;
 using EverythingToolbar.Search;
 using EverythingToolbar.ViewModels;
@@ -21,7 +20,7 @@ namespace EverythingToolbar
             services.AddSingleton<ISettings>(_ => ToolbarSettings.User);
             services.AddSingleton<SearchHistoryService>();
             services.AddSingleton<TaskbarStateService>();
-            services.AddSingleton<IFilterNames, FilterNamesService>();
+            services.AddSingleton<IFilterNames, FilterNames>();
             services.AddSingleton<DefaultFilterService>();
             services.AddSingleton<EverythingFilterService>();
             services.AddSingleton<FilterService>();

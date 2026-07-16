@@ -25,5 +25,6 @@
   </ItemGroup>
   <ItemGroup>
     <Using Include="EverythingToolbar.App.Services" />
+    <Using Include="EverythingToolbar.Services" />
   </ItemGroup>
 </Project>

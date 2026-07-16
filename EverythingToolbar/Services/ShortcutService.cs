@@ -2,14 +2,15 @@ using System;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Threading;
+using EverythingToolbar.Helpers;
 using NLog;
 using Windows.Win32;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Services
 {
-    public class ShortcutManager
+    public class ShortcutService
     {
-        private static readonly ILogger Logger = ToolbarLogger.GetLogger<ShortcutManager>();
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<ShortcutService>();
 
         private static Action? _handler;
         private static Dispatcher? _dispatcher;

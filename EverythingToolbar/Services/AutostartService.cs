@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using EverythingToolbar.Helpers;
 using Microsoft.Win32;
 using NLog;
 
