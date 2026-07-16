@@ -33,7 +33,7 @@
     <Color x:Key="AcrylicWindowBackgroundFallback">#222222</Color>
 
     <SolidColorBrush x:Key="SearchResultsViewBackground" Color="Transparent" />
-    <SolidColorBrush x:Key="TabBarBottomBorder" Color="#b9b9b9" />
+    <SolidColorBrush x:Key="TabBarBottomBorder" Color="#1f1f1f" />
     <SolidColorBrush x:Key="SearchResultsViewHeader" Color="#f0252525" />
     <SolidColorBrush x:Key="SearchResultsViewSpinner" Color="#ffffff" />
     
