@@ -5,13 +5,14 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
+using EverythingToolbar.App.Helpers;
 using NLog;
 
-namespace EverythingToolbar.App.Helpers
+namespace EverythingToolbar.App.Services
 {
-    public class HistoryManager
+    public class SearchHistoryService
     {
-        private static readonly ILogger Logger = ToolbarLogger.GetLogger<HistoryManager>();
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<SearchHistoryService>();
         private static readonly string HistoryPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "EverythingToolbar",
@@ -25,7 +26,7 @@ namespace EverythingToolbar.App.Helpers
         private readonly List<string> _history;
         private readonly ISettings _settings;
 
-        public HistoryManager(ISettings settings)
+        public SearchHistoryService(ISettings settings)
         {
             _settings = settings;
             _history = LoadHistory();

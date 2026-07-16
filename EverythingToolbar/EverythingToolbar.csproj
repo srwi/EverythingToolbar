@@ -98,6 +98,7 @@
     <Using Include="EverythingToolbar.App.Data" />
     <Using Include="EverythingToolbar.App.Helpers" />
     <Using Include="EverythingToolbar.App.Search" />
+    <Using Include="EverythingToolbar.App.Services" />
     <Using Include="EverythingToolbar.Services" />
   </ItemGroup>
   <ItemGroup>

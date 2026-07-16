@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -66,7 +66,7 @@ namespace EverythingToolbar.Services
         }
 
         private readonly ISettings _settings;
-        private readonly WindowsPolicy _windowsPolicy;
+        private readonly WindowsPolicyService _windowsPolicy;
         private readonly RegistryValueWatcher _personalizeWatcher;
         private readonly UISettings? _uiSettings;
         private readonly Dispatcher _dispatcher;
@@ -77,7 +77,7 @@ namespace EverythingToolbar.Services
 
         public event EventHandler<ThemeChangedEventArgs>? ThemeChanged;
 
-        public ThemeService(ISettings settings, WindowsPolicy windowsPolicy)
+        public ThemeService(ISettings settings, WindowsPolicyService windowsPolicy)
         {
             _settings = settings;
             _windowsPolicy = windowsPolicy;

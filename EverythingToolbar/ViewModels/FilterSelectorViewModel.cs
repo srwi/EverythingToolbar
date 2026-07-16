@@ -1,16 +1,16 @@
-using EverythingToolbar.Data;
+﻿using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 
 namespace EverythingToolbar.ViewModels
 {
     public sealed class FilterSelectorViewModel
     {
-        public FilterLoader FilterLoader { get; }
+        public FilterService FilterService { get; }
         public ISettings Settings { get; }
 
-        public FilterSelectorViewModel(FilterLoader filterLoader, ISettings settings)
+        public FilterSelectorViewModel(FilterService filterService, ISettings settings)
         {
-            FilterLoader = filterLoader;
+            FilterService = filterService;
             Settings = settings;
         }
     }

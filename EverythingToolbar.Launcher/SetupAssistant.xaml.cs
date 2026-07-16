@@ -24,7 +24,7 @@ namespace EverythingToolbar.Launcher
         private bool _iconUpdateRequired;
         private FileSystemWatcher? _watcher;
         private RegistryValueWatcher? _taskbarAlignmentWatcher;
-        private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
+        private readonly WindowsPolicyService _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicyService>();
         private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
         private readonly IAutostartService _autostartService = Ioc.Default.GetRequiredService<IAutostartService>();
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<SetupAssistant>();

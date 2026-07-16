@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,7 +17,7 @@ namespace EverythingToolbar
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<TaskbarWindow>();
         private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
-        private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
+        private readonly WindowsPolicyService _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicyService>();
 
         private IntPtr _taskbarHandle;
 

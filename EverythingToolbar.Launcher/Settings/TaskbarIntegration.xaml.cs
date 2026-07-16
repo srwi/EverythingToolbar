@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -17,7 +17,7 @@ namespace EverythingToolbar.Launcher.Settings
         private readonly string _taskbarShortcutPath = Utils.GetTaskbarShortcutPath();
         private FileSystemWatcher? _watcher;
         private RegistryValueWatcher? _taskbarAlignmentWatcher;
-        private readonly WindowsPolicy _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
+        private readonly WindowsPolicyService _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicyService>();
         private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
 
         public ISettings Settings => _settings;

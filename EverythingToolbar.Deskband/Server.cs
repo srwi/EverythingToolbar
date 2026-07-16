@@ -24,7 +24,7 @@ namespace EverythingToolbar.Deskband
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<Server>();
         private static ToolbarControl? _toolbarControl;
-        private TaskbarStateManager _taskbarState = null!;
+        private TaskbarStateService _taskbarState = null!;
         protected override UIElement UIElement => _toolbarControl!;
 
         public Server()
@@ -33,7 +33,7 @@ namespace EverythingToolbar.Deskband
             {
                 AppServices.Initialize();
 
-                _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
+                _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateService>();
 
                 // Apply saved UI language
                 CultureHelper.ApplyUILanguage(Ioc.Default.GetRequiredService<ISettings>().UILanguage);
@@ -52,7 +52,7 @@ namespace EverythingToolbar.Deskband
                 TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
                 TaskbarInfo.TaskbarSizeChanged += OnTaskbarSizeChanged;
 
-                _taskbarState.TaskbarEdge = (Helpers.Edge)TaskbarInfo.Edge;
+                _taskbarState.TaskbarEdge = (Services.Edge)TaskbarInfo.Edge;
             }
             catch (Exception e)
             {
@@ -75,7 +75,7 @@ namespace EverythingToolbar.Deskband
 
         private void OnTaskbarEdgeChanged(object? sender, TaskbarEdgeChangedEventArgs e)
         {
-            _taskbarState.TaskbarEdge = (Helpers.Edge)e.Edge;
+            _taskbarState.TaskbarEdge = (Services.Edge)e.Edge;
         }
 
         private void OnTaskbarSizeChanged(object? sender, TaskbarSizeChangedEventArgs e)
@@ -86,7 +86,7 @@ namespace EverythingToolbar.Deskband
         protected override void DeskbandOnClosed()
         {
             WeakReferenceMessenger.Default.UnregisterAll(this);
-            Ioc.Default.GetRequiredService<StartMenuIntegration>().Disable();
+            Ioc.Default.GetRequiredService<StartMenuService>().Disable();
 
             base.DeskbandOnClosed();
 

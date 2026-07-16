@@ -1,4 +1,4 @@
-using CommunityToolkit.Mvvm.DependencyInjection;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Platform;
 using EverythingToolbar.Search;
@@ -19,19 +19,19 @@ namespace EverythingToolbar
 
             var services = new ServiceCollection();
             services.AddSingleton<ISettings>(_ => ToolbarSettings.User);
-            services.AddSingleton<HistoryManager>();
-            services.AddSingleton<TaskbarStateManager>();
+            services.AddSingleton<SearchHistoryService>();
+            services.AddSingleton<TaskbarStateService>();
             services.AddSingleton<IFilterNames, FilterNames>();
-            services.AddSingleton<DefaultFilterLoader>();
-            services.AddSingleton<EverythingFilterLoader>();
-            services.AddSingleton<FilterLoader>();
+            services.AddSingleton<DefaultFilterService>();
+            services.AddSingleton<EverythingFilterService>();
+            services.AddSingleton<FilterService>();
             services.AddSingleton<SearchState>();
             services.AddSingleton<SearchSession>();
             services.AddSingleton<SearchCommands>();
             services.AddSingleton<CustomActionService>();
-            services.AddSingleton<WindowsPolicy>();
+            services.AddSingleton<WindowsPolicyService>();
             services.AddSingleton<ThemeService>();
-            services.AddSingleton<StartMenuIntegration>();
+            services.AddSingleton<StartMenuService>();
             services.AddSingleton<SearchWindow>();
             services.AddSingleton<ISearchWindowController, SearchWindowController>();
             services.AddSingleton<IEverythingClient, EverythingIpcClient>();

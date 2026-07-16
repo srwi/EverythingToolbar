@@ -5,18 +5,19 @@ using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
+using EverythingToolbar.Helpers;
 using NLog;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.System.Threading;
 using Windows.Win32.UI.Accessibility;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Services
 {
-    public class StartMenuIntegration
+    public class StartMenuService
     {
         private static readonly Queue<Input> RecordedInputs = new();
-        private static readonly ILogger Logger = ToolbarLogger.GetLogger<StartMenuIntegration>();
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<StartMenuService>();
 
         private static WINEVENTPROC? _focusedWindowChangedCallback;
         private static NativeMethods.LowLevelKeyboardProc? _startMenuKeyboardHookCallback;
@@ -36,7 +37,7 @@ namespace EverythingToolbar.Helpers
         private const int InputKeyboard = 1;
         private const uint KeyeventFKeyup = 0x0002;
 
-        public StartMenuIntegration(ISettings settings)
+        public StartMenuService(ISettings settings)
         {
             _settings = settings;
             _cleanupTimer.Tick += OnCleanupTimerElapsed;

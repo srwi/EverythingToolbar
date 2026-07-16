@@ -12,13 +12,13 @@
     </UserControl.OpacityMask>
     <StackPanel Orientation="Horizontal">
         <TabControl x:Name="TabControl"
-                    ItemsSource="{Binding FilterLoader.VisibleFilters}"
+                    ItemsSource="{Binding FilterService.VisibleFilters}"
                     SelectedIndex="-1"
                     SelectionChanged="OnTabItemSelected"
                     FocusVisualStyle="{x:Null}" />
 
         <ComboBox Name="ComboBox"
-                  ItemsSource="{Binding FilterLoader.OverflowFilters}"
+                  ItemsSource="{Binding FilterService.OverflowFilters}"
                   DisplayMemberPath="Name"
                   SelectedIndex="-1"
                   SelectionChanged="OnComboBoxItemSelected"

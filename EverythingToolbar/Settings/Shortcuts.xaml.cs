@@ -169,7 +169,7 @@ namespace EverythingToolbar.Settings
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            Ioc.Default.GetRequiredService<StartMenuIntegration>().Disable();
+            Ioc.Default.GetRequiredService<StartMenuService>().Disable();
             ShortcutManager.IsEnabled = false;
 
             Modifiers = (ModifierKeys)_settings.ShortcutModifiers;
@@ -185,7 +185,7 @@ namespace EverythingToolbar.Settings
         {
             ShortcutManager.IsEnabled = true;
             ReleaseKeyboard();
-            Ioc.Default.GetRequiredService<StartMenuIntegration>().Initialize();
+            Ioc.Default.GetRequiredService<StartMenuService>().Initialize();
 
             if (Key != OriginalKey || Modifiers != OriginalModifiers)
             {

@@ -71,7 +71,7 @@ namespace EverythingToolbar.Controls
             RoundSmall = 3,
         }
 
-        private readonly WindowsPolicy _windowsPolicy;
+        private readonly WindowsPolicyService _windowsPolicy;
         private readonly ThemeService _themeService;
 
         public bool IsAcrylicEnabled
@@ -113,7 +113,7 @@ namespace EverythingToolbar.Controls
             new PropertyMetadata(false, OnAcrylicPropertyChanged)
         );
 
-        protected AcrylicWindow(ThemeService themeService, WindowsPolicy windowsPolicy)
+        protected AcrylicWindow(ThemeService themeService, WindowsPolicyService windowsPolicy)
         {
             _themeService = themeService;
             _windowsPolicy = windowsPolicy;

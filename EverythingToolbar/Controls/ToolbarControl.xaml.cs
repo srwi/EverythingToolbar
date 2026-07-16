@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -23,7 +23,7 @@ namespace EverythingToolbar.Controls
             set => SetValue(IsFixedLayoutProperty, value);
         }
 
-        private readonly TaskbarStateManager _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
+        private readonly TaskbarStateService _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateService>();
         private readonly ISearchWindowController _searchWindowController = Ioc.Default.GetRequiredService<ISearchWindowController>();
 
         public ToolbarControl()

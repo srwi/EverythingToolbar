@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -45,11 +45,11 @@ namespace EverythingToolbar.Settings
 
         private void LoadFilterOrder()
         {
-            var defaultFilterLoader = Ioc.Default.GetRequiredService<DefaultFilterLoader>();
-            var defaultFilters = defaultFilterLoader.DefaultFilters;
+            var defaultFilterService = Ioc.Default.GetRequiredService<DefaultFilterService>();
+            var defaultFilters = defaultFilterService.DefaultFilters;
 
-            // Use the validation logic from DefaultFilterLoader
-            var validOrder = defaultFilterLoader.GetValidFilterOrder();
+            // Use the validation logic from DefaultFilterService
+            var validOrder = defaultFilterService.GetValidFilterOrder();
 
             FilterOrderItems = new ObservableCollection<FilterOrderItem>(
                 validOrder.Select(i => new FilterOrderItem { Name = defaultFilters[i].Name, OriginalIndex = i })

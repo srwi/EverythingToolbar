@@ -4,12 +4,12 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EverythingToolbar.Data;
 
-namespace EverythingToolbar.App.Helpers
+namespace EverythingToolbar.App.Services
 {
-    public class FilterLoader : ObservableObject
+    public class FilterService : ObservableObject
     {
-        private readonly DefaultFilterLoader _defaultLoader;
-        private readonly EverythingFilterLoader _everythingLoader;
+        private readonly DefaultFilterService _defaultLoader;
+        private readonly EverythingFilterService _everythingLoader;
         private readonly ISettings _settings;
 
         public ObservableCollection<Filter> Filters
@@ -37,7 +37,7 @@ namespace EverythingToolbar.App.Helpers
 
         public ObservableCollection<Filter> OverflowFilters => new(Filters.Skip(_settings.MaxTabItems));
 
-        public FilterLoader(DefaultFilterLoader defaultLoader, EverythingFilterLoader everythingLoader,
+        public FilterService(DefaultFilterService defaultLoader, EverythingFilterService everythingLoader,
             ISettings settings)
         {
             _defaultLoader = defaultLoader;
@@ -51,7 +51,7 @@ namespace EverythingToolbar.App.Helpers
 
         private void OnDefaultFiltersChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(DefaultFilterLoader.Filters))
+            if (e.PropertyName == nameof(DefaultFilterService.Filters))
             {
                 NotifyFilterCollectionsChanged();
             }
@@ -59,7 +59,7 @@ namespace EverythingToolbar.App.Helpers
 
         private void OnEverythingFiltersChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(EverythingFilterLoader.Filters))
+            if (e.PropertyName == nameof(EverythingFilterService.Filters))
             {
                 NotifyFilterCollectionsChanged();
             }

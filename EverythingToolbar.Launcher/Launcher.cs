@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -32,9 +32,9 @@ namespace EverythingToolbar.Launcher
         {
             private TaskbarWindow? _taskbarWindow;
             private readonly SearchWindow _searchWindow;
-            private readonly TaskbarStateManager _taskbarState;
+            private readonly TaskbarStateService _taskbarState;
             private readonly SearchWindowPlacement? _searchWindowPlacementBehavior;
-            private readonly WindowsPolicy _windowsPolicy;
+            private readonly WindowsPolicyService _windowsPolicy;
             private readonly ISettings _settings;
             private bool _temporarilyInIconMode;
             private bool _closingTaskbarWindowIntentionally;
@@ -53,8 +53,8 @@ namespace EverythingToolbar.Launcher
                 }
 
                 _searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();
-                _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateManager>();
-                _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
+                _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateService>();
+                _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicyService>();
                 _settings = Ioc.Default.GetRequiredService<ISettings>();
 
                 _trayIcon = icon;
@@ -74,9 +74,9 @@ namespace EverythingToolbar.Launcher
                 WindowStyle = WindowStyle.None;
 
                 _searchWindowPlacementBehavior = new SearchWindowPlacement(
-                    Ioc.Default.GetRequiredService<TaskbarStateManager>(),
+                    Ioc.Default.GetRequiredService<TaskbarStateService>(),
                     Ioc.Default.GetRequiredService<ISettings>(),
-                    Ioc.Default.GetRequiredService<WindowsPolicy>());
+                    Ioc.Default.GetRequiredService<WindowsPolicyService>());
                 Interaction.GetBehaviors(_searchWindow).Add(_searchWindowPlacementBehavior);
 
                 if (_windowsPolicy.IsTaskbarWindowActive())
@@ -98,7 +98,7 @@ namespace EverythingToolbar.Launcher
 
                 ShortcutManager.Initialize(FocusSearchBox);
 
-                Ioc.Default.GetRequiredService<StartMenuIntegration>().Initialize();
+                Ioc.Default.GetRequiredService<StartMenuService>().Initialize();
 
                 _searchWindow.Hiding += OnSearchWindowHiding;
                 _searchWindow.Hidden += OnSearchWindowHidden;

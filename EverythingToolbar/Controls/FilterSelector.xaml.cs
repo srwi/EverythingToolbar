@@ -49,7 +49,7 @@ namespace EverythingToolbar.Controls
             TabControl.SelectionChanged -= OnTabItemSelected;
             ComboBox.SelectionChanged -= OnComboBoxItemSelected;
 
-            int filterIndex = _viewModel.FilterLoader.Filters.IndexOf(SelectedFilter);
+            int filterIndex = _viewModel.FilterService.Filters.IndexOf(SelectedFilter);
             int maxTabItems = _viewModel.Settings.MaxTabItems;
 
             TabControl.SelectedIndex = filterIndex < maxTabItems ? filterIndex : -1;

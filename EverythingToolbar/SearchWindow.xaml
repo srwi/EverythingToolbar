@@ -111,7 +111,7 @@
                                 Grid.Row="{DynamicResource SearchBoxGridRow}"
                                 Height="40"
                                 Margin="{DynamicResource SearchBoxMargin}"
-                                Visibility="{Binding Source={h:Service {x:Type h:TaskbarStateManager}},
+                                Visibility="{Binding Source={h:Service {x:Type h:TaskbarStateService}},
                                                      Path=IsIcon,
                                                      Converter={c:BoolToVisibilityConverter}}" />
         </Grid>

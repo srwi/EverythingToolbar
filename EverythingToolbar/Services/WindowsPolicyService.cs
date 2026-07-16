@@ -1,9 +1,10 @@
 using System;
+using EverythingToolbar.Helpers;
 using Microsoft.Win32;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Services
 {
-    public sealed class WindowsPolicy(ISettings settings)
+    public sealed class WindowsPolicyService(ISettings settings)
     {
         public Version GetWindowsVersion()
         {

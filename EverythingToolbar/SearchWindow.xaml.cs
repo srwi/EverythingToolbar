@@ -26,7 +26,7 @@ namespace EverythingToolbar
         private readonly SearchWindowViewModel _viewModel;
 
         public SearchWindow(SearchWindowViewModel viewModel)
-            : base(viewModel.ThemeService, viewModel.WindowsPolicy)
+            : base(viewModel.ThemeService, viewModel.WindowsPolicyService)
         {
             _viewModel = viewModel;
             InitializeComponent();
@@ -227,7 +227,7 @@ namespace EverythingToolbar
             SetTopmostBelowTaskbar();
 
             // Animate window along primary axis position
-            if (_viewModel.WindowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
+            if (_viewModel.WindowsPolicyService.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
                 AnimateShowWin11(left, top, width, height, taskbarEdge);
             else
                 AnimateShowWin10(left, top, taskbarEdge);
@@ -235,7 +235,7 @@ namespace EverythingToolbar
 
         private void AnimateShowWin10(double left, double top, Edge taskbarEdge)
         {
-            if (_viewModel.WindowsPolicy.IsEffectiveAnimationsDisabled)
+            if (_viewModel.WindowsPolicyService.IsEffectiveAnimationsDisabled)
             {
                 Opacity = 1;
                 Left = left;
@@ -321,7 +321,7 @@ namespace EverythingToolbar
 
         private void AnimateShowWin11(double left, double top, double width, double height, Edge taskbarEdge)
         {
-            if (_viewModel.WindowsPolicy.IsEffectiveAnimationsDisabled)
+            if (_viewModel.WindowsPolicyService.IsEffectiveAnimationsDisabled)
             {
                 Opacity = 1;
                 Left = left;
@@ -396,7 +396,7 @@ namespace EverythingToolbar
 
         private void AnimateHideWin10(Edge taskbarEdge)
         {
-            if (_viewModel.WindowsPolicy.IsEffectiveAnimationsDisabled)
+            if (_viewModel.WindowsPolicyService.IsEffectiveAnimationsDisabled)
             {
                 Dispatcher.BeginInvoke(() => OnHidden(this, EventArgs.Empty));
                 return;
@@ -440,7 +440,7 @@ namespace EverythingToolbar
 
         private void AnimateHideWin11(Edge taskbarEdge)
         {
-            if (_viewModel.WindowsPolicy.IsEffectiveAnimationsDisabled)
+            if (_viewModel.WindowsPolicyService.IsEffectiveAnimationsDisabled)
             {
                 Dispatcher.BeginInvoke(() => OnHidden(this, EventArgs.Empty));
                 return;
@@ -488,7 +488,7 @@ namespace EverythingToolbar
         {
             HookRendering();
 
-            if (_viewModel.WindowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
+            if (_viewModel.WindowsPolicyService.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
                 AnimateHideWin11(taskbarEdge);
             else
                 AnimateHideWin10(taskbarEdge);

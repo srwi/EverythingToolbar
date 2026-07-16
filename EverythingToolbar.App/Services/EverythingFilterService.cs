@@ -6,20 +6,21 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using EverythingToolbar.App.Helpers;
 using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Platform;
 using Microsoft.VisualBasic.FileIO;
 using NLog;
 
-namespace EverythingToolbar.App.Helpers
+namespace EverythingToolbar.App.Services
 {
-    public class EverythingFilterLoader : ObservableObject
+    public class EverythingFilterService : ObservableObject
     {
         private ObservableCollection<Filter>? _filters;
         public ObservableCollection<Filter>? Filters => _filters ??= LoadFilters();
 
-        private static readonly ILogger Logger = ToolbarLogger.GetLogger<EverythingFilterLoader>();
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<EverythingFilterService>();
         private FileSystemWatcher? _watcher;
         private readonly ISettings _settings;
         private readonly IFilterNames _names;
@@ -27,7 +28,7 @@ namespace EverythingToolbar.App.Helpers
         private readonly IShellDialogs _shellDialogs;
         private readonly SynchronizationContext? _syncContext;
 
-        public EverythingFilterLoader(IFilterNames names, INotifier notifier, IShellDialogs shellDialogs, ISettings settings)
+        public EverythingFilterService(IFilterNames names, INotifier notifier, IShellDialogs shellDialogs, ISettings settings)
         {
             _names = names;
             _notifier = notifier;

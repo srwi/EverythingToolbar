@@ -23,4 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EverythingToolbar.Core\EverythingToolbar.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Using Include="EverythingToolbar.App.Services" />
+  </ItemGroup>
 </Project>

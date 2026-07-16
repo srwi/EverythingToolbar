@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
@@ -24,11 +24,11 @@ namespace EverythingToolbar.Behaviors
         public bool UseCursorPlacement { get; set; }
 
         private double _dpiScalingFactor = 1.0;
-        private readonly TaskbarStateManager _taskbarState;
+        private readonly TaskbarStateService _taskbarState;
         private readonly ISettings _settings;
-        private readonly WindowsPolicy _windowsPolicy;
+        private readonly WindowsPolicyService _windowsPolicy;
 
-        public SearchWindowPlacement(TaskbarStateManager taskbarState, ISettings settings, WindowsPolicy windowsPolicy)
+        public SearchWindowPlacement(TaskbarStateService taskbarState, ISettings settings, WindowsPolicyService windowsPolicy)
         {
             _taskbarState = taskbarState;
             _settings = settings;

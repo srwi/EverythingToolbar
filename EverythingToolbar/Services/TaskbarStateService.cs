@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Services
 {
     public enum Edge : uint
     {
@@ -11,7 +11,7 @@ namespace EverythingToolbar.Helpers
         Bottom,
     }
 
-    public sealed partial class TaskbarStateManager : ObservableObject
+    public sealed partial class TaskbarStateService : ObservableObject
     {
         [ObservableProperty]
         private Edge _taskbarEdge = Edge.Bottom;

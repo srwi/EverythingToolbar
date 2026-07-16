@@ -1,4 +1,4 @@
-using CommunityToolkit.Mvvm.DependencyInjection;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Behaviors;
 using EverythingToolbar.Helpers;
 using Microsoft.Xaml.Behaviors;
@@ -11,16 +11,16 @@ namespace EverythingToolbar.Deskband
         {
             InitializeComponent();
 
-            Ioc.Default.GetRequiredService<TaskbarStateManager>().IsIcon = false;
+            Ioc.Default.GetRequiredService<TaskbarStateService>().IsIcon = false;
             ShortcutManager.Initialize(UnifiedToolbarControl.FocusSearchBox);
-            Ioc.Default.GetRequiredService<StartMenuIntegration>().Initialize();
+            Ioc.Default.GetRequiredService<StartMenuService>().Initialize();
 
             var searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();
             Interaction.GetBehaviors(searchWindow).Add(
                 new SearchWindowPlacement(
-                    Ioc.Default.GetRequiredService<TaskbarStateManager>(),
+                    Ioc.Default.GetRequiredService<TaskbarStateService>(),
                     Ioc.Default.GetRequiredService<ISettings>(),
-                    Ioc.Default.GetRequiredService<WindowsPolicy>())
+                    Ioc.Default.GetRequiredService<WindowsPolicyService>())
                 { PlacementTarget = UnifiedToolbarControl });
         }
     }
