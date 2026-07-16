@@ -29,10 +29,6 @@
         <b:Themed Surface="TaskbarSurface" />
     </i:Interaction.Behaviors>
 
-    <controls:AcrylicWindow.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-    </controls:AcrylicWindow.Resources>
-
     <Border Background="{DynamicResource SearchResultsViewHeader}">
 
         <Grid Name="ContentGrid">
@@ -62,7 +58,7 @@
                                                   Converter={c:SearchResultsCountConverter}}"
                                 Visibility="{Binding Source={h:Service {x:Type app:ISettings}},
                                                      Path=IsShowResultsCount,
-                                                     Converter={StaticResource BoolToVisibilityConverter}}"
+                                                     Converter={c:BoolToVisibilityConverter}}"
                                 Click="OpenSearchInEverything" />
                     </Border>
 
@@ -117,7 +113,7 @@
                                 Margin="{DynamicResource SearchBoxMargin}"
                                 Visibility="{Binding Source={h:Service {x:Type h:TaskbarStateManager}},
                                                      Path=IsIcon,
-                                                     Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                     Converter={c:BoolToVisibilityConverter}}" />
         </Grid>
     </Border>
 

@@ -1,15 +1,10 @@
 <UserControl x:Class="EverythingToolbar.Controls.SearchResultPreviewPane"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:c="clr-namespace:EverythingToolbar.Converters"
              xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
+             xmlns:c="clr-namespace:EverythingToolbar.Converters"
              xmlns:properties="clr-namespace:EverythingToolbar.Properties"
              x:Name="Root">
-    <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-        <c:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibilityConverter" />
-    </UserControl.Resources>
-
     <Border Margin="{DynamicResource SearchResultPreviewPaneMargin}"
             Padding="0"
             Background="{DynamicResource TextBoxBackground}"
@@ -37,7 +32,7 @@
                    MaxHeight="280"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"
-                   Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={StaticResource BoolToVisibilityConverter}}"
+                   Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={c:BoolToVisibilityConverter}}"
                    RenderOptions.BitmapScalingMode="Fant" />
 
             <TextBlock Grid.Row="1"
@@ -48,16 +43,16 @@
                        TextTrimming="CharacterEllipsis"
                        Margin="0,14,0,13"
                        HorizontalAlignment="Stretch"
-                       Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={StaticResource BoolToVisibilityConverter}}" />
+                       Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={c:BoolToVisibilityConverter}}" />
 
             <Border Grid.Row="2"
                     Height="1"
                     Margin="0,17,0,17"
                     Background="{DynamicResource TextBoxBorder}"
-                    Visibility="{Binding ElementName=Root, Path=HasVisibleFileInfo, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    Visibility="{Binding ElementName=Root, Path=HasVisibleFileInfo, Converter={c:BoolToVisibilityConverter}}" />
 
             <Grid Grid.Row="3"
-                  Visibility="{Binding ElementName=Root, Path=HasVisibleFileInfo, Converter={StaticResource BoolToVisibilityConverter}}">
+                  Visibility="{Binding ElementName=Root, Path=HasVisibleFileInfo, Converter={c:BoolToVisibilityConverter}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -72,37 +67,37 @@
                            Margin="0,0,16,0"
                            Text="{x:Static properties:Resources.PreviewPaneFilePath}"
                            Foreground="{DynamicResource SearchResultPath}"
-                           Visibility="{Binding ElementName=Root, Path=ShowPathInfo, Converter={StaticResource BoolToVisibilityConverter}}" />
+                           Visibility="{Binding ElementName=Root, Path=ShowPathInfo, Converter={c:BoolToVisibilityConverter}}" />
                 <TextBlock Grid.Row="0"
                            Grid.Column="1"
                            Margin="0,0,0,0"
                            Text="{Binding ElementName=Root, Path=SelectedResult.FullPathAndFileName}"
                            TextWrapping="Wrap"
                            Foreground="{DynamicResource SearchResultFileName}"
-                           Visibility="{Binding ElementName=Root, Path=ShowPathInfo, Converter={StaticResource BoolToVisibilityConverter}}" />
+                           Visibility="{Binding ElementName=Root, Path=ShowPathInfo, Converter={c:BoolToVisibilityConverter}}" />
 
                 <TextBlock Grid.Row="1"
                            Grid.Column="0"
                            Margin="0,6,16,0"
                            Text="{x:Static properties:Resources.PreviewPaneSize}"
                            Foreground="{DynamicResource SearchResultPath}"
-                           Visibility="{Binding ElementName=Root, Path=ShowSizeInfo, Converter={StaticResource BoolToVisibilityConverter}}" />
+                           Visibility="{Binding ElementName=Root, Path=ShowSizeInfo, Converter={c:BoolToVisibilityConverter}}" />
                 <TextBlock Grid.Row="1"
                            Grid.Column="1"
                            Margin="0,6,0,0"
                            Text="{Binding ElementName=Root, Path=SelectedResult.HumanReadableFileSize}"
                            Foreground="{DynamicResource SearchResultFileName}"
-                           Visibility="{Binding ElementName=Root, Path=ShowSizeInfo, Converter={StaticResource BoolToVisibilityConverter}}" />
+                           Visibility="{Binding ElementName=Root, Path=ShowSizeInfo, Converter={c:BoolToVisibilityConverter}}" />
             </Grid>
 
             <Border Grid.Row="4"
                     Height="1"
                     Margin="0,17,0,17"
                     Background="{DynamicResource TextBoxBorder}"
-                    Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={c:BoolToVisibilityConverter}}" />
 
             <StackPanel Grid.Row="5"
-                        Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={c:BoolToVisibilityConverter}}">
                 <ItemsControl ItemsSource="{Binding ElementName=Root, Path=PreviewActions}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -141,7 +136,7 @@
                        VerticalAlignment="Center"
                        Foreground="{DynamicResource SearchResultPath}"
                        FontSize="16"
-                        Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={StaticResource InvertedBoolToVisibilityConverter}}" />
+                        Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={c:InvertedBoolToVisibilityConverter}}" />
         </Grid>
     </Border>
 </UserControl>
