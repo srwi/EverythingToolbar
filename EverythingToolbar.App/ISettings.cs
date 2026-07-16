@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using EverythingToolbar.Data;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.App
 {
     public interface ISettings : INotifyPropertyChanged
     {

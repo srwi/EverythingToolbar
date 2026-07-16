@@ -7,7 +7,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using NLog;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.App.Helpers
 {
     public class HistoryManager
     {

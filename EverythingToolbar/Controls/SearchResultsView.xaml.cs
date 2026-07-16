@@ -13,7 +13,7 @@ using EverythingToolbar.Data;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.Search;
 using EverythingToolbar.ViewModels;
-using SearchResult = EverythingToolbar.Data.SearchResult;
+using SearchResult = EverythingToolbar.App.Data.SearchResult;
 
 namespace EverythingToolbar.Controls
 {

@@ -2,7 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace EverythingToolbar.Data
+namespace EverythingToolbar.App.Data
 {
     public enum FileType
     {

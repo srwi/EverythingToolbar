@@ -94,6 +94,12 @@
     <ProjectReference Include="..\EverythingToolbar.Platform\EverythingToolbar.Platform.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Using Include="EverythingToolbar.App" />
+    <Using Include="EverythingToolbar.App.Data" />
+    <Using Include="EverythingToolbar.App.Helpers" />
+    <Using Include="EverythingToolbar.App.Search" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Images\AboutBannerBackground.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

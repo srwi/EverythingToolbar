@@ -4,11 +4,11 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
-using EverythingToolbar.Data;
+using EverythingToolbar.App.Data;
 using EverythingToolbar.Platform;
 using NLog;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.App.Helpers
 {
     public sealed class CustomActionService(
         ISettings settings,

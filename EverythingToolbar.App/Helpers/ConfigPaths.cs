@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.App.Helpers
 {
     public static class ConfigPaths
     {

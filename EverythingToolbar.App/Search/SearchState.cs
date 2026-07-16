@@ -2,9 +2,10 @@
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EverythingToolbar.Data;
-using EverythingToolbar.Helpers;
+using EverythingToolbar.Search;
+using EverythingToolbar.App.Helpers;
 
-namespace EverythingToolbar.Search
+namespace EverythingToolbar.App.Search
 {
     public sealed partial class SearchState : ObservableObject
     {

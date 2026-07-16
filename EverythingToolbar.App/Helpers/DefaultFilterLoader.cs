@@ -4,8 +4,9 @@ using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Linq;
 using EverythingToolbar.Data;
+using EverythingToolbar.Helpers;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.App.Helpers
 {
     public class DefaultFilterLoader : ObservableObject
     {

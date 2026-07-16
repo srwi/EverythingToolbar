@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.App
 {
     public class SettingsProxy : DispatchProxy
     {

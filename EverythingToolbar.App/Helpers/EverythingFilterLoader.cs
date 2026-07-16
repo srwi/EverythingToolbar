@@ -7,11 +7,12 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using EverythingToolbar.Data;
+using EverythingToolbar.Helpers;
 using EverythingToolbar.Platform;
 using Microsoft.VisualBasic.FileIO;
 using NLog;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.App.Helpers
 {
     public class EverythingFilterLoader : ObservableObject
     {

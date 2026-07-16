@@ -5,9 +5,10 @@ using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Threading;
 using EverythingToolbar.Data;
-using SearchResult = EverythingToolbar.Data.SearchResult;
+using EverythingToolbar.Search;
+using SearchResult = EverythingToolbar.App.Data.SearchResult;
 
-namespace EverythingToolbar.Search
+namespace EverythingToolbar.App.Search
 {
     public sealed partial class SearchSession : ObservableObject, IDisposable
     {

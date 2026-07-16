@@ -5,7 +5,7 @@
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:core="clr-namespace:System;assembly=mscorlib"
       xmlns:data="clr-namespace:EverythingToolbar.Data"
-      xmlns:appdata="clr-namespace:EverythingToolbar.Data;assembly=EverythingToolbar.App"
+      xmlns:appdata="clr-namespace:EverythingToolbar.App.Data;assembly=EverythingToolbar.App"
       xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
       xmlns:properties="clr-namespace:EverythingToolbar.Properties"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"

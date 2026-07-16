@@ -1,9 +1,9 @@
 using System.IO;
 using Config.Net;
 using EverythingToolbar.Data;
-using EverythingToolbar.Helpers;
+using EverythingToolbar.App.Helpers;
 
-namespace EverythingToolbar
+namespace EverythingToolbar.App
 {
     public interface IToolbarSettings
     {

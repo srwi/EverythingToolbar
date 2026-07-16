@@ -3,8 +3,10 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using EverythingToolbar.Data;
+using EverythingToolbar.App.Data;
+using EverythingToolbar.Search;
 
-namespace EverythingToolbar.Search
+namespace EverythingToolbar.App.Search
 {
     public sealed class EverythingItemsProvider : IItemsProvider<SearchResult>
     {

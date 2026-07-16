@@ -1,4 +1,6 @@
-namespace EverythingToolbar.Data
+using EverythingToolbar.Data;
+
+namespace EverythingToolbar.App.Data
 {
     public class SearchResult
     {

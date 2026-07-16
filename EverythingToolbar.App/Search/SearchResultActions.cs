@@ -1,10 +1,11 @@
 using System;
-using EverythingToolbar.Data;
-using EverythingToolbar.Helpers;
+using EverythingToolbar.App.Data;
+using EverythingToolbar.App.Helpers;
 using EverythingToolbar.Platform;
+using EverythingToolbar.Search;
 using NLog;
 
-namespace EverythingToolbar.Search
+namespace EverythingToolbar.App.Search
 {
     public sealed class SearchResultActions(
         IEverythingClient everything,

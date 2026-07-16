@@ -1,10 +1,10 @@
 using System.IO;
 using EverythingToolbar.Data;
-using EverythingToolbar.Helpers;
+using EverythingToolbar.App.Helpers;
 using EverythingToolbar.Platform;
 using NLog;
 
-namespace EverythingToolbar.Search
+namespace EverythingToolbar.App.Search
 {
     public sealed class EverythingSearchLauncher(
         INotifier notifier,

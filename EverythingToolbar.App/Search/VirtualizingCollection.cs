@@ -7,8 +7,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using EverythingToolbar.Search;
 
-namespace EverythingToolbar.Search
+namespace EverythingToolbar.App.Search
 {
     public sealed partial class VirtualizingCollection<T>
         : ObservableObject,

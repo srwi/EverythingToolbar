@@ -5,7 +5,7 @@
              xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
              xmlns:helpers="clr-namespace:EverythingToolbar.Helpers"
              xmlns:search="clr-namespace:EverythingToolbar.Search"
-             xmlns:appsearch="clr-namespace:EverythingToolbar.Search;assembly=EverythingToolbar.App"
+             xmlns:appsearch="clr-namespace:EverythingToolbar.App.Search;assembly=EverythingToolbar.App"
              xmlns:controls="clr-namespace:EverythingToolbar.Controls"
              xmlns:converters="clr-namespace:EverythingToolbar.Converters"
              HorizontalAlignment="Stretch"

@@ -26,6 +26,12 @@
     <ProjectReference Include="..\EverythingToolbar.Platform\EverythingToolbar.Platform.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Using Include="EverythingToolbar.App" />
+    <Using Include="EverythingToolbar.App.Data" />
+    <Using Include="EverythingToolbar.App.Helpers" />
+    <Using Include="EverythingToolbar.App.Search" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Icons\Light.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
