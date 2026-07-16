@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -29,7 +30,7 @@ namespace EverythingToolbar.Search
             _searchState.PropertyChanged += (_, _) => Rebuild();
         }
 
-        public object? Results => _collection;
+        public IList? Results => _collection;
 
         public int TotalCount { get; private set; }
 
