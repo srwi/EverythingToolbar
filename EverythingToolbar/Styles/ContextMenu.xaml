@@ -66,28 +66,32 @@
                                    IsOpen="{Binding Path=IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
                                    Placement="Right"
                                    AllowsTransparency="True">
-                                <Border x:Name="SubMenuBorder"
-                                        Background="{DynamicResource ContextMenuBackground}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        CornerRadius="{DynamicResource ContextMenuCornerRadius}"
-                                        Margin="{DynamicResource ContextMenuDropShadowMargin}"
-                                        Padding="0, 4">
-                                    <Border.RenderTransform>
+                                <Grid x:Name="SubMenuBorder"
+                                      Margin="{DynamicResource ContextMenuDropShadowMargin}">
+                                    <Grid.RenderTransform>
                                         <TranslateTransform />
-                                    </Border.RenderTransform>
-                                    <Border.Effect>
-                                        <DropShadowEffect Color="Black"
-                                                          BlurRadius="{DynamicResource ContextMenuDropShadowRadius}"
-                                                          ShadowDepth="0"
-                                                          Opacity="0.3" />
-                                    </Border.Effect>
-                                    <Grid x:Name="SubMenu" Grid.IsSharedSizeScope="True">
-                                        <StackPanel IsItemsHost="True"
-                                                    KeyboardNavigation.DirectionalNavigation="Cycle"
-                                                    Style="{x:Null}" Grid.IsSharedSizeScope="True" />
-                                    </Grid>
-                                </Border>
+                                    </Grid.RenderTransform>
+                                    <Border Background="{DynamicResource ContextMenuBackground}"
+                                            CornerRadius="{DynamicResource ContextMenuCornerRadius}">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="Black"
+                                                              BlurRadius="{DynamicResource ContextMenuDropShadowRadius}"
+                                                              ShadowDepth="0"
+                                                              Opacity="0.3" />
+                                        </Border.Effect>
+                                    </Border>
+                                    <Border Background="{DynamicResource ContextMenuBackground}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="{DynamicResource ContextMenuCornerRadius}"
+                                            Padding="0, 4">
+                                        <Grid x:Name="SubMenu" Grid.IsSharedSizeScope="True">
+                                            <StackPanel IsItemsHost="True"
+                                                        KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                        Style="{x:Null}" Grid.IsSharedSizeScope="True" />
+                                        </Grid>
+                                    </Border>
+                                </Grid>
                             </Popup>
                         </Grid>
                     </Border>
@@ -147,7 +151,7 @@
                                     <Storyboard>
                                         <DoubleAnimation
                                             Storyboard.TargetName="SubMenuBorder"
-                                            Storyboard.TargetProperty="(Border.RenderTransform).(TranslateTransform.Y)"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
                                             From="-90"
                                             To="0"
                                             Duration="00:00:00.167">
@@ -185,21 +189,25 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContextMenu}">
-                    <Border x:Name="Border"
-                            Background="{DynamicResource ContextMenuBackground}"
-                            BorderBrush="{DynamicResource ContextMenuBorder}"
-                            BorderThickness="1"
-                            Padding="0, 4"
-                            Margin="{DynamicResource ContextMenuDropShadowMargin}"
-                            CornerRadius="{DynamicResource ContextMenuCornerRadius}">
-                        <Border.RenderTransform>
+                    <Grid x:Name="Border"
+                          Margin="{DynamicResource ContextMenuDropShadowMargin}">
+                        <Grid.RenderTransform>
                             <TranslateTransform />
-                        </Border.RenderTransform>
-                        <Border.Effect>
-                            <DropShadowEffect Color="Black" BlurRadius="{DynamicResource ContextMenuDropShadowRadius}" ShadowDepth="0" Opacity="0.3" />
-                        </Border.Effect>
-                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
-                    </Border>
+                        </Grid.RenderTransform>
+                        <Border Background="{DynamicResource ContextMenuBackground}"
+                                CornerRadius="{DynamicResource ContextMenuCornerRadius}">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="{DynamicResource ContextMenuDropShadowRadius}" ShadowDepth="0" Opacity="0.3" />
+                            </Border.Effect>
+                        </Border>
+                        <Border Background="{DynamicResource ContextMenuBackground}"
+                                BorderBrush="{DynamicResource ContextMenuBorder}"
+                                BorderThickness="1"
+                                Padding="0, 4"
+                                CornerRadius="{DynamicResource ContextMenuCornerRadius}">
+                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                        </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsOpen" Value="True">
                             <Trigger.EnterActions>
@@ -207,7 +215,7 @@
                                     <Storyboard>
                                         <DoubleAnimation
                                             Storyboard.TargetName="Border"
-                                            Storyboard.TargetProperty="(Border.RenderTransform).(TranslateTransform.Y)"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
                                             From="-90"
                                             To="0"
                                             Duration="00:00:00.167">

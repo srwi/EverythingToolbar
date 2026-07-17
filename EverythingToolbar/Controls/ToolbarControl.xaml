@@ -27,20 +27,16 @@
             AlwaysVisibleWithAutoHidingTaskbar="False" />
     </UserControl.Resources>
 
+    <!-- SearchBox and SearchButton overlap in a single cell and both stretch to the full width.
+         The +70 / -70 thresholds evaluated against that shared width make them mutually exclusive:
+         the box shows when the toolbar is wide, the icon (centered) when it is narrow. Keeping them
+         in separate columns breaks the trick (the button's Auto width is constant) and the centering. -->
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        
         <TextBox Opacity="0"
                  IsHitTestVisible="False"
-                 Name="KeyboardFocusCapture"
-                 Grid.ColumnSpan="3" />
+                 Name="KeyboardFocusCapture" />
 
         <controls:SearchBox x:Name="SearchBox"
-                            Grid.Column="1"
                             Visibility="{Binding Path=ActualWidth,
                                                  RelativeSource={RelativeSource Self},
                                                  Converter={StaticResource SearchBoxDoubleToVisibilityConverter}}"
@@ -49,9 +45,8 @@
                             LostKeyboardFocus="OnSearchBoxLostKeyboardFocus"/>
 
         <controls:SearchButton x:Name="SearchButton"
-                               Grid.Column="2"
                                Visibility="{Binding Path=ActualWidth,
-                                                    RelativeSource={RelativeSource Self},  
+                                                    RelativeSource={RelativeSource Self},
                                                     Converter={StaticResource SearchButtonDoubleToVisibilityConverter}}" />
     </Grid>
     

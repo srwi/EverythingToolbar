@@ -1,4 +1,5 @@
 using System;
+using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using NLog;
@@ -110,7 +111,22 @@ namespace EverythingToolbar.Services
 
         public void PreWarm() => RunOnUi(() => Window.PreWarm());
 
-        public void NotifyFocusLostToOutside() => RunOnUi(HideInternal);
+        public void NotifyFocusLostToOutside() => RunOnUi(() =>
+        {
+            // Keyboard focus leaving the window reports NewFocus == null even when it moves to our own
+            // attached toolbar box, which lives in a separate top-level window. Defer the hide so focus
+            // can settle (the box's GotKeyboardFocus runs right after this), then skip it if focus landed
+            // in the toolbar box — the user is still interacting with us, so the window must stay open.
+            Window.Dispatcher.BeginInvoke(
+                new Action(() =>
+                {
+                    if (_toolbarBoxIsFocused?.Invoke() == true)
+                        return;
+
+                    HideInternal();
+                }),
+                DispatcherPriority.Input);
+        });
 
         public void NotifySearchBoxFocused() => SearchBoxFocused?.Invoke(this, EventArgs.Empty);
 

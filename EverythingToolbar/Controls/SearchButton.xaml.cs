@@ -14,10 +14,21 @@ namespace EverythingToolbar.Controls
         {
             InitializeComponent();
 
+            Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            _searchWindowController.ActiveChanged -= OnSearchWindowActiveChanged;
             _searchWindowController.ActiveChanged += OnSearchWindowActiveChanged;
 
+            _themeService.ThemeChanged -= UpdateTheme;
             _themeService.ThemeChanged += UpdateTheme;
-            Unloaded += OnUnloaded;
+
+            // ThemeService.ThemeChanged only fires on subsequent changes, never for the initial state,
+            // so apply the current theme here or the icon keeps WPF's default (black) in dark mode.
+            UpdateTheme(_themeService.GetEffectiveTheme(ThemeFlavor.System));
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)

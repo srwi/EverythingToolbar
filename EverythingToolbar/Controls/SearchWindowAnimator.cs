@@ -103,7 +103,7 @@ namespace EverythingToolbar.Controls
             }
 
             var (axis, sign, horizontal) = EdgeGeometry(taskbarEdge);
-            var basePos = horizontal ? left : top;
+            var basePos = horizontal ? top : left;
 
             _window.BeginAnimation(
                 axis,
@@ -150,8 +150,8 @@ namespace EverythingToolbar.Controls
             }
 
             var (axis, sign, horizontal) = EdgeGeometry(taskbarEdge);
-            var basePos = horizontal ? left : top;
-            var magnitude = horizontal ? width : height;
+            var basePos = horizontal ? top : left;
+            var magnitude = horizontal ? height : width;
 
             _window.BeginAnimation(
                 axis,
@@ -195,7 +195,7 @@ namespace EverythingToolbar.Controls
             );
 
             var (axis, sign, horizontal) = EdgeGeometry(taskbarEdge);
-            var basePos = horizontal ? _window.RestoreBounds.Left : _window.RestoreBounds.Top;
+            var basePos = horizontal ? _window.RestoreBounds.Top : _window.RestoreBounds.Left;
 
             var animation = new DoubleAnimation { To = basePos + sign * 150, Duration = TimeSpan.FromMilliseconds(30) };
             animation.Completed += (_, _) => _onHideCompleted();
@@ -211,9 +211,9 @@ namespace EverythingToolbar.Controls
             }
 
             var (axis, sign, horizontal) = EdgeGeometry(taskbarEdge);
-            var basePos = horizontal ? _window.RestoreBounds.Left : _window.RestoreBounds.Top;
+            var basePos = horizontal ? _window.RestoreBounds.Top : _window.RestoreBounds.Left;
             const double extraOffset = 50; // To include all possible window decorations
-            var magnitude = (horizontal ? _window.Width : _window.Height) + extraOffset;
+            var magnitude = (horizontal ? _window.Height : _window.Width) + extraOffset;
 
             var animation = new DoubleAnimation
             {
@@ -234,17 +234,17 @@ namespace EverythingToolbar.Controls
         private static (DependencyProperty axis, double sign, bool horizontal) EdgeGeometry(Edge taskbarEdge) =>
             taskbarEdge switch
             {
-                Edge.Left => (Window.LeftProperty, -1.0, true),
-                Edge.Right => (Window.LeftProperty, 1.0, true),
-                Edge.Top => (Window.TopProperty, -1.0, false),
-                Edge.Bottom => (Window.TopProperty, 1.0, false),
+                Edge.Left => (Window.LeftProperty, -1.0, false),
+                Edge.Right => (Window.LeftProperty, 1.0, false),
+                Edge.Top => (Window.TopProperty, -1.0, true),
+                Edge.Bottom => (Window.TopProperty, 1.0, true),
                 _ => throw new ArgumentOutOfRangeException(nameof(taskbarEdge)),
             };
 
         private static Thickness SlideMargin(bool horizontal, double sign)
         {
             var offset = sign * 50;
-            return horizontal ? new Thickness(offset, 0, -offset, 0) : new Thickness(0, offset, 0, -offset);
+            return horizontal ? new Thickness(0, offset, 0, -offset) : new Thickness(offset, 0, -offset, 0);
         }
     }
 }
