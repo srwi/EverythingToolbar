@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,14 +12,14 @@ namespace EverythingToolbar.Core.Search
 
         int QueryCountSync(SearchQuery query, int pageSize);
 
-        Task<IList<SearchResultData>> QueryRangeAsync(
+        Task<IList<SearchResult>> QueryRangeAsync(
             SearchQuery query,
             int startIndex,
             int pageSize,
             CancellationToken cancellationToken
         );
 
-        IList<SearchResultData> QueryRangeSync(SearchQuery query, int startIndex, int pageSize);
+        IList<SearchResult> QueryRangeSync(SearchQuery query, int startIndex, int pageSize);
 
         Version GetEverythingVersion();
 

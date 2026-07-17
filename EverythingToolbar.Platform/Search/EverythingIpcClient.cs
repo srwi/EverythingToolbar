@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -80,7 +80,7 @@ namespace EverythingToolbar.Platform.Search
             }
         }
 
-        public Task<IList<SearchResultData>> QueryRangeAsync(
+        public Task<IList<SearchResult>> QueryRangeAsync(
             SearchQuery query,
             int startIndex,
             int pageSize,
@@ -88,7 +88,7 @@ namespace EverythingToolbar.Platform.Search
         )
         {
             if (cancellationToken.IsCancellationRequested)
-                return Task.FromCanceled<IList<SearchResultData>>(cancellationToken);
+                return Task.FromCanceled<IList<SearchResult>>(cancellationToken);
 
             lock (_gate)
             {
@@ -102,7 +102,7 @@ namespace EverythingToolbar.Platform.Search
             }
         }
 
-        public IList<SearchResultData> QueryRangeSync(SearchQuery query, int startIndex, int pageSize)
+        public IList<SearchResult> QueryRangeSync(SearchQuery query, int startIndex, int pageSize)
         {
             lock (_gate)
             {
@@ -110,7 +110,7 @@ namespace EverythingToolbar.Platform.Search
                     return ReadResultsFromResultList();
 
                 if (!ExecuteQueryBlocking(query, pageSize, (uint)startIndex))
-                    return new List<SearchResultData>();
+                    return new List<SearchResult>();
 
                 return ReadResultsFromResultList();
             }
@@ -277,9 +277,9 @@ namespace EverythingToolbar.Platform.Search
             Everything_SetReplyWindow(_replyWindowHandle);
         }
 
-        private static IList<SearchResultData> ReadResultsFromResultList()
+        private static IList<SearchResult> ReadResultsFromResultList()
         {
-            var results = new List<SearchResultData>();
+            var results = new List<SearchResult>();
             var fullPathAndFilename = new StringBuilder(4096);
             for (uint i = 0; i < Everything_GetNumResults(); i++)
             {
@@ -290,7 +290,7 @@ namespace EverythingToolbar.Platform.Search
                 Everything_GetResultSize(i, out var fileSize);
                 Everything_GetResultDateModified(i, out var dateModified);
                 results.Add(
-                    new SearchResultData(
+                    new SearchResult(
                         highlightedPath ?? "<invalid>",
                         highlightedFileName ?? "<invalid>",
                         fullPathAndFilename.ToString(),
@@ -473,12 +473,12 @@ namespace EverythingToolbar.Platform.Search
             CancellationToken cancellationToken
         ) : PendingQuery(query, pageSize, (uint)startIndex, replyId, cancellationToken)
         {
-            public TaskCompletionSource<IList<SearchResultData>> CompletionSource { get; } =
+            public TaskCompletionSource<IList<SearchResult>> CompletionSource { get; } =
                 new(TaskCreationOptions.RunContinuationsAsynchronously);
 
             protected override void CancelCompletionSource() => CompletionSource.TrySetCanceled(CancellationToken);
 
-            public override void CompleteEmpty() => CompletionSource.TrySetResult(new List<SearchResultData>());
+            public override void CompleteEmpty() => CompletionSource.TrySetResult(new List<SearchResult>());
         }
 
         [Flags]

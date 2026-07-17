@@ -1,9 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using EverythingToolbar.Core.Data;
 using EverythingToolbar.ViewModels;
 
 namespace EverythingToolbar.Controls

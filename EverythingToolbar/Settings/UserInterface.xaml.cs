@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -60,18 +60,16 @@ namespace EverythingToolbar.Settings
                 new Uri("pack://application:,,,/EverythingToolbar;component/Images/AppIcon.ico")
             );
             SampleSearchResult = new SearchResult(
-                new SearchResultData(
-                    HighlightedPath: @"C:\Program Files\EverythingToolbar\Everything*Toolbar*.exe",
-                    HighlightedFileName: "Everything*Toolbar*",
-                    FullPathAndFileName: @"C:\Program Files\EverythingToolbar\EverythingToolbar.exe",
-                    IsFile: true,
-                    FileSize: 12345678,
-                    DateModified: new FILETIME
-                    {
-                        dwHighDateTime = DateTimeToFileTime(DateTime.Now).dwHighDateTime,
-                        dwLowDateTime = DateTimeToFileTime(DateTime.Now).dwLowDateTime,
-                    }
-                )
+                HighlightedPath: @"C:\Program Files\EverythingToolbar\Everything*Toolbar*.exe",
+                HighlightedFileName: "Everything*Toolbar*",
+                FullPathAndFileName: @"C:\Program Files\EverythingToolbar\EverythingToolbar.exe",
+                IsFile: true,
+                FileSize: 12345678,
+                DateModified: new FILETIME
+                {
+                    dwHighDateTime = DateTimeToFileTime(DateTime.Now).dwHighDateTime,
+                    dwLowDateTime = DateTimeToFileTime(DateTime.Now).dwLowDateTime,
+                }
             );
 
             ResultImageCache.Get(SampleSearchResult).SetFixedIcon(imageSource);

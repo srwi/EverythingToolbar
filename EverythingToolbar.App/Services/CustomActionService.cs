@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -6,6 +6,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using EverythingToolbar.App.Data;
 using EverythingToolbar.App.Helpers;
+using EverythingToolbar.Core.Data;
 using EverythingToolbar.Core.Platform;
 using NLog;
 

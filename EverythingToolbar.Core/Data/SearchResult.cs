@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using EverythingToolbar.Core.Helpers;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 namespace EverythingToolbar.Core.Data
 {
-    public sealed record SearchResultData(
+    public sealed record SearchResult(
         string HighlightedPath,
         string HighlightedFileName,
         string FullPathAndFileName,

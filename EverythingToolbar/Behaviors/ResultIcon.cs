@@ -1,6 +1,7 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using EverythingToolbar.Core.Data;
 
 namespace EverythingToolbar.Behaviors
 {

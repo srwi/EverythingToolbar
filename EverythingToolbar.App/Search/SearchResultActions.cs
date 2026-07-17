@@ -1,6 +1,6 @@
-using System;
-using EverythingToolbar.App.Data;
+﻿using System;
 using EverythingToolbar.App.Helpers;
+using EverythingToolbar.Core.Data;
 using EverythingToolbar.Core.Platform;
 using EverythingToolbar.Core.Search;
 using NLog;

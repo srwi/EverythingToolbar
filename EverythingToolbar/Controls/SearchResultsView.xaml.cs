@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,9 +10,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using EverythingToolbar.Core.Data;
 using EverythingToolbar.Helpers;
 using EverythingToolbar.ViewModels;
-using SearchResult = EverythingToolbar.App.Data.SearchResult;
 
 namespace EverythingToolbar.Controls
 {

@@ -1,5 +1,5 @@
+﻿using EverythingToolbar.Core.Data;
 using EverythingToolbar.Search;
-using SearchResult = EverythingToolbar.App.Data.SearchResult;
 
 namespace EverythingToolbar.ViewModels
 {

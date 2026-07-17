@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -6,7 +6,6 @@ using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EverythingToolbar.Core.Data;
 using EverythingToolbar.Core.Search;
-using SearchResult = EverythingToolbar.App.Data.SearchResult;
 
 namespace EverythingToolbar.App.Search
 {
@@ -82,7 +81,7 @@ namespace EverythingToolbar.App.Search
             }
             else
             {
-                SelectedIndex += 1; // from -1 → 0 (select first), otherwise next
+                SelectedIndex += 1; // from -1 â†’ 0 (select first), otherwise next
             }
         }
 

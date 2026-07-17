@@ -1,8 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using EverythingToolbar.App.Data;
 using EverythingToolbar.Core.Data;
 using EverythingToolbar.Core.Search;
 
@@ -57,17 +56,13 @@ namespace EverythingToolbar.App.Search
             CancellationToken cancellationToken
         )
         {
-            IList<SearchResultData> data;
+            IList<SearchResult> data;
             if (!isAsync)
                 data = _client.QueryRangeSync(_query, startIndex, pageSize);
             else
                 data = await TrackBusyState(_client.QueryRangeAsync(_query, startIndex, pageSize, cancellationToken));
 
-            var results = new List<SearchResult>(data.Count);
-            foreach (var item in data)
-                results.Add(new SearchResult(item));
-
-            return results;
+            return data;
         }
 
         private Task<T> TrackBusyState<T>(Task<T> task)
