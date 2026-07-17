@@ -17,8 +17,27 @@ namespace EverythingToolbar.Behaviors
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<SearchWindowPlacement>();
 
-        public FrameworkElement? PlacementTarget { get; set; }
+        public FrameworkElement? PlacementTarget
+        {
+            get => _placementTarget;
+            set
+            {
+                if (ReferenceEquals(_placementTarget, value))
+                    return;
 
+                // The target can be swapped after attaching, so the subscription has to move with it.
+                if (_isAttached && _placementTarget != null)
+                    _placementTarget.Loaded -= OnPlacementTargetLoaded;
+
+                _placementTarget = value;
+
+                if (_isAttached && _placementTarget != null)
+                    _placementTarget.Loaded += OnPlacementTargetLoaded;
+            }
+        }
+
+        private FrameworkElement? _placementTarget;
+        private bool _isAttached;
         private double _dpiScalingFactor = 1.0;
         private readonly TaskbarInfoProvider _taskbarState;
         private readonly ISettings _settings;
@@ -39,8 +58,10 @@ namespace EverythingToolbar.Behaviors
             AssociatedObject.Showing += OnShowing;
             AssociatedObject.Hiding += OnHiding;
 
-            if (PlacementTarget != null)
-                PlacementTarget.Loaded += OnPlacementTargetLoaded;
+            _isAttached = true;
+
+            if (_placementTarget != null)
+                _placementTarget.Loaded += OnPlacementTargetLoaded;
         }
 
         protected override void OnDetaching()
@@ -48,8 +69,10 @@ namespace EverythingToolbar.Behaviors
             AssociatedObject.Showing -= OnShowing;
             AssociatedObject.Hiding -= OnHiding;
 
-            if (PlacementTarget != null)
-                PlacementTarget.Loaded -= OnPlacementTargetLoaded;
+            if (_placementTarget != null)
+                _placementTarget.Loaded -= OnPlacementTargetLoaded;
+
+            _isAttached = false;
         }
 
         private void OnPlacementTargetLoaded(object sender, RoutedEventArgs e)

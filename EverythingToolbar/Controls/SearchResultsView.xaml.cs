@@ -43,8 +43,6 @@ namespace EverythingToolbar.Controls
         {
             InitializeComponent();
 
-            _viewModel.Session.PropertyChanged += OnSessionPropertyChanged;
-            _viewModel.Session.ResultsReset += OnResultsReset;
             SearchResultsListView.PreviewKeyDown += OnKeyPressed;
             SearchResultsListView.SelectionChanged += OnListSelectionChanged;
             SearchResultsListView.PreviewMouseLeftButtonDown += OnPreviewLeftMouseButtonDown;
@@ -73,6 +71,11 @@ namespace EverythingToolbar.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            _viewModel.Session.PropertyChanged -= OnSessionPropertyChanged;
+            _viewModel.Session.PropertyChanged += OnSessionPropertyChanged;
+            _viewModel.Session.ResultsReset -= OnResultsReset;
+            _viewModel.Session.ResultsReset += OnResultsReset;
+
             _viewModel.Session.Start();
 
             // Let keyboard navigation move focus onto the selected item (see SearchCommands.SyncFocusToSelection).
@@ -86,6 +89,11 @@ namespace EverythingToolbar.Controls
         {
             if (_focusSelectedItem != null)
                 _viewModel.UnregisterResultsList(_focusSelectedItem);
+
+            _busyIndicatorTimer.Stop();
+
+            _viewModel.Session.PropertyChanged -= OnSessionPropertyChanged;
+            _viewModel.Session.ResultsReset -= OnResultsReset;
         }
 
         private void FocusSelectedItem()

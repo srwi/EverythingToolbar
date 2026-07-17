@@ -58,6 +58,12 @@ namespace EverythingToolbar.Services
                 _keyboardHook.Install();
         }
 
+        public void Disable()
+        {
+            _keyboardHook.Uninstall();
+            _hotkeyDown = false;
+        }
+
         private void UpdateSettings(Key key, ModifierKeys mods)
         {
             _settings.ShortcutKey = (int)key;

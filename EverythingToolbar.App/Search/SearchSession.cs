@@ -25,7 +25,7 @@ namespace EverythingToolbar.App.Search
             _everythingClient = everythingClient;
             _settings = settings;
 
-            _searchState.PropertyChanged += (_, _) => Rebuild();
+            _searchState.PropertyChanged += OnSearchStateChanged;
         }
 
         public IList? Results => _collection;
@@ -163,8 +163,7 @@ namespace EverythingToolbar.App.Search
 
             if (_settings.IsHideEmptySearchResults && string.IsNullOrEmpty(_searchState.SearchTerm))
             {
-                _collection?.Dispose();
-                _collection = null;
+                ReleaseCollection();
                 TotalCount = 0;
                 OnPropertyChanged(nameof(Results));
                 OnPropertyChanged(nameof(TotalCount));
@@ -204,10 +203,23 @@ namespace EverythingToolbar.App.Search
                 OnPropertyChanged(nameof(IsBusy));
         }
 
+        private void OnSearchStateChanged(object? sender, PropertyChangedEventArgs e) => Rebuild();
+
+        private void ReleaseCollection()
+        {
+            if (_collection == null)
+                return;
+
+            _collection.CollectionChanged -= OnCollectionChanged;
+            _collection.PropertyChanged -= OnCollectionPropertyChanged;
+            _collection.Dispose();
+            _collection = null;
+        }
+
         public void Dispose()
         {
-            _collection?.Dispose();
-            _collection = null;
+            ReleaseCollection();
+            _searchState.PropertyChanged -= OnSearchStateChanged;
         }
     }
 }

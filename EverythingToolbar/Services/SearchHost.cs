@@ -38,6 +38,9 @@ namespace EverythingToolbar.Services
 
         public void Attach(FrameworkElement? placementTarget, bool iconMode)
         {
+            if (_placement != null)
+                Detach();
+
             _controller.SetIconMode(iconMode);
             _shortcutListener.Initialize(_controller.ToggleSearchUi);
             _startMenuInterceptor.Initialize();
@@ -59,7 +62,14 @@ namespace EverythingToolbar.Services
 
         public void Detach()
         {
+            _shortcutListener.Disable();
             _startMenuInterceptor.Disable();
+
+            if (_placement != null)
+            {
+                Interaction.GetBehaviors(_searchWindow).Remove(_placement);
+                _placement = null;
+            }
         }
     }
 }
