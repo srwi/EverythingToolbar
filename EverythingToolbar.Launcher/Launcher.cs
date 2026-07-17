@@ -32,6 +32,7 @@ namespace EverythingToolbar.Launcher
         {
             private TaskbarWindow? _taskbarWindow;
             private readonly SearchWindow _searchWindow;
+            private readonly SearchWindowController _controller;
             private readonly TaskbarStateService _taskbarState;
             private readonly SearchWindowPlacement? _searchWindowPlacementBehavior;
             private readonly WindowsPolicyService _windowsPolicy;
@@ -53,6 +54,7 @@ namespace EverythingToolbar.Launcher
                 }
 
                 _searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();
+                _controller = Ioc.Default.GetRequiredService<SearchWindowController>();
                 _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateService>();
                 _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicyService>();
                 _settings = Ioc.Default.GetRequiredService<ISettings>();
@@ -100,10 +102,10 @@ namespace EverythingToolbar.Launcher
 
                 Ioc.Default.GetRequiredService<StartMenuService>().Initialize();
 
-                _searchWindow.Hiding += OnSearchWindowHiding;
-                _searchWindow.Hidden += OnSearchWindowHidden;
+                _controller.Hiding += OnSearchWindowHiding;
+                _controller.Hidden += OnSearchWindowHidden;
 
-                Dispatcher.BeginInvoke(_searchWindow.PreWarm, DispatcherPriority.ApplicationIdle);
+                Dispatcher.BeginInvoke(_controller.PreWarm, DispatcherPriority.ApplicationIdle);
 
                 _settings.PropertyChanged += async (_, e) =>
                 {
@@ -153,7 +155,7 @@ namespace EverythingToolbar.Launcher
                         else
                         {
                             if (_searchWindow.IsVisible)
-                                _searchWindow.Hide();
+                                _controller.Hide();
 
                             // Never leave the user with no way into search or settings.
                             if (!Utils.IsTaskbarPinned() && !_settings.IsTrayIconEnabled)
@@ -311,26 +313,28 @@ namespace EverythingToolbar.Launcher
                 if (_taskbarWindow is { IsLoaded: true })
                 {
                     if (_searchWindow.IsVisible)
-                        _searchWindow.Hide();
+                        _controller.Hide();
                     else
-                        WeakReferenceMessenger.Default.Send(new FocusSearchBoxRequest());
+                        _controller.FocusSearchBox();
                 }
                 else
                 {
-                    _searchWindow.Toggle();
+                    _controller.Toggle();
                 }
             }
 
             private void ShowAsLauncher()
             {
-                if (_taskbarWindow != null && _searchWindowPlacementBehavior != null)
+                if (_taskbarWindow != null)
                 {
                     _temporarilyInIconMode = true;
                     _taskbarState.IsIcon = true;
-                    _searchWindowPlacementBehavior.UseCursorPlacement = true;
+                    _controller.ShowAtCursor();
                 }
-
-                _searchWindow.Show();
+                else
+                {
+                    _controller.Show();
+                }
             }
 
             private void StartToggleListener()
@@ -364,7 +368,7 @@ namespace EverythingToolbar.Launcher
                 Dispatcher?.Invoke(() =>
                 {
                     if (_searchWindow.IsVisible)
-                        _searchWindow.Hide();
+                        _controller.Hide();
                     else
                         ShowAsLauncher();
                 });

@@ -3,7 +3,6 @@ namespace EverythingToolbar.ViewModels
     public sealed class SearchWindowViewModel
     {
         private readonly SearchState _searchState;
-        private readonly TaskbarStateService _taskbarState;
         private readonly EverythingSearchLauncher _launcher;
         private readonly ISettings _settings;
 
@@ -12,21 +11,18 @@ namespace EverythingToolbar.ViewModels
 
         public SearchWindowViewModel(
             SearchState searchState,
-            TaskbarStateService taskbarState,
             EverythingSearchLauncher launcher,
             ISettings settings,
             WindowsPolicyService windowsPolicy,
             ThemeService themeService)
         {
             _searchState = searchState;
-            _taskbarState = taskbarState;
             _launcher = launcher;
             _settings = settings;
             WindowsPolicyService = windowsPolicy;
             ThemeService = themeService;
         }
 
-        public bool ShouldActivateOnShow => _taskbarState.IsIcon;
         public bool AnimationsDisabled => WindowsPolicyService.IsEffectiveAnimationsDisabled;
         public bool IsWindows11OrGreater => WindowsPolicyService.GetWindowsVersion() >= Utils.WindowsVersion.Windows11;
 

@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
-using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Controls;
 using EverythingToolbar.ViewModels;
 using Windows.Win32;
@@ -12,20 +11,31 @@ using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace EverythingToolbar
 {
+    public sealed record ShowOptions(bool Activate, bool AtCursor);
+
+    public sealed class ShowingEventArgs : EventArgs
+    {
+        public ShowingEventArgs(bool atCursor) => AtCursor = atCursor;
+
+        public bool AtCursor { get; }
+    }
+
     public partial class SearchWindow
     {
         public event EventHandler<EventArgs>? Hiding;
         public event EventHandler<EventArgs>? Hidden;
-        public event EventHandler<EventArgs>? Showing;
+        public event EventHandler<ShowingEventArgs>? Showing;
 
         private bool _isFirstShow = true;
         private readonly SearchWindowViewModel _viewModel;
+        private readonly SearchWindowController _controller;
         private readonly SearchWindowAnimator _animator;
 
-        public SearchWindow(SearchWindowViewModel viewModel)
+        public SearchWindow(SearchWindowViewModel viewModel, SearchWindowController controller)
             : base(viewModel.ThemeService, viewModel.WindowsPolicyService)
         {
             _viewModel = viewModel;
+            _controller = controller;
             InitializeComponent();
 
             _animator = new SearchWindowAnimator(
@@ -35,16 +45,6 @@ namespace EverythingToolbar
                 OnHidden,
                 () => _viewModel.AnimationsDisabled,
                 _viewModel.IsWindows11OrGreater);
-
-            Deactivated += (_, _) => WeakReferenceMessenger.Default.Send(new SearchWindowActiveChanged(false));
-        }
-
-        private void OnActivated(object? sender, EventArgs e)
-        {
-            WeakReferenceMessenger.Default.Send(new SearchWindowActiveChanged(true));
-
-            if (_viewModel.ShouldActivateOnShow)
-                WeakReferenceMessenger.Default.Send(new FocusSearchBoxRequest());
         }
 
         private void OnPreviewKeyDown(object? sender, KeyEventArgs e)
@@ -58,8 +58,7 @@ namespace EverythingToolbar
             else if (e.Key == Key.Escape)
             {
                 Keyboard.ClearFocus();
-                NativeMethods.FocusTaskbarWindow();
-                Hide();
+                _controller.Dismiss();
                 e.Handled = true;
             }
             else if (Keyboard.Modifiers == ModifierKeys.Alt && e.SystemKey == Key.Space)
@@ -72,7 +71,7 @@ namespace EverythingToolbar
         {
             if (e.NewFocus == null) // New focus outside application
             {
-                Hide();
+                _controller.NotifyFocusLostToOutside();
             }
         }
 
@@ -81,13 +80,49 @@ namespace EverythingToolbar
             _viewModel.OpenSearchInEverything();
         }
 
-        public new void Hide()
+        internal void Show(ShowOptions options)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                if (options.Activate)
+                    ActivateAndBringToFront();
+
+                return;
+            }
+
+            ShowActivated = options.Activate;
+            base.Show();
+
+            if (options.Activate)
+            {
+                Dispatcher.BeginInvoke(new Action(ActivateAndBringToFront), DispatcherPriority.Input);
+            }
+
+            // For first show we ensure the UI is fully rendered
+            if (_isFirstShow)
+            {
+                _isFirstShow = false;
+                UpdateLayout();
+                Dispatcher.BeginInvoke(
+                    new Action(() =>
+                    {
+                        Showing?.Invoke(this, new ShowingEventArgs(options.AtCursor));
+                    }),
+                    DispatcherPriority.Loaded
+                );
+            }
+            else
+            {
+                Showing?.Invoke(this, new ShowingEventArgs(options.AtCursor));
+            }
+        }
+
+        internal void HideAnimated()
         {
             if (Visibility != Visibility.Visible)
                 return;
 
             Hiding?.Invoke(this, EventArgs.Empty);
-            WeakReferenceMessenger.Default.Send(new SearchWindowHidingMessage());
         }
 
         private void OnHidden()
@@ -108,7 +143,7 @@ namespace EverythingToolbar
             Hidden?.Invoke(this, EventArgs.Empty);
         }
 
-        public void PreWarm()
+        internal void PreWarm()
         {
             if (!_isFirstShow || Visibility == Visibility.Visible)
                 return;
@@ -125,59 +160,12 @@ namespace EverythingToolbar
             base.Hide(); // Intentionally without firing Hiding - no animation, no state reset
         }
 
-        public new void Show()
-        {
-            var activate = _viewModel.ShouldActivateOnShow;
-
-            if (Visibility == Visibility.Visible)
-            {
-                if (activate)
-                    ActivateAndBringToFront();
-
-                return;
-            }
-
-            ShowActivated = activate;
-            base.Show();
-
-            if (activate)
-            {
-                Dispatcher.BeginInvoke(new Action(ActivateAndBringToFront), DispatcherPriority.Input);
-            }
-
-            // For first show we ensure the UI is fully rendered
-            if (_isFirstShow)
-            {
-                _isFirstShow = false;
-                UpdateLayout();
-                Dispatcher.BeginInvoke(
-                    new Action(() =>
-                    {
-                        Showing?.Invoke(this, EventArgs.Empty);
-                    }),
-                    DispatcherPriority.Loaded
-                );
-            }
-            else
-            {
-                Showing?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
         private void ActivateAndBringToFront()
         {
             var hwnd = new WindowInteropHelper(this).Handle;
 
             Activate();
             NativeMethods.ForciblySetForegroundWindow(hwnd);
-        }
-
-        public void Toggle()
-        {
-            if (Visibility == Visibility.Visible)
-                Hide();
-            else
-                Show();
         }
 
         public void AnimateShow(double left, double top, double width, double height, Edge taskbarEdge)

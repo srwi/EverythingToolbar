@@ -1,8 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
 
 namespace EverythingToolbar.Controls
 {
@@ -10,16 +10,13 @@ namespace EverythingToolbar.Controls
     {
         private readonly TaskbarStateService _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateService>();
         private readonly ThemeService _themeService = Ioc.Default.GetRequiredService<ThemeService>();
-        private readonly ISearchWindowController _searchWindowController = Ioc.Default.GetRequiredService<ISearchWindowController>();
+        private readonly SearchWindowController _searchWindowController = Ioc.Default.GetRequiredService<SearchWindowController>();
 
         public SearchButton()
         {
             InitializeComponent();
 
-            WeakReferenceMessenger.Default.Register<SearchWindowActiveChanged>(
-                this,
-                (_, m) => OnSearchWindowActiveChanged(m.IsActive)
-            );
+            _searchWindowController.ActiveChanged += OnSearchWindowActiveChanged;
 
             _themeService.ThemeChanged += UpdateTheme;
             Unloaded += OnUnloaded;
@@ -28,9 +25,10 @@ namespace EverythingToolbar.Controls
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             _themeService.ThemeChanged -= UpdateTheme;
+            _searchWindowController.ActiveChanged -= OnSearchWindowActiveChanged;
         }
 
-        private void OnSearchWindowActiveChanged(bool isActive)
+        private void OnSearchWindowActiveChanged(object? sender, bool isActive)
         {
             if (Template.FindName("OuterBorder", this) is not Border border)
                 return;

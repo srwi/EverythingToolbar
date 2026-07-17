@@ -6,7 +6,7 @@ namespace EverythingToolbar.ViewModels
     public sealed class SearchBoxViewModel
     {
         private readonly SearchState _searchState;
-        private readonly ISearchWindowController _controller;
+        private readonly SearchWindowController _controller;
         private readonly SearchCommands _commands;
 
         public ISettings Settings { get; }
@@ -14,7 +14,7 @@ namespace EverythingToolbar.ViewModels
         public SearchBoxViewModel(
             SearchState searchState,
             ISettings settings,
-            ISearchWindowController searchWindowController,
+            SearchWindowController searchWindowController,
             SearchCommands commands)
         {
             _searchState = searchState;
@@ -24,6 +24,12 @@ namespace EverythingToolbar.ViewModels
         }
 
         public void HideWindow() => _controller.Hide();
+
+        public void Dismiss() => _controller.Dismiss();
+
+        public void NotifyFocusLostToOutside() => _controller.NotifyFocusLostToOutside();
+
+        public void NotifySearchBoxFocused() => _controller.NotifySearchBoxFocused();
 
         public void CycleFilters(int offset) => _searchState.CycleFilters(offset);
 

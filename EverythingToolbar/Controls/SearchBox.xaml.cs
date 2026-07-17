@@ -101,8 +101,7 @@ namespace EverythingToolbar.Controls
             if (e.Key == Key.Escape)
             {
                 Keyboard.ClearFocus();
-                NativeMethods.FocusTaskbarWindow();
-                _viewModel.HideWindow();
+                _viewModel.Dismiss();
                 e.Handled = true;
                 return;
             }
@@ -169,14 +168,14 @@ namespace EverythingToolbar.Controls
         private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             TextBox.SelectAll();
-            WeakReferenceMessenger.Default.Send(new SearchBoxFocusedNotification());
+            _viewModel.NotifySearchBoxFocused();
         }
 
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (e.NewFocus == null) // New focus outside application
             {
-                _viewModel.HideWindow();
+                _viewModel.NotifyFocusLostToOutside();
             }
         }
 

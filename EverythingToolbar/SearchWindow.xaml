@@ -19,7 +19,6 @@
         ShowInTaskbar="False"
         UseLayoutRounding="True"
         PreviewKeyDown="OnPreviewKeyDown"
-        Activated="OnActivated"
         LostKeyboardFocus="OnLostKeyboardFocus"
         mc:Ignorable="d"
         ShowAccentBorder="True"

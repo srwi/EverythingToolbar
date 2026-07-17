@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
 using NLog;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -28,7 +26,9 @@ namespace EverythingToolbar.Services
         private static bool _isInterceptingKeys;
         private static bool? _animationsToRestore;
         private readonly DispatcherTimer _cleanupTimer = new() { Interval = TimeSpan.FromSeconds(1) };
+        private readonly Dispatcher _dispatcher = Dispatcher.CurrentDispatcher;
         private readonly ISettings _settings;
+        private readonly SearchWindowController _controller;
 
         private const int WhKeyboardLl = 13;
         private const int WmKeyDown = 0x0100;
@@ -36,9 +36,10 @@ namespace EverythingToolbar.Services
         private const int InputKeyboard = 1;
         private const uint KeyeventFKeyup = 0x0002;
 
-        public StartMenuService(ISettings settings)
+        public StartMenuService(ISettings settings, SearchWindowController controller)
         {
             _settings = settings;
+            _controller = controller;
             _cleanupTimer.Tick += OnCleanupTimerElapsed;
             _settings.PropertyChanged += OnSettingsChanged;
         }
@@ -177,12 +178,12 @@ namespace EverythingToolbar.Services
             return NativeMethods.CallNextHookEx(_startMenuKeyboardHookId, nCode, wParam, lParam);
         }
 
-        private void OnAnySearchBoxGotKeyboardFocus()
+        private void OnAnySearchBoxGotKeyboardFocus(object? sender, EventArgs e)
         {
             if (!_isInterceptingKeys)
                 return;
 
-            WeakReferenceMessenger.Default.Unregister<SearchBoxFocusedNotification>(this);
+            _controller.SearchBoxFocused -= OnAnySearchBoxGotKeyboardFocus;
 
             Logger.Debug("Search box got keyboard focus. Replaying recorded inputs...");
 
@@ -211,14 +212,13 @@ namespace EverythingToolbar.Services
 
         private void TriggerSearchWindow()
         {
-            var searchWindow = Ioc.Default.GetRequiredService<SearchWindow>();
-            WeakReferenceMessenger.Default.Unregister<SearchBoxFocusedNotification>(this);
-            WeakReferenceMessenger.Default.Register<SearchBoxFocusedNotification>(this, (_, _) => OnAnySearchBoxGotKeyboardFocus());
-            searchWindow.Dispatcher.BeginInvoke(
+            _controller.SearchBoxFocused -= OnAnySearchBoxGotKeyboardFocus;
+            _controller.SearchBoxFocused += OnAnySearchBoxGotKeyboardFocus;
+            _dispatcher.BeginInvoke(
                 new Action(() =>
                 {
-                    searchWindow.Show();
-                    WeakReferenceMessenger.Default.Send(new FocusSearchBoxRequest());
+                    _controller.Show();
+                    _controller.FocusSearchBox();
                 }),
                 DispatcherPriority.Input
             );
@@ -254,6 +254,7 @@ namespace EverythingToolbar.Services
             CancelCleanupTimer();
             RecordedInputs.Clear();
             UnhookStartMenuInput();
+            _controller.SearchBoxFocused -= OnAnySearchBoxGotKeyboardFocus;
             _searchAppHwnd = IntPtr.Zero;
             _isInterceptingKeys = false;
             _isNativeSearchActive = false;

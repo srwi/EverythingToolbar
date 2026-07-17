@@ -25,6 +25,7 @@ namespace EverythingToolbar.Deskband
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<Server>();
         private static ToolbarControl? _toolbarControl;
         private TaskbarStateService _taskbarState = null!;
+        private SearchWindowController _controller = null!;
         protected override UIElement UIElement => _toolbarControl!;
 
         public Server()
@@ -44,11 +45,8 @@ namespace EverythingToolbar.Deskband
                 Options.MinVerticalSize = new Size(24, 30);
 
                 WeakReferenceMessenger.Default.Register<ToolbarFocusChanged>(this, (_, m) => UpdateFocus(m.IsFocused));
-                WeakReferenceMessenger.Default.Register<SearchWindowActiveChanged>(this, (_, m) =>
-                {
-                    if (m.IsActive)
-                        UpdateFocus(true);
-                });
+                _controller = Ioc.Default.GetRequiredService<SearchWindowController>();
+                _controller.ActiveChanged += OnSearchWindowActiveChanged;
                 TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
                 TaskbarInfo.TaskbarSizeChanged += OnTaskbarSizeChanged;
 
@@ -73,6 +71,12 @@ namespace EverythingToolbar.Deskband
 
         public void Dummy() { }
 
+        private void OnSearchWindowActiveChanged(object? sender, bool isActive)
+        {
+            if (isActive)
+                UpdateFocus(true);
+        }
+
         private void OnTaskbarEdgeChanged(object? sender, TaskbarEdgeChangedEventArgs e)
         {
             _taskbarState.TaskbarEdge = (Services.Edge)e.Edge;
@@ -86,6 +90,7 @@ namespace EverythingToolbar.Deskband
         protected override void DeskbandOnClosed()
         {
             WeakReferenceMessenger.Default.UnregisterAll(this);
+            _controller.ActiveChanged -= OnSearchWindowActiveChanged;
             Ioc.Default.GetRequiredService<StartMenuService>().Disable();
 
             base.DeskbandOnClosed();

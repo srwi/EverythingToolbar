@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -23,13 +23,14 @@ namespace EverythingToolbar.Controls
         }
 
         private readonly TaskbarStateService _taskbarState = Ioc.Default.GetRequiredService<TaskbarStateService>();
-        private readonly ISearchWindowController _searchWindowController = Ioc.Default.GetRequiredService<ISearchWindowController>();
+        private readonly SearchWindowController _searchWindowController = Ioc.Default.GetRequiredService<SearchWindowController>();
 
         public ToolbarControl()
         {
             InitializeComponent();
 
-            WeakReferenceMessenger.Default.Register<SearchWindowHidingMessage>(this, (_, _) => OnSearchWindowHiding());
+            Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
         }
 
         private static void OnIsFixedLayoutChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -61,7 +62,18 @@ namespace EverythingToolbar.Controls
             UpdateLayoutMode();
         }
 
-        private void OnSearchWindowHiding()
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            _searchWindowController.Hiding -= OnSearchWindowHiding;
+            _searchWindowController.Hiding += OnSearchWindowHiding;
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            _searchWindowController.Hiding -= OnSearchWindowHiding;
+        }
+
+        private void OnSearchWindowHiding(object? sender, EventArgs e)
         {
             Keyboard.Focus(KeyboardFocusCapture);
         }
@@ -93,7 +105,7 @@ namespace EverythingToolbar.Controls
             }
             else
             {
-                WeakReferenceMessenger.Default.Send(new FocusSearchBoxRequest());
+                _searchWindowController.FocusSearchBox();
             }
         }
 

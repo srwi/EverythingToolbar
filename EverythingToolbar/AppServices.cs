@@ -32,7 +32,8 @@ namespace EverythingToolbar
             services.AddSingleton<ThemeService>();
             services.AddSingleton<StartMenuService>();
             services.AddSingleton<SearchWindow>();
-            services.AddSingleton<ISearchWindowController, SearchWindowController>();
+            services.AddSingleton<SearchWindowController>();
+            services.AddSingleton<ISearchWindowController>(sp => sp.GetRequiredService<SearchWindowController>());
             services.AddSingleton<IEverythingClient, EverythingIpcClient>();
             services.AddSingleton<IClipboard, ClipboardAdapter>();
             services.AddSingleton<IShellDialogs, ShellDialogsAdapter>();

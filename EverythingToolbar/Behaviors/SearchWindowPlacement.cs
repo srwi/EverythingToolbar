@@ -19,8 +19,6 @@ namespace EverythingToolbar.Behaviors
 
         public FrameworkElement? PlacementTarget { get; set; }
 
-        public bool UseCursorPlacement { get; set; }
-
         private double _dpiScalingFactor = 1.0;
         private readonly TaskbarStateService _taskbarState;
         private readonly ISettings _settings;
@@ -64,12 +62,11 @@ namespace EverythingToolbar.Behaviors
             AssociatedObject.AnimateHide(_taskbarState.TaskbarEdge);
         }
 
-        private void OnShowing(object? sender, EventArgs e)
+        private void OnShowing(object? sender, ShowingEventArgs e)
         {
             _dpiScalingFactor = GetScalingFactor();
 
-            var useCursor = UseCursorPlacement || PlacementTarget == null;
-            UseCursorPlacement = false;
+            var useCursor = e.AtCursor || PlacementTarget == null;
 
             var position = useCursor ? CalculatePositionFromTaskbar() : CalculatePositionFromTarget();
 
