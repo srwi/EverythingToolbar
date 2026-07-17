@@ -13,6 +13,12 @@ dotnet_diagnostic.IDE0005.severity = warning
 dotnet_diagnostic.IDE0051.severity = warning
 # Private member that is assigned but never read
 dotnet_diagnostic.IDE0052.severity = warning
+# Unreachable code
+dotnet_diagnostic.IDE0035.severity = warning
+# Dead store (unnecessary value assignment)
+dotnet_diagnostic.IDE0059.severity = warning
+# Convert to block-scoped namespace (already the preference)
+dotnet_diagnostic.IDE0161.severity = warning
 
 #### Core EditorConfig Options ####
 
@@ -204,17 +210,32 @@ csharp_preserve_single_line_statements = true
 
 # Naming rules
 
-dotnet_naming_rule.interface_should_be_begins_with_i.severity = suggestion
+dotnet_naming_rule.interface_should_be_begins_with_i.severity = warning
 dotnet_naming_rule.interface_should_be_begins_with_i.symbols = interface
 dotnet_naming_rule.interface_should_be_begins_with_i.style = begins_with_i
 
-dotnet_naming_rule.types_should_be_pascal_case.severity = suggestion
+dotnet_naming_rule.types_should_be_pascal_case.severity = warning
 dotnet_naming_rule.types_should_be_pascal_case.symbols = types
 dotnet_naming_rule.types_should_be_pascal_case.style = pascal_case
 
-dotnet_naming_rule.non_field_members_should_be_pascal_case.severity = suggestion
+dotnet_naming_rule.non_field_members_should_be_pascal_case.severity = warning
 dotnet_naming_rule.non_field_members_should_be_pascal_case.symbols = non_field_members
 dotnet_naming_rule.non_field_members_should_be_pascal_case.style = pascal_case
+
+# Private const fields use PascalCase (existing convention)
+dotnet_naming_rule.private_const_fields_pascal_case.severity = warning
+dotnet_naming_rule.private_const_fields_pascal_case.symbols = private_const_fields
+dotnet_naming_rule.private_const_fields_pascal_case.style = pascal_case
+
+# Private static fields use PascalCase (existing convention)
+dotnet_naming_rule.private_static_fields_pascal_case.severity = warning
+dotnet_naming_rule.private_static_fields_pascal_case.symbols = private_static_fields
+dotnet_naming_rule.private_static_fields_pascal_case.style = pascal_case
+
+# Private instance fields use _camelCase (existing convention)
+dotnet_naming_rule.private_fields_underscore.severity = warning
+dotnet_naming_rule.private_fields_underscore.symbols = private_fields
+dotnet_naming_rule.private_fields_underscore.style = underscore_camel
 
 # Symbol specifications
 
@@ -230,6 +251,18 @@ dotnet_naming_symbols.non_field_members.applicable_kinds = property, event, meth
 dotnet_naming_symbols.non_field_members.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
 dotnet_naming_symbols.non_field_members.required_modifiers =
 
+dotnet_naming_symbols.private_const_fields.applicable_kinds = field
+dotnet_naming_symbols.private_const_fields.applicable_accessibilities = private
+dotnet_naming_symbols.private_const_fields.required_modifiers = const
+
+dotnet_naming_symbols.private_static_fields.applicable_kinds = field
+dotnet_naming_symbols.private_static_fields.applicable_accessibilities = private
+dotnet_naming_symbols.private_static_fields.required_modifiers = static
+
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_symbols.private_fields.required_modifiers =
+
 # Naming styles
 
 dotnet_naming_style.pascal_case.required_prefix =
@@ -242,8 +275,17 @@ dotnet_naming_style.begins_with_i.required_suffix =
 dotnet_naming_style.begins_with_i.word_separator =
 dotnet_naming_style.begins_with_i.capitalization = pascal_case
 
+dotnet_naming_style.underscore_camel.required_prefix = _
+dotnet_naming_style.underscore_camel.required_suffix =
+dotnet_naming_style.underscore_camel.word_separator =
+dotnet_naming_style.underscore_camel.capitalization = camel_case
+
 # Vendored third-party code lives under ThirdParty/. Do not enforce our style rules there
 [**/ThirdParty/**.cs]
 dotnet_diagnostic.IDE0005.severity = none
 dotnet_diagnostic.IDE0051.severity = none
 dotnet_diagnostic.IDE0052.severity = none
+dotnet_diagnostic.IDE0035.severity = none
+dotnet_diagnostic.IDE0059.severity = none
+dotnet_diagnostic.IDE0161.severity = none
+dotnet_diagnostic.IDE1006.severity = none

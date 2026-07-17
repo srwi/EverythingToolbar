@@ -150,7 +150,7 @@ namespace EverythingToolbar.Platform.Helpers
             return PInvoke.CallNextHookEx((HHOOK)hhk, nCode, (WPARAM)(nuint)wParam, (LPARAM)(nint)lParam);
         }
 
-        public static void keybd_event(byte bVk, byte bScan, uint dwFlags, IntPtr dwExtraInfo)
+        public static void KeybdEvent(byte bVk, byte bScan, uint dwFlags, IntPtr dwExtraInfo)
         {
             PInvoke.keybd_event(bVk, bScan, (KEYBD_EVENT_FLAGS)dwFlags, (nuint)dwExtraInfo);
         }

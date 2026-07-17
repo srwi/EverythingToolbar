@@ -8,13 +8,13 @@ namespace EverythingToolbar
 {
     public static class AppServices
     {
-        private static bool _initialized;
+        private static bool IsInitialized;
 
         public static void Initialize()
         {
-            if (_initialized)
+            if (IsInitialized)
                 return;
-            _initialized = true;
+            IsInitialized = true;
 
             var services = new ServiceCollection();
             services.AddSettings().AddPlatformAdapters().AddSearchEngine().AddShellServices().AddViewModels();

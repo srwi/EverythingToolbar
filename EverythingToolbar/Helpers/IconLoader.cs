@@ -17,20 +17,20 @@ namespace EverythingToolbar.Helpers
         private static readonly object Gate = new();
         private static readonly LinkedList<Request> Backlog = new();
         private static readonly List<(ResultImages Item, ImageSource Icon)> CompletedBatch = new();
-        private static Dispatcher? _dispatcher;
-        private static bool _flushScheduled;
-        private static bool _workersStarted;
+        private static Dispatcher? CurrentDispatcher;
+        private static bool FlushScheduled;
+        private static bool WorkersStarted;
 
         // Must be called from the UI thread (the dispatcher is captured on first use)
         public static void Enqueue(ResultImages item, bool useThumbnail)
         {
             lock (Gate)
             {
-                _dispatcher ??= Dispatcher.CurrentDispatcher;
+                CurrentDispatcher ??= Dispatcher.CurrentDispatcher;
 
-                if (!_workersStarted)
+                if (!WorkersStarted)
                 {
-                    _workersStarted = true;
+                    WorkersStarted = true;
                     for (var i = 0; i < WorkerCount; i++)
                     {
                         new Thread(WorkerLoop)
@@ -85,10 +85,10 @@ namespace EverythingToolbar.Helpers
                 {
                     CompletedBatch.Add((item, icon));
 
-                    if (!_flushScheduled)
+                    if (!FlushScheduled)
                     {
-                        _flushScheduled = true;
-                        _dispatcher!.BeginInvoke(FlushCompleted, DispatcherPriority.Background);
+                        FlushScheduled = true;
+                        CurrentDispatcher!.BeginInvoke(FlushCompleted, DispatcherPriority.Background);
                     }
                 }
             }
@@ -101,7 +101,7 @@ namespace EverythingToolbar.Helpers
             {
                 batch = new List<(ResultImages, ImageSource)>(CompletedBatch);
                 CompletedBatch.Clear();
-                _flushScheduled = false;
+                FlushScheduled = false;
             }
 
             foreach (var (item, icon) in batch)

@@ -21,7 +21,7 @@ namespace EverythingToolbar.Launcher
         private const string ToggleEventName = "EverythingToolbarToggleEvent";
         private const string StartSetupAssistantEventName = "StartSetupAssistantEvent";
         private const string MutexName = "EverythingToolbar.Launcher";
-        private static TrayIcon? _trayIcon;
+        private static TrayIcon? TrayIcon;
 
         private class LauncherWindow : Window
         {
@@ -52,7 +52,7 @@ namespace EverythingToolbar.Launcher
                 _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicy>();
                 _settings = Ioc.Default.GetRequiredService<ISettings>();
 
-                _trayIcon = icon;
+                TrayIcon = icon;
 
                 Width = 0;
                 Height = 0;
@@ -177,13 +177,13 @@ namespace EverythingToolbar.Launcher
 
             private static void SetTrayIconVisible(bool visible)
             {
-                if (_trayIcon == null)
+                if (TrayIcon == null)
                     return;
 
                 if (visible)
-                    _trayIcon.Show();
+                    TrayIcon.Show();
                 else
-                    _trayIcon.Hide();
+                    TrayIcon.Hide();
             }
 
             private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -191,7 +191,7 @@ namespace EverythingToolbar.Launcher
                 if (_taskbarCreatedMsg != 0 && msg == _taskbarCreatedMsg)
                 {
                     // Explorer restarted and dropped the tray icon; TaskbarCreated signals it's ready again.
-                    _trayIcon?.HandleExplorerRestart();
+                    TrayIcon?.HandleExplorerRestart();
 
                     if (_windowsPolicy.IsTaskbarWindowActive())
                     {
@@ -295,8 +295,8 @@ namespace EverythingToolbar.Launcher
             {
                 Dispatcher?.Invoke(() =>
                 {
-                    if (_trayIcon != null)
-                        new SetupAssistant(_trayIcon).Show();
+                    if (TrayIcon != null)
+                        new SetupAssistant(TrayIcon).Show();
                 });
             }
 

@@ -229,7 +229,7 @@ namespace EverythingToolbar.Services
             while (_recordedInputs.Count > 0)
             {
                 var input = _recordedInputs.Dequeue();
-                NativeMethods.keybd_event(
+                NativeMethods.KeybdEvent(
                     (byte)input.u.ki.wVk,
                     (byte)input.u.ki.wScan,
                     input.u.ki.dwFlags,

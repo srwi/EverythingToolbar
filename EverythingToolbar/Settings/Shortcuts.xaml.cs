@@ -24,8 +24,8 @@ namespace EverythingToolbar.Settings
 
         private static event EventHandler<WinKeyEventArgs>? WinKeyEventHandler;
 
-        private static NativeMethods.LowLevelKeyboardProc? _llKeyboardHookCallback;
-        private static IntPtr _llKeyboardHookId = IntPtr.Zero;
+        private static NativeMethods.LowLevelKeyboardProc? LlKeyboardHookCallback;
+        private static IntPtr LlKeyboardHookId = IntPtr.Zero;
 
         private const int WhKeyboardLl = 13;
         private const int WmKeydown = 0x0100;
@@ -75,7 +75,7 @@ namespace EverythingToolbar.Settings
         private static IntPtr KeyboardHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode < 0)
-                return NativeMethods.CallNextHookEx(_llKeyboardHookId, nCode, wParam, lParam);
+                return NativeMethods.CallNextHookEx(LlKeyboardHookId, nCode, wParam, lParam);
 
             var vkCode = (Keys)Marshal.ReadInt32(lParam);
             var isDown = (int)wParam == WmKeydown || (int)wParam == WmSyskeydown;
@@ -115,14 +115,14 @@ namespace EverythingToolbar.Settings
         {
             ReleaseKeyboard();
             WinKeyEventHandler += callback;
-            _llKeyboardHookCallback = KeyboardHookCallback;
-            _llKeyboardHookId = NativeMethods.SetWindowsHookEx(WhKeyboardLl, _llKeyboardHookCallback, IntPtr.Zero, 0);
+            LlKeyboardHookCallback = KeyboardHookCallback;
+            LlKeyboardHookId = NativeMethods.SetWindowsHookEx(WhKeyboardLl, LlKeyboardHookCallback, IntPtr.Zero, 0);
         }
 
         private static void ReleaseKeyboard()
         {
             WinKeyEventHandler = null;
-            NativeMethods.UnhookWindowsHookEx(_llKeyboardHookId);
+            NativeMethods.UnhookWindowsHookEx(LlKeyboardHookId);
         }
 
         private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)

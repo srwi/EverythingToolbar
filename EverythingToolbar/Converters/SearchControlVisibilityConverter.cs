@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 using Windows.Win32;
-using Windows.Win32.UI.Shell;
 
 namespace EverythingToolbar.Converters
 {
@@ -14,7 +13,7 @@ namespace EverythingToolbar.Converters
         public bool AlwaysVisibleWithAutoHidingTaskbar { get; set; }
         public double VisibilityThreshold { get; set; }
 
-        private static bool _isTaskbarAutoHiding;
+        private static bool IsTaskbarAutoHiding;
 
         public SearchControlVisibilityConverter()
         {
@@ -25,17 +24,20 @@ namespace EverythingToolbar.Converters
         private void SetTaskbarAutoHideState()
         {
             const uint ABS_AUTOHIDE = 0x0000001;
-            var autoHideData = new APPBARDATA { cbSize = (uint)Marshal.SizeOf<APPBARDATA>() };
+            var autoHideData = new Windows.Win32.UI.Shell.APPBARDATA
+            {
+                cbSize = (uint)Marshal.SizeOf<Windows.Win32.UI.Shell.APPBARDATA>(),
+            };
             var autoHideState = PInvoke.SHAppBarMessage(PInvoke.ABM_GETSTATE, ref autoHideData);
             if (autoHideState != 0)
             {
-                _isTaskbarAutoHiding = ((uint)autoHideState & ABS_AUTOHIDE) == ABS_AUTOHIDE;
+                IsTaskbarAutoHiding = ((uint)autoHideState & ABS_AUTOHIDE) == ABS_AUTOHIDE;
             }
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (_isTaskbarAutoHiding)
+            if (IsTaskbarAutoHiding)
                 return AlwaysVisibleWithAutoHidingTaskbar ? Visibility.Visible : Visibility.Collapsed;
 
             if (System.Convert.ToDouble(value) >= Math.Abs(VisibilityThreshold))

@@ -24,10 +24,10 @@ namespace EverythingToolbar.Deskband
     public class Server : CSDeskBandWpf, IServer
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<Server>();
-        private static ToolbarControl? _toolbarControl;
+        private static ToolbarControl? ToolbarControl;
         private TaskbarInfoProvider _taskbarState = null!;
         private SearchWindowController _controller = null!;
-        protected override UIElement UIElement => _toolbarControl!;
+        protected override UIElement UIElement => ToolbarControl!;
 
         static Server()
         {
@@ -58,7 +58,7 @@ namespace EverythingToolbar.Deskband
                 // Apply saved UI language
                 CultureHelper.ApplyUILanguage(Ioc.Default.GetRequiredService<ISettings>().UILanguage);
 
-                _toolbarControl = new ToolbarControl();
+                ToolbarControl = new ToolbarControl();
 
                 Options.MinHorizontalSize = new Size(24, 30);
                 Options.MinVerticalSize = new Size(24, 30);
@@ -114,10 +114,10 @@ namespace EverythingToolbar.Deskband
 
             base.DeskbandOnClosed();
 
-            if (_toolbarControl != null)
+            if (ToolbarControl != null)
             {
-                _toolbarControl.Content = null;
-                _toolbarControl = null;
+                ToolbarControl.Content = null;
+                ToolbarControl = null;
             }
         }
     }

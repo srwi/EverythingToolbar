@@ -114,11 +114,11 @@ namespace EverythingToolbar.Helpers
         private static readonly ConcurrentDictionary<string, ImageSource> IconByIndexAndScaleCache = new();
         private static readonly ConcurrentDictionary<string, int> ExtensionToIndexMap = new();
 
-        private static readonly int _fallbackDirectoryIconIndex;
+        private static readonly int FallbackDirectoryIconIndex;
 
         static IconProvider()
         {
-            _fallbackDirectoryIconIndex = GetIconIndex("asdf1234", IconIndexType.DirectoryName);
+            FallbackDirectoryIconIndex = GetIconIndex("asdf1234", IconIndexType.DirectoryName);
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
@@ -169,7 +169,7 @@ namespace EverythingToolbar.Helpers
             }
             else
             {
-                iconIndexByExt = _fallbackDirectoryIconIndex;
+                iconIndexByExt = FallbackDirectoryIconIndex;
             }
 
             var iconByIndexAndScaleCacheKey = iconIndexByExt + "_" + iconSize;

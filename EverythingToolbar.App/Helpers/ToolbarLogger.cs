@@ -11,7 +11,7 @@ namespace EverythingToolbar.App.Helpers
     {
         private static readonly string DebugFlagFileName = Path.Combine(ConfigPaths.GetConfigDirectory(), "debug.txt");
         private static readonly LogFactory LogFactory = new LogFactory();
-        private static ILogger? _rootLogger;
+        private static ILogger? RootLogger;
 
         public static ILogger GetLogger(string name)
         {
@@ -71,12 +71,12 @@ namespace EverythingToolbar.App.Helpers
         {
             ConfigureLogger();
 
-            _rootLogger = GetLogger(name);
-            LogVersionInformation(_rootLogger);
-            InitializeExceptionLoggers(_rootLogger);
+            RootLogger = GetLogger(name);
+            LogVersionInformation(RootLogger);
+            InitializeExceptionLoggers(RootLogger);
         }
 
         public static void LogUiThreadException(Exception exception) =>
-            _rootLogger?.Error(exception, "Unhandled exception on UI thread");
+            RootLogger?.Error(exception, "Unhandled exception on UI thread");
     }
 }

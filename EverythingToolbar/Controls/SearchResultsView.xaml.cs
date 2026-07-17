@@ -97,8 +97,11 @@ namespace EverythingToolbar.Controls
                 new Action(() =>
                 {
                     var index = SearchResultsListView.SelectedIndex;
-                    if (index >= 0
-                        && SearchResultsListView.ItemContainerGenerator.ContainerFromIndex(index) is ListViewItem container)
+                    if (
+                        index >= 0
+                        && SearchResultsListView.ItemContainerGenerator.ContainerFromIndex(index)
+                            is ListViewItem container
+                    )
                         Keyboard.Focus(container);
                 }),
                 DispatcherPriority.Input
