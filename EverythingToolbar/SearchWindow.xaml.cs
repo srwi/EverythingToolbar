@@ -1,11 +1,10 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.Messaging;
+using EverythingToolbar.Controls;
 using EverythingToolbar.ViewModels;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -20,8 +19,8 @@ namespace EverythingToolbar
         public event EventHandler<EventArgs>? Showing;
 
         private bool _isFirstShow = true;
-        private bool _isRenderingHooked;
         private readonly SearchWindowViewModel _viewModel;
+        private readonly SearchWindowAnimator _animator;
 
         public SearchWindow(SearchWindowViewModel viewModel)
             : base(viewModel.ThemeService, viewModel.WindowsPolicyService)
@@ -29,26 +28,15 @@ namespace EverythingToolbar
             _viewModel = viewModel;
             InitializeComponent();
 
+            _animator = new SearchWindowAnimator(
+                this,
+                ContentGrid,
+                SetTopmostBelowTaskbar,
+                OnHidden,
+                () => _viewModel.AnimationsDisabled,
+                _viewModel.IsWindows11OrGreater);
+
             Deactivated += (_, _) => WeakReferenceMessenger.Default.Send(new SearchWindowActiveChanged(false));
-        }
-
-        // Forces a render every frame, so only hook this while the hide animation needs DwmFlush sync.
-        private void HookRendering()
-        {
-            if (_isRenderingHooked)
-                return;
-
-            _isRenderingHooked = true;
-            CompositionTarget.Rendering += OnCompositionTargetRendering;
-        }
-
-        private void UnhookRendering()
-        {
-            if (!_isRenderingHooked)
-                return;
-
-            _isRenderingHooked = false;
-            CompositionTarget.Rendering -= OnCompositionTargetRendering;
         }
 
         private void OnActivated(object? sender, EventArgs e)
@@ -102,18 +90,18 @@ namespace EverythingToolbar
             WeakReferenceMessenger.Default.Send(new SearchWindowHidingMessage());
         }
 
-        private void OnHidden(object? sender, EventArgs e)
+        private void OnHidden()
         {
             _viewModel.SavePopupSize((int)Width, (int)Height);
 
             // Push outside of screens to hide Windows' closing animation
-            ClearAnimations();
+            _animator.ClearAnimations();
             Top = 100000;
             Left = 100000;
 
             base.Hide();
 
-            UnhookRendering();
+            _animator.UnhookRendering();
 
             _viewModel.ResetSearch();
 
@@ -192,305 +180,14 @@ namespace EverythingToolbar
                 Show();
         }
 
-        private void ClearAnimations()
-        {
-            BeginAnimation(LeftProperty, null);
-            BeginAnimation(TopProperty, null);
-            BeginAnimation(OpacityProperty, null);
-            ContentGrid.BeginAnimation(MarginProperty, null);
-        }
-
         public void AnimateShow(double left, double top, double width, double height, Edge taskbarEdge)
         {
-            // A running hide animation's Completed handler (OnHidden) may never fire if we interrupt it; unhook here.
-            UnhookRendering();
-
-            // Clearing all animations allows us to set the corresponding properties again
-            ClearAnimations();
-
-            Width = width;
-            Height = height;
-
-            // Move window to correct secondary axis position
-            var vertical = taskbarEdge is Edge.Left or Edge.Right;
-            if (vertical)
-                Top = top;
-            else
-                Left = left;
-
-            SetTopmostBelowTaskbar();
-
-            // Animate window along primary axis position
-            if (_viewModel.IsWindows11OrGreater)
-                AnimateShowWin11(left, top, width, height, taskbarEdge);
-            else
-                AnimateShowWin10(left, top, taskbarEdge);
-        }
-
-        private void AnimateShowWin10(double left, double top, Edge taskbarEdge)
-        {
-            if (_viewModel.AnimationsDisabled)
-            {
-                Opacity = 1;
-                Left = left;
-                Top = top;
-                return;
-            }
-
-            DependencyProperty? property = null;
-            double from = 0;
-            double to = 0;
-            switch (taskbarEdge)
-            {
-                case Edge.Left:
-                    from = left - 150;
-                    to = left;
-                    property = LeftProperty;
-                    break;
-                case Edge.Right:
-                    from = left + 150;
-                    to = left;
-                    property = LeftProperty;
-                    break;
-                case Edge.Top:
-                    from = top - 150;
-                    to = top;
-                    property = TopProperty;
-                    break;
-                case Edge.Bottom:
-                    from = top + 150;
-                    to = top;
-                    property = TopProperty;
-                    break;
-            }
-            BeginAnimation(
-                property,
-                new DoubleAnimation
-                {
-                    From = from,
-                    To = to,
-                    Duration = TimeSpan.FromSeconds(0.4),
-                    EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut },
-                }
-            );
-
-            BeginAnimation(
-                OpacityProperty,
-                new DoubleAnimation
-                {
-                    From = 0,
-                    To = 1,
-                    Duration = TimeSpan.FromSeconds(0.4),
-                    EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut },
-                }
-            );
-
-            var fromThickness = new Thickness(0);
-            switch (taskbarEdge)
-            {
-                case Edge.Left:
-                    fromThickness = new Thickness(-50, 0, 50, 0);
-                    break;
-                case Edge.Right:
-                    fromThickness = new Thickness(50, 0, -50, 0);
-                    break;
-                case Edge.Top:
-                    fromThickness = new Thickness(0, -50, 0, 50);
-                    break;
-                case Edge.Bottom:
-                    fromThickness = new Thickness(0, 50, 0, -50);
-                    break;
-            }
-            ContentGrid.BeginAnimation(
-                MarginProperty,
-                new ThicknessAnimation
-                {
-                    From = fromThickness,
-                    To = new Thickness(0),
-                    Duration = TimeSpan.FromSeconds(0.8),
-                    EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut },
-                }
-            );
-        }
-
-        private void AnimateShowWin11(double left, double top, double width, double height, Edge taskbarEdge)
-        {
-            if (_viewModel.AnimationsDisabled)
-            {
-                Opacity = 1;
-                Left = left;
-                Top = top;
-                return;
-            }
-
-            DependencyProperty? property = null;
-            double from = 0;
-            double to = 0;
-            switch (taskbarEdge)
-            {
-                case Edge.Left:
-                    from = left - width;
-                    to = left;
-                    property = LeftProperty;
-                    break;
-                case Edge.Right:
-                    from = left + width;
-                    to = left;
-                    property = LeftProperty;
-                    break;
-                case Edge.Top:
-                    from = top - height;
-                    to = top;
-                    property = TopProperty;
-                    break;
-                case Edge.Bottom:
-                    from = top + height;
-                    to = top;
-                    property = TopProperty;
-                    break;
-            }
-            BeginAnimation(
-                property,
-                new DoubleAnimation
-                {
-                    From = from,
-                    To = to,
-                    Duration = TimeSpan.FromSeconds(0.25),
-                    EasingFunction = new PowerEase { EasingMode = EasingMode.EaseOut, Power = 5 },
-                }
-            );
-
-            var fromThickness = new Thickness(0);
-            switch (taskbarEdge)
-            {
-                case Edge.Top:
-                    fromThickness = new Thickness(0, -50, 0, 50);
-                    break;
-                case Edge.Right:
-                    fromThickness = new Thickness(50, 0, -50, 0);
-                    break;
-                case Edge.Bottom:
-                    fromThickness = new Thickness(0, 50, 0, -50);
-                    break;
-                case Edge.Left:
-                    fromThickness = new Thickness(-50, 0, 50, 0);
-                    break;
-            }
-            ContentGrid.BeginAnimation(
-                MarginProperty,
-                new ThicknessAnimation
-                {
-                    From = fromThickness,
-                    To = new Thickness(0),
-                    Duration = TimeSpan.FromSeconds(0.3),
-                    EasingFunction = new PowerEase { EasingMode = EasingMode.EaseOut, Power = 5 },
-                }
-            );
-        }
-
-        private void AnimateHideWin10(Edge taskbarEdge)
-        {
-            if (_viewModel.AnimationsDisabled)
-            {
-                Dispatcher.BeginInvoke(() => OnHidden(this, EventArgs.Empty));
-                return;
-            }
-
-            BeginAnimation(
-                OpacityProperty,
-                new DoubleAnimation
-                {
-                    From = 1,
-                    To = 0,
-                    Duration = TimeSpan.FromMilliseconds(30),
-                }
-            );
-
-            double target = 0;
-            DependencyProperty? property = null;
-            switch (taskbarEdge)
-            {
-                case Edge.Left:
-                    target = RestoreBounds.Left - 150;
-                    property = LeftProperty;
-                    break;
-                case Edge.Right:
-                    target = RestoreBounds.Left + 150;
-                    property = LeftProperty;
-                    break;
-                case Edge.Top:
-                    target = RestoreBounds.Top - 150;
-                    property = TopProperty;
-                    break;
-                case Edge.Bottom:
-                    target = RestoreBounds.Top + 150;
-                    property = TopProperty;
-                    break;
-            }
-            var animation = new DoubleAnimation { To = target, Duration = TimeSpan.FromMilliseconds(30) };
-            animation.Completed += OnHidden;
-            BeginAnimation(property, animation);
-        }
-
-        private void AnimateHideWin11(Edge taskbarEdge)
-        {
-            if (_viewModel.AnimationsDisabled)
-            {
-                Dispatcher.BeginInvoke(() => OnHidden(this, EventArgs.Empty));
-                return;
-            }
-
-            DependencyProperty? property = null;
-            double from = 0;
-            double to = 0;
-            double extraOffset = 50; // To include all possible window decorations
-            switch (taskbarEdge)
-            {
-                case Edge.Left:
-                    from = RestoreBounds.Left;
-                    to = RestoreBounds.Left - Width - extraOffset;
-                    property = LeftProperty;
-                    break;
-                case Edge.Right:
-                    from = RestoreBounds.Left;
-                    to = RestoreBounds.Left + Width + extraOffset;
-                    property = LeftProperty;
-                    break;
-                case Edge.Top:
-                    from = RestoreBounds.Top;
-                    to = RestoreBounds.Top - Height - extraOffset;
-                    property = TopProperty;
-                    break;
-                case Edge.Bottom:
-                    from = RestoreBounds.Top;
-                    to = RestoreBounds.Top + Height + extraOffset;
-                    property = TopProperty;
-                    break;
-            }
-            var animation = new DoubleAnimation
-            {
-                From = from,
-                To = to,
-                Duration = TimeSpan.FromSeconds(0.25),
-                EasingFunction = new PowerEase { EasingMode = EasingMode.EaseIn, Power = 6 },
-            };
-            animation.Completed += OnHidden;
-            BeginAnimation(property, animation);
+            _animator.AnimateShow(left, top, width, height, taskbarEdge);
         }
 
         public void AnimateHide(Edge taskbarEdge)
         {
-            HookRendering();
-
-            if (_viewModel.IsWindows11OrGreater)
-                AnimateHideWin11(taskbarEdge);
-            else
-                AnimateHideWin10(taskbarEdge);
-        }
-
-        private void OnCompositionTargetRendering(object? sender, EventArgs e)
-        {
-            NativeMethods.DwmFlush();
+            _animator.AnimateHide(taskbarEdge);
         }
 
         private void SetTopmostBelowTaskbar()

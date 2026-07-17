@@ -7,8 +7,6 @@ namespace EverythingToolbar.Core.Helpers
 
     public sealed record ToolbarFocusChanged(bool IsFocused);
 
-    public sealed record DeskbandUnfocusRequest;
-
     public sealed record SearchWindowHidingMessage;
 
     public sealed record SearchWindowActiveChanged(bool IsActive);
