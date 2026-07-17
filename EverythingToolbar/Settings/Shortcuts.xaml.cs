@@ -17,6 +17,7 @@ namespace EverythingToolbar.Settings
         private ModifierKeys TempMods { get; set; }
 
         private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
+        private readonly StartMenuService _startMenuService = Ioc.Default.GetRequiredService<StartMenuService>();
 
         private static event EventHandler<WinKeyEventArgs>? WinKeyEventHandler;
 
@@ -168,7 +169,7 @@ namespace EverythingToolbar.Settings
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            Ioc.Default.GetRequiredService<StartMenuService>().Disable();
+            _startMenuService.Disable();
             ShortcutService.IsEnabled = false;
 
             Modifiers = (ModifierKeys)_settings.ShortcutModifiers;
@@ -184,7 +185,7 @@ namespace EverythingToolbar.Settings
         {
             ShortcutService.IsEnabled = true;
             ReleaseKeyboard();
-            Ioc.Default.GetRequiredService<StartMenuService>().Initialize();
+            _startMenuService.Initialize();
 
             if (Key != OriginalKey || Modifiers != OriginalModifiers)
             {

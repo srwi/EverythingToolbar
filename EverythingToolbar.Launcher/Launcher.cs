@@ -225,7 +225,7 @@ namespace EverythingToolbar.Launcher
                 if (!_windowsPolicy.IsTaskbarWindowActive() || _taskbarWindow != null)
                     return;
 
-                _taskbarWindow = new TaskbarWindow();
+                _taskbarWindow = new TaskbarWindow(_windowsPolicy, _settings);
                 _taskbarWindow.Closed += OnTaskbarWindowClosed;
 
                 new WindowInteropHelper(_taskbarWindow).EnsureHandle();

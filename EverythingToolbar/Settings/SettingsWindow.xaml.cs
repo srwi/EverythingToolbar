@@ -19,6 +19,7 @@ namespace EverythingToolbar.Settings
     public partial class SettingsWindow
     {
         private static readonly List<SettingsPageDescriptor> ExternalPages = new();
+        private readonly IEverythingClient _everythingClient = Ioc.Default.GetRequiredService<IEverythingClient>();
 
         public static void RegisterPage(SettingsPageDescriptor descriptor)
         {
@@ -70,7 +71,7 @@ namespace EverythingToolbar.Settings
         private void OnReportABugClicked(object sender, RoutedEventArgs e)
         {
             string version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "";
-            string everythingVersion = Ioc.Default.GetRequiredService<IEverythingClient>().GetEverythingVersion().ToString();
+            string everythingVersion = _everythingClient.GetEverythingVersion().ToString();
             string osVersion = Environment.OSVersion.ToString();
 
             string url =

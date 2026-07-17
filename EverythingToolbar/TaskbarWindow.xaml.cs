@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Interop;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using NLog;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -15,8 +14,8 @@ namespace EverythingToolbar
     public partial class TaskbarWindow
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<TaskbarWindow>();
-        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
-        private readonly WindowsPolicyService _windowsPolicy = Ioc.Default.GetRequiredService<WindowsPolicyService>();
+        private readonly ISettings _settings;
+        private readonly WindowsPolicyService _windowsPolicy;
 
         private IntPtr _taskbarHandle;
 
@@ -30,8 +29,11 @@ namespace EverythingToolbar
 
         public bool IsAttachedToTaskbar { get; private set; }
 
-        public TaskbarWindow()
+        public TaskbarWindow(WindowsPolicyService windowsPolicy, ISettings settings)
         {
+            _windowsPolicy = windowsPolicy;
+            _settings = settings;
+
             InitializeComponent();
 
             Loaded += OnLoaded;

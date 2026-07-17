@@ -8,6 +8,7 @@ namespace EverythingToolbar.Settings
     public partial class Search
     {
         public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
+        private readonly SearchState _searchState = Ioc.Default.GetRequiredService<SearchState>();
 
         public List<KeyValuePair<string, FocusBehavior>> FocusBehaviorItems { get; } =
             [
@@ -24,7 +25,7 @@ namespace EverythingToolbar.Settings
 
         private void OnClearHistoryClicked(object sender, RoutedEventArgs e)
         {
-            Ioc.Default.GetRequiredService<SearchState>().ClearHistory();
+            _searchState.ClearHistory();
         }
     }
 }

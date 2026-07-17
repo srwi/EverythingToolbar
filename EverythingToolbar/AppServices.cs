@@ -49,6 +49,8 @@ namespace EverythingToolbar
             services.AddTransient<FilterSelectorViewModel>();
             services.AddTransient<SettingsControlViewModel>();
             services.AddTransient<SearchWindowViewModel>();
+            services.AddTransient<SearchButtonViewModel>();
+            services.AddTransient<ToolbarControlViewModel>();
 
             var provider = services.BuildServiceProvider();
             Ioc.Default.ConfigureServices(provider);

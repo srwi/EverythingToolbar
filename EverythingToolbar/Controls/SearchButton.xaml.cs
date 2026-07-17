@@ -2,13 +2,13 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using EverythingToolbar.ViewModels;
 
 namespace EverythingToolbar.Controls
 {
     public partial class SearchButton
     {
-        private readonly ThemeService _themeService = Ioc.Default.GetRequiredService<ThemeService>();
-        private readonly SearchWindowController _searchWindowController = Ioc.Default.GetRequiredService<SearchWindowController>();
+        private readonly SearchButtonViewModel _viewModel = Ioc.Default.GetRequiredService<SearchButtonViewModel>();
 
         public SearchButton()
         {
@@ -20,21 +20,21 @@ namespace EverythingToolbar.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _searchWindowController.ActiveChanged -= OnSearchWindowActiveChanged;
-            _searchWindowController.ActiveChanged += OnSearchWindowActiveChanged;
+            _viewModel.ActiveChanged -= OnSearchWindowActiveChanged;
+            _viewModel.ActiveChanged += OnSearchWindowActiveChanged;
 
-            _themeService.ThemeChanged -= UpdateTheme;
-            _themeService.ThemeChanged += UpdateTheme;
+            _viewModel.ThemeChanged -= UpdateTheme;
+            _viewModel.ThemeChanged += UpdateTheme;
 
-            // ThemeService.ThemeChanged only fires on subsequent changes, never for the initial state,
+            // ThemeChanged only fires on subsequent changes, never for the initial state,
             // so apply the current theme here or the icon keeps WPF's default (black) in dark mode.
-            UpdateTheme(_themeService.GetEffectiveTheme(ThemeFlavor.System));
+            UpdateTheme(_viewModel.CurrentSystemTheme);
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            _themeService.ThemeChanged -= UpdateTheme;
-            _searchWindowController.ActiveChanged -= OnSearchWindowActiveChanged;
+            _viewModel.ThemeChanged -= UpdateTheme;
+            _viewModel.ActiveChanged -= OnSearchWindowActiveChanged;
         }
 
         private void OnSearchWindowActiveChanged(object? sender, bool isActive)
@@ -77,12 +77,12 @@ namespace EverythingToolbar.Controls
 
         private void OnClick(object? sender, RoutedEventArgs e)
         {
-            _searchWindowController.Toggle();
+            _viewModel.Toggle();
         }
 
         private void OnIsVisibleChanged(object? sender, DependencyPropertyChangedEventArgs e)
         {
-            _searchWindowController.SetIconMode((bool)e.NewValue);
+            _viewModel.SetIconMode((bool)e.NewValue);
         }
     }
 }

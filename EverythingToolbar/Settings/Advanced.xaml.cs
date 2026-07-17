@@ -17,6 +17,7 @@ namespace EverythingToolbar.Settings
 
         public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
         private readonly IAutostartService _autostartService = Ioc.Default.GetRequiredService<IAutostartService>();
+        private readonly IEverythingClient _everythingClient = Ioc.Default.GetRequiredService<IEverythingClient>();
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -83,7 +84,7 @@ namespace EverythingToolbar.Settings
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            Ioc.Default.GetRequiredService<IEverythingClient>().SetInstanceName(Settings.InstanceName);
+            _everythingClient.SetInstanceName(Settings.InstanceName);
         }
 
         private async void OnCheckForUpdatesClicked(object sender, RoutedEventArgs e)

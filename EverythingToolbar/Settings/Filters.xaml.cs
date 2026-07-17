@@ -23,6 +23,7 @@ namespace EverythingToolbar.Settings
         private bool _isDragging;
         private Point _startPoint;
         public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
+        private readonly DefaultFilterService _defaultFilterService = Ioc.Default.GetRequiredService<DefaultFilterService>();
 
         public ObservableCollection<FilterOrderItem> FilterOrderItems
         {
@@ -44,11 +45,10 @@ namespace EverythingToolbar.Settings
 
         private void LoadFilterOrder()
         {
-            var defaultFilterService = Ioc.Default.GetRequiredService<DefaultFilterService>();
-            var defaultFilters = defaultFilterService.DefaultFilters;
+            var defaultFilters = _defaultFilterService.DefaultFilters;
 
             // Use the validation logic from DefaultFilterService
-            var validOrder = defaultFilterService.GetValidFilterOrder();
+            var validOrder = _defaultFilterService.GetValidFilterOrder();
 
             FilterOrderItems = new ObservableCollection<FilterOrderItem>(
                 validOrder.Select(i => new FilterOrderItem { Name = defaultFilters[i].Name, OriginalIndex = i })

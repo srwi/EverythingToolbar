@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
+using EverythingToolbar.ViewModels;
 
 namespace EverythingToolbar.Controls
 {
@@ -22,7 +22,7 @@ namespace EverythingToolbar.Controls
             set => SetValue(IsFixedLayoutProperty, value);
         }
 
-        private readonly SearchWindowController _searchWindowController = Ioc.Default.GetRequiredService<SearchWindowController>();
+        private readonly ToolbarControlViewModel _viewModel = Ioc.Default.GetRequiredService<ToolbarControlViewModel>();
 
         private Action? _searchBoxFocus;
         private Func<bool>? _searchBoxIsFocused;
@@ -66,20 +66,20 @@ namespace EverythingToolbar.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _searchWindowController.Hiding -= OnSearchWindowHiding;
-            _searchWindowController.Hiding += OnSearchWindowHiding;
+            _viewModel.Hiding -= OnSearchWindowHiding;
+            _viewModel.Hiding += OnSearchWindowHiding;
 
             _searchBoxFocus ??= SearchBox.Focus;
             _searchBoxIsFocused ??= () => SearchBox.IsKeyboardFocusWithin;
-            _searchWindowController.RegisterToolbarSearchBox(_searchBoxIsFocused, _searchBoxFocus);
+            _viewModel.RegisterSearchBox(_searchBoxIsFocused, _searchBoxFocus);
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            _searchWindowController.Hiding -= OnSearchWindowHiding;
+            _viewModel.Hiding -= OnSearchWindowHiding;
 
             if (_searchBoxFocus != null)
-                _searchWindowController.UnregisterToolbarSearchBox(_searchBoxFocus);
+                _viewModel.UnregisterSearchBox(_searchBoxFocus);
         }
 
         private void OnSearchWindowHiding(object? sender, EventArgs e)
@@ -89,7 +89,7 @@ namespace EverythingToolbar.Controls
 
         private void OnSearchBoxLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            WeakReferenceMessenger.Default.Send(new ToolbarFocusChanged(false));
+            _viewModel.NotifyToolbarFocusChanged(false);
 
             if (e.NewFocus == null) // New focus outside application
             {
@@ -99,7 +99,7 @@ namespace EverythingToolbar.Controls
 
         private void OnSearchBoxGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            _searchWindowController.Show();
+            _viewModel.ShowSearchWindow();
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
@@ -113,7 +113,7 @@ namespace EverythingToolbar.Controls
 
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
-            WeakReferenceMessenger.Default.Send(new ToolbarFocusChanged(true));
+            _viewModel.NotifyToolbarFocusChanged(true);
         }
     }
 }
