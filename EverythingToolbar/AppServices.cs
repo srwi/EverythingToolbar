@@ -43,6 +43,7 @@ namespace EverythingToolbar
             services.AddSingleton<SearchResultActions>();
             services.AddSingleton<EverythingSearchLauncher>();
             services.AddTransient<SearchResultsViewModel>();
+            services.AddTransient<SearchResultPreviewPaneViewModel>();
             services.AddTransient<SearchBoxViewModel>();
             services.AddTransient<FilterSelectorViewModel>();
             services.AddTransient<SettingsControlViewModel>();

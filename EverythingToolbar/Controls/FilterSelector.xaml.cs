@@ -49,8 +49,8 @@ namespace EverythingToolbar.Controls
             TabControl.SelectionChanged -= OnTabItemSelected;
             ComboBox.SelectionChanged -= OnComboBoxItemSelected;
 
-            int filterIndex = _viewModel.FilterService.Filters.IndexOf(SelectedFilter);
-            int maxTabItems = _viewModel.Settings.MaxTabItems;
+            int filterIndex = _viewModel.IndexOf(SelectedFilter);
+            int maxTabItems = _viewModel.MaxTabItems;
 
             TabControl.SelectedIndex = filterIndex < maxTabItems ? filterIndex : -1;
             ComboBox.SelectedIndex = filterIndex >= maxTabItems ? filterIndex - maxTabItems : -1;

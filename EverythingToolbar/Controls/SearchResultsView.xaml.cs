@@ -151,92 +151,73 @@ namespace EverythingToolbar.Controls
         {
             if (e.Key == Key.Space)
             {
-                _viewModel.Commands.PreviewSelected();
+                _viewModel.PreviewSelected();
                 e.Handled = true;
                 return;
             }
             if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.C)
             {
-                _viewModel.Commands.CopySelectedPath();
+                _viewModel.CopySelectedPath();
                 e.Handled = true;
                 return;
             }
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.C)
             {
-                _viewModel.Commands.CopySelected();
+                _viewModel.CopySelected();
                 e.Handled = true;
                 return;
             }
             if (e.Key == Key.Escape)
             {
-                _viewModel.SearchWindowController.Hide();
+                _viewModel.HideWindow();
                 e.Handled = true;
                 return;
             }
 
-            if (_viewModel.Commands.TranslateResultsGesture(e.Key, e.SystemKey, Keyboard.Modifiers, fromSearchBox: false))
+            if (_viewModel.TryHandleResultsGesture(e.Key, e.SystemKey, Keyboard.Modifiers))
                 e.Handled = true;
-        }
-
-        private void OpenSelectedSearchResult()
-        {
-            if (SelectedItem == null)
-                return;
-
-            if (!_viewModel.CustomActions.TryRun(SelectedItem))
-                InvokeOnSelected(_viewModel.Actions.Open);
-
-            _viewModel.SearchWindowController.Hide();
         }
 
         private void OpenFilePath(object sender, RoutedEventArgs e)
         {
-            InvokeOnSelected(_viewModel.Actions.OpenPath);
-            _viewModel.SearchWindowController.Hide();
-        }
-
-        private void InvokeOnSelected(Action<SearchResult> action)
-        {
-            if (SelectedItem is { } item)
-                action(item);
+            _viewModel.OpenSelectedPath();
         }
 
         private void CopyPathToClipBoard(object sender, RoutedEventArgs e)
         {
-            InvokeOnSelected(_viewModel.Actions.CopyPathToClipboard);
+            _viewModel.CopySelectedPath();
         }
 
         private void OpenWith(object sender, RoutedEventArgs e)
         {
-            _viewModel.Commands.OpenSelectedWith();
+            _viewModel.OpenSelectedWith();
         }
 
         private void ShowInEverything(object sender, RoutedEventArgs e)
         {
-            InvokeOnSelected(_viewModel.Actions.ShowInEverything);
-            _viewModel.SearchWindowController.Hide();
+            _viewModel.ShowSelectedInEverything();
         }
 
         private void CopyFile(object sender, RoutedEventArgs e)
         {
-            InvokeOnSelected(_viewModel.Actions.CopyToClipboard);
+            _viewModel.CopySelected();
         }
 
         private void SingleClickSearchResult(object sender, MouseEventArgs e)
         {
-            if (!_viewModel.Settings.IsDoubleClickToOpen)
+            if (!_viewModel.IsDoubleClickToOpen)
                 OpenWithMouseClick();
         }
 
         private void DoubleClickSearchResult(object sender, MouseEventArgs e)
         {
-            if (_viewModel.Settings.IsDoubleClickToOpen)
+            if (_viewModel.IsDoubleClickToOpen)
                 OpenWithMouseClick();
         }
 
         private void Open(object sender, RoutedEventArgs e)
         {
-            OpenSelectedSearchResult();
+            _viewModel.OpenSelected();
         }
 
         private void OpenWithMouseClick()
@@ -244,19 +225,16 @@ namespace EverythingToolbar.Controls
             switch (Keyboard.Modifiers)
             {
                 case ModifierKeys.Alt:
-                    InvokeOnSelected(_viewModel.Actions.ShowProperties);
-                    _viewModel.SearchWindowController.Hide();
+                    _viewModel.ShowSelectedProperties();
                     break;
                 case ModifierKeys.Control:
-                    InvokeOnSelected(_viewModel.Actions.OpenPath);
-                    _viewModel.SearchWindowController.Hide();
+                    _viewModel.OpenSelectedPath();
                     break;
                 case ModifierKeys.Shift:
-                    InvokeOnSelected(_viewModel.Actions.ShowInEverything);
-                    _viewModel.SearchWindowController.Hide();
+                    _viewModel.ShowSelectedInEverything();
                     break;
                 default:
-                    OpenSelectedSearchResult();
+                    _viewModel.OpenSelected();
                     break;
             }
             SearchResultsListView.SelectedIndex = -1;
@@ -264,19 +242,17 @@ namespace EverythingToolbar.Controls
 
         private void RunAsAdmin(object sender, RoutedEventArgs e)
         {
-            InvokeOnSelected(_viewModel.Actions.RunAsAdmin);
-            _viewModel.SearchWindowController.Hide();
+            _viewModel.RunSelectedAsAdmin();
         }
 
         private void ShowFileProperties(object sender, RoutedEventArgs e)
         {
-            InvokeOnSelected(_viewModel.Actions.ShowProperties);
-            _viewModel.SearchWindowController.Hide();
+            _viewModel.ShowSelectedProperties();
         }
 
         private void ShowFileWindowsContextMenu(object sender, RoutedEventArgs e)
         {
-            _viewModel.Commands.ShowSelectedWindowsContextMenu();
+            _viewModel.ShowSelectedWindowsContextMenu();
         }
 
         private void OnOpenWithMenuLoaded(object sender, RoutedEventArgs e)
@@ -287,7 +263,7 @@ namespace EverythingToolbar.Controls
             while (menuItem.Items.Count > 2)
                 menuItem.Items.RemoveAt(0);
 
-            List<Rule> actions = _viewModel.CustomActions.Load();
+            List<Rule> actions = _viewModel.LoadCustomActions();
 
             if (actions.Count == 0)
             {
@@ -324,7 +300,7 @@ namespace EverythingToolbar.Controls
 
             var menuItem = sender as MenuItem;
             var command = menuItem?.Tag?.ToString() ?? "";
-            _viewModel.CustomActions.TryRun(SelectedItem, command);
+            _viewModel.TryRunCustomAction(SelectedItem, command);
         }
 
         private void OnListViewItemMouseDown(object sender, MouseButtonEventArgs e)
@@ -386,9 +362,9 @@ namespace EverythingToolbar.Controls
             if (SelectedItem == null)
                 return;
 
-            if (_viewModel.Settings.IsSystemContextMenuDefault != (Keyboard.Modifiers == ModifierKeys.Shift))
+            if (_viewModel.IsSystemContextMenuDefault != (Keyboard.Modifiers == ModifierKeys.Shift))
             {
-                _viewModel.Commands.ShowSelectedWindowsContextMenu();
+                _viewModel.ShowSelectedWindowsContextMenu();
                 e.Handled = true;
             }
         }

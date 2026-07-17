@@ -55,7 +55,7 @@ namespace EverythingToolbar
         {
             WeakReferenceMessenger.Default.Send(new SearchWindowActiveChanged(true));
 
-            if (_viewModel.TaskbarState.IsIcon)
+            if (_viewModel.ShouldActivateOnShow)
                 WeakReferenceMessenger.Default.Send(new FocusSearchBoxRequest());
         }
 
@@ -64,7 +64,7 @@ namespace EverythingToolbar
             if (e.Key is >= Key.D0 and <= Key.D9 && Keyboard.Modifiers == ModifierKeys.Control)
             {
                 var index = e.Key == Key.D0 ? 9 : e.Key - Key.D1;
-                _viewModel.SearchState.SelectFilterFromIndex(index);
+                _viewModel.SelectFilterFromIndex(index);
                 e.Handled = true;
             }
             else if (e.Key == Key.Escape)
@@ -90,7 +90,7 @@ namespace EverythingToolbar
 
         private void OpenSearchInEverything(object? sender, RoutedEventArgs e)
         {
-            _viewModel.Launcher.OpenSearchInEverything(_viewModel.SearchState);
+            _viewModel.OpenSearchInEverything();
         }
 
         public new void Hide()
@@ -104,11 +104,7 @@ namespace EverythingToolbar
 
         private void OnHidden(object? sender, EventArgs e)
         {
-            if ((int)Height != _viewModel.Settings.PopupHeight || (int)Width != _viewModel.Settings.PopupWidth)
-            {
-                _viewModel.Settings.PopupHeight = (int)Height;
-                _viewModel.Settings.PopupWidth = (int)Width;
-            }
+            _viewModel.SavePopupSize((int)Width, (int)Height);
 
             // Push outside of screens to hide Windows' closing animation
             ClearAnimations();
@@ -119,7 +115,7 @@ namespace EverythingToolbar
 
             UnhookRendering();
 
-            _viewModel.SearchState.Reset();
+            _viewModel.ResetSearch();
 
             Hidden?.Invoke(this, EventArgs.Empty);
         }
@@ -143,7 +139,7 @@ namespace EverythingToolbar
 
         public new void Show()
         {
-            var activate = _viewModel.TaskbarState.IsIcon;
+            var activate = _viewModel.ShouldActivateOnShow;
 
             if (Visibility == Visibility.Visible)
             {
@@ -225,7 +221,7 @@ namespace EverythingToolbar
             SetTopmostBelowTaskbar();
 
             // Animate window along primary axis position
-            if (_viewModel.WindowsPolicyService.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
+            if (_viewModel.IsWindows11OrGreater)
                 AnimateShowWin11(left, top, width, height, taskbarEdge);
             else
                 AnimateShowWin10(left, top, taskbarEdge);
@@ -233,7 +229,7 @@ namespace EverythingToolbar
 
         private void AnimateShowWin10(double left, double top, Edge taskbarEdge)
         {
-            if (_viewModel.WindowsPolicyService.IsEffectiveAnimationsDisabled)
+            if (_viewModel.AnimationsDisabled)
             {
                 Opacity = 1;
                 Left = left;
@@ -319,7 +315,7 @@ namespace EverythingToolbar
 
         private void AnimateShowWin11(double left, double top, double width, double height, Edge taskbarEdge)
         {
-            if (_viewModel.WindowsPolicyService.IsEffectiveAnimationsDisabled)
+            if (_viewModel.AnimationsDisabled)
             {
                 Opacity = 1;
                 Left = left;
@@ -394,7 +390,7 @@ namespace EverythingToolbar
 
         private void AnimateHideWin10(Edge taskbarEdge)
         {
-            if (_viewModel.WindowsPolicyService.IsEffectiveAnimationsDisabled)
+            if (_viewModel.AnimationsDisabled)
             {
                 Dispatcher.BeginInvoke(() => OnHidden(this, EventArgs.Empty));
                 return;
@@ -438,7 +434,7 @@ namespace EverythingToolbar
 
         private void AnimateHideWin11(Edge taskbarEdge)
         {
-            if (_viewModel.WindowsPolicyService.IsEffectiveAnimationsDisabled)
+            if (_viewModel.AnimationsDisabled)
             {
                 Dispatcher.BeginInvoke(() => OnHidden(this, EventArgs.Empty));
                 return;
@@ -486,7 +482,7 @@ namespace EverythingToolbar
         {
             HookRendering();
 
-            if (_viewModel.WindowsPolicyService.GetWindowsVersion() >= Utils.WindowsVersion.Windows11)
+            if (_viewModel.IsWindows11OrGreater)
                 AnimateHideWin11(taskbarEdge);
             else
                 AnimateHideWin10(taskbarEdge);

@@ -77,13 +77,13 @@ namespace EverythingToolbar.Controls
         {
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Up)
             {
-                UpdateSearchTerm(_viewModel.SearchState.GetPreviousSearchTerm());
+                UpdateSearchTerm(_viewModel.PreviousHistoryTerm());
                 e.Handled = true;
                 return;
             }
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Down)
             {
-                UpdateSearchTerm(_viewModel.SearchState.GetNextSearchTerm());
+                UpdateSearchTerm(_viewModel.NextHistoryTerm());
                 e.Handled = true;
                 return;
             }
@@ -102,12 +102,12 @@ namespace EverythingToolbar.Controls
             {
                 Keyboard.ClearFocus();
                 NativeMethods.FocusTaskbarWindow();
-                _viewModel.SearchWindowController.Hide();
+                _viewModel.HideWindow();
                 e.Handled = true;
                 return;
             }
 
-            if (_viewModel.Commands.TranslateResultsGesture(e.Key, e.SystemKey, Keyboard.Modifiers, fromSearchBox: true))
+            if (_viewModel.TryHandleResultsGesture(e.Key, e.SystemKey, Keyboard.Modifiers))
                 e.Handled = true;
         }
 
@@ -116,7 +116,7 @@ namespace EverythingToolbar.Controls
             if (e.Key == Key.Tab)
             {
                 var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
-                _viewModel.SearchState.CycleFilters(offset);
+                _viewModel.CycleFilters(offset);
                 e.Handled = true;
             }
         }
@@ -176,7 +176,7 @@ namespace EverythingToolbar.Controls
         {
             if (e.NewFocus == null) // New focus outside application
             {
-                _viewModel.SearchWindowController.Hide();
+                _viewModel.HideWindow();
             }
         }
 

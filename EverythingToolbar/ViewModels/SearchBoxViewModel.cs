@@ -1,13 +1,15 @@
+using System.Windows.Input;
 using EverythingToolbar.Search;
 
 namespace EverythingToolbar.ViewModels
 {
     public sealed class SearchBoxViewModel
     {
-        public SearchState SearchState { get; }
+        private readonly SearchState _searchState;
+        private readonly ISearchWindowController _controller;
+        private readonly SearchCommands _commands;
+
         public ISettings Settings { get; }
-        public ISearchWindowController SearchWindowController { get; }
-        public SearchCommands Commands { get; }
 
         public SearchBoxViewModel(
             SearchState searchState,
@@ -15,10 +17,21 @@ namespace EverythingToolbar.ViewModels
             ISearchWindowController searchWindowController,
             SearchCommands commands)
         {
-            SearchState = searchState;
+            _searchState = searchState;
             Settings = settings;
-            SearchWindowController = searchWindowController;
-            Commands = commands;
+            _controller = searchWindowController;
+            _commands = commands;
         }
+
+        public void HideWindow() => _controller.Hide();
+
+        public void CycleFilters(int offset) => _searchState.CycleFilters(offset);
+
+        public string PreviousHistoryTerm() => _searchState.GetPreviousSearchTerm();
+
+        public string NextHistoryTerm() => _searchState.GetNextSearchTerm();
+
+        public bool TryHandleResultsGesture(Key key, Key systemKey, ModifierKeys modifiers) =>
+            _commands.TranslateResultsGesture(key, systemKey, modifiers, fromSearchBox: true);
     }
 }

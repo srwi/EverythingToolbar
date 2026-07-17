@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar.Core.Data;
 using EverythingToolbar.Settings;
 using EverythingToolbar.ViewModels;
 
@@ -23,7 +21,7 @@ namespace EverythingToolbar.Controls
 
         private void OpenSettingsWindow(object sender, RoutedEventArgs e)
         {
-            _viewModel.SearchWindowController.Hide();
+            _viewModel.HideWindow();
             Window settings = new SettingsWindow();
             settings.Show();
         }
@@ -35,15 +33,7 @@ namespace EverythingToolbar.Controls
 
             int selectedIndex = SortByMenu.Items.IndexOf(selectedItem);
 
-            int[] fastSortExceptions = [4, 8];
-            if (
-                _viewModel.EverythingClient.GetIsFastSort((SortBy)selectedIndex, _viewModel.Settings.IsSortDescending)
-                || fastSortExceptions.Contains(selectedIndex)
-            )
-            {
-                _viewModel.Settings.SortBy = selectedIndex;
-            }
-            else
+            if (!_viewModel.TrySetSortBy(selectedIndex))
             {
                 FluentMessageBox
                     .CreateRegular(
@@ -58,13 +48,13 @@ namespace EverythingToolbar.Controls
 
         private void OnSortAscendingClicked(object sender, RoutedEventArgs e)
         {
-            _viewModel.Settings.IsSortDescending = false;
+            _viewModel.SetSortDescending(false);
             SelectSortType();
         }
 
         private void OnSortDescendingClicked(object sender, RoutedEventArgs e)
         {
-            _viewModel.Settings.IsSortDescending = true;
+            _viewModel.SetSortDescending(true);
             SelectSortType();
         }
 
@@ -100,7 +90,7 @@ namespace EverythingToolbar.Controls
 
         private void TogglePreviewPane(object sender, RoutedEventArgs e)
         {
-            _viewModel.Settings.IsPreviewPaneEnabled = !_viewModel.Settings.IsPreviewPaneEnabled;
+            _viewModel.TogglePreviewPane();
         }
     }
 }
