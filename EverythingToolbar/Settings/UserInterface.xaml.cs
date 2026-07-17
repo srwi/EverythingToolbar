@@ -28,12 +28,12 @@ namespace EverythingToolbar.Settings
         public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
 
         public List<KeyValuePair<string, string>> ItemTemplates { get; } =
-            [
-                new(Resources.ItemTemplateCompact, "Compact"),
-                new(Resources.ItemTemplateCompactDetailed, "CompactDetailed"),
-                new(Resources.ItemTemplateNormal, "Normal"),
-                new(Resources.ItemTemplateNormalDetailed, "NormalDetailed"),
-            ];
+        [
+            new(Resources.ItemTemplateCompact, "Compact"),
+            new(Resources.ItemTemplateCompactDetailed, "CompactDetailed"),
+            new(Resources.ItemTemplateNormal, "Normal"),
+            new(Resources.ItemTemplateNormalDetailed, "NormalDetailed"),
+        ];
         public List<KeyValuePair<string, string>> Languages { get; } = CultureHelper.GetAvailableLanguages();
 
         public string SelectedLanguage

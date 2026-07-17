@@ -1,29 +1,32 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Sys="clr-namespace:System;assembly=mscorlib">
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:Sys="clr-namespace:System;assembly=mscorlib">
+  <Thickness
+    x:Key="ContextMenuMenuItemMargin"
+    Left="4"
+    Right="4" />
+  <CornerRadius
+    x:Key="ContextMenuMenuItemCornerRadius"
+    BottomLeft="5"
+    BottomRight="5"
+    TopLeft="5"
+    TopRight="5" />
+  <CornerRadius
+    x:Key="ContextMenuCornerRadius"
+    BottomLeft="8"
+    BottomRight="8"
+    TopLeft="8"
+    TopRight="8" />
+  <Sys:Double x:Key="ContextMenuDropShadowRadius">10</Sys:Double>
+  <Thickness
+    x:Key="ContextMenuDropShadowMargin"
+    Bottom="10"
+    Left="10"
+    Right="10"
+    Top="10" />
 
-    <Thickness x:Key="ContextMenuMenuItemMargin"
-               Left="4"
-               Right="4" />
-    <CornerRadius x:Key="ContextMenuMenuItemCornerRadius"
-                  BottomLeft="5"
-                  BottomRight="5"
-                  TopRight="5"
-                  TopLeft="5" />
-    <CornerRadius x:Key="ContextMenuCornerRadius"
-                  BottomLeft="8"
-                  BottomRight="8"
-                  TopRight="8"
-                  TopLeft="8" />
-    <Sys:Double x:Key="ContextMenuDropShadowRadius">10</Sys:Double>
-    <Thickness x:Key="ContextMenuDropShadowMargin"
-               Left="10"
-               Right="10"
-               Top="10"
-               Bottom="10" />
-
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="../../../Styles/ContextMenu.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="../../../Styles/ContextMenu.xaml" />
+  </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

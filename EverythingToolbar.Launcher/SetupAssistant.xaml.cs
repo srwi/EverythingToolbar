@@ -65,10 +65,10 @@ namespace EverythingToolbar.Launcher
 
         // Display text is localized; the stored value stays the invariant "Left"/"Right".
         public List<KeyValuePair<string, string>> TaskbarWindowAlignmentOptions { get; } =
-            [
-                new(EverythingToolbar.Properties.Resources.SettingsTaskbarWindowAlignmentLeft, "Left"),
-                new(EverythingToolbar.Properties.Resources.SettingsTaskbarWindowAlignmentRight, "Right"),
-            ];
+        [
+            new(EverythingToolbar.Properties.Resources.SettingsTaskbarWindowAlignmentLeft, "Left"),
+            new(EverythingToolbar.Properties.Resources.SettingsTaskbarWindowAlignmentRight, "Right"),
+        ];
 
         public bool AllowLeftAlignment => _windowsPolicy.IsTaskbarCenterAligned();
 

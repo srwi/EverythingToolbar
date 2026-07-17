@@ -3,9 +3,16 @@
   "isRoot": true,
   "tools": {
     "csharpier": {
-      "version": "1.0.3",
+      "version": "1.3.0",
       "commands": [
         "csharpier"
+      ],
+      "rollForward": false
+    },
+    "xamlstyler.console": {
+      "version": "3.2501.8",
+      "commands": [
+        "xstyler"
       ],
       "rollForward": false
     }

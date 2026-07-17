@@ -40,34 +40,31 @@ namespace EverythingToolbar.Launcher.Settings
             _windowsPolicy.GetWindowsVersion() >= Core.Helpers.Utils.WindowsVersion.Windows11;
 
         public List<KeyValuePair<string, string>> TaskbarWindowAlignmentOptions { get; } =
-            [
-                new(Res.SettingsTaskbarWindowAlignmentLeft, "Left"),
-                new(Res.SettingsTaskbarWindowAlignmentRight, "Right"),
-            ];
+        [new(Res.SettingsTaskbarWindowAlignmentLeft, "Left"), new(Res.SettingsTaskbarWindowAlignmentRight, "Right")];
 
         public bool AllowLeftAlignment => _windowsPolicy.IsTaskbarCenterAligned();
 
         public List<IconItem> IconItems { get; } =
-            [
-                new()
-                {
-                    DisplayName = "Light",
-                    IconPath = "pack://siteoforigin:,,,/Icons/Dark.ico",
-                    Value = "Icons/Dark.ico",
-                },
-                new()
-                {
-                    DisplayName = "Dark",
-                    IconPath = "pack://siteoforigin:,,,/Icons/Light.ico",
-                    Value = "Icons/Light.ico",
-                },
-                new()
-                {
-                    DisplayName = "Blue",
-                    IconPath = "pack://siteoforigin:,,,/Icons/Medium.ico",
-                    Value = "Icons/Medium.ico",
-                },
-            ];
+        [
+            new()
+            {
+                DisplayName = "Light",
+                IconPath = "pack://siteoforigin:,,,/Icons/Dark.ico",
+                Value = "Icons/Dark.ico",
+            },
+            new()
+            {
+                DisplayName = "Dark",
+                IconPath = "pack://siteoforigin:,,,/Icons/Light.ico",
+                Value = "Icons/Light.ico",
+            },
+            new()
+            {
+                DisplayName = "Blue",
+                IconPath = "pack://siteoforigin:,,,/Icons/Medium.ico",
+                Value = "Icons/Medium.ico",
+            },
+        ];
 
         public IconItem? SelectedIconItem
         {

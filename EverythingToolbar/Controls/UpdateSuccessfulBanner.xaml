@@ -1,17 +1,19 @@
-﻿<UserControl x:Class="EverythingToolbar.Controls.UpdateSuccessfulBanner"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-             xmlns:controls="clr-namespace:EverythingToolbar.Controls"
-             Background="Transparent"
-             Loaded="OnLoaded"
-             Visibility="Collapsed">
-    <controls:GenericBanner x:Name="Banner"
-                            Text="{x:Static properties:Resources.UpdateSuccessfulBannerText}"
-                            BannerColor="#A8E6CF"
-                            ButtonBorderBrush="#9bd5b8"
-                            PrimaryButtonText="{x:Static properties:Resources.UpdateSuccessfulBannerDismiss}"
-                            SecondaryButtonText="{x:Static properties:Resources.UpdateSuccessfulBannerDonate}"
-                            PrimaryButtonClicked="OnDismissClicked"
-                            SecondaryButtonClicked="OnDonateClicked" />
+﻿<UserControl
+  x:Class="EverythingToolbar.Controls.UpdateSuccessfulBanner"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:EverythingToolbar.Controls"
+  xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+  Background="Transparent"
+  Loaded="OnLoaded"
+  Visibility="Collapsed">
+  <controls:GenericBanner
+    x:Name="Banner"
+    BannerColor="#A8E6CF"
+    ButtonBorderBrush="#9bd5b8"
+    PrimaryButtonClicked="OnDismissClicked"
+    PrimaryButtonText="{x:Static properties:Resources.UpdateSuccessfulBannerDismiss}"
+    SecondaryButtonClicked="OnDonateClicked"
+    SecondaryButtonText="{x:Static properties:Resources.UpdateSuccessfulBannerDonate}"
+    Text="{x:Static properties:Resources.UpdateSuccessfulBannerText}" />
 </UserControl>

@@ -1,14 +1,16 @@
-﻿<UserControl x:Class="EverythingToolbar.Controls.UpdateBanner"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-             xmlns:controls="clr-namespace:EverythingToolbar.Controls"
-             Background="Transparent"
-             Loaded="OnLoaded"
-             Visibility="Collapsed">
-    <controls:GenericBanner Text="{x:Static properties:Resources.UpdateBannerText}"
-                            SecondaryButtonText="{x:Static properties:Resources.UpdateBannerSkip}"
-                            PrimaryButtonText="{x:Static properties:Resources.UpdateBannerDownload}"
-                            PrimaryButtonClicked="OnDownloadClicked"
-                            SecondaryButtonClicked="OnSkipUpdateClicked" />
+﻿<UserControl
+  x:Class="EverythingToolbar.Controls.UpdateBanner"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:EverythingToolbar.Controls"
+  xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+  Background="Transparent"
+  Loaded="OnLoaded"
+  Visibility="Collapsed">
+  <controls:GenericBanner
+    PrimaryButtonClicked="OnDownloadClicked"
+    PrimaryButtonText="{x:Static properties:Resources.UpdateBannerDownload}"
+    SecondaryButtonClicked="OnSkipUpdateClicked"
+    SecondaryButtonText="{x:Static properties:Resources.UpdateBannerSkip}"
+    Text="{x:Static properties:Resources.UpdateBannerText}" />
 </UserControl>

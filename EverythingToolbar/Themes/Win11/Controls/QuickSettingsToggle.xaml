@@ -1,14 +1,12 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <CornerRadius
+    x:Key="QuickSettingsToggleButtonCornerRadius"
+    BottomLeft="4"
+    BottomRight="4"
+    TopLeft="4"
+    TopRight="4" />
 
-    <CornerRadius x:Key="QuickSettingsToggleButtonCornerRadius"
-                  TopLeft="4"
-                  TopRight="4"
-                  BottomRight="4"
-                  BottomLeft="4" />
-
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="../../../Styles/QuickSettingsToggle.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="../../../Styles/QuickSettingsToggle.xaml" />
+  </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

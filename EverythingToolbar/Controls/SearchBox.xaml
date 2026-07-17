@@ -1,89 +1,102 @@
-﻿<UserControl x:Class="EverythingToolbar.Controls.SearchBox"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:c="clr-namespace:EverythingToolbar.Converters"
-             xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-             xmlns:controls="clr-namespace:EverythingToolbar.Controls"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             SizeChanged="OnSizeChanged">
+﻿<UserControl
+  x:Class="EverythingToolbar.Controls.SearchBox"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:c="clr-namespace:EverythingToolbar.Converters"
+  xmlns:controls="clr-namespace:EverythingToolbar.Controls"
+  xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+  SizeChanged="OnSizeChanged">
+  <Grid>
+    <TextBox
+      Name="TextBox"
+      CaretBrush="{DynamicResource TextBoxForegroundActive}"
+      GotKeyboardFocus="OnGotKeyboardFocus"
+      LostKeyboardFocus="OnLostKeyboardFocus"
+      PreviewKeyDown="OnPreviewKeyDown"
+      PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"
+      Tag="{x:Static properties:Resources.TextBoxWatermark}"
+      Text="{Binding SearchTerm, RelativeSource={RelativeSource AncestorType={x:Type controls:SearchBox}}, Mode=OneWay}"
+      TextChanged="OnTextChanged">
+      <TextBox.ContextMenu>
+        <ContextMenu>
+          <MenuItem
+            Header="{x:Static properties:Resources.SettingsRegularExpressions}"
+            IsCheckable="True"
+            IsChecked="{Binding Settings.IsRegExEnabled, Mode=TwoWay}" />
+          <MenuItem
+            Header="{x:Static properties:Resources.SettingsMatchCase}"
+            IsCheckable="True"
+            IsChecked="{Binding Settings.IsMatchCase, Mode=TwoWay}" />
+          <MenuItem
+            Header="{x:Static properties:Resources.SettingsMatchPath}"
+            IsCheckable="True"
+            IsChecked="{Binding Settings.IsMatchPath, Mode=TwoWay}" />
+          <MenuItem
+            Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
+            IsCheckable="True"
+            IsChecked="{Binding Settings.IsMatchWholeWord, Mode=TwoWay}"
+            IsEnabled="{Binding Settings.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={c:NotConverter}}" />
+          <Separator />
+          <MenuItem
+            Click="OnCutClicked"
+            Header="{x:Static properties:Resources.ContextMenuCut}"
+            Icon="&#xE8C6;" />
+          <MenuItem
+            Click="OnCopyClicked"
+            Header="{x:Static properties:Resources.ContextMenuCopy}"
+            Icon="&#xE8C8;" />
+          <MenuItem
+            Click="OnPasteClicked"
+            Header="{x:Static properties:Resources.ContextMenuPaste}"
+            Icon="&#xE77F;" />
+        </ContextMenu>
+      </TextBox.ContextMenu>
+    </TextBox>
 
-    <Grid>
-        <TextBox Name="TextBox"
-                 Tag="{x:Static properties:Resources.TextBoxWatermark}"
-                 Text="{Binding SearchTerm, RelativeSource={RelativeSource AncestorType={x:Type controls:SearchBox}}, Mode=OneWay}"
-                 CaretBrush="{DynamicResource TextBoxForegroundActive}"
-                 TextChanged="OnTextChanged"
-                 GotKeyboardFocus="OnGotKeyboardFocus"
-                 LostKeyboardFocus="OnLostKeyboardFocus"
-                 PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"
-                 PreviewKeyDown="OnPreviewKeyDown">
-            <TextBox.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="{x:Static properties:Resources.SettingsRegularExpressions}"
-                              IsCheckable="True"
-                              IsChecked="{Binding Settings.IsRegExEnabled, Mode=TwoWay}" />
-                    <MenuItem Header="{x:Static properties:Resources.SettingsMatchCase}"
-                              IsCheckable="True"
-                              IsChecked="{Binding Settings.IsMatchCase, Mode=TwoWay}" />
-                    <MenuItem Header="{x:Static properties:Resources.SettingsMatchPath}"
-                              IsCheckable="True"
-                              IsChecked="{Binding Settings.IsMatchPath, Mode=TwoWay}" />
-                    <MenuItem Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
-                              IsCheckable="True"
-                              IsChecked="{Binding Settings.IsMatchWholeWord, Mode=TwoWay}"
-                              IsEnabled="{Binding Settings.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={c:NotConverter}}" />
-                    <Separator />
-                    <MenuItem Header="{x:Static properties:Resources.ContextMenuCut}"
-                              Click="OnCutClicked"
-                              Icon="&#xE8C6;" />
-                    <MenuItem Header="{x:Static properties:Resources.ContextMenuCopy}"
-                              Click="OnCopyClicked"
-                              Icon="&#xE8C8;" />
-                    <MenuItem Header="{x:Static properties:Resources.ContextMenuPaste}"
-                              Click="OnPasteClicked"
-                              Icon="&#xE77F;" />
-                </ContextMenu>
-            </TextBox.ContextMenu>
-        </TextBox>
+    <Control Style="{DynamicResource SearchBoxIconStyle}" />
 
-        <Control Style="{DynamicResource SearchBoxIconStyle}" />
-
-        <StackPanel Name="QuickToggleButtons"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    Margin="0, 0, 11, 0"
-                    Background="Transparent">
-            <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
-                          ToolTip="{x:Static properties:Resources.SettingsMatchCase}"
-                          IsChecked="{Binding Settings.IsMatchCase}"
-                          Content="Aa"
-                          Margin="1" />
-            <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
-                          ToolTip="{x:Static properties:Resources.SettingsMatchWholeWord}"
-                          IsChecked="{Binding Settings.IsMatchWholeWord}"
-                          IsEnabled="{Binding Settings.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={c:NotConverter}}"
-                          Margin="1">
-                <TextBlock TextDecorations="Underline,OverLine"
-                           Text="Abl"
-                           FontSize="11"
-                           Padding="0, 2, 0, 0"
-                           HorizontalAlignment="Center" />
-            </ToggleButton>
-            <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
-                          ToolTip="{x:Static properties:Resources.SettingsMatchPath}"
-                          IsChecked="{Binding Settings.IsMatchPath}"
-                          Margin="1">
-                <TextBlock Text="..\"
-                           FontSize="12pt"
-                           Margin="-1, -2, 0, 0" />
-            </ToggleButton>
-            <ToggleButton Style="{DynamicResource QuickSettingsToggleButton}"
-                          ToolTip="{x:Static properties:Resources.SettingsRegularExpressions}"
-                          IsChecked="{Binding Settings.IsRegExEnabled}"
-                          TextBlock.FontWeight="Bold"
-                          Content=".*"
-                          Margin="1" />
-        </StackPanel>
-
-    </Grid>
-
+    <StackPanel
+      Name="QuickToggleButtons"
+      Margin="0 0 11 0"
+      HorizontalAlignment="Right"
+      Background="Transparent"
+      Orientation="Horizontal">
+      <ToggleButton
+        Margin="1"
+        Content="Aa"
+        IsChecked="{Binding Settings.IsMatchCase}"
+        Style="{DynamicResource QuickSettingsToggleButton}"
+        ToolTip="{x:Static properties:Resources.SettingsMatchCase}" />
+      <ToggleButton
+        Margin="1"
+        IsChecked="{Binding Settings.IsMatchWholeWord}"
+        IsEnabled="{Binding Settings.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={c:NotConverter}}"
+        Style="{DynamicResource QuickSettingsToggleButton}"
+        ToolTip="{x:Static properties:Resources.SettingsMatchWholeWord}">
+        <TextBlock
+          Padding="0 2 0 0"
+          HorizontalAlignment="Center"
+          FontSize="11"
+          Text="Abl"
+          TextDecorations="Underline,OverLine" />
+      </ToggleButton>
+      <ToggleButton
+        Margin="1"
+        IsChecked="{Binding Settings.IsMatchPath}"
+        Style="{DynamicResource QuickSettingsToggleButton}"
+        ToolTip="{x:Static properties:Resources.SettingsMatchPath}">
+        <TextBlock
+          Margin="-1 -2 0 0"
+          FontSize="12pt"
+          Text="..\" />
+      </ToggleButton>
+      <ToggleButton
+        Margin="1"
+        Content=".*"
+        IsChecked="{Binding Settings.IsRegExEnabled}"
+        Style="{DynamicResource QuickSettingsToggleButton}"
+        TextBlock.FontWeight="Bold"
+        ToolTip="{x:Static properties:Resources.SettingsRegularExpressions}" />
+    </StackPanel>
+  </Grid>
 </UserControl>

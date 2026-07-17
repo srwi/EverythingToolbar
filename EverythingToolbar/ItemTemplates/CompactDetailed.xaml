@@ -1,46 +1,50 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:h="clr-namespace:EverythingToolbar.Helpers"
-                    xmlns:b="clr-namespace:EverythingToolbar.Behaviors">
-    
-    <DataTemplate x:Key="CompactDetailed">
-        <Grid x:Name="ListViewItem" Margin="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition Width="1.5*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="62" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Image b:ResultIcon.Result="{Binding}"
-                   Width="16"
-                   Height="16" />
-            <TextBlock h:HighlightedText.Source="{Binding HighlightedFileName, Mode=OneTime}"
-                       TextTrimming="CharacterEllipsis"
-                       FontSize="9pt"
-                       Grid.Column="1"
-                       Margin="2, 0"
-                       ToolTip="{Binding FileName}"
-                       Foreground="{DynamicResource SearchResultFileName}" />
-            <TextBlock h:HighlightedText.Source="{Binding HighlightedPath, Mode=OneTime}"
-                       TextTrimming="CharacterEllipsis"
-                       FontSize="9pt"
-                       ToolTip="{Binding Path}"
-                       Grid.Column="2"
-                       Margin="2, 0"
-                       Foreground="{DynamicResource SearchResultPath}" />
-            <TextBlock Grid.Column="3"
-                       FontSize="9pt"
-                       Margin="2, 0"
-                       Foreground="{DynamicResource SearchResultFileSize}"
-                       TextAlignment="Right"
-                       Text="{Binding HumanReadableFileSize}" />
-            <TextBlock Grid.Column="4"
-                       FontSize="9pt"
-                       Margin="2, 0"
-                       Foreground="{DynamicResource SearchResultDateModified}"
-                       Text="{Binding HumanReadableDateModified}" />
-        </Grid>
-    </DataTemplate>
-    
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
+  xmlns:h="clr-namespace:EverythingToolbar.Helpers">
+  <DataTemplate x:Key="CompactDetailed">
+    <Grid x:Name="ListViewItem" Margin="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="20" />
+        <ColumnDefinition Width="1.5*" />
+        <ColumnDefinition Width="2*" />
+        <ColumnDefinition Width="62" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <Image
+        Width="16"
+        Height="16"
+        b:ResultIcon.Result="{Binding}" />
+      <TextBlock
+        Grid.Column="1"
+        Margin="2 0"
+        h:HighlightedText.Source="{Binding HighlightedFileName, Mode=OneTime}"
+        FontSize="9pt"
+        Foreground="{DynamicResource SearchResultFileName}"
+        TextTrimming="CharacterEllipsis"
+        ToolTip="{Binding FileName}" />
+      <TextBlock
+        Grid.Column="2"
+        Margin="2 0"
+        h:HighlightedText.Source="{Binding HighlightedPath, Mode=OneTime}"
+        FontSize="9pt"
+        Foreground="{DynamicResource SearchResultPath}"
+        TextTrimming="CharacterEllipsis"
+        ToolTip="{Binding Path}" />
+      <TextBlock
+        Grid.Column="3"
+        Margin="2 0"
+        FontSize="9pt"
+        Foreground="{DynamicResource SearchResultFileSize}"
+        Text="{Binding HumanReadableFileSize}"
+        TextAlignment="Right" />
+      <TextBlock
+        Grid.Column="4"
+        Margin="2 0"
+        FontSize="9pt"
+        Foreground="{DynamicResource SearchResultDateModified}"
+        Text="{Binding HumanReadableDateModified}" />
+    </Grid>
+  </DataTemplate>
 </ResourceDictionary>

@@ -1,14 +1,8 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-    <!-- The four result-row templates, each keyed by its ISettings.ItemTemplate value. Aggregated
-         so ItemTemplateConverter can look one up by name. Independent of the theme pipeline; the
-         templates' DynamicResource brushes resolve against whatever themed tree they render in. -->
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Normal.xaml" />
-        <ResourceDictionary Source="NormalDetailed.xaml" />
-        <ResourceDictionary Source="Compact.xaml" />
-        <ResourceDictionary Source="CompactDetailed.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="Normal.xaml" />
+    <ResourceDictionary Source="NormalDetailed.xaml" />
+    <ResourceDictionary Source="Compact.xaml" />
+    <ResourceDictionary Source="CompactDetailed.xaml" />
+  </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

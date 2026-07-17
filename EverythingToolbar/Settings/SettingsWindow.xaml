@@ -1,88 +1,86 @@
-﻿<ui:FluentWindow x:Class="EverythingToolbar.Settings.SettingsWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:settings="clr-namespace:EverythingToolbar.Settings"
-        xmlns:behaviors="clr-namespace:EverythingToolbar.Behaviors"
-        xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-        mc:Ignorable="d"
-        WindowBackdropType="Mica"
-        ExtendsContentIntoTitleBar="True"
-        WindowCornerPreference="Round"
-        WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource ApplicationBackgroundBrush}"
-        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-        Height="620"
-        Width="1100"
-        Title="{x:Static properties:Resources.SettingsPreferences}">
-    
-    <i:Interaction.Behaviors>
-        <behaviors:Themed Surface="AppWindow" />
-    </i:Interaction.Behaviors>
-    
-    <Grid>
-        
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        
-        <ui:TitleBar
-            Grid.Row="0"
-            Title="EverythingToolbar"
-            CloseWindowByDoubleClickOnIcon="True">
-            <ui:TitleBar.Icon>
-                <ui:ImageIcon Source="pack://application:,,,/EverythingToolbar;component/Images/AppIcon.ico" />
-            </ui:TitleBar.Icon>
-        </ui:TitleBar>
+﻿<ui:FluentWindow
+  x:Class="EverythingToolbar.Settings.SettingsWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:behaviors="clr-namespace:EverythingToolbar.Behaviors"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+  xmlns:settings="clr-namespace:EverythingToolbar.Settings"
+  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+  Title="{x:Static properties:Resources.SettingsPreferences}"
+  Width="1100"
+  Height="620"
+  Background="{DynamicResource ApplicationBackgroundBrush}"
+  ExtendsContentIntoTitleBar="True"
+  Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+  WindowBackdropType="Mica"
+  WindowCornerPreference="Round"
+  WindowStartupLocation="CenterScreen"
+  mc:Ignorable="d">
+  <i:Interaction.Behaviors>
+    <behaviors:Themed Surface="AppWindow" />
+  </i:Interaction.Behaviors>
 
-        <ui:NavigationView
-            Name="ThisNavigationView"
-            Grid.Row="1"
-            MinHeight="300"
-            IsBackButtonVisible="Collapsed"
-            IsPaneToggleVisible="True"
-            PaneTitle="{x:Static properties:Resources.SettingsPreferences}">
-            <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem
-                    Content="{x:Static properties:Resources.SettingsHome}"
-                    Icon="{ui:SymbolIcon Home24}"
-                    TargetPageType="{x:Type settings:About}" />
-                <ui:NavigationViewItem
-                    Content="{x:Static properties:Resources.SettingsSearch}"
-                    Icon="{ui:SymbolIcon SearchSettings20}"
-                    TargetPageType="{x:Type settings:Search}" />
-                <ui:NavigationViewItem
-                    Content="{x:Static properties:Resources.SettingsUserInterface}"
-                    Icon="{ui:SymbolIcon WindowSettings20}"
-                    TargetPageType="{x:Type settings:UserInterface}" />
-                <ui:NavigationViewItem
-                    Content="{x:Static properties:Resources.SettingsFilters}"
-                    Icon="{ui:SymbolIcon DataFunnel24}"
-                    TargetPageType="{x:Type settings:Filters}" />
-                <ui:NavigationViewItem
-                    Content="{x:Static properties:Resources.SettingsCustomActions}"
-                    Icon="{ui:SymbolIcon Open24}"
-                    TargetPageType="{x:Type settings:CustomActions}" />
-                <ui:NavigationViewItem
-                    Content="{x:Static properties:Resources.SettingsShortcuts}"
-                    Icon="{ui:SymbolIcon Keyboard24}"
-                    TargetPageType="{x:Type settings:Shortcuts}" />
-                <ui:NavigationViewItem
-                    Content="{x:Static properties:Resources.SettingsAdvanced}"
-                    Icon="{ui:SymbolIcon Warning24}"
-                    TargetPageType="{x:Type settings:Advanced}" />
-            </ui:NavigationView.MenuItems>
-            <ui:NavigationView.FooterMenuItems>
-                <ui:NavigationViewItem
-                    Content="{x:Static properties:Resources.SettingsReportProblem}"
-                    Icon="{ui:SymbolIcon Bug24}"
-                    Click="OnReportABugClicked"/>
-            </ui:NavigationView.FooterMenuItems>
-        </ui:NavigationView>
-        
-    </Grid>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <ui:TitleBar
+      Title="EverythingToolbar"
+      Grid.Row="0"
+      CloseWindowByDoubleClickOnIcon="True">
+      <ui:TitleBar.Icon>
+        <ui:ImageIcon Source="pack://application:,,,/EverythingToolbar;component/Images/AppIcon.ico" />
+      </ui:TitleBar.Icon>
+    </ui:TitleBar>
+
+    <ui:NavigationView
+      Name="ThisNavigationView"
+      Grid.Row="1"
+      MinHeight="300"
+      IsBackButtonVisible="Collapsed"
+      IsPaneToggleVisible="True"
+      PaneTitle="{x:Static properties:Resources.SettingsPreferences}">
+      <ui:NavigationView.MenuItems>
+        <ui:NavigationViewItem
+          Content="{x:Static properties:Resources.SettingsHome}"
+          Icon="{ui:SymbolIcon Home24}"
+          TargetPageType="{x:Type settings:About}" />
+        <ui:NavigationViewItem
+          Content="{x:Static properties:Resources.SettingsSearch}"
+          Icon="{ui:SymbolIcon SearchSettings20}"
+          TargetPageType="{x:Type settings:Search}" />
+        <ui:NavigationViewItem
+          Content="{x:Static properties:Resources.SettingsUserInterface}"
+          Icon="{ui:SymbolIcon WindowSettings20}"
+          TargetPageType="{x:Type settings:UserInterface}" />
+        <ui:NavigationViewItem
+          Content="{x:Static properties:Resources.SettingsFilters}"
+          Icon="{ui:SymbolIcon DataFunnel24}"
+          TargetPageType="{x:Type settings:Filters}" />
+        <ui:NavigationViewItem
+          Content="{x:Static properties:Resources.SettingsCustomActions}"
+          Icon="{ui:SymbolIcon Open24}"
+          TargetPageType="{x:Type settings:CustomActions}" />
+        <ui:NavigationViewItem
+          Content="{x:Static properties:Resources.SettingsShortcuts}"
+          Icon="{ui:SymbolIcon Keyboard24}"
+          TargetPageType="{x:Type settings:Shortcuts}" />
+        <ui:NavigationViewItem
+          Content="{x:Static properties:Resources.SettingsAdvanced}"
+          Icon="{ui:SymbolIcon Warning24}"
+          TargetPageType="{x:Type settings:Advanced}" />
+      </ui:NavigationView.MenuItems>
+      <ui:NavigationView.FooterMenuItems>
+        <ui:NavigationViewItem
+          Click="OnReportABugClicked"
+          Content="{x:Static properties:Resources.SettingsReportProblem}"
+          Icon="{ui:SymbolIcon Bug24}" />
+      </ui:NavigationView.FooterMenuItems>
+    </ui:NavigationView>
+  </Grid>
 </ui:FluentWindow>

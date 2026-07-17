@@ -11,11 +11,11 @@ namespace EverythingToolbar.Settings
         private readonly SearchState _searchState = Ioc.Default.GetRequiredService<SearchState>();
 
         public List<KeyValuePair<string, FocusBehavior>> FocusBehaviorItems { get; } =
-            [
-                new(Properties.Resources.FocusBehaviorClamp, FocusBehavior.Clamp),
-                new(Properties.Resources.FocusBehaviorRepeat, FocusBehavior.Repeat),
-                new(Properties.Resources.FocusBehaviorRepeatWithSearch, FocusBehavior.RepeatWithSearch),
-            ];
+        [
+            new(Properties.Resources.FocusBehaviorClamp, FocusBehavior.Clamp),
+            new(Properties.Resources.FocusBehaviorRepeat, FocusBehavior.Repeat),
+            new(Properties.Resources.FocusBehaviorRepeatWithSearch, FocusBehavior.RepeatWithSearch),
+        ];
 
         public Search()
         {

@@ -1,37 +1,24 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-    <!--
-        Shadow style for ToolTips so they keep the app's context-menu color scheme
-        instead of taking on the WPF-UI Fluent base look (Phase C audit,
-        THEMING-REFACTOR-PLAN.md §3).
-    -->
-    <Style TargetType="{x:Type ToolTip}">
-        <Setter Property="Background"
-                Value="{DynamicResource ContextMenuBackground}" />
-        <Setter Property="Foreground"
-                Value="{DynamicResource ContextMenuItemForeground}" />
-        <Setter Property="BorderBrush"
-                Value="{DynamicResource ContextMenuBorder}" />
-        <Setter Property="BorderThickness"
-                Value="1" />
-        <Setter Property="Padding"
-                Value="7, 5" />
-        <Setter Property="FontSize"
-                Value="12" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToolTip}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{DynamicResource ContextMenuMenuItemCornerRadius}"
-                            Padding="{TemplateBinding Padding}">
-                        <ContentPresenter />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Style TargetType="{x:Type ToolTip}">
+    <Setter Property="Background" Value="{DynamicResource ContextMenuBackground}" />
+    <Setter Property="Foreground" Value="{DynamicResource ContextMenuItemForeground}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ContextMenuBorder}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Padding" Value="7 5" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ToolTip}">
+          <Border
+            Padding="{TemplateBinding Padding}"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="{DynamicResource ContextMenuMenuItemCornerRadius}">
+            <ContentPresenter />
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
 </ResourceDictionary>

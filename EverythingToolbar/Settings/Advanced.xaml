@@ -1,116 +1,127 @@
-﻿<Page x:Class="EverythingToolbar.Settings.Advanced"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-      xmlns:c="clr-namespace:EverythingToolbar.Converters"
-      xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
-      xmlns:controls="clr-namespace:EverythingToolbar.Controls"
-      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      ScrollViewer.CanContentScroll="False"
-      Unloaded="OnUnloaded">
+﻿<Page
+  x:Class="EverythingToolbar.Settings.Advanced"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
+  xmlns:c="clr-namespace:EverythingToolbar.Converters"
+  xmlns:controls="clr-namespace:EverythingToolbar.Controls"
+  xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+  xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+  Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+  ScrollViewer.CanContentScroll="False"
+  Unloaded="OnUnloaded">
+  <i:Interaction.Behaviors>
+    <b:Themed Surface="AppWindow" />
+  </i:Interaction.Behaviors>
 
-    <i:Interaction.Behaviors>
-        <b:Themed Surface="AppWindow" />
-    </i:Interaction.Behaviors>
+  <ScrollViewer>
+    <StackPanel Margin="40">
+      <ui:TextBlock
+        Margin="0 0 0 0"
+        FontTypography="Title"
+        Text="{x:Static properties:Resources.SettingsAdvanced}" />
 
-    <ScrollViewer>
-        <StackPanel Margin="40">
-            <ui:TextBlock FontTypography="Title"
-                          Text="{x:Static properties:Resources.SettingsAdvanced}"
-                          Margin="0, 0, 0, 0" />
-
-            <ui:TextBlock FontTypography="BodyStrong"
-                          Text="{x:Static properties:Resources.SettingsUpdates}"
-                          Margin="0, 25, 0, 7" />
-            <Border Padding="16"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1,1,1,1"
-                    CornerRadius="8,8,8,8">
-                <StackPanel>
-                    <controls:SettingItem Title="{x:Static properties:Resources.SettingsCheckForUpdates}"
-                                          HelpText="{x:Static properties:Resources.SettingsUpdatesHelp}">
-                        <controls:SettingItem.SettingContent>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <ui:ProgressRing IsIndeterminate="True" Width="24" Height="24" Margin="0,0,15,0"
-                                                 Visibility="{Binding CheckingForUpdatesVisible, RelativeSource={RelativeSource AncestorType={x:Type Page}}, Converter={c:BoolToVisibilityConverter}}" />
-                                <ui:Button Content="{x:Static properties:Resources.SettingsCheckNow}"
-                                           Click="OnCheckForUpdatesClicked"
-                                           Visibility="{Binding DownloadUpdateButtonVisible, RelativeSource={RelativeSource AncestorType={x:Type Page}}, Converter={c:InvertedBoolToVisibilityConverter}}" />
-                                <ui:Button Content="{x:Static properties:Resources.SettingsDownloadLatestVersion}"
-                                           Click="OnDownloadUpdateClicked"
-                                           Visibility="{Binding DownloadUpdateButtonVisible, RelativeSource={RelativeSource AncestorType={x:Type Page}}, Converter={c:BoolToVisibilityConverter}}" />
-                                <ui:ToggleSwitch IsChecked="{Binding Settings.IsUpdateNotificationsEnabled, Mode=TwoWay}"
-                                                 Margin="15, 0, 0, 0" />
-                            </StackPanel>
-                        </controls:SettingItem.SettingContent>
-                    </controls:SettingItem>
-                    <ui:InfoBar Name="NoUpdatesInfoBar"
-                                Message="{x:Static properties:Resources.SettingsLatestVersionMessage}"
-                                IsOpen="{Binding NoUpdatesBannerOpen, RelativeSource={RelativeSource AncestorType={x:Type Page}}, Mode=TwoWay}" />
-                </StackPanel>
-            </Border>
-            <ui:TextBlock FontTypography="BodyStrong"
-                          Text="{x:Static properties:Resources.SettingsNamedInstance}"
-                          Margin="0, 25, 0, 7" />
-            <Border Padding="16"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1,1,1,1"
-                    CornerRadius="8,8,8,8">
-                <controls:SettingItem Title="{x:Static properties:Resources.SettingsInstanceName}"
-                                      HelpText="{x:Static properties:Resources.SettingsInstanceNameHelp}">
-                    <controls:SettingItem.SettingContent>
-                        <ui:TextBox Text="{Binding Settings.InstanceName, Mode=TwoWay}"
-                                    HorizontalAlignment="Right"
-                                    Width="200"
-                                    PlaceholderText="{x:Static properties:Resources.SettingsDefaultInstance}" />
-                    </controls:SettingItem.SettingContent>
-                </controls:SettingItem>
-            </Border>
-            <ui:TextBlock FontTypography="BodyStrong"
-                          Text="{x:Static properties:Resources.SettingsOther}"
-                          Margin="0, 25, 0, 7"/>
-            <Border Padding="16"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1,1,1,1"
-                    CornerRadius="8,8,0,0">
-                <controls:SettingItem Title="{x:Static properties:Resources.SettingsReplaceStartMenuSearch}"
-                                      HelpText="{x:Static properties:Resources.SettingsReplaceStartMenuHelp}">
-                    <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding Settings.IsReplaceStartMenuSearch, Mode=TwoWay}" />
-                    </controls:SettingItem.SettingContent>
-                </controls:SettingItem>
-            </Border>
-            <Border Padding="16"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1,0,1,1"
-                    CornerRadius="0,0,0,0"
-                    Visibility="{Binding IsLauncher, Converter={c:BoolToVisibilityConverter}}">
-                <controls:SettingItem Title="{x:Static properties:Resources.SettingsEnableAutostart}"
-                                      HelpText="{x:Static properties:Resources.SettingsEnableAutostartHelp}">
-                    <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding IsAutostartEnabled, Mode=TwoWay}" />
-                    </controls:SettingItem.SettingContent>
-                </controls:SettingItem>
-            </Border>
-            <Border Padding="16"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1,0,1,1"
-                    CornerRadius="0, 0,8,8"
-                    Visibility="{Binding WindowsBuildVersion, Converter={c:WindowsVersionToVisibilityConverter}, ConverterParameter='>=22000'}">
-                <controls:SettingItem Title="{x:Static properties:Resources.SettingsForceWin10Styles}"
-                                      HelpText="{x:Static properties:Resources.SettingsForceWin10StylesHelp}">
-                    <controls:SettingItem.SettingContent>
-                        <ui:ToggleSwitch IsChecked="{Binding Settings.ForceWin10Behavior, Mode=TwoWay}" />
-                    </controls:SettingItem.SettingContent>
-                </controls:SettingItem>
-            </Border>
+      <ui:TextBlock
+        Margin="0 25 0 7"
+        FontTypography="BodyStrong"
+        Text="{x:Static properties:Resources.SettingsUpdates}" />
+      <Border
+        Padding="16"
+        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1 1 1 1"
+        CornerRadius="8,8,8,8">
+        <StackPanel>
+          <controls:SettingItem Title="{x:Static properties:Resources.SettingsCheckForUpdates}" HelpText="{x:Static properties:Resources.SettingsUpdatesHelp}">
+            <controls:SettingItem.SettingContent>
+              <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <ui:ProgressRing
+                  Width="24"
+                  Height="24"
+                  Margin="0 0 15 0"
+                  IsIndeterminate="True"
+                  Visibility="{Binding CheckingForUpdatesVisible, RelativeSource={RelativeSource AncestorType={x:Type Page}}, Converter={c:BoolToVisibilityConverter}}" />
+                <ui:Button
+                  Click="OnCheckForUpdatesClicked"
+                  Content="{x:Static properties:Resources.SettingsCheckNow}"
+                  Visibility="{Binding DownloadUpdateButtonVisible, RelativeSource={RelativeSource AncestorType={x:Type Page}}, Converter={c:InvertedBoolToVisibilityConverter}}" />
+                <ui:Button
+                  Click="OnDownloadUpdateClicked"
+                  Content="{x:Static properties:Resources.SettingsDownloadLatestVersion}"
+                  Visibility="{Binding DownloadUpdateButtonVisible, RelativeSource={RelativeSource AncestorType={x:Type Page}}, Converter={c:BoolToVisibilityConverter}}" />
+                <ui:ToggleSwitch Margin="15 0 0 0" IsChecked="{Binding Settings.IsUpdateNotificationsEnabled, Mode=TwoWay}" />
+              </StackPanel>
+            </controls:SettingItem.SettingContent>
+          </controls:SettingItem>
+          <ui:InfoBar
+            Name="NoUpdatesInfoBar"
+            IsOpen="{Binding NoUpdatesBannerOpen, RelativeSource={RelativeSource AncestorType={x:Type Page}}, Mode=TwoWay}"
+            Message="{x:Static properties:Resources.SettingsLatestVersionMessage}" />
         </StackPanel>
-    </ScrollViewer>
+      </Border>
+      <ui:TextBlock
+        Margin="0 25 0 7"
+        FontTypography="BodyStrong"
+        Text="{x:Static properties:Resources.SettingsNamedInstance}" />
+      <Border
+        Padding="16"
+        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1 1 1 1"
+        CornerRadius="8,8,8,8">
+        <controls:SettingItem Title="{x:Static properties:Resources.SettingsInstanceName}" HelpText="{x:Static properties:Resources.SettingsInstanceNameHelp}">
+          <controls:SettingItem.SettingContent>
+            <ui:TextBox
+              Width="200"
+              HorizontalAlignment="Right"
+              PlaceholderText="{x:Static properties:Resources.SettingsDefaultInstance}"
+              Text="{Binding Settings.InstanceName, Mode=TwoWay}" />
+          </controls:SettingItem.SettingContent>
+        </controls:SettingItem>
+      </Border>
+      <ui:TextBlock
+        Margin="0 25 0 7"
+        FontTypography="BodyStrong"
+        Text="{x:Static properties:Resources.SettingsOther}" />
+      <Border
+        Padding="16"
+        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1 1 1 1"
+        CornerRadius="8,8,0,0">
+        <controls:SettingItem Title="{x:Static properties:Resources.SettingsReplaceStartMenuSearch}" HelpText="{x:Static properties:Resources.SettingsReplaceStartMenuHelp}">
+          <controls:SettingItem.SettingContent>
+            <ui:ToggleSwitch IsChecked="{Binding Settings.IsReplaceStartMenuSearch, Mode=TwoWay}" />
+          </controls:SettingItem.SettingContent>
+        </controls:SettingItem>
+      </Border>
+      <Border
+        Padding="16"
+        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1 0 1 1"
+        CornerRadius="0,0,0,0"
+        Visibility="{Binding IsLauncher, Converter={c:BoolToVisibilityConverter}}">
+        <controls:SettingItem Title="{x:Static properties:Resources.SettingsEnableAutostart}" HelpText="{x:Static properties:Resources.SettingsEnableAutostartHelp}">
+          <controls:SettingItem.SettingContent>
+            <ui:ToggleSwitch IsChecked="{Binding IsAutostartEnabled, Mode=TwoWay}" />
+          </controls:SettingItem.SettingContent>
+        </controls:SettingItem>
+      </Border>
+      <Border
+        Padding="16"
+        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1 0 1 1"
+        CornerRadius="0, 0,8,8"
+        Visibility="{Binding WindowsBuildVersion, Converter={c:WindowsVersionToVisibilityConverter}, ConverterParameter='>=22000'}">
+        <controls:SettingItem Title="{x:Static properties:Resources.SettingsForceWin10Styles}" HelpText="{x:Static properties:Resources.SettingsForceWin10StylesHelp}">
+          <controls:SettingItem.SettingContent>
+            <ui:ToggleSwitch IsChecked="{Binding Settings.ForceWin10Behavior, Mode=TwoWay}" />
+          </controls:SettingItem.SettingContent>
+        </controls:SettingItem>
+      </Border>
+    </StackPanel>
+  </ScrollViewer>
 </Page>

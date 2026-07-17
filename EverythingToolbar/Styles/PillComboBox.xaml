@@ -1,206 +1,170 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:properties="clr-namespace:EverythingToolbar.Properties">
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:properties="clr-namespace:EverythingToolbar.Properties">
+  <Style TargetType="{x:Type ComboBox}">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="OverridesDefaultStyle" Value="true" />
+    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+    <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+    <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ComboBox">
+          <Border>
+            <Grid>
+              <Border
+                x:Name="Border"
+                Height="32"
+                Padding="15 1"
+                Background="{DynamicResource AccentColor}"
+                BorderBrush="{DynamicResource AccentColor}"
+                BorderThickness="0"
+                CornerRadius="16">
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock
+                    x:Name="ContentSiteIcon"
+                    Margin="-3 0 0 0"
+                    Padding="0 0 7 3"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="10pt"
+                    Foreground="{DynamicResource TabForegroundActive}"
+                    IsHitTestVisible="False"
+                    Text="🞃" />
+                  <TextBlock
+                    x:Name="ContentSite"
+                    Margin="0 0 0 2"
+                    VerticalAlignment="Center"
+                    FontSize="10pt"
+                    FontWeight="Medium"
+                    Foreground="{DynamicResource TabForegroundActive}"
+                    IsHitTestVisible="False"
+                    Text="{TemplateBinding Text}" />
+                </StackPanel>
+              </Border>
+              <ToggleButton
+                Name="ToggleButton"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                ClickMode="Press"
+                IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                Opacity="0" />
+              <Popup
+                Name="Popup"
+                AllowsTransparency="True"
+                IsOpen="{TemplateBinding IsDropDownOpen}"
+                Placement="Bottom"
+                PopupAnimation="None"
+                VerticalOffset="{DynamicResource ContextMenuDropShadowRadius}">
+                <Grid
+                  Name="DropDown"
+                  MinWidth="{TemplateBinding ActualWidth}"
+                  MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                  Margin="{DynamicResource ContextMenuDropShadowMargin}">
+                  <Grid.RenderTransform>
+                    <TranslateTransform />
+                  </Grid.RenderTransform>
+                  <Grid.Effect>
+                    <DropShadowEffect
+                      BlurRadius="{DynamicResource ContextMenuDropShadowRadius}"
+                      Opacity="0.3"
+                      ShadowDepth="0"
+                      Color="Black" />
+                  </Grid.Effect>
+                  <Border
+                    x:Name="DropDownBorder"
+                    Background="{DynamicResource ContextMenuBackground}"
+                    BorderBrush="{DynamicResource ContextMenuBorder}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    SnapsToDevicePixels="True">
+                    <ScrollViewer>
+                      <StackPanel
+                        Margin="4"
+                        IsItemsHost="True"
+                        KeyboardNavigation.DirectionalNavigation="Contained" />
+                    </ScrollViewer>
+                  </Border>
+                </Grid>
+              </Popup>
+            </Grid>
+          </Border>
+          <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ComboBox, Path=SelectedItem}" Value="{x:Null}">
+              <Setter TargetName="ContentSite" Property="Text" Value="{x:Static properties:Resources.UserFilterPlaceholder}" />
+              <Setter TargetName="ContentSite" Property="TextBlock.Foreground" Value="{DynamicResource TabForeground}" />
+              <Setter TargetName="ContentSite" Property="TextBlock.FontWeight" Value="Normal" />
+              <Setter TargetName="ContentSiteIcon" Property="Foreground" Value="{DynamicResource TabForeground}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource TabBorder}" />
+              <Setter TargetName="Border" Property="BorderThickness" Value="1" />
+              <Setter TargetName="Border" Property="Padding" Value="14 0" />
+              <Setter TargetName="Border" Property="Background" Value="{DynamicResource TabBackground}" />
+            </DataTrigger>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding ElementName=ComboBox, Path=SelectedItem}" Value="{x:Null}" />
+                <Condition Binding="{Binding ElementName=ComboBox, Path=IsMouseOver}" Value="True" />
+              </MultiDataTrigger.Conditions>
+              <MultiDataTrigger.Setters>
+                <Setter TargetName="ContentSiteIcon" Property="Foreground" Value="{DynamicResource TabForegroundHover}" />
+                <Setter TargetName="ContentSite" Property="TextBlock.Foreground" Value="{DynamicResource TabForegroundHover}" />
+                <Setter TargetName="Border" Property="Background" Value="{DynamicResource TabBackgroundHover}" />
+              </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <DataTrigger Binding="{Binding HasItems, RelativeSource={RelativeSource Self}}" Value="False">
+              <Setter Property="Visibility" Value="Hidden" />
+            </DataTrigger>
+            <Trigger SourceName="Popup" Property="IsOpen" Value="True">
+              <Trigger.EnterActions>
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation
+                      Storyboard.TargetName="DropDown"
+                      Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                      From="-90"
+                      To="0"
+                      Duration="00:00:00.167">
+                      <DoubleAnimation.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                  </Storyboard>
+                </BeginStoryboard>
+              </Trigger.EnterActions>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
 
-    <Style TargetType="{x:Type ComboBox}">
-        <Setter Property="Background"
-                Value="Transparent" />
-        <Setter Property="OverridesDefaultStyle"
-                Value="true" />
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
-                Value="Auto" />
-        <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
-                Value="Auto" />
-        <Setter Property="ScrollViewer.CanContentScroll"
-                Value="true" />
-        <Setter Property="SnapsToDevicePixels"
-                Value="True" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ComboBox">
-                    <Border>
-                        <Grid>
-                            <Border x:Name="Border"
-                                    Height="32"
-                                    BorderThickness="0"
-                                    CornerRadius="16"
-                                    Padding="15, 1"
-                                    BorderBrush="{DynamicResource AccentColor}"
-                                    Background="{DynamicResource AccentColor}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock x:Name="ContentSiteIcon"
-                                               IsHitTestVisible="False"
-                                               Text="🞃"
-                                               FontSize="10pt"
-                                               Foreground="{DynamicResource TabForegroundActive}"
-                                               Margin="-3, 0, 0, 0"
-                                               Padding="0, 0, 7, 3"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center" />
-                                    <TextBlock x:Name="ContentSite"
-                                               Text="{TemplateBinding Text}"
-                                               IsHitTestVisible="False"
-                                               FontSize="10pt"
-                                               FontWeight="Medium"
-                                               Margin="0, 0, 0, 2"
-                                               Foreground="{DynamicResource TabForegroundActive}"
-                                               VerticalAlignment="Center" />
-                                </StackPanel>
-                            </Border>
-                            <ToggleButton Name="ToggleButton"
-                                          VerticalAlignment="Stretch"
-                                          HorizontalAlignment="Stretch"
-                                          Opacity="0"
-                                          IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                          ClickMode="Press" />
-                            <Popup Name="Popup"
-                                   Placement="Bottom"
-                                   VerticalOffset="{DynamicResource ContextMenuDropShadowRadius}"
-                                   IsOpen="{TemplateBinding IsDropDownOpen}"
-                                   AllowsTransparency="True"
-                                   PopupAnimation="None">
-                                <Grid Name="DropDown"
-                                      MinWidth="{TemplateBinding ActualWidth}"
-                                      MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                                      Margin="{DynamicResource ContextMenuDropShadowMargin}">
-                                    <Grid.RenderTransform>
-                                        <TranslateTransform />
-                                    </Grid.RenderTransform>
-                                    <Grid.Effect>
-                                        <DropShadowEffect Color="Black"
-                                            BlurRadius="{DynamicResource ContextMenuDropShadowRadius}"
-                                            ShadowDepth="0"
-                                            Opacity="0.3" />
-                                    </Grid.Effect>
-                                    <Border x:Name="DropDownBorder"
-                                            Background="{DynamicResource ContextMenuBackground}"
-                                            BorderBrush="{DynamicResource ContextMenuBorder}"
-                                            BorderThickness="1"
-                                            CornerRadius="8"
-                                            SnapsToDevicePixels="True">
-                                        <ScrollViewer>
-                                            <StackPanel IsItemsHost="True"
-                                                        Margin="4"
-                                                        KeyboardNavigation.DirectionalNavigation="Contained" />
-                                        </ScrollViewer>
-                                    </Border>
-                                </Grid>
-                            </Popup>
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=ComboBox, Path=SelectedItem}"
-                                     Value="{x:Null}">
-                            <Setter TargetName="ContentSite"
-                                    Property="Text"
-                                    Value="{x:Static properties:Resources.UserFilterPlaceholder}" />
-                            <Setter TargetName="ContentSite"
-                                    Property="TextBlock.Foreground"
-                                    Value="{DynamicResource TabForeground}" />
-                            <Setter TargetName="ContentSite"
-                                    Property="TextBlock.FontWeight"
-                                    Value="Normal" />
-                            <Setter TargetName="ContentSiteIcon"
-                                    Property="Foreground"
-                                    Value="{DynamicResource TabForeground}" />
-                            <Setter TargetName="Border"
-                                    Property="BorderBrush"
-                                    Value="{DynamicResource TabBorder}" />
-                            <Setter TargetName="Border"
-                                    Property="BorderThickness"
-                                    Value="1" />
-                            <Setter TargetName="Border"
-                                    Property="Padding"
-                                    Value="14, 0" />
-                            <Setter TargetName="Border"
-                                    Property="Background"
-                                    Value="{DynamicResource TabBackground}" />
-                        </DataTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding ElementName=ComboBox, Path=SelectedItem}"
-                                           Value="{x:Null}" />
-                                <Condition Binding="{Binding ElementName=ComboBox, Path=IsMouseOver}"
-                                           Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <MultiDataTrigger.Setters>
-                                <Setter TargetName="ContentSiteIcon"
-                                        Property="Foreground"
-                                        Value="{DynamicResource TabForegroundHover}" />
-                                <Setter TargetName="ContentSite"
-                                        Property="TextBlock.Foreground"
-                                        Value="{DynamicResource TabForegroundHover}" />
-                                <Setter TargetName="Border"
-                                        Property="Background"
-                                        Value="{DynamicResource TabBackgroundHover}" />
-                            </MultiDataTrigger.Setters>
-                        </MultiDataTrigger>
-                        <DataTrigger Binding="{Binding HasItems, RelativeSource={RelativeSource Self}}"
-                                     Value="False">
-                            <Setter Property="Visibility"
-                                    Value="Hidden" />
-                        </DataTrigger>
-                        <Trigger SourceName="Popup" Property="IsOpen" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="DropDown"
-                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                                            From="-90"
-                                            To="0"
-                                            Duration="00:00:00.167">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CircleEase EasingMode="EaseOut" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style TargetType="{x:Type ComboBoxItem}">
-        <Setter Property="FontSize"
-                Value="10pt" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
-                    <Border x:Name="Bd"
-                            Background="Transparent"
-                            Margin="1"
-                            Padding="11, 5, 35, 5"
-                            CornerRadius="5">
-                        <ContentPresenter x:Name="Cp"
-                                          TextBlock.Foreground="{DynamicResource ContextMenuItemForeground}" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    TargetName="Bd"
-                                    Value="{DynamicResource ContextMenuItemBackgroundHover}" />
-                            <Setter Property="TextBlock.Foreground"
-                                    TargetName="Cp"
-                                    Value="{DynamicResource ContextMenuItemForegroundHover}" />
-                        </Trigger>
-                        <Trigger Property="IsSelected"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    TargetName="Bd"
-                                    Value="{DynamicResource ContextMenuItemBackgroundActive}" />
-                            <Setter Property="TextBlock.Foreground"
-                                    TargetName="Cp"
-                                    Value="{DynamicResource ContextMenuItemForegroundActive}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
+  <Style TargetType="{x:Type ComboBoxItem}">
+    <Setter Property="FontSize" Value="10pt" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+          <Border
+            x:Name="Bd"
+            Margin="1"
+            Padding="11 5 35 5"
+            Background="Transparent"
+            CornerRadius="5">
+            <ContentPresenter x:Name="Cp" TextBlock.Foreground="{DynamicResource ContextMenuItemForeground}" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ContextMenuItemBackgroundHover}" />
+              <Setter TargetName="Cp" Property="TextBlock.Foreground" Value="{DynamicResource ContextMenuItemForegroundHover}" />
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+              <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ContextMenuItemBackgroundActive}" />
+              <Setter TargetName="Cp" Property="TextBlock.Foreground" Value="{DynamicResource ContextMenuItemForegroundActive}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
 </ResourceDictionary>

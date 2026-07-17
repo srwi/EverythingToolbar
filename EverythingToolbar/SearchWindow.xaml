@@ -1,121 +1,110 @@
-﻿<controls:AcrylicWindow x:Class="EverythingToolbar.SearchWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
-        xmlns:c="clr-namespace:EverythingToolbar.Converters"
-        xmlns:h="clr-namespace:EverythingToolbar.Helpers"
-        xmlns:markup="clr-namespace:EverythingToolbar.Markup"
-        xmlns:services="clr-namespace:EverythingToolbar.Services"
-        xmlns:local="clr-namespace:EverythingToolbar"
-        xmlns:app="clr-namespace:EverythingToolbar.App;assembly=EverythingToolbar.App"
-        xmlns:search="clr-namespace:EverythingToolbar.Search"
-        xmlns:appsearch="clr-namespace:EverythingToolbar.App.Search;assembly=EverythingToolbar.App"
-        xmlns:controls="clr-namespace:EverythingToolbar.Controls"
-        MinWidth="600"
-        MinHeight="300"
-        ShowInTaskbar="False"
-        UseLayoutRounding="True"
-        PreviewKeyDown="OnPreviewKeyDown"
-        LostKeyboardFocus="OnLostKeyboardFocus"
-        mc:Ignorable="d"
-        ShowAccentBorder="True"
-        d:DesignWidth="500"
-        d:DesignHeight="500">
+﻿<controls:AcrylicWindow
+  x:Class="EverythingToolbar.SearchWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:app="clr-namespace:EverythingToolbar.App;assembly=EverythingToolbar.App"
+  xmlns:appsearch="clr-namespace:EverythingToolbar.App.Search;assembly=EverythingToolbar.App"
+  xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
+  xmlns:c="clr-namespace:EverythingToolbar.Converters"
+  xmlns:controls="clr-namespace:EverythingToolbar.Controls"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:h="clr-namespace:EverythingToolbar.Helpers"
+  xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+  xmlns:local="clr-namespace:EverythingToolbar"
+  xmlns:markup="clr-namespace:EverythingToolbar.Markup"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:search="clr-namespace:EverythingToolbar.Search"
+  xmlns:services="clr-namespace:EverythingToolbar.Services"
+  MinWidth="600"
+  MinHeight="300"
+  d:DesignHeight="500"
+  d:DesignWidth="500"
+  LostKeyboardFocus="OnLostKeyboardFocus"
+  PreviewKeyDown="OnPreviewKeyDown"
+  ShowAccentBorder="True"
+  ShowInTaskbar="False"
+  UseLayoutRounding="True"
+  mc:Ignorable="d">
+  <i:Interaction.Behaviors>
+    <b:FlowDirectionAwareness />
+    <b:Themed Surface="TaskbarSurface" />
+  </i:Interaction.Behaviors>
 
-    <i:Interaction.Behaviors>
-        <b:FlowDirectionAwareness />
-        <b:Themed Surface="TaskbarSurface" />
-    </i:Interaction.Behaviors>
+  <Border Background="{DynamicResource SearchResultsViewHeader}">
+    <Grid Name="ContentGrid">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="{DynamicResource FirstGridRowHeight}" />
+        <RowDefinition Height="{DynamicResource SecondGridRowHeight}" />
+        <RowDefinition Height="{DynamicResource ThirdGridRowHeight}" />
+        <RowDefinition Height="{DynamicResource FourthGridRowHeight}" />
+      </Grid.RowDefinitions>
 
-    <Border Background="{DynamicResource SearchResultsViewHeader}">
+      <Border
+        Grid.Row="{DynamicResource TabBarGridRow}"
+        BorderBrush="{DynamicResource TabBarBottomBorder}"
+        BorderThickness="0 0 0 1">
+        <Grid Margin="{DynamicResource TabBarMargin}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
 
-        <Grid Name="ContentGrid">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="{DynamicResource FirstGridRowHeight}" />
-                <RowDefinition Height="{DynamicResource SecondGridRowHeight}" />
-                <RowDefinition Height="{DynamicResource ThirdGridRowHeight}" />
-                <RowDefinition Height="{DynamicResource FourthGridRowHeight}" />
-            </Grid.RowDefinitions>
+          <controls:FilterSelector x:Name="FilterSelector" SelectedFilter="{Binding Source={markup:Service {x:Type appsearch:SearchState}}, Path=Filter, Mode=TwoWay}" />
 
-            <Border Grid.Row="{DynamicResource TabBarGridRow}"
-                    BorderThickness="0,0,0,1"
-                    BorderBrush="{DynamicResource TabBarBottomBorder}">
-                <Grid Margin="{DynamicResource TabBarMargin}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+          <Border Grid.Column="1">
+            <Button
+              Click="OpenSearchInEverything"
+              Content="{Binding Source={markup:Service {x:Type appsearch:SearchSession}}, Path=TotalCount, Converter={c:SearchResultsCountConverter}}"
+              Style="{DynamicResource TabBarButtonStyle}"
+              Visibility="{Binding Source={markup:Service {x:Type app:ISettings}}, Path=IsShowResultsCount, Converter={c:BoolToVisibilityConverter}}" />
+          </Border>
 
-                    <controls:FilterSelector x:Name="FilterSelector"
-                                             SelectedFilter="{Binding Source={markup:Service {x:Type appsearch:SearchState}}, Path=Filter, Mode=TwoWay}"/>
-
-                    <Border Grid.Column="1">
-                        <Button Style="{DynamicResource TabBarButtonStyle}"
-                                Content="{Binding Source={markup:Service {x:Type appsearch:SearchSession}}, Path=TotalCount,
-                                                  Converter={c:SearchResultsCountConverter}}"
-                                Visibility="{Binding Source={markup:Service {x:Type app:ISettings}},
-                                                     Path=IsShowResultsCount,
-                                                     Converter={c:BoolToVisibilityConverter}}"
-                                Click="OpenSearchInEverything" />
-                    </Border>
-
-                    <controls:SettingsControl Grid.Column="2" />
-                </Grid>
-            </Border>
-
-            <controls:UpdateBanner Grid.Row="{DynamicResource UpdateBannerGridRow}" />
-            <controls:UpdateSuccessfulBanner Grid.Row="{DynamicResource UpdateBannerGridRow}" />
-
-            <Grid Grid.Row="{DynamicResource SearchResultsViewGridRow}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <controls:SearchResultsView x:Name="SearchResultsView"
-                                            Grid.Column="0" />
-
-                <ContentControl Grid.Column="1"
-                                Content="{Binding ElementName=SearchResultsView, Path=SelectedSearchResult}">
-                    <ContentControl.Style>
-                        <Style TargetType="{x:Type ContentControl}">
-                            <Setter Property="Visibility"
-                                    Value="Collapsed" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Source={markup:Service {x:Type app:ISettings}}, Path=IsPreviewPaneEnabled}"
-                                             Value="True">
-                                    <Setter Property="Visibility"
-                                            Value="Visible" />
-                                    <Setter Property="Width"
-                                            Value="380" />
-                                    <Setter Property="ContentTemplate">
-                                        <Setter.Value>
-                                            <DataTemplate>
-                                                <controls:SearchResultPreviewPane SelectedResult="{Binding}" />
-                                            </DataTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ContentControl.Style>
-                </ContentControl>
-            </Grid>
-
-            <controls:SearchBox x:Name="SearchBox"
-                                SearchTerm="{Binding Source={markup:Service {x:Type appsearch:SearchState}}, Path=SearchTerm, Mode=TwoWay}"
-                                TabIndex="999"
-                                Grid.Row="{DynamicResource SearchBoxGridRow}"
-                                Height="40"
-                                Margin="{DynamicResource SearchBoxMargin}"
-                                Visibility="{Binding Source={markup:Service {x:Type services:SearchWindowController}},
-                                                     Path=IsIconMode,
-                                                     Converter={c:BoolToVisibilityConverter}}" />
+          <controls:SettingsControl Grid.Column="2" />
         </Grid>
-    </Border>
+      </Border>
 
+      <controls:UpdateBanner Grid.Row="{DynamicResource UpdateBannerGridRow}" />
+      <controls:UpdateSuccessfulBanner Grid.Row="{DynamicResource UpdateBannerGridRow}" />
+
+      <Grid Grid.Row="{DynamicResource SearchResultsViewGridRow}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <controls:SearchResultsView x:Name="SearchResultsView" Grid.Column="0" />
+
+        <ContentControl Grid.Column="1" Content="{Binding ElementName=SearchResultsView, Path=SelectedSearchResult}">
+          <ContentControl.Style>
+            <Style TargetType="{x:Type ContentControl}">
+              <Setter Property="Visibility" Value="Collapsed" />
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding Source={markup:Service {x:Type app:ISettings}}, Path=IsPreviewPaneEnabled}" Value="True">
+                  <Setter Property="Visibility" Value="Visible" />
+                  <Setter Property="Width" Value="380" />
+                  <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                      <DataTemplate>
+                        <controls:SearchResultPreviewPane SelectedResult="{Binding}" />
+                      </DataTemplate>
+                    </Setter.Value>
+                  </Setter>
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </ContentControl.Style>
+        </ContentControl>
+      </Grid>
+
+      <controls:SearchBox
+        x:Name="SearchBox"
+        Grid.Row="{DynamicResource SearchBoxGridRow}"
+        Height="40"
+        Margin="{DynamicResource SearchBoxMargin}"
+        SearchTerm="{Binding Source={markup:Service {x:Type appsearch:SearchState}}, Path=SearchTerm, Mode=TwoWay}"
+        TabIndex="999"
+        Visibility="{Binding Source={markup:Service {x:Type services:SearchWindowController}}, Path=IsIconMode, Converter={c:BoolToVisibilityConverter}}" />
+    </Grid>
+  </Border>
 </controls:AcrylicWindow>

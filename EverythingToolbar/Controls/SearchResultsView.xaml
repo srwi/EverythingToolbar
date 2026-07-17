@@ -1,190 +1,192 @@
-<UserControl x:Class="EverythingToolbar.Controls.SearchResultsView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-             xmlns:markup="clr-namespace:EverythingToolbar.Markup"
-             xmlns:c="clr-namespace:EverythingToolbar.Converters"
-             xmlns:app="clr-namespace:EverythingToolbar.App;assembly=EverythingToolbar.App"
-             xmlns:appsearch="clr-namespace:EverythingToolbar.App.Search;assembly=EverythingToolbar.App"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d"
-             d:DesignWidth="300"
-             d:DesignHeight="300"
-             Loaded="OnLoaded">
-    <UserControl.Resources>
-        <ResourceDictionary>
+﻿<UserControl
+  x:Class="EverythingToolbar.Controls.SearchResultsView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:app="clr-namespace:EverythingToolbar.App;assembly=EverythingToolbar.App"
+  xmlns:appsearch="clr-namespace:EverythingToolbar.App.Search;assembly=EverythingToolbar.App"
+  xmlns:c="clr-namespace:EverythingToolbar.Converters"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:markup="clr-namespace:EverythingToolbar.Markup"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+  d:DesignHeight="300"
+  d:DesignWidth="300"
+  Loaded="OnLoaded"
+  mc:Ignorable="d">
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ContextMenu x:Key="ListViewItemContextMenu" Opened="OnContextMenuOpened">
+        <MenuItem
+          Click="Open"
+          FontWeight="Bold"
+          Header="{x:Static properties:Resources.ContextMenuOpen}" />
+        <MenuItem
+          Click="OpenFilePath"
+          Header="{x:Static properties:Resources.ContextMenuOpenPath}"
+          Icon="&#xE838;" />
+        <MenuItem
+          x:Name="OpenAsAdminMenuItem"
+          Click="RunAsAdmin"
+          Header="{x:Static properties:Resources.ContextMenuRunAsAdmin}"
+          Icon="&#xE7EF;" />
+        <MenuItem
+          Header="{x:Static properties:Resources.ContextMenuOpenWith}"
+          Icon="&#xE7AC;"
+          Loaded="OnOpenWithMenuLoaded">
+          <Separator />
+          <MenuItem
+            Click="OpenWith"
+            Header="{x:Static properties:Resources.ContextMenuOpenWithChooseApp}"
+            Icon="&#xE7AC;" />
+        </MenuItem>
+        <MenuItem
+          Click="ShowInEverything"
+          Header="{x:Static properties:Resources.ContextMenuShowInEverything}"
+          Icon="&#xF78B;" />
+        <Separator />
+        <MenuItem Click="CopyPathToClipBoard" Header="{x:Static properties:Resources.ContextMenuCopyFullName}" />
+        <MenuItem
+          Click="CopyFile"
+          Header="{x:Static properties:Resources.ContextMenuCopyFile}"
+          Icon="&#xE8C8;" />
+        <MenuItem
+          Click="ShowFileProperties"
+          Header="{x:Static properties:Resources.ContextMenuProperties}"
+          Icon="&#xE946;" />
+        <Separator />
+        <MenuItem
+          Click="ShowFileWindowsContextMenu"
+          Header="{x:Static properties:Resources.ContextMenuOpenWinContext}"
+          Icon="&#xE712;" />
+      </ContextMenu>
 
-            <ContextMenu x:Key="ListViewItemContextMenu"
-                         Opened="OnContextMenuOpened">
-                <MenuItem Header="{x:Static properties:Resources.ContextMenuOpen}"
-                          Click="Open"
-                          FontWeight="Bold" />
-                <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenPath}"
-                          Click="OpenFilePath"
-                          Icon="&#xE838;" />
-                <MenuItem x:Name="OpenAsAdminMenuItem"
-                          Header="{x:Static properties:Resources.ContextMenuRunAsAdmin}"
-                          Click="RunAsAdmin"
-                          Icon="&#xE7EF;" />
-                <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWith}"
-                          Loaded="OnOpenWithMenuLoaded"
-                          Icon="&#xE7AC;">
-                    <Separator />
-                    <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWithChooseApp}"
-                              Click="OpenWith"
-                              Icon="&#xE7AC;" />
-                </MenuItem>
-                <MenuItem Header="{x:Static properties:Resources.ContextMenuShowInEverything}"
-                          Click="ShowInEverything"
-                          Icon="&#xF78B;" />
-                <Separator />
-                <MenuItem Header="{x:Static properties:Resources.ContextMenuCopyFullName}"
-                          Click="CopyPathToClipBoard" />
-                <MenuItem Header="{x:Static properties:Resources.ContextMenuCopyFile}"
-                          Click="CopyFile"
-                          Icon="&#xE8C8;" />
-                <MenuItem Header="{x:Static properties:Resources.ContextMenuProperties}"
-                          Click="ShowFileProperties"
-                          Icon="&#xE946;" />
-                <Separator />
-                <MenuItem Header="{x:Static properties:Resources.ContextMenuOpenWinContext}"
-                          Click="ShowFileWindowsContextMenu"
-                          Icon="&#xE712;" />
-            </ContextMenu>
+      <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Margin" Value="{DynamicResource ListViewItemMargin}" />
+        <Setter Property="ContextMenu" Value="{StaticResource ListViewItemContextMenu}" />
+        <EventSetter Event="PreviewMouseLeftButtonUp" Handler="SingleClickSearchResult" />
+        <EventSetter Event="PreviewMouseDoubleClick" Handler="DoubleClickSearchResult" />
+        <EventSetter Event="PreviewMouseDown" Handler="OnListViewItemMouseDown" />
+        <EventSetter Event="MouseMove" Handler="OnListViewItemMouseMove" />
+        <EventSetter Event="TouchDown" Handler="OnListViewItemTouchDown" />
+        <EventSetter Event="TouchMove" Handler="OnListViewItemTouchMove" />
+        <EventSetter Event="TouchUp" Handler="OnListViewItemTouchUp" />
+        <Setter Property="Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ListViewItem}">
+              <Border
+                Padding="{TemplateBinding Padding}"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{DynamicResource ListViewItemCornerRadius}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                <ContentPresenter
+                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+              </Border>
+              <ControlTemplate.Triggers>
+                <MultiTrigger>
+                  <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                  </MultiTrigger.Conditions>
+                  <Setter Property="Background" Value="{DynamicResource SearchResultBackgroundHover}" />
+                </MultiTrigger>
+                <MultiTrigger>
+                  <MultiTrigger.Conditions>
+                    <Condition Property="Selector.IsSelectionActive" Value="False" />
+                    <Condition Property="IsSelected" Value="True" />
+                  </MultiTrigger.Conditions>
+                  <Setter Property="Background" Value="{DynamicResource SearchResultBackgroundActive}" />
+                </MultiTrigger>
+                <MultiTrigger>
+                  <MultiTrigger.Conditions>
+                    <Condition Property="Selector.IsSelectionActive" Value="True" />
+                    <Condition Property="IsSelected" Value="True" />
+                  </MultiTrigger.Conditions>
+                  <Setter Property="Background" Value="{DynamicResource SearchResultBackgroundActive}" />
+                </MultiTrigger>
+              </ControlTemplate.Triggers>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+    </ResourceDictionary>
+  </UserControl.Resources>
 
-            <Style x:Key="ListViewItemStyle"
-                   TargetType="{x:Type ListViewItem}">
-                <Setter Property="FocusVisualStyle"
-                        Value="{x:Null}" />
-                <Setter Property="SnapsToDevicePixels"
-                        Value="True" />
-                <Setter Property="BorderThickness"
-                        Value="0" />
-                <Setter Property="Margin"
-                        Value="{DynamicResource ListViewItemMargin}" />
-                <Setter Property="ContextMenu"
-                        Value="{StaticResource ListViewItemContextMenu}" />
-                <EventSetter Event="PreviewMouseLeftButtonUp"
-                             Handler="SingleClickSearchResult" />
-                <EventSetter Event="PreviewMouseDoubleClick"
-                             Handler="DoubleClickSearchResult" />
-                <EventSetter Event="PreviewMouseDown"
-                             Handler="OnListViewItemMouseDown" />
-                <EventSetter Event="MouseMove"
-                             Handler="OnListViewItemMouseMove" />
-                <EventSetter Event="TouchDown"
-                             Handler="OnListViewItemTouchDown" />
-                <EventSetter Event="TouchMove"
-                             Handler="OnListViewItemTouchMove" />
-                <EventSetter Event="TouchUp"
-                             Handler="OnListViewItemTouchUp" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type ListViewItem}">
-                            <Border BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    Padding="{TemplateBinding Padding}"
-                                    Background="{TemplateBinding Background}"
-                                    CornerRadius="{DynamicResource ListViewItemCornerRadius}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <MultiTrigger>
-                                    <MultiTrigger.Conditions>
-                                        <Condition Property="IsMouseOver"
-                                                   Value="True" />
-                                    </MultiTrigger.Conditions>
-                                    <Setter Property="Background"
-                                            Value="{DynamicResource SearchResultBackgroundHover}" />
-                                </MultiTrigger>
-                                <MultiTrigger>
-                                    <MultiTrigger.Conditions>
-                                        <Condition Property="Selector.IsSelectionActive"
-                                                   Value="False" />
-                                        <Condition Property="IsSelected"
-                                                   Value="True" />
-                                    </MultiTrigger.Conditions>
-                                    <Setter Property="Background"
-                                            Value="{DynamicResource SearchResultBackgroundActive}" />
-                                </MultiTrigger>
-                                <MultiTrigger>
-                                    <MultiTrigger.Conditions>
-                                        <Condition Property="Selector.IsSelectionActive"
-                                                   Value="True" />
-                                        <Condition Property="IsSelected"
-                                                   Value="True" />
-                                    </MultiTrigger.Conditions>
-                                    <Setter Property="Background"
-                                            Value="{DynamicResource SearchResultBackgroundActive}" />
-                                </MultiTrigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
+  <Grid>
+    <ListView
+      Name="SearchResultsListView"
+      HorizontalContentAlignment="Stretch"
+      Background="{DynamicResource SearchResultsViewBackground}"
+      BorderThickness="0"
+      ContextMenuOpening="OnContextMenuOpening"
+      DataContext="{Binding Source={markup:Service {x:Type appsearch:SearchSession}}}"
+      FocusVisualStyle="{x:Null}"
+      IsSynchronizedWithCurrentItem="True"
+      IsTextSearchEnabled="False"
+      ItemContainerStyle="{StaticResource ListViewItemStyle}"
+      ItemTemplate="{Binding Source={markup:Service {x:Type app:ISettings}}, Path=ItemTemplate, Converter={c:ItemTemplateConverter}}"
+      ItemsSource="{Binding Results}"
+      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+      ScrollViewer.PanningMode="VerticalOnly"
+      ScrollViewer.VerticalScrollBarVisibility="Visible"
+      SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+      SelectedItem="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=SelectedSearchResult, Mode=TwoWay}"
+      SelectionMode="Single"
+      VirtualizingPanel.CacheLength="1"
+      VirtualizingPanel.CacheLengthUnit="Page"
+      VirtualizingPanel.IsVirtualizing="True"
+      VirtualizingPanel.ScrollUnit="Item"
+      VirtualizingPanel.VirtualizationMode="Recycling" />
+    <Grid
+      x:Name="SpinnerOverlay"
+      HorizontalAlignment="Center"
+      VerticalAlignment="Center"
+      IsHitTestVisible="False"
+      Visibility="Collapsed">
+      <Viewbox
+        Width="30"
+        Height="30"
+        Stretch="Fill">
+        <Path
+          Data="M 50,10 A 40,40 0 1 1 90.45,29.55"
+          Fill="Transparent"
+          RenderTransformOrigin="0.5,0.5"
+          Stretch="Fill"
+          Stroke="{DynamicResource SearchResultsViewSpinner}"
+          StrokeThickness="8">
+          <Path.RenderTransform>
+            <RotateTransform />
+          </Path.RenderTransform>
+          <Path.Style>
+            <Style>
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=SpinnerOverlay, Path=Visibility}" Value="Visible">
+                  <DataTrigger.EnterActions>
+                    <BeginStoryboard x:Name="SpinnerStoryboard">
+                      <Storyboard>
+                        <DoubleAnimation
+                          RepeatBehavior="Forever"
+                          Storyboard.TargetProperty="RenderTransform.Angle"
+                          From="0"
+                          To="360"
+                          Duration="0:0:1" />
+                      </Storyboard>
+                    </BeginStoryboard>
+                  </DataTrigger.EnterActions>
+                  <DataTrigger.ExitActions>
+                    <StopStoryboard BeginStoryboardName="SpinnerStoryboard" />
+                  </DataTrigger.ExitActions>
+                </DataTrigger>
+              </Style.Triggers>
             </Style>
-
-        </ResourceDictionary>
-    </UserControl.Resources>
-
-    <Grid>
-        <ListView Name="SearchResultsListView"
-                  DataContext="{Binding Source={markup:Service {x:Type appsearch:SearchSession}}}"
-                  SelectionMode="Single"
-                  ItemsSource="{Binding Results}"
-                  SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
-                  SelectedItem="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=SelectedSearchResult, Mode=TwoWay}"
-                  BorderThickness="0"
-                  HorizontalContentAlignment="Stretch"
-                  ContextMenuOpening="OnContextMenuOpening"
-                  Background="{DynamicResource SearchResultsViewBackground}"
-                  ItemTemplate="{Binding Source={markup:Service {x:Type app:ISettings}}, Path=ItemTemplate, Converter={c:ItemTemplateConverter}}"
-                  ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                  IsTextSearchEnabled="False"
-                  IsSynchronizedWithCurrentItem="True"
-                  VirtualizingPanel.IsVirtualizing="True"
-                  VirtualizingPanel.CacheLengthUnit="Page"
-                  VirtualizingPanel.CacheLength="1"
-                  VirtualizingPanel.VirtualizationMode="Recycling"
-                  VirtualizingPanel.ScrollUnit="Item"
-                  ScrollViewer.VerticalScrollBarVisibility="Visible"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                  ScrollViewer.PanningMode="VerticalOnly"
-                  FocusVisualStyle="{x:Null}" />
-        <Grid x:Name="SpinnerOverlay"
-              Visibility="Collapsed"
-              IsHitTestVisible="False"
-              VerticalAlignment="Center"
-              HorizontalAlignment="Center">
-            <Viewbox Height="30" Width="30" Stretch="Fill">
-                <Path Stretch="Fill" Stroke="{DynamicResource SearchResultsViewSpinner}" StrokeThickness="8" Fill="Transparent" Data="M 50,10 A 40,40 0 1 1 90.45,29.55" RenderTransformOrigin="0.5,0.5">
-                    <Path.RenderTransform>
-                        <RotateTransform/>
-                    </Path.RenderTransform>
-                    <Path.Style>
-                        <Style>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=SpinnerOverlay, Path=Visibility}" Value="Visible">
-                                    <DataTrigger.EnterActions>
-                                        <BeginStoryboard x:Name="SpinnerStoryboard">
-                                            <Storyboard>
-                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="360" Duration="0:0:1" RepeatBehavior="Forever" />
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </DataTrigger.EnterActions>
-                                    <DataTrigger.ExitActions>
-                                        <!-- Without stopping it, the Forever animation clock keeps ticking every frame while the spinner is collapsed -->
-                                        <StopStoryboard BeginStoryboardName="SpinnerStoryboard" />
-                                    </DataTrigger.ExitActions>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Path.Style>
-                </Path>
-            </Viewbox>
-        </Grid>
+          </Path.Style>
+        </Path>
+      </Viewbox>
     </Grid>
+  </Grid>
 </UserControl>

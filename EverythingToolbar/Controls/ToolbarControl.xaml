@@ -1,53 +1,45 @@
-<UserControl x:Class="EverythingToolbar.Controls.ToolbarControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
-             xmlns:markup="clr-namespace:EverythingToolbar.Markup"
-             xmlns:search="clr-namespace:EverythingToolbar.Search"
-             xmlns:appsearch="clr-namespace:EverythingToolbar.App.Search;assembly=EverythingToolbar.App"
-             xmlns:controls="clr-namespace:EverythingToolbar.Controls"
-             xmlns:converters="clr-namespace:EverythingToolbar.Converters"
-             HorizontalAlignment="Stretch"
-             KeyDown="OnKeyDown"
-             GotFocus="OnGotFocus">
-    
-    <i:Interaction.Behaviors>
-        <b:Themed Surface="TaskbarSurface" />
-    </i:Interaction.Behaviors>
+﻿<UserControl
+  x:Class="EverythingToolbar.Controls.ToolbarControl"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:appsearch="clr-namespace:EverythingToolbar.App.Search;assembly=EverythingToolbar.App"
+  xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
+  xmlns:controls="clr-namespace:EverythingToolbar.Controls"
+  xmlns:converters="clr-namespace:EverythingToolbar.Converters"
+  xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+  xmlns:markup="clr-namespace:EverythingToolbar.Markup"
+  xmlns:search="clr-namespace:EverythingToolbar.Search"
+  HorizontalAlignment="Stretch"
+  GotFocus="OnGotFocus"
+  KeyDown="OnKeyDown">
+  <i:Interaction.Behaviors>
+    <b:Themed Surface="TaskbarSurface" />
+  </i:Interaction.Behaviors>
 
-    <UserControl.Resources>
-        <converters:SearchControlVisibilityConverter
-            x:Key="SearchButtonDoubleToVisibilityConverter"
-            VisibilityThreshold="-70"
-            AlwaysVisibleWithAutoHidingTaskbar="True" />
-        <converters:SearchControlVisibilityConverter
-            x:Key="SearchBoxDoubleToVisibilityConverter"
-            VisibilityThreshold="70"
-            AlwaysVisibleWithAutoHidingTaskbar="False" />
-    </UserControl.Resources>
+  <UserControl.Resources>
+    <converters:SearchControlVisibilityConverter
+      x:Key="SearchButtonDoubleToVisibilityConverter"
+      AlwaysVisibleWithAutoHidingTaskbar="True"
+      VisibilityThreshold="-70" />
+    <converters:SearchControlVisibilityConverter
+      x:Key="SearchBoxDoubleToVisibilityConverter"
+      AlwaysVisibleWithAutoHidingTaskbar="False"
+      VisibilityThreshold="70" />
+  </UserControl.Resources>
 
-    <!-- SearchBox and SearchButton overlap in a single cell and both stretch to the full width.
-         The +70 / -70 thresholds evaluated against that shared width make them mutually exclusive:
-         the box shows when the toolbar is wide, the icon (centered) when it is narrow. Keeping them
-         in separate columns breaks the trick (the button's Auto width is constant) and the centering. -->
-    <Grid>
-        <TextBox Opacity="0"
-                 IsHitTestVisible="False"
-                 Name="KeyboardFocusCapture" />
+  <Grid>
+    <TextBox
+      Name="KeyboardFocusCapture"
+      IsHitTestVisible="False"
+      Opacity="0" />
 
-        <controls:SearchBox x:Name="SearchBox"
-                            Visibility="{Binding Path=ActualWidth,
-                                                 RelativeSource={RelativeSource Self},
-                                                 Converter={StaticResource SearchBoxDoubleToVisibilityConverter}}"
-                            SearchTerm="{Binding Source={markup:Service {x:Type appsearch:SearchState}}, Path=SearchTerm, Mode=TwoWay}"
-                            GotKeyboardFocus="OnSearchBoxGotKeyboardFocus"
-                            LostKeyboardFocus="OnSearchBoxLostKeyboardFocus"/>
+    <controls:SearchBox
+      x:Name="SearchBox"
+      GotKeyboardFocus="OnSearchBoxGotKeyboardFocus"
+      LostKeyboardFocus="OnSearchBoxLostKeyboardFocus"
+      SearchTerm="{Binding Source={markup:Service {x:Type appsearch:SearchState}}, Path=SearchTerm, Mode=TwoWay}"
+      Visibility="{Binding Path=ActualWidth, RelativeSource={RelativeSource Self}, Converter={StaticResource SearchBoxDoubleToVisibilityConverter}}" />
 
-        <controls:SearchButton x:Name="SearchButton"
-                               Visibility="{Binding Path=ActualWidth,
-                                                    RelativeSource={RelativeSource Self},
-                                                    Converter={StaticResource SearchButtonDoubleToVisibilityConverter}}" />
-    </Grid>
-    
+    <controls:SearchButton x:Name="SearchButton" Visibility="{Binding Path=ActualWidth, RelativeSource={RelativeSource Self}, Converter={StaticResource SearchButtonDoubleToVisibilityConverter}}" />
+  </Grid>
 </UserControl>

@@ -1,0 +1,21 @@
+name: XAML Styler check
+
+on: [push, pull_request]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check_xaml:
+    runs-on: windows-2025
+    name: Check XAML Formatting
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          dotnet tool restore
+          dotnet xstyler -r -d . -c Settings.XamlStyler -p

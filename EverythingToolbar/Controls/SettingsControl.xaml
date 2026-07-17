@@ -1,108 +1,128 @@
-﻿<Grid x:Class="EverythingToolbar.Controls.SettingsControl"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-      xmlns:converters="clr-namespace:EverythingToolbar.Converters">
-
-    <StackPanel Orientation="Horizontal">
-        <Button Content="&#xE8CB;"
-                Click="OpenButtonContextMenu"
-                ToolTip="{x:Static properties:Resources.SettingsSortBy}"
-                FontSize="12pt"
-                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
-                Style="{DynamicResource TabBarButtonStyle}"
-                Padding="10, 4, 10, 4">
-            <Button.ContextMenu>
-                <ContextMenu Name="SortByMenu"
-                             FontFamily="Segoe UI Variable Text, Segoe UI">
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SortByName}"
-                              Click="OnSortByClicked" />
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SortByPath}"
-                              Click="OnSortByClicked" />
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SortBySize}"
-                              Click="OnSortByClicked" />
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SortByExtension}"
-                              Click="OnSortByClicked" />
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SortByTypeName}"
-                              Click="OnSortByClicked"/>
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SortByDateCreated}"
-                              Click="OnSortByClicked" />
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SortByDateModified}"
-                              Click="OnSortByClicked" />
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SortByAttributes}"
-                              Click="OnSortByClicked" />
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SortByFileListFilename}"
-                              Click="OnSortByClicked" />
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SortByRunCount}"
-                              Click="OnSortByClicked" />
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SortByDateRecentlyChanged}"
-                              Click="OnSortByClicked" />
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SortByDateAccessed}"
-                              Click="OnSortByClicked" />
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SortByDateRun}"
-                              Click="OnSortByClicked" />
-                    <Separator />
-                    <MenuItem Name="SortAscendingMenuItem"
-                              IsCheckable="True"
-                              Header="{x:Static properties:Resources.SortAscending}"
-                              Click="OnSortAscendingClicked" />
-                    <MenuItem Name="SortDescendingMenuItem"
-                              IsCheckable="True"
-                              Header="{x:Static properties:Resources.SortDescending}"
-                              Click="OnSortDescendingClicked" />
-                </ContextMenu>
-            </Button.ContextMenu>
-        </Button>
-        <Button Content="{Binding Settings.IsPreviewPaneEnabled, Converter={converters:PreviewPaneToggleIconConverter}}"
-                Click="TogglePreviewPane"
-                ToolTip="{x:Static properties:Resources.SettingsPreviewPaneEnabled}"
-                FontSize="12pt"
-                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
-                Style="{DynamicResource TabBarButtonStyle}"
-                Padding="10, 4, 10, 4" />
-        <Button Content="&#xE713;"
-                Click="OpenButtonContextMenu"
-                ToolTip="{x:Static properties:Resources.SettingsPreferences}"
-                FontSize="12pt"
-                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
-                Style="{DynamicResource TabBarButtonStyle}"
-                Padding="10, 4, 10, 4">
-            <Button.ContextMenu>
-                <ContextMenu FontFamily="Segoe UI Variable Text, Segoe UI">
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SettingsRegularExpressions}"
-                              IsChecked="{Binding Settings.IsRegExEnabled, Mode=TwoWay}" />
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SettingsMatchCase}"
-                              IsChecked="{Binding Settings.IsMatchCase, Mode=TwoWay}" />
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SettingsMatchPath}"
-                              IsChecked="{Binding Settings.IsMatchPath, Mode=TwoWay}" />
-                    <MenuItem IsCheckable="True"
-                              Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
-                              IsChecked="{Binding Settings.IsMatchWholeWord, Mode=TwoWay}"
-                              IsEnabled="{Binding Settings.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={converters:NotConverter}}" />
-                    <Separator />
-                    <MenuItem Header="{x:Static properties:Resources.SettingsPreferences}"
-                              Click="OpenSettingsWindow"
-                              Icon="&#xE713;" />
-                </ContextMenu>
-            </Button.ContextMenu>
-        </Button>
-    </StackPanel>
-
-
+﻿<Grid
+  x:Class="EverythingToolbar.Controls.SettingsControl"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:converters="clr-namespace:EverythingToolbar.Converters"
+  xmlns:properties="clr-namespace:EverythingToolbar.Properties">
+  <StackPanel Orientation="Horizontal">
+    <Button
+      Padding="10 4 10 4"
+      Click="OpenButtonContextMenu"
+      Content="&#xE8CB;"
+      FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+      FontSize="12pt"
+      Style="{DynamicResource TabBarButtonStyle}"
+      ToolTip="{x:Static properties:Resources.SettingsSortBy}">
+      <Button.ContextMenu>
+        <ContextMenu Name="SortByMenu" FontFamily="Segoe UI Variable Text, Segoe UI">
+          <MenuItem
+            Click="OnSortByClicked"
+            Header="{x:Static properties:Resources.SortByName}"
+            IsCheckable="True" />
+          <MenuItem
+            Click="OnSortByClicked"
+            Header="{x:Static properties:Resources.SortByPath}"
+            IsCheckable="True" />
+          <MenuItem
+            Click="OnSortByClicked"
+            Header="{x:Static properties:Resources.SortBySize}"
+            IsCheckable="True" />
+          <MenuItem
+            Click="OnSortByClicked"
+            Header="{x:Static properties:Resources.SortByExtension}"
+            IsCheckable="True" />
+          <MenuItem
+            Click="OnSortByClicked"
+            Header="{x:Static properties:Resources.SortByTypeName}"
+            IsCheckable="True" />
+          <MenuItem
+            Click="OnSortByClicked"
+            Header="{x:Static properties:Resources.SortByDateCreated}"
+            IsCheckable="True" />
+          <MenuItem
+            Click="OnSortByClicked"
+            Header="{x:Static properties:Resources.SortByDateModified}"
+            IsCheckable="True" />
+          <MenuItem
+            Click="OnSortByClicked"
+            Header="{x:Static properties:Resources.SortByAttributes}"
+            IsCheckable="True" />
+          <MenuItem
+            Click="OnSortByClicked"
+            Header="{x:Static properties:Resources.SortByFileListFilename}"
+            IsCheckable="True" />
+          <MenuItem
+            Click="OnSortByClicked"
+            Header="{x:Static properties:Resources.SortByRunCount}"
+            IsCheckable="True" />
+          <MenuItem
+            Click="OnSortByClicked"
+            Header="{x:Static properties:Resources.SortByDateRecentlyChanged}"
+            IsCheckable="True" />
+          <MenuItem
+            Click="OnSortByClicked"
+            Header="{x:Static properties:Resources.SortByDateAccessed}"
+            IsCheckable="True" />
+          <MenuItem
+            Click="OnSortByClicked"
+            Header="{x:Static properties:Resources.SortByDateRun}"
+            IsCheckable="True" />
+          <Separator />
+          <MenuItem
+            Name="SortAscendingMenuItem"
+            Click="OnSortAscendingClicked"
+            Header="{x:Static properties:Resources.SortAscending}"
+            IsCheckable="True" />
+          <MenuItem
+            Name="SortDescendingMenuItem"
+            Click="OnSortDescendingClicked"
+            Header="{x:Static properties:Resources.SortDescending}"
+            IsCheckable="True" />
+        </ContextMenu>
+      </Button.ContextMenu>
+    </Button>
+    <Button
+      Padding="10 4 10 4"
+      Click="TogglePreviewPane"
+      Content="{Binding Settings.IsPreviewPaneEnabled, Converter={converters:PreviewPaneToggleIconConverter}}"
+      FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+      FontSize="12pt"
+      Style="{DynamicResource TabBarButtonStyle}"
+      ToolTip="{x:Static properties:Resources.SettingsPreviewPaneEnabled}" />
+    <Button
+      Padding="10 4 10 4"
+      Click="OpenButtonContextMenu"
+      Content="&#xE713;"
+      FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+      FontSize="12pt"
+      Style="{DynamicResource TabBarButtonStyle}"
+      ToolTip="{x:Static properties:Resources.SettingsPreferences}">
+      <Button.ContextMenu>
+        <ContextMenu FontFamily="Segoe UI Variable Text, Segoe UI">
+          <MenuItem
+            Header="{x:Static properties:Resources.SettingsRegularExpressions}"
+            IsCheckable="True"
+            IsChecked="{Binding Settings.IsRegExEnabled, Mode=TwoWay}" />
+          <MenuItem
+            Header="{x:Static properties:Resources.SettingsMatchCase}"
+            IsCheckable="True"
+            IsChecked="{Binding Settings.IsMatchCase, Mode=TwoWay}" />
+          <MenuItem
+            Header="{x:Static properties:Resources.SettingsMatchPath}"
+            IsCheckable="True"
+            IsChecked="{Binding Settings.IsMatchPath, Mode=TwoWay}" />
+          <MenuItem
+            Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
+            IsCheckable="True"
+            IsChecked="{Binding Settings.IsMatchWholeWord, Mode=TwoWay}"
+            IsEnabled="{Binding Settings.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={converters:NotConverter}}" />
+          <Separator />
+          <MenuItem
+            Click="OpenSettingsWindow"
+            Header="{x:Static properties:Resources.SettingsPreferences}"
+            Icon="&#xE713;" />
+        </ContextMenu>
+      </Button.ContextMenu>
+    </Button>
+  </StackPanel>
 </Grid>

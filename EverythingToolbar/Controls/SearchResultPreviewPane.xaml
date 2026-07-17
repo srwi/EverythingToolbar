@@ -1,142 +1,154 @@
-<UserControl x:Class="EverythingToolbar.Controls.SearchResultPreviewPane"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
-             xmlns:c="clr-namespace:EverythingToolbar.Converters"
-             xmlns:properties="clr-namespace:EverythingToolbar.Properties"
-             x:Name="Root">
-    <Border Margin="{DynamicResource SearchResultPreviewPaneMargin}"
-            Padding="0"
-            Background="{DynamicResource TextBoxBackground}"
-            BorderThickness="0"
-            CornerRadius="{DynamicResource SearchResultPreviewPaneCornerRadius}">
+﻿<UserControl
+  x:Class="EverythingToolbar.Controls.SearchResultPreviewPane"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:b="clr-namespace:EverythingToolbar.Behaviors"
+  xmlns:c="clr-namespace:EverythingToolbar.Converters"
+  xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+  x:Name="Root">
+  <Border
+    Margin="{DynamicResource SearchResultPreviewPaneMargin}"
+    Padding="0"
+    Background="{DynamicResource TextBoxBackground}"
+    BorderThickness="0"
+    CornerRadius="{DynamicResource SearchResultPreviewPaneCornerRadius}">
+    <Grid>
+      <ScrollViewer
+        Padding="18"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
         <Grid>
-            <ScrollViewer VerticalScrollBarVisibility="Auto"
-                          HorizontalScrollBarVisibility="Disabled"
-                          Padding="18">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" MinHeight="92" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="92" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
 
-            <Image Grid.Row="0"
-                   b:ResultIcon.PreviewResult="{Binding ElementName=Root, Path=SelectedResult}"
-                   Stretch="Uniform"
-                   StretchDirection="DownOnly"
-                   MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Path=ActualWidth}"
-                   MaxHeight="280"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={c:BoolToVisibilityConverter}}"
-                   RenderOptions.BitmapScalingMode="Fant" />
+          <Image
+            Grid.Row="0"
+            MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Path=ActualWidth}"
+            MaxHeight="280"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            b:ResultIcon.PreviewResult="{Binding ElementName=Root, Path=SelectedResult}"
+            RenderOptions.BitmapScalingMode="Fant"
+            Stretch="Uniform"
+            StretchDirection="DownOnly"
+            Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={c:BoolToVisibilityConverter}}" />
 
-            <TextBlock Grid.Row="1"
-                       Text="{Binding ElementName=Root, Path=SelectedResult.FileName}"
-                       Foreground="{DynamicResource SearchResultFileName}"
-                       FontSize="18"
-                       TextAlignment="Center"
-                       TextTrimming="CharacterEllipsis"
-                       Margin="0,14,0,13"
-                       HorizontalAlignment="Stretch"
-                       Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={c:BoolToVisibilityConverter}}" />
+          <TextBlock
+            Grid.Row="1"
+            Margin="0 14 0 13"
+            HorizontalAlignment="Stretch"
+            FontSize="18"
+            Foreground="{DynamicResource SearchResultFileName}"
+            Text="{Binding ElementName=Root, Path=SelectedResult.FileName}"
+            TextAlignment="Center"
+            TextTrimming="CharacterEllipsis"
+            Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={c:BoolToVisibilityConverter}}" />
 
-            <Border Grid.Row="2"
-                    Height="1"
-                    Margin="0,17,0,17"
-                    Background="{DynamicResource TextBoxBorder}"
-                    Visibility="{Binding ElementName=Root, Path=HasVisibleFileInfo, Converter={c:BoolToVisibilityConverter}}" />
+          <Border
+            Grid.Row="2"
+            Height="1"
+            Margin="0 17 0 17"
+            Background="{DynamicResource TextBoxBorder}"
+            Visibility="{Binding ElementName=Root, Path=HasVisibleFileInfo, Converter={c:BoolToVisibilityConverter}}" />
 
-            <Grid Grid.Row="3"
-                  Visibility="{Binding ElementName=Root, Path=HasVisibleFileInfo, Converter={c:BoolToVisibilityConverter}}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+          <Grid Grid.Row="3" Visibility="{Binding ElementName=Root, Path=HasVisibleFileInfo, Converter={c:BoolToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0"
-                           Grid.Column="0"
-                           Margin="0,0,16,0"
-                           Text="{x:Static properties:Resources.PreviewPaneFilePath}"
-                           Foreground="{DynamicResource SearchResultPath}"
-                           Visibility="{Binding ElementName=Root, Path=ShowPathInfo, Converter={c:BoolToVisibilityConverter}}" />
-                <TextBlock Grid.Row="0"
-                           Grid.Column="1"
-                           Margin="0,0,0,0"
-                           Text="{Binding ElementName=Root, Path=SelectedResult.FullPathAndFileName}"
-                           TextWrapping="Wrap"
-                           Foreground="{DynamicResource SearchResultFileName}"
-                           Visibility="{Binding ElementName=Root, Path=ShowPathInfo, Converter={c:BoolToVisibilityConverter}}" />
+            <TextBlock
+              Grid.Row="0"
+              Grid.Column="0"
+              Margin="0 0 16 0"
+              Foreground="{DynamicResource SearchResultPath}"
+              Text="{x:Static properties:Resources.PreviewPaneFilePath}"
+              Visibility="{Binding ElementName=Root, Path=ShowPathInfo, Converter={c:BoolToVisibilityConverter}}" />
+            <TextBlock
+              Grid.Row="0"
+              Grid.Column="1"
+              Margin="0 0 0 0"
+              Foreground="{DynamicResource SearchResultFileName}"
+              Text="{Binding ElementName=Root, Path=SelectedResult.FullPathAndFileName}"
+              TextWrapping="Wrap"
+              Visibility="{Binding ElementName=Root, Path=ShowPathInfo, Converter={c:BoolToVisibilityConverter}}" />
 
-                <TextBlock Grid.Row="1"
-                           Grid.Column="0"
-                           Margin="0,6,16,0"
-                           Text="{x:Static properties:Resources.PreviewPaneSize}"
-                           Foreground="{DynamicResource SearchResultPath}"
-                           Visibility="{Binding ElementName=Root, Path=ShowSizeInfo, Converter={c:BoolToVisibilityConverter}}" />
-                <TextBlock Grid.Row="1"
-                           Grid.Column="1"
-                           Margin="0,6,0,0"
-                           Text="{Binding ElementName=Root, Path=SelectedResult.HumanReadableFileSize}"
-                           Foreground="{DynamicResource SearchResultFileName}"
-                           Visibility="{Binding ElementName=Root, Path=ShowSizeInfo, Converter={c:BoolToVisibilityConverter}}" />
-            </Grid>
+            <TextBlock
+              Grid.Row="1"
+              Grid.Column="0"
+              Margin="0 6 16 0"
+              Foreground="{DynamicResource SearchResultPath}"
+              Text="{x:Static properties:Resources.PreviewPaneSize}"
+              Visibility="{Binding ElementName=Root, Path=ShowSizeInfo, Converter={c:BoolToVisibilityConverter}}" />
+            <TextBlock
+              Grid.Row="1"
+              Grid.Column="1"
+              Margin="0 6 0 0"
+              Foreground="{DynamicResource SearchResultFileName}"
+              Text="{Binding ElementName=Root, Path=SelectedResult.HumanReadableFileSize}"
+              Visibility="{Binding ElementName=Root, Path=ShowSizeInfo, Converter={c:BoolToVisibilityConverter}}" />
+          </Grid>
 
-            <Border Grid.Row="4"
-                    Height="1"
-                    Margin="0,17,0,17"
-                    Background="{DynamicResource TextBoxBorder}"
-                    Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={c:BoolToVisibilityConverter}}" />
+          <Border
+            Grid.Row="4"
+            Height="1"
+            Margin="0 17 0 17"
+            Background="{DynamicResource TextBoxBorder}"
+            Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={c:BoolToVisibilityConverter}}" />
 
-            <StackPanel Grid.Row="5"
-                        Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={c:BoolToVisibilityConverter}}">
-                <ItemsControl ItemsSource="{Binding ElementName=Root, Path=PreviewActions}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Button Style="{DynamicResource PreviewActionButtonStyle}"
-                                    Click="OnActionButtonClick">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="20" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
+          <StackPanel Grid.Row="5" Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={c:BoolToVisibilityConverter}}">
+            <ItemsControl ItemsSource="{Binding ElementName=Root, Path=PreviewActions}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Button Click="OnActionButtonClick" Style="{DynamicResource PreviewActionButtonStyle}">
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                      </Grid.ColumnDefinitions>
 
-                                    <TextBlock Grid.Column="0"
-                                               VerticalAlignment="Center"
-                                               FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
-                                               FontSize="14"
-                                               Foreground="{DynamicResource SearchResultFileName}"
-                                               Text="{Binding Glyph}" />
-                                    <TextBlock Grid.Column="1"
-                                               Margin="8,0,0,0"
-                                               VerticalAlignment="Center"
-                                               Foreground="{DynamicResource SearchResultFileName}"
-                                               Text="{Binding Label}"
-                                               FontSize="12" />
-                                </Grid>
-                            </Button>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-                </Grid>
-            </ScrollViewer>
-
-            <TextBlock Grid.Row="0" Grid.RowSpan="6"
-                       Text="{x:Static properties:Resources.PreviewPaneSelectResult}"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Foreground="{DynamicResource SearchResultPath}"
-                       FontSize="16"
-                        Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={c:InvertedBoolToVisibilityConverter}}" />
+                      <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                        FontSize="14"
+                        Foreground="{DynamicResource SearchResultFileName}"
+                        Text="{Binding Glyph}" />
+                      <TextBlock
+                        Grid.Column="1"
+                        Margin="8 0 0 0"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{DynamicResource SearchResultFileName}"
+                        Text="{Binding Label}" />
+                    </Grid>
+                  </Button>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
         </Grid>
-    </Border>
+      </ScrollViewer>
+
+      <TextBlock
+        Grid.Row="0"
+        Grid.RowSpan="6"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        FontSize="16"
+        Foreground="{DynamicResource SearchResultPath}"
+        Text="{x:Static properties:Resources.PreviewPaneSelectResult}"
+        Visibility="{Binding ElementName=Root, Path=HasSelection, Converter={c:InvertedBoolToVisibilityConverter}}" />
+    </Grid>
+  </Border>
 </UserControl>

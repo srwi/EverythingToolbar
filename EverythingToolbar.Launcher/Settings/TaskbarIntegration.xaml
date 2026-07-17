@@ -1,180 +1,193 @@
-<Page x:Class="EverythingToolbar.Launcher.Settings.TaskbarIntegration"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:properties="clr-namespace:EverythingToolbar.Properties;assembly=EverythingToolbar"
-      xmlns:lprops="clr-namespace:EverythingToolbar.Launcher.Properties"
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-      xmlns:b="clr-namespace:EverythingToolbar.Behaviors;assembly=EverythingToolbar"
-      xmlns:c="clr-namespace:EverythingToolbar.Converters;assembly=EverythingToolbar"
-      xmlns:controls="clr-namespace:EverythingToolbar.Controls;assembly=EverythingToolbar"
-      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      ScrollViewer.CanContentScroll="False">
+﻿<Page
+  x:Class="EverythingToolbar.Launcher.Settings.TaskbarIntegration"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:b="clr-namespace:EverythingToolbar.Behaviors;assembly=EverythingToolbar"
+  xmlns:c="clr-namespace:EverythingToolbar.Converters;assembly=EverythingToolbar"
+  xmlns:controls="clr-namespace:EverythingToolbar.Controls;assembly=EverythingToolbar"
+  xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+  xmlns:lprops="clr-namespace:EverythingToolbar.Launcher.Properties"
+  xmlns:properties="clr-namespace:EverythingToolbar.Properties;assembly=EverythingToolbar"
+  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+  Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+  ScrollViewer.CanContentScroll="False">
+  <i:Interaction.Behaviors>
+    <b:Themed Surface="AppWindow" />
+  </i:Interaction.Behaviors>
 
-    <i:Interaction.Behaviors>
-        <b:Themed Surface="AppWindow" />
-    </i:Interaction.Behaviors>
+  <Page.Resources>
+    <DataTemplate x:Key="IconItemTemplate">
+      <StackPanel Orientation="Horizontal">
+        <Image
+          Width="24"
+          Height="24"
+          Margin="0 0 8 0"
+          RenderOptions.BitmapScalingMode="Fant"
+          Source="{Binding IconPath}" />
+        <TextBlock VerticalAlignment="Center" Text="{Binding DisplayName}" />
+      </StackPanel>
+    </DataTemplate>
+  </Page.Resources>
 
-    <Page.Resources>
-        <DataTemplate x:Key="IconItemTemplate">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding IconPath}"
-                       Width="24"
-                       Height="24"
-                       Margin="0,0,8,0"
-                       RenderOptions.BitmapScalingMode="Fant" />
-                <TextBlock Text="{Binding DisplayName}"
-                           VerticalAlignment="Center" />
-            </StackPanel>
-        </DataTemplate>
-    </Page.Resources>
+  <ScrollViewer>
+    <StackPanel Margin="40">
+      <ui:TextBlock
+        Margin="0 0 0 0"
+        FontTypography="Title"
+        Text="{x:Static properties:Resources.SettingsTaskbarIntegration}" />
 
-    <ScrollViewer>
-        <StackPanel Margin="40">
-            <ui:TextBlock FontTypography="Title"
-                          Text="{x:Static properties:Resources.SettingsTaskbarIntegration}"
-                          Margin="0, 0, 0, 0"/>
-
-            <StackPanel>
-                <ui:TextBlock FontTypography="BodyStrong"
-                              Text="{x:Static properties:Resources.SettingsTaskbarIcon}"
-                              Margin="0, 25, 0, 7"/>
-                <Border Padding="16"
-                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1,1,1,0"
-                        CornerRadius="8,8,0,0">
-                    <controls:SettingItem Title="{x:Static lprops:Resources.SetupAssistantPinToTaskbar}"
-                                          HelpText="{x:Static lprops:Resources.SetupAssistantPinToTaskbarHelp}">
-                        <controls:SettingItem.SettingContent>
-                            <Grid VerticalAlignment="Center">
-                                <StackPanel Orientation="Horizontal"
-                                            VerticalAlignment="Center"
-                                            Visibility="{Binding IsTaskbarIconPinned, Converter={c:BoolToVisibilityConverter}}">
-                                    <ui:SymbolIcon Symbol="Checkmark24"
-                                                   FontSize="18"
-                                                   Margin="0, 0, 6, 0"
-                                                   Foreground="{ui:ThemeResource SystemFillColorSuccessBrush}" />
-                                    <ui:TextBlock VerticalAlignment="Center"
-                                                  Foreground="{ui:ThemeResource SystemFillColorSuccessBrush}"
-                                                  Text="{x:Static properties:Resources.SettingsTaskbarIconStatusPinned}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal"
-                                            VerticalAlignment="Center"
-                                            ToolTipService.ShowDuration="60000"
-                                            ToolTipService.InitialShowDelay="100"
-                                            Visibility="{Binding IsTaskbarIconPinned, Converter={c:InvertedBoolToVisibilityConverter}}">
-                                    <StackPanel.ToolTip>
-                                        <ToolTip MaxWidth="600">
-                                            <Image Source="pack://application:,,,/EverythingToolbar.Launcher;component/Images/PinToTaskbar.png"
-                                                   Width="500"
-                                                   Stretch="Uniform"
-                                                   RenderOptions.BitmapScalingMode="Fant" />
-                                        </ToolTip>
-                                    </StackPanel.ToolTip>
-                                    <ui:SymbolIcon Symbol="Warning24"
-                                                   FontSize="18"
-                                                   Margin="0, 0, 6, 0"
-                                                   Foreground="{ui:ThemeResource SystemFillColorCautionBrush}" />
-                                    <ui:TextBlock VerticalAlignment="Center"
-                                                  Foreground="{ui:ThemeResource SystemFillColorCautionBrush}"
-                                                  Text="{x:Static properties:Resources.SettingsTaskbarIconStatusNotPinned}" />
-                                </StackPanel>
-                            </Grid>
-                        </controls:SettingItem.SettingContent>
-                    </controls:SettingItem>
-                </Border>
-                <StackPanel>
-                    <Border Padding="16"
-                            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                            BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                            BorderThickness="1,1,1,0"
-                            CornerRadius="0,0,0,0">
-                        <controls:SettingItem Title="{x:Static properties:Resources.SettingsSearchIcon}"
-                                              HelpText="{x:Static properties:Resources.SettingsSearchIconHelp}">
-                            <controls:SettingItem.SettingContent>
-                                <ComboBox HorizontalAlignment="Right"
-                                          MinWidth="150"
-                                          IsEnabled="{Binding IsTaskbarIconPinned}"
-                                          ItemsSource="{Binding IconItems}"
-                                          SelectedItem="{Binding SelectedIconItem, Mode=TwoWay}"
-                                          ItemTemplate="{StaticResource IconItemTemplate}" />
-                            </controls:SettingItem.SettingContent>
-                        </controls:SettingItem>
-                    </Border>
-                    <Border Padding="16"
-                            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                            BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                            BorderThickness="1,1,1,1"
-                            CornerRadius="0,0,8,8">
-                        <controls:SettingItem Title="{x:Static properties:Resources.SettingsHideWindowsSearchIcon}"
-                                              HelpText="{x:Static properties:Resources.SettingsHideWindowsSearchIconHelp}">
-                            <controls:SettingItem.SettingContent>
-                                <ui:ToggleSwitch IsChecked="{Binding IsWindowsSearchHidden, Mode=TwoWay}" />
-                            </controls:SettingItem.SettingContent>
-                        </controls:SettingItem>
-                    </Border>
+      <StackPanel>
+        <ui:TextBlock
+          Margin="0 25 0 7"
+          FontTypography="BodyStrong"
+          Text="{x:Static properties:Resources.SettingsTaskbarIcon}" />
+        <Border
+          Padding="16"
+          Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+          BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+          BorderThickness="1 1 1 0"
+          CornerRadius="8,8,0,0">
+          <controls:SettingItem Title="{x:Static lprops:Resources.SetupAssistantPinToTaskbar}" HelpText="{x:Static lprops:Resources.SetupAssistantPinToTaskbarHelp}">
+            <controls:SettingItem.SettingContent>
+              <Grid VerticalAlignment="Center">
+                <StackPanel
+                  VerticalAlignment="Center"
+                  Orientation="Horizontal"
+                  Visibility="{Binding IsTaskbarIconPinned, Converter={c:BoolToVisibilityConverter}}">
+                  <ui:SymbolIcon
+                    Margin="0 0 6 0"
+                    FontSize="18"
+                    Foreground="{ui:ThemeResource SystemFillColorSuccessBrush}"
+                    Symbol="Checkmark24" />
+                  <ui:TextBlock
+                    VerticalAlignment="Center"
+                    Foreground="{ui:ThemeResource SystemFillColorSuccessBrush}"
+                    Text="{x:Static properties:Resources.SettingsTaskbarIconStatusPinned}" />
                 </StackPanel>
-            </StackPanel>
-
-            <StackPanel Visibility="{Binding ShowTaskbarWindowSettings, Converter={c:BoolToVisibilityConverter}}">
-                <ui:TextBlock FontTypography="BodyStrong"
-                              Text="{x:Static properties:Resources.SettingsTaskbarSearchBox}"
-                              Margin="0, 25, 0, 7"/>
-                <Border Padding="16"
-                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1,1,1,0"
-                        CornerRadius="8,8,0,0">
-                    <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindow}"
-                                          HelpText="{x:Static properties:Resources.SettingsTaskbarWindowHelp}">
-                        <controls:SettingItem.SettingContent>
-                            <ui:ToggleSwitch IsChecked="{Binding Settings.TaskbarWindowEnabled, Mode=TwoWay}" />
-                        </controls:SettingItem.SettingContent>
-                    </controls:SettingItem>
-                </Border>
-                <Border Padding="16"
-                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1,1,1,1"
-                        CornerRadius="0,0,8,8">
-                    <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindowAlignment}"
-                                          HelpText="{x:Static properties:Resources.SettingsTaskbarWindowAlignmentHelp}">
-                        <controls:SettingItem.SettingContent>
-                            <ComboBox HorizontalAlignment="Right"
-                                      ItemsSource="{Binding TaskbarWindowAlignmentOptions}"
-                                      DisplayMemberPath="Key"
-                                      SelectedValuePath="Value"
-                                      SelectedValue="{Binding Settings.TaskbarWindowAlignment, Mode=TwoWay}">
-                                <ComboBox.IsEnabled>
-                                    <MultiBinding Converter="{c:BooleanAndConverter}">
-                                        <Binding Path="Settings.TaskbarWindowEnabled" />
-                                        <Binding Path="AllowLeftAlignment" />
-                                    </MultiBinding>
-                                </ComboBox.IsEnabled>
-                            </ComboBox>
-                        </controls:SettingItem.SettingContent>
-                    </controls:SettingItem>
-                </Border>
-            </StackPanel>
-
-            <StackPanel>
-                <ui:TextBlock FontTypography="BodyStrong"
-                              Text="{x:Static properties:Resources.SettingsOther}"
-                              Margin="0, 25, 0, 7"/>
-                <Border Padding="16"
-                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1,1,1,1"
-                        CornerRadius="8,8,8,8">
-                    <controls:SettingItem Title="{x:Static properties:Resources.SettingsEnableSystemTrayIcon}"
-                                          HelpText="{x:Static properties:Resources.SettingsEnableSystemTrayIconHelp}">
-                        <controls:SettingItem.SettingContent>
-                            <ui:ToggleSwitch IsChecked="{Binding Settings.IsTrayIconEnabled, Mode=TwoWay}" />
-                        </controls:SettingItem.SettingContent>
-                    </controls:SettingItem>
-                </Border>
-            </StackPanel>
+                <StackPanel
+                  VerticalAlignment="Center"
+                  Orientation="Horizontal"
+                  ToolTipService.InitialShowDelay="100"
+                  ToolTipService.ShowDuration="60000"
+                  Visibility="{Binding IsTaskbarIconPinned, Converter={c:InvertedBoolToVisibilityConverter}}">
+                  <StackPanel.ToolTip>
+                    <ToolTip MaxWidth="600">
+                      <Image
+                        Width="500"
+                        RenderOptions.BitmapScalingMode="Fant"
+                        Source="pack://application:,,,/EverythingToolbar.Launcher;component/Images/PinToTaskbar.png"
+                        Stretch="Uniform" />
+                    </ToolTip>
+                  </StackPanel.ToolTip>
+                  <ui:SymbolIcon
+                    Margin="0 0 6 0"
+                    FontSize="18"
+                    Foreground="{ui:ThemeResource SystemFillColorCautionBrush}"
+                    Symbol="Warning24" />
+                  <ui:TextBlock
+                    VerticalAlignment="Center"
+                    Foreground="{ui:ThemeResource SystemFillColorCautionBrush}"
+                    Text="{x:Static properties:Resources.SettingsTaskbarIconStatusNotPinned}" />
+                </StackPanel>
+              </Grid>
+            </controls:SettingItem.SettingContent>
+          </controls:SettingItem>
+        </Border>
+        <StackPanel>
+          <Border
+            Padding="16"
+            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1 1 1 0"
+            CornerRadius="0,0,0,0">
+            <controls:SettingItem Title="{x:Static properties:Resources.SettingsSearchIcon}" HelpText="{x:Static properties:Resources.SettingsSearchIconHelp}">
+              <controls:SettingItem.SettingContent>
+                <ComboBox
+                  MinWidth="150"
+                  HorizontalAlignment="Right"
+                  IsEnabled="{Binding IsTaskbarIconPinned}"
+                  ItemTemplate="{StaticResource IconItemTemplate}"
+                  ItemsSource="{Binding IconItems}"
+                  SelectedItem="{Binding SelectedIconItem, Mode=TwoWay}" />
+              </controls:SettingItem.SettingContent>
+            </controls:SettingItem>
+          </Border>
+          <Border
+            Padding="16"
+            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1 1 1 1"
+            CornerRadius="0,0,8,8">
+            <controls:SettingItem Title="{x:Static properties:Resources.SettingsHideWindowsSearchIcon}" HelpText="{x:Static properties:Resources.SettingsHideWindowsSearchIconHelp}">
+              <controls:SettingItem.SettingContent>
+                <ui:ToggleSwitch IsChecked="{Binding IsWindowsSearchHidden, Mode=TwoWay}" />
+              </controls:SettingItem.SettingContent>
+            </controls:SettingItem>
+          </Border>
         </StackPanel>
-    </ScrollViewer>
+      </StackPanel>
+
+      <StackPanel Visibility="{Binding ShowTaskbarWindowSettings, Converter={c:BoolToVisibilityConverter}}">
+        <ui:TextBlock
+          Margin="0 25 0 7"
+          FontTypography="BodyStrong"
+          Text="{x:Static properties:Resources.SettingsTaskbarSearchBox}" />
+        <Border
+          Padding="16"
+          Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+          BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+          BorderThickness="1 1 1 0"
+          CornerRadius="8,8,0,0">
+          <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindow}" HelpText="{x:Static properties:Resources.SettingsTaskbarWindowHelp}">
+            <controls:SettingItem.SettingContent>
+              <ui:ToggleSwitch IsChecked="{Binding Settings.TaskbarWindowEnabled, Mode=TwoWay}" />
+            </controls:SettingItem.SettingContent>
+          </controls:SettingItem>
+        </Border>
+        <Border
+          Padding="16"
+          Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+          BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+          BorderThickness="1 1 1 1"
+          CornerRadius="0,0,8,8">
+          <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindowAlignment}" HelpText="{x:Static properties:Resources.SettingsTaskbarWindowAlignmentHelp}">
+            <controls:SettingItem.SettingContent>
+              <ComboBox
+                HorizontalAlignment="Right"
+                DisplayMemberPath="Key"
+                ItemsSource="{Binding TaskbarWindowAlignmentOptions}"
+                SelectedValue="{Binding Settings.TaskbarWindowAlignment, Mode=TwoWay}"
+                SelectedValuePath="Value">
+                <ComboBox.IsEnabled>
+                  <MultiBinding Converter="{c:BooleanAndConverter}">
+                    <Binding Path="Settings.TaskbarWindowEnabled" />
+                    <Binding Path="AllowLeftAlignment" />
+                  </MultiBinding>
+                </ComboBox.IsEnabled>
+              </ComboBox>
+            </controls:SettingItem.SettingContent>
+          </controls:SettingItem>
+        </Border>
+      </StackPanel>
+
+      <StackPanel>
+        <ui:TextBlock
+          Margin="0 25 0 7"
+          FontTypography="BodyStrong"
+          Text="{x:Static properties:Resources.SettingsOther}" />
+        <Border
+          Padding="16"
+          Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+          BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+          BorderThickness="1 1 1 1"
+          CornerRadius="8,8,8,8">
+          <controls:SettingItem Title="{x:Static properties:Resources.SettingsEnableSystemTrayIcon}" HelpText="{x:Static properties:Resources.SettingsEnableSystemTrayIconHelp}">
+            <controls:SettingItem.SettingContent>
+              <ui:ToggleSwitch IsChecked="{Binding Settings.IsTrayIconEnabled, Mode=TwoWay}" />
+            </controls:SettingItem.SettingContent>
+          </controls:SettingItem>
+        </Border>
+      </StackPanel>
+    </StackPanel>
+  </ScrollViewer>
 </Page>
