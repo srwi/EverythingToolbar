@@ -1,4 +1,6 @@
+using System.IO;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Config.Net;
 using EverythingToolbar.Core.Platform;
 using EverythingToolbar.Search;
 using EverythingToolbar.ViewModels;
@@ -32,7 +34,13 @@ namespace EverythingToolbar
     {
         public static IServiceCollection AddSettings(this IServiceCollection services)
         {
-            return services.AddSingleton<ISettings>(_ => ToolbarSettings.User);
+            return services.AddSingleton<ISettings>(_ =>
+            {
+                var store = new ConfigurationBuilder<IToolbarSettings>()
+                    .UseIniFile(Path.Combine(ConfigPaths.GetConfigDirectory(), "settings.ini"))
+                    .Build();
+                return SettingsProxy.Create(store);
+            });
         }
 
         // The OS-abstraction seam: each interface is the app-facing contract, the adapter the Win32 impl.

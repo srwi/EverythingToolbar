@@ -1,6 +1,4 @@
-using System.IO;
 using Config.Net;
-using EverythingToolbar.App.Helpers;
 using EverythingToolbar.Core.Data;
 
 namespace EverythingToolbar.App
@@ -127,8 +125,8 @@ namespace EverythingToolbar.App
         [Option(DefaultValue = false)]
         bool IsDoubleClickToOpen { get; set; }
 
-        [Option(DefaultValue = false)]
-        bool ForceWin10Theme { get; set; }
+        [Option(Alias = "ForceWin10Theme", DefaultValue = false)]
+        bool ForceWin10Behavior { get; set; }
 
         [Option(DefaultValue = "")]
         string ThemeOverride { get; set; }
@@ -144,14 +142,5 @@ namespace EverythingToolbar.App
 
         [Option(DefaultValue = "Left")]
         string TaskbarWindowAlignment { get; set; }
-    }
-
-    public abstract class ToolbarSettings
-    {
-        private static readonly IToolbarSettings UserSettings = new ConfigurationBuilder<IToolbarSettings>()
-            .UseIniFile(Path.Combine(ConfigPaths.GetConfigDirectory(), "settings.ini"))
-            .Build();
-
-        public static readonly ISettings User = SettingsProxy.Create(UserSettings);
     }
 }

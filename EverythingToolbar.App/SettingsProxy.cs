@@ -11,11 +11,6 @@ namespace EverythingToolbar.App
             .GetProperties()
             .ToDictionary(property => property.Name);
 
-        private static readonly Dictionary<string, string> RenamedProperties = new()
-        {
-            [nameof(ISettings.ForceWin10Behavior)] = nameof(IToolbarSettings.ForceWin10Theme),
-        };
-
         private IToolbarSettings _store = null!;
         private PropertyChangedEventHandler? _propertyChanged;
 
@@ -60,10 +55,7 @@ namespace EverythingToolbar.App
 
         private static PropertyInfo StoreProperty(string settingsPropertyName)
         {
-            var storeName = RenamedProperties.TryGetValue(settingsPropertyName, out var mapped)
-                ? mapped
-                : settingsPropertyName;
-            return StoreProperties[storeName];
+            return StoreProperties[settingsPropertyName];
         }
     }
 }
