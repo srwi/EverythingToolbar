@@ -13,7 +13,8 @@ namespace EverythingToolbar.ViewModels
         public SettingsControlViewModel(
             ISearchWindowController searchWindowController,
             ISettings settings,
-            IEverythingClient everythingClient)
+            IEverythingClient everythingClient
+        )
         {
             _controller = searchWindowController;
             Settings = settings;
@@ -25,8 +26,10 @@ namespace EverythingToolbar.ViewModels
         public bool TrySetSortBy(int index)
         {
             int[] fastSortExceptions = [4, 8];
-            if (_everythingClient.GetIsFastSort((SortBy)index, Settings.IsSortDescending)
-                || fastSortExceptions.Contains(index))
+            if (
+                _everythingClient.GetIsFastSort((SortBy)index, Settings.IsSortDescending)
+                || fastSortExceptions.Contains(index)
+            )
             {
                 Settings.SortBy = index;
                 return true;

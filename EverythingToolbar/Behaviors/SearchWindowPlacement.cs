@@ -330,6 +330,5 @@ namespace EverythingToolbar.Behaviors
             public Rectangle Position;
             public Edge Edge;
         }
-
     }
 }

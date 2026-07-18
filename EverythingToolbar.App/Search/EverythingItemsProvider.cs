@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using EverythingToolbar.Core.Data;
 using EverythingToolbar.App.Data;
+using EverythingToolbar.Core.Data;
 using EverythingToolbar.Core.Search;
 
 namespace EverythingToolbar.App.Search
@@ -50,7 +50,12 @@ namespace EverythingToolbar.App.Search
             return TrackBusyState(_client.QueryCountAsync(_query, pageSize, cancellationToken));
         }
 
-        public async Task<IList<SearchResult>> FetchRange(int startIndex, int pageSize, bool isAsync, CancellationToken cancellationToken)
+        public async Task<IList<SearchResult>> FetchRange(
+            int startIndex,
+            int pageSize,
+            bool isAsync,
+            CancellationToken cancellationToken
+        )
         {
             IList<SearchResultData> data;
             if (!isAsync)

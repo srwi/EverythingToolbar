@@ -17,17 +17,14 @@ namespace EverythingToolbar
             _initialized = true;
 
             var services = new ServiceCollection();
-            services
-                .AddSettings()
-                .AddPlatformAdapters()
-                .AddSearchEngine()
-                .AddShellServices()
-                .AddViewModels();
+            services.AddSettings().AddPlatformAdapters().AddSearchEngine().AddShellServices().AddViewModels();
 
             var provider = services.BuildServiceProvider();
             Ioc.Default.ConfigureServices(provider);
 
-            provider.GetRequiredService<IEverythingClient>().SetInstanceName(provider.GetRequiredService<ISettings>().InstanceName);
+            provider
+                .GetRequiredService<IEverythingClient>()
+                .SetInstanceName(provider.GetRequiredService<ISettings>().InstanceName);
         }
     }
 

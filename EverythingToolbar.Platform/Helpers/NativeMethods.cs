@@ -13,7 +13,6 @@ namespace EverythingToolbar.Platform.Helpers
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
-
         #region Window discovery
 
         public static IntPtr FindTaskbarHandle()

@@ -17,8 +17,10 @@ namespace EverythingToolbar.Settings
         private ModifierKeys TempMods { get; set; }
 
         private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
-        private readonly StartMenuSearchInterceptor _startMenuInterceptor = Ioc.Default.GetRequiredService<StartMenuSearchInterceptor>();
-        private readonly GlobalShortcutListener _shortcutListener = Ioc.Default.GetRequiredService<GlobalShortcutListener>();
+        private readonly StartMenuSearchInterceptor _startMenuInterceptor =
+            Ioc.Default.GetRequiredService<StartMenuSearchInterceptor>();
+        private readonly GlobalShortcutListener _shortcutListener =
+            Ioc.Default.GetRequiredService<GlobalShortcutListener>();
 
         private static event EventHandler<WinKeyEventArgs>? WinKeyEventHandler;
 

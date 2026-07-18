@@ -94,7 +94,11 @@ namespace EverythingToolbar.Behaviors
 
                 if (requiresThumbnail)
                 {
-                    ImageSource? thumbnail = ThumbnailProvider.GetImage(path, PreviewThumbnailSize, allowUpscaling: false);
+                    ImageSource? thumbnail = ThumbnailProvider.GetImage(
+                        path,
+                        PreviewThumbnailSize,
+                        allowUpscaling: false
+                    );
                     if (thumbnail != null)
                         PreviewImage = thumbnail;
                 }
@@ -139,7 +143,6 @@ namespace EverythingToolbar.Behaviors
     {
         private static readonly ConditionalWeakTable<SearchResult, ResultImages> Table = new();
 
-        public static ResultImages Get(SearchResult result) =>
-            Table.GetValue(result, static r => new ResultImages(r));
+        public static ResultImages Get(SearchResult result) => Table.GetValue(result, static r => new ResultImages(r));
     }
 }

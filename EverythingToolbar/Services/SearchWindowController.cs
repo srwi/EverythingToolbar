@@ -67,66 +67,72 @@ namespace EverythingToolbar.Services
 
         public void Toggle() => RunOnUi(ToggleInternal);
 
-        public void Dismiss() => RunOnUi(() =>
-        {
-            NativeMethods.FocusTaskbarWindow();
-            HideInternal();
-        });
-
-        public void ToggleSearchUi() => RunOnUi(() =>
-        {
-            if (IsIconMode)
-                ToggleInternal();
-            else if (_toolbarBoxIsFocused?.Invoke() == true)
-                HideInternal();
-            else
-                _toolbarBoxFocus?.Invoke();
-        });
-
-        public void TogglePopupAtCursor() => RunOnUi(() =>
-        {
-            if (_state == WindowState.Visible)
+        public void Dismiss() =>
+            RunOnUi(() =>
             {
+                NativeMethods.FocusTaskbarWindow();
                 HideInternal();
-                return;
-            }
+            });
 
-            // Ignore a toggle arriving right after a hide (e.g. clicking the icon to close reopens otherwise).
-            if ((DateTime.Now - _lastHideStart).TotalMilliseconds < DebounceMs)
-                return;
+        public void ToggleSearchUi() =>
+            RunOnUi(() =>
+            {
+                if (IsIconMode)
+                    ToggleInternal();
+                else if (_toolbarBoxIsFocused?.Invoke() == true)
+                    HideInternal();
+                else
+                    _toolbarBoxFocus?.Invoke();
+            });
 
-            if (!_structuralIconMode)
-                SetTemporaryPopupMode(true);
+        public void TogglePopupAtCursor() =>
+            RunOnUi(() =>
+            {
+                if (_state == WindowState.Visible)
+                {
+                    HideInternal();
+                    return;
+                }
 
-            ShowInternal(atCursor: true);
-        });
+                // Ignore a toggle arriving right after a hide (e.g. clicking the icon to close reopens otherwise).
+                if ((DateTime.Now - _lastHideStart).TotalMilliseconds < DebounceMs)
+                    return;
 
-        public void FocusSearchBox() => RunOnUi(() =>
-        {
-            if (IsIconMode)
-                Window.FocusSearchBox();
-            else
-                _toolbarBoxFocus?.Invoke();
-        });
+                if (!_structuralIconMode)
+                    SetTemporaryPopupMode(true);
+
+                ShowInternal(atCursor: true);
+            });
+
+        public void FocusSearchBox() =>
+            RunOnUi(() =>
+            {
+                if (IsIconMode)
+                    Window.FocusSearchBox();
+                else
+                    _toolbarBoxFocus?.Invoke();
+            });
 
         public void PreWarm() => RunOnUi(() => Window.PreWarm());
 
-        public void NotifyFocusLostToOutside() => RunOnUi(() =>
-        {
-            // Keyboard focus leaving the window reports NewFocus == null even when it moves to our own
-            // attached toolbar box, which lives in a separate top-level window. Defer the hide so focus
-            // can settle (the box's GotKeyboardFocus runs right after this), then skip it if focus landed
-            // in the toolbar box — the user is still interacting with us, so the window must stay open.
-            Window.Dispatcher.BeginInvoke(
-                new Action(() =>
-                {
-                    if (_toolbarBoxIsFocused?.Invoke() == true)
-                        return;
+        public void NotifyFocusLostToOutside() =>
+            RunOnUi(() =>
+            {
+                // Keyboard focus leaving the window reports NewFocus == null even when it moves to our own
+                // attached toolbar box, which lives in a separate top-level window. Defer the hide so focus
+                // can settle (the box's GotKeyboardFocus runs right after this), then skip it if focus landed
+                // in the toolbar box — the user is still interacting with us, so the window must stay open.
+                Window.Dispatcher.BeginInvoke(
+                    new Action(() =>
+                    {
+                        if (_toolbarBoxIsFocused?.Invoke() == true)
+                            return;
 
-                    HideInternal();
-                }),
-                DispatcherPriority.Input);
-        });
+                        HideInternal();
+                    }),
+                    DispatcherPriority.Input
+                );
+            });
 
         public void NotifySearchBoxFocused() => SearchBoxFocused?.Invoke(this, EventArgs.Empty);
 

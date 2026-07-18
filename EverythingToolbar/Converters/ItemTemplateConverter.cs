@@ -10,11 +10,12 @@ namespace EverythingToolbar.Converters
     {
         private const string FallbackKey = "Normal";
 
-        private static readonly Lazy<ResourceDictionary> Templates = new(() => new ResourceDictionary
-        {
-            Source = new Uri(
-                "pack://application:,,,/EverythingToolbar;component/ItemTemplates/ItemTemplates.xaml"),
-        });
+        private static readonly Lazy<ResourceDictionary> Templates = new(() =>
+            new ResourceDictionary
+            {
+                Source = new Uri("pack://application:,,,/EverythingToolbar;component/ItemTemplates/ItemTemplates.xaml"),
+            }
+        );
 
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {

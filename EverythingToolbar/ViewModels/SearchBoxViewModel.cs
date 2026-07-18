@@ -15,7 +15,8 @@ namespace EverythingToolbar.ViewModels
             SearchState searchState,
             ISettings settings,
             SearchWindowController searchWindowController,
-            SearchCommands commands)
+            SearchCommands commands
+        )
         {
             _searchState = searchState;
             Settings = settings;

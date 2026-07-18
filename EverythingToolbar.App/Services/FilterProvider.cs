@@ -44,8 +44,11 @@ namespace EverythingToolbar.App.Services
             return _defaultLoader.Filters;
         }
 
-        public FilterProvider(DefaultFilterProvider defaultLoader, EverythingFilterProvider everythingLoader,
-            ISettings settings)
+        public FilterProvider(
+            DefaultFilterProvider defaultLoader,
+            EverythingFilterProvider everythingLoader,
+            ISettings settings
+        )
         {
             _defaultLoader = defaultLoader;
             _everythingLoader = everythingLoader;

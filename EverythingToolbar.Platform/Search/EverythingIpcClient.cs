@@ -39,7 +39,8 @@ namespace EverythingToolbar.Platform.Search
         {
             if (_synchronizationContext == null)
             {
-                var context = SynchronizationContext.Current
+                var context =
+                    SynchronizationContext.Current
                     ?? throw new InvalidOperationException(
                         "EverythingIpcClient must be used on a thread with a synchronization context."
                     );
@@ -264,11 +265,7 @@ namespace EverythingToolbar.Platform.Search
 
                 if (_replyWindowHandle != IntPtr.Zero)
                 {
-                    SetWindowLongPtr(
-                        _replyWindowHandle,
-                        gwlpWndproc,
-                        Marshal.GetFunctionPointerForDelegate(_wndProc)
-                    );
+                    SetWindowLongPtr(_replyWindowHandle, gwlpWndproc, Marshal.GetFunctionPointerForDelegate(_wndProc));
                 }
                 else
                 {
@@ -421,7 +418,13 @@ namespace EverythingToolbar.Platform.Search
             private readonly CancellationToken _cancellationToken;
             private readonly CancellationTokenRegistration _cancellationRegistration;
 
-            protected PendingQuery(SearchQuery query, int pageSize, uint offset, uint replyId, CancellationToken cancellationToken)
+            protected PendingQuery(
+                SearchQuery query,
+                int pageSize,
+                uint offset,
+                uint replyId,
+                CancellationToken cancellationToken
+            )
             {
                 Query = query;
                 PageSize = pageSize;
@@ -447,8 +450,12 @@ namespace EverythingToolbar.Platform.Search
             public void Dispose() => _cancellationRegistration.Dispose();
         }
 
-        private sealed class PendingCountQuery(SearchQuery query, int pageSize, uint replyId, CancellationToken cancellationToken)
-            : PendingQuery(query, pageSize, offset: 0, replyId, cancellationToken)
+        private sealed class PendingCountQuery(
+            SearchQuery query,
+            int pageSize,
+            uint replyId,
+            CancellationToken cancellationToken
+        ) : PendingQuery(query, pageSize, offset: 0, replyId, cancellationToken)
         {
             public TaskCompletionSource<int> CompletionSource { get; } =
                 new(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -458,8 +465,13 @@ namespace EverythingToolbar.Platform.Search
             public override void CompleteEmpty() => CompletionSource.TrySetResult(0);
         }
 
-        private sealed class PendingRangeQuery(SearchQuery query, int startIndex, int pageSize, uint replyId, CancellationToken cancellationToken)
-            : PendingQuery(query, pageSize, (uint)startIndex, replyId, cancellationToken)
+        private sealed class PendingRangeQuery(
+            SearchQuery query,
+            int startIndex,
+            int pageSize,
+            uint replyId,
+            CancellationToken cancellationToken
+        ) : PendingQuery(query, pageSize, (uint)startIndex, replyId, cancellationToken)
         {
             public TaskCompletionSource<IList<SearchResultData>> CompletionSource { get; } =
                 new(TaskCreationOptions.RunContinuationsAsynchronously);

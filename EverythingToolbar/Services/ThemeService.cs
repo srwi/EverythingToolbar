@@ -117,11 +117,7 @@ namespace EverythingToolbar.Services
         public void Register(FrameworkElement root, ThemedSurface surface)
         {
             RemoveRegistration(root);
-            var registration = new Registration
-            {
-                Root = new WeakReference<FrameworkElement>(root),
-                Surface = surface,
-            };
+            var registration = new Registration { Root = new WeakReference<FrameworkElement>(root), Surface = surface };
             _registrations.Add(registration);
 
             var systemTheme = GetEffectiveTheme(ThemeFlavor.System);
@@ -167,11 +163,7 @@ namespace EverythingToolbar.Services
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (
-                e.PropertyName
-                is nameof(ISettings.ThemeOverride)
-                    or nameof(ISettings.ForceWin10Behavior)
-            )
+            if (e.PropertyName is nameof(ISettings.ThemeOverride) or nameof(ISettings.ForceWin10Behavior))
             {
                 ScheduleApply();
             }
@@ -221,8 +213,7 @@ namespace EverythingToolbar.Services
                 root.Resources.MergedDictionaries.Remove(dict);
             registration.AddedDictionaries.Clear();
 
-            var profile =
-                _windowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11 ? "Win11" : "Win10";
+            var profile = _windowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11 ? "Win11" : "Win10";
 
             AddWpfUiBase(registration, root, systemTheme);
 

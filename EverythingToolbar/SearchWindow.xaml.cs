@@ -44,7 +44,8 @@ namespace EverythingToolbar
                 SetTopmostBelowTaskbar,
                 OnHidden,
                 () => _viewModel.AnimationsDisabled,
-                _viewModel.IsWindows11OrGreater);
+                _viewModel.IsWindows11OrGreater
+            );
         }
 
         private void OnPreviewKeyDown(object? sender, KeyEventArgs e)

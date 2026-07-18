@@ -37,7 +37,8 @@ namespace EverythingToolbar.Deskband
             // that deps.json — so assemblies referenced only from XAML (e.g. Microsoft.Xaml.Behaviors)
             // fail to load. Bridge the default context to this component's own context/resolver, so a
             // single shared instance is returned (avoiding a duplicate assembly identity).
-            var componentContext = AssemblyLoadContext.GetLoadContext(typeof(Server).Assembly) ?? AssemblyLoadContext.Default;
+            var componentContext =
+                AssemblyLoadContext.GetLoadContext(typeof(Server).Assembly) ?? AssemblyLoadContext.Default;
             var resolver = new AssemblyDependencyResolver(typeof(Server).Assembly.Location);
             AssemblyLoadContext.Default.Resolving += (_, name) =>
             {

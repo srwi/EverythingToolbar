@@ -22,8 +22,7 @@ namespace EverythingToolbar.ViewModels
         public void RegisterSearchBox(Func<bool> isFocused, Action focus) =>
             _controller.RegisterToolbarSearchBox(isFocused, focus);
 
-        public void UnregisterSearchBox(Action focus) =>
-            _controller.UnregisterToolbarSearchBox(focus);
+        public void UnregisterSearchBox(Action focus) => _controller.UnregisterToolbarSearchBox(focus);
 
         public void ShowSearchWindow() => _controller.Show();
 

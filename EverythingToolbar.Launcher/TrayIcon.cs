@@ -27,7 +27,10 @@ namespace EverythingToolbar.Launcher
             quitItem.Click += (_, _) => onQuit();
             contextMenu.Items.Add(quitItem);
 
-            _menuTheme = new ThemesDictionary { Theme = ToApplicationTheme(_themeService.GetEffectiveTheme(ThemeFlavor.App)) };
+            _menuTheme = new ThemesDictionary
+            {
+                Theme = ToApplicationTheme(_themeService.GetEffectiveTheme(ThemeFlavor.App)),
+            };
             contextMenu.Resources.MergedDictionaries.Add(new ControlsDictionary());
             contextMenu.Resources.MergedDictionaries.Add(_menuTheme);
             _themeService.ThemeChanged += OnThemeChanged;

@@ -105,17 +105,20 @@ namespace EverythingToolbar.Launcher
                     }
                 };
 
-                WeakReferenceMessenger.Default.Register<TaskbarPinIconChanged>(this, async (_, message) =>
-                {
-                    var restartExplorer =
-                        await FluentMessageBox
-                            .CreateYesNo(
-                                Properties.Resources.SetupAssistantRestartExplorerDialogText,
-                                Properties.Resources.SetupAssistantRestartExplorerDialogTitle
-                            )
-                            .ShowDialogAsync() == MessageBoxResult.Primary;
-                    Utils.ChangeTaskbarPinIcon(message.IconName, restartExplorer);
-                });
+                WeakReferenceMessenger.Default.Register<TaskbarPinIconChanged>(
+                    this,
+                    async (_, message) =>
+                    {
+                        var restartExplorer =
+                            await FluentMessageBox
+                                .CreateYesNo(
+                                    Properties.Resources.SetupAssistantRestartExplorerDialogText,
+                                    Properties.Resources.SetupAssistantRestartExplorerDialogTitle
+                                )
+                                .ShowDialogAsync() == MessageBoxResult.Primary;
+                        Utils.ChangeTaskbarPinIcon(message.IconName, restartExplorer);
+                    }
+                );
 
                 _settings.PropertyChanged += async (_, e) =>
                 {
@@ -349,7 +352,8 @@ namespace EverythingToolbar.Launcher
                     using var trayIcon = new TrayIcon(
                         OpenSettingsWindow,
                         app.Shutdown,
-                        Ioc.Default.GetRequiredService<ThemeService>());
+                        Ioc.Default.GetRequiredService<ThemeService>()
+                    );
                     app.Run(new LauncherWindow(trayIcon));
                 }
                 else

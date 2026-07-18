@@ -20,9 +20,7 @@ namespace EverythingToolbar.Controls
             };
 
             var appTheme = Ioc.Default.GetRequiredService<ThemeService>().GetEffectiveTheme(ThemeFlavor.App);
-            ApplicationThemeManager.Apply(
-                appTheme == Theme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark
-            );
+            ApplicationThemeManager.Apply(appTheme == Theme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark);
             ApplicationThemeManager.Apply(messageBox);
 
             return messageBox;

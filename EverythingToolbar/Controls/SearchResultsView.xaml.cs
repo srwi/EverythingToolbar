@@ -48,9 +48,18 @@ namespace EverythingToolbar.Controls
             SearchResultsListView.SelectionChanged += OnListSelectionChanged;
             SearchResultsListView.PreviewMouseLeftButtonDown += OnPreviewLeftMouseButtonDown;
 
-            SearchResultsListView.AddHandler(ScrollViewer.ScrollChangedEvent, new ScrollChangedEventHandler(OnScrollChanged));
-            SearchResultsListView.AddHandler(Thumb.DragStartedEvent, new DragStartedEventHandler(OnScrollBarDragStarted));
-            SearchResultsListView.AddHandler(Thumb.DragCompletedEvent, new DragCompletedEventHandler(OnScrollBarDragCompleted));
+            SearchResultsListView.AddHandler(
+                ScrollViewer.ScrollChangedEvent,
+                new ScrollChangedEventHandler(OnScrollChanged)
+            );
+            SearchResultsListView.AddHandler(
+                Thumb.DragStartedEvent,
+                new DragStartedEventHandler(OnScrollBarDragStarted)
+            );
+            SearchResultsListView.AddHandler(
+                Thumb.DragCompletedEvent,
+                new DragCompletedEventHandler(OnScrollBarDragCompleted)
+            );
 
             _busyIndicatorTimer = new DispatcherTimer
             {
@@ -288,7 +297,12 @@ namespace EverythingToolbar.Controls
                 var actionIcon = CustomActionIcons.Load(action.Command);
                 if (actionIcon != null)
                 {
-                    actionMenuItem.Icon = new Image { Width = 16, Height = 16, Source = actionIcon };
+                    actionMenuItem.Icon = new Image
+                    {
+                        Width = 16,
+                        Height = 16,
+                        Source = actionIcon,
+                    };
                 }
                 actionMenuItem.Click += OpenWithCustomAction;
                 menuItem.Items.Insert(i, actionMenuItem);

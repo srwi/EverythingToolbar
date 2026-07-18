@@ -46,7 +46,6 @@ namespace EverythingToolbar.App.Helpers
             {
                 logger.Error((Exception)args.ExceptionObject, "Unhandled exception");
             };
-
         }
 
         private static void ConfigureLogger()

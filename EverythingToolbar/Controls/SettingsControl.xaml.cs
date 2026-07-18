@@ -9,7 +9,8 @@ namespace EverythingToolbar.Controls
 {
     public partial class SettingsControl
     {
-        private readonly SettingsControlViewModel _viewModel = Ioc.Default.GetRequiredService<SettingsControlViewModel>();
+        private readonly SettingsControlViewModel _viewModel =
+            Ioc.Default.GetRequiredService<SettingsControlViewModel>();
 
         public SettingsControl()
         {

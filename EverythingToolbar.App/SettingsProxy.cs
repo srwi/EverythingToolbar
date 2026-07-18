@@ -7,8 +7,9 @@ namespace EverythingToolbar.App
 {
     public class SettingsProxy : DispatchProxy
     {
-        private static readonly Dictionary<string, PropertyInfo> StoreProperties =
-            typeof(IToolbarSettings).GetProperties().ToDictionary(property => property.Name);
+        private static readonly Dictionary<string, PropertyInfo> StoreProperties = typeof(IToolbarSettings)
+            .GetProperties()
+            .ToDictionary(property => property.Name);
 
         private static readonly Dictionary<string, string> RenamedProperties = new()
         {

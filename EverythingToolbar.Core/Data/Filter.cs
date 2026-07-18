@@ -28,7 +28,8 @@ namespace EverythingToolbar.Core.Data
             bool currentIsMatchCase,
             bool currentIsMatchWholeWord,
             bool currentIsMatchPath,
-            bool currentIsRegExEnabled)
+            bool currentIsRegExEnabled
+        )
         {
             if (string.IsNullOrEmpty(Search))
                 return "";

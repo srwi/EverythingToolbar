@@ -13,7 +13,6 @@ namespace EverythingToolbar.Markup
 
         public ServiceExtension(Type type) => Type = type;
 
-        public override object ProvideValue(IServiceProvider serviceProvider) =>
-            Ioc.Default.GetRequiredService(Type);
+        public override object ProvideValue(IServiceProvider serviceProvider) => Ioc.Default.GetRequiredService(Type);
     }
 }

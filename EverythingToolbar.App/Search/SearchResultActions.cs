@@ -15,7 +15,8 @@ namespace EverythingToolbar.App.Search
         IFileLauncher fileLauncher,
         IFilePreviewer previewer,
         SearchState searchState,
-        EverythingSearchLauncher launcher)
+        EverythingSearchLauncher launcher
+    )
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<SearchResultActions>();
 

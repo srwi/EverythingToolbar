@@ -1,6 +1,6 @@
 using System.IO;
-using EverythingToolbar.Core.Data;
 using EverythingToolbar.App.Helpers;
+using EverythingToolbar.Core.Data;
 using EverythingToolbar.Core.Platform;
 using NLog;
 
@@ -10,7 +10,8 @@ namespace EverythingToolbar.App.Search
         INotifier notifier,
         IShellDialogs shellDialogs,
         IFileLauncher fileLauncher,
-        ISettings settings)
+        ISettings settings
+    )
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<EverythingSearchLauncher>();
 

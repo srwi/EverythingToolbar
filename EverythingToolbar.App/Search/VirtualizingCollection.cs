@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using CommunityToolkit.Mvvm.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 using EverythingToolbar.Core.Search;
 
 namespace EverythingToolbar.App.Search
@@ -82,7 +82,6 @@ namespace EverythingToolbar.App.Search
             _pageAccessOrder.Clear();
             _pageAccessNodes.Clear();
 
-
             ItemsProvider.PropertyChanged -= OnItemsProviderPropertyChanged;
             ItemsProvider = newProvider;
             ItemsProvider.PropertyChanged += OnItemsProviderPropertyChanged;
@@ -135,10 +134,7 @@ namespace EverythingToolbar.App.Search
             }
             else
             {
-                Count = ItemsProvider
-                    .FetchCount(PageSize, isAsync: false, cancellationToken)
-                    .GetAwaiter()
-                    .GetResult();
+                Count = ItemsProvider.FetchCount(PageSize, isAsync: false, cancellationToken).GetAwaiter().GetResult();
             }
         }
 

@@ -106,7 +106,8 @@ namespace EverythingToolbar.App.Search
 
         public string BuildSearchTerm()
         {
-            var rawSearchTerm = Filter.GetSearchPrefix(IsMatchCase, IsMatchWholeWord, IsMatchPath, IsRegExEnabled) + SearchTerm;
+            var rawSearchTerm =
+                Filter.GetSearchPrefix(IsMatchCase, IsMatchWholeWord, IsMatchPath, IsRegExEnabled) + SearchTerm;
             var searchTermWithAppliedMacros = ApplyMacros(rawSearchTerm);
             return searchTermWithAppliedMacros;
         }
@@ -152,6 +153,5 @@ namespace EverythingToolbar.App.Search
                     break;
             }
         }
-
     }
 }

@@ -13,7 +13,6 @@ namespace EverythingToolbar.Services
             return Environment.OSVersion.Version;
         }
 
-
         public bool IsEffectiveAnimationsDisabled =>
             settings.IsAnimationsDisabled || !SystemSettings.GetSystemAnimationsEnabled();
 

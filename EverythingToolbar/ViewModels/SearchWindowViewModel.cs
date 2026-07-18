@@ -14,7 +14,8 @@ namespace EverythingToolbar.ViewModels
             EverythingSearchLauncher launcher,
             ISettings settings,
             WindowsPolicy windowsPolicy,
-            ThemeService themeService)
+            ThemeService themeService
+        )
         {
             _searchState = searchState;
             _launcher = launcher;

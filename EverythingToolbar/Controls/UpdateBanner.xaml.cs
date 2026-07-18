@@ -16,7 +16,8 @@ namespace EverythingToolbar.Controls
         private Version? _latestVersion;
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<UpdateBanner>();
         private static readonly HttpClient HttpClient = new();
-        private static readonly string LatestReleaseApiUrl = "https://api.github.com/repos/srwi/EverythingToolbar/releases/latest";
+        private static readonly string LatestReleaseApiUrl =
+            "https://api.github.com/repos/srwi/EverythingToolbar/releases/latest";
         private static readonly string LatestReleaseUrl = "https://github.com/srwi/EverythingToolbar/releases/latest";
         private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
 

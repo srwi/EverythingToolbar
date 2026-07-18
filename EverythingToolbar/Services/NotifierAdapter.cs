@@ -13,18 +13,14 @@ namespace EverythingToolbar.Services
             if (!string.IsNullOrEmpty(detail))
                 message += Environment.NewLine + Environment.NewLine + detail;
 
-            _ = FluentMessageBox
-                .CreateError(message, Resources.MessageBoxErrorTitle)
-                .ShowDialogAsync();
+            _ = FluentMessageBox.CreateError(message, Resources.MessageBoxErrorTitle).ShowDialogAsync();
         }
 
         public void ShowInformation(string messageResourceKey)
         {
             var message = Resolve(messageResourceKey);
 
-            _ = FluentMessageBox
-                .CreateRegular(message, string.Empty)
-                .ShowDialogAsync();
+            _ = FluentMessageBox.CreateRegular(message, string.Empty).ShowDialogAsync();
         }
 
         private static string Resolve(string resourceKey)

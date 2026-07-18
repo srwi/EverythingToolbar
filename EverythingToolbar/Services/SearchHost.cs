@@ -23,7 +23,8 @@ namespace EverythingToolbar.Services
             SearchWindow searchWindow,
             TaskbarInfoProvider taskbarInfo,
             ISettings settings,
-            WindowsPolicy windowsPolicy)
+            WindowsPolicy windowsPolicy
+        )
         {
             _controller = controller;
             _shortcutListener = shortcutListener;
@@ -42,7 +43,7 @@ namespace EverythingToolbar.Services
 
             _placement = new SearchWindowPlacement(_taskbarInfo, _settings, _windowsPolicy)
             {
-                PlacementTarget = placementTarget
+                PlacementTarget = placementTarget,
             };
             Interaction.GetBehaviors(_searchWindow).Add(_placement);
         }

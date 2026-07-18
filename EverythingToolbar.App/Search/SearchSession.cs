@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using CommunityToolkit.Mvvm.ComponentModel;
 using System.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
 using EverythingToolbar.Core.Data;
 using EverythingToolbar.Core.Search;
 using SearchResult = EverythingToolbar.App.Data.SearchResult;
@@ -39,7 +39,6 @@ namespace EverythingToolbar.App.Search
 
         public event Action? ResultsReset;
 
-
         [ObservableProperty]
         private int _selectedIndex = -1;
 
@@ -50,8 +49,7 @@ namespace EverythingToolbar.App.Search
 
         public int VisiblePageCount { get; set; } = 1;
 
-        private bool KeepSearchBoxFocused =>
-            _settings.IsAutoSelectFirstResult && _settings.IsSearchAsYouType;
+        private bool KeepSearchBoxFocused => _settings.IsAutoSelectFirstResult && _settings.IsSearchAsYouType;
 
         private FocusBehavior EffectiveListFocusBehavior =>
             KeepSearchBoxFocused && _settings.ListFocusBehavior == FocusBehavior.RepeatWithSearch
@@ -186,11 +184,7 @@ namespace EverythingToolbar.App.Search
 
             if (_collection == null)
             {
-                _collection = new VirtualizingCollection<SearchResult>(
-                    newProvider,
-                    PageSize,
-                    _synchronizationContext
-                );
+                _collection = new VirtualizingCollection<SearchResult>(newProvider, PageSize, _synchronizationContext);
                 _collection.CollectionChanged += OnCollectionChanged;
                 _collection.PropertyChanged += OnCollectionPropertyChanged;
             }
@@ -223,6 +217,5 @@ namespace EverythingToolbar.App.Search
             _collection?.Dispose();
             _collection = null;
         }
-
     }
 }

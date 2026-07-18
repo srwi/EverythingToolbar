@@ -22,7 +22,8 @@ namespace EverythingToolbar.Controls
             Action setTopmostBelowTaskbar,
             Action onHideCompleted,
             Func<bool> animationsDisabled,
-            bool isWindows11OrGreater)
+            bool isWindows11OrGreater
+        )
         {
             _window = window;
             _contentGrid = contentGrid;

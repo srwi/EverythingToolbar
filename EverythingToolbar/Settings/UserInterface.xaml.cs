@@ -123,6 +123,5 @@ namespace EverythingToolbar.Settings
                 Application.Current.Shutdown();
             }
         }
-
     }
 }

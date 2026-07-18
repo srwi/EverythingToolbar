@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using CommunityToolkit.Mvvm.ComponentModel;
 using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using EverythingToolbar.Core.Data;
 using EverythingToolbar.Core.Helpers;
 
@@ -122,11 +122,12 @@ namespace EverythingToolbar.App.Services
             var order = _settings.FilterOrder;
             var validOrder = FilterOrderValidator.GetValidFilterOrder(order, DefaultFilters.Count);
 
-            if (!string.IsNullOrWhiteSpace(order) && validOrder.SequenceEqual(Enumerable.Range(0, DefaultFilters.Count)))
+            if (
+                !string.IsNullOrWhiteSpace(order) && validOrder.SequenceEqual(Enumerable.Range(0, DefaultFilters.Count))
+            )
                 _settings.FilterOrder = string.Empty;
 
             return validOrder;
         }
-
     }
 }

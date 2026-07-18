@@ -295,6 +295,5 @@ namespace EverythingToolbar.Helpers
                 return ShilExtralarge;
             return ShilJumbo;
         }
-
     }
 }

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using CommunityToolkit.Mvvm.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
 using EverythingToolbar.App.Helpers;
 using EverythingToolbar.Core.Data;
 using EverythingToolbar.Core.Platform;
@@ -27,7 +27,12 @@ namespace EverythingToolbar.App.Services
         private readonly IShellDialogs _shellDialogs;
         private readonly SynchronizationContext? _syncContext;
 
-        public EverythingFilterProvider(IFilterNames names, INotifier notifier, IShellDialogs shellDialogs, ISettings settings)
+        public EverythingFilterProvider(
+            IFilterNames names,
+            INotifier notifier,
+            IShellDialogs shellDialogs,
+            ISettings settings
+        )
         {
             _names = names;
             _notifier = notifier;
@@ -87,7 +92,10 @@ namespace EverythingToolbar.App.Services
 
                 _notifier.ShowInformation("MessageBoxSelectFiltersCsv");
                 var pickedPath = _shellDialogs.BrowseForFile(
-                    "Filters.csv", "Filters.csv", Path.Combine(_settings.FiltersPath, ".."));
+                    "Filters.csv",
+                    "Filters.csv",
+                    Path.Combine(_settings.FiltersPath, "..")
+                );
 
                 if (pickedPath != null)
                 {
@@ -200,6 +208,5 @@ namespace EverythingToolbar.App.Services
         {
             ResetFilters();
         }
-
     }
 }

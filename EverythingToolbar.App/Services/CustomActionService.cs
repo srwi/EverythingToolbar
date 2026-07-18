@@ -11,15 +11,11 @@ using NLog;
 
 namespace EverythingToolbar.App.Services
 {
-    public sealed class CustomActionService(
-        ISettings settings,
-        INotifier notifier,
-        IFileLauncher fileLauncher)
+    public sealed class CustomActionService(ISettings settings, INotifier notifier, IFileLauncher fileLauncher)
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<CustomActionService>();
 
-        private static string CustomActionsPath =>
-            Path.Combine(ConfigPaths.GetConfigDirectory(), "rules.xml");
+        private static string CustomActionsPath => Path.Combine(ConfigPaths.GetConfigDirectory(), "rules.xml");
 
         public List<Rule> Load()
         {

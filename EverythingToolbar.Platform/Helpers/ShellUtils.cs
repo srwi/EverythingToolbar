@@ -76,7 +76,13 @@ namespace EverythingToolbar.Platform.Helpers
                 return;
 
             var itemToSelect = Path.GetFileName(path);
-            PInvoke.SHParseDisplayName(Path.Combine(parentFolder, itemToSelect), null, out ITEMIDLIST* nativeFile, 0, out _);
+            PInvoke.SHParseDisplayName(
+                Path.Combine(parentFolder, itemToSelect),
+                null,
+                out ITEMIDLIST* nativeFile,
+                0,
+                out _
+            );
 
             var fileToSelect = nativeFile != null ? nativeFile : nativeFolder;
             PInvoke.SHOpenFolderAndSelectItems(nativeFolder, 1, &fileToSelect, 0);

@@ -1,7 +1,7 @@
 using System.IO;
 using Config.Net;
-using EverythingToolbar.Core.Data;
 using EverythingToolbar.App.Helpers;
+using EverythingToolbar.Core.Data;
 
 namespace EverythingToolbar.App
 {

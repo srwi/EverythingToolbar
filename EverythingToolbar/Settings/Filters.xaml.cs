@@ -23,7 +23,8 @@ namespace EverythingToolbar.Settings
         private bool _isDragging;
         private Point _startPoint;
         public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
-        private readonly DefaultFilterProvider _defaultFilterProvider = Ioc.Default.GetRequiredService<DefaultFilterProvider>();
+        private readonly DefaultFilterProvider _defaultFilterProvider =
+            Ioc.Default.GetRequiredService<DefaultFilterProvider>();
 
         public ObservableCollection<FilterOrderItem> FilterOrderItems
         {

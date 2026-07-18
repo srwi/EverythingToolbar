@@ -19,7 +19,8 @@ namespace EverythingToolbar.ViewModels
             CustomActionService customActions,
             ISettings settings,
             ISearchWindowController searchWindowController,
-            SearchCommands commands)
+            SearchCommands commands
+        )
         {
             Session = session;
             _customActions = customActions;
@@ -37,17 +38,27 @@ namespace EverythingToolbar.ViewModels
             _commands.TranslateResultsGesture(key, systemKey, modifiers, fromSearchBox: false);
 
         public void OpenSelected() => _commands.OpenSelected();
+
         public void OpenSelectedPath() => _commands.OpenSelectedPath();
+
         public void RunSelectedAsAdmin() => _commands.RunSelectedAsAdmin();
+
         public void ShowSelectedProperties() => _commands.ShowSelectedProperties();
+
         public void OpenSelectedWith() => _commands.OpenSelectedWith();
+
         public void CopySelected() => _commands.CopySelected();
+
         public void CopySelectedPath() => _commands.CopySelectedPath();
+
         public void PreviewSelected() => _commands.PreviewSelected();
+
         public void ShowSelectedWindowsContextMenu() => _commands.ShowSelectedWindowsContextMenu();
+
         public void ShowSelectedInEverything() => _commands.ShowSelectedInEverything();
 
         public List<Rule> LoadCustomActions() => _customActions.Load();
+
         public bool TryRunCustomAction(SearchResult item, string command = "") => _customActions.TryRun(item, command);
     }
 }

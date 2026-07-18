@@ -11,20 +11,12 @@ namespace EverythingToolbar.Services
             if (Directory.Exists(path) && !path.EndsWith("\\"))
                 path += "\\";
 
-            Process.Start(new ProcessStartInfo(path)
-            {
-                WorkingDirectory = workingDirectory,
-                UseShellExecute = true
-            });
+            Process.Start(new ProcessStartInfo(path) { WorkingDirectory = workingDirectory, UseShellExecute = true });
         }
 
         public void OpenAsAdmin(string path)
         {
-            Process.Start(new ProcessStartInfo(path)
-            {
-                Verb = "runas",
-                UseShellExecute = true
-            });
+            Process.Start(new ProcessStartInfo(path) { Verb = "runas", UseShellExecute = true });
         }
 
         public void OpenWithArguments(string path, string arguments)
