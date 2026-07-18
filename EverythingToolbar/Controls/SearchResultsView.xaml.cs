@@ -35,6 +35,7 @@ namespace EverythingToolbar.Controls
         private Point _dragStart;
         private int _lastScrolledIndex = -1;
         private ScrollViewer? _scrollViewer;
+        private Action? _focusSelectedItem;
         private int? _touchId;
         private readonly DispatcherTimer _busyIndicatorTimer;
         private const int BusyIndicatorDelayMilliseconds = 2000;
@@ -68,13 +69,40 @@ namespace EverythingToolbar.Controls
                 Interval = TimeSpan.FromMilliseconds(BusyIndicatorDelayMilliseconds),
             };
             _busyIndicatorTimer.Tick += BusyIndicatorTimerElapsed;
+
+            Unloaded += OnUnloaded;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             _viewModel.Session.Start(SynchronizationContext.Current ?? new SynchronizationContext());
 
+            // Let keyboard navigation move focus onto the selected item (see SearchCommands.SyncFocusToSelection).
+            _focusSelectedItem ??= FocusSelectedItem;
+            _viewModel.RegisterResultsList(_focusSelectedItem);
+
             _viewModel.Session.AutoSelect();
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (_focusSelectedItem != null)
+                _viewModel.UnregisterResultsList(_focusSelectedItem);
+        }
+
+        private void FocusSelectedItem()
+        {
+            // Defer past the pending scroll/layout so the container exists even after a jump (virtualization).
+            Dispatcher.BeginInvoke(
+                new Action(() =>
+                {
+                    var index = SearchResultsListView.SelectedIndex;
+                    if (index >= 0
+                        && SearchResultsListView.ItemContainerGenerator.ContainerFromIndex(index) is ListViewItem container)
+                        Keyboard.Focus(container);
+                }),
+                DispatcherPriority.Input
+            );
         }
 
         private void OnSessionPropertyChanged(object? sender, PropertyChangedEventArgs e)

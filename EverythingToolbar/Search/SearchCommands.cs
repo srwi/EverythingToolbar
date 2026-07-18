@@ -9,7 +9,7 @@ namespace EverythingToolbar.Search
         private readonly SearchSession _session;
         private readonly SearchResultActions _actions;
         private readonly CustomActionService _customActions;
-        private readonly ISearchWindowController _controller;
+        private readonly SearchWindowController _controller;
         private readonly ISettings _settings;
         private readonly SearchState _searchState;
 
@@ -17,7 +17,7 @@ namespace EverythingToolbar.Search
             SearchSession session,
             SearchResultActions actions,
             CustomActionService customActions,
-            ISearchWindowController controller,
+            SearchWindowController controller,
             ISettings settings,
             SearchState searchState
         )
@@ -93,37 +93,43 @@ namespace EverythingToolbar.Search
             {
                 case Key.Up:
                     _session.MoveUp();
-                    return true;
+                    break;
                 case Key.Down:
                     _session.MoveDown();
-                    return true;
+                    break;
                 case Key.PageUp:
                     _session.PageUp();
-                    return true;
+                    break;
                 case Key.PageDown:
                     _session.PageDown();
-                    return true;
-                case Key.Home:
-                    if (CanHomeEndNavigate(modifiers, fromSearchBox))
-                    {
-                        _session.SelectFirst();
-                        return true;
-                    }
-                    return false;
-                case Key.End:
-                    if (CanHomeEndNavigate(modifiers, fromSearchBox))
-                    {
-                        _session.SelectLast();
-                        return true;
-                    }
+                    break;
+                case Key.Home when CanHomeEndNavigate(modifiers, fromSearchBox):
+                    _session.SelectFirst();
+                    break;
+                case Key.End when CanHomeEndNavigate(modifiers, fromSearchBox):
+                    _session.SelectLast();
+                    break;
+                default:
                     return false;
             }
 
-            return false;
+            SyncFocusToSelection();
+            return true;
         }
 
         private bool CanHomeEndNavigate(ModifierKeys modifiers, bool fromSearchBox) =>
             !fromSearchBox || (modifiers != ModifierKeys.Shift && _settings.IsHomeEndNavigateResults);
+
+        private void SyncFocusToSelection()
+        {
+            if (_session.KeepSearchBoxFocused)
+                return;
+
+            if (_session.SelectedIndex < 0)
+                _controller.FocusSearchBox();
+            else
+                _controller.FocusSelectedResult();
+        }
 
         public void OpenSelected(SearchResult? target = null) =>
             Act(target, RunOrOpen, hide: true, clearSelection: true);

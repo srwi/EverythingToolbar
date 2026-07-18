@@ -26,6 +26,7 @@ namespace EverythingToolbar.Services
 
         private Func<bool>? _toolbarBoxIsFocused;
         private Action? _toolbarBoxFocus;
+        private Action? _focusSelectedResult;
 
         public event EventHandler? Showing;
         public event EventHandler? Hiding;
@@ -113,6 +114,8 @@ namespace EverythingToolbar.Services
                     _toolbarBoxFocus?.Invoke();
             });
 
+        public void FocusSelectedResult() => RunOnUi(() => _focusSelectedResult?.Invoke());
+
         public void PreWarm() => RunOnUi(() => Window.PreWarm());
 
         public void NotifyFocusLostToOutside() =>
@@ -152,6 +155,20 @@ namespace EverythingToolbar.Services
 
             _toolbarBoxIsFocused = null;
             _toolbarBoxFocus = null;
+        }
+
+        public void RegisterResultsList(Action focusSelected)
+        {
+            if (_focusSelectedResult != null)
+                Logger.Warn("A results list is already registered; overwriting.");
+
+            _focusSelectedResult = focusSelected;
+        }
+
+        public void UnregisterResultsList(Action focusSelected)
+        {
+            if (ReferenceEquals(_focusSelectedResult, focusSelected))
+                _focusSelectedResult = null;
         }
 
         private void ShowInternal(bool atCursor)

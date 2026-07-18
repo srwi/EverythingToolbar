@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using EverythingToolbar.Search;
@@ -8,7 +9,7 @@ namespace EverythingToolbar.ViewModels
     public sealed class SearchResultsViewModel
     {
         private readonly CustomActionService _customActions;
-        private readonly ISearchWindowController _controller;
+        private readonly SearchWindowController _controller;
         private readonly SearchCommands _commands;
 
         public SearchSession Session { get; }
@@ -18,7 +19,7 @@ namespace EverythingToolbar.ViewModels
             SearchSession session,
             CustomActionService customActions,
             ISettings settings,
-            ISearchWindowController searchWindowController,
+            SearchWindowController searchWindowController,
             SearchCommands commands
         )
         {
@@ -28,6 +29,10 @@ namespace EverythingToolbar.ViewModels
             _controller = searchWindowController;
             _commands = commands;
         }
+
+        public void RegisterResultsList(Action focusSelected) => _controller.RegisterResultsList(focusSelected);
+
+        public void UnregisterResultsList(Action focusSelected) => _controller.UnregisterResultsList(focusSelected);
 
         public bool IsDoubleClickToOpen => Settings.IsDoubleClickToOpen;
         public bool IsSystemContextMenuDefault => Settings.IsSystemContextMenuDefault;

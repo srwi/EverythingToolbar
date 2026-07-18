@@ -49,7 +49,7 @@ namespace EverythingToolbar.App.Search
 
         public int VisiblePageCount { get; set; } = 1;
 
-        private bool KeepSearchBoxFocused => _settings.IsAutoSelectFirstResult && _settings.IsSearchAsYouType;
+        public bool KeepSearchBoxFocused => _settings.IsAutoSelectFirstResult && _settings.IsSearchAsYouType;
 
         private FocusBehavior EffectiveListFocusBehavior =>
             KeepSearchBoxFocused && _settings.ListFocusBehavior == FocusBehavior.RepeatWithSearch
