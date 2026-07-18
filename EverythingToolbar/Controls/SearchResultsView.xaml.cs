@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Helpers;
@@ -33,6 +34,7 @@ namespace EverythingToolbar.Controls
         private SearchResult? SelectedItem => SelectedSearchResult;
         private Point _dragStart;
         private int _lastScrolledIndex = -1;
+        private ScrollViewer? _scrollViewer;
         private int? _touchId;
         private readonly DispatcherTimer _busyIndicatorTimer;
         private const int BusyIndicatorDelayMilliseconds = 2000;
@@ -84,18 +86,67 @@ namespace EverythingToolbar.Controls
         private void OnListSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedIndex = SearchResultsListView.SelectedIndex;
-            if (selectedIndex < 0 || SearchResultsListView.SelectedItem == null)
+            if (selectedIndex < 0)
                 return;
 
             if (selectedIndex == _lastScrolledIndex)
                 return;
 
             _lastScrolledIndex = selectedIndex;
-            SearchResultsListView.ScrollIntoView(SearchResultsListView.SelectedItem);
+
+            ScrollIndexIntoView(selectedIndex);
+        }
+
+        private void ScrollIndexIntoView(int index)
+        {
+            var scrollViewer = GetListScrollViewer();
+            if (scrollViewer == null)
+            {
+                // Template not realized yet; try item-based scrolling instead
+                if (SearchResultsListView.SelectedItem != null)
+                    SearchResultsListView.ScrollIntoView(SearchResultsListView.SelectedItem);
+                return;
+            }
+
+            var viewportItems = scrollViewer.ViewportHeight;
+            var topItem = scrollViewer.VerticalOffset;
+
+            if (index < topItem)
+                scrollViewer.ScrollToVerticalOffset(index);
+            else if (index >= topItem + viewportItems)
+                scrollViewer.ScrollToVerticalOffset(index - viewportItems + 1);
+        }
+
+        private ScrollViewer? GetListScrollViewer()
+        {
+            if (_scrollViewer != null)
+                return _scrollViewer;
+
+            _scrollViewer = FindVisualChild<ScrollViewer>(SearchResultsListView);
+            return _scrollViewer;
+        }
+
+        private static T? FindVisualChild<T>(DependencyObject parent)
+            where T : DependencyObject
+        {
+            var childCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (var i = 0; i < childCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T typed)
+                    return typed;
+
+                var descendant = FindVisualChild<T>(child);
+                if (descendant != null)
+                    return descendant;
+            }
+
+            return null;
         }
 
         private void OnResultsReset()
         {
+            _lastScrolledIndex = -1;
             Dispatcher.BeginInvoke(_viewModel.Session.AutoSelect);
         }
 
@@ -390,7 +441,8 @@ namespace EverythingToolbar.Controls
             if (SelectedItem == null)
                 return;
 
-            var runAsAdminItem = (sender as ContextMenu)?.Items.OfType<MenuItem>()
+            var runAsAdminItem = (sender as ContextMenu)
+                ?.Items.OfType<MenuItem>()
                 .FirstOrDefault(mi => mi.Name == "OpenAsAdminMenuItem");
             if (runAsAdminItem == null)
                 return;
@@ -398,7 +450,9 @@ namespace EverythingToolbar.Controls
             string[] extensions = [".exe", ".bat", ".cmd"];
             var isExecutable =
                 SelectedItem.IsFile
-                && extensions.Any(ext => SelectedItem.FullPathAndFileName.EndsWith(ext, StringComparison.OrdinalIgnoreCase));
+                && extensions.Any(ext =>
+                    SelectedItem.FullPathAndFileName.EndsWith(ext, StringComparison.OrdinalIgnoreCase)
+                );
 
             runAsAdminItem.Visibility = isExecutable ? Visibility.Visible : Visibility.Collapsed;
         }
