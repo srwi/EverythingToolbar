@@ -88,17 +88,17 @@
                         </Grid.ColumnDefinitions>
 
                         <Image
-                            Width="60"
-                            Margin="24,0,0,0"
+                            Width="40"
+                            Margin="16,0,0,0"
                             Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/IconElement.png" />
 
                         <ui:TextBlock
                             Grid.Column="1"
-                            Margin="24"
+                            Margin="16"
                             VerticalAlignment="Center"
                             FontTypography="BodyStrong"
                             Text="{x:Static properties:Resources.AboutSearchSettings}"
-                            TextWrapping="WrapWithOverflow" />
+                            TextWrapping="Wrap" />
                     </Grid>
                 </ui:CardAction>
 
@@ -117,17 +117,17 @@
                         </Grid.ColumnDefinitions>
 
                         <Image
-                            Width="60"
-                            Margin="24,0,0,0"
+                            Width="40"
+                            Margin="16,0,0,0"
                             Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/MenuFlyout.png" />
 
                         <ui:TextBlock
                             Grid.Column="1"
-                            Margin="24"
+                            Margin="16"
                             VerticalAlignment="Center"
                             FontTypography="BodyStrong"
                             Text="{x:Static properties:Resources.AboutUserInterface}"
-                            TextWrapping="WrapWithOverflow" />
+                            TextWrapping="Wrap" />
                     </Grid>
                 </ui:CardAction>
 
@@ -146,17 +146,17 @@
                         </Grid.ColumnDefinitions>
 
                         <Image
-                            Width="60"
-                            Margin="24,0,0,0"
+                            Width="40"
+                            Margin="16,0,0,0"
                             Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/FilePicker.png" />
 
                         <ui:TextBlock
                             Grid.Column="1"
-                            Margin="24"
+                            Margin="16"
                             VerticalAlignment="Center"
                             FontTypography="BodyStrong"
                             Text="{x:Static properties:Resources.AboutCustomActions}"
-                            TextWrapping="WrapWithOverflow" />
+                            TextWrapping="Wrap" />
                     </Grid>
                 </ui:CardAction>
             </Grid>
