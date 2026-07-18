@@ -5,16 +5,16 @@ on:
     tags:
       - '*'
   workflow_dispatch:
-      inputs:
-        version_tag:
-          description: 'Tag to build the release for'
-          required: true
+    inputs:
+      version_tag:
+        description: 'Tag to build the release for'
+        required: true
+
+permissions:
+  contents: write
 
 jobs:
   build-release:
-    runs-on: ${{ matrix.runner }}
-    env:
-      VERSION_TAG: ${{ inputs.version_tag || github.ref_name }}
     strategy:
       matrix:
         include:
@@ -24,52 +24,39 @@ jobs:
           - runner: windows-11-arm
             arch: arm64
             installer: Installer-arm64.iss
+    uses: ./.github/workflows/_build.yml
+    with:
+      runner: ${{ matrix.runner }}
+      arch: ${{ matrix.arch }}
+      installer: ${{ matrix.installer }}
+      ref: ${{ inputs.version_tag || github.ref_name }}
+      sign: true
+      installer_basename: EverythingToolbar-${{ inputs.version_tag || github.ref_name }}-${{ matrix.arch }}
+      upload_artifact: true
+      artifact_name: EverythingToolbar ${{ inputs.version_tag || github.ref_name }} ${{ matrix.arch }}
+    secrets:
+      PFX_CERTIFICATE_FILE: ${{ secrets.PFX_CERTIFICATE_FILE }}
+
+  publish:
+    needs: build-release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
         with:
-          ref: ${{ env.VERSION_TAG }}
-
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
-
-      - name: Install NuGet
-        uses: nuget/setup-nuget@v1
-
-      - name: Restore NuGet dependencies
-        run: nuget restore
-
-      - name: Decode certificate
-        shell: bash
-        run: echo ${{ secrets.PFX_CERTIFICATE_FILE }} | base64 --decode  > ./EverythingToolbar.snk
-
-      - name: Build all
-        run: MSBuild $Env:GITHUB_WORKSPACE /p:Configuration=Release /p:Platform=${{ matrix.arch }}
-
-      - name: Install Inno Setup
-        run: choco install innosetup -y --version 6.5.4 --allow-downgrade
-
-      - name: Build installer
-        run: iscc /F"EverythingToolbar-${{ env.VERSION_TAG }}-${{ matrix.arch }}" "Installer\${{ matrix.installer }}"
-
-      - name: Generate SHA-256 checksum
-        shell: bash
-        run: sha256sum Installer/output/EverythingToolbar-${{ env.VERSION_TAG }}-${{ matrix.arch }}.exe > Installer/output/EverythingToolbar-${{ env.VERSION_TAG }}-${{ matrix.arch }}.sha256
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: EverythingToolbar ${{ env.VERSION_TAG }} ${{ matrix.arch }}
-          path: |
-            Installer/output/EverythingToolbar-${{ env.VERSION_TAG }}-${{ matrix.arch }}.exe
-            Installer/output/EverythingToolbar-${{ env.VERSION_TAG }}-${{ matrix.arch }}.sha256
+          pattern: EverythingToolbar *
+          merge-multiple: true
+          path: artifacts
 
       - name: Create release draft
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          VERSION_TAG: ${{ inputs.version_tag || github.ref_name }}
         run: |
-          gh release create "${{ env.VERSION_TAG }}" `
-            "Installer/output/EverythingToolbar-${{ env.VERSION_TAG }}-${{ matrix.arch }}.exe" `
-            "Installer/output/EverythingToolbar-${{ env.VERSION_TAG }}-${{ matrix.arch }}.sha256" `
-            --draft `
-            --title "${{ env.VERSION_TAG }}"
+          gh release create "$VERSION_TAG" \
+            artifacts/*.exe \
+            artifacts/*.sha256 \
+            --draft \
+            --title "$VERSION_TAG"

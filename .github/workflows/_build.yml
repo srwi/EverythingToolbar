@@ -1,0 +1,97 @@
+name: Generic Build
+
+on:
+  workflow_call:
+    inputs:
+      runner:
+        description: 'Runner to build on (e.g. windows-2025, windows-11-arm)'
+        required: true
+        type: string
+      arch:
+        description: 'MSBuild platform / architecture (x64, arm64)'
+        required: true
+        type: string
+      installer:
+        description: 'Inno Setup script filename under Installer/'
+        required: true
+        type: string
+      ref:
+        description: 'Git ref to check out (defaults to the triggering ref)'
+        required: false
+        type: string
+        default: ''
+      sign:
+        description: 'Sign assemblies with the certificate from secrets'
+        required: false
+        type: boolean
+        default: false
+      installer_basename:
+        description: 'If set, name the installer output and emit a matching .sha256'
+        required: false
+        type: string
+        default: ''
+      upload_artifact:
+        description: 'Upload the installer (and checksum) as a build artifact'
+        required: false
+        type: boolean
+        default: false
+      artifact_name:
+        description: 'Name of the uploaded artifact'
+        required: false
+        type: string
+        default: ''
+    secrets:
+      PFX_CERTIFICATE_FILE:
+        description: 'Base64-encoded strong-name key, required when sign is true'
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ${{ inputs.runner }}
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Install NuGet
+        uses: nuget/setup-nuget@v2
+
+      - name: Restore NuGet dependencies
+        run: nuget restore
+
+      - name: Decode certificate
+        if: ${{ inputs.sign }}
+        shell: bash
+        run: echo ${{ secrets.PFX_CERTIFICATE_FILE }} | base64 --decode > ./EverythingToolbar.snk
+
+      - name: Build all
+        run: MSBuild $Env:GITHUB_WORKSPACE /p:Configuration=Release /p:Platform=${{ inputs.arch }} /p:SignAssembly=${{ inputs.sign }}
+
+      - name: Install Inno Setup
+        run: choco install innosetup -y --version 6.5.4 --allow-downgrade
+
+      - name: Build installer
+        run: iscc ${{ inputs.installer_basename != '' && format('/F"{0}"', inputs.installer_basename) || '' }} "Installer\${{ inputs.installer }}"
+
+      - name: Generate SHA-256 checksum
+        if: ${{ inputs.installer_basename != '' }}
+        shell: bash
+        run: sha256sum "Installer/output/${{ inputs.installer_basename }}.exe" > "Installer/output/${{ inputs.installer_basename }}.sha256"
+
+      - name: Upload artifact
+        if: ${{ inputs.upload_artifact }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.artifact_name }}
+          if-no-files-found: error
+          path: |
+            Installer/output/*.exe
+            Installer/output/*.sha256

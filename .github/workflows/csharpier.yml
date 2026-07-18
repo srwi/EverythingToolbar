@@ -1,13 +1,21 @@
-﻿name: CSharpier check
+name: CSharpier check
 
 on: [push, pull_request]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   check_formatting:
     runs-on: windows-2025
     name: Check Formatting
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: |
           dotnet tool restore
           dotnet csharpier check .

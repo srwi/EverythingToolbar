@@ -9,26 +9,21 @@ on:
           description: 'Tag to run winget-releaser for'
           required: true
 
+permissions:
+  contents: read
+
 jobs:
   winget:
     name: Publish to WinGet
-    # winget-releaser is cross-platform, we use ubuntu cause it uses less resources than windows
     runs-on: ubuntu-latest
     steps:
-      # LAUNCHER
       - name: Update Launcher
-        # we peg winget-releaser to v2 for stability
         uses: vedantmgoyal9/winget-releaser@v2
         with:
           identifier: srwi.EverythingToolbar.Launcher
           token: ${{ secrets.WINGET_PAT }}
-          # regex assumes there's only one file ending with x64.exe and arm64.exe in each release
-          # if this changes in the future, modify the regex accordingly, in both launcher and deskband!
           installers-regex: '-x64\.exe$|-arm64\.exe$'
-          # if there was a version_tag supplied (manual run) use that, otherwise determine it automatically
           release-tag: ${{ inputs.version_tag || github.event.release.tag_name }}
-
-      # DESKBAND
       - name: Update Deskband
         uses: vedantmgoyal9/winget-releaser@v2
         with:

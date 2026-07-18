@@ -2,9 +2,16 @@ name: Build solution
 
 on: [push, pull_request, workflow_dispatch]
 
+# Cancel superseded runs on the same ref (e.g. push + pull_request for one commit).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   build:
-    runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
         include:
@@ -14,31 +21,12 @@ jobs:
           - runner: windows-11-arm
             arch: arm64
             installer: Installer-arm64.iss
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
-
-      - name: Install NuGet
-        uses: nuget/setup-nuget@v1
-
-      - name: Restore NuGet dependencies
-        run: nuget restore
-
-      - name: Build all
-        run: MSBuild $Env:GITHUB_WORKSPACE /p:Configuration=Release /p:Platform=${{ matrix.arch }} /p:SignAssembly=false /p:DelaySign=false
-
-      - name: Install Inno Setup
-        run: choco install innosetup -y --version 6.5.4 --allow-downgrade
-
-      - name: Build installer
-        run: iscc "Installer\${{ matrix.installer }}"
-
-      - name: Upload installer artifact
-        if: github.event_name == 'workflow_dispatch'
-        uses: actions/upload-artifact@v4
-        with:
-          name: EverythingToolbar-Installer-${{ matrix.arch }}
-          path: Installer/Output/*.exe
+    uses: ./.github/workflows/_build.yml
+    with:
+      runner: ${{ matrix.runner }}
+      arch: ${{ matrix.arch }}
+      installer: ${{ matrix.installer }}
+      sign: false
+      # Only keep the installer when the build was triggered manually.
+      upload_artifact: ${{ github.event_name == 'workflow_dispatch' }}
+      artifact_name: EverythingToolbar-Installer-${{ matrix.arch }}
