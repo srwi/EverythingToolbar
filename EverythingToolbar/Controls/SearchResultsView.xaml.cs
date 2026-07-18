@@ -390,13 +390,15 @@ namespace EverythingToolbar.Controls
             if (SelectedItem == null)
                 return;
 
-            var cm = sender as ContextMenu;
-            if (cm?.FindName("OpenAsAdminMenuItem") is not MenuItem runAsAdminItem)
+            var runAsAdminItem = (sender as ContextMenu)?.Items.OfType<MenuItem>()
+                .FirstOrDefault(mi => mi.Name == "OpenAsAdminMenuItem");
+            if (runAsAdminItem == null)
                 return;
 
             string[] extensions = [".exe", ".bat", ".cmd"];
             var isExecutable =
-                SelectedItem.IsFile && extensions.Any(ext => SelectedItem.FullPathAndFileName.EndsWith(ext));
+                SelectedItem.IsFile
+                && extensions.Any(ext => SelectedItem.FullPathAndFileName.EndsWith(ext, StringComparison.OrdinalIgnoreCase));
 
             runAsAdminItem.Visibility = isExecutable ? Visibility.Visible : Visibility.Collapsed;
         }

@@ -41,6 +41,10 @@ namespace EverythingToolbar.App.Search
                 fileLauncher.OpenAsAdmin(r.FullPathAndFileName);
                 everything.IncrementRunCount(r.FullPathAndFileName);
             }
+            catch (OperationCanceledException)
+            {
+                // The user dismissed the UAC elevation prompt; nothing to run and nothing to report.
+            }
             catch (Exception e)
             {
                 Logger.Error(e, "Failed to open search result.");
