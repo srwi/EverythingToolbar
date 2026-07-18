@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Threading;
 using EverythingToolbar.Behaviors;
 using Microsoft.Xaml.Behaviors;
 
@@ -46,6 +47,8 @@ namespace EverythingToolbar.Services
                 PlacementTarget = placementTarget,
             };
             Interaction.GetBehaviors(_searchWindow).Add(_placement);
+
+            _searchWindow.Dispatcher.BeginInvoke(_controller.PreWarm, DispatcherPriority.ApplicationIdle);
         }
 
         public void SetPlacementTarget(FrameworkElement? target)

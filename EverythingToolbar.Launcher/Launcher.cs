@@ -78,8 +78,6 @@ namespace EverythingToolbar.Launcher
                     new SetupAssistant(icon).Show();
                 }
 
-                Dispatcher.BeginInvoke(_controller.PreWarm, DispatcherPriority.ApplicationIdle);
-
                 _settings.PropertyChanged += async (_, e) =>
                 {
                     if (e.PropertyName == nameof(_settings.IsTrayIconEnabled))

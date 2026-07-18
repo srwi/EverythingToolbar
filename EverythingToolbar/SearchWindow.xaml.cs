@@ -91,6 +91,9 @@ namespace EverythingToolbar
                 return;
             }
 
+            if (_isFirstShow)
+                PreWarm();
+
             ShowActivated = options.Activate;
             base.Show();
 
@@ -99,23 +102,7 @@ namespace EverythingToolbar
                 Dispatcher.BeginInvoke(new Action(ActivateAndBringToFront), DispatcherPriority.Input);
             }
 
-            // For first show we ensure the UI is fully rendered
-            if (_isFirstShow)
-            {
-                _isFirstShow = false;
-                UpdateLayout();
-                Dispatcher.BeginInvoke(
-                    new Action(() =>
-                    {
-                        Showing?.Invoke(this, new ShowingEventArgs(options.AtCursor));
-                    }),
-                    DispatcherPriority.Loaded
-                );
-            }
-            else
-            {
-                Showing?.Invoke(this, new ShowingEventArgs(options.AtCursor));
-            }
+            Showing?.Invoke(this, new ShowingEventArgs(options.AtCursor));
         }
 
         internal void HideAnimated()
@@ -160,10 +147,13 @@ namespace EverythingToolbar
             Top = 100000;
             Left = 100000;
 
+            Width = Math.Max(_viewModel.PopupWidth, MinWidth);
+            Height = Math.Max(_viewModel.PopupHeight, MinHeight);
+
             ShowActivated = false;
-            base.Show(); // Intentionally without firing Showing - no placement, no animation
+            base.Show(); // Intentionally without firing Showing
             UpdateLayout();
-            base.Hide(); // Intentionally without firing Hiding - no animation, no state reset
+            base.Hide(); // Intentionally without firing Hiding
         }
 
         private void ActivateAndBringToFront()
