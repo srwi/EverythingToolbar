@@ -4,9 +4,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <!-- CsWin32's friendly overloads (out/ref/SafeHandle wrappers) are generated as unsafe code. -->
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <!-- The launcher exe has never been strong-named; opt out of the shared signing default. -->
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
@@ -27,7 +25,6 @@
     <Using Include="EverythingToolbar.App.Helpers" />
     <Using Include="EverythingToolbar.App.Search" />
     <Using Include="EverythingToolbar.Services" />
-    <!-- Core (contracts, data, pure helpers) and Platform (Win32) layers. -->
     <Using Include="EverythingToolbar.Core.Helpers" />
     <Using Include="EverythingToolbar.Core.Search" />
     <Using Include="EverythingToolbar.Core.Services" />
@@ -101,13 +98,5 @@ Exit 0</PreBuildEvent>
     <PreBuildEvent>taskkill /IM EverythingToolbar.Launcher.exe /F 2&gt;nul &amp;set errorlevel=0
 xcopy $(SolutionDir)EverythingSDK\ARM64\$(Configuration)\Everything64.dll $(TargetDir) /r /y
 Exit 0</PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"></PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'"></PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
 </Project>

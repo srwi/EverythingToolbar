@@ -2,7 +2,6 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <RootNamespace>EverythingToolbar.Platform</RootNamespace>
-    <!-- CsWin32's friendly overloads (out/ref/SafeHandle wrappers) are generated as unsafe code. -->
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
@@ -16,7 +15,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <!-- EverythingIpcClient implements Core's IEverythingClient (Core.Search). -->
     <Using Include="EverythingToolbar.Core.Search" />
   </ItemGroup>
 </Project>

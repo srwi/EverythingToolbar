@@ -9,18 +9,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <DefineConstants>DESKBAND_WPF</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DefineConstants>TRACE;DEBUG;DESKBAND_WPF</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
-    <DefineConstants>DESKBAND_WPF</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
-    <DefineConstants>TRACE;DEBUG;DESKBAND_WPF</DefineConstants>
+    <DefineConstants>$(DefineConstants);DESKBAND_WPF</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\EverythingToolbar\EverythingToolbar.csproj" />
@@ -33,7 +22,6 @@
     <Using Include="EverythingToolbar.App.Helpers" />
     <Using Include="EverythingToolbar.App.Search" />
     <Using Include="EverythingToolbar.Services" />
-    <!-- Core (contracts, data, pure helpers) and Platform (Win32) layers. -->
     <Using Include="EverythingToolbar.Core.Helpers" />
     <Using Include="EverythingToolbar.Core.Search" />
     <Using Include="EverythingToolbar.Core.Services" />

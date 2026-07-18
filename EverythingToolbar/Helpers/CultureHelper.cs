@@ -9,9 +9,6 @@ namespace EverythingToolbar.Helpers
 {
     public static class CultureHelper
     {
-        /// <summary>
-        /// Dynamically gets supported language codes by scanning for satellite assemblies.
-        /// </summary>
         private static string[] GetSupportedLanguageCodes()
         {
             try
@@ -50,9 +47,6 @@ namespace EverythingToolbar.Helpers
             }
         }
 
-        /// <summary>
-        /// Gets list of available languages as display-friendly KeyValuePairs.
-        /// </summary>
         public static List<KeyValuePair<string, string>> GetAvailableLanguages()
         {
             var languages = new List<KeyValuePair<string, string>>
@@ -96,9 +90,6 @@ namespace EverythingToolbar.Helpers
             return languages;
         }
 
-        /// <summary>
-        /// Gets a CultureInfo for the given language code, or null if invalid.
-        /// </summary>
         public static CultureInfo? GetCultureInfo(string languageCode)
         {
             if (string.IsNullOrEmpty(languageCode))
@@ -116,10 +107,6 @@ namespace EverythingToolbar.Helpers
             }
         }
 
-        /// <summary>
-        /// Applies the UI language based on the saved setting.
-        /// If empty/system, uses current system UI culture.
-        /// </summary>
         public static void ApplyUILanguage(string? languageCode)
         {
             CultureInfo culture;

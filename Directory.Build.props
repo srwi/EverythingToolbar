@@ -7,9 +7,6 @@
     <PublishReadyToRun>true</PublishReadyToRun>
   </PropertyGroup>
 
-  <!-- Common properties shared by every C# project (the C++ SDK ignores these). Individual
-       .csproj files override or add only what is genuinely project-specific (OutputType,
-       RootNamespace, UseWPF/UseWindowsForms, AllowUnsafeBlocks, COM hosting, …). -->
   <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.csproj'">
     <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
@@ -21,17 +18,9 @@
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)EverythingToolbar.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
-  <!-- Static-analysis enforcement: keep dead code and unused usings from re-accumulating.
-       Runs the IDE code-style analyzers (IDExxxx) during command-line / MSBuild builds, not just
-       in the IDE. GenerateDocumentationFile is required for IDE0005 (unused usings) to be reported
-       at build time; CS1591 (missing XML doc comment) is suppressed so that does not add noise.
-       Rules + severities live in .editorconfig. Scoped to C# projects (the C++ SDK ignores these). -->
   <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.csproj'">
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <!-- The doc file is only enabled so IDE0005 works in build; suppress the XML-doc-comment
-         quality warnings it drags in (missing/mismatched/broken doc tags) so they don't drown
-         the dead-code signal. Remove these if you decide to enforce doc-comment accuracy. -->
     <NoWarn>$(NoWarn);CS1591;CS1573;CS1572;CS1574;CS0419</NoWarn>
   </PropertyGroup>
 </Project>

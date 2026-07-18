@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Runtime.Loader;
 using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
@@ -27,6 +28,23 @@ namespace EverythingToolbar.Deskband
         private TaskbarInfoProvider _taskbarState = null!;
         private SearchWindowController _controller = null!;
         protected override UIElement UIElement => _toolbarControl!;
+
+        static Server()
+        {
+            // The deskband is COM-hosted by explorer, so its assemblies load in an isolated
+            // AssemblyLoadContext backed by this component's deps.json. WPF's BAML loader, however,
+            // resolves assemblies via Assembly.Load on the *default* context, which knows nothing of
+            // that deps.json — so assemblies referenced only from XAML (e.g. Microsoft.Xaml.Behaviors)
+            // fail to load. Bridge the default context to this component's own context/resolver, so a
+            // single shared instance is returned (avoiding a duplicate assembly identity).
+            var componentContext = AssemblyLoadContext.GetLoadContext(typeof(Server).Assembly) ?? AssemblyLoadContext.Default;
+            var resolver = new AssemblyDependencyResolver(typeof(Server).Assembly.Location);
+            AssemblyLoadContext.Default.Resolving += (_, name) =>
+            {
+                var path = resolver.ResolveAssemblyToPath(name);
+                return path != null ? componentContext.LoadFromAssemblyPath(path) : null;
+            };
+        }
 
         public Server()
         {
