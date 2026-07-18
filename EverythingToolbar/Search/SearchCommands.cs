@@ -89,6 +89,12 @@ namespace EverythingToolbar.Search
                 return true;
             }
 
+            if (key == Key.Tab && modifiers is ModifierKeys.None or ModifierKeys.Shift)
+            {
+                _searchState.CycleFilters(modifiers == ModifierKeys.Shift ? -1 : 1);
+                return true;
+            }
+
             switch (key)
             {
                 case Key.Up:

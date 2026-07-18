@@ -15,8 +15,7 @@
                  GotKeyboardFocus="OnGotKeyboardFocus"
                  LostKeyboardFocus="OnLostKeyboardFocus"
                  PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"
-                 PreviewKeyDown="OnPreviewKeyDown"
-                 PreviewKeyUp="OnPreviewKeyUp">
+                 PreviewKeyDown="OnPreviewKeyDown">
             <TextBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="{x:Static properties:Resources.SettingsRegularExpressions}"

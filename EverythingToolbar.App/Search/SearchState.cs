@@ -65,6 +65,9 @@ namespace EverythingToolbar.App.Search
         public void CycleFilters(int offset = 1)
         {
             var filterCount = _filterProvider.Filters.Count;
+            if (filterCount == 0)
+                return;
+
             var currentIndex = _filterProvider.Filters.IndexOf(Filter);
             var newIndex = (currentIndex + offset + filterCount) % filterCount;
             Filter = _filterProvider.Filters[newIndex];

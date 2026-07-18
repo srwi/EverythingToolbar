@@ -32,8 +32,6 @@ namespace EverythingToolbar.ViewModels
 
         public void NotifySearchBoxFocused() => _controller.NotifySearchBoxFocused();
 
-        public void CycleFilters(int offset) => _searchState.CycleFilters(offset);
-
         public string PreviousHistoryTerm() => _searchState.GetPreviousSearchTerm();
 
         public string NextHistoryTerm() => _searchState.GetNextSearchTerm();

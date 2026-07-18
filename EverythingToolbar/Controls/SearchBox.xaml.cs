@@ -83,11 +83,6 @@ namespace EverythingToolbar.Controls
                 e.Handled = true;
                 return;
             }
-            if (e.Key == Key.Tab)
-            {
-                e.Handled = true;
-                return;
-            }
             if (e.Key == Key.Escape)
             {
                 Keyboard.ClearFocus();
@@ -98,16 +93,6 @@ namespace EverythingToolbar.Controls
 
             if (_viewModel.TryHandleResultsGesture(e.Key, e.SystemKey, Keyboard.Modifiers))
                 e.Handled = true;
-        }
-
-        private void OnPreviewKeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Tab)
-            {
-                var offset = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) ? -1 : 1;
-                _viewModel.CycleFilters(offset);
-                e.Handled = true;
-            }
         }
 
         private void UpdateSearchTerm(string newSearchTerm)
