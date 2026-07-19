@@ -63,6 +63,7 @@ namespace EverythingToolbar.App.Services
                     if (regexCond && typeCond)
                     {
                         command = r.Command;
+                        break; // First matching rule wins
                     }
                 }
             }
