@@ -119,6 +119,21 @@ namespace EverythingToolbar.Platform.Search
             }
         }
 
+        public bool TryReadCachedFirstPage(SearchQuery query, out IList<SearchResult> results)
+        {
+            lock (_gate)
+            {
+                if (query != _resultListQuery)
+                {
+                    results = Array.Empty<SearchResult>();
+                    return false;
+                }
+
+                results = ReadResultsFromResultList();
+                return true;
+            }
+        }
+
         private uint NextReplyId()
         {
             // Unique reply ID so a stale reply can never complete the wrong pending query.

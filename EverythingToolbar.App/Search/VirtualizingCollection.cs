@@ -118,7 +118,10 @@ namespace EverythingToolbar.App.Search
                 {
                     int count = await ItemsProvider.FetchCount(PageSize, isAsync: true, cancellationToken);
                     if (!cancellationToken.IsCancellationRequested)
+                    {
+                        PrefetchFirstPage(count);
                         Count = count;
+                    }
                 }
                 catch (OperationCanceledException) { }
                 catch (Exception e)
@@ -130,6 +133,21 @@ namespace EverythingToolbar.App.Search
             {
                 Count = ItemsProvider.FetchCount(PageSize, isAsync: false, cancellationToken).GetAwaiter().GetResult();
             }
+        }
+
+        // The count reply leaves the first page in the provider's reach, so caching it before Count raises Reset lets
+        // the ListView bind real data on its first pass. Otherwise every visible row binds twice per query: once
+        // against the previous query's rows, once against the Replace notifications from LoadPageAsync.
+        private void PrefetchFirstPage(int count)
+        {
+            if (count <= 0 || _pages.ContainsKey(0))
+                return;
+
+            if (!ItemsProvider.TryFetchCachedFirstPage(out var items))
+                return;
+
+            _pages[0] = items as List<T> ?? items.ToList();
+            TouchPage(0);
         }
 
         private List<T> LoadPage(int index)

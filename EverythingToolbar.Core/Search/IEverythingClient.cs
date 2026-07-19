@@ -21,6 +21,8 @@ namespace EverythingToolbar.Core.Search
 
         IList<SearchResult> QueryRangeSync(SearchQuery query, int startIndex, int pageSize);
 
+        bool TryReadCachedFirstPage(SearchQuery query, out IList<SearchResult> results);
+
         Version GetEverythingVersion();
 
         void SetInstanceName(string name);

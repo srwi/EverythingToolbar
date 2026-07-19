@@ -59,6 +59,11 @@ namespace EverythingToolbar.App.Search
             return data;
         }
 
+        public bool TryFetchCachedFirstPage(out IList<SearchResult> items)
+        {
+            return _client.TryReadCachedFirstPage(_query, out items);
+        }
+
         private async Task<T> TrackBusyState<T>(Task<T> task)
         {
             if (task.IsCompleted)

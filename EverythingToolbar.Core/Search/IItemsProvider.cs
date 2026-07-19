@@ -12,5 +12,7 @@ namespace EverythingToolbar.Core.Search
         Task<int> FetchCount(int pageSize, bool isAsync, CancellationToken cancellationToken);
 
         Task<IList<T>> FetchRange(int startIndex, int pageSize, bool isAsync, CancellationToken cancellationToken);
+
+        bool TryFetchCachedFirstPage(out IList<T> items);
     }
 }
