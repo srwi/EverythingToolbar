@@ -66,7 +66,6 @@ namespace EverythingToolbar.Services
 
         private readonly ISettings _settings;
         private readonly WindowsPolicy _windowsPolicy;
-        private readonly RegistryValueWatcher _personalizeWatcher;
         private readonly UISettings? _uiSettings;
         private readonly Dispatcher _dispatcher;
         private readonly List<Registration> _registrations = new();
@@ -81,9 +80,6 @@ namespace EverythingToolbar.Services
             _settings = settings;
             _windowsPolicy = windowsPolicy;
             _dispatcher = Dispatcher.CurrentDispatcher;
-
-            _personalizeWatcher = new RegistryValueWatcher(PersonalizeSubKey);
-            _personalizeWatcher.Changed += ScheduleApply;
 
             try
             {
@@ -280,7 +276,6 @@ namespace EverythingToolbar.Services
             _settings.PropertyChanged -= OnSettingsChanged;
             if (_uiSettings != null)
                 _uiSettings.ColorValuesChanged -= OnColorValuesChanged;
-            _personalizeWatcher.Dispose();
         }
     }
 }
