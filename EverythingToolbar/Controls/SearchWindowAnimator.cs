@@ -7,12 +7,15 @@ namespace EverythingToolbar.Controls
 {
     internal sealed class SearchWindowAnimator
     {
+        private const double ContentSlideOffset = 50;
+
         private readonly Window _window;
-        private readonly FrameworkElement _contentGrid;
         private readonly Action _setTopmostBelowTaskbar;
         private readonly Action _onHideCompleted;
         private readonly Func<bool> _animationsDisabled;
         private readonly bool _isWindows11OrGreater;
+
+        private readonly TranslateTransform _contentSlide = new();
 
         private bool _isRenderingHooked;
 
@@ -26,11 +29,11 @@ namespace EverythingToolbar.Controls
         )
         {
             _window = window;
-            _contentGrid = contentGrid;
             _setTopmostBelowTaskbar = setTopmostBelowTaskbar;
             _onHideCompleted = onHideCompleted;
             _animationsDisabled = animationsDisabled;
             _isWindows11OrGreater = isWindows11OrGreater;
+            contentGrid.RenderTransform = _contentSlide;
         }
 
         public void AnimateShow(double left, double top, double width, double height, Edge taskbarEdge)
@@ -71,7 +74,10 @@ namespace EverythingToolbar.Controls
             _window.BeginAnimation(Window.LeftProperty, null);
             _window.BeginAnimation(Window.TopProperty, null);
             _window.BeginAnimation(UIElement.OpacityProperty, null);
-            _contentGrid.BeginAnimation(FrameworkElement.MarginProperty, null);
+            _contentSlide.BeginAnimation(TranslateTransform.XProperty, null);
+            _contentSlide.BeginAnimation(TranslateTransform.YProperty, null);
+            _contentSlide.X = 0;
+            _contentSlide.Y = 0;
         }
 
         // Forces a render every frame, so only hook this while the hide animation needs DwmFlush sync.
@@ -128,12 +134,12 @@ namespace EverythingToolbar.Controls
                 }
             );
 
-            _contentGrid.BeginAnimation(
-                FrameworkElement.MarginProperty,
-                new ThicknessAnimation
+            _contentSlide.BeginAnimation(
+                horizontal ? TranslateTransform.YProperty : TranslateTransform.XProperty,
+                new DoubleAnimation
                 {
-                    From = SlideMargin(horizontal, sign),
-                    To = new Thickness(0),
+                    From = sign * ContentSlideOffset,
+                    To = 0,
                     Duration = TimeSpan.FromSeconds(0.8),
                     EasingFunction = new QuinticEase { EasingMode = EasingMode.EaseOut },
                 }
@@ -165,12 +171,12 @@ namespace EverythingToolbar.Controls
                 }
             );
 
-            _contentGrid.BeginAnimation(
-                FrameworkElement.MarginProperty,
-                new ThicknessAnimation
+            _contentSlide.BeginAnimation(
+                horizontal ? TranslateTransform.YProperty : TranslateTransform.XProperty,
+                new DoubleAnimation
                 {
-                    From = SlideMargin(horizontal, sign),
-                    To = new Thickness(0),
+                    From = sign * ContentSlideOffset,
+                    To = 0,
                     Duration = TimeSpan.FromSeconds(0.3),
                     EasingFunction = new PowerEase { EasingMode = EasingMode.EaseOut, Power = 5 },
                 }
@@ -241,11 +247,5 @@ namespace EverythingToolbar.Controls
                 Edge.Bottom => (Window.TopProperty, 1.0, true),
                 _ => throw new ArgumentOutOfRangeException(nameof(taskbarEdge)),
             };
-
-        private static Thickness SlideMargin(bool horizontal, double sign)
-        {
-            var offset = sign * 50;
-            return horizontal ? new Thickness(0, offset, 0, -offset) : new Thickness(offset, 0, -offset, 0);
-        }
     }
 }
