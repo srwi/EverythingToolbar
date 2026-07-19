@@ -10,9 +10,7 @@ using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Core.Data;
-using EverythingToolbar.Helpers;
-
-namespace EverythingToolbar.Behaviors
+namespace EverythingToolbar.Icons
 {
     public sealed class ResultImages : ObservableObject
     {

@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 using Windows.Win32;
 using Windows.Win32.UI.Shell;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Icons
 {
     internal static class ImageScalingHelper
     {

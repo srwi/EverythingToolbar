@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Core.Data;
-using EverythingToolbar.Helpers;
+using EverythingToolbar.Icons;
 using EverythingToolbar.ViewModels;
 
 namespace EverythingToolbar.Controls

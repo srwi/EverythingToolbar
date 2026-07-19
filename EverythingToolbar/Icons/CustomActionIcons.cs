@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Windows.Media;
 
-namespace EverythingToolbar.Helpers
+namespace EverythingToolbar.Icons
 {
     public static class CustomActionIcons
     {
