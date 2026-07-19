@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -40,6 +42,7 @@ namespace EverythingToolbar.Behaviors
         private ImageSource? _previewImage;
         private bool _iconLoadStarted;
         private bool _previewLoadStarted;
+        private bool _useThumbnail;
 
         internal ResultImages(SearchResult result)
         {
@@ -72,9 +75,16 @@ namespace EverythingToolbar.Behaviors
                 return;
             _iconLoadStarted = true;
 
-            var useThumbnail = Settings.IsThumbnailsEnabled && IsImageFile;
-            Icon = IconProvider.GetImage(_result.FullPathAndFileName, _result.IsFile, useThumbnail ? IconSize : 32);
-            IconLoader.Enqueue(this, useThumbnail);
+            _useThumbnail = Settings.IsThumbnailsEnabled && IsImageFile;
+
+            if (ResultImageCache.TryGetRefinedIcon(_result.FullPathAndFileName, _useThumbnail, out var refinedIcon))
+            {
+                Icon = refinedIcon;
+                return;
+            }
+
+            Icon = IconProvider.GetImage(_result.FullPathAndFileName, _result.IsFile, _useThumbnail ? IconSize : 32);
+            IconLoader.Enqueue(this, _useThumbnail);
         }
 
         public void EnsurePreviewLoading()
@@ -134,6 +144,7 @@ namespace EverythingToolbar.Behaviors
         // Applied by IconLoader on the dispatcher once the refined icon is ready.
         internal void ApplyRefinedIcon(ImageSource icon)
         {
+            ResultImageCache.SetRefinedIcon(_result.FullPathAndFileName, _useThumbnail, icon);
             Icon = icon;
         }
 
@@ -142,8 +153,27 @@ namespace EverythingToolbar.Behaviors
 
     internal static class ResultImageCache
     {
+        private const int MaxRefinedIcons = 4096;
+
         private static readonly ConditionalWeakTable<SearchResult, ResultImages> Table = new();
 
+        private static readonly ConcurrentDictionary<(string Path, bool UseThumbnail), ImageSource> RefinedIcons =
+            new();
+
         public static ResultImages Get(SearchResult result) => Table.GetValue(result, static r => new ResultImages(r));
+
+        public static bool TryGetRefinedIcon(
+            string path,
+            bool useThumbnail,
+            [NotNullWhen(true)] out ImageSource? icon
+        ) => RefinedIcons.TryGetValue((path, useThumbnail), out icon);
+
+        public static void SetRefinedIcon(string path, bool useThumbnail, ImageSource icon)
+        {
+            if (RefinedIcons.Count >= MaxRefinedIcons)
+                RefinedIcons.Clear();
+
+            RefinedIcons[(path, useThumbnail)] = icon;
+        }
     }
 }
