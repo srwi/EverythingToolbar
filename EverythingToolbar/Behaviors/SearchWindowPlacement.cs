@@ -70,11 +70,13 @@ namespace EverythingToolbar.Behaviors
 
             var position = useCursor ? CalculatePositionFromTaskbar() : CalculatePositionFromTarget();
 
+            var size = GetTargetWindowSizeDip();
+
             AssociatedObject.AnimateShow(
                 position.left * _dpiScalingFactor,
                 position.top * _dpiScalingFactor,
-                (position.right - position.left) * _dpiScalingFactor,
-                (position.bottom - position.top) * _dpiScalingFactor,
+                size.Width,
+                size.Height,
                 _taskbarState.TaskbarEdge
             );
         }
@@ -203,12 +205,18 @@ namespace EverythingToolbar.Behaviors
             return windowPosition;
         }
 
+        private Size GetTargetWindowSizeDip()
+        {
+            return new Size(
+                Math.Max(_settings.PopupWidth, AssociatedObject.MinWidth),
+                Math.Max(_settings.PopupHeight, AssociatedObject.MinHeight)
+            );
+        }
+
         private Size GetTargetWindowSize()
         {
-            var windowSize = new Size(_settings.PopupWidth, _settings.PopupHeight);
-            windowSize.Width = Math.Max(windowSize.Width, AssociatedObject.MinWidth) / _dpiScalingFactor;
-            windowSize.Height = Math.Max(windowSize.Height, AssociatedObject.MinHeight) / _dpiScalingFactor;
-            return windowSize;
+            var windowSize = GetTargetWindowSizeDip();
+            return new Size(windowSize.Width / _dpiScalingFactor, windowSize.Height / _dpiScalingFactor);
         }
 
         private RECT SetHorizontalPosition(
