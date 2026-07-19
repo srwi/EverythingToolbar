@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using EverythingToolbar.Core.Data;
@@ -16,6 +15,8 @@ namespace EverythingToolbar.Platform.Search
     public sealed class EverythingIpcClient : IEverythingClient
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
+        private const int PathBufferLength = 4096;
 
         private readonly object _gate = new();
         private readonly Queue<PendingQuery> _queue = new();
@@ -304,23 +305,25 @@ namespace EverythingToolbar.Platform.Search
             Everything_SetReplyWindow(_replyWindowHandle);
         }
 
-        private static IList<SearchResult> ReadResultsFromResultList()
+        private static unsafe IList<SearchResult> ReadResultsFromResultList()
         {
-            var results = new List<SearchResult>();
-            var fullPathAndFilename = new StringBuilder(4096);
-            for (uint i = 0; i < Everything_GetNumResults(); i++)
+            var count = Everything_GetNumResults();
+            var results = new List<SearchResult>((int)count);
+            char* fullPathAndFilename = stackalloc char[PathBufferLength];
+
+            for (uint i = 0; i < count; i++)
             {
                 var highlightedPath = Marshal.PtrToStringUni(Everything_GetResultHighlightedPath(i));
                 var highlightedFileName = Marshal.PtrToStringUni(Everything_GetResultHighlightedFileName(i));
                 var isFile = Everything_IsFileResult(i);
-                Everything_GetResultFullPathNameW(i, fullPathAndFilename.Clear(), 4096);
+                var pathLength = Everything_GetResultFullPathNameW(i, fullPathAndFilename, PathBufferLength);
                 Everything_GetResultSize(i, out var fileSize);
                 Everything_GetResultDateModified(i, out var dateModified);
                 results.Add(
                     new SearchResult(
                         highlightedPath ?? "<invalid>",
                         highlightedFileName ?? "<invalid>",
-                        fullPathAndFilename.ToString(),
+                        new string(fullPathAndFilename, 0, (int)Math.Min(pathLength, PathBufferLength - 1)),
                         isFile,
                         fileSize,
                         dateModified
@@ -564,9 +567,9 @@ namespace EverythingToolbar.Platform.Search
         private static extern uint Everything_GetTotResults();
 
         [DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
-        private static extern void Everything_GetResultFullPathNameW(
+        private static extern unsafe uint Everything_GetResultFullPathNameW(
             uint nIndex,
-            StringBuilder lpString,
+            char* lpString,
             uint nMaxCount
         );
 
