@@ -1,4 +1,5 @@
-using System.Collections.Generic;
+using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +11,7 @@ namespace EverythingToolbar.Settings
     public partial class CustomActions
     {
         private readonly CustomActionService _service = Ioc.Default.GetRequiredService<CustomActionService>();
-        private List<Rule> _actions = new();
+        private ObservableCollection<Rule> _actions = new();
 
         public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
 
@@ -22,7 +23,7 @@ namespace EverythingToolbar.Settings
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _actions = _service.Load();
+            _actions = new ObservableCollection<Rule>(_service.Load());
             DataGrid.ItemsSource = _actions;
             AutoApplyCustomActionsCheckbox.IsChecked = Settings.IsAutoApplyCustomActions;
             UpdateUi();
@@ -57,14 +58,13 @@ namespace EverythingToolbar.Settings
                 return false;
             }
 
-            _service.Save(_actions);
+            _service.Save(_actions.ToList());
             return true;
         }
 
         private void AddItem(object sender, RoutedEventArgs e)
         {
-            _actions.Insert(
-                _actions.Count,
+            _actions.Add(
                 new Rule
                 {
                     Name = "",
@@ -73,7 +73,6 @@ namespace EverythingToolbar.Settings
                     Command = "",
                 }
             );
-            RefreshList();
             DataGrid.SelectedIndex = _actions.Count - 1;
         }
 
@@ -81,15 +80,8 @@ namespace EverythingToolbar.Settings
         {
             var selectedIndex = DataGrid.SelectedIndex;
             _actions.RemoveAt(selectedIndex);
-            RefreshList();
-            if (_actions.Count > selectedIndex)
-            {
-                DataGrid.SelectedIndex = selectedIndex;
-            }
-            else if (_actions.Count > 0)
-            {
-                DataGrid.SelectedIndex = _actions.Count - 1;
-            }
+
+            DataGrid.SelectedIndex = Math.Min(selectedIndex, _actions.Count - 1);
         }
 
         private void MoveDownSelected(object sender, RoutedEventArgs e)
@@ -104,25 +96,19 @@ namespace EverythingToolbar.Settings
 
         private void MoveItem(int delta)
         {
-            if (DataGrid.SelectedItem is not Rule item)
+            if (DataGrid.SelectedItem is not Rule)
                 return;
 
             var selectedIndex = DataGrid.SelectedIndex;
-            _actions.RemoveAt(selectedIndex);
-            _actions.Insert(selectedIndex + delta, item);
-            RefreshList();
+            _actions.Move(selectedIndex, selectedIndex + delta);
+
             DataGrid.SelectedIndex = selectedIndex + delta;
+            UpdateUi();
         }
 
         private void OnGridSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateUi();
-        }
-
-        private void RefreshList()
-        {
-            DataGrid.ItemsSource = null;
-            DataGrid.ItemsSource = _actions;
         }
 
         private void UpdateUi()
