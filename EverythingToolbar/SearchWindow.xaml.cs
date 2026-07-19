@@ -131,7 +131,14 @@ namespace EverythingToolbar
 
             _animator.UnhookRendering();
 
-            _viewModel.ResetSearch();
+            Dispatcher.BeginInvoke(
+                () =>
+                {
+                    if (Visibility != Visibility.Visible)
+                        _viewModel.ResetSearch();
+                },
+                DispatcherPriority.ApplicationIdle
+            );
 
             Hidden?.Invoke(this, EventArgs.Empty);
         }

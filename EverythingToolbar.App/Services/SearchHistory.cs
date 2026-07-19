@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using EverythingToolbar.App.Helpers;
@@ -25,6 +26,9 @@ namespace EverythingToolbar.App.Services
         private int _currentIndex;
         private readonly List<string> _history;
         private readonly ISettings _settings;
+
+        private readonly object _saveGate = new();
+        private Task _saveTask = Task.CompletedTask;
 
         public SearchHistory(ISettings settings)
         {
@@ -72,6 +76,14 @@ namespace EverythingToolbar.App.Services
 
         private void SaveHistory()
         {
+            var snapshot = new List<string>(_history);
+
+            lock (_saveGate)
+                _saveTask = _saveTask.ContinueWith(_ => WriteHistory(snapshot), TaskScheduler.Default);
+        }
+
+        private static void WriteHistory(List<string> history)
+        {
             try
             {
                 if (Path.GetDirectoryName(HistoryPath) is { } path)
@@ -79,7 +91,7 @@ namespace EverythingToolbar.App.Services
 
                 var serializer = new XmlSerializer(typeof(List<string>));
                 using var writer = XmlWriter.Create(HistoryPath);
-                serializer.Serialize(writer, _history);
+                serializer.Serialize(writer, history);
             }
             catch (Exception e)
             {
