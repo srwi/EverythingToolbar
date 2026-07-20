@@ -260,7 +260,9 @@ namespace EverythingToolbar.Controls
             if (sender is not MenuItem menuItem)
                 return;
 
-            while (menuItem.Items.Count > 2)
+            // Remove previously injected custom-action items (everything before the static separator),
+            // rather than assuming a fixed count of trailing static entries.
+            while (menuItem.Items.Count > 0 && menuItem.Items[0] is not Separator)
                 menuItem.Items.RemoveAt(0);
 
             List<Rule> actions = _viewModel.LoadCustomActions();
@@ -375,15 +377,14 @@ namespace EverythingToolbar.Controls
                 return;
 
             var cm = sender as ContextMenu;
-            var mi = cm?.Items[2] as MenuItem;
-            if (mi == null)
+            if (cm?.FindName("OpenAsAdminMenuItem") is not MenuItem runAsAdminItem)
                 return;
 
             string[] extensions = [".exe", ".bat", ".cmd"];
             var isExecutable =
                 SelectedItem.IsFile && extensions.Any(ext => SelectedItem.FullPathAndFileName.EndsWith(ext));
 
-            mi.Visibility = isExecutable ? Visibility.Visible : Visibility.Collapsed;
+            runAsAdminItem.Visibility = isExecutable ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }
