@@ -274,7 +274,7 @@ namespace EverythingToolbar.Launcher
                         wh.WaitOne();
                         ToggleWindow();
                     }
-                });
+                }, TaskCreationOptions.LongRunning);
                 Task.Factory.StartNew(() =>
                 {
                     var wh = new EventWaitHandle(false, EventResetMode.AutoReset, StartSetupAssistantEventName);
@@ -283,7 +283,7 @@ namespace EverythingToolbar.Launcher
                         wh.WaitOne();
                         OpenSetupAssistant();
                     }
-                });
+                }, TaskCreationOptions.LongRunning);
             }
 
             private void ToggleWindow()

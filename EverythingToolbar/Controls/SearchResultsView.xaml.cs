@@ -31,7 +31,6 @@ namespace EverythingToolbar.Controls
             set => SetValue(SelectedSearchResultProperty, value);
         }
 
-        private SearchResult? SelectedItem => SelectedSearchResult;
         private Point _dragStart;
         private int _lastScrolledIndex = -1;
         private ScrollViewer? _scrollViewer;
@@ -393,12 +392,12 @@ namespace EverythingToolbar.Controls
 
         private void OpenWithCustomAction(object sender, RoutedEventArgs e)
         {
-            if (SelectedItem == null)
+            if (SelectedSearchResult == null)
                 return;
 
             var menuItem = sender as MenuItem;
             var command = menuItem?.Tag?.ToString() ?? "";
-            _viewModel.TryRunCustomAction(SelectedItem, command);
+            _viewModel.TryRunCustomAction(SelectedSearchResult, command);
         }
 
         private void OnListViewItemMouseDown(object sender, MouseButtonEventArgs e)
@@ -437,7 +436,7 @@ namespace EverythingToolbar.Controls
 
         private bool TryStartDragDrop(Point currentPosition)
         {
-            if (SelectedItem == null)
+            if (SelectedSearchResult == null)
                 return false;
 
             var diff = _dragStart - currentPosition;
@@ -448,7 +447,7 @@ namespace EverythingToolbar.Controls
             )
                 return false;
 
-            string[] files = [SelectedItem.FullPathAndFileName];
+            string[] files = [SelectedSearchResult.FullPathAndFileName];
             var data = new DataObject(DataFormats.FileDrop, files);
             data.SetData(DataFormats.Text, files[0]);
             DragDrop.DoDragDrop(SearchResultsListView, data, DragDropEffects.All);
@@ -457,7 +456,7 @@ namespace EverythingToolbar.Controls
 
         private void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            if (SelectedItem == null)
+            if (SelectedSearchResult == null)
                 return;
 
             if (_viewModel.IsSystemContextMenuDefault != (Keyboard.Modifiers == ModifierKeys.Shift))
@@ -469,7 +468,7 @@ namespace EverythingToolbar.Controls
 
         private void OnContextMenuOpened(object sender, RoutedEventArgs e)
         {
-            if (SelectedItem == null)
+            if (SelectedSearchResult == null)
                 return;
 
             var runAsAdminItem = (sender as ContextMenu)
@@ -480,9 +479,9 @@ namespace EverythingToolbar.Controls
 
             string[] extensions = [".exe", ".bat", ".cmd"];
             var isExecutable =
-                SelectedItem.IsFile
+                SelectedSearchResult.IsFile
                 && extensions.Any(ext =>
-                    SelectedItem.FullPathAndFileName.EndsWith(ext, StringComparison.OrdinalIgnoreCase)
+                    SelectedSearchResult.FullPathAndFileName.EndsWith(ext, StringComparison.OrdinalIgnoreCase)
                 );
 
             runAsAdminItem.Visibility = isExecutable ? Visibility.Visible : Visibility.Collapsed;

@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -150,12 +149,7 @@ namespace EverythingToolbar.Helpers
         private const uint FileAttributeNormal = 0x00000080;
         private const uint FileAttributeDirectory = 0x00000010;
 
-        public static ImageSource? GetImage(
-            string path,
-            bool isFile,
-            int iconSize,
-            Action<ImageSource>? onUpdated = null
-        )
+        public static ImageSource? GetImage(string path, bool isFile, int iconSize)
         {
             int iconIndexByExt;
             if (isFile)
@@ -180,16 +174,6 @@ namespace EverythingToolbar.Helpers
                 {
                     IconByIndexAndScaleCache.TryAdd(iconByIndexAndScaleCacheKey, iconByExtAndScale);
                 }
-            }
-
-            if (onUpdated != null)
-            {
-                Task.Run(() =>
-                {
-                    ImageSource? exactIcon = GetExactImage(path, iconSize);
-                    if (exactIcon != null)
-                        onUpdated.Invoke(exactIcon);
-                });
             }
 
             return iconByExtAndScale;
