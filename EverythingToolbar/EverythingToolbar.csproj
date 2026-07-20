@@ -14,10 +14,8 @@
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="Config.Net" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-    <PackageReference Include="Microsoft.VisualBasic" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" />
     <PackageReference Include="NLog" />
-    <PackageReference Include="WindowsAPICodePackShell" />
     <PackageReference Include="WPF-UI" />
     <PackageReference Include="Microsoft.Windows.CsWin32">
       <PrivateAssets>all</PrivateAssets>

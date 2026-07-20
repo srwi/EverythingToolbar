@@ -8,7 +8,6 @@
   xmlns:converters="clr-namespace:EverythingToolbar.Converters"
   xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:markup="clr-namespace:EverythingToolbar.Markup"
-  xmlns:search="clr-namespace:EverythingToolbar.Search"
   HorizontalAlignment="Stretch"
   GotFocus="OnGotFocus"
   KeyDown="OnKeyDown">
