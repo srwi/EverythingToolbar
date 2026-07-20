@@ -5,8 +5,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using EverythingToolbar;
 using Microsoft.Win32;
 
 namespace Peter
@@ -38,9 +36,14 @@ namespace Peter
     public class ShellContextMenu : NativeWindow
     {
         #region Constructor
-        /// <summary>Default constructor</summary>
-        public ShellContextMenu()
+        private readonly Func<bool> _isLightTheme;
+
+        /// <summary>Constructor. <paramref name="isLightTheme"/> supplies the current theme so this
+        /// vendored menu can style itself without reaching into the application's DI container.</summary>
+        public ShellContextMenu(Func<bool> isLightTheme)
         {
+            _isLightTheme = isLightTheme;
+
             CreateHandle(new CreateParams());
 
             InitializeDarkModeSupport();
@@ -614,9 +617,9 @@ namespace Peter
         /// <summary>
         /// Detects whether dark mode should be used based on system settings and user preferences.
         /// </summary>
-        private static bool ShouldUseDarkMode()
+        private bool ShouldUseDarkMode()
         {
-            return !Ioc.Default.GetRequiredService<ThemeService>().IsLightTheme();
+            return !_isLightTheme();
         }
 
         /// <summary>

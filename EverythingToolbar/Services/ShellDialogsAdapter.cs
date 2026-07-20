@@ -7,6 +7,13 @@ namespace EverythingToolbar.Services
 {
     public sealed class ShellDialogsAdapter : IShellDialogs
     {
+        private readonly ThemeService _themeService;
+
+        public ShellDialogsAdapter(ThemeService themeService)
+        {
+            _themeService = themeService;
+        }
+
         public void OpenWith(string filePath)
         {
             ShellUtils.OpenWithDialog(filePath);
@@ -24,7 +31,7 @@ namespace EverythingToolbar.Services
 
         public void ShowWindowsContextMenu(string filePath)
         {
-            var menu = new ShellContextMenu();
+            var menu = new ShellContextMenu(_themeService.IsLightTheme);
             var arrFi = new FileInfo[1];
             arrFi[0] = new FileInfo(filePath);
             menu.ShowContextMenu(arrFi, Control.MousePosition);
