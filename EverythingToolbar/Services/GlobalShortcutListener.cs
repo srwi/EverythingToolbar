@@ -129,8 +129,8 @@ namespace EverythingToolbar.Services
             if ((_modifiers & (ModifierKeys.Windows | ModifierKeys.Alt)) == 0)
                 return;
 
-            NativeMethods.KeybdEvent(VkControl, 0, 0, IntPtr.Zero);
-            NativeMethods.KeybdEvent(VkControl, 0, KeyeventfKeyup, IntPtr.Zero);
+            NativeMethods.SendKeybdEvent(VkControl, 0, 0, IntPtr.Zero);
+            NativeMethods.SendKeybdEvent(VkControl, 0, KeyeventfKeyup, IntPtr.Zero);
         }
 
         private static bool IsKeyDown(int vk) => (PInvoke.GetAsyncKeyState(vk) & 0x8000) != 0;

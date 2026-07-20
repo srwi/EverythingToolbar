@@ -121,7 +121,7 @@ namespace EverythingToolbar.Helpers
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        private struct Shfileinfo
+        private struct ShFileInfo
         {
             public IntPtr hIcon;
             public int iIcon;
@@ -138,7 +138,7 @@ namespace EverythingToolbar.Helpers
         private static extern IntPtr SHGetFileInfo(
             string pszPath,
             uint dwFileAttributes,
-            ref Shfileinfo psfi,
+            ref ShFileInfo psfi,
             uint cbSizeFileInfo,
             uint uFlags
         );
@@ -196,7 +196,7 @@ namespace EverythingToolbar.Helpers
 
         private static int GetIconIndex(string path, IconIndexType indexType)
         {
-            Shfileinfo shfi = new();
+            ShFileInfo shfi = new();
             uint flags = ShgfiSysiconindex | ShgfiSmallicon;
             uint fileAttributes = 0;
             if (indexType == IconIndexType.ByFileName)

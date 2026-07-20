@@ -52,7 +52,7 @@ namespace EverythingToolbar.Services
                     const int seerInvokeW32 = 5000;
                     const int wmCopydata = 0x004A;
 
-                    var cd = new NativeMethods.Copydatastruct
+                    var cd = new NativeMethods.CopyDataStruct
                     {
                         cbData = (filePath.Length + 1) * 2,
                         lpData = Marshal.StringToHGlobalUni(filePath),

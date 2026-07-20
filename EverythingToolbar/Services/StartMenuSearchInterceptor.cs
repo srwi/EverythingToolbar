@@ -206,7 +206,7 @@ namespace EverythingToolbar.Services
             while (_recordedInputs.Count > 0)
             {
                 var input = _recordedInputs.Dequeue();
-                NativeMethods.KeybdEvent(
+                NativeMethods.SendKeybdEvent(
                     (byte)input.Vk,
                     0,
                     input.IsDown ? 0 : KeyeventFKeyup,
