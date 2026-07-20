@@ -6,6 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using EverythingToolbar.Core.Data;
 using NLog;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 namespace EverythingToolbar.Platform.Search
@@ -23,7 +26,7 @@ namespace EverythingToolbar.Platform.Search
         private bool _initialized;
 
         // Keep the delegate alive so the GC can't collect it while native code holds the function pointer.
-        private readonly WndProcDelegate _wndProc;
+        private readonly WNDPROC _wndProc;
 
         // The count query's first page is left behind in the SDK's result list, so page 0 can be
         // read from it without a second IPC roundtrip.
@@ -167,11 +170,19 @@ namespace EverythingToolbar.Platform.Search
             }
         }
 
-        private IntPtr HandleWindowMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
+        private LRESULT HandleWindowMessage(HWND hWnd, uint msg, WPARAM wParam, LPARAM lParam)
         {
             lock (_gate)
             {
-                if (_current != null && Everything_IsQueryReply(msg, wParam, lParam, _current.ReplyId))
+                if (
+                    _current != null
+                    && Everything_IsQueryReply(
+                        msg,
+                        (IntPtr)(nuint)wParam,
+                        (IntPtr)(nint)lParam,
+                        _current.ReplyId
+                    )
+                )
                 {
                     var completed = _current;
                     _current = null;
@@ -190,11 +201,11 @@ namespace EverythingToolbar.Platform.Search
 
                     completed.Dispose();
                     GetSynchronizationContext().Post(_ => ProcessNextQuery(), null);
-                    return 1;
+                    return (LRESULT)1;
                 }
             }
 
-            return DefWindowProc(hWnd, msg, wParam, lParam);
+            return PInvoke.DefWindowProc(hWnd, msg, wParam, lParam);
         }
 
         private void ApplySearchParameters(SearchQuery query, int pageSize)
@@ -240,32 +251,33 @@ namespace EverythingToolbar.Platform.Search
             return true;
         }
 
-        private void EnsureReplyWindow()
+        private unsafe void EnsureReplyWindow()
         {
             if (_replyWindowHandle == IntPtr.Zero)
             {
-                const int gwlpWndproc = -4;
-                const IntPtr hwndMessage = -3;
-
                 // Create a message-only window to receive IPC messages
-                _replyWindowHandle = CreateWindowEx(
+                _replyWindowHandle = PInvoke.CreateWindowEx(
                     0,
                     "STATIC",
-                    null!,
+                    null,
                     0,
                     0,
                     0,
                     0,
                     0,
-                    hwndMessage,
-                    IntPtr.Zero,
-                    IntPtr.Zero,
-                    IntPtr.Zero
+                    (HWND)(-3),
+                    null,
+                    null,
+                    null
                 );
 
                 if (_replyWindowHandle != IntPtr.Zero)
                 {
-                    SetWindowLongPtr(_replyWindowHandle, gwlpWndproc, Marshal.GetFunctionPointerForDelegate(_wndProc));
+                    PInvoke.SetWindowLongPtr(
+                        (HWND)_replyWindowHandle,
+                        WINDOW_LONG_PTR_INDEX.GWLP_WNDPROC,
+                        (nint)Marshal.GetFunctionPointerForDelegate(_wndProc)
+                    );
                 }
                 else
                 {
@@ -591,28 +603,5 @@ namespace EverythingToolbar.Platform.Search
         [DllImport("Everything64.dll")]
         private static extern bool Everything_IsQueryReply(uint message, IntPtr wParam, IntPtr lParam, long nId);
 
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr CreateWindowEx(
-            uint dwExStyle,
-            string lpClassName,
-            string? lpWindowName,
-            uint dwStyle,
-            int x,
-            int y,
-            int nWidth,
-            int nHeight,
-            IntPtr hWndParent,
-            IntPtr hMenu,
-            IntPtr hInstance,
-            IntPtr lpParam
-        );
-
-        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
-        private static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr DefWindowProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam);
-
-        private delegate IntPtr WndProcDelegate(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
     }
 }

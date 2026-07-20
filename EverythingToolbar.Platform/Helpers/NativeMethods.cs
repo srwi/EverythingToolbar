@@ -13,8 +13,6 @@ namespace EverythingToolbar.Platform.Helpers
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
-        #region Window discovery
-
         public static IntPtr FindTaskbarHandle()
         {
             return FindWindow("Shell_TrayWnd", null);
@@ -29,10 +27,6 @@ namespace EverythingToolbar.Platform.Helpers
         {
             return PInvoke.FindWindowEx((HWND)parentHandle, (HWND)childAfter, className, windowTitle);
         }
-
-        #endregion
-
-        #region Foreground & activation
 
         public static void FocusTaskbarWindow()
         {
@@ -72,9 +66,9 @@ namespace EverythingToolbar.Platform.Helpers
             }
         }
 
-        public static uint FlashWindow(IntPtr hWnd, bool bInvert)
+        public static bool FlashWindow(IntPtr hWnd, bool bInvert)
         {
-            return PInvoke.FlashWindow((HWND)hWnd, bInvert) ? 1u : 0u;
+            return PInvoke.FlashWindow((HWND)hWnd, bInvert);
         }
 
         public static IntPtr GetForegroundWindow()
@@ -87,38 +81,26 @@ namespace EverythingToolbar.Platform.Helpers
             return PInvoke.GetWindowThreadProcessId((HWND)hWnd, out lpdwProcessId);
         }
 
-        #endregion
-
-        #region Window position & DPI
-
         public static uint GetDpiForWindow(IntPtr hWnd)
         {
             return PInvoke.GetDpiForWindow((HWND)hWnd);
         }
 
-        #endregion
-
-        #region WM_COPYDATA messaging
-
-        public static unsafe IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, ref Copydatastruct lParam)
+        public static unsafe IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, ref CopyDataStruct lParam)
         {
-            fixed (Copydatastruct* p = &lParam)
+            fixed (CopyDataStruct* p = &lParam)
             {
                 return PInvoke.SendMessage((HWND)hWnd, msg, (WPARAM)(nuint)wParam, (LPARAM)(nint)p);
             }
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct Copydatastruct
+        public struct CopyDataStruct
         {
             public IntPtr dwData;
             public int cbData;
             public IntPtr lpData;
         }
-
-        #endregion
-
-        #region Low-level keyboard hook
 
         public delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
@@ -150,20 +132,14 @@ namespace EverythingToolbar.Platform.Helpers
             return PInvoke.CallNextHookEx((HHOOK)hhk, nCode, (WPARAM)(nuint)wParam, (LPARAM)(nint)lParam);
         }
 
-        public static void KeybdEvent(byte bVk, byte bScan, uint dwFlags, IntPtr dwExtraInfo)
+        public static void SendKeybdEvent(byte bVk, byte bScan, uint dwFlags, IntPtr dwExtraInfo)
         {
             PInvoke.keybd_event(bVk, bScan, (KEYBD_EVENT_FLAGS)dwFlags, (nuint)dwExtraInfo);
         }
-
-        #endregion
-
-        #region Desktop Window Manager
 
         public static int DwmFlush()
         {
             return PInvoke.DwmFlush();
         }
-
-        #endregion
     }
 }
