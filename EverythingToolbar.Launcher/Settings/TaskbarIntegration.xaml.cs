@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Res = EverythingToolbar.Properties.Resources;
 
 namespace EverythingToolbar.Launcher.Settings
 {
-    public partial class TaskbarIntegration : INotifyPropertyChanged
+    [ObservableObject]
+    public partial class TaskbarIntegration
     {
         private readonly string _taskbarShortcutPath = Utils.GetTaskbarShortcutPath();
         private FileSystemWatcher? _watcher;
@@ -21,28 +21,35 @@ namespace EverythingToolbar.Launcher.Settings
 
         public ISettings Settings => _settings;
 
+        [ObservableProperty]
         private bool _isTaskbarIconPinned;
 
-        public bool IsTaskbarIconPinned
-        {
-            get => _isTaskbarIconPinned;
-            private set
-            {
-                if (_isTaskbarIconPinned != value)
-                {
-                    _isTaskbarIconPinned = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool ShowTaskbarWindowSettings =>
-            _windowsPolicy.GetWindowsVersion() >= Core.Helpers.Utils.WindowsVersion.Windows11;
+        public bool ShowTaskbarWindowSettings => _windowsPolicy.GetWindowsVersion() >= WindowsVersion.Windows11;
 
         public List<KeyValuePair<string, string>> TaskbarWindowAlignmentOptions { get; } =
         [new(Res.SettingsTaskbarWindowAlignmentLeft, "Left"), new(Res.SettingsTaskbarWindowAlignmentRight, "Right")];
 
         public bool AllowLeftAlignment => _windowsPolicy.IsTaskbarCenterAligned();
+
+        [ObservableProperty]
+        private IconItem? _selectedIconItem;
+
+        partial void OnSelectedIconItemChanged(IconItem? value)
+        {
+            if (value != null)
+            {
+                _settings.IconName = value.Value;
+                WeakReferenceMessenger.Default.Send(new TaskbarPinIconChanged(value.Value));
+            }
+        }
+
+        [ObservableProperty]
+        private bool _isWindowsSearchHidden = !SystemSettings.GetWindowsSearchEnabledState();
+
+        partial void OnIsWindowsSearchHiddenChanged(bool value)
+        {
+            SystemSettings.SetWindowsSearchEnabledState(!value);
+        }
 
         public List<IconItem> IconItems { get; } =
         [
@@ -66,41 +73,15 @@ namespace EverythingToolbar.Launcher.Settings
             },
         ];
 
-        public IconItem? SelectedIconItem
-        {
-            get => IconItems.FirstOrDefault(item => item.Value == _settings.IconName);
-            set
-            {
-                if (value != null)
-                {
-                    _settings.IconName = value.Value;
-                    WeakReferenceMessenger.Default.Send(new TaskbarPinIconChanged(value.Value));
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private bool _isWindowsSearchHidden = !SystemSettings.GetWindowsSearchEnabledState();
-        public bool IsWindowsSearchHidden
-        {
-            get => _isWindowsSearchHidden;
-            set
-            {
-                if (_isWindowsSearchHidden != value)
-                {
-                    _isWindowsSearchHidden = value;
-                    SystemSettings.SetWindowsSearchEnabledState(!value);
-                    OnPropertyChanged();
-                }
-            }
-        }
-
         public TaskbarIntegration()
         {
             if (!AllowLeftAlignment && _settings.TaskbarWindowAlignment == "Left")
                 _settings.TaskbarWindowAlignment = "Right";
 
             _isTaskbarIconPinned = File.Exists(_taskbarShortcutPath);
+
+            // Assign the field, not the property: the change handler would re-pin the taskbar icon on open.
+            _selectedIconItem = IconItems.FirstOrDefault(item => item.Value == _settings.IconName);
 
             InitializeComponent();
             DataContext = this;
@@ -177,13 +158,6 @@ namespace EverythingToolbar.Launcher.Settings
             _watcher.Created += (_, _) => Dispatcher.BeginInvoke(() => IsTaskbarIconPinned = true);
             _watcher.Deleted += (_, _) => Dispatcher.BeginInvoke(() => IsTaskbarIconPinned = false);
         }
-
-        private void OnPropertyChanged([CallerMemberName] string? name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
     }
 
     public class IconItem

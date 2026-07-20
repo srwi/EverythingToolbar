@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace EverythingToolbar.Settings
@@ -17,24 +16,17 @@ namespace EverythingToolbar.Settings
         public int OriginalIndex { get; init; }
     }
 
-    public partial class Filters : INotifyPropertyChanged
+    [ObservableObject]
+    public partial class Filters
     {
+        [ObservableProperty]
         private ObservableCollection<FilterOrderItem> _filterOrderItems = new();
+
         private bool _isDragging;
         private Point _startPoint;
         public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
         private readonly DefaultFilterProvider _defaultFilterProvider =
             Ioc.Default.GetRequiredService<DefaultFilterProvider>();
-
-        public ObservableCollection<FilterOrderItem> FilterOrderItems
-        {
-            get => _filterOrderItems;
-            set
-            {
-                _filterOrderItems = value;
-                OnPropertyChanged();
-            }
-        }
 
         public Filters()
         {
@@ -133,13 +125,6 @@ namespace EverythingToolbar.Settings
                 }
             }
             return listBox.Items.Count - 1;
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

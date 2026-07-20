@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Controls;
@@ -16,7 +16,8 @@ using MessageBoxResult = Wpf.Ui.Controls.MessageBoxResult;
 
 namespace EverythingToolbar.Launcher
 {
-    public partial class SetupAssistant : INotifyPropertyChanged
+    [ObservableObject]
+    public partial class SetupAssistant
     {
         private readonly string _taskbarShortcutPath = Utils.GetTaskbarShortcutPath();
         private readonly TrayIcon _icon;
@@ -30,30 +31,24 @@ namespace EverythingToolbar.Launcher
 
         public ISettings Settings => _settings;
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        [ObservableProperty]
+        private bool _windowsSearchHidden = !SystemSettings.GetWindowsSearchEnabledState();
 
-        public bool WindowsSearchHidden
+        partial void OnWindowsSearchHiddenChanged(bool value)
         {
-            get => !SystemSettings.GetWindowsSearchEnabledState();
-            set
-            {
-                SystemSettings.SetWindowsSearchEnabledState(!value);
-                OnPropertyChanged();
-            }
+            SystemSettings.SetWindowsSearchEnabledState(!value);
         }
 
-        public bool AutostartEnabled
+        [ObservableProperty]
+        private bool _autostartEnabled;
+
+        partial void OnAutostartEnabledChanged(bool value)
         {
-            get => _autostart.IsEnabled;
-            set
-            {
-                _autostart.IsEnabled = value;
-                OnPropertyChanged();
-            }
+            _autostart.IsEnabled = value;
         }
 
         public bool IsTaskbarWindowSupported =>
-            _windowsPolicy.GetWindowsVersion() >= Core.Helpers.Utils.WindowsVersion.Windows11;
+            _windowsPolicy.GetWindowsVersion() >= WindowsVersion.Windows11;
 
         public bool PreferencesUnlocked =>
             CurrentStep == 1 || (IsTaskbarWindowSupported && _settings.TaskbarWindowEnabled);
@@ -72,28 +67,23 @@ namespace EverythingToolbar.Launcher
 
         public bool AllowLeftAlignment => _windowsPolicy.IsTaskbarCenterAligned();
 
+        [ObservableProperty]
         private int _currentStep;
-        public int CurrentStep
+
+        partial void OnCurrentStepChanged(int value)
         {
-            get => _currentStep;
-            set
-            {
-                if (_currentStep != value)
-                {
-                    _currentStep = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(IsPinned));
-                    OnPropertyChanged(nameof(IsPinOptionAvailable));
-                    OnPropertyChanged(nameof(IsWindowOptionAvailable));
-                    OnPropertyChanged(nameof(PreferencesUnlocked));
-                }
-            }
+            OnPropertyChanged(nameof(IsPinned));
+            OnPropertyChanged(nameof(IsPinOptionAvailable));
+            OnPropertyChanged(nameof(IsWindowOptionAvailable));
+            OnPropertyChanged(nameof(PreferencesUnlocked));
         }
 
         internal SetupAssistant(TrayIcon icon)
         {
             if (!AllowLeftAlignment && _settings.TaskbarWindowAlignment == "Left")
                 _settings.TaskbarWindowAlignment = "Right";
+
+            _autostartEnabled = _autostart.IsEnabled;
 
             InitializeComponent();
 
@@ -282,11 +272,6 @@ namespace EverythingToolbar.Launcher
                 _taskbarAlignmentWatcher.Dispose();
                 _taskbarAlignmentWatcher = null;
             }
-        }
-
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
