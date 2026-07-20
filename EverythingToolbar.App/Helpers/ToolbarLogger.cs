@@ -34,9 +34,6 @@ namespace EverythingToolbar.App.Helpers
             logger.Info(
                 $"EverythingToolbar {Assembly.GetExecutingAssembly().GetName().Version} started. OS: {Environment.OSVersion}"
             );
-
-            if (ToolbarSettings.User.ForceWin10Behavior)
-                logger.Info("Using Windows 10 behavior.");
         }
 
         private static void InitializeExceptionLoggers(ILogger logger)
