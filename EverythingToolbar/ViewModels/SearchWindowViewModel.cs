@@ -25,7 +25,7 @@ namespace EverythingToolbar.ViewModels
         }
 
         public bool AnimationsDisabled => WindowsPolicy.IsEffectiveAnimationsDisabled;
-        public bool IsWindows11OrGreater => WindowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11;
+        public bool IsWindows11OrGreater => WindowsPolicy.GetWindowsVersion() >= WindowsVersion.Windows11;
 
         public int PopupWidth => _settings.PopupWidth;
         public int PopupHeight => _settings.PopupHeight;

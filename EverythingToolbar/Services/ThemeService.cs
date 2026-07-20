@@ -213,7 +213,7 @@ namespace EverythingToolbar.Services
                 root.Resources.MergedDictionaries.Remove(dict);
             registration.AddedDictionaries.Clear();
 
-            var profile = _windowsPolicy.GetWindowsVersion() >= Utils.WindowsVersion.Windows11 ? "Win11" : "Win10";
+            var profile = _windowsPolicy.GetWindowsVersion() >= WindowsVersion.Windows11 ? "Win11" : "Win10";
 
             AddWpfUiBase(registration, root, systemTheme);
 

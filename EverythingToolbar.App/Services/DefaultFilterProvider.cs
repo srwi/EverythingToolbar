@@ -100,7 +100,7 @@ namespace EverythingToolbar.App.Services
         }
 
         private static string Glyph(string glyph) =>
-            Environment.OSVersion.Version >= Utils.WindowsVersion.Windows10 ? glyph : "";
+            Environment.OSVersion.Version >= WindowsVersion.Windows10 ? glyph : "";
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
