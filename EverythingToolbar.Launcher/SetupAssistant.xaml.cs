@@ -47,8 +47,7 @@ namespace EverythingToolbar.Launcher
             _autostart.IsEnabled = value;
         }
 
-        public bool IsTaskbarWindowSupported =>
-            _windowsPolicy.GetWindowsVersion() >= WindowsVersion.Windows11;
+        public bool IsTaskbarWindowSupported => _windowsPolicy.GetWindowsVersion() >= WindowsVersion.Windows11;
 
         public bool PreferencesUnlocked =>
             CurrentStep == 1 || (IsTaskbarWindowSupported && _settings.TaskbarWindowEnabled);

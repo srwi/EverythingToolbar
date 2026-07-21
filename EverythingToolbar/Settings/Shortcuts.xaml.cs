@@ -83,7 +83,7 @@ namespace EverythingToolbar.Settings
                 VkShift or VkLshift or VkRshift => Key.LeftShift,
                 VkMenu or VkLmenu or VkRmenu => Key.LeftAlt,
                 VkLwin or VkRwin => Key.LWin,
-                _ => KeyInterop.KeyFromVirtualKey(vk)
+                _ => KeyInterop.KeyFromVirtualKey(vk),
             };
         }
 

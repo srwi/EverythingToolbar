@@ -192,12 +192,7 @@ namespace EverythingToolbar.Platform.Search
             {
                 if (
                     _current != null
-                    && Everything_IsQueryReply(
-                        msg,
-                        (IntPtr)(nuint)wParam,
-                        (IntPtr)(nint)lParam,
-                        _current.ReplyId
-                    )
+                    && Everything_IsQueryReply(msg, (IntPtr)(nuint)wParam, (IntPtr)(nint)lParam, _current.ReplyId)
                 )
                 {
                     var completed = _current;
@@ -620,6 +615,5 @@ namespace EverythingToolbar.Platform.Search
 
         [DllImport("Everything64.dll")]
         private static extern bool Everything_IsQueryReply(uint message, IntPtr wParam, IntPtr lParam, long nId);
-
     }
 }

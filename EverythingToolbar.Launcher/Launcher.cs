@@ -199,24 +199,30 @@ namespace EverythingToolbar.Launcher
 
             private void StartToggleListener()
             {
-                Task.Factory.StartNew(() =>
-                {
-                    var wh = new EventWaitHandle(false, EventResetMode.AutoReset, ToggleEventName);
-                    while (true)
+                Task.Factory.StartNew(
+                    () =>
                     {
-                        wh.WaitOne();
-                        ToggleWindow();
-                    }
-                }, TaskCreationOptions.LongRunning);
-                Task.Factory.StartNew(() =>
-                {
-                    var wh = new EventWaitHandle(false, EventResetMode.AutoReset, StartSetupAssistantEventName);
-                    while (true)
+                        var wh = new EventWaitHandle(false, EventResetMode.AutoReset, ToggleEventName);
+                        while (true)
+                        {
+                            wh.WaitOne();
+                            ToggleWindow();
+                        }
+                    },
+                    TaskCreationOptions.LongRunning
+                );
+                Task.Factory.StartNew(
+                    () =>
                     {
-                        wh.WaitOne();
-                        OpenSetupAssistant();
-                    }
-                }, TaskCreationOptions.LongRunning);
+                        var wh = new EventWaitHandle(false, EventResetMode.AutoReset, StartSetupAssistantEventName);
+                        while (true)
+                        {
+                            wh.WaitOne();
+                            OpenSetupAssistant();
+                        }
+                    },
+                    TaskCreationOptions.LongRunning
+                );
             }
 
             private void ToggleWindow()

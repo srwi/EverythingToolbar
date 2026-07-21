@@ -222,12 +222,7 @@ namespace EverythingToolbar.Services
             while (_recordedInputs.Count > 0)
             {
                 var input = _recordedInputs.Dequeue();
-                NativeMethods.SendKeybdEvent(
-                    (byte)input.Vk,
-                    0,
-                    input.IsDown ? 0 : KeyeventFKeyup,
-                    IntPtr.Zero
-                );
+                NativeMethods.SendKeybdEvent((byte)input.Vk, 0, input.IsDown ? 0 : KeyeventFKeyup, IntPtr.Zero);
             }
         }
 

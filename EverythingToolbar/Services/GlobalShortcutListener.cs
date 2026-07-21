@@ -20,7 +20,7 @@ namespace EverythingToolbar.Services
         private ModifierKeys _modifiers;
         private bool _hotkeyDown;
 
-        public bool IsEnabled{ get; set; } = true;
+        public bool IsEnabled { get; set; } = true;
 
         private const int VkShift = 0x10;
         private const int VkControl = 0x11;

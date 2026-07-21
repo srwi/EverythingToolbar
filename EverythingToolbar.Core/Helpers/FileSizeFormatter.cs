@@ -20,7 +20,7 @@ namespace EverythingToolbar.Core.Helpers
             {
                 >= 100 => $"0 {units[unit]}",
                 >= 10 => $"0.# {units[unit]}",
-                _ => $"0.## {units[unit]}"
+                _ => $"0.## {units[unit]}",
             };
             return size.ToString(format);
         }
