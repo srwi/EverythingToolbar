@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.DependencyInjection;
