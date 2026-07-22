@@ -3,8 +3,8 @@
 
 # <img src="EverythingToolbar/Images/AppIcon.ico" width="24"> EverythingToolbar
 
-<a href="https://paypal.me/rumswinkel"><img src="https://img.shields.io/static/v1?label=Donate&message=%E2%9D%A4&logo=PayPal&color=%23009cde" height="25" /></a>
 <a href="https://ko-fi.com/stephanrwi"><img src="https://img.shields.io/static/v1?label=Buy%20me%20a%20coffee&message=%E2%98%95&logo=Ko-fi&color=%23FF5E5B" height="25" /></a>
+<a href="https://paypal.me/rumswinkel"><img src="https://img.shields.io/static/v1?label=Donate&message=%E2%9D%A4&logo=PayPal&color=%23009cde" height="25" /></a>
 <a href="https://github.com/srwi/EverythingToolbar/releases/latest"><img src="https://img.shields.io/github/downloads/srwi/EverythingToolbar/total?color=critical" height="25" /></a>
 <a href="https://crowdin.com/project/everythingtoolbar"><img src="https://badges.crowdin.net/everythingtoolbar/localized.svg" height="25" /></a>
 
@@ -13,6 +13,15 @@
 <img src="https://raw.githubusercontent.com/srwi/EverythingToolbar/develop/.github/images/demo.gif" alt="EverythingToolbar演示" width="80%">
 
 ## 🌟 功能特点
+
+### 任务栏集成
+EverythingToolbar就在您的任务栏上，既可以是Windows 11上可直接输入的搜索框，也可以是点击后打开搜索窗口的紧凑图标。
+
+<img src="https://raw.githubusercontent.com/srwi/EverythingToolbar/develop/.github/images/taskbar_modes.png" alt="任务栏搜索框与搜索图标" width="80%">
+
+您可以在设置过程中选择，也可以随时在**设置** → **任务栏集成**中切换。搜索框可放置在任务栏的任意一侧，任务栏居中对齐时可选择靠左对齐。
+
+此外，在Windows 10上，EverythingToolbar还可以作为原生桌面栏集成到任务栏内部。
 
 ### 明亮和暗黑主题
 EverythingToolbar无缝融入Windows 10和11，自动适应您的系统主题。
@@ -35,7 +44,7 @@ EverythingToolbar内置常用搜索过滤器。对于高级用户，它可以与
 <img src="https://raw.githubusercontent.com/srwi/EverythingToolbar/develop/.github/images/custom_actions.png" alt="自定义操作选项" width="80%">
 
 ### 兼容性
-EverythingToolbar在Windows 10和Windows 11上无缝运行，并与[ExplorerPatcher](https://github.com/valinet/ExplorerPatcher)和[StartAllBack](https://www.startallback.com/)等工具完美集成，在Windows 11上提供完整的桌面栏支持。
+EverythingToolbar在Windows 10和Windows 11上无缝运行。在Windows 11上，任务栏搜索框开箱即用地嵌入任务栏；如需完整的桌面栏支持，它还与[ExplorerPatcher](https://github.com/valinet/ExplorerPatcher)和[StartAllBack](https://www.startallback.com/)等工具集成。
 
 <img src="https://raw.githubusercontent.com/srwi/EverythingToolbar/develop/.github/images/compatible.png" alt="Windows 10截图" width="80%">
 
@@ -79,14 +88,19 @@ EverythingToolbar在Windows 10和Windows 11上无缝运行，并与[ExplorerPatc
 
 ## ⚙️ 设置
 
-### 启动器（任务栏图标）
+### 启动器
 *推荐用于未修改的Windows 11安装*
 
-在Windows 11上安装后，设置助手将指导您完成配置过程。
+在Windows 11上安装后，设置助手将指导您完成配置过程。它提供两种从任务栏访问EverythingToolbar的方式，任选其一：
+
+- **任务栏搜索框**（仅限Windows 11）：将搜索框嵌入任务栏本身。
+- **任务栏图标**：将EverythingToolbar固定为普通任务栏图标，点击后打开搜索窗口。
+
+两者均可稍后在**设置** → **任务栏集成**中更改。
 
 > 如果设置助手没有自动启动，请在Windows开始菜单中搜索**EverythingToolbar**。
 
-> 对于偏好搜索图标的Windows 10用户（不推荐），请搜索**EverythingToolbar.Launcher.exe**，手动启动并按照设置过程操作。
+> 对于偏好搜索图标的Windows 10用户（不推荐），请搜索**EverythingToolbar.Launcher.exe**，手动启动并按照设置过程操作。Windows 10不支持任务栏搜索框，请改用桌面栏。
 
 ### 桌面栏
 *推荐用于Windows 10或使用[ExplorerPatcher](https://github.com/valinet/ExplorerPatcher) / [StartAllBack](https://www.startallback.com/)时*
@@ -96,7 +110,7 @@ EverythingToolbar在Windows 10和Windows 11上无缝运行，并与[ExplorerPatc
    > 您可能需要打开上下文菜单两次才能显示EverythingToolbar
 2. 解锁任务栏以调整大小和位置（[演示视频](https://raw.githubusercontent.com/srwi/EverythingToolbar/develop/.github/images/deskband_resizing_demo.gif)）
 
-> **Windows 11用户**：安装后搜索图标设置助手会自动启动。如果要使用桌面栏（仅在使用ExplorerPatcher/StartAllBack时推荐），请关闭助手并通过系统托盘结束EverythingToolbar的后台进程。
+> **Windows 11用户**：安装后设置助手会自动启动。如果要使用桌面栏（仅在使用ExplorerPatcher/StartAllBack时推荐），请关闭助手并通过系统托盘结束EverythingToolbar的后台进程。
 
 有关故障排除和其他设置帮助，请参阅[常见问题解答](FAQ.md)。
 

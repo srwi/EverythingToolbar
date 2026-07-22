@@ -22,7 +22,14 @@ EverythingToolbar originally started as a search bar that could be fully integra
 - **Windows 11**: You can only use the deskband with third-party tools like StartAllBack or ExplorerPatcher, which restore deskband support
 
 #### Launcher
-With the removal of deskband support from Windows 11, EverythingToolbar can only be embedded into the taskbar by pinning a regular application icon. Windows no longer allows search bar UI integration into the taskbar without the third-party tools mentioned above.
+The launcher runs EverythingToolbar as a regular background application instead of a shell extension. It offers two ways to reach the search from the taskbar, selectable in the setup assistant or later under `Settings → Taskbar integration`:
+
+- **Taskbar search box**: places an actual search box on the unmodified Windows 11 taskbar, similar to the deskband. This mode is not designed to be used with StartAllBack or ExplorerPatcher. If you use those, choose the deskband instead.
+- **Taskbar icon**: pins EverythingToolbar as a regular application icon that opens the search window when clicked. This works with any kind of taskbar, including StartAllBack and ExplorerPatcher.
+
+<img src="https://raw.githubusercontent.com/srwi/EverythingToolbar/develop/.github/images/taskbar_modes.png" alt="Taskbar search box and search icon" width="80%">
+
+Both modes support the global keyboard shortcut, so the search window is always reachable even without either taskbar element.
 
 ### ❓ How can I rearrange the filters in the filter selector bar?
 The method for rearranging filters depends on your settings:
@@ -69,8 +76,11 @@ The method depends on which variant you're using:
 2. A handle will appear on the left side of the search bar
 3. Drag and drop the handle to move it to your desired position
 
-**Launcher:**
+**Launcher (taskbar icon):**
 - Drag and drop the search icon in the taskbar like any other pinned application. Unfortunately the positioning capabilities are limited by Windows.
+
+**Launcher (taskbar search box):**
+- Go to `Settings → Taskbar integration → Search box alignment` and choose Left or Right. The search box is anchored to the taskbar's own elements rather than freely draggable. Left alignment is only selectable while the taskbar is center-aligned, since a left-aligned taskbar leaves no free space on that side.
 
 ### ❓ How do I change the color of the launcher search icon?
 **Important**: Updating the taskbar icon color requires restarting the Explorer process, so it's not done automatically when the Windows theme changes.

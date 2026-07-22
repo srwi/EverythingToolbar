@@ -2,8 +2,8 @@ _Read in other languages: [English](README.md), [中文](README.zh-CN.md)_
 
 # <img src="EverythingToolbar/Images/AppIcon.ico" width="24"> EverythingToolbar
 
-<a href="https://paypal.me/rumswinkel"><img src="https://img.shields.io/static/v1?label=Donate&message=%E2%9D%A4&logo=PayPal&color=%23009cde" height="25" /></a>
 <a href="https://ko-fi.com/stephanrwi"><img src="https://img.shields.io/static/v1?label=Buy%20me%20a%20coffee&message=%E2%98%95&logo=Ko-fi&color=%23FF5E5B" height="25" /></a>
+<a href="https://paypal.me/rumswinkel"><img src="https://img.shields.io/static/v1?label=Donate&message=%E2%9D%A4&logo=PayPal&color=%23009cde" height="25" /></a>
 <a href="https://github.com/srwi/EverythingToolbar/releases/latest"><img src="https://img.shields.io/github/downloads/srwi/EverythingToolbar/total?color=critical" height="25" /></a>
 <a href="https://crowdin.com/project/everythingtoolbar"><img src="https://badges.crowdin.net/everythingtoolbar/localized.svg" height="25" /></a>
 
@@ -12,6 +12,13 @@ Instant file search integration for the Windows taskbar powered by [Everything](
 <img src="https://raw.githubusercontent.com/srwi/EverythingToolbar/develop/.github/images/demo.gif" alt="EverythingToolbar in action" width="80%">
 
 ## 🌟 Features
+
+### Taskbar Integration
+EverythingToolbar sits right on your taskbar, either as a real search box you can type into directly on Windows 11, or as a compact icon that opens the search window when clicked.
+
+<img src="https://raw.githubusercontent.com/srwi/EverythingToolbar/develop/.github/images/taskbar_modes.png" alt="Taskbar search box and search icon" width="80%">
+
+Choose either during setup or switch anytime under **Settings** → **Taskbar integration**. Additionally, on Windows 10 EverythingToolbar can be integrated as a native deskband.
 
 ### Light & Dark Themes
 EverythingToolbar seamlessly blends into Windows 10 and 11, automatically adjusting to your system theme.
@@ -34,7 +41,7 @@ Create custom **Open with** actions by navigating to **Settings** → **Custom a
 <img src="https://raw.githubusercontent.com/srwi/EverythingToolbar/develop/.github/images/custom_actions.png" alt="Custom action options" width="80%">
 
 ### Compatibility
-EverythingToolbar works seamlessly on Windows 10 and Windows 11, and integrates perfectly with tools like [ExplorerPatcher](https://github.com/valinet/ExplorerPatcher) and [StartAllBack](https://www.startallback.com/) for full deskband support on Windows 11.
+EverythingToolbar works seamlessly on Windows 10 and Windows 11. On Windows 11 the taskbar search box embeds into the taskbar out of the box, and for full deskband support it integrates with tools like [ExplorerPatcher](https://github.com/valinet/ExplorerPatcher) and [StartAllBack](https://www.startallback.com/).
 
 <img src="https://raw.githubusercontent.com/srwi/EverythingToolbar/develop/.github/images/compatible.png" alt="Windows 10 screenshot" width="80%">
 
@@ -78,14 +85,19 @@ Choose one of the following installation methods:
 
 ## ⚙️ Setup
 
-### Launcher (Taskbar Icon)
+### Launcher
 *Recommended for unmodified Windows 11 installations*
 
-After installation on Windows 11, the setup assistant will guide you through the configuration process.
+After installation on Windows 11, the setup assistant will guide you through the configuration process. It offers two ways to reach EverythingToolbar from the taskbar — pick whichever you prefer:
+
+- **Taskbar search box** *(Windows 11 only)*: embeds a search box into the taskbar itself.
+- **Taskbar icon**: pins EverythingToolbar as a regular taskbar icon that opens the search window.
+
+Both can be changed later under **Settings** → **Taskbar integration**.
 
 > If the setup assistant doesn't start automatically, search for **EverythingToolbar** in the Windows Start menu.
 
-> For Windows 10 users who prefer the search icon (not recommended), search for **EverythingToolbar.Launcher.exe**, start it manually and follow the setup process.
+> For Windows 10 users who prefer the search icon (not recommended), search for **EverythingToolbar.Launcher.exe**, start it manually and follow the setup process. The taskbar search box is not available on Windows 10 — use the deskband instead.
 
 ### Deskband
 *Recommended for Windows 10 or when using [ExplorerPatcher](https://github.com/valinet/ExplorerPatcher) / [StartAllBack](https://www.startallback.com/)*
@@ -95,7 +107,7 @@ After installation on Windows 10:
    > You may need to open the context menu twice for EverythingToolbar to appear
 2. Unlock the taskbar to adjust size and position ([demonstration video](https://raw.githubusercontent.com/srwi/EverythingToolbar/develop/.github/images/deskband_resizing_demo.gif))
 
-> **Windows 11 users**: The search icon setup assistant starts automatically after installation. To use the deskband instead (only recommended with ExplorerPatcher/StartAllBack), close the assistant and end EverythingToolbar's background process via the system tray.
+> **Windows 11 users**: The setup assistant starts automatically after installation. To use the deskband instead (only recommended with ExplorerPatcher/StartAllBack), close the assistant and end EverythingToolbar's background process via the system tray.
 
 For troubleshooting and additional setup help, see the [FAQ](FAQ.md).
 

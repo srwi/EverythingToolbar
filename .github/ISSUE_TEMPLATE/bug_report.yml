@@ -27,6 +27,7 @@ body:
     description: What variant of EverythingToolbar are you using? [What are the different variants?](https://github.com/srwi/EverythingToolbar/blob/develop/FAQ.md#-what-is-the-difference-between-the-deskband-and-launcher-variants-of-everythingtoolbar)
     options:
       - Not applicable / Don't know
+      - Taskbar search box / Launcher
       - Search icon / Launcher
       - Deskband
   validations:
