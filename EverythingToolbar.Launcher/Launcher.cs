@@ -308,7 +308,9 @@ namespace EverythingToolbar.Launcher
                     }
                     catch (Exception ex)
                     {
-                        FluentMessageBox.CreateError(ex.Message, "Error").ShowDialogAsync();
+                        FluentMessageBox
+                            .CreateError(ex.Message, EverythingToolbar.Properties.Resources.MessageBoxErrorTitle)
+                            .ShowDialogAsync();
                     }
                 }
             }

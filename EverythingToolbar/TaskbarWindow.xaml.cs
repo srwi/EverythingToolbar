@@ -328,7 +328,7 @@ namespace EverythingToolbar
             }
 
             // Neither anchor available: fall back to the far corner matching the alignment.
-            return leftOnCentered ? taskbarWidth - widgetWidth - padding : 0;
+            return leftOnCentered ? 0 : taskbarWidth - widgetWidth - padding;
         }
 
         private static int ToClientX(IntPtr taskbarHandle, int screenX)

@@ -20,11 +20,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingToolbar.Deskband"
 		{BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD} = {BF806AC1-5839-4DAA-90F2-9D6F2B65C0FD}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingToolbar.Core", "EverythingToolbar.Core\EverythingToolbar.Core.csproj", "{03BE40EC-2091-40B7-ABF5-20BE5D6311C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingToolbar.Core", "EverythingToolbar.Core\EverythingToolbar.Core.csproj", "{03BE40EC-2091-40B7-ABF5-20BE5D6311C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingToolbar.Platform", "EverythingToolbar.Platform\EverythingToolbar.Platform.csproj", "{2219D4B4-BEBA-4C2F-BCC0-A3B86C35D6AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingToolbar.Platform", "EverythingToolbar.Platform\EverythingToolbar.Platform.csproj", "{2219D4B4-BEBA-4C2F-BCC0-A3B86C35D6AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingToolbar.App", "EverythingToolbar.App\EverythingToolbar.App.csproj", "{22005E54-69C5-4F80-8B33-0682C546B8B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingToolbar.App", "EverythingToolbar.App\EverythingToolbar.App.csproj", "{22005E54-69C5-4F80-8B33-0682C546B8B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -70,7 +70,9 @@ jobs:
       - name: Decode certificate
         if: ${{ inputs.sign }}
         shell: bash
-        run: echo ${{ secrets.PFX_CERTIFICATE_FILE }} | base64 --decode > ./EverythingToolbar.snk
+        env:
+          PFX_CERTIFICATE_FILE: ${{ secrets.PFX_CERTIFICATE_FILE }}
+        run: echo "$PFX_CERTIFICATE_FILE" | base64 --decode > ./EverythingToolbar.snk
 
       - name: Build all
         run: MSBuild $Env:GITHUB_WORKSPACE /p:Configuration=Release /p:Platform=${{ inputs.arch }} /p:SignAssembly=${{ inputs.sign }} /warnaserror:IDE0005,IDE0051,IDE0052,IDE0035,IDE0059,IDE0161,IDE1006,nullable

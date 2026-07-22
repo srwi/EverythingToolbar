@@ -1,11 +1,13 @@
 using System;
 using System.Windows.Interop;
 using System.Windows.Threading;
+using NLog;
 
 namespace EverythingToolbar.Launcher
 {
     internal class TaskbarWindowHost
     {
+        private static readonly ILogger Logger = ToolbarLogger.GetLogger<TaskbarWindowHost>();
         private readonly WindowsPolicy _windowsPolicy;
         private readonly ISettings _settings;
         private readonly SearchWindowController _controller;
@@ -38,6 +40,7 @@ namespace EverythingToolbar.Launcher
             new WindowInteropHelper(_taskbarWindow).EnsureHandle();
             if (!_taskbarWindow.IsAttachedToTaskbar)
             {
+                Logger.Warn("Taskbar window could not attach to the taskbar.");
                 Close();
                 return;
             }
@@ -54,6 +57,7 @@ namespace EverythingToolbar.Launcher
                 _closingTaskbarWindowIntentionally = true;
                 try
                 {
+                    _taskbarWindow.Closed -= OnTaskbarWindowClosed;
                     _taskbarWindow.Close();
                 }
                 catch
