@@ -47,7 +47,9 @@ namespace EverythingToolbar
         public static IServiceCollection AddPlatformAdapters(this IServiceCollection services)
         {
             return services
-                .AddSingleton<IEverythingClient, EverythingIpcClient>()
+                .AddSingleton<EverythingIpcClient>()
+                .AddSingleton<EverythingPipeClient>()
+                .AddSingleton<IEverythingClient, EverythingClientRouter>()
                 .AddSingleton<IClipboard, ClipboardAdapter>()
                 .AddSingleton<IShellDialogs, ShellDialogsAdapter>()
                 .AddSingleton<INotifier, NotifierAdapter>()

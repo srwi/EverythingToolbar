@@ -60,14 +60,6 @@ While EverythingToolbar's main goal is to provide fast search results rather tha
 
 **Tip**: Use Everything's filter order or EverythingToolbar's `Settings → Filters → Remember filter` option to control which filter is selected when opening the search window.
 
-### ❓ How should I configure the Everything instance name for Everything 1.5?
-For Everything 1.5 beta or newer, leave the Everything instance name empty in EverythingToolbar:
-
-1. Go to `Settings → Advanced → Everything instance name`
-2. Clear the field
-
-The old `1.5a` instance name was only needed for Everything 1.5 alpha builds.
-
 ### ❓ How do I move the search icon on the taskbar?
 The method depends on which variant you're using:
 
