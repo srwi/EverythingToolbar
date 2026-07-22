@@ -111,18 +111,9 @@ After installation on Windows 10:
 
 For troubleshooting and additional setup help, see the [FAQ](FAQ.md).
 
-## 🛠️ Development
-
-### Building from Source
-1. Open the solution in Visual Studio with .NET 8.0 support
-2. Disable code signing in project properties
-3. Choose your build target:
-   - **Deskband**: Build `EverythingToolbar.Deskband` project, then run `/tools/install_deskband.cmd` as administrator
-   - **Search icon**: Set `EverythingToolbar.Launcher` as startup project and start debugging
-
 ## 🤝 Contributing
 
-All types of contributions are welcome! Whether you're reporting bugs, requesting features, or submitting pull requests, your help is appreciated.
+All types of contributions are welcome! Whether you're reporting bugs, requesting features, or submitting pull requests, your help is appreciated. For detailed guidelines, including how to build from source, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### How to Contribute
 - Check existing [issues](https://github.com/srwi/EverythingToolbar/issues) before creating new ones

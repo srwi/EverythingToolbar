@@ -114,18 +114,9 @@ EverythingToolbar在Windows 10和Windows 11上无缝运行。在Windows 11上，
 
 有关故障排除和其他设置帮助，请参阅[常见问题解答](FAQ.md)。
 
-## 🛠️ 开发
-
-### 从源代码构建
-1. 在支持.NET 8.0的Visual Studio中打开解决方案
-2. 在项目属性中禁用代码签名
-3. 选择您的构建目标：
-   - **桌面栏**：构建`EverythingToolbar.Deskband`项目，然后以管理员身份运行`/tools/install_deskband.cmd`
-   - **搜索图标**：将`EverythingToolbar.Launcher`设置为启动项目并开始调试
-
 ## 🤝 贡献
 
-欢迎各种类型的贡献！无论是报告错误、请求功能还是提交拉取请求，您的帮助都将受到赞赏。
+欢迎各种类型的贡献！无论是报告错误、请求功能还是提交拉取请求，您的帮助都将受到赞赏。有关详细指南，包括如何从源代码构建，请参阅 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ### 如何贡献
 - 创建新问题前请检查现有[问题](https://github.com/srwi/EverythingToolbar/issues)

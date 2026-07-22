@@ -21,3 +21,11 @@ When opening a pull request, please try to:
 - Update documentation or translations when the change affects user-facing text or behavior.
 
 AI tools are welcome as part of your workflow, but please review their output carefully and make sure you understand, test, and can explain the changes you submit.
+
+## Building from Source
+
+1. Open the solution in Visual Studio with .NET 8.0 support
+2. Disable code signing in project properties
+3. Choose your build target:
+   - **Deskband**: Build `EverythingToolbar.Deskband` project, then run `/tools/install_deskband.cmd` as administrator
+   - **Search icon**: Set `EverythingToolbar.Launcher` as startup project and start debugging
