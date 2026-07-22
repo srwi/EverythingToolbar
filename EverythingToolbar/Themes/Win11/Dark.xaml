@@ -32,7 +32,7 @@
 
   <SolidColorBrush x:Key="SearchResultsViewBackground" Color="Transparent" />
   <SolidColorBrush x:Key="TabBarBottomBorder" Color="Transparent" />
-  <SolidColorBrush x:Key="SearchResultsViewHeader" Color="#f0252525" />
+  <SolidColorBrush x:Key="SearchResultsViewHeader" Color="#da252525" />
   <SolidColorBrush x:Key="SearchResultsViewSpinner" Color="#ffffff" />
 
   <SolidColorBrush x:Key="TabBackground" Color="#11ffffff" />
