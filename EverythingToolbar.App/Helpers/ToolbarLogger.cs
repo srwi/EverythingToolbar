@@ -40,12 +40,32 @@ namespace EverythingToolbar.App.Helpers
         {
             AppDomain.CurrentDomain.FirstChanceException += (_, e) =>
             {
+                if (IsKnownBenignException(e.Exception))
+                    return;
+
                 logger.Debug(e.Exception, "Unhandled first chance exception");
             };
             AppDomain.CurrentDomain.UnhandledException += (_, args) =>
             {
                 logger.Error((Exception)args.ExceptionObject, "Unhandled exception");
             };
+        }
+
+        private static bool IsKnownBenignException(Exception exception)
+        {
+            // Cancellation is regular control flow (e.g. a search query superseded by a newer one)
+            if (exception is OperationCanceledException)
+                return true;
+
+            // XmlSerializer probes for pre-generated *.XmlSerializers assemblies and falls back
+            // to runtime code generation when they do not exist
+            if (
+                exception is FileNotFoundException fileNotFound
+                && fileNotFound.FileName?.Contains(".XmlSerializers") == true
+            )
+                return true;
+
+            return false;
         }
 
         private static void ConfigureLogger()
