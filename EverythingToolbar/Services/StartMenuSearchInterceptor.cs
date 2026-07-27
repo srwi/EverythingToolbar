@@ -30,13 +30,19 @@ namespace EverythingToolbar.Services
         private readonly Dispatcher _dispatcher = Dispatcher.CurrentDispatcher;
         private readonly ISettings _settings;
         private readonly SearchWindowController _controller;
+        private readonly WindowsPolicy _windowsPolicy;
 
         private const uint KeyeventFKeyup = 0x0002;
 
-        public StartMenuSearchInterceptor(ISettings settings, SearchWindowController controller)
+        public StartMenuSearchInterceptor(
+            ISettings settings,
+            SearchWindowController controller,
+            WindowsPolicy windowsPolicy
+        )
         {
             _settings = settings;
             _controller = controller;
+            _windowsPolicy = windowsPolicy;
             _keyboardHook = new LowLevelKeyboardHook(OnKeyEvent);
             _cleanupTimer.Tick += OnCleanupTimerElapsed;
             _settings.PropertyChanged += OnSettingsChanged;
@@ -229,14 +235,19 @@ namespace EverythingToolbar.Services
         {
             _controller.SearchBoxFocused -= OnAnySearchBoxGotKeyboardFocus;
             _controller.SearchBoxFocused += OnAnySearchBoxGotKeyboardFocus;
-            _dispatcher.BeginInvoke(
-                new Action(() =>
-                {
-                    _controller.Show();
-                    _controller.FocusSearchBox();
-                }),
-                DispatcherPriority.Input
-            );
+            _dispatcher.BeginInvoke(new Action(ShowSearchUiForReplay), DispatcherPriority.Input);
+        }
+
+        private void ShowSearchUiForReplay()
+        {
+            if (_windowsPolicy.IsTaskbarWindowActive())
+            {
+                _controller.ShowStandalone();
+                return;
+            }
+
+            _controller.Show();
+            _controller.FocusSearchBox();
         }
 
         // Must be called while holding _stateLock

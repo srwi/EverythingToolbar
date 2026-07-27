@@ -99,11 +99,10 @@ namespace EverythingToolbar.Services
                 if ((DateTime.Now - _lastHideStart).TotalMilliseconds < DebounceMs)
                     return;
 
-                if (!_structuralIconMode)
-                    SetTemporaryPopupMode(true);
-
-                ShowInternal(atCursor: true);
+                ShowStandaloneInternal();
             });
+
+        public void ShowStandalone() => RunOnUi(ShowStandaloneInternal);
 
         public void FocusSearchBox() =>
             RunOnUi(() =>
@@ -175,6 +174,14 @@ namespace EverythingToolbar.Services
         {
             Window.Show(new ShowOptions(IsIconMode, atCursor));
             _state = WindowState.Visible;
+        }
+
+        private void ShowStandaloneInternal()
+        {
+            if (!_structuralIconMode)
+                SetTemporaryPopupMode(true);
+
+            ShowInternal(atCursor: true);
         }
 
         private void HideInternal()
