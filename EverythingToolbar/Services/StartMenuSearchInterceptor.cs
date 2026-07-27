@@ -30,26 +30,27 @@ namespace EverythingToolbar.Services
         private readonly Dispatcher _dispatcher = Dispatcher.CurrentDispatcher;
         private readonly ISettings _settings;
         private readonly SearchWindowController _controller;
-        private readonly WindowsPolicy _windowsPolicy;
+        private Action? _showSearchUi;
 
         private const uint KeyeventFKeyup = 0x0002;
         private const uint WmClose = 0x0010;
 
-        public StartMenuSearchInterceptor(
-            ISettings settings,
-            SearchWindowController controller,
-            WindowsPolicy windowsPolicy
-        )
+        public StartMenuSearchInterceptor(ISettings settings, SearchWindowController controller)
         {
             _settings = settings;
             _controller = controller;
-            _windowsPolicy = windowsPolicy;
             _keyboardHook = new LowLevelKeyboardHook(OnKeyEvent);
             _cleanupTimer.Tick += OnCleanupTimerElapsed;
             _settings.PropertyChanged += OnSettingsChanged;
         }
 
-        public void Initialize()
+        public void Initialize(Action showSearchUi)
+        {
+            _showSearchUi = showSearchUi;
+            Enable();
+        }
+
+        public void Enable()
         {
             _isAttached = true;
 
@@ -233,21 +234,12 @@ namespace EverythingToolbar.Services
 
         private void TriggerSearchWindow()
         {
+            if (_showSearchUi is not { } showSearchUi)
+                return;
+
             _controller.SearchBoxFocused -= OnAnySearchBoxGotKeyboardFocus;
             _controller.SearchBoxFocused += OnAnySearchBoxGotKeyboardFocus;
-            _dispatcher.BeginInvoke(new Action(ShowSearchUiForReplay), DispatcherPriority.Input);
-        }
-
-        private void ShowSearchUiForReplay()
-        {
-            if (_windowsPolicy.IsTaskbarWindowActive())
-            {
-                _controller.ShowStandalone();
-                return;
-            }
-
-            _controller.Show();
-            _controller.FocusSearchBox();
+            _dispatcher.BeginInvoke(showSearchUi, DispatcherPriority.Input);
         }
 
         // Must be called while holding _stateLock
@@ -321,7 +313,6 @@ namespace EverythingToolbar.Services
 
         private void HookStartMenuInput()
         {
-            UnhookStartMenuInput();
             _keyboardHook.Install();
         }
 

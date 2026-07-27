@@ -44,7 +44,7 @@ namespace EverythingToolbar.Services
 
             _controller.SetIconMode(iconMode);
             _shortcutListener.Initialize(_controller.ToggleSearchUi);
-            _startMenuInterceptor.Initialize();
+            _startMenuInterceptor.Initialize(placementTarget != null ? ShowSearchUiAtToolbar : ShowSearchUiStandalone);
 
             _placement = new SearchWindowPlacement(_taskbarInfo, _settings, _windowsPolicy)
             {
@@ -56,6 +56,18 @@ namespace EverythingToolbar.Services
                 _controller.PreWarm,
                 DispatcherPriority.ApplicationIdle
             );
+        }
+
+        private void ShowSearchUiAtToolbar()
+        {
+            _controller.Show();
+            _controller.FocusSearchBox();
+        }
+
+        private void ShowSearchUiStandalone()
+        {
+            _controller.ShowStandalone();
+            _controller.FocusSearchBox();
         }
 
         public void SetPlacementTarget(FrameworkElement? target)

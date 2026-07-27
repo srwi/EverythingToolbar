@@ -170,7 +170,7 @@ namespace EverythingToolbar.Settings
         {
             _shortcutListener.IsEnabled = true;
             ReleaseKeyboard();
-            _startMenuInterceptor.Initialize();
+            _startMenuInterceptor.Enable();
 
             if (Key != OriginalKey || Modifiers != OriginalModifiers)
             {

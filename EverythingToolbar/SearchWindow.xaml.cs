@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -27,6 +27,7 @@ namespace EverythingToolbar
         public event EventHandler<ShowingEventArgs>? Showing;
 
         private bool _isFirstShow = true;
+        private bool _isHiding;
         private readonly SearchWindowViewModel _viewModel;
         private readonly SearchWindowController _controller;
         private readonly SearchWindowAnimator _animator;
@@ -83,13 +84,15 @@ namespace EverythingToolbar
 
         internal void Show(ShowOptions options)
         {
-            if (Visibility == Visibility.Visible)
+            if (Visibility == Visibility.Visible && !_isHiding)
             {
                 if (options.Activate)
                     ActivateAndBringToFront();
 
                 return;
             }
+
+            _isHiding = false;
 
             if (_isFirstShow)
                 PreWarm();
@@ -107,9 +110,10 @@ namespace EverythingToolbar
 
         internal void HideAnimated()
         {
-            if (Visibility != Visibility.Visible)
+            if (Visibility != Visibility.Visible || _isHiding)
                 return;
 
+            _isHiding = true;
             Hiding?.Invoke(this, EventArgs.Empty);
         }
 
@@ -120,6 +124,7 @@ namespace EverythingToolbar
 
         private void OnHidden()
         {
+            _isHiding = false;
             _viewModel.SavePopupSize((int)Width, (int)Height);
 
             // Push outside of screens to hide Windows' closing animation
