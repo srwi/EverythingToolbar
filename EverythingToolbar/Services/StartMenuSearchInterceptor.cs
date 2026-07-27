@@ -33,6 +33,7 @@ namespace EverythingToolbar.Services
         private readonly WindowsPolicy _windowsPolicy;
 
         private const uint KeyeventFKeyup = 0x0002;
+        private const uint WmClose = 0x0010;
 
         public StartMenuSearchInterceptor(
             ISettings settings,
@@ -130,8 +131,7 @@ namespace EverythingToolbar.Services
                 }
                 else
                 {
-                    lock (_stateLock)
-                        RestoreAnimations();
+                    RestoreAnimations();
                 }
 
                 lock (_stateLock)
@@ -263,13 +263,28 @@ namespace EverythingToolbar.Services
         // Must be called while holding _stateLock
         private void CloseStartMenu()
         {
-            if (_searchAppHwnd != IntPtr.Zero)
-            {
-                _animationsToRestore ??= SystemSettings.GetSystemAnimationsEnabled();
-                SystemSettings.SetSystemAnimationsEnabled(false);
-                PInvoke.PostMessage((HWND)_searchAppHwnd, 0x0010, 0, 0);
-                _searchAppHwnd = IntPtr.Zero;
-            }
+            if (_searchAppHwnd == IntPtr.Zero)
+                return;
+
+            var startMenuHwnd = (HWND)_searchAppHwnd;
+            _searchAppHwnd = IntPtr.Zero;
+            _animationsToRestore ??= SystemSettings.GetSystemAnimationsEnabled();
+
+            // We hand slow operations to the dispatcher
+            _dispatcher.BeginInvoke(
+                new Action(() =>
+                {
+                    lock (_stateLock)
+                    {
+                        // The handover may have been reset (and the animations restored) since.
+                        if (_animationsToRestore == null)
+                            return;
+                    }
+
+                    SystemSettings.SetSystemAnimationsEnabled(false);
+                    PInvoke.PostMessage(startMenuHwnd, WmClose, 0, 0);
+                })
+            );
         }
 
         private void ResetHandoverState()
@@ -284,18 +299,24 @@ namespace EverythingToolbar.Services
                 _searchAppHwnd = IntPtr.Zero;
                 _isInterceptingKeys = false;
                 _isNativeSearchActive = false;
-                RestoreAnimations();
             }
+
+            RestoreAnimations();
         }
 
-        // Must be called while holding _stateLock
+        // Must not be called while holding _stateLock: the broadcast this triggers can take far
+        // longer than the keyboard hook thread is allowed to wait for the lock.
         private void RestoreAnimations()
         {
-            if (_animationsToRestore is not bool enabled)
-                return;
+            bool? enabled;
+            lock (_stateLock)
+            {
+                enabled = _animationsToRestore;
+                _animationsToRestore = null;
+            }
 
-            SystemSettings.SetSystemAnimationsEnabled(enabled);
-            _animationsToRestore = null;
+            if (enabled is { } value)
+                SystemSettings.SetSystemAnimationsEnabled(value);
         }
 
         private void HookStartMenuInput()
@@ -321,7 +342,7 @@ namespace EverythingToolbar.Services
             );
 
             Span<char> nameBuffer = new char[1000];
-            uint length = PInvoke.GetModuleFileNameEx(processHandle, default, nameBuffer);
+            uint length = PInvoke.GetModuleFileNameEx(processHandle, null, nameBuffer);
             foregroundProcessName = nameBuffer[..(int)length].ToString();
         }
 
