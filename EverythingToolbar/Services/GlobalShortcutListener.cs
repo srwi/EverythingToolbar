@@ -16,11 +16,16 @@ namespace EverythingToolbar.Services
         private Action? _handler;
         private Dispatcher? _dispatcher;
 
-        private int _triggerVk;
-        private ModifierKeys _modifiers;
-        private bool _hotkeyDown;
+        private volatile int _triggerVk;
+        private volatile ModifierKeys _modifiers;
+        private volatile bool _hotkeyDown;
+        private volatile bool _isEnabled = true;
 
-        public bool IsEnabled { get; set; } = true;
+        public bool IsEnabled
+        {
+            get => _isEnabled;
+            set => _isEnabled = value;
+        }
 
         private const int VkShift = 0x10;
         private const int VkControl = 0x11;

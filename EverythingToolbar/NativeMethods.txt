@@ -28,3 +28,15 @@ OpenProcess
 GetModuleFileNameEx
 SetWinEventHook
 UnhookWinEvent
+GetMessage
+TranslateMessage
+DispatchMessage
+PeekMessage
+PostThreadMessage
+GetCurrentThreadId
+WM_QUIT
+SetThreadInformation
+GetCurrentThread
+THREAD_POWER_THROTTLING_STATE
+THREAD_POWER_THROTTLING_CURRENT_VERSION
+THREAD_POWER_THROTTLING_EXECUTION_SPEED

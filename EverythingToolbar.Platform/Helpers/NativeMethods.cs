@@ -117,13 +117,18 @@ namespace EverythingToolbar.Platform.Helpers
             HHOOK hook = PInvoke.SetWindowsHookEx((WINDOWS_HOOK_ID)idHook, proc, (HINSTANCE)hMod, dwThreadId);
             IntPtr raw = hook;
             if (raw != IntPtr.Zero)
-                InstalledHooks[raw] = proc;
+            {
+                lock (InstalledHooks)
+                    InstalledHooks[raw] = proc;
+            }
             return raw;
         }
 
         public static bool UnhookWindowsHookEx(IntPtr hhk)
         {
-            InstalledHooks.Remove(hhk);
+            lock (InstalledHooks)
+                InstalledHooks.Remove(hhk);
+
             return PInvoke.UnhookWindowsHookEx((HHOOK)hhk);
         }
 

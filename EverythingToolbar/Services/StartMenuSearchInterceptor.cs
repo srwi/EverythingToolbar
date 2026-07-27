@@ -14,6 +14,8 @@ namespace EverythingToolbar.Services
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<StartMenuSearchInterceptor>();
 
+        private readonly object _stateLock = new();
+
         private readonly Queue<RecordedKey> _recordedInputs = new();
         private readonly LowLevelKeyboardHook _keyboardHook;
         private WINEVENTPROC? _focusedWindowChangedCallback;
@@ -48,9 +50,6 @@ namespace EverythingToolbar.Services
                 EnableHook();
         }
 
-        // Called when the host detaches. The settings subscription lives for the lifetime of this
-        // singleton, so without the flag a later settings change would re-arm the hooks for a host
-        // that no longer exists.
         public void Disable()
         {
             _isAttached = false;
@@ -114,24 +113,34 @@ namespace EverythingToolbar.Services
                 || foregroundProcessName.EndsWith("SearchHost.exe")
             )
             {
-                if (_isInterceptingKeys)
+                bool wasIntercepting;
+                lock (_stateLock)
+                    wasIntercepting = _isInterceptingKeys;
+
+                if (wasIntercepting)
                 {
                     Logger.Debug("Native search regained the foreground during handover. Resetting intercepted state.");
                     ResetHandoverState();
                 }
                 else
                 {
-                    RestoreAnimations();
+                    lock (_stateLock)
+                        RestoreAnimations();
                 }
 
-                _searchAppHwnd = foregroundHwnd;
+                lock (_stateLock)
+                    _searchAppHwnd = foregroundHwnd;
 
                 HookStartMenuInput();
                 CancelCleanupTimer();
             }
             else
             {
-                if (_isInterceptingKeys)
+                bool wasIntercepting;
+                lock (_stateLock)
+                    wasIntercepting = _isInterceptingKeys;
+
+                if (wasIntercepting)
                 {
                     TriggerSearchWindow();
                     StartCleanupTimer();
@@ -140,50 +149,63 @@ namespace EverythingToolbar.Services
                 {
                     UnhookStartMenuInput();
                 }
-                _isNativeSearchActive = false;
+
+                lock (_stateLock)
+                    _isNativeSearchActive = false;
             }
         }
 
         private bool OnKeyEvent(int vk, bool isDown, bool isInjected)
         {
-            if (_isNativeSearchActive)
-                return false;
-
-            // We never want to block the Windows keys and Escape
-            if (vk == 0x5B || vk == 0x5C || vk == 0x1B)
+            // Called on the keyboard hook thread
+            lock (_stateLock)
             {
-                return false;
+                if (_isNativeSearchActive)
+                    return false;
+
+                // We never want to block the Windows keys and Escape
+                if (vk == 0x5B || vk == 0x5C || vk == 0x1B)
+                {
+                    return false;
+                }
+
+                // Check for exception key (LALT)
+                if (vk == 0xA4)
+                {
+                    _isNativeSearchActive = true;
+                    return false;
+                }
+
+                // Queue keypress for replay in EverythingToolbar
+                _isInterceptingKeys = true;
+                _recordedInputs.Enqueue(new RecordedKey((ushort)vk, isDown));
+
+                CloseStartMenu();
+
+                return true;
             }
-
-            // Check for exception key (LALT)
-            if (vk == 0xA4)
-            {
-                _isNativeSearchActive = true;
-                return false;
-            }
-
-            // Queue keypress for replay in EverythingToolbar
-            _isInterceptingKeys = true;
-            _recordedInputs.Enqueue(new RecordedKey((ushort)vk, isDown));
-
-            CloseStartMenu();
-
-            return true;
         }
 
         private void OnAnySearchBoxGotKeyboardFocus(object? sender, EventArgs e)
         {
-            if (!_isInterceptingKeys)
-                return;
+            lock (_stateLock)
+            {
+                if (!_isInterceptingKeys)
+                    return;
+            }
 
             _controller.SearchBoxFocused -= OnAnySearchBoxGotKeyboardFocus;
 
             Logger.Debug("Search box got keyboard focus. Replaying recorded inputs...");
 
-            UnhookStartMenuInput();
-            ReplayRecordedInputs();
-            _isInterceptingKeys = false;
-            _searchAppHwnd = IntPtr.Zero;
+            UnhookStartMenuInput(); // Stops the hook thread; no more keys can be recorded
+
+            lock (_stateLock)
+            {
+                ReplayRecordedInputs();
+                _isInterceptingKeys = false;
+                _searchAppHwnd = IntPtr.Zero;
+            }
         }
 
         private void StartCleanupTimer()
@@ -217,6 +239,7 @@ namespace EverythingToolbar.Services
             );
         }
 
+        // Must be called while holding _stateLock
         private void ReplayRecordedInputs()
         {
             while (_recordedInputs.Count > 0)
@@ -226,6 +249,7 @@ namespace EverythingToolbar.Services
             }
         }
 
+        // Must be called while holding _stateLock
         private void CloseStartMenu()
         {
             if (_searchAppHwnd != IntPtr.Zero)
@@ -240,15 +264,20 @@ namespace EverythingToolbar.Services
         private void ResetHandoverState()
         {
             CancelCleanupTimer();
-            _recordedInputs.Clear();
-            UnhookStartMenuInput();
+            UnhookStartMenuInput(); // Stops the hook thread first so the state reset cannot race it
             _controller.SearchBoxFocused -= OnAnySearchBoxGotKeyboardFocus;
-            _searchAppHwnd = IntPtr.Zero;
-            _isInterceptingKeys = false;
-            _isNativeSearchActive = false;
-            RestoreAnimations();
+
+            lock (_stateLock)
+            {
+                _recordedInputs.Clear();
+                _searchAppHwnd = IntPtr.Zero;
+                _isInterceptingKeys = false;
+                _isNativeSearchActive = false;
+                RestoreAnimations();
+            }
         }
 
+        // Must be called while holding _stateLock
         private void RestoreAnimations()
         {
             if (_animationsToRestore is not bool enabled)

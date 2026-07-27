@@ -89,7 +89,8 @@ namespace EverythingToolbar.Settings
 
         private bool OnKeyEvent(int vk, bool isDown, bool isInjected)
         {
-            OnKeyPressedReleased(vk, isDown);
+            Dispatcher.BeginInvoke(() => OnKeyPressedReleased(vk, isDown));
+
             return true;
         }
 
