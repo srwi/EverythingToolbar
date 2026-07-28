@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using EverythingToolbar.Core.Data;
@@ -13,70 +12,78 @@ namespace EverythingToolbar.Platform.Search
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
-        // Everything can be started, stopped or upgraded while we run, so the choice has to be
-        // revisited — but off the caller's thread and rarely, never once per keystroke.
-        private static readonly TimeSpan RecheckInterval = TimeSpan.FromSeconds(5);
+        private static readonly TimeSpan RetryInterval = TimeSpan.FromSeconds(5);
 
         private volatile IEverythingClient? _active;
-        private long _lastCheckTimestamp;
-        private int _recheckRunning;
+        private volatile bool _resolveAttempted;
+        private int _retryRunning;
 
         private IEverythingClient Active
         {
             get
             {
-                // Deciding means connecting, and connecting takes the pipe client's lock — which a
-                // running query holds for its entire duration. Doing that on every call put the
-                // caller in line behind every search still in flight.
                 var active = _active;
-                if (active == null)
-                    return Resolve();
+                if (active != null)
+                    return active;
 
-                RecheckInBackground();
-                return active;
+                if (!_resolveAttempted)
+                {
+                    _resolveAttempted = true;
+
+                    active = TryResolve();
+                    if (active != null)
+                        return active;
+                }
+
+                RetryUntilResolved();
+                return ipcClient;
             }
         }
 
-        private IEverythingClient Resolve()
+        private IEverythingClient? TryResolve()
         {
-            var usePipeClient = pipeClient.TryConnect();
-            IEverythingClient active = usePipeClient ? pipeClient : ipcClient;
+            IEverythingClient? resolved = null;
 
-            if (!ReferenceEquals(_active, active))
-            {
-                Logger.Info(
-                    usePipeClient
-                        ? "Using the Everything 1.5 SDK3 pipe client."
-                        : "Using the Everything 1.4 SDK2 IPC client."
-                );
-            }
+            if (pipeClient.TryConnect())
+                resolved = pipeClient;
+            else if (ipcClient.GetEverythingVersion().Major > 0)
+                resolved = ipcClient;
 
-            _active = active;
-            Volatile.Write(ref _lastCheckTimestamp, Stopwatch.GetTimestamp());
-            return active;
+            if (resolved == null)
+                return null;
+
+            Logger.Info(
+                ReferenceEquals(resolved, pipeClient)
+                    ? "Using the Everything 1.5 SDK3 pipe client."
+                    : "Using the Everything 1.4 SDK2 IPC client."
+            );
+
+            _active = resolved;
+            return resolved;
         }
 
-        private void RecheckInBackground()
+        private void RetryUntilResolved()
         {
-            if (Stopwatch.GetElapsedTime(Volatile.Read(ref _lastCheckTimestamp)) < RecheckInterval)
+            if (Interlocked.Exchange(ref _retryRunning, 1) == 1)
                 return;
 
-            if (Interlocked.Exchange(ref _recheckRunning, 1) == 1)
-                return;
-
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 try
                 {
-                    Resolve();
+                    while (_active == null)
+                    {
+                        await Task.Delay(RetryInterval).ConfigureAwait(false);
+                        TryResolve();
+                    }
                 }
                 catch (Exception e)
                 {
-                    Logger.Debug(e, "Failed to re-check which Everything client to use.");
+                    Logger.Debug(e, "Gave up looking for a running Everything instance.");
                 }
                 finally
                 {
-                    Volatile.Write(ref _recheckRunning, 0);
+                    Volatile.Write(ref _retryRunning, 0);
                 }
             });
         }
@@ -106,8 +113,8 @@ namespace EverythingToolbar.Platform.Search
             pipeClient.SetInstanceName(name);
             ipcClient.SetInstanceName(name);
 
-            // The instance decides which pipe to talk to, so the choice has to be made again.
             _active = null;
+            _resolveAttempted = false;
         }
 
         public void IncrementRunCount(string path) => Active.IncrementRunCount(path);
