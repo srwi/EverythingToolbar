@@ -33,6 +33,11 @@ namespace EverythingToolbar.Platform.Search
 
         public bool TryConnect()
         {
+            // An established connection needs no lock. Taking _gate here would queue the caller
+            // behind a running query, which holds it for the entire search.
+            if (Volatile.Read(ref _client) != IntPtr.Zero)
+                return true;
+
             lock (_gate)
             {
                 return TryConnectLocked();
@@ -123,7 +128,16 @@ namespace EverythingToolbar.Platform.Search
 
         public bool TryReadCachedFirstPage(SearchQuery query, out IList<SearchResult> results)
         {
-            lock (_gate)
+            // Runs on the UI thread as a query completes, while a newer one may already hold _gate
+            // for its entire duration. This is a shortcut, not a requirement: on a miss the caller
+            // loads the page asynchronously, which is what it would do anyway. So never wait here.
+            if (!Monitor.TryEnter(_gate))
+            {
+                results = Array.Empty<SearchResult>();
+                return false;
+            }
+
+            try
             {
                 if (query != _resultListQuery)
                 {
@@ -133,6 +147,10 @@ namespace EverythingToolbar.Platform.Search
 
                 results = ReadResultsFromResultListLocked();
                 return true;
+            }
+            finally
+            {
+                Monitor.Exit(_gate);
             }
         }
 
