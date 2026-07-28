@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -33,6 +34,11 @@ namespace EverythingToolbar.Helpers
             if (e.NewValue is not string input || input.Length == 0)
                 return;
 
+            textBlock.Inlines.AddRange(CreateRuns(input));
+        }
+
+        private static IEnumerable<Run> CreateRuns(string input)
+        {
             string[] segments = input.Split('*');
             for (int i = 0; i < segments.Length; i++)
             {
@@ -43,7 +49,7 @@ namespace EverythingToolbar.Helpers
                 if (i % 2 > 0)
                     run.FontWeight = FontWeights.Bold;
 
-                textBlock.Inlines.Add(run);
+                yield return run;
             }
         }
     }
