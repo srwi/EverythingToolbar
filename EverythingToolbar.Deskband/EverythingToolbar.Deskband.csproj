@@ -50,20 +50,25 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" />
     <PackageReference Include="NLog" />
   </ItemGroup>
+  <Target Name="StopExplorerIfDeskbandLoaded" BeforeTargets="PreBuildEvent">
+    <Exec
+      Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildThisFileDirectory)..\tools\stop_explorer_if_locked.ps1&quot; -TargetDir &quot;$(TargetDir.TrimEnd('\'))&quot;"
+      ContinueOnError="true"
+    />
+  </Target>
   <PropertyGroup Condition="'$(Platform)'=='x64'">
-    <PreBuildEvent>taskkill /f /im explorer.exe
-      xcopy $(SolutionDir)EverythingSDK\x64\$(Configuration)\Everything64.dll $(TargetDir) /r /y
+    <PreBuildEvent>xcopy $(SolutionDir)EverythingSDK\x64\$(Configuration)\Everything64.dll $(TargetDir) /r /y
       xcopy $(SolutionDir)EverythingSDK3\x64\$(Configuration)\Everything3.dll $(TargetDir) /r /y
 Exit 0</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)'=='ARM64'">
-    <PreBuildEvent>taskkill /f /im explorer.exe
-      xcopy $(SolutionDir)EverythingSDK\ARM64\$(Configuration)\Everything64.dll $(TargetDir) /r /y
+    <PreBuildEvent>xcopy $(SolutionDir)EverythingSDK\ARM64\$(Configuration)\Everything64.dll $(TargetDir) /r /y
       xcopy $(SolutionDir)EverythingSDK3\ARM64\$(Configuration)\Everything3.dll $(TargetDir) /r /y
 Exit 0</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>powershell start-process %25windir%25\explorer.exe
+    <!-- Only bring Explorer back if it was actually stopped (also covers a failed build). -->
+    <PostBuildEvent>powershell -NoProfile -Command "if (-not (Get-Process -Name explorer -ErrorAction SilentlyContinue)) { Start-Process $env:windir\explorer.exe }"
 Exit 0</PostBuildEvent>
   </PropertyGroup>
 </Project>
