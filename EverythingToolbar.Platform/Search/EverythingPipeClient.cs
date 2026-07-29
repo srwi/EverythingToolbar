@@ -15,7 +15,6 @@ namespace EverythingToolbar.Platform.Search
 
         private const int PathBufferLength = 4096;
 
-        // Everything 1.5 alpha registers under this instance name by default
         private const string AlphaInstanceName = "1.5a";
 
         private const uint PropertyIdName = 0;
@@ -30,6 +29,7 @@ namespace EverythingToolbar.Platform.Search
         private IntPtr _resultList;
 
         private SearchQuery? _resultListQuery;
+        private int _resultListOffset;
 
         public bool TryConnect()
         {
@@ -71,6 +71,7 @@ namespace EverythingToolbar.Platform.Search
                 _resultList = IntPtr.Zero;
             }
             _resultListQuery = null;
+            _resultListOffset = 0;
 
             if (_client != IntPtr.Zero)
             {
@@ -94,7 +95,6 @@ namespace EverythingToolbar.Platform.Search
                 if (!ExecuteQueryLocked(query, pageSize, offset: 0))
                     return 0;
 
-                _resultListQuery = query;
                 return (int)Everything3_GetResultListCount(_resultList);
             }
         }
@@ -116,8 +116,14 @@ namespace EverythingToolbar.Platform.Search
         {
             lock (_gate)
             {
-                if (startIndex == 0 && query == _resultListQuery)
-                    return ReadResultsFromResultListLocked();
+                if (query == _resultListQuery)
+                {
+                    if (startIndex == _resultListOffset)
+                        return ReadResultsFromResultListLocked();
+
+                    if (TryMoveViewportLocked(query, pageSize, (uint)startIndex))
+                        return ReadResultsFromResultListLocked();
+                }
 
                 if (!ExecuteQueryLocked(query, pageSize, (uint)startIndex))
                     return new List<SearchResult>();
@@ -128,9 +134,6 @@ namespace EverythingToolbar.Platform.Search
 
         public bool TryReadCachedFirstPage(SearchQuery query, out IList<SearchResult> results)
         {
-            // Runs on the UI thread as a query completes, while a newer one may already hold _gate
-            // for its entire duration. This is a shortcut, not a requirement: on a miss the caller
-            // loads the page asynchronously, which is what it would do anyway. So never wait here.
             if (!Monitor.TryEnter(_gate))
             {
                 results = Array.Empty<SearchResult>();
@@ -139,7 +142,7 @@ namespace EverythingToolbar.Platform.Search
 
             try
             {
-                if (query != _resultListQuery)
+                if (query != _resultListQuery || _resultListOffset != 0)
                 {
                     results = Array.Empty<SearchResult>();
                     return false;
@@ -161,11 +164,54 @@ namespace EverythingToolbar.Platform.Search
             if (!TryConnectLocked())
                 return false;
 
+            var resultList = RunSearchLocked(query, pageSize, offset, reuseResultSet: false);
+
+            if (resultList == IntPtr.Zero)
+            {
+                // The pipe may have broken since the last query (e.g. Everything restarted);
+                // reconnect and retry once before giving up.
+                Logger.Warn("Search failed with error 0x{error:X8}, reconnecting.", Everything3_GetLastError());
+                DisconnectLocked();
+
+                if (TryConnectLocked())
+                    resultList = RunSearchLocked(query, pageSize, offset, reuseResultSet: false);
+
+                if (resultList == IntPtr.Zero)
+                {
+                    Logger.Error("Search failed with error 0x{error:X8}.", Everything3_GetLastError());
+                    DisconnectLocked();
+                    return false;
+                }
+            }
+
+            AdoptResultListLocked(resultList, query, (int)offset);
+            return true;
+        }
+
+        private bool TryMoveViewportLocked(SearchQuery query, int pageSize, uint offset)
+        {
+            if (_client == IntPtr.Zero || query != _resultListQuery)
+                return false;
+
+            var resultList = RunSearchLocked(query, pageSize, offset, reuseResultSet: true);
+            if (resultList == IntPtr.Zero)
+            {
+                // Everything no longer holds a result set for us; fall back to a full search.
+                _resultListQuery = null;
+                return false;
+            }
+
+            AdoptResultListLocked(resultList, query, (int)offset);
+            return true;
+        }
+
+        private IntPtr RunSearchLocked(SearchQuery query, int pageSize, uint offset, bool reuseResultSet)
+        {
             var searchState = Everything3_CreateSearchState();
             if (searchState == IntPtr.Zero)
             {
                 Logger.Error("Failed to allocate the search state.");
-                return false;
+                return IntPtr.Zero;
             }
 
             try
@@ -184,35 +230,24 @@ namespace EverythingToolbar.Platform.Search
                 Everything3_SetSearchViewportOffset(searchState, offset);
                 Everything3_SetSearchViewportCount(searchState, (nuint)pageSize);
 
-                var resultList = Everything3_Search(_client, searchState);
-
-                if (resultList == IntPtr.Zero)
-                {
-                    // The pipe may have broken since the last query (e.g. Everything restarted);
-                    // reconnect and retry once before giving up.
-                    Logger.Warn("Search failed with error 0x{error:X8}, reconnecting.", Everything3_GetLastError());
-                    DisconnectLocked();
-
-                    if (TryConnectLocked())
-                        resultList = Everything3_Search(_client, searchState);
-
-                    if (resultList == IntPtr.Zero)
-                    {
-                        Logger.Error("Search failed with error 0x{error:X8}.", Everything3_GetLastError());
-                        DisconnectLocked();
-                        return false;
-                    }
-                }
-
-                if (_resultList != IntPtr.Zero)
-                    Everything3_DestroyResultList(_resultList);
-                _resultList = resultList;
-                return true;
+                return reuseResultSet
+                    ? Everything3_GetResults(_client, searchState)
+                    : Everything3_Search(_client, searchState);
             }
             finally
             {
                 Everything3_DestroySearchState(searchState);
             }
+        }
+
+        private void AdoptResultListLocked(IntPtr resultList, SearchQuery query, int offset)
+        {
+            if (_resultList != IntPtr.Zero)
+                Everything3_DestroyResultList(_resultList);
+
+            _resultList = resultList;
+            _resultListQuery = query;
+            _resultListOffset = offset;
         }
 
         private unsafe IList<SearchResult> ReadResultsFromResultListLocked()
@@ -404,6 +439,9 @@ namespace EverythingToolbar.Platform.Search
 
         [DllImport("Everything3.dll")]
         private static extern IntPtr Everything3_Search(IntPtr client, IntPtr searchState);
+
+        [DllImport("Everything3.dll")]
+        private static extern IntPtr Everything3_GetResults(IntPtr client, IntPtr searchState);
 
         [DllImport("Everything3.dll")]
         private static extern bool Everything3_DestroyResultList(IntPtr resultList);
