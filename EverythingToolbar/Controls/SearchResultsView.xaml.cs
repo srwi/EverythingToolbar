@@ -184,6 +184,7 @@ namespace EverythingToolbar.Controls
         private void OnResultsReset()
         {
             _lastScrolledIndex = -1;
+            GetListScrollViewer()?.ScrollToTop();
             Dispatcher.BeginInvoke(_viewModel.Session.AutoSelect);
         }
 
