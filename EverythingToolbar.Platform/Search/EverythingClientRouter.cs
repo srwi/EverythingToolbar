@@ -16,6 +16,7 @@ namespace EverythingToolbar.Platform.Search
 
         private volatile IEverythingClient? _active;
         private volatile bool _resolveAttempted;
+        private volatile bool _pipeClientUnavailable;
         private int _retryRunning;
 
         private IEverythingClient Active
@@ -44,7 +45,7 @@ namespace EverythingToolbar.Platform.Search
         {
             IEverythingClient? resolved = null;
 
-            if (pipeClient.TryConnect())
+            if (TryConnectPipeClient())
                 resolved = pipeClient;
             else if (ipcClient.GetEverythingVersion().Major > 0)
                 resolved = ipcClient;
@@ -60,6 +61,23 @@ namespace EverythingToolbar.Platform.Search
 
             _active = resolved;
             return resolved;
+        }
+
+        private bool TryConnectPipeClient()
+        {
+            if (_pipeClientUnavailable)
+                return false;
+
+            try
+            {
+                return pipeClient.TryConnect();
+            }
+            catch (Exception e)
+            {
+                _pipeClientUnavailable = true;
+                Logger.Error(e, "The Everything 1.5 SDK3 client could not be loaded.");
+                return false;
+            }
         }
 
         private void RetryUntilResolved()
