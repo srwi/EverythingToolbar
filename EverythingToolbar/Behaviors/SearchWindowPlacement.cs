@@ -352,7 +352,7 @@ namespace EverythingToolbar.Behaviors
 
         private int GetMargin()
         {
-            var marginDip = _windowsPolicy.GetWindowsVersion() >= WindowsVersion.Windows11 ? 12 : 0;
+            var marginDip = _windowsPolicy.GetEffectiveWindowsVersion() >= WindowsVersion.Windows11 ? 12 : 0;
             return (int)Math.Round(marginDip / GetScalingFactor());
         }
 

@@ -252,7 +252,7 @@ namespace EverythingToolbar.Controls
             var handle = hwndSource!.Handle;
 
             // Determine corner style based on Windows version
-            var windowsVersion = _windowsPolicy.GetWindowsVersion();
+            var windowsVersion = _windowsPolicy.GetEffectiveWindowsVersion();
             var cornerStyle = windowsVersion >= WindowsVersion.Windows11 ? WindowCorner.Round : WindowCorner.RoundSmall;
 
             var corner = (int)cornerStyle;

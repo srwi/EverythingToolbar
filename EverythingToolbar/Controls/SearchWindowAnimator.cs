@@ -13,7 +13,7 @@ namespace EverythingToolbar.Controls
         private readonly Action _setTopmostBelowTaskbar;
         private readonly Action _onHideCompleted;
         private readonly Func<bool> _animationsDisabled;
-        private readonly bool _isWindows11OrGreater;
+        private readonly Func<bool> _isWindows11OrGreater;
 
         private readonly TranslateTransform _contentSlide = new();
 
@@ -25,7 +25,7 @@ namespace EverythingToolbar.Controls
             Action setTopmostBelowTaskbar,
             Action onHideCompleted,
             Func<bool> animationsDisabled,
-            bool isWindows11OrGreater
+            Func<bool> isWindows11OrGreater
         )
         {
             _window = window;
@@ -53,7 +53,7 @@ namespace EverythingToolbar.Controls
 
             _setTopmostBelowTaskbar();
 
-            if (_isWindows11OrGreater)
+            if (_isWindows11OrGreater())
                 AnimateShowWin11(left, top, width, height, taskbarEdge);
             else
                 AnimateShowWin10(left, top, taskbarEdge);
@@ -63,7 +63,7 @@ namespace EverythingToolbar.Controls
         {
             HookRendering();
 
-            if (_isWindows11OrGreater)
+            if (_isWindows11OrGreater())
                 AnimateHideWin11(taskbarEdge);
             else
                 AnimateHideWin10(taskbarEdge);

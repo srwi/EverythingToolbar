@@ -18,13 +18,15 @@ namespace EverythingToolbar.Services
             SystemParameters.StaticPropertyChanged += OnSystemParametersChanged;
         }
 
-        public Version GetWindowsVersion()
+        public Version GetEffectiveWindowsVersion()
         {
             if (_settings.ForceWin10Behavior)
                 return WindowsVersion.Windows10Anniversary;
 
             return Environment.OSVersion.Version;
         }
+
+        public Version GetWindowsVersion() => Environment.OSVersion.Version;
 
         public bool IsEffectiveAnimationsDisabled =>
             _settings.IsAnimationsDisabled || !SystemSettings.GetSystemAnimationsEnabled();
