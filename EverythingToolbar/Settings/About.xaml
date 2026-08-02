@@ -89,7 +89,8 @@
 
             <Image
               Width="40"
-              Margin="16 0 0 0"
+              Margin="16"
+              VerticalAlignment="Center"
               Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/IconElement.png" />
 
             <ui:TextBlock
@@ -118,7 +119,8 @@
 
             <Image
               Width="40"
-              Margin="16 0 0 0"
+              Margin="16"
+              VerticalAlignment="Center"
               Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/MenuFlyout.png" />
 
             <ui:TextBlock
@@ -147,7 +149,8 @@
 
             <Image
               Width="40"
-              Margin="16 0 0 0"
+              Margin="16"
+              VerticalAlignment="Center"
               Source="pack://application:,,,/EverythingToolbar;component/Images/WinUIGallery/FilePicker.png" />
 
             <ui:TextBlock
