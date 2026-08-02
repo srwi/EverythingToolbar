@@ -1,4 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Thickness x:Key="ListViewItemMargin" />
+  <Thickness
+    x:Key="ListViewItemMargin"
+    Bottom="0"
+    Left="0"
+    Right="12"
+    Top="0" />
   <CornerRadius x:Key="ListViewItemCornerRadius" />
 </ResourceDictionary>

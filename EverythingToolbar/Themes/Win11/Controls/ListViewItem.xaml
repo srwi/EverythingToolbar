@@ -3,7 +3,7 @@
     x:Key="ListViewItemMargin"
     Bottom="0"
     Left="28"
-    Right="16"
+    Right="28"
     Top="0" />
   <CornerRadius
     x:Key="ListViewItemCornerRadius"
