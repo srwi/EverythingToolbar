@@ -363,6 +363,25 @@ namespace EverythingToolbar.Deskband
         /// <inheritdoc/>
         public int TranslateAcceleratorIO(ref MSG msg)
         {
+            // Explorer pre-translates navigation keys (e.g. Tab, which cycles through taskbar
+            // bands) by offering them to the focused band here instead of dispatching them to the
+            // focused window. Reporting them as handled without doing anything drops the key
+            // stroke, so deliver it to the hosted content ourselves.
+            if (msg.message < (uint)WindowMessages.WM_KEYFIRST || msg.message > (uint)WindowMessages.WM_KEYLAST)
+                return HRESULT.S_FALSE;
+
+            // The message explorer passes carries no target window, so fall back to the focused one.
+            var target = msg.hwnd != IntPtr.Zero ? msg.hwnd : User32.GetFocus();
+            if (target == IntPtr.Zero || HwndSource.FromHwnd(target) == null)
+            {
+                // Not one of our windows: let explorer run its own taskbar navigation instead.
+                return HRESULT.S_FALSE;
+            }
+
+            var forwarded = msg;
+            forwarded.hwnd = target;
+            User32.TranslateMessage(ref forwarded);
+            User32.DispatchMessage(ref forwarded);
             return HRESULT.S_OK;
         }
 
@@ -2023,6 +2042,9 @@ namespace CSDeskBand
         [DllImport("user32.dll")]
         public static extern IntPtr DispatchMessage([In] ref MSG lpmsg);
 
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetFocus();
+
         public static int HiWord(int val)
         {
             return Convert.ToInt32(BitConverter.ToInt16(BitConverter.GetBytes(val), 2));
@@ -2114,8 +2136,8 @@ namespace CSDeskBand
     {
         public IntPtr hwnd;
         public uint message;
-        public uint wParam;
-        public int lParam;
+        public UIntPtr wParam;
+        public IntPtr lParam;
         public uint time;
         public POINT pt;
     }
@@ -2482,7 +2504,9 @@ namespace CSDeskBand
 
     internal enum WindowMessages
     {
-        WM_NCHITTEST = 0x0084
+        WM_NCHITTEST = 0x0084,
+        WM_KEYFIRST = 0x0100,
+        WM_KEYLAST = 0x0109
     }
 
     internal enum HitTestMessageResults
