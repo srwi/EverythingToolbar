@@ -35,9 +35,14 @@ namespace EverythingToolbar.Search
             if (key == Key.Enter && modifiers == ModifierKeys.None)
             {
                 if (_session.SelectedResult == null)
+                {
                     _session.MoveDown();
+                    SyncFocusToSelection();
+                }
                 else
+                {
                     OpenSelected();
+                }
                 return true;
             }
             if (key == Key.Enter && modifiers == ModifierKeys.Control)
@@ -97,16 +102,16 @@ namespace EverythingToolbar.Search
 
             switch (key)
             {
-                case Key.Up:
+                case Key.Up when CanArrowNavigate(modifiers, fromSearchBox):
                     _session.MoveUp();
                     break;
-                case Key.Down:
+                case Key.Down when CanArrowNavigate(modifiers, fromSearchBox):
                     _session.MoveDown();
                     break;
-                case Key.PageUp:
+                case Key.PageUp when CanArrowNavigate(modifiers, fromSearchBox):
                     _session.PageUp();
                     break;
-                case Key.PageDown:
+                case Key.PageDown when CanArrowNavigate(modifiers, fromSearchBox):
                     _session.PageDown();
                     break;
                 case Key.Home when CanHomeEndNavigate(modifiers, fromSearchBox):
@@ -122,6 +127,9 @@ namespace EverythingToolbar.Search
             SyncFocusToSelection();
             return true;
         }
+
+        private static bool CanArrowNavigate(ModifierKeys modifiers, bool fromSearchBox) =>
+            !fromSearchBox || modifiers == ModifierKeys.None;
 
         private bool CanHomeEndNavigate(ModifierKeys modifiers, bool fromSearchBox) =>
             !fromSearchBox || (modifiers != ModifierKeys.Shift && _settings.IsHomeEndNavigateResults);

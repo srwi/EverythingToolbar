@@ -46,12 +46,7 @@ namespace EverythingToolbar.App.Search
 
         public int VisiblePageCount { get; set; } = 1;
 
-        public bool KeepSearchBoxFocused => _settings.IsAutoSelectFirstResult && _settings.IsSearchAsYouType;
-
-        private FocusBehavior EffectiveListFocusBehavior =>
-            KeepSearchBoxFocused && _settings.ListFocusBehavior == FocusBehavior.RepeatWithSearch
-                ? FocusBehavior.Repeat
-                : _settings.ListFocusBehavior;
+        public bool KeepSearchBoxFocused => _settings.IsAutoSelectFirstResult;
 
         public void AutoSelect()
         {
@@ -67,7 +62,7 @@ namespace EverythingToolbar.App.Search
 
             if (SelectedIndex == TotalCount - 1)
             {
-                switch (EffectiveListFocusBehavior)
+                switch (_settings.ListFocusBehavior)
                 {
                     case FocusBehavior.Repeat:
                         SelectedIndex = 0;
@@ -94,7 +89,7 @@ namespace EverythingToolbar.App.Search
             }
             else if (SelectedIndex == 0)
             {
-                switch (EffectiveListFocusBehavior)
+                switch (_settings.ListFocusBehavior)
                 {
                     case FocusBehavior.Repeat:
                         SelectedIndex = TotalCount - 1; // jump to end
@@ -111,7 +106,7 @@ namespace EverythingToolbar.App.Search
             }
             else // no selection
             {
-                if (EffectiveListFocusBehavior != FocusBehavior.Clamp)
+                if (_settings.ListFocusBehavior != FocusBehavior.Clamp)
                     SelectedIndex = TotalCount - 1; // jump to end
             }
         }
@@ -137,8 +132,7 @@ namespace EverythingToolbar.App.Search
             if (TotalCount == 0)
                 return;
 
-            var baseIndex = SelectedIndex < 0 ? 0 : SelectedIndex;
-            SelectedIndex = Math.Clamp(baseIndex + offset, 0, TotalCount - 1);
+            SelectedIndex = Math.Clamp(SelectedIndex + offset, 0, TotalCount - 1);
         }
 
         public bool IsAsync
