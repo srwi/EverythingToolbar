@@ -77,7 +77,12 @@ namespace EverythingToolbar.Controls
                 e.Handled = true;
                 return;
             }
-            if (Keyboard.Modifiers == ModifierKeys.None && e.Key == Key.Enter && !_viewModel.Settings.IsSearchAsYouType)
+            if (
+                Keyboard.Modifiers == ModifierKeys.None
+                && e.Key == Key.Enter
+                && !_viewModel.Settings.IsSearchAsYouType
+                && SearchTerm != TextBox.Text
+            )
             {
                 SearchTerm = TextBox.Text;
                 e.Handled = true;
