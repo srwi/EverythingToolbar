@@ -18,6 +18,15 @@ namespace EverythingToolbar.Platform.Helpers
             return FindWindow("Shell_TrayWnd", null);
         }
 
+        public static bool IsClassicTaskbar()
+        {
+            var taskbarHandle = FindTaskbarHandle();
+            if (taskbarHandle == IntPtr.Zero)
+                return false;
+
+            return FindWindowEx(taskbarHandle, IntPtr.Zero, "ReBarWindow32", null) != IntPtr.Zero;
+        }
+
         public static IntPtr FindWindow(string lpClassName, string? lpWindowName)
         {
             return PInvoke.FindWindow(lpClassName, lpWindowName);

@@ -60,6 +60,8 @@ namespace EverythingToolbar.Launcher
                 ResizeMode = ResizeMode.NoResize;
                 WindowStyle = WindowStyle.None;
 
+                _taskbarWindowHost.DisableIfUnsupported();
+
                 _searchHost.Attach(placementTarget: null, iconMode: !_windowsPolicy.IsTaskbarWindowActive());
 
                 if (_windowsPolicy.IsTaskbarWindowActive())

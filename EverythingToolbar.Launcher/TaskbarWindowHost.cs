@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Interop;
 using System.Windows.Threading;
+using EverythingToolbar.Controls;
 using NLog;
 
 namespace EverythingToolbar.Launcher
@@ -12,6 +13,7 @@ namespace EverythingToolbar.Launcher
         private readonly ISettings _settings;
         private readonly SearchWindowController _controller;
         private readonly SearchHost _searchHost;
+        private readonly Dispatcher _dispatcher = Dispatcher.CurrentDispatcher;
 
         private TaskbarWindow? _taskbarWindow;
         private bool _closingTaskbarWindowIntentionally;
@@ -29,8 +31,45 @@ namespace EverythingToolbar.Launcher
             _searchHost = searchHost;
         }
 
+        public bool DisableIfUnsupported()
+        {
+            if (!_settings.TaskbarWindowEnabled || _windowsPolicy.CanEnableTaskbarWindow())
+                return false;
+
+            Logger.Info("Classic taskbar detected. Disabling the taskbar search box.");
+
+            // Turning the setting off runs the regular teardown, which also guarantees that the user
+            // is left with a way into search and settings.
+            _settings.TaskbarWindowEnabled = false;
+            ShowUnsupportedMessage();
+            return true;
+        }
+
+        private void ShowUnsupportedMessage()
+        {
+            _dispatcher.BeginInvoke(async () =>
+            {
+                try
+                {
+                    await FluentMessageBox
+                        .CreateError(
+                            EverythingToolbar.Properties.Resources.SettingsTaskbarWindowUnsupported,
+                            Properties.Resources.TaskbarWindowUnsupportedTitle
+                        )
+                        .ShowDialogAsync();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex, "Failed to show the unsupported taskbar message");
+                }
+            });
+        }
+
         public void Create()
         {
+            if (DisableIfUnsupported())
+                return;
+
             if (!_windowsPolicy.IsTaskbarWindowActive() || _taskbarWindow != null)
                 return;
 

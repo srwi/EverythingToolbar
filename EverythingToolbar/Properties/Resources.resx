@@ -666,6 +666,9 @@
   <data name="SettingsTaskbarWindowAlignmentRight" xml:space="preserve">
     <value>Right</value>
   </data>
+  <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
+    <value>The search box requires the original Windows 11 taskbar. When using ExplorerPatcher or StartAllBack, use the deskband instead.</value>
+  </data>
   <data name="SettingsTaskbarIcon" xml:space="preserve">
     <value>Taskbar icon</value>
   </data>

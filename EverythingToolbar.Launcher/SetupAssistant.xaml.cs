@@ -47,10 +47,9 @@ namespace EverythingToolbar.Launcher
             _autostart.IsEnabled = value;
         }
 
-        public bool IsTaskbarWindowSupported => _windowsPolicy.GetWindowsVersion() >= WindowsVersion.Windows11;
+        public bool IsTaskbarWindowSupported => _windowsPolicy.CanEnableTaskbarWindow();
 
-        public bool PreferencesUnlocked =>
-            CurrentStep == 1 || (IsTaskbarWindowSupported && _settings.TaskbarWindowEnabled);
+        public bool PreferencesUnlocked => CurrentStep == 1 || _windowsPolicy.IsTaskbarWindowActive();
 
         public bool IsPinned => CurrentStep == 1;
 
@@ -218,7 +217,7 @@ namespace EverythingToolbar.Launcher
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {
-            if (CurrentStep == 0 && !(IsTaskbarWindowSupported && _settings.TaskbarWindowEnabled))
+            if (CurrentStep == 0 && !_windowsPolicy.IsTaskbarWindowActive())
             {
                 var result = await FluentMessageBox
                     .CreateYesNo(

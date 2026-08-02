@@ -138,11 +138,19 @@
           BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
           BorderThickness="1 1 1 0"
           CornerRadius="8,8,0,0">
-          <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindow}" HelpText="{x:Static properties:Resources.SettingsTaskbarWindowHelp}">
-            <controls:SettingItem.SettingContent>
-              <ui:ToggleSwitch IsChecked="{Binding Settings.TaskbarWindowEnabled, Mode=TwoWay}" />
-            </controls:SettingItem.SettingContent>
-          </controls:SettingItem>
+          <StackPanel>
+            <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindow}" HelpText="{x:Static properties:Resources.SettingsTaskbarWindowHelp}">
+              <controls:SettingItem.SettingContent>
+                <ui:ToggleSwitch IsChecked="{Binding Settings.TaskbarWindowEnabled, Mode=TwoWay}" IsEnabled="{Binding CanEnableTaskbarWindow}" />
+              </controls:SettingItem.SettingContent>
+            </controls:SettingItem>
+            <ui:InfoBar
+              Margin="0 15 0 0"
+              IsClosable="False"
+              IsOpen="{Binding IsTaskbarWindowUnsupported, Mode=OneWay}"
+              Message="{x:Static properties:Resources.SettingsTaskbarWindowUnsupported}"
+              Severity="Warning" />
+          </StackPanel>
         </Border>
         <Border
           Padding="16"

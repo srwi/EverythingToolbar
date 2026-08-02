@@ -31,8 +31,10 @@ namespace EverythingToolbar.Services
         public bool IsEffectiveAnimationsDisabled =>
             _settings.IsAnimationsDisabled || !SystemSettings.GetSystemAnimationsEnabled();
 
-        public bool IsTaskbarWindowActive() =>
-            _settings.TaskbarWindowEnabled && GetWindowsVersion() >= WindowsVersion.Windows11;
+        public bool CanEnableTaskbarWindow() =>
+            GetWindowsVersion() >= WindowsVersion.Windows11 && !NativeMethods.IsClassicTaskbar();
+
+        public bool IsTaskbarWindowActive() => _settings.TaskbarWindowEnabled;
 
         public bool IsTaskbarCenterAligned()
         {

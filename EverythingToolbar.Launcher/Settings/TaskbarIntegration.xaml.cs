@@ -26,6 +26,10 @@ namespace EverythingToolbar.Launcher.Settings
 
         public bool ShowTaskbarWindowSettings => _windowsPolicy.GetWindowsVersion() >= WindowsVersion.Windows11;
 
+        public bool IsTaskbarWindowUnsupported => !_windowsPolicy.CanEnableTaskbarWindow();
+
+        public bool CanEnableTaskbarWindow => !IsTaskbarWindowUnsupported;
+
         public List<KeyValuePair<string, string>> TaskbarWindowAlignmentOptions { get; } =
         [new(Res.SettingsTaskbarWindowAlignmentLeft, "Left"), new(Res.SettingsTaskbarWindowAlignmentRight, "Right")];
 

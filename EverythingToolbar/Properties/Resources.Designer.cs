@@ -1426,7 +1426,16 @@ namespace EverythingToolbar.Properties {
                 return ResourceManager.GetString("SettingsTaskbarWindowHelp", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to The search box requires the original Windows 11 taskbar. When using ExplorerPatcher or StartAllBack, use the deskband instead..
+        /// </summary>
+        public static string SettingsTaskbarWindowUnsupported {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarWindowUnsupported", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Enable thumbnails.
         /// </summary>
