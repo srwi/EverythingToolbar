@@ -14,7 +14,7 @@
         Width="16"
         Height="16"
         Margin="0 5 0 0"
-        b:ResultIcon.Result="{Binding}" />
+        b:ResultIcon.Result="{Binding Mode=OneTime}" />
       <TextBlock
         Grid.Column="1"
         Margin="0 7 0 4"
@@ -23,14 +23,14 @@
         FontSize="12pt"
         Foreground="{DynamicResource SearchResultFileName}"
         TextTrimming="CharacterEllipsis"
-        ToolTip="{Binding FileName}" />
+        ToolTip="{Binding FileName, Mode=OneTime}" />
       <TextBlock
         Grid.Column="2"
         Margin="10 5 10 6"
         VerticalAlignment="Bottom"
         FontSize="10pt"
         Foreground="{DynamicResource SearchResultDateModified}"
-        Text="{Binding HumanReadableDateModified}" />
+        Text="{Binding HumanReadableDateModified, Mode=OneTime}" />
     </Grid>
   </DataTemplate>
 </ResourceDictionary>

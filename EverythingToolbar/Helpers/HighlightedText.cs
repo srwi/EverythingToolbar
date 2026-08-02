@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -29,28 +28,72 @@ namespace EverythingToolbar.Helpers
             if (d is not TextBlock textBlock)
                 return;
 
-            textBlock.Inlines.Clear();
+            var input = e.NewValue as string ?? "";
 
-            if (e.NewValue is not string input || input.Length == 0)
+            // Nothing to highlight: assigning Text keeps the text block on its plain-text path,
+            // which is about twice as cheap to lay out as an inline collection. Reading
+            // textBlock.Inlines would itself create the machinery this branch avoids.
+            if (!input.Contains('*'))
+            {
+                textBlock.Text = input;
+                return;
+            }
+
+            var segments = input.Split('*');
+            var inlines = textBlock.Inlines;
+
+            if (TryUpdateRuns(inlines, segments))
                 return;
 
-            textBlock.Inlines.AddRange(CreateRuns(input));
-        }
+            inlines.Clear();
 
-        private static IEnumerable<Run> CreateRuns(string input)
-        {
-            string[] segments = input.Split('*');
-            for (int i = 0; i < segments.Length; i++)
+            for (var i = 0; i < segments.Length; i++)
             {
                 if (segments[i].Length == 0)
                     continue;
 
                 var run = new Run(segments[i]);
-                if (i % 2 > 0)
+                if (IsMatch(i))
                     run.FontWeight = FontWeights.Bold;
 
-                yield return run;
+                inlines.Add(run);
             }
         }
+
+        private static bool TryUpdateRuns(InlineCollection inlines, string[] segments)
+        {
+            var inline = inlines.FirstInline;
+
+            for (var i = 0; i < segments.Length; i++)
+            {
+                if (segments[i].Length == 0)
+                    continue;
+
+                if (inline is not Run run)
+                    return false;
+
+                // Read the successor first: writing Run.Text edits the backing text container,
+                // which invalidates any enumerator over the collection.
+                var next = run.NextInline;
+
+                if (run.Text != segments[i])
+                    run.Text = segments[i];
+
+                // Clearing rather than assigning Normal keeps an unhighlighted segment inheriting
+                // its weight, exactly as a freshly constructed run would.
+                if (IsMatch(i))
+                    run.FontWeight = FontWeights.Bold;
+                else
+                    run.ClearValue(TextElement.FontWeightProperty);
+
+                inline = next;
+            }
+
+            // Runs left over from a longer previous value mean the collection has to be rebuilt.
+            return inline == null;
+        }
+
+        // Everything brackets each match in asterisks, so the odd-numbered segments are the matches.
+        private static bool IsMatch(int segmentIndex) => segmentIndex % 2 > 0;
     }
 }
