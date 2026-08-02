@@ -67,6 +67,7 @@ namespace EverythingToolbar.Services
         private readonly ISettings _settings;
         private readonly WindowsPolicy _windowsPolicy;
         private readonly UISettings? _uiSettings;
+        private readonly RegistryValueWatcher? _personalizeWatcher;
         private readonly Dispatcher _dispatcher;
         private readonly List<Registration> _registrations = new();
         private int _applyScheduled;
@@ -87,6 +88,14 @@ namespace EverythingToolbar.Services
             catch
             {
                 Logger.Info("Could not apply accent color automatically.");
+            }
+
+            // ColorValuesChanged is the primary theme-switch signal. Where WinRT is unavailable it
+            // never arrives, so fall back to watching the Personalize key the theme is read from.
+            if (_uiSettings == null)
+            {
+                _personalizeWatcher = new RegistryValueWatcher(PersonalizeSubKey);
+                _personalizeWatcher.Changed += ScheduleApply;
             }
 
             _settings.PropertyChanged += OnSettingsChanged;
@@ -274,6 +283,7 @@ namespace EverythingToolbar.Services
             _settings.PropertyChanged -= OnSettingsChanged;
             if (_uiSettings != null)
                 _uiSettings.ColorValuesChanged -= OnColorValuesChanged;
+            _personalizeWatcher?.Dispose();
         }
     }
 }
