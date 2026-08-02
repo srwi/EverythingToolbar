@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EverythingToolbar.App.Helpers;
@@ -117,14 +116,20 @@ namespace EverythingToolbar.App.Services
 
                 var header = csvParser.ReadFields();
 
+                if (header == null)
+                    return filters;
+
                 while (!csvParser.EndOfData)
                 {
                     var fields = csvParser.ReadFields();
 
-                    if (header == null || fields == null)
+                    if (fields == null)
                         continue;
 
-                    var filterDict = header.Zip(fields, (h, f) => new { h, f }).ToDictionary(x => x.h, x => x.f);
+                    var filterDict = new Dictionary<string, string>();
+                    for (var i = 0; i < Math.Min(header.Length, fields.Length); i++)
+                        filterDict[header[i]] = fields[i];
+
                     filters.Add(ParseFilterFromDict(filterDict));
                 }
 
@@ -138,30 +143,42 @@ namespace EverythingToolbar.App.Services
             return null;
         }
 
+        private static string GetColumnOrEmpty(Dictionary<string, string> row, string column)
+        {
+            if (!row.TryGetValue(column, out var value))
+                return "";
+
+            return value;
+        }
+
         private Filter ParseFilterFromDict(Dictionary<string, string> dict)
         {
             return new Filter
             {
-                Name = LocalizeName(dict["Name"]),
-                IsMatchCase = dict["Case"] == "1",
-                IsMatchWholeWord = dict["Whole Word"] == "1",
-                IsMatchPath = dict["Path"] == "1",
-                IsRegExEnabled = dict["Regex"] == "1",
-                Search = dict["Search"],
-                Macro = dict["Macro"],
+                Name = LocalizeName(GetColumnOrEmpty(dict, "Name")),
+                IsMatchCase = GetColumnOrEmpty(dict, "Case") == "1",
+                IsMatchWholeWord = GetColumnOrEmpty(dict, "Whole Word") == "1",
+                IsMatchPath = GetColumnOrEmpty(dict, "Path") == "1",
+                IsRegExEnabled = GetColumnOrEmpty(dict, "Regex") == "1",
+                Search = GetColumnOrEmpty(dict, "Search"),
+                Macro = GetColumnOrEmpty(dict, "Macro"),
             };
         }
 
         private string LocalizeName(string name) =>
-            name.Replace("EVERYTHING", _names.All)
-                .Replace("FOLDER", _names.Folder)
-                .Replace("FILE", _names.File)
-                .Replace("AUDIO", _names.Audio)
-                .Replace("COMPRESSED", _names.Compressed)
-                .Replace("DOCUMENT", _names.Document)
-                .Replace("EXECUTABLE", _names.Executable)
-                .Replace("PICTURE", _names.Picture)
-                .Replace("VIDEO", _names.Video);
+            name.Trim() switch
+            {
+                "EVERYTHING" => _names.All,
+                "FILE" => _names.File,
+                "FOLDER" => _names.Folder,
+                "AUDIO" => _names.Audio,
+                "COMPRESSED" => _names.Compressed,
+                "DOCUMENT" => _names.Document,
+                "EXECUTABLE" => _names.Executable,
+                "PICTURE" or "IMAGE" => _names.Picture,
+                "VIDEO" => _names.Video,
+                _ => name,
+            };
 
         private void StopFileWatcher()
         {
