@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:properties="clr-namespace:EverythingToolbar.Properties">
+  xmlns:markup="clr-namespace:EverythingToolbar.Markup"
+  xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+  xmlns:services="clr-namespace:EverythingToolbar.Services">
   <Style TargetType="{x:Type ComboBox}">
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="OverridesDefaultStyle" Value="true" />
@@ -116,8 +118,12 @@
             <DataTrigger Binding="{Binding HasItems, RelativeSource={RelativeSource Self}}" Value="False">
               <Setter Property="Visibility" Value="Hidden" />
             </DataTrigger>
-            <Trigger SourceName="Popup" Property="IsOpen" Value="True">
-              <Trigger.EnterActions>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding IsDropDownOpen, RelativeSource={RelativeSource Self}}" Value="True" />
+                <Condition Binding="{Binding Source={markup:Service {x:Type services:WindowsPolicy}}, Path=IsEffectiveAnimationsDisabled}" Value="False" />
+              </MultiDataTrigger.Conditions>
+              <MultiDataTrigger.EnterActions>
                 <BeginStoryboard>
                   <Storyboard>
                     <DoubleAnimation
@@ -132,8 +138,8 @@
                     </DoubleAnimation>
                   </Storyboard>
                 </BeginStoryboard>
-              </Trigger.EnterActions>
-            </Trigger>
+              </MultiDataTrigger.EnterActions>
+            </MultiDataTrigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>

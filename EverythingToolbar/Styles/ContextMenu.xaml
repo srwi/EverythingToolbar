@@ -1,4 +1,14 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:markup="clr-namespace:EverythingToolbar.Markup"
+  xmlns:services="clr-namespace:EverythingToolbar.Services">
+  <!--
+    The popup hosting a ContextMenu is created by WPF, which resource-references the system menu
+    animation for it. Opt out of it here so the fade-in below stays under our own control.
+  -->
+  <PopupAnimation x:Key="{x:Static SystemParameters.MenuPopupAnimationKey}">None</PopupAnimation>
+
   <Style TargetType="{x:Type MenuItem}">
     <Setter Property="Background" Value="{DynamicResource ContextMenuBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ContextMenuBorder}" />
@@ -158,8 +168,12 @@
               <Setter TargetName="SubMenuPopup" Property="PopupAnimation" Value="None" />
               <Setter Property="Background" Value="{DynamicResource ContextMenuItemBackgroundHover}" />
             </Trigger>
-            <Trigger SourceName="SubMenuPopup" Property="IsOpen" Value="True">
-              <Trigger.EnterActions>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding IsSubmenuOpen, RelativeSource={RelativeSource Self}}" Value="True" />
+                <Condition Binding="{Binding Source={markup:Service {x:Type services:WindowsPolicy}}, Path=IsEffectiveAnimationsDisabled}" Value="False" />
+              </MultiDataTrigger.Conditions>
+              <MultiDataTrigger.EnterActions>
                 <BeginStoryboard>
                   <Storyboard>
                     <DoubleAnimation
@@ -174,8 +188,8 @@
                     </DoubleAnimation>
                   </Storyboard>
                 </BeginStoryboard>
-              </Trigger.EnterActions>
-            </Trigger>
+              </MultiDataTrigger.EnterActions>
+            </MultiDataTrigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>
@@ -230,8 +244,12 @@
             </Border>
           </Grid>
           <ControlTemplate.Triggers>
-            <Trigger Property="IsOpen" Value="True">
-              <Trigger.EnterActions>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding IsOpen, RelativeSource={RelativeSource Self}}" Value="True" />
+                <Condition Binding="{Binding Source={markup:Service {x:Type services:WindowsPolicy}}, Path=IsEffectiveAnimationsDisabled}" Value="False" />
+              </MultiDataTrigger.Conditions>
+              <MultiDataTrigger.EnterActions>
                 <BeginStoryboard>
                   <Storyboard>
                     <DoubleAnimation
@@ -244,10 +262,16 @@
                         <CircleEase EasingMode="EaseOut" />
                       </DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
+                    <DoubleAnimation
+                      Storyboard.TargetName="Border"
+                      Storyboard.TargetProperty="(UIElement.Opacity)"
+                      From="0"
+                      To="1"
+                      Duration="00:00:00.167" />
                   </Storyboard>
                 </BeginStoryboard>
-              </Trigger.EnterActions>
-            </Trigger>
+              </MultiDataTrigger.EnterActions>
+            </MultiDataTrigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>

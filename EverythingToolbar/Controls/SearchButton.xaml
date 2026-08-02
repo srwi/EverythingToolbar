@@ -3,8 +3,10 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:markup="clr-namespace:EverythingToolbar.Markup"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:properties="clr-namespace:EverythingToolbar.Properties"
+  xmlns:services="clr-namespace:EverythingToolbar.Services"
   d:DesignHeight="40"
   d:DesignWidth="50"
   Click="OnClick"
@@ -48,8 +50,12 @@
               <Trigger Property="IsPressed" Value="True">
                 <Setter TargetName="OuterBorder" Property="Background" Value="#40ffffff" />
               </Trigger>
-              <Trigger Property="IsMouseOver" Value="True">
-                <Trigger.EnterActions>
+              <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                  <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                  <Condition Binding="{Binding Source={markup:Service {x:Type services:WindowsPolicy}}, Path=IsEffectiveAnimationsDisabled}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.EnterActions>
                   <BeginStoryboard>
                     <Storyboard>
                       <ColorAnimation
@@ -59,8 +65,8 @@
                         Duration="0" />
                     </Storyboard>
                   </BeginStoryboard>
-                </Trigger.EnterActions>
-                <Trigger.ExitActions>
+                </MultiDataTrigger.EnterActions>
+                <MultiDataTrigger.ExitActions>
                   <BeginStoryboard>
                     <Storyboard>
                       <ColorAnimation
@@ -70,8 +76,36 @@
                         Duration="0:0:0.1" />
                     </Storyboard>
                   </BeginStoryboard>
-                </Trigger.ExitActions>
-              </Trigger>
+                </MultiDataTrigger.ExitActions>
+              </MultiDataTrigger>
+              <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                  <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                  <Condition Binding="{Binding Source={markup:Service {x:Type services:WindowsPolicy}}, Path=IsEffectiveAnimationsDisabled}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.EnterActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <ColorAnimation
+                        Storyboard.TargetName="InnerBorder"
+                        Storyboard.TargetProperty="Background.Color"
+                        To="#99ffffff"
+                        Duration="0" />
+                    </Storyboard>
+                  </BeginStoryboard>
+                </MultiDataTrigger.EnterActions>
+                <MultiDataTrigger.ExitActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <ColorAnimation
+                        Storyboard.TargetName="InnerBorder"
+                        Storyboard.TargetProperty="Background.Color"
+                        To="Transparent"
+                        Duration="0" />
+                    </Storyboard>
+                  </BeginStoryboard>
+                </MultiDataTrigger.ExitActions>
+              </MultiDataTrigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
         </Setter.Value>

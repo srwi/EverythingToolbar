@@ -1,27 +1,40 @@
 using System;
+using System.ComponentModel;
+using System.Windows;
 using Microsoft.Win32;
 
 namespace EverythingToolbar.Services
 {
-    public sealed class WindowsPolicy(ISettings settings)
+    public sealed class WindowsPolicy : INotifyPropertyChanged, IDisposable
     {
+        private readonly ISettings _settings;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public WindowsPolicy(ISettings settings)
+        {
+            _settings = settings;
+            _settings.PropertyChanged += OnSettingsChanged;
+            SystemParameters.StaticPropertyChanged += OnSystemParametersChanged;
+        }
+
         public Version GetWindowsVersion()
         {
-            if (settings.ForceWin10Behavior)
+            if (_settings.ForceWin10Behavior)
                 return WindowsVersion.Windows10Anniversary;
 
             return Environment.OSVersion.Version;
         }
 
         public bool IsEffectiveAnimationsDisabled =>
-            settings.IsAnimationsDisabled || !SystemSettings.GetSystemAnimationsEnabled();
+            _settings.IsAnimationsDisabled || !SystemSettings.GetSystemAnimationsEnabled();
 
         public bool IsTaskbarWindowActive() =>
-            settings.TaskbarWindowEnabled && GetWindowsVersion() >= WindowsVersion.Windows11;
+            _settings.TaskbarWindowEnabled && GetWindowsVersion() >= WindowsVersion.Windows11;
 
         public bool IsTaskbarCenterAligned()
         {
-            if (settings.IsForceCenterAlignment)
+            if (_settings.IsForceCenterAlignment)
                 return true;
 
             if (GetWindowsVersion() < WindowsVersion.Windows11)
@@ -33,6 +46,24 @@ namespace EverythingToolbar.Services
             var taskbarAlignment = key?.GetValue("TaskbarAl");
             var leftAligned = taskbarAlignment != null && (int)taskbarAlignment == 0;
             return !leftAligned;
+        }
+
+        private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is nameof(ISettings.IsAnimationsDisabled))
+                NotifyAnimationsChanged();
+        }
+
+        // Any system parameter change may carry a new SPI_GETCLIENTAREAANIMATION value.
+        private void OnSystemParametersChanged(object? sender, PropertyChangedEventArgs e) => NotifyAnimationsChanged();
+
+        private void NotifyAnimationsChanged() =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsEffectiveAnimationsDisabled)));
+
+        public void Dispose()
+        {
+            _settings.PropertyChanged -= OnSettingsChanged;
+            SystemParameters.StaticPropertyChanged -= OnSystemParametersChanged;
         }
     }
 }
