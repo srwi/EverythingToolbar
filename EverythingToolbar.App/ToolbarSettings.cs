@@ -107,7 +107,7 @@ namespace EverythingToolbar.App
         [Option(DefaultValue = false)]
         bool IsSetupAssistantDisabled { get; set; }
 
-        [Option(DefaultValue = false)]
+        [Option(DefaultValue = true)]
         bool IsTrayIconEnabled { get; set; }
 
         [Option(DefaultValue = true)]
