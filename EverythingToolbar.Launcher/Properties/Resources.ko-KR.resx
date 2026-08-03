@@ -120,8 +120,8 @@
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>종료</value>
   </data>
-  <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>설정 도우미 실행...</value>
+  <data name="ContextMenuSettings" xml:space="preserve">
+    <value>설정...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>EverythingToolbar를 작업 표시줄에 고정하려면 아이콘을 오른쪽 클릭하고 '작업 표시줄에 고정'을 선택합니다.</value>
@@ -135,10 +135,10 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar 설정 도우미</value>
   </data>
-  <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>설정 도우미를 종료하시겠습니까? EverythingToolbar 는 키보드 바로 가기를 통해서만 액세스할 수 있습니다. 시스템 트레이 아이콘을 통해 설정 도우미에 다시 액세스하여 검색 아이콘을 작업 표시줄에 고정할 수 있습니다.</value>
+  <data name="SetupAssistantExitWarningText" xml:space="preserve">
+    <value>설정 도우미를 종료하시겠습니까? 시스템 트레이 아이콘이 활성화되므로 나중에 EverythingToolbar 설정을 열고 작업 표시줄 통합을 설정할 수 있습니다. 키보드 바로 가기로 언제든지 검색을 열 수도 있습니다.</value>
   </data>
-  <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
+  <data name="SetupAssistantExitWarningTitle" xml:space="preserve">
     <value>설치 도우미 종료</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
@@ -159,19 +159,40 @@
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>시스템 트레이 아이콘을 활성화하여 설정에 빠르게 액세스할 수 있습니다</value>
   </data>
+  <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
+    <value>Embeds a search box on the taskbar</value>
+  </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>자동 시작 사용함</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Windows가 시작되면 EverythingToolbar를 자동으로 시작합니다</value>
+    <value>Windows가 시작되면 EverythingToolbar가 자동으로 시작됩니다</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>완료</value>
   </data>
-  <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>EverythingToolbar가 작업 표시줄에 고정되어 있지 않으면 시스템 트레이 아이콘을 비활성화할 수 없습니다. 먼저 EverythingToolbar를 작업 표시줄에 고정하거나 시스템 트레이 아이콘을 활성화하여 설정 및 기능에 액세스하세요.</value>
+  <data name="SetupAssistantChooseAccess" xml:space="preserve">
+    <value>Choose how to open EverythingToolbar</value>
+  </data>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>또는</value>
+  </data>
+  <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
+    <value>Taskbar search box</value>
+  </data>
+  <data name="TrayIconDisableErrorMessage" xml:space="preserve">
+    <value>EverythingToolbar가 작업 표시줄에 고정되어 있지 않고 작업 표시줄 검색 상자도 활성화되어 있지 않으면 시스템 트레이 아이콘을 비활성화할 수 없습니다. 먼저 둘 중 하나를 활성화하거나, 설정에 액세스할 수 있도록 시스템 트레이 아이콘을 활성화된 상태로 유지하세요.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>시스템 트레이 아이콘을 비활성화할 수 없습니다</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
+    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
+    <value>Tray icon enabled</value>
+  </data>
+  <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
+    <value>Taskbar search box disabled</value>
   </data>
 </root>
