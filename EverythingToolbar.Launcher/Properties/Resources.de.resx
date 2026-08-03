@@ -120,8 +120,8 @@
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>Beenden</value>
   </data>
-  <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Einrichtungsassistenten öffnen...</value>
+  <data name="ContextMenuSettings" xml:space="preserve">
+    <value>Einstellungen...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>Um EverythingToolbar an die Taskleiste anzuheften, öffnen Sie das Kontextmenü des Icons und wählen Sie 'An Taskleiste anheften'.</value>
@@ -135,10 +135,10 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar Einrichtungsassistent</value>
   </data>
-  <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Möchten Sie den Einrichtungsassistenten wirklich beenden? EverythingToolbar wird dann nur noch über die Tastenkombination zugänglich sein. Sie können den Einrichtungsassistenten erneut über das Benachrichtigungsfeldsymbol aufrufen, um das Suchsymbol an die Taskleiste zu heften.</value>
+  <data name="SetupAssistantExitWarningText" xml:space="preserve">
+    <value>Möchten Sie den Einrichtungsassistenten wirklich beenden? Das Infobereichsymbol wird aktiviert, sodass Sie die Einstellungen von EverythingToolbar weiterhin öffnen und die Taskleisten-Integration später einrichten können. Sie können die Suche außerdem jederzeit über die Tastenkombination öffnen.</value>
   </data>
-  <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
+  <data name="SetupAssistantExitWarningTitle" xml:space="preserve">
     <value>Einrichtungsassistenten schließen</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
@@ -159,6 +159,9 @@
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>Aktiviert das Infobereichsymbol für schnellen Zugriff auf die Einstellungen</value>
   </data>
+  <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
+    <value>Embeds a search box on the taskbar</value>
+  </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>Autostart aktivieren</value>
   </data>
@@ -168,10 +171,28 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Fertig</value>
   </data>
-  <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>Das Infobereichsymbol kann nicht deaktiviert werden, wenn EverythingToolbar nicht an die Taskleiste angeheftet ist. Bitte heften Sie EverythingToolbar zuerst an die Taskleiste an oder lassen Sie das Infobereichsymbol aktiviert.</value>
+  <data name="SetupAssistantChooseAccess" xml:space="preserve">
+    <value>Choose how to open EverythingToolbar</value>
+  </data>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>oder</value>
+  </data>
+  <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
+    <value>Taskbar search box</value>
+  </data>
+  <data name="TrayIconDisableErrorMessage" xml:space="preserve">
+    <value>Das Infobereichsymbol kann nicht deaktiviert werden, wenn EverythingToolbar weder an die Taskleiste angeheftet ist noch das Taskleisten-Suchfeld aktiviert hat. Bitte aktivieren Sie zuerst eines von beiden oder lassen Sie das Infobereichsymbol aktiviert, um auf die Einstellungen zuzugreifen.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>Infobereichsymbol kann nicht deaktiviert werden</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
+    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
+    <value>Tray icon enabled</value>
+  </data>
+  <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
+    <value>Taskbar search box disabled</value>
   </data>
 </root>
