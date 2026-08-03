@@ -135,9 +135,6 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Assistente Configurazione EverythingToolbar</value>
   </data>
-  <data name="SetupAssistantOr" xml:space="preserve">
-    <value>oppure</value>
-  </data>
   <data name="SetupAssistantExitWarningText" xml:space="preserve">
     <value>Sei sicuro di voler uscire dall'assistente di configurazione? L'icona nell'area di notifica verrà attivata, così potrai comunque aprire le impostazioni di EverythingToolbar e configurare l'integrazione con la barra delle applicazioni in un secondo momento. Puoi anche aprire la ricerca in qualsiasi momento con la scorciatoia da tastiera.</value>
   </data>
@@ -162,6 +159,9 @@
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>Abilita icona area di notifica per un accesso rapido alle impostazioni</value>
   </data>
+  <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
+    <value>Embeds a search box on the taskbar</value>
+  </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>Abilita avvio automatico</value>
   </data>
@@ -171,10 +171,28 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Fatto</value>
   </data>
+  <data name="SetupAssistantChooseAccess" xml:space="preserve">
+    <value>Choose how to open EverythingToolbar</value>
+  </data>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>oppure</value>
+  </data>
+  <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
+    <value>Taskbar search box</value>
+  </data>
   <data name="TrayIconDisableErrorMessage" xml:space="preserve">
     <value>The system tray icon cannot be disabled when EverythingToolbar is neither pinned to the taskbar nor has the taskbar search box enabled. Please enable either first, or keep the system tray icon enabled to access settings.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>Cannot disable system tray icon</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
+    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
+    <value>Tray icon enabled</value>
+  </data>
+  <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
+    <value>Taskbar search box disabled</value>
   </data>
 </root>

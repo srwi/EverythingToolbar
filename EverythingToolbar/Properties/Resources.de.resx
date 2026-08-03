@@ -265,7 +265,7 @@
     <value>Animationen deaktivieren</value>
   </data>
   <data name="SettingsEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>Autostart aktivieren</value>
   </data>
   <data name="SettingsEnableAutostartHelp" xml:space="preserve">
     <value>Automatically starts EverythingToolbar when Windows starts</value>
@@ -648,11 +648,38 @@
   <data name="SettingsSearchIconHelp" xml:space="preserve">
     <value>Ändert den Stil des Taskleisten-Symbols (erfordert einen Neustart des Explorers)</value>
   </data>
+  <data name="SettingsTaskbarWindow" xml:space="preserve">
+    <value>Show search box</value>
+  </data>
+  <data name="SettingsTaskbarWindowHelp" xml:space="preserve">
+    <value>Show a search box on the taskbar</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignment" xml:space="preserve">
+    <value>Search box alignment</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignmentHelp" xml:space="preserve">
+    <value>Controls the search box alignment on the taskbar</value>
+  </data>
   <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
     <value>Links</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentRight" xml:space="preserve">
     <value>Rechts</value>
+  </data>
+  <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
+    <value>The search box requires the original Windows 11 taskbar. When using ExplorerPatcher or StartAllBack, use the deskband instead.</value>
+  </data>
+  <data name="SettingsTaskbarIcon" xml:space="preserve">
+    <value>Taskbar icon</value>
+  </data>
+  <data name="SettingsTaskbarSearchBox" xml:space="preserve">
+    <value>Taskbar search box</value>
+  </data>
+  <data name="SettingsTaskbarIconStatusPinned" xml:space="preserve">
+    <value>Pinned to taskbar</value>
+  </data>
+  <data name="SettingsTaskbarIconStatusNotPinned" xml:space="preserve">
+    <value>Not pinned to taskbar</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>Filterreihenfolge</value>

@@ -135,9 +135,6 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar Einrichtungsassistent</value>
   </data>
-  <data name="SetupAssistantOr" xml:space="preserve">
-    <value>oder</value>
-  </data>
   <data name="SetupAssistantExitWarningText" xml:space="preserve">
     <value>Möchten Sie den Einrichtungsassistenten wirklich beenden? Das Infobereichsymbol wird aktiviert, sodass Sie die Einstellungen von EverythingToolbar weiterhin öffnen und die Taskleisten-Integration später einrichten können. Sie können die Suche außerdem jederzeit über die Tastenkombination öffnen.</value>
   </data>
@@ -162,6 +159,9 @@
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>Aktiviert das Infobereichsymbol für schnellen Zugriff auf die Einstellungen</value>
   </data>
+  <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
+    <value>Embeds a search box on the taskbar</value>
+  </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>Autostart aktivieren</value>
   </data>
@@ -171,10 +171,28 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Fertig</value>
   </data>
+  <data name="SetupAssistantChooseAccess" xml:space="preserve">
+    <value>Choose how to open EverythingToolbar</value>
+  </data>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>oder</value>
+  </data>
+  <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
+    <value>Taskbar search box</value>
+  </data>
   <data name="TrayIconDisableErrorMessage" xml:space="preserve">
     <value>Das Infobereichsymbol kann nicht deaktiviert werden, wenn EverythingToolbar weder an die Taskleiste angeheftet ist noch das Taskleisten-Suchfeld aktiviert hat. Bitte aktivieren Sie zuerst eines von beiden oder lassen Sie das Infobereichsymbol aktiviert, um auf die Einstellungen zuzugreifen.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>Infobereichsymbol kann nicht deaktiviert werden</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
+    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
+    <value>Tray icon enabled</value>
+  </data>
+  <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
+    <value>Taskbar search box disabled</value>
   </data>
 </root>

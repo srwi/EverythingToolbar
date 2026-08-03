@@ -135,9 +135,6 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>מסייע ההגדרה של EverythingToolbar</value>
   </data>
-  <data name="SetupAssistantOr" xml:space="preserve">
-    <value>או</value>
-  </data>
   <data name="SetupAssistantExitWarningText" xml:space="preserve">
     <value>האם אתם בטוחים שברצונכם לצאת ממסייע ההגדרה? סמל מגש המערכת יופעל כך שתוכלו עדיין לפתוח את ההגדרות של EverythingToolbar ולהגדיר את השילוב בשורת המשימות מאוחר יותר. תוכלו גם לפתוח את החיפוש בכל עת באמצעות קיצור המקלדת.</value>
   </data>
@@ -162,6 +159,9 @@
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>הפעל סמל במגש המערכת, לגישה מהירה להגדרות</value>
   </data>
+  <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
+    <value>Embeds a search box on the taskbar</value>
+  </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>אפשר הפעלה אוטומטית ליישום</value>
   </data>
@@ -171,10 +171,28 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>בוצע</value>
   </data>
+  <data name="SetupAssistantChooseAccess" xml:space="preserve">
+    <value>Choose how to open EverythingToolbar</value>
+  </data>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>או</value>
+  </data>
+  <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
+    <value>Taskbar search box</value>
+  </data>
   <data name="TrayIconDisableErrorMessage" xml:space="preserve">
     <value>לא ניתן להשבית את סמל מגש המערכת כאשר EverythingToolbar אינו מוצמד לשורת המשימות ותיבת החיפוש בשורת המשימות אינה מופעלת. אנא הפעילו תחילה אחת מהאפשרויות, או השאירו את סמל מגש המערכת מופעל כדי לגשת להגדרות.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>לא ניתן להשבית את סמל מגש המערכת</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
+    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
+    <value>Tray icon enabled</value>
+  </data>
+  <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
+    <value>Taskbar search box disabled</value>
   </data>
 </root>

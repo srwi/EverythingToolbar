@@ -135,9 +135,6 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Assistente de Configuração do EverythingToolbar</value>
   </data>
-  <data name="SetupAssistantOr" xml:space="preserve">
-    <value>ou</value>
-  </data>
   <data name="SetupAssistantExitWarningText" xml:space="preserve">
     <value>Tem certeza de que deseja sair do assistente de configuração? O ícone da bandeja do sistema será ativado para que você ainda possa abrir as configurações do EverythingToolbar e configurar a integração com a barra de tarefas mais tarde. Você também pode abrir a pesquisa a qualquer momento com o atalho de teclado.</value>
   </data>
@@ -162,6 +159,9 @@
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>Habilita o ícone da bandeja do sistema para acesso rápido às configurações</value>
   </data>
+  <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
+    <value>Embeds a search box on the taskbar</value>
+  </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>Ative a Inicialização Automática do aplicativo</value>
   </data>
@@ -171,10 +171,28 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Concluído</value>
   </data>
+  <data name="SetupAssistantChooseAccess" xml:space="preserve">
+    <value>Choose how to open EverythingToolbar</value>
+  </data>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>ou</value>
+  </data>
+  <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
+    <value>Taskbar search box</value>
+  </data>
   <data name="TrayIconDisableErrorMessage" xml:space="preserve">
     <value>O ícone da bandeja do sistema não pode ser desativado quando o EverythingToolbar não está fixado na barra de tarefas nem tem a caixa de pesquisa da barra de tarefas ativada. Ative primeiro uma das opções ou mantenha o ícone da bandeja do sistema ativado para acessar as configurações.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>Não é possível desativar o ícone da bandeja do sistema</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
+    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
+    <value>Tray icon enabled</value>
+  </data>
+  <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
+    <value>Taskbar search box disabled</value>
   </data>
 </root>

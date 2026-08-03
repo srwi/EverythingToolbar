@@ -135,9 +135,6 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar Setup Assistant</value>
   </data>
-  <data name="SetupAssistantOr" xml:space="preserve">
-    <value>eller</value>
-  </data>
   <data name="SetupAssistantExitWarningText" xml:space="preserve">
     <value>Är du säker på att du vill avsluta installationsassistenten? Systemfältsikonen aktiveras så att du fortfarande kan öppna EverythingToolbars inställningar och konfigurera aktivitetsfältsintegrationen senare. Du kan också öppna sökningen när som helst med kortkommandot.</value>
   </data>
@@ -162,6 +159,9 @@
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>Enables the system tray icon for quick access to settings</value>
   </data>
+  <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
+    <value>Embeds a search box on the taskbar</value>
+  </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>Enable autostart</value>
   </data>
@@ -171,10 +171,28 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Done</value>
   </data>
+  <data name="SetupAssistantChooseAccess" xml:space="preserve">
+    <value>Choose how to open EverythingToolbar</value>
+  </data>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>eller</value>
+  </data>
+  <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
+    <value>Taskbar search box</value>
+  </data>
   <data name="TrayIconDisableErrorMessage" xml:space="preserve">
     <value>The system tray icon cannot be disabled when EverythingToolbar is neither pinned to the taskbar nor has the taskbar search box enabled. Please enable either first, or keep the system tray icon enabled to access settings.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>Cannot disable system tray icon</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
+    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
+    <value>Tray icon enabled</value>
+  </data>
+  <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
+    <value>Taskbar search box disabled</value>
   </data>
 </root>
