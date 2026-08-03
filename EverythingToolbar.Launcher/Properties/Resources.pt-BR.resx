@@ -120,8 +120,8 @@
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>Sair</value>
   </data>
-  <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Executar assistente de configuração...</value>
+  <data name="ContextMenuSettings" xml:space="preserve">
+    <value>Configurações...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>Para fixar o EverythingToolbar na barra de tarefas, clique com o botão direito no ícone do programa e selecione 'Fixar na barra de tarefas'.</value>
@@ -135,10 +135,10 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Assistente de Configuração do EverythingToolbar</value>
   </data>
-  <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Tem certeza de que deseja sair do assistente de configuração? O EverythingToolbar só será acessível usando o atalho de teclado. Você pode acessar o assistente de configuração novamente através do ícone da bandeja do sistema para fixar o ícone de pesquisa na barra de tarefas.</value>
+  <data name="SetupAssistantExitWarningText" xml:space="preserve">
+    <value>Tem certeza de que deseja sair do assistente de configuração? O ícone da bandeja do sistema será ativado para que você ainda possa abrir as configurações do EverythingToolbar e configurar a integração com a barra de tarefas mais tarde. Você também pode abrir a pesquisa a qualquer momento com o atalho de teclado.</value>
   </data>
-  <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
+  <data name="SetupAssistantExitWarningTitle" xml:space="preserve">
     <value>Sair do Assistente de Configuração</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
@@ -159,6 +159,9 @@
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>Habilita o ícone da bandeja do sistema para acesso rápido às configurações</value>
   </data>
+  <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
+    <value>Embeds a search box on the taskbar</value>
+  </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>Ative a Inicialização Automática do aplicativo</value>
   </data>
@@ -168,10 +171,28 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Concluído</value>
   </data>
-  <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>O ícone da bandeja do sistema não pode ser desativado quando EverythingToolbar não está fixado na barra de tarefas. Por favor, fixe o EverythingToolbar na barra de tarefas primeiro, ou mantenha o ícone de bandeja habilitado para acessar as configurações e funcionalidades.</value>
+  <data name="SetupAssistantChooseAccess" xml:space="preserve">
+    <value>Choose how to open EverythingToolbar</value>
+  </data>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>ou</value>
+  </data>
+  <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
+    <value>Taskbar search box</value>
+  </data>
+  <data name="TrayIconDisableErrorMessage" xml:space="preserve">
+    <value>O ícone da bandeja do sistema não pode ser desativado quando o EverythingToolbar não está fixado na barra de tarefas nem tem a caixa de pesquisa da barra de tarefas ativada. Ative primeiro uma das opções ou mantenha o ícone da bandeja do sistema ativado para acessar as configurações.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>Não é possível desativar o ícone da bandeja do sistema</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
+    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
+    <value>Tray icon enabled</value>
+  </data>
+  <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
+    <value>Taskbar search box disabled</value>
   </data>
 </root>
