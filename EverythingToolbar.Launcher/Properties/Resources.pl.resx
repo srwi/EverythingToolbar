@@ -120,8 +120,8 @@
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>Wyjdź</value>
   </data>
-  <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Uruchom asystenta konfiguracji...</value>
+  <data name="ContextMenuSettings" xml:space="preserve">
+    <value>Ustawienia...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>Aby przypiąć EverythingToolbar do paska zadań, kliknij prawym przyciskiem myszy na ikonę i wybierz 'Przypnij do paska zadań'.</value>
@@ -135,10 +135,10 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Asystent konfiguracji EverythingToolbar</value>
   </data>
-  <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Czy na pewno chcesz opuścić asystenta konfiguracji? EverythingToolbar będzie dostępny tylko przy użyciu skrótu klawiaturowego. Możesz ponownie uzyskać dostęp do asystenta konfiguracji za pomocą ikony w zasobniku systemowym, aby przypiąć ikonę wyszukiwania do paska zadań.</value>
+  <data name="SetupAssistantExitWarningText" xml:space="preserve">
+    <value>Czy na pewno chcesz opuścić asystenta konfiguracji? Ikona w zasobniku systemowym zostanie włączona, dzięki czemu nadal możesz otworzyć ustawienia EverythingToolbar i skonfigurować integrację z paskiem zadań później. Wyszukiwanie możesz też otworzyć w dowolnej chwili skrótem klawiaturowym.</value>
   </data>
-  <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
+  <data name="SetupAssistantExitWarningTitle" xml:space="preserve">
     <value>Zamknij asystenta konfiguracji</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
@@ -159,6 +159,9 @@
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>Włącza ikonę w zasobniku systemowym dla szybkiego dostępu do ustawień</value>
   </data>
+  <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
+    <value>Embeds a search box on the taskbar</value>
+  </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>Uruchom przy starcie systemu</value>
   </data>
@@ -168,10 +171,28 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Gotowe</value>
   </data>
-  <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>Ikona zasobnika systemowego nie może być wyłączona, gdy EverythingToolbar nie jest przypięty do paska zadań. Proszę najpierw przypiąć EverythingToolbar do paska zadań lub zachować ikonę zasobnika systemowego włączoną, aby uzyskać dostęp do ustawień i funkcjonalności.</value>
+  <data name="SetupAssistantChooseAccess" xml:space="preserve">
+    <value>Choose how to open EverythingToolbar</value>
+  </data>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>lub</value>
+  </data>
+  <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
+    <value>Taskbar search box</value>
+  </data>
+  <data name="TrayIconDisableErrorMessage" xml:space="preserve">
+    <value>Ikona w zasobniku systemowym nie może być wyłączona, gdy EverythingToolbar nie jest przypięty do paska zadań ani nie ma włączonego pola wyszukiwania na pasku zadań. Najpierw włącz jedną z tych opcji lub zachowaj włączoną ikonę w zasobniku systemowym, aby uzyskać dostęp do ustawień.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>Nie można wyłączyć ikony w zasobniku systemowym</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
+    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
+    <value>Tray icon enabled</value>
+  </data>
+  <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
+    <value>Taskbar search box disabled</value>
   </data>
 </root>
