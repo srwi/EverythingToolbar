@@ -325,7 +325,7 @@
     <value>Sprache</value>
   </data>
   <data name="SettingsUILanguageHelp" xml:space="preserve">
-    <value>Choose the UI language. Restart the application to apply changes.</value>
+    <value>Wählen Sie die UI-Sprache. Starten Sie die Anwendung neu, um die Änderungen zu übernehmen.</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
     <value>Attribute</value>
@@ -556,7 +556,7 @@
     <value>Vorschaubilder für Bilddateien anzeigen</value>
   </data>
   <data name="SettingsSystemContextMenuDefaultHelp" xml:space="preserve">
-    <value>Show the Windows context menu when right-clicking a result</value>
+    <value>Windows-Kontextmenü beim Rechtsklick auf ein Ergebnis anzeigen</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
     <value>Gesamtanzahl der Suchergebnisse anzeigen</value>
@@ -565,7 +565,7 @@
     <value>Schnellschalter für Suchoptionen in der Suchleiste anzeigen</value>
   </data>
   <data name="SettingsPreviewPaneHelp" xml:space="preserve">
-    <value>Show a Start menu style side pane for the selected result</value>
+    <value>Seitenleiste im Startmenü-Stil für das ausgewählte Ergebnis anzeigen</value>
   </data>
   <data name="PreviewPaneFilePath" xml:space="preserve">
     <value>Dateipfad</value>
@@ -649,16 +649,16 @@
     <value>Ändert den Stil des Taskleisten-Symbols (erfordert einen Neustart des Explorers)</value>
   </data>
   <data name="SettingsTaskbarWindow" xml:space="preserve">
-    <value>Show search box</value>
+    <value>Suchfeld anzeigen</value>
   </data>
   <data name="SettingsTaskbarWindowHelp" xml:space="preserve">
-    <value>Show a search box on the taskbar</value>
+    <value>Suchfeld in der Taskleiste anzeigen</value>
   </data>
   <data name="SettingsTaskbarWindowAlignment" xml:space="preserve">
-    <value>Search box alignment</value>
+    <value>Suchfeldausrichtung</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentHelp" xml:space="preserve">
-    <value>Controls the search box alignment on the taskbar</value>
+    <value>Legt die Ausrichtung des Suchfeldes in der Taskleiste fest</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
     <value>Links</value>
@@ -667,19 +667,19 @@
     <value>Rechts</value>
   </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
-    <value>The search box requires the original Windows 11 taskbar. When using ExplorerPatcher or StartAllBack, use the deskband instead.</value>
+    <value>Das Suchfeld erfordert die originale Windows-11-Taskleiste. Wenn Sie ExplorerPatcher oder StartAllBack verwenden, nutzen Sie stattdessen das Deskband.</value>
   </data>
   <data name="SettingsTaskbarIcon" xml:space="preserve">
-    <value>Taskbar icon</value>
+    <value>Taskleistensymbol</value>
   </data>
   <data name="SettingsTaskbarSearchBox" xml:space="preserve">
-    <value>Taskbar search box</value>
+    <value>Taskleisten-Suchfeld</value>
   </data>
   <data name="SettingsTaskbarIconStatusPinned" xml:space="preserve">
-    <value>Pinned to taskbar</value>
+    <value>An Taskleiste angepinnt</value>
   </data>
   <data name="SettingsTaskbarIconStatusNotPinned" xml:space="preserve">
-    <value>Not pinned to taskbar</value>
+    <value>Nicht an Taskleiste angepinnt</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>Filterreihenfolge</value>
@@ -718,21 +718,21 @@
     <value>Festlegen, wie sich der Fokus beim Navigieren der Ergebnisliste verhält</value>
   </data>
   <data name="FocusBehaviorClamp" xml:space="preserve">
-    <value>Clamp</value>
+    <value>Begrenzen</value>
   </data>
   <data name="FocusBehaviorRepeat" xml:space="preserve">
     <value>Wiederholen</value>
   </data>
   <data name="FocusBehaviorRepeatWithSearch" xml:space="preserve">
-    <value>Repeat with search</value>
+    <value>Mit Suche wiederholen</value>
   </data>
   <data name="SettingsUseSystemLanguage" xml:space="preserve">
-    <value>Use System Language</value>
+    <value>Systemsprache verwenden</value>
   </data>
   <data name="MessageBoxRestartTitle" xml:space="preserve">
-    <value>Restart required</value>
+    <value>Neustart erforderlich</value>
   </data>
   <data name="MessageBoxRestartMessage" xml:space="preserve">
-    <value>A restart is required for the language changes to take effect. Do you want to restart now?</value>
+    <value>Um die Sprachänderungen wirksam zu machen, ist ein Neustart erforderlich. Möchten Sie jetzt neu starten?</value>
   </data>
 </root>
