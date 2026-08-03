@@ -120,8 +120,8 @@
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>終了</value>
   </data>
-  <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>セットアップアシスタントを実行...</value>
+  <data name="ContextMenuSettings" xml:space="preserve">
+    <value>設定...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>EverythingToolbar をタスクバーに固定するには、アイコンを右クリックし「タスクバーにピン留めする」を選択します。</value>
@@ -135,10 +135,10 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar セットアップアシスタント</value>
   </data>
-  <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>本当にセットアップアシスタントを終了しますか？ EverythingToolbar はキーボードショートカットを使用してのみアクセスできます。 システムトレイアイコンから再度セットアップアシスタントにアクセスして、検索アイコンをタスクバーに固定することができます。</value>
+  <data name="SetupAssistantExitWarningText" xml:space="preserve">
+    <value>本当にセットアップアシスタントを終了しますか？ システムトレイアイコンが有効になるため、後から EverythingToolbar の設定を開いたり、タスクバー統合を設定したりできます。 キーボードショートカットでいつでも検索を開くこともできます。</value>
   </data>
-  <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
+  <data name="SetupAssistantExitWarningTitle" xml:space="preserve">
     <value>セットアップアシスタントを終了する</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
@@ -159,6 +159,9 @@
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>システムトレイアイコンを有効にして設定にすばやくアクセスします</value>
   </data>
+  <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
+    <value>Embeds a search box on the taskbar</value>
+  </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>アプリを自動起動する</value>
   </data>
@@ -168,10 +171,28 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>完了</value>
   </data>
-  <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>EverythingToolbarがタスクバーにピン留めされていない場合、システムトレイアイコンを無効にすることはできません。 EverythingToolbarを最初にタスクバーに固定するか、システムトレイアイコンを有効にしておくと設定や機能が利用できます。</value>
+  <data name="SetupAssistantChooseAccess" xml:space="preserve">
+    <value>Choose how to open EverythingToolbar</value>
+  </data>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>または</value>
+  </data>
+  <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
+    <value>Taskbar search box</value>
+  </data>
+  <data name="TrayIconDisableErrorMessage" xml:space="preserve">
+    <value>EverythingToolbar がタスクバーにピン留めされておらず、タスクバーの検索ボックスも有効になっていない場合、システムトレイアイコンを無効にすることはできません。 まずいずれかを有効にするか、設定にアクセスできるようシステムトレイアイコンを有効なままにしてください。</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>システムトレイアイコンを無効にできません</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
+    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
+    <value>Tray icon enabled</value>
+  </data>
+  <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
+    <value>Taskbar search box disabled</value>
   </data>
 </root>
