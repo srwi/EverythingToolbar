@@ -98,9 +98,9 @@ namespace EverythingToolbar.Launcher.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Exit Setup Assistant.
         /// </summary>
-        public static string SetupAssistantDisableWarningTitle {
+        public static string SetupAssistantExitWarningTitle {
             get {
-                return ResourceManager.GetString("SetupAssistantDisableWarningTitle", resourceCulture);
+                return ResourceManager.GetString("SetupAssistantExitWarningTitle", resourceCulture);
             }
         }
         

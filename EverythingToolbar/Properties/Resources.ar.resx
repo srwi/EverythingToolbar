@@ -612,6 +612,12 @@
   <data name="MessageBoxOk" xml:space="preserve">
     <value>موافق</value>
   </data>
+  <data name="MessageBoxYes" xml:space="preserve">
+    <value>نعم</value>
+  </data>
+  <data name="MessageBoxNo" xml:space="preserve">
+    <value>لا</value>
+  </data>
   <data name="ContextMenuOpenWithNoCustomActions" xml:space="preserve">
     <value>No actions defined</value>
   </data>
@@ -641,6 +647,12 @@
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
     <value>Changes the style of the taskbar icon (requires explorer restart)</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
+    <value>يسار</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignmentRight" xml:space="preserve">
+    <value>يمين</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>Filter order</value>

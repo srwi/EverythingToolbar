@@ -612,6 +612,12 @@
   <data name="MessageBoxOk" xml:space="preserve">
     <value>确定</value>
   </data>
+  <data name="MessageBoxYes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="MessageBoxNo" xml:space="preserve">
+    <value>否</value>
+  </data>
   <data name="ContextMenuOpenWithNoCustomActions" xml:space="preserve">
     <value>未定义操作</value>
   </data>
@@ -641,6 +647,12 @@
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
     <value>更改任务栏图标的样式 (需要重新启动文件管理器)</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
+    <value>靠左</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignmentRight" xml:space="preserve">
+    <value>靠右</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>筛选器顺序</value>

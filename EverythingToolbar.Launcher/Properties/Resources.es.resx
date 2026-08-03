@@ -120,8 +120,8 @@
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>Salir</value>
   </data>
-  <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Asistente de configuración...</value>
+  <data name="ContextMenuSettings" xml:space="preserve">
+    <value>Configuración...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>Hacer clic derecho en el icono y seleccionar 'Anclar a la barra de tareas'.</value>
@@ -135,10 +135,13 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Asistente de configuración de EverythingToolbar</value>
   </data>
-  <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>¿Está seguro de que desea salir del asistente de configuración? Solo se podrá acceder a EverythingToolbar mediante el atajo de teclado. Se puede acceder de nuevo al asistente de configuración a través del icono de la bandeja del sistema para anclar el icono de búsqueda a la barra de tareas.</value>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>o</value>
   </data>
-  <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
+  <data name="SetupAssistantExitWarningText" xml:space="preserve">
+    <value>¿Está seguro de que desea salir del asistente de configuración? Se activará el icono de la bandeja del sistema para que pueda seguir abriendo la configuración de EverythingToolbar y configurar la integración con la barra de tareas más adelante. También puede abrir la búsqueda en cualquier momento con el atajo de teclado.</value>
+  </data>
+  <data name="SetupAssistantExitWarningTitle" xml:space="preserve">
     <value>Salir del asistente de configuración</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
@@ -168,8 +171,8 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Hecho</value>
   </data>
-  <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>El icono de la bandeja del sistema no se puede desactivar si EverythingToolbar no está anclado a la barra de tareas. Anclar primero EverythingToolbar a la barra de tareas o mantener activado el icono de la bandeja del sistema para acceder a la configuración y y a las demás funciones.</value>
+  <data name="TrayIconDisableErrorMessage" xml:space="preserve">
+    <value>El icono de la bandeja del sistema no se puede desactivar si EverythingToolbar no está anclado a la barra de tareas ni tiene activado el cuadro de búsqueda en la barra de tareas. Active primero una de las dos opciones o mantenga activado el icono de la bandeja del sistema para acceder a la configuración.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>No se puede desactivar el icono de la bandeja del sistema</value>

@@ -612,6 +612,12 @@
   <data name="MessageBoxOk" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="MessageBoxYes" xml:space="preserve">
+    <value>Có</value>
+  </data>
+  <data name="MessageBoxNo" xml:space="preserve">
+    <value>Không</value>
+  </data>
   <data name="ContextMenuOpenWithNoCustomActions" xml:space="preserve">
     <value>No actions defined</value>
   </data>
@@ -641,6 +647,12 @@
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
     <value>Changes the style of the taskbar icon (requires explorer restart)</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
+    <value>Trái</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignmentRight" xml:space="preserve">
+    <value>Phải</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>Filter order</value>

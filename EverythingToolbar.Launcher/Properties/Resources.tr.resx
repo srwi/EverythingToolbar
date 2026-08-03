@@ -120,8 +120,8 @@
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>Çıkış</value>
   </data>
-  <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Kurulum yardımcısını çalıştır...</value>
+  <data name="ContextMenuSettings" xml:space="preserve">
+    <value>Ayarlar...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>EverythingToolbar'ı görev çubuğuna sabitlemek için simgesine sağ tıklayıp 'Görev çubuğuna sabitle'yi seçin.</value>
@@ -135,10 +135,13 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar Kurulum Asistanı</value>
   </data>
-  <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Kurulum asistanından çıkmak istediğinizden emin misiniz? EverythingToolbar yalnızca klavye kısayolu kullanılarak erişilebilir olacaktır. Arama simgesini görev çubuğuna sabitlemek isterseniz; bildirim alanı simgesinden kurulum asistanına tekrar erişebilirsiniz.</value>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>veya</value>
   </data>
-  <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
+  <data name="SetupAssistantExitWarningText" xml:space="preserve">
+    <value>Kurulum asistanından çıkmak istediğinizden emin misiniz? Bildirim alanı simgesi etkinleştirilecek; böylece EverythingToolbar ayarlarını yine açabilir ve görev çubuğu entegrasyonunu daha sonra kurabilirsiniz. Ayrıca klavye kısayolu ile aramayı istediğiniz zaman açabilirsiniz.</value>
+  </data>
+  <data name="SetupAssistantExitWarningTitle" xml:space="preserve">
     <value>Kurulum Yardımcısından Çık</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
@@ -168,8 +171,8 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Tamam</value>
   </data>
-  <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>The system tray icon cannot be disabled when EverythingToolbar is not pinned to the taskbar. Please pin EverythingToolbar to the taskbar first, or keep the system tray icon enabled to access settings and functionality.</value>
+  <data name="TrayIconDisableErrorMessage" xml:space="preserve">
+    <value>The system tray icon cannot be disabled when EverythingToolbar is neither pinned to the taskbar nor has the taskbar search box enabled. Please enable either first, or keep the system tray icon enabled to access settings.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>Sistem tepsisi simgesi devre dışı bırakılamıyor</value>

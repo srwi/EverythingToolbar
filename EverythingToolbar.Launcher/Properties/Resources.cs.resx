@@ -120,8 +120,8 @@
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>Ukončit</value>
   </data>
-  <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Spustit průvodce nastavením...</value>
+  <data name="ContextMenuSettings" xml:space="preserve">
+    <value>Nastavení...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>Chcete-li připnout EverythingToolbar na hlavní panel, klepněte pravým tlačítkem na jeho ikonu a zvolte „Připnout na hlavní panel“.</value>
@@ -135,10 +135,13 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Průvodce nastavením EverythingToolbar</value>
   </data>
-  <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Opravdu chcete opustit průvodce nastavením? Aplikace EverythingToolbar bude přístupná pouze pomocí klávesové zkratky. K průvodci nastavením se můžete znovu dostat přes ikonu v oznamovací oblasti a připnout tak ikonu vyhledávání na hlavní panel.</value>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>nebo</value>
   </data>
-  <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
+  <data name="SetupAssistantExitWarningText" xml:space="preserve">
+    <value>Opravdu chcete opustit průvodce nastavením? Ikona v oznamovací oblasti bude zapnuta, takže můžete i nadále otevřít nastavení aplikace EverythingToolbar a integraci s hlavním panelem nastavit později. Vyhledávání můžete také kdykoli otevřít klávesovou zkratkou.</value>
+  </data>
+  <data name="SetupAssistantExitWarningTitle" xml:space="preserve">
     <value>Ukončit průvodce nastavením</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
@@ -168,8 +171,8 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Dokončit</value>
   </data>
-  <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>Ikonu v oznamovací oblasti nelze zakázat, pokud není EverythingToolbar připnut k hlavnímu panelu. Nejprve připněte EverythingToolbar k hlavnímu panelu, nebo nechte ikonu v oznamovací oblasti zapnutou pro přístup k nastavení a funkcím.</value>
+  <data name="TrayIconDisableErrorMessage" xml:space="preserve">
+    <value>Ikonu v oznamovací oblasti nelze zakázat, pokud EverythingToolbar není připnut k hlavnímu panelu ani nemá zapnuté vyhledávací pole na hlavním panelu. Nejprve zapněte jednu z těchto možností, nebo nechte ikonu v oznamovací oblasti zapnutou pro přístup k nastavení.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>Ikonu v oznamovací oblasti nelze zakázat</value>

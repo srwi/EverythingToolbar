@@ -120,8 +120,8 @@
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>Выход</value>
   </data>
-  <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>Запустить помощника по настройке...</value>
+  <data name="ContextMenuSettings" xml:space="preserve">
+    <value>Настройки...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>Чтобы закрепить EverythingToolbar на панели задач, щёлкните правой кнопкой мыши и выберите 'Закрепить на панели задач'.</value>
@@ -135,10 +135,13 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>Помощник настройки EverythingToolbar</value>
   </data>
-  <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>Вы действительно хотите закрыть помощника по настройке? EverythingToolbar будет доступен только с помощью клавиатуры. Чтобы закрепить значок поиска в панели задач, вызовите помощник по настройке через значок в области уведомлений.</value>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>или</value>
   </data>
-  <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
+  <data name="SetupAssistantExitWarningText" xml:space="preserve">
+    <value>Вы действительно хотите закрыть помощника по настройке? Значок в области уведомлений будет включён, чтобы вы по-прежнему могли открыть настройки EverythingToolbar и настроить интеграцию с панелью задач позже. Также вы можете открыть поиск в любой момент с помощью сочетания клавиш.</value>
+  </data>
+  <data name="SetupAssistantExitWarningTitle" xml:space="preserve">
     <value>Закрыть помощника по настройке</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
@@ -168,8 +171,8 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Готово</value>
   </data>
-  <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>Значок в области уведомлений нельзя отключить, если EverythingToolbar не прикреплён к панели задач. Сначала закрепите EverythingToolbar на панели задач, либо оставьте значок в области уведомлений для доступа к настройкам и функциям.</value>
+  <data name="TrayIconDisableErrorMessage" xml:space="preserve">
+    <value>Значок в области уведомлений нельзя отключить, если EverythingToolbar не закреплён на панели задач и поле поиска на панели задач не включено. Сначала включите одно из этого либо оставьте значок в области уведомлений включённым для доступа к настройкам.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>Невозможно отключить значок в области уведомлений</value>

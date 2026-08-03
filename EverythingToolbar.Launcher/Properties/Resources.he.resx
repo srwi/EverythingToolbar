@@ -120,8 +120,8 @@
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>יציאה</value>
   </data>
-  <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>הפעלת מסייע ההגדרה...</value>
+  <data name="ContextMenuSettings" xml:space="preserve">
+    <value>הגדרות...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>כדי להצמיד את EverythingToolbar לשורת המשימות, לחצו לחיצה ימנית על הסמל של היישום ובחרו 'הצמד לשורת המשימות'.</value>
@@ -135,10 +135,13 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>מסייע ההגדרה של EverythingToolbar</value>
   </data>
-  <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>האם אתם רוצים לצאת ממסייע ההגדרה? סרגל הכלים יהיה נגיש רק באמצעות קיצור המקלדת. תוכלו לגשת שוב אל מסייע ההגדרה דרך סמליל מגש המערכת בכדי להצמיד את סמל החיפוש לשורת המשימות.</value>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>או</value>
   </data>
-  <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
+  <data name="SetupAssistantExitWarningText" xml:space="preserve">
+    <value>האם אתם בטוחים שברצונכם לצאת ממסייע ההגדרה? סמל מגש המערכת יופעל כך שתוכלו עדיין לפתוח את ההגדרות של EverythingToolbar ולהגדיר את השילוב בשורת המשימות מאוחר יותר. תוכלו גם לפתוח את החיפוש בכל עת באמצעות קיצור המקלדת.</value>
+  </data>
+  <data name="SetupAssistantExitWarningTitle" xml:space="preserve">
     <value>יציאה ממסייע ההגדרה</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
@@ -168,8 +171,8 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>בוצע</value>
   </data>
-  <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>לא ניתן להשבית את סמל מגש המערכת כאשר EverythingToolbar אינו מוצמד לשורת המשימות. אנא הצמד תחילה את EverythingToolbar לשורת המשימות, או השאר את סמל מגש המערכת מופעל כדי לגשת להגדרות ולפונקציונליות.</value>
+  <data name="TrayIconDisableErrorMessage" xml:space="preserve">
+    <value>לא ניתן להשבית את סמל מגש המערכת כאשר EverythingToolbar אינו מוצמד לשורת המשימות ותיבת החיפוש בשורת המשימות אינה מופעלת. אנא הפעילו תחילה אחת מהאפשרויות, או השאירו את סמל מגש המערכת מופעל כדי לגשת להגדרות.</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>לא ניתן להשבית את סמל מגש המערכת</value>

@@ -612,6 +612,12 @@
   <data name="MessageBoxOk" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="MessageBoxYes" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="MessageBoxNo" xml:space="preserve">
+    <value>Não</value>
+  </data>
   <data name="ContextMenuOpenWithNoCustomActions" xml:space="preserve">
     <value>Nenhuma ação definida</value>
   </data>
@@ -641,6 +647,12 @@
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
     <value>Altera o estilo do ícone da barra de tarefas (requer reinicialização do explore)</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
+    <value>Esquerda</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignmentRight" xml:space="preserve">
+    <value>Direita</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value> Ordem do filtro</value>

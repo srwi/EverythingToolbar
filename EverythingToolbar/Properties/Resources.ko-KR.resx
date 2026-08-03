@@ -612,6 +612,12 @@
   <data name="MessageBoxOk" xml:space="preserve">
     <value>확인</value>
   </data>
+  <data name="MessageBoxYes" xml:space="preserve">
+    <value>예</value>
+  </data>
+  <data name="MessageBoxNo" xml:space="preserve">
+    <value>아니요</value>
+  </data>
   <data name="ContextMenuOpenWithNoCustomActions" xml:space="preserve">
     <value>정의된 작업 없음</value>
   </data>
@@ -641,6 +647,12 @@
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
     <value>작업 표시줄 아이콘의 스타일을 변경합니다 (탐색기 재시작 필요)</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
+    <value>왼쪽</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignmentRight" xml:space="preserve">
+    <value>오른쪽</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>필터 순서</value>

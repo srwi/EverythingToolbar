@@ -138,7 +138,7 @@
   <data name="SetupAssistantExitWarningText" xml:space="preserve">
     <value>Are you sure you want to exit the setup assistant? The tray icon will be enabled so you can still open EverythingToolbar's settings and set up taskbar integration later. You can also open search anytime with the keyboard shortcut.</value>
   </data>
-  <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
+  <data name="SetupAssistantExitWarningTitle" xml:space="preserve">
     <value>Exit Setup Assistant</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
