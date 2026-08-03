@@ -268,7 +268,7 @@
     <value>Autostart aktivieren</value>
   </data>
   <data name="SettingsEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Startet die EverythingToolbar automatisch beim Start von Windows</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>Suchverlauf aktivieren</value>
@@ -313,7 +313,7 @@
     <value>Miniaturansicht aktivieren</value>
   </data>
   <data name="SettingsSystemContextMenuDefault" xml:space="preserve">
-    <value>Use system context menu by default</value>
+    <value>System-Kontextmenü standardmäßig verwenden</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Everything-Filter verwenden</value>
@@ -322,7 +322,7 @@
     <value>Ansicht</value>
   </data>
   <data name="SettingsUILanguage" xml:space="preserve">
-    <value>Language</value>
+    <value>Sprache</value>
   </data>
   <data name="SettingsUILanguageHelp" xml:space="preserve">
     <value>Choose the UI language. Restart the application to apply changes.</value>
