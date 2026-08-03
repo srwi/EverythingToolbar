@@ -649,16 +649,16 @@
     <value>Altera o estilo do ícone da barra de tarefas (requer reinicialização do explore)</value>
   </data>
   <data name="SettingsTaskbarWindow" xml:space="preserve">
-    <value>Show search box</value>
+    <value>Mostrar caixa de pesquisa</value>
   </data>
   <data name="SettingsTaskbarWindowHelp" xml:space="preserve">
-    <value>Show a search box on the taskbar</value>
+    <value>Mostrar uma caixa de pesquisa na barra de tarefas</value>
   </data>
   <data name="SettingsTaskbarWindowAlignment" xml:space="preserve">
-    <value>Search box alignment</value>
+    <value>Alinhamento da caixa de pesquisa</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentHelp" xml:space="preserve">
-    <value>Controls the search box alignment on the taskbar</value>
+    <value>Controla o alinhamento da caixa de pesquisa na barra de tarefas</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
     <value>Esquerda</value>
@@ -667,19 +667,19 @@
     <value>Direita</value>
   </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
-    <value>The search box requires the original Windows 11 taskbar. When using ExplorerPatcher or StartAllBack, use the deskband instead.</value>
+    <value>A caixa de pesquisa requer a barra de tarefas original do Windows 11. Quando estiver usando o ExplorerPatcher ou StartAllBack, use a área de trabalho como alternativa.</value>
   </data>
   <data name="SettingsTaskbarIcon" xml:space="preserve">
-    <value>Taskbar icon</value>
+    <value>Ícone de barra de tarefas</value>
   </data>
   <data name="SettingsTaskbarSearchBox" xml:space="preserve">
-    <value>Taskbar search box</value>
+    <value>Caixa de pesquisa da barra de tarefas</value>
   </data>
   <data name="SettingsTaskbarIconStatusPinned" xml:space="preserve">
-    <value>Pinned to taskbar</value>
+    <value>Fixado na barra de tarefas</value>
   </data>
   <data name="SettingsTaskbarIconStatusNotPinned" xml:space="preserve">
-    <value>Not pinned to taskbar</value>
+    <value>Não fixado na barra de tarefas</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value> Ordem do filtro</value>
