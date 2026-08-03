@@ -120,8 +120,8 @@
   <data name="ContextMenuQuit" xml:space="preserve">
     <value>退出</value>
   </data>
-  <data name="ContextMenuRunSetupAssistant" xml:space="preserve">
-    <value>运行设置助手...</value>
+  <data name="ContextMenuSettings" xml:space="preserve">
+    <value>设置...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
     <value>右键单击 EverythingToolbar 任务栏图标并选择“固定到任务栏”以固定到任务栏。</value>
@@ -135,10 +135,10 @@
   <data name="SetupAssistantTitle" xml:space="preserve">
     <value>EverythingToolbar 设置助手</value>
   </data>
-  <data name="SetupAssistantDisableWarningText" xml:space="preserve">
-    <value>您确定要退出设置助手吗？EverythingToolbar 将只能使用键盘快捷键访问。 您可通过系统托盘再次访问设置助手，以在任务栏中显示搜索图标。</value>
+  <data name="SetupAssistantExitWarningText" xml:space="preserve">
+    <value>您确定要退出设置助手吗？系统托盘图标将被启用，您仍可打开 EverythingToolbar 的设置并稍后配置任务栏集成。您也可以随时使用键盘快捷键打开搜索。</value>
   </data>
-  <data name="SetupAssistantDisableWarningTitle" xml:space="preserve">
+  <data name="SetupAssistantExitWarningTitle" xml:space="preserve">
     <value>退出设置助手</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
@@ -159,6 +159,9 @@
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
     <value>启用系统托盘图标以快速访问设置</value>
   </data>
+  <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
+    <value>Embeds a search box on the taskbar</value>
+  </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>启用自动启动</value>
   </data>
@@ -168,10 +171,28 @@
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>完成</value>
   </data>
-  <data name="TrayIconDisableErrorText" xml:space="preserve">
-    <value>当 EverythingToolbar 未固定到任务栏时，系统托盘图标无法禁用。请先将 EverythingToolbar 固定到任务栏，或保持系统托盘图标启用以访问设置和功能。</value>
+  <data name="SetupAssistantChooseAccess" xml:space="preserve">
+    <value>Choose how to open EverythingToolbar</value>
+  </data>
+  <data name="SetupAssistantOr" xml:space="preserve">
+    <value>或</value>
+  </data>
+  <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
+    <value>Taskbar search box</value>
+  </data>
+  <data name="TrayIconDisableErrorMessage" xml:space="preserve">
+    <value>当 EverythingToolbar 既未固定到任务栏，也未启用任务栏搜索框时，无法禁用系统托盘图标。请先启用其中之一，或保持系统托盘图标启用以访问设置。</value>
   </data>
   <data name="TrayIconDisableErrorTitle" xml:space="preserve">
     <value>无法禁用系统托盘图标</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
+    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+  </data>
+  <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
+    <value>Tray icon enabled</value>
+  </data>
+  <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
+    <value>Taskbar search box disabled</value>
   </data>
 </root>
