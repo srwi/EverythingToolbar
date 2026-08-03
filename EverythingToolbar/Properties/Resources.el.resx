@@ -612,6 +612,12 @@
   <data name="MessageBoxOk" xml:space="preserve">
     <value>ΟΚ</value>
   </data>
+  <data name="MessageBoxYes" xml:space="preserve">
+    <value>Ναι</value>
+  </data>
+  <data name="MessageBoxNo" xml:space="preserve">
+    <value>Όχι</value>
+  </data>
   <data name="ContextMenuOpenWithNoCustomActions" xml:space="preserve">
     <value>Δεν έχουν οριστεί ενέργειες</value>
   </data>
@@ -641,6 +647,39 @@
   </data>
   <data name="SettingsSearchIconHelp" xml:space="preserve">
     <value>Αλλάζει το στυλ του εικονιδίου της γραμμής εργασιών (απαιτεί επανεκκίνηση του εξερευνητή)</value>
+  </data>
+  <data name="SettingsTaskbarWindow" xml:space="preserve">
+    <value>Show search box</value>
+  </data>
+  <data name="SettingsTaskbarWindowHelp" xml:space="preserve">
+    <value>Show a search box on the taskbar</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignment" xml:space="preserve">
+    <value>Search box alignment</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignmentHelp" xml:space="preserve">
+    <value>Controls the search box alignment on the taskbar</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
+    <value>Αριστερά</value>
+  </data>
+  <data name="SettingsTaskbarWindowAlignmentRight" xml:space="preserve">
+    <value>Δεξιά</value>
+  </data>
+  <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
+    <value>The search box requires the original Windows 11 taskbar. When using ExplorerPatcher or StartAllBack, use the deskband instead.</value>
+  </data>
+  <data name="SettingsTaskbarIcon" xml:space="preserve">
+    <value>Taskbar icon</value>
+  </data>
+  <data name="SettingsTaskbarSearchBox" xml:space="preserve">
+    <value>Taskbar search box</value>
+  </data>
+  <data name="SettingsTaskbarIconStatusPinned" xml:space="preserve">
+    <value>Pinned to taskbar</value>
+  </data>
+  <data name="SettingsTaskbarIconStatusNotPinned" xml:space="preserve">
+    <value>Not pinned to taskbar</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>Filter order</value>
