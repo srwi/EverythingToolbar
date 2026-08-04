@@ -160,7 +160,7 @@
     <value>启用系统托盘图标以快速访问设置</value>
   </data>
   <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
-    <value>Embeds a search box on the taskbar</value>
+    <value>在任务栏上嵌入搜索框</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>启用自动启动</value>
@@ -172,13 +172,13 @@
     <value>完成</value>
   </data>
   <data name="SetupAssistantChooseAccess" xml:space="preserve">
-    <value>Choose how to open EverythingToolbar</value>
+    <value>选择打开 EverythingToolbar 的方式</value>
   </data>
   <data name="SetupAssistantOr" xml:space="preserve">
     <value>或</value>
   </data>
   <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
-    <value>Taskbar search box</value>
+    <value>任务栏搜索框</value>
   </data>
   <data name="TrayIconDisableErrorMessage" xml:space="preserve">
     <value>当 EverythingToolbar 既未固定到任务栏，也未启用任务栏搜索框时，无法禁用系统托盘图标。请先启用其中之一，或保持系统托盘图标启用以访问设置。</value>
@@ -187,12 +187,12 @@
     <value>无法禁用系统托盘图标</value>
   </data>
   <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
-    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+    <value>已启用托盘图标，以便在禁用任务栏搜索框后仍然可以访问 EverythingToolbar。</value>
   </data>
   <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
-    <value>Tray icon enabled</value>
+    <value>托盘图标已启用</value>
   </data>
   <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
-    <value>Taskbar search box disabled</value>
+    <value>任务栏搜索框已禁用</value>
   </data>
 </root>
