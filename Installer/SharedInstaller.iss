@@ -257,7 +257,8 @@ begin
     'Choose Installation Type', 'Select how you want to install EverythingToolbar',
     'Please specify which installation method you would like to use, then click Next.',
     True, False);
-  InstallTypePage.Add(''#13#10'Launcher (Recommended for Windows 11):'#13#10'Pins EverythingToolbar as a regular taskbar icon. ' +
+  InstallTypePage.Add(''#13#10'Launcher (Recommended for Windows 11):'#13#10'Pins EverythingToolbar as a regular taskbar icon ' +
+                      'or embeds a search box on the Windows 11 taskbar. ' +
                       'This is the only option compatible with unmodified Windows 11 installations.'#13#10'');
   InstallTypePage.Add(''#13#10'Deskband (Requires Windows 10 or StartAllBack / ExplorerPatcher):'#13#10'' +
                       'Integrates the search bar directly into the taskbar. Only works on Windows 10 or ' +

@@ -19,7 +19,7 @@ EverythingToolbar就在您的任务栏上，既可以是Windows 11上可直接�
 
 <img src="https://raw.githubusercontent.com/srwi/EverythingToolbar/develop/.github/images/taskbar_modes.png" alt="任务栏搜索框与搜索图标" width="80%">
 
-您可以在设置过程中选择，也可以随时在**设置** → **任务栏集成**中切换。搜索框可放置在任务栏的任意一侧，任务栏居中对齐时可选择靠左对齐。
+您可以在设置过程中选择，也可以随时在**设置** → **任务栏集成**中切换。
 
 此外，在Windows 10上，EverythingToolbar还可以作为原生桌面栏集成到任务栏内部。
 
