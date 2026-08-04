@@ -60,7 +60,7 @@ namespace EverythingToolbar.Launcher
             {
                 Logger.Warn("Taskbar window could not attach to the taskbar.");
                 Close();
-                AttachAbandoned?.Invoke();
+                ScheduleAttachRetry();
                 return;
             }
 
@@ -114,13 +114,14 @@ namespace EverythingToolbar.Launcher
             timer.Start();
         }
 
-        // A taskbar that is mid-build looks unsupported, and at logon the toolbar can easily win the
-        // race against explorer. TaskbarCreated only helps when it arrives after we started listening,
-        // so give the taskbar a few seconds to appear before settling for the pinned icon.
+        // A taskbar that is mid-build looks unsupported or refuses the attach, and at logon the toolbar
+        // can easily win the race against explorer. TaskbarCreated only helps when it arrives after we
+        // started listening, so give the taskbar a few seconds to appear before settling for the icon.
         private void ScheduleAttachRetry()
         {
             if (_attachRetriesLeft <= 0)
             {
+                Logger.Info("Giving up on the taskbar search box; the pinned icon stays the way in.");
                 AttachAbandoned?.Invoke();
                 return;
             }

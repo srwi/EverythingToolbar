@@ -80,11 +80,9 @@ namespace EverythingToolbar.Launcher
                 {
                     if (e.PropertyName == nameof(_settings.IsTrayIconEnabled))
                     {
-                        if (
-                            !_settings.IsTrayIconEnabled
-                            && !Utils.IsTaskbarPinned()
-                            && !_windowsPolicy.IsTaskbarWindowActive()
-                        )
+                        // Ask the host, not the setting: the setting can be on while the taskbar
+                        // refuses the search box, and that leaves the tray icon as the only way in.
+                        if (!_settings.IsTrayIconEnabled && !Utils.IsTaskbarPinned() && !_taskbarWindowHost.IsRunning)
                         {
                             await FluentMessageBox
                                 .CreateError(
