@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
+using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using EverythingToolbar.Helpers;
@@ -51,6 +53,8 @@ namespace EverythingToolbar.Deskband
         {
             try
             {
+                EnsureDispatcherSynchronizationContext();
+
                 AppServices.Initialize();
 
                 _taskbarState = Ioc.Default.GetRequiredService<TaskbarInfoProvider>();
@@ -89,6 +93,22 @@ namespace EverythingToolbar.Deskband
         }
 
         public void Dummy() { }
+
+        // Explorer owns this thread's message loop, so WPF installs no synchronization context of its
+        // own and awaits can resume off the UI thread, losing search results (issue #762).
+        private static void EnsureDispatcherSynchronizationContext()
+        {
+            if (SynchronizationContext.Current is DispatcherSynchronizationContext)
+                return;
+
+            Logger.Debug(
+                "No dispatcher synchronization context on the deskband UI thread (found: {context}); installing one.",
+                SynchronizationContext.Current?.GetType().Name ?? "none"
+            );
+            SynchronizationContext.SetSynchronizationContext(
+                new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher)
+            );
+        }
 
         private void OnSearchWindowActiveChanged(object? sender, bool isActive)
         {
