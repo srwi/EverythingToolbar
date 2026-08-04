@@ -1,7 +1,6 @@
 using System;
 using System.Windows.Interop;
 using System.Windows.Threading;
-using EverythingToolbar.Controls;
 using NLog;
 
 namespace EverythingToolbar.Launcher
@@ -13,10 +12,13 @@ namespace EverythingToolbar.Launcher
         private readonly ISettings _settings;
         private readonly SearchWindowController _controller;
         private readonly SearchHost _searchHost;
-        private readonly Dispatcher _dispatcher = Dispatcher.CurrentDispatcher;
+
+        private const int AttachRetryCount = 5;
+        private static readonly TimeSpan AttachRetryInterval = TimeSpan.FromSeconds(2);
 
         private TaskbarWindow? _taskbarWindow;
         private bool _closingTaskbarWindowIntentionally;
+        private int _attachRetriesLeft = AttachRetryCount;
 
         public TaskbarWindowHost(
             WindowsPolicy windowsPolicy,
@@ -31,47 +33,20 @@ namespace EverythingToolbar.Launcher
             _searchHost = searchHost;
         }
 
-        public bool DisableIfUnsupported()
-        {
-            if (!_settings.TaskbarWindowEnabled || _windowsPolicy.CanEnableTaskbarWindow())
-                return false;
-
-            Logger.Info("Classic taskbar detected. Disabling the taskbar search box.");
-
-            // Turning the setting off runs the regular teardown, which also guarantees that the user
-            // is left with a way into search and settings.
-            _settings.TaskbarWindowEnabled = false;
-            ShowUnsupportedMessage();
-            return true;
-        }
-
-        private void ShowUnsupportedMessage()
-        {
-            _dispatcher.BeginInvoke(async () =>
-            {
-                try
-                {
-                    await FluentMessageBox
-                        .CreateError(
-                            EverythingToolbar.Properties.Resources.SettingsTaskbarWindowUnsupported,
-                            Properties.Resources.TaskbarWindowUnsupportedTitle
-                        )
-                        .ShowDialogAsync();
-                }
-                catch (Exception ex)
-                {
-                    Logger.Error(ex, "Failed to show the unsupported taskbar message");
-                }
-            });
-        }
+        public bool IsRunning => _taskbarWindow != null;
 
         public void Create()
         {
-            if (DisableIfUnsupported())
-                return;
-
             if (!_windowsPolicy.IsTaskbarWindowActive() || _taskbarWindow != null)
                 return;
+
+            if (!_windowsPolicy.CanEnableTaskbarWindow())
+            {
+                Logger.Info("Taskbar does not currently host a search box; falling back to the pinned icon.");
+                Close();
+                ScheduleAttachRetry();
+                return;
+            }
 
             _taskbarWindow = new TaskbarWindow(_windowsPolicy, _settings);
             _taskbarWindow.Closed += OnTaskbarWindowClosed;
@@ -87,6 +62,8 @@ namespace EverythingToolbar.Launcher
             _taskbarWindow.Show();
             _controller.SetIconMode(false);
             _searchHost.SetPlacementTarget(_taskbarWindow.PlacementTarget);
+
+            _attachRetriesLeft = AttachRetryCount;
         }
 
         public void Close()
@@ -119,12 +96,33 @@ namespace EverythingToolbar.Launcher
             if (!_windowsPolicy.IsTaskbarWindowActive())
                 return;
 
+            _attachRetriesLeft = AttachRetryCount;
+
             // Delay so the new taskbar's UIA tree (Widgets button / tray) is ready for positioning.
-            var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
+            var timer = new DispatcherTimer { Interval = AttachRetryInterval };
             timer.Tick += (_, _) =>
             {
                 timer.Stop();
                 Close();
+                Create();
+            };
+            timer.Start();
+        }
+
+        // A taskbar that is mid-build looks unsupported, and at logon the toolbar can easily win the
+        // race against explorer. TaskbarCreated only helps when it arrives after we started listening,
+        // so give the taskbar a few seconds to appear before settling for the pinned icon.
+        private void ScheduleAttachRetry()
+        {
+            if (_attachRetriesLeft <= 0)
+                return;
+
+            _attachRetriesLeft--;
+
+            var timer = new DispatcherTimer { Interval = AttachRetryInterval };
+            timer.Tick += (_, _) =>
+            {
+                timer.Stop();
                 Create();
             };
             timer.Start();

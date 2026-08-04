@@ -47,7 +47,8 @@ namespace EverythingToolbar.Launcher
             _autostart.IsEnabled = value;
         }
 
-        public bool IsTaskbarWindowSupported => _windowsPolicy.CanEnableTaskbarWindow();
+        [ObservableProperty]
+        private bool _isTaskbarWindowSupported;
 
         public bool PreferencesUnlocked => CurrentStep == 1 || _windowsPolicy.IsTaskbarWindowActive();
 
@@ -63,7 +64,8 @@ namespace EverythingToolbar.Launcher
             new(EverythingToolbar.Properties.Resources.SettingsTaskbarWindowAlignmentRight, "Right"),
         ];
 
-        public bool AllowLeftAlignment => _windowsPolicy.IsTaskbarCenterAligned();
+        [ObservableProperty]
+        private bool _allowLeftAlignment;
 
         [ObservableProperty]
         private int _currentStep;
@@ -78,6 +80,9 @@ namespace EverythingToolbar.Launcher
 
         internal SetupAssistant(TrayIcon icon)
         {
+            _isTaskbarWindowSupported = _windowsPolicy.CanEnableTaskbarWindow();
+            _allowLeftAlignment = _windowsPolicy.IsTaskbarCenterAligned();
+
             if (!AllowLeftAlignment && _settings.TaskbarWindowAlignment == "Left")
                 _settings.TaskbarWindowAlignment = "Right";
 
@@ -98,6 +103,8 @@ namespace EverythingToolbar.Launcher
 
             CreateFileWatcher(_taskbarShortcutPath);
             CreateTaskbarAlignmentWatcher();
+
+            Loaded += (_, _) => RefreshTaskbarWindowSupport();
 
             if (File.Exists(_taskbarShortcutPath))
             {
@@ -128,9 +135,16 @@ namespace EverythingToolbar.Launcher
             NativeMethods.FlashWindow(new WindowInteropHelper(this).Handle, true);
         }
 
+        private void RefreshTaskbarWindowSupport()
+        {
+            IsTaskbarWindowSupported = _windowsPolicy.CanEnableTaskbarWindow();
+            AllowLeftAlignment = _windowsPolicy.IsTaskbarCenterAligned();
+            CreateTaskbarAlignmentWatcher();
+        }
+
         private void CreateTaskbarAlignmentWatcher()
         {
-            if (!IsTaskbarWindowSupported)
+            if (!IsTaskbarWindowSupported || _taskbarAlignmentWatcher != null)
                 return;
 
             _taskbarAlignmentWatcher = new RegistryValueWatcher(
@@ -141,7 +155,7 @@ namespace EverythingToolbar.Launcher
 
         private void OnTaskbarAlignmentChanged()
         {
-            Dispatcher.BeginInvoke(() => OnPropertyChanged(nameof(AllowLeftAlignment)));
+            Dispatcher.BeginInvoke(() => AllowLeftAlignment = _windowsPolicy.IsTaskbarCenterAligned());
         }
 
         private void SetAppIcon()

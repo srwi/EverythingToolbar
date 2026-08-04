@@ -13,6 +13,9 @@ namespace EverythingToolbar.Platform.Helpers
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
+        // The Windows 11 taskbar hosts its UI in a XAML island; the classic taskbar has none.
+        private const string TaskbarXamlIslandClass = "Windows.UI.Composition.DesktopWindowContentBridge";
+
         public static IntPtr FindTaskbarHandle()
         {
             return FindWindow("Shell_TrayWnd", null);
@@ -24,7 +27,29 @@ namespace EverythingToolbar.Platform.Helpers
             if (taskbarHandle == IntPtr.Zero)
                 return false;
 
-            return FindWindowEx(taskbarHandle, IntPtr.Zero, "ReBarWindow32", null) != IntPtr.Zero;
+            return !HasChildOfClass(taskbarHandle, TaskbarXamlIslandClass);
+        }
+
+        private static bool HasChildOfClass(IntPtr parentHandle, string className)
+        {
+            var child = PInvoke.GetWindow((HWND)parentHandle, GET_WINDOW_CMD.GW_CHILD);
+            while (child != HWND.Null)
+            {
+                if (GetWindowClassName(child) == className)
+                    return true;
+
+                child = PInvoke.GetWindow(child, GET_WINDOW_CMD.GW_HWNDNEXT);
+            }
+
+            return false;
+        }
+
+        private static unsafe string GetWindowClassName(HWND handle)
+        {
+            const int maxClassNameLength = 256;
+            var buffer = stackalloc char[maxClassNameLength];
+            var length = PInvoke.GetClassName(handle, buffer, maxClassNameLength);
+            return length > 0 ? new string(buffer, 0, length) : string.Empty;
         }
 
         public static IntPtr FindWindow(string lpClassName, string? lpWindowName)

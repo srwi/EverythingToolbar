@@ -147,9 +147,10 @@
             <ui:InfoBar
               Margin="0 15 0 0"
               IsClosable="False"
-              IsOpen="{Binding IsTaskbarWindowUnsupported, Mode=OneWay}"
+              IsOpen="True"
               Message="{x:Static properties:Resources.SettingsTaskbarWindowUnsupported}"
-              Severity="Warning" />
+              Severity="Warning"
+              Visibility="{Binding CanEnableTaskbarWindow, Converter={c:InvertedBoolToVisibilityConverter}}" />
           </StackPanel>
         </Border>
         <Border

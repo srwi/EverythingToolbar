@@ -3,6 +3,8 @@
 // callers keep their IntPtr-based signatures.
 FindWindow
 FindWindowEx
+GetWindow
+GetClassName
 FlashWindow
 GetForegroundWindow
 GetWindowThreadProcessId

@@ -26,14 +26,14 @@ namespace EverythingToolbar.Launcher.Settings
 
         public bool ShowTaskbarWindowSettings => _windowsPolicy.GetWindowsVersion() >= WindowsVersion.Windows11;
 
-        public bool IsTaskbarWindowUnsupported => !_windowsPolicy.CanEnableTaskbarWindow();
+        [ObservableProperty]
+        private bool _canEnableTaskbarWindow;
 
-        public bool CanEnableTaskbarWindow => !IsTaskbarWindowUnsupported;
+        [ObservableProperty]
+        private bool _allowLeftAlignment;
 
         public List<KeyValuePair<string, string>> TaskbarWindowAlignmentOptions { get; } =
         [new(Res.SettingsTaskbarWindowAlignmentLeft, "Left"), new(Res.SettingsTaskbarWindowAlignmentRight, "Right")];
-
-        public bool AllowLeftAlignment => _windowsPolicy.IsTaskbarCenterAligned();
 
         [ObservableProperty]
         private IconItem? _selectedIconItem;
@@ -79,6 +79,9 @@ namespace EverythingToolbar.Launcher.Settings
 
         public TaskbarIntegration()
         {
+            _canEnableTaskbarWindow = _windowsPolicy.CanEnableTaskbarWindow();
+            _allowLeftAlignment = _windowsPolicy.IsTaskbarCenterAligned();
+
             if (!AllowLeftAlignment && _settings.TaskbarWindowAlignment == "Left")
                 _settings.TaskbarWindowAlignment = "Right";
 
@@ -97,6 +100,9 @@ namespace EverythingToolbar.Launcher.Settings
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             IsTaskbarIconPinned = File.Exists(_taskbarShortcutPath);
+            CanEnableTaskbarWindow = _windowsPolicy.CanEnableTaskbarWindow();
+            AllowLeftAlignment = _windowsPolicy.IsTaskbarCenterAligned();
+
             CreateFileWatcher();
             CreateTaskbarAlignmentWatcher();
         }
@@ -131,7 +137,7 @@ namespace EverythingToolbar.Launcher.Settings
 
         private void OnTaskbarAlignmentChanged()
         {
-            Dispatcher.BeginInvoke(() => OnPropertyChanged(nameof(AllowLeftAlignment)));
+            Dispatcher.BeginInvoke(() => AllowLeftAlignment = _windowsPolicy.IsTaskbarCenterAligned());
         }
 
         private void CreateFileWatcher()
