@@ -124,7 +124,7 @@
     <value>Настройки...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
-    <value>Чтобы закрепить EverythingToolbar на панели задач, щёлкните правой кнопкой мыши и выберите 'Закрепить на панели задач'.</value>
+    <value>Чтобы закрепить EverythingToolbar на панели задач, щёлкните по его значку правой кнопкой мыши и выберите «Закрепить на панели задач».</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>Чтобы обновить значок панели задач, нужно перезапустить Проводник. Сделать это сейчас?</value>
@@ -136,10 +136,10 @@
     <value>Помощник настройки EverythingToolbar</value>
   </data>
   <data name="SetupAssistantExitWarningText" xml:space="preserve">
-    <value>Вы действительно хотите закрыть помощника по настройке? Значок в области уведомлений будет включён, чтобы вы по-прежнему могли открыть настройки EverythingToolbar и настроить интеграцию с панелью задач позже. Также вы можете открыть поиск в любой момент с помощью сочетания клавиш.</value>
+    <value>Вы действительно хотите закрыть помощник настройки? Значок в области уведомлений будет включён, чтобы вы по-прежнему могли открыть настройки EverythingToolbar и настроить интеграцию с панелью задач позже. Также вы можете открыть поиск в любой момент с помощью сочетания клавиш.</value>
   </data>
   <data name="SetupAssistantExitWarningTitle" xml:space="preserve">
-    <value>Закрыть помощника по настройке</value>
+    <value>Выход из помощника настройки</value>
   </data>
   <data name="SetupAssistantPinToTaskbar" xml:space="preserve">
     <value>Закрепить на панели задач</value>
@@ -151,7 +151,7 @@
     <value>Скрыть значок поиска Windows</value>
   </data>
   <data name="SetupAssistantHideWindowsSearchHelp" xml:space="preserve">
-    <value>Скрывает исходный значок поиска Windows в панели задач</value>
+    <value>Скрывает исходный значок поиска Windows с панели задач</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
     <value>Показывать значок в области уведомлений</value>
@@ -160,25 +160,25 @@
     <value>Показывать значок в области уведомлений для быстрого доступа к настройкам</value>
   </data>
   <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
-    <value>Embeds a search box on the taskbar</value>
+    <value>Встраивает поле поиска в панель задач</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>Включить автозапуск</value>
   </data>
   <data name="SetupAssistantEnableAutostartHelp" xml:space="preserve">
-    <value>Автоматически запускать EverythingToolbar вместе с Windows</value>
+    <value>Автоматически запускать EverythingToolbar при запуске Windows</value>
   </data>
   <data name="SetupAssistantDone" xml:space="preserve">
     <value>Готово</value>
   </data>
   <data name="SetupAssistantChooseAccess" xml:space="preserve">
-    <value>Choose how to open EverythingToolbar</value>
+    <value>Выберите способ запуска EverythingToolbar</value>
   </data>
   <data name="SetupAssistantOr" xml:space="preserve">
     <value>или</value>
   </data>
   <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
-    <value>Taskbar search box</value>
+    <value>Поле поиска на панели задач</value>
   </data>
   <data name="TrayIconDisableErrorMessage" xml:space="preserve">
     <value>Значок в области уведомлений нельзя отключить, если EverythingToolbar не закреплён на панели задач и поле поиска на панели задач не включено. Сначала включите одно из этого либо оставьте значок в области уведомлений включённым для доступа к настройкам.</value>
@@ -187,12 +187,12 @@
     <value>Невозможно отключить значок в области уведомлений</value>
   </data>
   <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
-    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+    <value>Значок в области уведомлений был включён, чтобы EverythingToolbar оставался доступным после отключения поля поиска на панели задач.</value>
   </data>
   <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
-    <value>Tray icon enabled</value>
+    <value>Значок в области уведомлений включён</value>
   </data>
   <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
-    <value>Taskbar search box disabled</value>
+    <value>Поле поиска на панели задач отключено</value>
   </data>
 </root>
