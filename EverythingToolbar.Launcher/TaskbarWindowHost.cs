@@ -35,6 +35,10 @@ namespace EverythingToolbar.Launcher
 
         public bool IsRunning => _taskbarWindow != null;
 
+        // Raised once the taskbar window is known not to be coming up, so that callers can fall back.
+        // Until then a missing taskbar window means nothing: the taskbar may simply be mid-build.
+        public event Action? AttachAbandoned;
+
         public void Create()
         {
             if (!_windowsPolicy.IsTaskbarWindowActive() || _taskbarWindow != null)
@@ -56,6 +60,7 @@ namespace EverythingToolbar.Launcher
             {
                 Logger.Warn("Taskbar window could not attach to the taskbar.");
                 Close();
+                AttachAbandoned?.Invoke();
                 return;
             }
 
@@ -115,7 +120,10 @@ namespace EverythingToolbar.Launcher
         private void ScheduleAttachRetry()
         {
             if (_attachRetriesLeft <= 0)
+            {
+                AttachAbandoned?.Invoke();
                 return;
+            }
 
             _attachRetriesLeft--;
 

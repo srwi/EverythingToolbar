@@ -63,19 +63,18 @@ namespace EverythingToolbar.Launcher
                 _searchHost.Attach(placementTarget: null, iconMode: !_windowsPolicy.IsTaskbarWindowActive());
 
                 if (_windowsPolicy.IsTaskbarWindowActive())
+                {
+                    // The taskbar can still be mid-build at logon, so the taskbar window not being up
+                    // yet is no reason to fall back to the assistant. Wait until the host gives up.
+                    _taskbarWindowHost.AttachAbandoned += () => ShowSetupAssistantIfNeeded(icon);
                     _taskbarWindowHost.Create();
+                }
+                else
+                {
+                    ShowSetupAssistantIfNeeded(icon);
+                }
 
                 StartToggleListener();
-
-                if (
-                    !Utils.IsTaskbarPinned()
-                    && !_taskbarWindowHost.IsRunning
-                    && (!_settings.IsSetupAssistantDisabled || !_settings.IsTrayIconEnabled)
-                )
-                {
-                    _suppressInitialTrayIcon = true;
-                    new SetupAssistant(icon).Show();
-                }
 
                 _settings.PropertyChanged += async (_, e) =>
                 {
@@ -146,6 +145,15 @@ namespace EverythingToolbar.Launcher
                         }
                     }
                 };
+            }
+
+            private void ShowSetupAssistantIfNeeded(TrayIcon icon)
+            {
+                if (Utils.IsTaskbarPinned() || (_settings.IsSetupAssistantDisabled && _settings.IsTrayIconEnabled))
+                    return;
+
+                _suppressInitialTrayIcon = true;
+                new SetupAssistant(icon).Show();
             }
 
             protected override void OnSourceInitialized(EventArgs e)
