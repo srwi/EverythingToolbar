@@ -267,15 +267,6 @@ namespace EverythingToolbar.Launcher.Properties {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Taskbar search box disabled.
-        /// </summary>
-        public static string TaskbarWindowUnsupportedTitle {
-            get {
-                return ResourceManager.GetString("TaskbarWindowUnsupportedTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to The system tray icon cannot be disabled when EverythingToolbar is neither pinned to the taskbar nor has the taskbar search box enabled. Please enable either first, or keep the system tray icon enabled to access settings..
         /// </summary>
         public static string TrayIconDisableErrorMessage {

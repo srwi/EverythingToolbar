@@ -192,7 +192,4 @@
   <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
     <value>Tray icon enabled</value>
   </data>
-  <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
-    <value>Taskbar search box disabled</value>
-  </data>
 </root>

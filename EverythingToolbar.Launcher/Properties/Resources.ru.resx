@@ -192,7 +192,4 @@
   <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
     <value>Значок в области уведомлений включён</value>
   </data>
-  <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
-    <value>Поле поиска на панели задач отключено</value>
-  </data>
 </root>

@@ -192,7 +192,4 @@
   <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
     <value>Infobereichsymbol aktiviert</value>
   </data>
-  <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
-    <value>Taskleisten-Suchfeld deaktiviert</value>
-  </data>
 </root>

@@ -192,7 +192,4 @@
   <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
     <value>Ícone da bandeja ativado</value>
   </data>
-  <data name="TaskbarWindowUnsupportedTitle" xml:space="preserve">
-    <value>Caixa de pesquisa da barra de tarefas desativada</value>
-  </data>
 </root>
