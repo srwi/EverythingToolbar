@@ -265,10 +265,10 @@
     <value>アニメーションを無効化</value>
   </data>
   <data name="SettingsEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>アプリを自動起動する</value>
   </data>
   <data name="SettingsEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Windows起動時にEverythingToolbarを自動的に起動します</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>検索履歴を有効</value>
@@ -313,7 +313,7 @@
     <value>サムネイルを有効化</value>
   </data>
   <data name="SettingsSystemContextMenuDefault" xml:space="preserve">
-    <value>Use system context menu by default</value>
+    <value>システムコンテキストメニューをデフォルトで使用</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Everything のフィルタを使用</value>
@@ -556,7 +556,7 @@
     <value>画像ファイルのサムネイルを表示します</value>
   </data>
   <data name="SettingsSystemContextMenuDefaultHelp" xml:space="preserve">
-    <value>Show the Windows context menu when right-clicking a result</value>
+    <value>結果を右クリックしたときに Windows のコンテキストメニューを表示します</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
     <value>検索結果の総数を表示します</value>
@@ -649,16 +649,16 @@
     <value>タスクバーアイコンのスタイルを変更します (エクスプローラーの再起動が必要です)</value>
   </data>
   <data name="SettingsTaskbarWindow" xml:space="preserve">
-    <value>Show search box</value>
+    <value>検索ボックスを表示</value>
   </data>
   <data name="SettingsTaskbarWindowHelp" xml:space="preserve">
-    <value>Show a search box on the taskbar</value>
+    <value>タスクバーに検索ボックスを表示します</value>
   </data>
   <data name="SettingsTaskbarWindowAlignment" xml:space="preserve">
-    <value>Search box alignment</value>
+    <value>検索ボックスの位置</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentHelp" xml:space="preserve">
-    <value>Controls the search box alignment on the taskbar</value>
+    <value>タスクバーの検索ボックスの配置を制御します</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
     <value>左揃え</value>
@@ -667,19 +667,19 @@
     <value>右揃え</value>
   </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
-    <value>The search box requires the original Windows 11 taskbar. When using ExplorerPatcher or StartAllBack, use the deskband instead.</value>
+    <value>検索ボックスには、元のWindows 11タスクバーが必要です。ExplorerPatcherまたはStartAllBackを使用する場合は、代わりにデスクトップを使用してください。</value>
   </data>
   <data name="SettingsTaskbarIcon" xml:space="preserve">
-    <value>Taskbar icon</value>
+    <value>タスクバーアイコン</value>
   </data>
   <data name="SettingsTaskbarSearchBox" xml:space="preserve">
-    <value>Taskbar search box</value>
+    <value>タスクバーの検索ボックス</value>
   </data>
   <data name="SettingsTaskbarIconStatusPinned" xml:space="preserve">
-    <value>Pinned to taskbar</value>
+    <value>タスクバーにピン留めされています</value>
   </data>
   <data name="SettingsTaskbarIconStatusNotPinned" xml:space="preserve">
-    <value>Not pinned to taskbar</value>
+    <value>タスクバーにピン留めされていません</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>フィルターの順番</value>
