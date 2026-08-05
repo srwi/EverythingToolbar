@@ -160,7 +160,7 @@
     <value>システムトレイアイコンを有効にして設定にすばやくアクセスします</value>
   </data>
   <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
-    <value>Embeds a search box on the taskbar</value>
+    <value>タスクバーに検索ボックスを埋め込みます</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>アプリを自動起動する</value>
@@ -172,13 +172,13 @@
     <value>完了</value>
   </data>
   <data name="SetupAssistantChooseAccess" xml:space="preserve">
-    <value>Choose how to open EverythingToolbar</value>
+    <value>EverythingToolbar を開く方法を選択してください</value>
   </data>
   <data name="SetupAssistantOr" xml:space="preserve">
     <value>または</value>
   </data>
   <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
-    <value>Taskbar search box</value>
+    <value>タスクバー検索ボックス</value>
   </data>
   <data name="TrayIconDisableErrorMessage" xml:space="preserve">
     <value>EverythingToolbar がタスクバーにピン留めされておらず、タスクバーの検索ボックスも有効になっていない場合、システムトレイアイコンを無効にすることはできません。 まずいずれかを有効にするか、設定にアクセスできるようシステムトレイアイコンを有効なままにしてください。</value>
@@ -187,9 +187,9 @@
     <value>システムトレイアイコンを無効にできません</value>
   </data>
   <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
-    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+    <value>タスクバーの検索を無効にした後でも EverythingToolbar にアクセスできるようにトレイアイコンが有効になっています。</value>
   </data>
   <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
-    <value>Tray icon enabled</value>
+    <value>トレイアイコンが有効</value>
   </data>
 </root>
