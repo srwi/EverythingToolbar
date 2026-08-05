@@ -7,6 +7,8 @@ using Microsoft.Xaml.Behaviors;
 using NLog;
 using Windows.Win32;
 using Windows.Win32.Foundation;
+using Windows.Win32.Graphics.Gdi;
+using Windows.Win32.UI.HiDpi;
 using FlowDirection = System.Windows.FlowDirection;
 using Point = System.Drawing.Point;
 using Size = System.Windows.Size;
@@ -77,7 +79,8 @@ namespace EverythingToolbar.Behaviors
 
         private void OnPlacementTargetLoaded(object sender, RoutedEventArgs e)
         {
-            _dpiScalingFactor = GetScalingFactor();
+            if (TryGetPlacementTargetScreen() is { } screen)
+                _dpiScalingFactor = GetScalingFactor(screen);
         }
 
         private void OnHiding(object? sender, EventArgs e)
@@ -87,11 +90,26 @@ namespace EverythingToolbar.Behaviors
 
         private void OnShowing(object? sender, ShowingEventArgs e)
         {
-            _dpiScalingFactor = GetScalingFactor();
-
             var useCursor = e.AtCursor || PlacementTarget == null;
 
-            var position = useCursor ? CalculatePositionFromTaskbar() : CalculatePositionFromTarget();
+            RECT placementTargetRect = default;
+            if (!useCursor && !TryGetPlacementTargetRect(out placementTargetRect))
+            {
+                Logger.Error("Failed to get PlacementTarget bounds. Falling back to cursor placement.");
+                useCursor = true;
+            }
+
+            // Every calculation below works in physical pixels, so the scaling factor has to come from the
+            // monitor the window is about to appear on. The placement target lives on the primary taskbar
+            // and is the wrong reference whenever the window opens at a cursor on another monitor.
+            var screen = useCursor
+                ? Screen.FromPoint(Cursor.Position)
+                : Screen.FromPoint(new Point(placementTargetRect.left, placementTargetRect.top));
+            _dpiScalingFactor = GetScalingFactor(screen);
+
+            var position = useCursor
+                ? CalculatePositionFromTaskbar(screen)
+                : CalculatePositionFromTarget(placementTargetRect, screen);
 
             var size = GetTargetWindowSizeDip();
 
@@ -104,20 +122,8 @@ namespace EverythingToolbar.Behaviors
             );
         }
 
-        private RECT CalculatePositionFromTarget()
+        private RECT CalculatePositionFromTarget(RECT nativeRect, Screen screen)
         {
-            if (
-                PlacementTarget == null
-                || PresentationSource.FromVisual(PlacementTarget) as HwndSource is not { } hwndSource
-            )
-            {
-                Logger.Error("Failed to get HwndSource from PlacementTarget. Cannot calculate window position.");
-                return new RECT();
-            }
-
-            PInvoke.GetWindowRect((HWND)hwndSource.Handle, out var nativeRect);
-            var placementTargetPos = new Point(nativeRect.left, nativeRect.top);
-            var screen = Screen.FromPoint(placementTargetPos);
             var workingArea = screen.WorkingArea;
             var screenBounds = screen.Bounds;
             var windowSize = GetTargetWindowSize();
@@ -169,9 +175,8 @@ namespace EverythingToolbar.Behaviors
             return windowPosition;
         }
 
-        private RECT CalculatePositionFromTaskbar()
+        private RECT CalculatePositionFromTaskbar(Screen screen)
         {
-            var screen = Screen.FromPoint(Cursor.Position);
             var taskbar = FindDockedTaskBar(screen);
             var windowSize = GetTargetWindowSize();
             var margin = GetMargin();
@@ -338,22 +343,46 @@ namespace EverythingToolbar.Behaviors
             };
         }
 
-        private double GetScalingFactor()
+        private bool TryGetPlacementTargetRect(out RECT rect)
         {
-            var visual = PlacementTarget ?? (System.Windows.Media.Visual)AssociatedObject;
-            if (PresentationSource.FromVisual(visual) is not HwndSource hwndSource)
+            rect = default;
+
+            if (
+                PlacementTarget == null
+                || PresentationSource.FromVisual(PlacementTarget) as HwndSource is not { } hwndSource
+            )
             {
-                Logger.Error("Failed to get display scaling factor. This may result in incorrect window placement.");
-                return 1.0;
+                return false;
             }
 
-            return 96.0 / NativeMethods.GetDpiForWindow(hwndSource.Handle);
+            return PInvoke.GetWindowRect((HWND)hwndSource.Handle, out rect);
+        }
+
+        private Screen? TryGetPlacementTargetScreen()
+        {
+            return TryGetPlacementTargetRect(out var rect) ? Screen.FromPoint(new Point(rect.left, rect.top)) : null;
+        }
+
+        private double GetScalingFactor(Screen screen)
+        {
+            // Deliberately not GetDpiForWindow: the window may still sit on the monitor it was last shown
+            // on, and its scale is what we are about to correct.
+            var monitor = PInvoke.MonitorFromPoint(
+                new Point(screen.Bounds.Left, screen.Bounds.Top),
+                MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST
+            );
+
+            if (PInvoke.GetDpiForMonitor(monitor, MONITOR_DPI_TYPE.MDT_EFFECTIVE_DPI, out var dpiX, out _).Succeeded)
+                return 96.0 / dpiX;
+
+            Logger.Error("Failed to get display scaling factor. This may result in incorrect window placement.");
+            return 1.0;
         }
 
         private int GetMargin()
         {
             var marginDip = _windowsPolicy.GetEffectiveWindowsVersion() >= WindowsVersion.Windows11 ? 12 : 0;
-            return (int)Math.Round(marginDip / GetScalingFactor());
+            return (int)Math.Round(marginDip / _dpiScalingFactor);
         }
 
         private struct TaskbarLocation

@@ -16,6 +16,8 @@ ABM_GETSTATE
 DwmSetWindowAttribute
 DwmExtendFrameIntoClientArea
 GetDpiForSystem
+GetDpiForMonitor
+MonitorFromPoint
 DeleteObject
 DestroyIcon
 SHCreateItemFromParsingName
