@@ -36,9 +36,10 @@ namespace EverythingToolbar.App.Search
 
         public Task<int> FetchCount(int pageSize, bool isAsync, CancellationToken cancellationToken)
         {
-            // The synchronous paths ignore the token: a blocking SDK query cannot be interrupted
+            // The token cannot interrupt a query already in flight, but it does stop a superseded
+            // one from ever starting.
             if (!isAsync)
-                return Task.FromResult(_client.QueryCountSync(_query, pageSize));
+                return Task.FromResult(_client.QueryCountSync(_query, pageSize, cancellationToken));
 
             return TrackBusyState(_client.QueryCountAsync(_query, pageSize, cancellationToken));
         }
@@ -52,7 +53,7 @@ namespace EverythingToolbar.App.Search
         {
             IList<SearchResult> data;
             if (!isAsync)
-                data = _client.QueryRangeSync(_query, startIndex, pageSize);
+                data = _client.QueryRangeSync(_query, startIndex, pageSize, cancellationToken);
             else
                 data = await TrackBusyState(_client.QueryRangeAsync(_query, startIndex, pageSize, cancellationToken));
 

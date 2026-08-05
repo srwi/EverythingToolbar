@@ -70,8 +70,13 @@ namespace EverythingToolbar.Platform.Search
             }
         }
 
-        public int QueryCountSync(SearchQuery query, int pageSize)
+        // The async path drops superseded queries in ProcessNextQuery; the sync path has no queue to
+        // drain, so it checks the token itself.
+        public int QueryCountSync(SearchQuery query, int pageSize, CancellationToken cancellationToken)
         {
+            if (cancellationToken.IsCancellationRequested)
+                return 0;
+
             lock (_gate)
             {
                 EnsureInitialized();
@@ -106,8 +111,16 @@ namespace EverythingToolbar.Platform.Search
             }
         }
 
-        public IList<SearchResult> QueryRangeSync(SearchQuery query, int startIndex, int pageSize)
+        public IList<SearchResult> QueryRangeSync(
+            SearchQuery query,
+            int startIndex,
+            int pageSize,
+            CancellationToken cancellationToken
+        )
         {
+            if (cancellationToken.IsCancellationRequested)
+                return Array.Empty<SearchResult>();
+
             lock (_gate)
             {
                 if (startIndex == 0 && query == _resultListQuery)

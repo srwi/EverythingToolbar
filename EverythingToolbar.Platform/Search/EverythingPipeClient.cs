@@ -17,6 +17,9 @@ namespace EverythingToolbar.Platform.Search
 
         private const string AlphaInstanceName = "1.5a";
 
+        // How long a query waits for the gate before rechecking whether it has been superseded.
+        private static readonly TimeSpan GateWaitSlice = TimeSpan.FromMilliseconds(50);
+
         private const uint PropertyIdName = 0;
         private const uint PropertyIdPath = 1;
         private const uint PropertyIdSize = 2;
@@ -85,17 +88,24 @@ namespace EverythingToolbar.Platform.Search
             if (cancellationToken.IsCancellationRequested)
                 return Task.FromCanceled<int>(cancellationToken);
 
-            return Task.Run(() => QueryCountSync(query, pageSize), cancellationToken);
+            return Task.Run(() => QueryCountSync(query, pageSize, cancellationToken), cancellationToken);
         }
 
-        public int QueryCountSync(SearchQuery query, int pageSize)
+        public int QueryCountSync(SearchQuery query, int pageSize, CancellationToken cancellationToken)
         {
-            lock (_gate)
+            if (!TryEnterGate(cancellationToken))
+                return 0;
+
+            try
             {
                 if (!ExecuteQueryLocked(query, pageSize, offset: 0))
                     return 0;
 
                 return (int)Everything3_GetResultListCount(_resultList);
+            }
+            finally
+            {
+                Monitor.Exit(_gate);
             }
         }
 
@@ -109,12 +119,20 @@ namespace EverythingToolbar.Platform.Search
             if (cancellationToken.IsCancellationRequested)
                 return Task.FromCanceled<IList<SearchResult>>(cancellationToken);
 
-            return Task.Run(() => QueryRangeSync(query, startIndex, pageSize), cancellationToken);
+            return Task.Run(() => QueryRangeSync(query, startIndex, pageSize, cancellationToken), cancellationToken);
         }
 
-        public IList<SearchResult> QueryRangeSync(SearchQuery query, int startIndex, int pageSize)
+        public IList<SearchResult> QueryRangeSync(
+            SearchQuery query,
+            int startIndex,
+            int pageSize,
+            CancellationToken cancellationToken
+        )
         {
-            lock (_gate)
+            if (!TryEnterGate(cancellationToken))
+                return Array.Empty<SearchResult>();
+
+            try
             {
                 if (query == _resultListQuery)
                 {
@@ -130,6 +148,27 @@ namespace EverythingToolbar.Platform.Search
 
                 return ReadResultsFromResultListLocked();
             }
+            finally
+            {
+                Monitor.Exit(_gate);
+            }
+        }
+
+        private bool TryEnterGate(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                if (!Monitor.TryEnter(_gate, GateWaitSlice))
+                    continue;
+
+                if (!cancellationToken.IsCancellationRequested)
+                    return true;
+
+                Monitor.Exit(_gate);
+                break;
+            }
+
+            return false;
         }
 
         public bool TryReadCachedFirstPage(SearchQuery query, out IList<SearchResult> results)

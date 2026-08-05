@@ -10,7 +10,9 @@ namespace EverythingToolbar.Core.Search
     {
         Task<int> QueryCountAsync(SearchQuery query, int pageSize, CancellationToken cancellationToken);
 
-        int QueryCountSync(SearchQuery query, int pageSize);
+        // Canceling means the query was superseded: it returns 0 rather than throwing, and callers
+        // are expected to discard the result once they notice the token is canceled.
+        int QueryCountSync(SearchQuery query, int pageSize, CancellationToken cancellationToken);
 
         Task<IList<SearchResult>> QueryRangeAsync(
             SearchQuery query,
@@ -19,7 +21,12 @@ namespace EverythingToolbar.Core.Search
             CancellationToken cancellationToken
         );
 
-        IList<SearchResult> QueryRangeSync(SearchQuery query, int startIndex, int pageSize);
+        IList<SearchResult> QueryRangeSync(
+            SearchQuery query,
+            int startIndex,
+            int pageSize,
+            CancellationToken cancellationToken
+        );
 
         bool TryReadCachedFirstPage(SearchQuery query, out IList<SearchResult> results);
 

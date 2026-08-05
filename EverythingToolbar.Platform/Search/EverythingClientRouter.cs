@@ -109,7 +109,8 @@ namespace EverythingToolbar.Platform.Search
         public Task<int> QueryCountAsync(SearchQuery query, int pageSize, CancellationToken cancellationToken) =>
             Active.QueryCountAsync(query, pageSize, cancellationToken);
 
-        public int QueryCountSync(SearchQuery query, int pageSize) => Active.QueryCountSync(query, pageSize);
+        public int QueryCountSync(SearchQuery query, int pageSize, CancellationToken cancellationToken) =>
+            Active.QueryCountSync(query, pageSize, cancellationToken);
 
         public Task<IList<SearchResult>> QueryRangeAsync(
             SearchQuery query,
@@ -118,8 +119,12 @@ namespace EverythingToolbar.Platform.Search
             CancellationToken cancellationToken
         ) => Active.QueryRangeAsync(query, startIndex, pageSize, cancellationToken);
 
-        public IList<SearchResult> QueryRangeSync(SearchQuery query, int startIndex, int pageSize) =>
-            Active.QueryRangeSync(query, startIndex, pageSize);
+        public IList<SearchResult> QueryRangeSync(
+            SearchQuery query,
+            int startIndex,
+            int pageSize,
+            CancellationToken cancellationToken
+        ) => Active.QueryRangeSync(query, startIndex, pageSize, cancellationToken);
 
         public bool TryReadCachedFirstPage(SearchQuery query, out IList<SearchResult> results) =>
             Active.TryReadCachedFirstPage(query, out results);
