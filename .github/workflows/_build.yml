@@ -26,12 +26,12 @@ on:
         type: boolean
         default: false
       installer_basename:
-        description: 'If set, name the installer output and emit a matching .sha256'
+        description: 'If set, name the installer output file'
         required: false
         type: string
         default: ''
       upload_artifact:
-        description: 'Upload the installer (and checksum) as a build artifact'
+        description: 'Upload the installer as a build artifact'
         required: false
         type: boolean
         default: false
@@ -83,17 +83,10 @@ jobs:
       - name: Build installer
         run: iscc ${{ inputs.installer_basename != '' && format('/F"{0}"', inputs.installer_basename) || '' }} "Installer\${{ inputs.installer }}"
 
-      - name: Generate SHA-256 checksum
-        if: ${{ inputs.installer_basename != '' }}
-        shell: bash
-        run: sha256sum "Installer/output/${{ inputs.installer_basename }}.exe" > "Installer/output/${{ inputs.installer_basename }}.sha256"
-
       - name: Upload artifact
         if: ${{ inputs.upload_artifact }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.artifact_name }}
           if-no-files-found: error
-          path: |
-            Installer/output/*.exe
-            Installer/output/*.sha256
+          path: Installer/output/*.exe

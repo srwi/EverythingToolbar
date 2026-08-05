@@ -11,7 +11,7 @@ on:
         required: true
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build-release:
@@ -41,6 +41,10 @@ jobs:
     needs: build-release
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v4
@@ -49,14 +53,33 @@ jobs:
           merge-multiple: true
           path: artifacts
 
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v4
+        with:
+          subject-path: artifacts/*.exe
+
       - name: Create release draft
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
           VERSION_TAG: ${{ inputs.version_tag || github.ref_name }}
         run: |
+          cat > notes.md <<EOF
+          <details>
+          <summary>How to verify your download</summary>
+
+          Every installer here comes with a [build provenance attestation](https://docs.github.com/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds): a signed record proving it was built by this repository's release workflow from this repository's source, and has not been modified since. To check it, install the [GitHub CLI](https://cli.github.com) and run:
+
+          \`\`\`
+          gh attestation verify EverythingToolbar-$VERSION_TAG-x64.exe --repo $GH_REPO
+          \`\`\`
+
+          Substitute the name of the file you actually downloaded.
+          </details>
+          EOF
+
           gh release create "$VERSION_TAG" \
             artifacts/*.exe \
-            artifacts/*.sha256 \
             --draft \
-            --title "$VERSION_TAG"
+            --title "$VERSION_TAG" \
+            --notes-file notes.md
