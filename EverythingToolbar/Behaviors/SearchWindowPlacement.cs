@@ -148,11 +148,11 @@ namespace EverythingToolbar.Behaviors
                         Math.Max(workingArea.Top + margin, taskbar.Position.Y - margin - height)
                     );
                 case Edge.Left:
-                    return new Point(taskbar.Position.Right + margin, margin);
+                    return new Point(taskbar.Position.Right + margin, workingArea.Top + margin);
                 default:
                     return new Point(
                         Math.Max(taskbar.Position.Left - margin - width, workingArea.Left + margin),
-                        margin
+                        workingArea.Top + margin
                     );
             }
         }
@@ -184,61 +184,56 @@ namespace EverythingToolbar.Behaviors
 
         private TaskbarLocation FindDockedTaskBar(Screen screen)
         {
-            var topDockedHeight = Math.Abs(Math.Abs(screen.Bounds.Top) - Math.Abs(screen.WorkingArea.Top));
-            var bottomDockedHeight = screen.Bounds.Height - topDockedHeight - screen.WorkingArea.Height;
-            var leftDockedWidth = Math.Abs(Math.Abs(screen.Bounds.Left) - Math.Abs(screen.WorkingArea.Left));
-            var rightDockedWidth = screen.Bounds.Width - leftDockedWidth - screen.WorkingArea.Width;
+            // An auto-hiding taskbar reserves no work area, so the geometry below cannot see it at all.
+            if (NativeMethods.IsTaskbarAutoHiding() && NativeMethods.TryGetTaskbarPosition(out var edge, out var thickness))
+                return CreateTaskbarLocation(screen, ToEdge(edge), RescaleFromPrimary(thickness));
+
+            var topDockedHeight = screen.WorkingArea.Top - screen.Bounds.Top;
+            var bottomDockedHeight = screen.Bounds.Bottom - screen.WorkingArea.Bottom;
+            var leftDockedWidth = screen.WorkingArea.Left - screen.Bounds.Left;
+            var rightDockedWidth = screen.Bounds.Right - screen.WorkingArea.Right;
 
             if (leftDockedWidth > 0 && bottomDockedHeight == 0)
-            {
-                return new TaskbarLocation
-                {
-                    Position = new Rectangle(
-                        screen.Bounds.Left,
-                        screen.Bounds.Top,
-                        leftDockedWidth,
-                        screen.Bounds.Height
-                    ),
-                    Edge = Edge.Left,
-                };
-            }
+                return CreateTaskbarLocation(screen, Edge.Left, leftDockedWidth);
             if (rightDockedWidth > 0 && bottomDockedHeight == 0)
-            {
-                return new TaskbarLocation
-                {
-                    Position = new Rectangle(
-                        screen.WorkingArea.Right,
-                        screen.Bounds.Top,
-                        rightDockedWidth,
-                        screen.Bounds.Height
-                    ),
-                    Edge = Edge.Right,
-                };
-            }
+                return CreateTaskbarLocation(screen, Edge.Right, rightDockedWidth);
             if (topDockedHeight > 0 && bottomDockedHeight == 0)
-            {
-                return new TaskbarLocation
-                {
-                    Position = new Rectangle(
-                        screen.WorkingArea.Left,
-                        screen.Bounds.Top,
-                        screen.WorkingArea.Width,
-                        topDockedHeight
-                    ),
-                    Edge = Edge.Top,
-                };
-            }
+                return CreateTaskbarLocation(screen, Edge.Top, topDockedHeight);
 
+            return CreateTaskbarLocation(screen, Edge.Bottom, bottomDockedHeight);
+        }
+
+        private static Edge ToEdge(uint appBarEdge) =>
+            appBarEdge switch
+            {
+                0 => Edge.Left,
+                1 => Edge.Top,
+                2 => Edge.Right,
+                _ => Edge.Bottom,
+            };
+
+        private static TaskbarLocation CreateTaskbarLocation(Screen screen, Edge edge, int thickness)
+        {
+            var bounds = screen.Bounds;
             return new TaskbarLocation
             {
-                Position = new Rectangle(
-                    screen.WorkingArea.Left,
-                    screen.WorkingArea.Bottom,
-                    screen.WorkingArea.Width,
-                    bottomDockedHeight
-                ),
-                Edge = Edge.Bottom,
+                Position = edge switch
+                {
+                    Edge.Left => new Rectangle(bounds.Left, bounds.Top, thickness, bounds.Height),
+                    Edge.Right => new Rectangle(bounds.Right - thickness, bounds.Top, thickness, bounds.Height),
+                    Edge.Top => new Rectangle(bounds.Left, bounds.Top, bounds.Width, thickness),
+                    _ => new Rectangle(bounds.Left, bounds.Bottom - thickness, bounds.Width, thickness),
+                },
+                Edge = edge,
             };
+        }
+
+        private int RescaleFromPrimary(int thickness)
+        {
+            if (Screen.PrimaryScreen is not { } primary)
+                return thickness;
+
+            return (int)Math.Round(thickness / GetPixelsPerDip(primary) * _pixelsPerDip);
         }
 
         private bool TryGetPlacementTargetRect(out RECT rect)
