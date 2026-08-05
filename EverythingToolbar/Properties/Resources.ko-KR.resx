@@ -268,7 +268,7 @@
     <value>자동 시작 사용</value>
   </data>
   <data name="SettingsEnableAutostartHelp" xml:space="preserve">
-    <value>Windows가 시작되면 EverythingToolbar가 자동으로 시작됩니다</value>
+    <value>Windows가 시작되면 EverythingToolbar를 자동으로 시작합니다</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>검색 기록 사용함</value>
@@ -313,7 +313,7 @@
     <value>썸네일 사용함</value>
   </data>
   <data name="SettingsSystemContextMenuDefault" xml:space="preserve">
-    <value>기본적으로 시스템 컨텍스트 메뉴 사용</value>
+    <value>시스템 컨텍스트 메뉴를 기본값으로 사용</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Everything 필터 사용</value>
@@ -403,10 +403,10 @@
     <value>첫 번째 결과 선택</value>
   </data>
   <data name="SettingsHomeEndNavigateResults" xml:space="preserve">
-    <value>Home/End 키 탐색 결과</value>
+    <value>Home/End 키로 결과 탐색</value>
   </data>
   <data name="SettingsDoubleClickToOpen" xml:space="preserve">
-    <value>두 번 클릭으로 열기</value>
+    <value>더블 클릭하여 열기</value>
   </data>
   <data name="SortDescending" xml:space="preserve">
     <value>내림차순</value>
@@ -463,7 +463,7 @@
     <value>클립보드에 전체 경로 복사</value>
   </data>
   <data name="ShortcutCycleFilters" xml:space="preserve">
-    <value>필터를 순환</value>
+    <value>필터 순환</value>
   </data>
   <data name="ShortcutSelectFilter" xml:space="preserve">
     <value>필터 선택</value>
@@ -517,7 +517,7 @@
     <value>Everything 인스턴스 이름</value>
   </data>
   <data name="SettingsInstanceNameHelp" xml:space="preserve">
-    <value>사용할 Everything 인스턴스의 이름 설정</value>
+    <value>사용할 Everything 인스턴스의 이름을 설정합니다</value>
   </data>
   <data name="SettingsDefaultInstance" xml:space="preserve">
     <value>기본 인스턴스</value>
@@ -553,19 +553,19 @@
     <value>검색 결과 레이아웃 선택</value>
   </data>
   <data name="SettingsThumbnailsHelp" xml:space="preserve">
-    <value>이미지 파일의 썸네일 표시</value>
+    <value>이미지 파일의 썸네일을 표시합니다</value>
   </data>
   <data name="SettingsSystemContextMenuDefaultHelp" xml:space="preserve">
-    <value>결과를 마우스 오른쪽 버튼으로 클릭할 때 Windows 컨텍스트 메뉴 표시</value>
+    <value>결과를 마우스 오른쪽 버튼으로 클릭할 때 Windows 컨텍스트 메뉴를 표시합니다</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
-    <value>검색 결과의 총 수 표시</value>
+    <value>검색 결과의 총 개수를 표시합니다</value>
   </data>
   <data name="SettingsQuickTogglesHelp" xml:space="preserve">
-    <value>검색창에 검색 옵션에 대한 빠른 전환 버튼 표시</value>
+    <value>검색 표시줄에 검색 옵션을 위한 빠른 전환 버튼을 표시합니다</value>
   </data>
   <data name="SettingsPreviewPaneHelp" xml:space="preserve">
-    <value>선택한 결과에 대한 시작 메뉴 스타일 측면 창 표시</value>
+    <value>선택한 결과에 대해 시작 메뉴 스타일의 측면 창을 표시합니다</value>
   </data>
   <data name="PreviewPaneFilePath" xml:space="preserve">
     <value>파일 경로</value>
@@ -577,37 +577,37 @@
     <value>크기</value>
   </data>
   <data name="SettingsAnimationsHelp" xml:space="preserve">
-    <value>성능 향상을 위해 UI 애니메이션 사용 안 함</value>
+    <value>성능 향상을 위해 UI 애니메이션을 비활성화합니다</value>
   </data>
   <data name="SettingsHideEmptyResultsHelp" xml:space="preserve">
-    <value>검색어가 비어 있을 때 결과 숨기기</value>
+    <value>검색어가 비어있을 경우 검색 결과를 숨깁니다</value>
   </data>
   <data name="SettingsSearchAsYouTypeHelp" xml:space="preserve">
-    <value>입력할 때 Enter 키를 누르지 않고 검색 시작</value>
+    <value>Enter를 누르지 않고 입력하는 즉시 검색을 시작합니다</value>
   </data>
   <data name="SettingsSelectFirstResultHelp" xml:space="preserve">
-    <value>검색창에 초점을 맞추면서 첫 번째 결과 자동으로 선택</value>
+    <value>검색 표시줄을 집중한 상태로 첫 번째 결과를 자동으로 선택합니다</value>
   </data>
   <data name="SettingsHomeEndNavigateResultsHelp" xml:space="preserve">
-    <value>Home/End 키는 커서를 이동하는 대신 검색 결과 탐색</value>
+    <value>Home/End 키는 커서를 이동하는 대신 검색 결과가 탐색됩니다</value>
   </data>
   <data name="SettingsDoubleClickHelp" xml:space="preserve">
-    <value>결과를 열려면 두 번 클릭 필요</value>
+    <value>결과를 열려면 더블 클릭해야 합니다</value>
   </data>
   <data name="SettingsHistoryHelp" xml:space="preserve">
     <value>빠른 액세스를 위해 이전 검색어 기억</value>
   </data>
   <data name="SettingsEverythingFiltersHelp" xml:space="preserve">
-    <value>Everything의 사용자 지정 필터 동기화</value>
+    <value>Everything의 사용자 지정 필터를 동기화합니다</value>
   </data>
   <data name="SettingsRememberFilterHelp" xml:space="preserve">
-    <value>향후 검색에 가장 최근에 사용된 필터 기억</value>
+    <value>다음 검색에서 가장 최근에 사용한 필터를 기억합니다</value>
   </data>
   <data name="SettingsUpdatesHelp" xml:space="preserve">
-    <value>새 버전이 사용 가능할 때 알림</value>
+    <value>새 버전이 출시되면 알려줍니다</value>
   </data>
   <data name="SettingsReplaceStartMenuHelp" xml:space="preserve">
-    <value>기본 Windows 시작 메뉴 검색을 EverythingToolbar로 교체</value>
+    <value>기본 Windows 시작 메뉴 검색을 EverythingToolbar로 교체합니다</value>
   </data>
   <data name="MessageBoxOk" xml:space="preserve">
     <value>확인</value>
@@ -634,7 +634,7 @@
     <value>Windows 검색 아이콘 숨기기</value>
   </data>
   <data name="SettingsHideWindowsSearchIconHelp" xml:space="preserve">
-    <value>작업 표시줄에서 원래 Windows 검색 아이콘 숨기기</value>
+    <value>작업 표시줄에서 원래 Windows 검색 아이콘을 숨김니다</value>
   </data>
   <data name="SettingsEnableSystemTrayIcon" xml:space="preserve">
     <value>트레이 아이콘 사용함</value>
@@ -649,16 +649,16 @@
     <value>작업 표시줄 아이콘의 스타일을 변경합니다 (탐색기 재시작 필요)</value>
   </data>
   <data name="SettingsTaskbarWindow" xml:space="preserve">
-    <value>Show search box</value>
+    <value>검색 상자 표시</value>
   </data>
   <data name="SettingsTaskbarWindowHelp" xml:space="preserve">
-    <value>Show a search box on the taskbar</value>
+    <value>작업 표시줄에 검색 상자를 표시합니다</value>
   </data>
   <data name="SettingsTaskbarWindowAlignment" xml:space="preserve">
-    <value>Search box alignment</value>
+    <value>검색 상자 정렬</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentHelp" xml:space="preserve">
-    <value>Controls the search box alignment on the taskbar</value>
+    <value>작업 표시줄의 검색 상자 정렬을 제어합니다</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
     <value>왼쪽</value>
@@ -667,19 +667,19 @@
     <value>오른쪽</value>
   </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
-    <value>The search box requires the original Windows 11 taskbar. When using ExplorerPatcher or StartAllBack, use the deskband instead.</value>
+    <value>검색 상자는 원래의 Windows 11 작업 표시줄이 필요합니다. ExplorerPatcher나 StartAllBack을 사용할 때는 대신 deskband를 사용하세요.</value>
   </data>
   <data name="SettingsTaskbarIcon" xml:space="preserve">
-    <value>Taskbar icon</value>
+    <value>작업 표시줄 아이콘</value>
   </data>
   <data name="SettingsTaskbarSearchBox" xml:space="preserve">
-    <value>Taskbar search box</value>
+    <value>작업 표시줄 검색 상자</value>
   </data>
   <data name="SettingsTaskbarIconStatusPinned" xml:space="preserve">
-    <value>Pinned to taskbar</value>
+    <value>작업 표시줄에 고정</value>
   </data>
   <data name="SettingsTaskbarIconStatusNotPinned" xml:space="preserve">
-    <value>Not pinned to taskbar</value>
+    <value>작업 표시줄에 고정하지 않음</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>필터 순서</value>
@@ -688,7 +688,7 @@
     <value>필터 탭 수</value>
   </data>
   <data name="SettingsMaxTabItemsHelp" xml:space="preserve">
-    <value>보이는 필터 탭의 수 제어</value>
+    <value>보이는 필터 탭의 개수를 제어합니다</value>
   </data>
   <data name="SettingsForceWin10Styles" xml:space="preserve">
     <value>강제 Windows 10 스타일</value>
