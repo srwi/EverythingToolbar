@@ -45,9 +45,7 @@
           Icon="&#xF78B;" />
         <Separator />
         <MenuItem Click="CopyPathToClipBoard" Header="{x:Static properties:Resources.ContextMenuCopyFullName}" />
-        <MenuItem
-          Click="CopyFileNameToClipboard"
-          Header="{x:Static properties:Resources.ContextMenuCopyFileName}" />
+        <MenuItem Click="CopyFileNameToClipboard" Header="{x:Static properties:Resources.ContextMenuCopyFileName}" />
         <MenuItem
           Click="CopyFile"
           Header="{x:Static properties:Resources.ContextMenuCopyFile}"

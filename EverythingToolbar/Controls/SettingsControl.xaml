@@ -14,9 +14,7 @@
       Style="{DynamicResource TabBarButtonStyle}"
       ToolTip="{x:Static properties:Resources.SettingsSortBy}">
       <Button.ContextMenu>
-        <ContextMenu
-          Name="SortByMenu"
-          FontFamily="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=FontFamily}">
+        <ContextMenu Name="SortByMenu" FontFamily="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=FontFamily}">
           <MenuItem
             Click="OnSortByClicked"
             Header="{x:Static properties:Resources.SortByName}"
