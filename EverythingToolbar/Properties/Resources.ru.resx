@@ -126,6 +126,9 @@
   <data name="ContextMenuCopyFile" xml:space="preserve">
     <value>Скопировать</value>
   </data>
+  <data name="ContextMenuCopyFileName" xml:space="preserve">
+    <value>Copy File Name to Clipboard</value>
+  </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
     <value>Скопировать полное имя в буфер обмена</value>
   </data>
@@ -139,7 +142,7 @@
     <value>Открыть путь</value>
   </data>
   <data name="ContextMenuOpenWinContext" xml:space="preserve">
-    <value>Больше настроек</value>
+    <value>Показать дополнительные параметры</value>
   </data>
   <data name="ContextMenuOpenWith" xml:space="preserve">
     <value>Открыть с помощью...</value>
@@ -200,6 +203,9 @@
   </data>
   <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
     <value>Не удалось скопировать файл.</value>
+  </data>
+  <data name="MessageBoxFailedToCopyFileName" xml:space="preserve">
+    <value>Failed to copy file name.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>Не удалось скопировать путь.</value>
@@ -265,16 +271,16 @@
     <value>Отключить анимации</value>
   </data>
   <data name="SettingsEnableAutostart" xml:space="preserve">
-    <value>Enable autostart</value>
+    <value>Включить автозапуск</value>
   </data>
   <data name="SettingsEnableAutostartHelp" xml:space="preserve">
-    <value>Automatically starts EverythingToolbar when Windows starts</value>
+    <value>Автоматически запускать EverythingToolbar при запуске Windows</value>
   </data>
   <data name="SettingsEnableHistory" xml:space="preserve">
     <value>Включить историю поиска</value>
   </data>
   <data name="SettingsHideEmptyResults" xml:space="preserve">
-    <value>Не показывать результаты пустого запроса</value>
+    <value>Скрывать при пустом запросе</value>
   </data>
   <data name="SettingsMatchCase" xml:space="preserve">
     <value>Учитывать регистр</value>
@@ -304,7 +310,7 @@
     <value>Показывать количество результатов</value>
   </data>
   <data name="SettingsPreviewPaneEnabled" xml:space="preserve">
-    <value>Show preview pane</value>
+    <value>Показывать область предпросмотра</value>
   </data>
   <data name="SettingsSortBy" xml:space="preserve">
     <value>Сортировка</value>
@@ -313,7 +319,7 @@
     <value>Показывать миниатюры</value>
   </data>
   <data name="SettingsSystemContextMenuDefault" xml:space="preserve">
-    <value>Use system context menu by default</value>
+    <value>Использовать системное контекстное меню по умолчанию</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Использовать фильтры Everything</value>
@@ -322,10 +328,10 @@
     <value>Вид</value>
   </data>
   <data name="SettingsUILanguage" xml:space="preserve">
-    <value>Language</value>
+    <value>Язык</value>
   </data>
   <data name="SettingsUILanguageHelp" xml:space="preserve">
-    <value>Choose the UI language. Restart the application to apply changes.</value>
+    <value>Выберите язык интерфейса. Перезапустите приложение для применения изменений.</value>
   </data>
   <data name="SortByAttributes" xml:space="preserve">
     <value>Атрибуты</value>
@@ -400,7 +406,7 @@
     <value>Проверять обновления автоматически</value>
   </data>
   <data name="SettingsSelectFirstResult" xml:space="preserve">
-    <value>Выберите первый результат</value>
+    <value>Выбирать первый результат</value>
   </data>
   <data name="SettingsHomeEndNavigateResults" xml:space="preserve">
     <value>Навигация клавишами Home/End</value>
@@ -451,7 +457,7 @@
     <value>Открыть путь</value>
   </data>
   <data name="ShortcutOpenInEverything" xml:space="preserve">
-    <value>Показать в Everything</value>
+    <value>Открыть в Everything</value>
   </data>
   <data name="ShortcutRunAsAdmin" xml:space="preserve">
     <value>Запуск от имени администратора</value>
@@ -463,7 +469,7 @@
     <value>Скопировать полный путь в буфер обмена</value>
   </data>
   <data name="ShortcutCycleFilters" xml:space="preserve">
-    <value>Циклически через фильтры</value>
+    <value>Переключение между фильтрами</value>
   </data>
   <data name="ShortcutSelectFilter" xml:space="preserve">
     <value>Выбрать фильтр</value>
@@ -556,7 +562,7 @@
     <value>Показывать миниатюры изображений</value>
   </data>
   <data name="SettingsSystemContextMenuDefaultHelp" xml:space="preserve">
-    <value>Show the Windows context menu when right-clicking a result</value>
+    <value>Показывать контекстное меню Windows при клике правой кнопкой мыши по результату</value>
   </data>
   <data name="SettingsResultsCountHelp" xml:space="preserve">
     <value>Показывать общее количество результатов поиска</value>
@@ -565,16 +571,16 @@
     <value>Показывать кнопки быстрого переключения в строке поиска</value>
   </data>
   <data name="SettingsPreviewPaneHelp" xml:space="preserve">
-    <value>Show a Start menu style side pane for the selected result</value>
+    <value>Показывать боковую панель в стиле меню «Пуск» для выбранного результата</value>
   </data>
   <data name="PreviewPaneFilePath" xml:space="preserve">
-    <value>File path</value>
+    <value>Путь к файлу</value>
   </data>
   <data name="PreviewPaneSelectResult" xml:space="preserve">
-    <value>Nothing selected</value>
+    <value>Ничего не выбрано</value>
   </data>
   <data name="PreviewPaneSize" xml:space="preserve">
-    <value>Size</value>
+    <value>Размер</value>
   </data>
   <data name="SettingsAnimationsHelp" xml:space="preserve">
     <value>Отключить анимацию интерфейса для повышения производительности</value>
@@ -649,16 +655,16 @@
     <value>Изменяет стиль значка в панели задач (требуется перезапуск проводника)</value>
   </data>
   <data name="SettingsTaskbarWindow" xml:space="preserve">
-    <value>Show search box</value>
+    <value>Показывать поле поиска</value>
   </data>
   <data name="SettingsTaskbarWindowHelp" xml:space="preserve">
-    <value>Show a search box on the taskbar</value>
+    <value>Показывать поле поиска на панели задач</value>
   </data>
   <data name="SettingsTaskbarWindowAlignment" xml:space="preserve">
-    <value>Search box alignment</value>
+    <value>Выравнивание поля поиска</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentHelp" xml:space="preserve">
-    <value>Controls the search box alignment on the taskbar</value>
+    <value>Определяет выравнивание поля поиска на панели задач</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
     <value>Слева</value>
@@ -667,19 +673,19 @@
     <value>Справа</value>
   </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
-    <value>The search box requires the original Windows 11 taskbar. When using ExplorerPatcher or StartAllBack, use the deskband instead.</value>
+    <value>Для поля поиска требуется оригинальная панель задач Windows 11. При использовании ExplorerPatcher или StartAllBack используйте панель инструментов (deskband).</value>
   </data>
   <data name="SettingsTaskbarIcon" xml:space="preserve">
-    <value>Taskbar icon</value>
+    <value>Значок на панели задач</value>
   </data>
   <data name="SettingsTaskbarSearchBox" xml:space="preserve">
-    <value>Taskbar search box</value>
+    <value>Поле поиска на панели задач</value>
   </data>
   <data name="SettingsTaskbarIconStatusPinned" xml:space="preserve">
-    <value>Pinned to taskbar</value>
+    <value>Закреплено на панели задач</value>
   </data>
   <data name="SettingsTaskbarIconStatusNotPinned" xml:space="preserve">
-    <value>Not pinned to taskbar</value>
+    <value>Не закреплено на панели задач</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>Порядок фильтров</value>
@@ -706,33 +712,33 @@
     <value>Поддержать</value>
   </data>
   <data name="UpdateSuccessfulBannerDismiss" xml:space="preserve">
-    <value>Отказаться</value>
+    <value>Закрыть</value>
   </data>
   <data name="ShortcutOpenSystemContextMenu" xml:space="preserve">
     <value>Открыть системное контекстное меню</value>
   </data>
   <data name="SettingsListFocusBehavior" xml:space="preserve">
-    <value>Result list focus</value>
+    <value>Фокус в списке результатов</value>
   </data>
   <data name="SettingsListFocusBehaviorHelp" xml:space="preserve">
-    <value>Controls how the focus behaves when navigating the result list</value>
+    <value>Определяет поведение фокуса при навигации по списку результатов</value>
   </data>
   <data name="FocusBehaviorClamp" xml:space="preserve">
-    <value>Clamp</value>
+    <value>Останавливать на краях</value>
   </data>
   <data name="FocusBehaviorRepeat" xml:space="preserve">
-    <value>Repeat</value>
+    <value>Зацикливать</value>
   </data>
   <data name="FocusBehaviorRepeatWithSearch" xml:space="preserve">
-    <value>Repeat with search</value>
+    <value>Зацикливать (включая строку поиска)</value>
   </data>
   <data name="SettingsUseSystemLanguage" xml:space="preserve">
-    <value>Use System Language</value>
+    <value>Использовать язык системы</value>
   </data>
   <data name="MessageBoxRestartTitle" xml:space="preserve">
-    <value>Restart required</value>
+    <value>Требуется перезапуск</value>
   </data>
   <data name="MessageBoxRestartMessage" xml:space="preserve">
-    <value>A restart is required for the language changes to take effect. Do you want to restart now?</value>
+    <value>Для применения языковых изменений требуется перезапуск. Перезапустить сейчас?</value>
   </data>
 </root>
