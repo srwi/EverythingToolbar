@@ -286,6 +286,11 @@ namespace EverythingToolbar.Controls
             _viewModel.CopySelectedPath();
         }
 
+        private void CopyFileNameToClipboard(object sender, RoutedEventArgs e)
+        {
+            _viewModel.CopySelectedFileName();
+        }
+
         private void OpenWith(object sender, RoutedEventArgs e)
         {
             _viewModel.OpenSelectedWith();

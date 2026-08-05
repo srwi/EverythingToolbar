@@ -56,6 +56,8 @@ namespace EverythingToolbar.ViewModels
 
         public void CopySelectedPath() => _commands.CopySelectedPath();
 
+        public void CopySelectedFileName() => _commands.CopySelectedFileName();
+
         public void PreviewSelected() => _commands.PreviewSelected();
 
         public void ShowSelectedWindowsContextMenu() => _commands.ShowSelectedWindowsContextMenu();

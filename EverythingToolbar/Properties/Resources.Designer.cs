@@ -166,6 +166,15 @@ namespace EverythingToolbar.Properties {
                 return ResourceManager.GetString("ContextMenuCopyFile", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Copy File Name to Clipboard.
+        /// </summary>
+        public static string ContextMenuCopyFileName {
+            get {
+                return ResourceManager.GetString("ContextMenuCopyFileName", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Copy Full Name to Clipboard.
@@ -488,6 +497,15 @@ namespace EverythingToolbar.Properties {
         public static string MessageBoxFailedToCopyFile {
             get {
                 return ResourceManager.GetString("MessageBoxFailedToCopyFile", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to copy file name..
+        /// </summary>
+        public static string MessageBoxFailedToCopyFileName {
+            get {
+                return ResourceManager.GetString("MessageBoxFailedToCopyFileName", resourceCulture);
             }
         }
         
