@@ -169,6 +169,9 @@ namespace EverythingToolbar.Search
         public void CopySelectedPath(SearchResult? target = null) =>
             Act(target, _actions.CopyPathToClipboard, hide: false, clearSelection: false);
 
+        public void CopySelectedFileName(SearchResult? target = null) =>
+            Act(target, _actions.CopyFileNameToClipboard, hide: false, clearSelection: false);
+
         public void ShowSelectedWindowsContextMenu(SearchResult? target = null) =>
             Act(target, _actions.ShowWindowsContextMenu, hide: false, clearSelection: false);
 

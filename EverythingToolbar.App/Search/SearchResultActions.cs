@@ -105,6 +105,19 @@ namespace EverythingToolbar.App.Search
             }
         }
 
+        public void CopyFileNameToClipboard(SearchResult r)
+        {
+            try
+            {
+                clipboard.SetText(r.FileName);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Failed to copy file name.");
+                notifier.ShowError("MessageBoxFailedToCopyFileName", e.Message);
+            }
+        }
+
         public void ShowProperties(SearchResult r)
         {
             shellDialogs.ShowFileProperties(r.FullPathAndFileName);
