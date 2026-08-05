@@ -3,12 +3,15 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
+using System.Windows.Threading;
 using Microsoft.Xaml.Behaviors;
 using NLog;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Gdi;
 using Windows.Win32.UI.HiDpi;
+using Windows.Win32.UI.WindowsAndMessaging;
+using DpiChangedEventArgs = System.Windows.DpiChangedEventArgs;
 using FlowDirection = System.Windows.FlowDirection;
 using Point = System.Drawing.Point;
 using Size = System.Windows.Size;
@@ -35,17 +38,16 @@ namespace EverythingToolbar.Behaviors
 
         protected override void OnAttached()
         {
-            AssociatedObject.Left = 100000;
-            AssociatedObject.Top = 100000;
-
             AssociatedObject.Showing += OnShowing;
             AssociatedObject.Hiding += OnHiding;
+            AssociatedObject.DpiChanged += OnDpiChanged;
         }
 
         protected override void OnDetaching()
         {
             AssociatedObject.Showing -= OnShowing;
             AssociatedObject.Hiding -= OnHiding;
+            AssociatedObject.DpiChanged -= OnDpiChanged;
         }
 
         private void OnHiding(object? sender, EventArgs e)
@@ -71,6 +73,8 @@ namespace EverythingToolbar.Behaviors
                 : Screen.FromPoint(new Point(placementTargetRect.left, placementTargetRect.top));
             _pixelsPerDip = GetPixelsPerDip(screen);
 
+            EnsureWindowDpiTransition(screen);
+
             var position = useCursor
                 ? CalculatePositionFromTaskbar(screen)
                 : CalculatePositionFromTarget(placementTargetRect, screen);
@@ -83,6 +87,96 @@ namespace EverythingToolbar.Behaviors
                 size.Width,
                 size.Height,
                 _taskbarState.TaskbarEdge
+            );
+
+            // WPF only pushes Width/Height to the handle when they change, converted with the scale the window
+            // last rendered at - both wrong after a scaling change. Enforce the physical size directly.
+            ApplyWindowSize();
+        }
+
+        /// <summary>
+        /// Windows only transitions a window to a monitor's DPI while its rect overlaps that monitor and the
+        /// window is not hidden, so a window parked off-screen keeps the DPI of the monitor it was last shown
+        /// on. Left alone, the transition would happen mid show animation, where WPF's WM_DPICHANGED handling
+        /// visibly rescales the window. Instead, hop the still-parked window onto the bottom few pixels of the
+        /// target monitor - behind a bottom-docked taskbar and overlapping no other monitor - which delivers
+        /// the transition before the window can be seen.
+        /// </summary>
+        private void EnsureWindowDpiTransition(Screen screen)
+        {
+            var hwnd = new WindowInteropHelper(AssociatedObject).Handle;
+            if (hwnd == IntPtr.Zero)
+                return;
+
+            if (PInvoke.GetDpiForWindow((HWND)hwnd) == (uint)Math.Round(_pixelsPerDip * 96))
+                return;
+
+            var bounds = screen.Bounds;
+            PInvoke.SetWindowPos(
+                (HWND)hwnd,
+                HWND.Null,
+                bounds.Left,
+                bounds.Bottom - 8,
+                0,
+                0,
+                SET_WINDOW_POS_FLAGS.SWP_NOSIZE
+                    | SET_WINDOW_POS_FLAGS.SWP_NOZORDER
+                    | SET_WINDOW_POS_FLAGS.SWP_NOOWNERZORDER
+                    | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE
+            );
+        }
+
+        private void OnDpiChanged(object? sender, DpiChangedEventArgs e)
+        {
+            // WPF's own WM_DPICHANGED handling runs after this event and may resize the window or rewrite
+            // Width/Height from a stale handle size, so repair its results once it is done. This also covers
+            // scaling changes while the popup is open and transitions Windows delivers late or not at all.
+            AssociatedObject.Dispatcher.BeginInvoke(DispatcherPriority.Background, ReconcileAfterDpiChange);
+        }
+
+        private void ReconcileAfterDpiChange()
+        {
+            var hwnd = new WindowInteropHelper(AssociatedObject).Handle;
+            if (!AssociatedObject.IsVisible || hwnd == IntPtr.Zero)
+                return;
+
+            // The transition has completed, so the window's own DPI is trustworthy again.
+            _pixelsPerDip = PInvoke.GetDpiForWindow((HWND)hwnd) / 96.0;
+            ApplyWindowSize();
+        }
+
+        /// <summary>
+        /// Writes the intended size to both places WPF fails to keep in step across DPI transitions:
+        /// the Width/Height properties (which WPF may have rewritten from a stale handle size) and the
+        /// handle itself (which WPF never resizes once Width/Height stop changing).
+        /// </summary>
+        private void ApplyWindowSize()
+        {
+            var size = GetTargetWindowSizeDip();
+            AssociatedObject.Width = size.Width;
+            AssociatedObject.Height = size.Height;
+
+            var hwnd = new WindowInteropHelper(AssociatedObject).Handle;
+            if (hwnd == IntPtr.Zero || !PInvoke.GetWindowRect((HWND)hwnd, out var rect))
+                return;
+
+            var width = (int)Math.Round(size.Width * _pixelsPerDip);
+            var height = (int)Math.Round(size.Height * _pixelsPerDip);
+
+            if (Math.Abs(rect.right - rect.left - width) <= 1 && Math.Abs(rect.bottom - rect.top - height) <= 1)
+                return;
+
+            PInvoke.SetWindowPos(
+                (HWND)hwnd,
+                HWND.Null,
+                0,
+                0,
+                width,
+                height,
+                SET_WINDOW_POS_FLAGS.SWP_NOMOVE
+                    | SET_WINDOW_POS_FLAGS.SWP_NOZORDER
+                    | SET_WINDOW_POS_FLAGS.SWP_NOOWNERZORDER
+                    | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE
             );
         }
 

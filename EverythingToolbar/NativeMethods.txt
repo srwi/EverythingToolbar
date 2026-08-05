@@ -15,6 +15,7 @@ DwmSetWindowAttribute
 DwmExtendFrameIntoClientArea
 GetDpiForSystem
 GetDpiForMonitor
+GetDpiForWindow
 MonitorFromPoint
 DeleteObject
 DestroyIcon
