@@ -14,7 +14,9 @@
       Style="{DynamicResource TabBarButtonStyle}"
       ToolTip="{x:Static properties:Resources.SettingsSortBy}">
       <Button.ContextMenu>
-        <ContextMenu Name="SortByMenu" FontFamily="Segoe UI Variable Text, Segoe UI">
+        <ContextMenu
+          Name="SortByMenu"
+          FontFamily="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=FontFamily}">
           <MenuItem
             Click="OnSortByClicked"
             Header="{x:Static properties:Resources.SortByName}"
@@ -98,7 +100,7 @@
       Style="{DynamicResource TabBarButtonStyle}"
       ToolTip="{x:Static properties:Resources.SettingsPreferences}">
       <Button.ContextMenu>
-        <ContextMenu FontFamily="Segoe UI Variable Text, Segoe UI">
+        <ContextMenu FontFamily="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=FontFamily}">
           <MenuItem
             Header="{x:Static properties:Resources.SettingsRegularExpressions}"
             IsCheckable="True"
