@@ -9,6 +9,7 @@ GetParent
 GetWindowLong
 SetWindowLong
 SetWindowPos
+WINDOW_STYLE
 GetAsyncKeyState
 PostMessage
 DwmSetWindowAttribute
@@ -29,6 +30,8 @@ OpenProcess
 GetModuleFileNameEx
 SetWinEventHook
 UnhookWinEvent
+EVENT_OBJECT_LOCATIONCHANGE
+WINEVENT_OUTOFCONTEXT
 GetMessage
 TranslateMessage
 DispatchMessage
