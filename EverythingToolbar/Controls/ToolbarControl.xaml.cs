@@ -50,8 +50,6 @@ namespace EverythingToolbar.Controls
 
             SearchBox.ClearValue(VisibilityProperty);
             SearchBox.Visibility = Visibility.Visible;
-            SearchBox.MinWidth = 200;
-            SearchBox.MaxWidth = 400;
             SearchButton.Visibility = Visibility.Collapsed;
 
             var grid = (Grid)Content;

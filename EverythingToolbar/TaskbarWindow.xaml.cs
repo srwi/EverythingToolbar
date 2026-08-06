@@ -1,15 +1,19 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Interop;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using NLog;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.Accessibility;
 using Windows.Win32.UI.WindowsAndMessaging;
+using AutomationCondition = System.Windows.Automation.Condition;
 
 namespace EverythingToolbar
 {
@@ -21,17 +25,33 @@ namespace EverythingToolbar
 
         private IntPtr _taskbarHandle;
         private int _positionGeneration;
+        private bool _isWidgetHidden;
+
+        private WidgetBounds? _currentBounds;
+        private WidgetBounds? _targetBounds;
+        private WidgetBounds _animationFrom;
 
         private WINEVENTPROC? _taskbarEventCallback;
         private HWINEVENTHOOK _taskbarLocationHook;
         private readonly DispatcherTimer _repositionDebounceTimer;
 
-        private const double WidgetWidthDip = 300;
+        private const double MaxWidgetWidthDip = 300;
+
+        // Narrower than this the box is little more than its icon, so it hides instead.
+        private const double MinWidgetWidthDip = 120;
         private const double MinWidgetHeightDip = 32;
         private const double WidgetVerticalMarginDip = 6;
         private const double HorizontalPaddingDip = 8;
 
+        // Taskbar children this much of the bar are containers spanning it, not icons.
+        private const double MaxIconClusterChildWidthRatio = 0.6;
+
+        private const string TaskbarFrameAutomationId = "TaskbarFrame";
+        private const string SystemTrayIconAutomationId = "SystemTrayIcon";
+        private const string WidgetsButtonAutomationId = "WidgetsButton";
+
         private const int RepositionDebounceMilliseconds = 150;
+        private static readonly TimeSpan PlacementAnimationDuration = TimeSpan.FromMilliseconds(250);
 
         private const int GWL_STYLE = -16;
         private const int WS_CHILD = 0x40000000;
@@ -42,6 +62,17 @@ namespace EverythingToolbar
 
         private const uint EVENT_OBJECT_LOCATIONCHANGE = 0x800B;
         private const uint WINEVENT_OUTOFCONTEXT = 0;
+
+        // The box is placed with SetWindowPos rather than through WPF layout, so the transition animates
+        // one progress value and interpolates it into the bounds.
+        private static readonly DependencyProperty PlacementProgressProperty = DependencyProperty.Register(
+            "PlacementProgress",
+            typeof(double),
+            typeof(TaskbarWindow),
+            new PropertyMetadata(0.0, OnPlacementProgressChanged)
+        );
+
+        private IntPtr WindowHandle => new WindowInteropHelper(this).Handle;
 
         public FrameworkElement PlacementTarget => ToolbarControl;
 
@@ -92,6 +123,7 @@ namespace EverythingToolbar
         protected override void OnClosed(EventArgs e)
         {
             _repositionDebounceTimer.Stop();
+            StopPlacementAnimation();
             UnhookTaskbarEvents();
             _settings.PropertyChanged -= OnSettingsChanged;
             Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= OnDisplaySettingsChanged;
@@ -126,7 +158,7 @@ namespace EverythingToolbar
         {
             try
             {
-                var hwnd = new WindowInteropHelper(this).Handle;
+                var hwnd = WindowHandle;
                 if (hwnd == IntPtr.Zero)
                     return;
 
@@ -226,7 +258,7 @@ namespace EverythingToolbar
 
             try
             {
-                var hwnd = new WindowInteropHelper(this).Handle;
+                var hwnd = WindowHandle;
                 if (hwnd == IntPtr.Zero)
                     return;
 
@@ -247,13 +279,13 @@ namespace EverythingToolbar
 
                 Task.Run(() =>
                 {
-                    var anchors = ResolveAnchorRects(taskbarHandle);
+                    var layout = ResolveTaskbarLayout(taskbarHandle);
                     Dispatcher.BeginInvoke(() =>
                     {
                         // Drop stale results if a newer UpdatePosition ran or the box went away.
                         if (generation != _positionGeneration || !IsLoaded)
                             return;
-                        ApplyPosition(hwnd, taskbarHandle, anchors);
+                        ApplyPosition(taskbarHandle, layout);
                     });
                 });
             }
@@ -263,72 +295,182 @@ namespace EverythingToolbar
             }
         }
 
-        private void ApplyPosition(IntPtr hwnd, IntPtr taskbarHandle, AnchorRects anchors)
+        private void ApplyPosition(IntPtr taskbarHandle, TaskbarLayout layout)
         {
-            // While the taskbar is auto-hidden or mid-reveal its anchors aren't measurable. Keep the
-            // last good position instead of falling back to the far-left corner.
-            if (!anchors.WidgetsRect.HasValue && !anchors.SystemTrayRect.HasValue)
+            // While the taskbar is auto-hidden or mid-reveal nothing on it is measurable. Keep the last
+            // good position instead of collapsing onto the far-left corner.
+            if (!layout.IsMeasurable)
                 return;
-
-            double dpiScale = NativeMethods.GetDpiForWindow(taskbarHandle) / 96.0;
 
             if (!PInvoke.GetWindowRect((HWND)taskbarHandle, out var taskbarRect))
                 return;
 
+            double dpiScale = NativeMethods.GetDpiForWindow(taskbarHandle) / 96.0;
+
+            var (left, width) = CalculateHorizontalPlacement(taskbarHandle, taskbarRect, layout, dpiScale);
+            if (width <= 0)
+            {
+                HideWidget();
+                return;
+            }
+
             int taskbarHeight = taskbarRect.bottom - taskbarRect.top;
-
             int verticalMargin = (int)(WidgetVerticalMarginDip * dpiScale);
-            int widgetHeight = Math.Max(taskbarHeight - 2 * verticalMargin, (int)(MinWidgetHeightDip * dpiScale));
-            int widgetWidth = (int)(WidgetWidthDip * dpiScale);
+            int height = Math.Max(taskbarHeight - 2 * verticalMargin, (int)(MinWidgetHeightDip * dpiScale));
 
-            int top = (taskbarHeight - widgetHeight) / 2;
-            int left = CalculateHorizontalPosition(taskbarHandle, taskbarRect, anchors, widgetWidth, dpiScale);
+            MoveWidget(new WidgetBounds(left, (taskbarHeight - height) / 2, width, height));
+        }
+
+        private void MoveWidget(WidgetBounds target)
+        {
+            if (_targetBounds == target)
+                return;
+
+            // A box that is not on the taskbar yet has nothing to glide from.
+            bool animate = !_isWidgetHidden && _currentBounds.HasValue && !_windowsPolicy.IsEffectiveAnimationsDisabled;
+
+            _targetBounds = target;
+            _isWidgetHidden = false;
+
+            if (!animate)
+            {
+                // Pinning the start at the target keeps the progress reset below from moving the box.
+                _animationFrom = target;
+                StopPlacementAnimation();
+                ApplyBounds(target);
+                return;
+            }
+
+            // Starting wherever the box is right now lets a target picked up mid-flight continue smoothly.
+            _animationFrom = _currentBounds ?? target;
+
+            BeginAnimation(
+                PlacementProgressProperty,
+                new DoubleAnimation
+                {
+                    From = 0,
+                    To = 1,
+                    Duration = PlacementAnimationDuration,
+                    EasingFunction = new PowerEase { EasingMode = EasingMode.EaseOut, Power = 5 },
+                }
+            );
+        }
+
+        private void HideWidget()
+        {
+            if (_isWidgetHidden)
+                return;
+
+            _isWidgetHidden = true;
+            Logger.Debug("Not enough free space on the taskbar; hiding the search box.");
+
+            // The animation would keep re-showing the box through SWP_SHOWWINDOW, and the bounds it was
+            // heading for must not suppress the next move.
+            _targetBounds = null;
+            StopPlacementAnimation();
 
             PInvoke.SetWindowPos(
-                (HWND)hwnd,
+                (HWND)WindowHandle,
                 (HWND)IntPtr.Zero,
-                left,
-                top,
-                widgetWidth,
-                widgetHeight,
+                0,
+                0,
+                0,
+                0,
+                SET_WINDOW_POS_FLAGS.SWP_NOMOVE
+                    | SET_WINDOW_POS_FLAGS.SWP_NOSIZE
+                    | SET_WINDOW_POS_FLAGS.SWP_NOZORDER
+                    | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE
+                    | SET_WINDOW_POS_FLAGS.SWP_HIDEWINDOW
+            );
+        }
+
+        // A finished animation holds its end value without ticking, so it is only cancelled where that
+        // held value would get in the way.
+        private void StopPlacementAnimation() => BeginAnimation(PlacementProgressProperty, null);
+
+        private static void OnPlacementProgressChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var window = (TaskbarWindow)d;
+            if (window._targetBounds is { } target)
+                window.ApplyBounds(WidgetBounds.Lerp(window._animationFrom, target, (double)e.NewValue));
+        }
+
+        private void ApplyBounds(WidgetBounds bounds)
+        {
+            _currentBounds = bounds;
+
+            PInvoke.SetWindowPos(
+                (HWND)WindowHandle,
+                (HWND)IntPtr.Zero,
+                bounds.Left,
+                bounds.Top,
+                bounds.Width,
+                bounds.Height,
                 SET_WINDOW_POS_FLAGS.SWP_NOZORDER
                     | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE
                     | SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW
             );
         }
 
-        private int CalculateHorizontalPosition(
+        private readonly record struct WidgetBounds(int Left, int Top, int Width, int Height)
+        {
+            public static WidgetBounds Lerp(WidgetBounds from, WidgetBounds to, double progress) =>
+                new(
+                    Interpolate(from.Left, to.Left, progress),
+                    Interpolate(from.Top, to.Top, progress),
+                    Interpolate(from.Width, to.Width, progress),
+                    Interpolate(from.Height, to.Height, progress)
+                );
+
+            private static int Interpolate(int from, int to, double progress) =>
+                (int)Math.Round(from + (to - from) * progress);
+        }
+
+        /// <summary>
+        /// Fits the box into the free stretch of taskbar between the icon cluster and the nearest thing
+        /// on the aligned side of it. Returns a width of zero when that gap is too narrow to be useful.
+        /// </summary>
+        private (int Left, int Width) CalculateHorizontalPlacement(
             IntPtr taskbarHandle,
             RECT taskbarRect,
-            AnchorRects anchors,
-            int widgetWidth,
+            TaskbarLayout layout,
             double dpiScale
         )
         {
-            int padding = (int)(HorizontalPaddingDip * dpiScale);
-            int taskbarWidth = taskbarRect.right - taskbarRect.left;
-
-            // "Left" alignment is only offered on a centered taskbar, where it sits in the empty area
-            // to the left of the centered cluster; every other case hugs the right-hand anchor.
+            // "Left" alignment is only offered on a centered taskbar, where the box sits in the empty
+            // area to the left of the centered cluster; every other case fills the space to its right.
             bool leftOnCentered = _settings.TaskbarWindowAlignment == "Left" && _windowsPolicy.IsTaskbarCenterAligned();
 
-            if (anchors.WidgetsRect.HasValue)
+            // The gap runs from the cluster edge to the nearest obstacle beyond it, falling back to the
+            // taskbar edge. An unmeasurable cluster widens it to the whole taskbar, which still lands the
+            // box in the aligned corner because it is capped at its maximum width below.
+            double gapStart;
+            double gapEnd;
+
+            if (leftOnCentered)
             {
-                var widgets = anchors.WidgetsRect.Value;
-                return leftOnCentered
-                    ? ToClientX(taskbarHandle, (int)widgets.Right) + padding
-                    : ToClientX(taskbarHandle, (int)widgets.Left) - widgetWidth - padding;
+                gapEnd = layout.IconCluster?.Left ?? taskbarRect.right;
+                gapStart = layout.Obstacles.Select(o => o.Right).Where(x => x <= gapEnd).Append(taskbarRect.left).Max();
+            }
+            else
+            {
+                gapStart = layout.IconCluster?.Right ?? taskbarRect.left;
+                gapEnd = layout.Obstacles.Select(o => o.Left).Where(x => x >= gapStart).Append(taskbarRect.right).Min();
             }
 
-            if (anchors.SystemTrayRect.HasValue)
-            {
-                return leftOnCentered
-                    ? 0
-                    : ToClientX(taskbarHandle, (int)anchors.SystemTrayRect.Value.Left) - widgetWidth - padding;
-            }
+            int padding = (int)(HorizontalPaddingDip * dpiScale);
+            int startClient = ToClientX(taskbarHandle, (int)Math.Round(gapStart));
+            int endClient = ToClientX(taskbarHandle, (int)Math.Round(gapEnd));
 
-            // Neither anchor available: fall back to the far corner matching the alignment.
-            return leftOnCentered ? 0 : taskbarWidth - widgetWidth - padding;
+            int gapLeft = Math.Min(startClient, endClient) + padding;
+            int gapRight = Math.Max(startClient, endClient) - padding;
+
+            int available = gapRight - gapLeft;
+            if (available < (int)(MinWidgetWidthDip * dpiScale))
+                return (0, 0);
+
+            int width = Math.Min(available, (int)(MaxWidgetWidthDip * dpiScale));
+            return (leftOnCentered ? gapLeft : gapRight - width, width);
         }
 
         private static int ToClientX(IntPtr taskbarHandle, int screenX)
@@ -338,44 +480,64 @@ namespace EverythingToolbar
             return pt.X;
         }
 
-        private static AnchorRects ResolveAnchorRects(IntPtr taskbarHandle)
+        /// <summary>
+        /// Measures the taskbar in screen pixels: the bounds of the icon cluster (Start button plus the
+        /// task buttons) and the elements the box must not overlap on either side of it.
+        /// </summary>
+        private static TaskbarLayout ResolveTaskbarLayout(IntPtr taskbarHandle)
         {
-            var widgetsRect = FindTaskbarElementRect(taskbarHandle, "WidgetsButton", "Widgets button");
-            var systemTrayRect = widgetsRect.HasValue
-                ? null
-                : FindTaskbarElementRect(taskbarHandle, "SystemTrayIcon", "System Tray");
-            return new AnchorRects(widgetsRect, systemTrayRect);
-        }
+            var obstacles = new List<Rect>();
+            Rect? iconCluster = null;
 
-        private readonly struct AnchorRects(Rect? widgetsRect, Rect? systemTrayRect)
-        {
-            public Rect? WidgetsRect { get; } = widgetsRect;
-            public Rect? SystemTrayRect { get; } = systemTrayRect;
-        }
-
-        private static Rect? FindTaskbarElementRect(IntPtr taskbarHandle, string automationId, string description)
-        {
             try
             {
-                var taskbarElement = AutomationElement.FromHandle(taskbarHandle);
-                var element = taskbarElement?.FindFirst(
-                    TreeScope.Descendants,
-                    new PropertyCondition(AutomationElement.AutomationIdProperty, automationId)
-                );
+                var taskbar = AutomationElement.FromHandle(taskbarHandle);
 
-                if (element != null)
+                // Depending on the Windows build the tray icons sit outside the taskbar frame, so they
+                // are collected from the root rather than from among the frame's children.
+                foreach (
+                    AutomationElement icon in taskbar.FindAll(TreeScope.Descendants, ById(SystemTrayIconAutomationId))
+                )
                 {
-                    var rect = element.Current.BoundingRectangle;
-                    if (!rect.IsEmpty)
-                        return rect;
+                    var iconRect = icon.Current.BoundingRectangle;
+                    if (iconRect.Width > 0)
+                        obstacles.Add(iconRect);
+                }
+
+                var frame = taskbar.FindFirst(TreeScope.Descendants, ById(TaskbarFrameAutomationId));
+                if (frame != null)
+                {
+                    double maxIconWidth = taskbar.Current.BoundingRectangle.Width * MaxIconClusterChildWidthRatio;
+
+                    foreach (
+                        AutomationElement child in frame.FindAll(TreeScope.Children, AutomationCondition.TrueCondition)
+                    )
+                    {
+                        var rect = child.Current.BoundingRectangle;
+                        if (rect.Width <= 0)
+                            continue;
+
+                        if (child.Current.AutomationId is SystemTrayIconAutomationId or WidgetsButtonAutomationId)
+                            obstacles.Add(rect);
+                        else if (rect.Width <= maxIconWidth)
+                            iconCluster = iconCluster.HasValue ? Rect.Union(iconCluster.Value, rect) : rect;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                Logger.Warn(ex, $"Could not find {description}");
+                Logger.Warn(ex, "Could not measure the taskbar layout");
             }
 
-            return null;
+            return new TaskbarLayout(iconCluster, obstacles);
+        }
+
+        private static PropertyCondition ById(string automationId) =>
+            new(AutomationElement.AutomationIdProperty, automationId);
+
+        private readonly record struct TaskbarLayout(Rect? IconCluster, IReadOnlyList<Rect> Obstacles)
+        {
+            public bool IsMeasurable => IconCluster.HasValue || Obstacles.Count > 0;
         }
     }
 }
