@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -38,7 +39,8 @@ namespace EverythingToolbar.Settings
 
         public ISettings Settings { get; } = Ioc.Default.GetRequiredService<ISettings>();
         private readonly IAutostart _autostart = Ioc.Default.GetRequiredService<IAutostart>();
-        private readonly IEverythingClient _everythingClient = Ioc.Default.GetRequiredService<IEverythingClient>();
+        private readonly EverythingClientRouter _everythingClient =
+            Ioc.Default.GetRequiredService<EverythingClientRouter>();
 
         public bool IsLauncher => Application.Current != null;
 
@@ -49,10 +51,20 @@ namespace EverythingToolbar.Settings
             InitializeComponent();
             _isAutostartEnabled = _autostart.IsEnabled;
             DataContext = this;
+            Settings.PropertyChanged += OnSettingsChanged;
+        }
+
+        private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ISettings.IsForceLegacySdk))
+            {
+                _everythingClient.SetForceLegacySdk(Settings.IsForceLegacySdk);
+            }
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
+            Settings.PropertyChanged -= OnSettingsChanged;
             _everythingClient.SetInstanceName(Settings.InstanceName);
         }
 

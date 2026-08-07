@@ -166,7 +166,7 @@ namespace EverythingToolbar.Properties {
                 return ResourceManager.GetString("ContextMenuCopyFile", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Copy File Name to Clipboard.
         /// </summary>
@@ -499,7 +499,7 @@ namespace EverythingToolbar.Properties {
                 return ResourceManager.GetString("MessageBoxFailedToCopyFile", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to copy file name..
         /// </summary>
@@ -573,15 +573,6 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OK.
-        /// </summary>
-        public static string MessageBoxOk {
-            get {
-                return ResourceManager.GetString("MessageBoxOk", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string MessageBoxNo {
@@ -591,11 +582,11 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes.
+        ///   Looks up a localized string similar to OK.
         /// </summary>
-        public static string MessageBoxYes {
+        public static string MessageBoxOk {
             get {
-                return ResourceManager.GetString("MessageBoxYes", resourceCulture);
+                return ResourceManager.GetString("MessageBoxOk", resourceCulture);
             }
         }
         
@@ -659,6 +650,15 @@ namespace EverythingToolbar.Properties {
         public static string MessageBoxUnhandledExceptionTitle {
             get {
                 return ResourceManager.GetString("MessageBoxUnhandledExceptionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string MessageBoxYes {
+            get {
+                return ResourceManager.GetString("MessageBoxYes", resourceCulture);
             }
         }
         
@@ -902,6 +902,24 @@ namespace EverythingToolbar.Properties {
         public static string SettingsFilters {
             get {
                 return ResourceManager.GetString("SettingsFilters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Force legacy SDK.
+        /// </summary>
+        public static string SettingsForceLegacySdk {
+            get {
+                return ResourceManager.GetString("SettingsForceLegacySdk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Always use the legacy IPC client, which may be more compatible but slower..
+        /// </summary>
+        public static string SettingsForceLegacySdkHelp {
+            get {
+                return ResourceManager.GetString("SettingsForceLegacySdkHelp", resourceCulture);
             }
         }
         
@@ -1444,7 +1462,7 @@ namespace EverythingToolbar.Properties {
                 return ResourceManager.GetString("SettingsTaskbarWindowHelp", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The search box requires the original Windows 11 taskbar. When using ExplorerPatcher or StartAllBack, use the deskband instead..
         /// </summary>
@@ -1453,7 +1471,7 @@ namespace EverythingToolbar.Properties {
                 return ResourceManager.GetString("SettingsTaskbarWindowUnsupported", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Enable thumbnails.
         /// </summary>
@@ -1921,7 +1939,7 @@ namespace EverythingToolbar.Properties {
                 return ResourceManager.GetString("UserFilterPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Video.
         /// </summary>

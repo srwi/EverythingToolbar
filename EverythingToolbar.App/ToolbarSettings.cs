@@ -142,5 +142,8 @@ namespace EverythingToolbar.App
 
         [Option(DefaultValue = "Left")]
         string TaskbarWindowAlignment { get; set; }
+
+        [Option(DefaultValue = false)]
+        bool IsForceLegacySdk { get; set; }
     }
 }

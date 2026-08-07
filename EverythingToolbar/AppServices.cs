@@ -24,9 +24,11 @@ namespace EverythingToolbar
             var provider = services.BuildServiceProvider();
             Ioc.Default.ConfigureServices(provider);
 
-            provider
-                .GetRequiredService<IEverythingClient>()
-                .SetInstanceName(provider.GetRequiredService<ISettings>().InstanceName);
+            var settings = provider.GetRequiredService<ISettings>();
+
+            var router = provider.GetRequiredService<EverythingClientRouter>();
+            router.SetInstanceName(settings.InstanceName);
+            router.SetForceLegacySdk(settings.IsForceLegacySdk);
         }
     }
 
@@ -43,13 +45,13 @@ namespace EverythingToolbar
             });
         }
 
-        // The OS-abstraction seam: each interface is the app-facing contract, the adapter the Win32 impl.
         public static IServiceCollection AddPlatformAdapters(this IServiceCollection services)
         {
             return services
                 .AddSingleton<EverythingIpcClient>()
                 .AddSingleton<EverythingPipeClient>()
-                .AddSingleton<IEverythingClient, EverythingClientRouter>()
+                .AddSingleton<EverythingClientRouter>()
+                .AddSingleton<IEverythingClient>(sp => sp.GetRequiredService<EverythingClientRouter>())
                 .AddSingleton<IClipboard, ClipboardAdapter>()
                 .AddSingleton<IShellDialogs, ShellDialogsAdapter>()
                 .AddSingleton<INotifier, NotifierAdapter>()

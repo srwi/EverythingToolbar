@@ -17,6 +17,7 @@ namespace EverythingToolbar.Platform.Search
         private volatile IEverythingClient? _active;
         private volatile bool _resolveAttempted;
         private volatile bool _pipeClientUnavailable;
+        private volatile bool _forceLegacySdk;
         private int _retryRunning;
 
         private IEverythingClient Active
@@ -45,7 +46,7 @@ namespace EverythingToolbar.Platform.Search
         {
             IEverythingClient? resolved = null;
 
-            if (TryConnectPipeClient())
+            if (!_forceLegacySdk && TryConnectPipeClient())
                 resolved = pipeClient;
             else if (ipcClient.GetEverythingVersion().Major > 0)
                 resolved = ipcClient;
@@ -54,9 +55,9 @@ namespace EverythingToolbar.Platform.Search
                 return null;
 
             Logger.Info(
-                ReferenceEquals(resolved, pipeClient)
-                    ? "Using the Everything 1.5 SDK3 pipe client."
-                    : "Using the Everything 1.4 SDK2 IPC client."
+                _forceLegacySdk ? "Using the Everything 1.4 SDK2 IPC client (legacy SDK forced)."
+                : ReferenceEquals(resolved, pipeClient) ? "Using the Everything 1.5 SDK3 pipe client."
+                : "Using the Everything 1.4 SDK2 IPC client."
             );
 
             _active = resolved;
@@ -136,6 +137,13 @@ namespace EverythingToolbar.Platform.Search
             pipeClient.SetInstanceName(name);
             ipcClient.SetInstanceName(name);
 
+            _active = null;
+            _resolveAttempted = false;
+        }
+
+        public void SetForceLegacySdk(bool force)
+        {
+            _forceLegacySdk = force;
             _active = null;
             _resolveAttempted = false;
         }
