@@ -76,11 +76,9 @@ namespace EverythingToolbar.Services
             );
         }
 
-        /// <summary>Hides the window. Returns true if it was visible.</summary>
         public bool Hide()
         {
-            if (_current is null)
-                return false;
+            var wasPositioned = _current is not null;
 
             _current = null;
             _target = null;
@@ -99,7 +97,7 @@ namespace EverythingToolbar.Services
                     | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE
                     | SET_WINDOW_POS_FLAGS.SWP_HIDEWINDOW
             );
-            return true;
+            return wasPositioned;
         }
 
         // A finished animation holds its end value without ticking, so it is only cancelled where that
