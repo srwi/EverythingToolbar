@@ -741,4 +741,10 @@
   <data name="MessageBoxRestartMessage" xml:space="preserve">
     <value>Je moet opnieuw opstarten om de taalwijzigingen door te voeren. Wil je nu opnieuw opstarten?</value>
   </data>
+  <data name="SettingsForceLegacySdk" xml:space="preserve">
+    <value>Force legacy SDK</value>
+  </data>
+  <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
+    <value>Always use the legacy IPC client, which may be more compatible but slower.</value>
+  </data>
 </root>
