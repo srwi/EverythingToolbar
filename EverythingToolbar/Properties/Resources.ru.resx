@@ -127,7 +127,7 @@
     <value>Скопировать</value>
   </data>
   <data name="ContextMenuCopyFileName" xml:space="preserve">
-    <value>Copy File Name to Clipboard</value>
+    <value>Скопировать имя файла в буфер обмена</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
     <value>Скопировать полное имя в буфер обмена</value>
@@ -205,7 +205,7 @@
     <value>Не удалось скопировать файл.</value>
   </data>
   <data name="MessageBoxFailedToCopyFileName" xml:space="preserve">
-    <value>Failed to copy file name.</value>
+    <value>Не удалось скопировать имя файла.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>Не удалось скопировать путь.</value>
