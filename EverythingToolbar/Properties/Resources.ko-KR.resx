@@ -741,4 +741,10 @@
   <data name="MessageBoxRestartMessage" xml:space="preserve">
     <value>언어 변경 사항을 적용하려면 재시작이 필요합니다. 지금 재시작하시겠습니까?</value>
   </data>
+  <data name="SettingsForceLegacySdk" xml:space="preserve">
+    <value>Force legacy SDK</value>
+  </data>
+  <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
+    <value>Always use the legacy IPC client, which may be more compatible but slower.</value>
+  </data>
 </root>
