@@ -742,4 +742,10 @@
   <data name="MessageBoxRestartMessage" xml:space="preserve">
     <value>A restart is required for the language changes to take effect. Do you want to restart now?</value>
   </data>
+  <data name="SettingsForceLegacySdk" xml:space="preserve">
+    <value>Force legacy SDK</value>
+  </data>
+  <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
+    <value>Always use the legacy IPC client, which may be more compatible but slower.</value>
+  </data>
 </root>
