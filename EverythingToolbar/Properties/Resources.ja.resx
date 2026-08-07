@@ -126,6 +126,9 @@
   <data name="ContextMenuCopyFile" xml:space="preserve">
     <value>コピー</value>
   </data>
+  <data name="ContextMenuCopyFileName" xml:space="preserve">
+    <value>Copy File Name to Clipboard</value>
+  </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
     <value>完全名をクリップボードにコピー</value>
   </data>
@@ -201,6 +204,9 @@
   <data name="MessageBoxFailedToCopyFile" xml:space="preserve">
     <value>ファイルのコピーに失敗しました。</value>
   </data>
+  <data name="MessageBoxFailedToCopyFileName" xml:space="preserve">
+    <value>Failed to copy file name.</value>
+  </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>パスのコピーに失敗しました。</value>
   </data>
@@ -229,7 +235,7 @@
     <value>Everything.exe を選択...</value>
   </data>
   <data name="MessageBoxSelectFiltersCsv" xml:space="preserve">
-    <value>Filters.csv を選択してください。デフォルトでは %APPDATA%\Everything にあります。この場所はインストール時の設定で変化する場合があります。このファイルが存在しない場合、Everything のデフォルトのフィルターに変更を加えていないということを意味します。</value>
+    <value>Filters.csv を選択してください。既定は「%APPDATA%\Everything」に存在します。この場所はインストール時の設定で変化する場合があります。このファイルが存在しない場合、Everything のデフォルトのフィルターに変更を加えていないということを意味します。</value>
   </data>
   <data name="MessageBoxSelectFiltersCsvTitle" xml:space="preserve">
     <value>Filters.csv が見つかりません</value>
@@ -313,7 +319,7 @@
     <value>サムネイルを有効化</value>
   </data>
   <data name="SettingsSystemContextMenuDefault" xml:space="preserve">
-    <value>システムコンテキストメニューをデフォルトで使用</value>
+    <value>システムコンテキストメニューを既定で使用</value>
   </data>
   <data name="SettingsUseEverythingFilters" xml:space="preserve">
     <value>Everything のフィルタを使用</value>
@@ -520,7 +526,7 @@
     <value>Everything で使用するインスタンスの名前を設定します</value>
   </data>
   <data name="SettingsDefaultInstance" xml:space="preserve">
-    <value>デフォルトのインスタンス</value>
+    <value>既定のインスタンス</value>
   </data>
   <data name="AboutDescription" xml:space="preserve">
     <value>Windows タスクバーに Everything を統合。</value>
@@ -607,7 +613,7 @@
     <value>新しいバージョンが利用可能になった時に通知します</value>
   </data>
   <data name="SettingsReplaceStartMenuHelp" xml:space="preserve">
-    <value>デフォルトの Windows スタートメニュー検索を EverythingToolbar に置き換えます</value>
+    <value>既定の Windows スタートメニュー検索を EverythingToolbar に置き換えます</value>
   </data>
   <data name="MessageBoxOk" xml:space="preserve">
     <value>OK</value>
