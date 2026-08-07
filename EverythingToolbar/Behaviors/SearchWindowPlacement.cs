@@ -235,7 +235,10 @@ namespace EverythingToolbar.Behaviors
             switch (taskbar.Edge)
             {
                 case Edge.Top:
-                    return new Point(GetHorizontalPosition(workingArea, width, margin), taskbar.Position.Bottom + margin);
+                    return new Point(
+                        GetHorizontalPosition(workingArea, width, margin),
+                        taskbar.Position.Bottom + margin
+                    );
                 case Edge.Bottom:
                     return new Point(
                         GetHorizontalPosition(workingArea, width, margin),
@@ -279,7 +282,10 @@ namespace EverythingToolbar.Behaviors
         private TaskbarLocation FindDockedTaskBar(Screen screen)
         {
             // An auto-hiding taskbar reserves no work area, so the geometry below cannot see it at all.
-            if (NativeMethods.IsTaskbarAutoHiding() && NativeMethods.TryGetTaskbarPosition(out var edge, out var thickness))
+            if (
+                NativeMethods.IsTaskbarAutoHiding()
+                && NativeMethods.TryGetTaskbarPosition(out var edge, out var thickness)
+            )
                 return CreateTaskbarLocation(screen, ToEdge(edge), RescaleFromPrimary(thickness));
 
             var topDockedHeight = screen.WorkingArea.Top - screen.Bounds.Top;
