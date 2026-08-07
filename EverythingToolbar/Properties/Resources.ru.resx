@@ -742,9 +742,9 @@
     <value>Для применения языковых изменений требуется перезапуск. Перезапустить сейчас?</value>
   </data>
   <data name="SettingsForceLegacySdk" xml:space="preserve">
-    <value>Force legacy SDK</value>
+    <value>Принудительно использовать устаревший SDK</value>
   </data>
   <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
-    <value>Always use the legacy IPC client, which may be more compatible but slower.</value>
+    <value>Всегда использовать устаревший IPC-клиент, который может быть более совместимым, но работает медленнее.</value>
   </data>
 </root>
