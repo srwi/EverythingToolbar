@@ -127,7 +127,7 @@
     <value>복사</value>
   </data>
   <data name="ContextMenuCopyFileName" xml:space="preserve">
-    <value>Copy File Name to Clipboard</value>
+    <value>파일 이름을 클립보드에 복사</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
     <value>클립보드에 전체 이름 복사</value>
@@ -205,7 +205,7 @@
     <value>파일 복사에 실패했습니다.</value>
   </data>
   <data name="MessageBoxFailedToCopyFileName" xml:space="preserve">
-    <value>Failed to copy file name.</value>
+    <value>파일 이름을 복사하지 못했습니다.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>경로 복사에 실패했습니다.</value>
@@ -742,9 +742,9 @@
     <value>언어 변경 사항을 적용하려면 재시작이 필요합니다. 지금 재시작하시겠습니까?</value>
   </data>
   <data name="SettingsForceLegacySdk" xml:space="preserve">
-    <value>Force legacy SDK</value>
+    <value>레거시 SDK 강제 적용</value>
   </data>
   <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
-    <value>Always use the legacy IPC client, which may be more compatible but slower.</value>
+    <value>더 호환성이 높을 수는 있지만 더 느릴 수 있는 기존 IPC 클라이언트를 항상 사용하세요.</value>
   </data>
 </root>
