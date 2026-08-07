@@ -69,6 +69,16 @@ namespace EverythingToolbar.Services
             _hotkeyDown = false;
         }
 
+        public void Pause()
+        {
+            _keyboardHook.Pause();
+        }
+
+        public void Resume()
+        {
+            _keyboardHook.Resume();
+        }
+
         private void UpdateSettings(Key key, ModifierKeys mods)
         {
             _settings.ShortcutKey = (int)key;
