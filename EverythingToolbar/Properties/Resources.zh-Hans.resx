@@ -741,4 +741,10 @@
   <data name="MessageBoxRestartMessage" xml:space="preserve">
     <value>语言更改需要重启系统才能生效。您现在要重启吗？</value>
   </data>
+  <data name="SettingsForceLegacySdk" xml:space="preserve">
+    <value>Force legacy SDK</value>
+  </data>
+  <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
+    <value>Always use the legacy IPC client, which may be more compatible but slower.</value>
+  </data>
 </root>
