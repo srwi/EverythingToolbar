@@ -742,9 +742,9 @@
     <value>语言更改需要重启系统才能生效。您现在要重启吗？</value>
   </data>
   <data name="SettingsForceLegacySdk" xml:space="preserve">
-    <value>Force legacy SDK</value>
+    <value>强制旧版 SDK</value>
   </data>
   <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
-    <value>Always use the legacy IPC client, which may be more compatible but slower.</value>
+    <value>始终使用旧版 IPC 客户端，它可能兼容性更好，但速度较慢。</value>
   </data>
 </root>
