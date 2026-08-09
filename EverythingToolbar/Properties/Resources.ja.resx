@@ -127,7 +127,7 @@
     <value>コピー</value>
   </data>
   <data name="ContextMenuCopyFileName" xml:space="preserve">
-    <value>Copy File Name to Clipboard</value>
+    <value>ファイル名をクリップボードにコピー</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
     <value>完全名をクリップボードにコピー</value>
@@ -205,7 +205,7 @@
     <value>ファイルのコピーに失敗しました。</value>
   </data>
   <data name="MessageBoxFailedToCopyFileName" xml:space="preserve">
-    <value>Failed to copy file name.</value>
+    <value>ファイル名のコピーに失敗しました。</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>パスのコピーに失敗しました。</value>
@@ -742,9 +742,9 @@
     <value>言語の変更を有効にするには再起動が必要です。今すぐ再起動しますか？</value>
   </data>
   <data name="SettingsForceLegacySdk" xml:space="preserve">
-    <value>Force legacy SDK</value>
+    <value>従来のSDKを強制</value>
   </data>
   <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
-    <value>Always use the legacy IPC client, which may be more compatible but slower.</value>
+    <value>常に従来のIPCクライアントを使用します。これは互換性がありますが、動作が遅くなります。</value>
   </data>
 </root>
