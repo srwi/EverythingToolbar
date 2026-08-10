@@ -127,7 +127,7 @@
     <value>Copiar</value>
   </data>
   <data name="ContextMenuCopyFileName" xml:space="preserve">
-    <value>Copy File Name to Clipboard</value>
+    <value>Copiar nombre de archivo al portapapeles</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
     <value>Copiar ruta completa al portapapeles</value>
@@ -205,7 +205,7 @@
     <value>Error al copiar archivo.</value>
   </data>
   <data name="MessageBoxFailedToCopyFileName" xml:space="preserve">
-    <value>Failed to copy file name.</value>
+    <value>No se pudo copiar el nombre de archivo.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>Error al copiar ubicación.</value>
@@ -655,16 +655,16 @@
     <value>Seleccionar el estilo del icono de la barra de tareas (es necesario reiniciar el Explorador)</value>
   </data>
   <data name="SettingsTaskbarWindow" xml:space="preserve">
-    <value>Show search box</value>
+    <value>Mostrar cuadro de búsqueda</value>
   </data>
   <data name="SettingsTaskbarWindowHelp" xml:space="preserve">
-    <value>Show a search box on the taskbar</value>
+    <value>Mostrar cuadro de búsqueda en la barra de tareas</value>
   </data>
   <data name="SettingsTaskbarWindowAlignment" xml:space="preserve">
-    <value>Search box alignment</value>
+    <value>Alineación del cuadro de búsqueda</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentHelp" xml:space="preserve">
-    <value>Controls the search box alignment on the taskbar</value>
+    <value>Control de la alineación del cuadro de búsqueda en la barra de tareas</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
     <value>Izquierda</value>
@@ -673,19 +673,19 @@
     <value>Derecha</value>
   </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
-    <value>The search box requires the original Windows 11 taskbar. When using ExplorerPatcher or StartAllBack, use the deskband instead.</value>
+    <value>El cuadro de búsqueda requiere la barra de tareas original de Windows 11. Cuando utilice ExplorerPatcher o StartAllBack, utilice la banda de escritorio en su lugar.</value>
   </data>
   <data name="SettingsTaskbarIcon" xml:space="preserve">
-    <value>Taskbar icon</value>
+    <value>Icono de la barra de tareas</value>
   </data>
   <data name="SettingsTaskbarSearchBox" xml:space="preserve">
-    <value>Taskbar search box</value>
+    <value>Cuadro de búsqueda en la barra de tareas</value>
   </data>
   <data name="SettingsTaskbarIconStatusPinned" xml:space="preserve">
-    <value>Pinned to taskbar</value>
+    <value>Anclado a la barra de tareas</value>
   </data>
   <data name="SettingsTaskbarIconStatusNotPinned" xml:space="preserve">
-    <value>Not pinned to taskbar</value>
+    <value>No anclado a la barra de tareas</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>Ordenar filtros</value>
@@ -742,9 +742,9 @@
     <value>Es necesario reiniciar para que los cambios de idioma surtan efecto. ¿Desea reiniciar ahora?</value>
   </data>
   <data name="SettingsForceLegacySdk" xml:space="preserve">
-    <value>Force legacy SDK</value>
+    <value>Forzar SDK heredado</value>
   </data>
   <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
-    <value>Always use the legacy IPC client, which may be more compatible but slower.</value>
+    <value>Utilice siempre el cliente IPC heredado, que puede ser más compatible, aunque más lento.</value>
   </data>
 </root>
