@@ -160,7 +160,7 @@
     <value>Habilita el icono de la bandeja del sistema para un acceso rápido a la configuración</value>
   </data>
   <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
-    <value>Insertar un cuadro de búsqueda en la barra de tareas</value>
+    <value>Inserta un cuadro de búsqueda en la barra de tareas</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>Activar inicio automático</value>
