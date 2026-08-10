@@ -658,13 +658,13 @@
     <value>Mostrar cuadro de búsqueda</value>
   </data>
   <data name="SettingsTaskbarWindowHelp" xml:space="preserve">
-    <value>Mostrar cuadro de búsqueda en la barra de tareas</value>
+    <value>Muestra cuadro de búsqueda en la barra de tareas</value>
   </data>
   <data name="SettingsTaskbarWindowAlignment" xml:space="preserve">
     <value>Alineación del cuadro de búsqueda</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentHelp" xml:space="preserve">
-    <value>Control de la alineación del cuadro de búsqueda en la barra de tareas</value>
+    <value>Controla la alineación del cuadro de búsqueda en la barra de tareas</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
     <value>Izquierda</value>
@@ -745,6 +745,6 @@
     <value>Forzar SDK heredado</value>
   </data>
   <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
-    <value>Utilice siempre el cliente IPC heredado, que puede ser más compatible, aunque más lento.</value>
+    <value>Utiliza siempre el cliente IPC heredado, aunque puede ser más compatible, es más lento.</value>
   </data>
 </root>
