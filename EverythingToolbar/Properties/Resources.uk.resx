@@ -127,7 +127,7 @@
     <value>Копіювати</value>
   </data>
   <data name="ContextMenuCopyFileName" xml:space="preserve">
-    <value>Copy File Name to Clipboard</value>
+    <value>Скопіювати назву файлу в буфер обміну</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
     <value>Скопіювати повну назву в буфер обміну</value>
@@ -205,7 +205,7 @@
     <value>Не вдалося скопіювати файл.</value>
   </data>
   <data name="MessageBoxFailedToCopyFileName" xml:space="preserve">
-    <value>Failed to copy file name.</value>
+    <value>Не вдалося скопіювати назву файлу.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>Не вдалося скопіювати шлях.</value>
@@ -655,7 +655,7 @@
     <value>Змінює стиль піктограми панелі завдань (потрібно перезапустити Провідник)</value>
   </data>
   <data name="SettingsTaskbarWindow" xml:space="preserve">
-    <value>Show search box</value>
+    <value>Показувати поле пошуку</value>
   </data>
   <data name="SettingsTaskbarWindowHelp" xml:space="preserve">
     <value>Show a search box on the taskbar</value>
