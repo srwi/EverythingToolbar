@@ -658,13 +658,13 @@
     <value>Показувати поле пошуку</value>
   </data>
   <data name="SettingsTaskbarWindowHelp" xml:space="preserve">
-    <value>Show a search box on the taskbar</value>
+    <value>Показувати поле пошуку на панелі завдань</value>
   </data>
   <data name="SettingsTaskbarWindowAlignment" xml:space="preserve">
-    <value>Search box alignment</value>
+    <value>Вирівнювання поля пошуку</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentHelp" xml:space="preserve">
-    <value>Controls the search box alignment on the taskbar</value>
+    <value>Керує вирівнюванням поля пошуку на панелі завдань</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
     <value>Ліворуч</value>
@@ -673,19 +673,19 @@
     <value>Праворуч</value>
   </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
-    <value>The search box requires the original Windows 11 taskbar. When using ExplorerPatcher or StartAllBack, use the deskband instead.</value>
+    <value>Для роботи поля пошуку потрібна оригінальна панель завдань Windows 11. При використанні ExplorerPatcher або StartAllBack використовуйте натомість панель інструментів (deskband).</value>
   </data>
   <data name="SettingsTaskbarIcon" xml:space="preserve">
-    <value>Taskbar icon</value>
+    <value>Значок панелі завдань</value>
   </data>
   <data name="SettingsTaskbarSearchBox" xml:space="preserve">
-    <value>Taskbar search box</value>
+    <value>Поле пошуку на панелі завдань</value>
   </data>
   <data name="SettingsTaskbarIconStatusPinned" xml:space="preserve">
-    <value>Pinned to taskbar</value>
+    <value>Закріплено на панелі завдань</value>
   </data>
   <data name="SettingsTaskbarIconStatusNotPinned" xml:space="preserve">
-    <value>Not pinned to taskbar</value>
+    <value>Не закріплено на панелі завдань</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>Порядок фільтрів</value>
@@ -742,9 +742,9 @@
     <value>Для того, щоб зміни мови набули чинності, потрібен перезапуск. Бажаєте перезапустити зараз?</value>
   </data>
   <data name="SettingsForceLegacySdk" xml:space="preserve">
-    <value>Force legacy SDK</value>
+    <value>Примусово використовувати застарілий SDK</value>
   </data>
   <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
-    <value>Always use the legacy IPC client, which may be more compatible but slower.</value>
+    <value>Завжди використовувати застарілий клієнт IPC, який може бути більш сумісним, але повільнішим.</value>
   </data>
 </root>
