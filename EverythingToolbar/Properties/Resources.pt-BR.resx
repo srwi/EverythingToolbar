@@ -678,6 +678,9 @@
   <data name="SettingsTaskbarWindowAlignmentRight" xml:space="preserve">
     <value>Direita</value>
   </data>
+  <data name="SettingsTaskbarWindowAlignmentAutoRight" xml:space="preserve">
+    <value>The search box is automatically right-aligned while the Windows taskbar icons are left-aligned. Set the taskbar icons to centered to choose the alignment.</value>
+  </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
     <value>A caixa de pesquisa requer a barra de tarefas original do Windows 11. Quando estiver usando o ExplorerPatcher ou StartAllBack, use a área de trabalho como alternativa.</value>
   </data>
