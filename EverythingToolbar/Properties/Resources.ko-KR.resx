@@ -678,6 +678,9 @@
   <data name="SettingsTaskbarWindowAlignmentRight" xml:space="preserve">
     <value>오른쪽</value>
   </data>
+  <data name="SettingsTaskbarWindowAlignmentAutoRight" xml:space="preserve">
+    <value>The search box is automatically right-aligned while the Windows taskbar icons are left-aligned. Set the taskbar icons to centered to choose the alignment.</value>
+  </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
     <value>검색 상자는 원래의 Windows 11 작업 표시줄이 필요합니다. ExplorerPatcher나 StartAllBack을 사용할 때는 대신 deskband를 사용하세요.</value>
   </data>
