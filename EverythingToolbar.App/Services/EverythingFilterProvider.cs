@@ -160,6 +160,11 @@ namespace EverythingToolbar.App.Services
                 IsMatchWholeWord = GetColumnOrEmpty(dict, "Whole Word") == "1",
                 IsMatchPath = GetColumnOrEmpty(dict, "Path") == "1",
                 IsRegExEnabled = GetColumnOrEmpty(dict, "Regex") == "1",
+                IsMatchDiacritics = GetColumnOrEmpty(dict, "Diacritics") == "1",
+                IsMatchPrefix = GetColumnOrEmpty(dict, "Prefix") == "1",
+                IsMatchSuffix = GetColumnOrEmpty(dict, "Suffix") == "1",
+                IsIgnorePunctuation = GetColumnOrEmpty(dict, "Ignore Punctuation") == "1",
+                IsIgnoreWhitespace = GetColumnOrEmpty(dict, "Ignore Whitespace") == "1",
                 Search = GetColumnOrEmpty(dict, "Search"),
                 Macro = GetColumnOrEmpty(dict, "Macro"),
             };

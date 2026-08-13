@@ -18,6 +18,7 @@ namespace EverythingToolbar.Platform.Search
         private volatile bool _resolveAttempted;
         private volatile bool _pipeClientUnavailable;
         private volatile bool _forceLegacySdk;
+        private volatile Version? _version;
         private int _retryRunning;
 
         private IEverythingClient Active
@@ -61,6 +62,7 @@ namespace EverythingToolbar.Platform.Search
             );
 
             _active = resolved;
+            _version = null;
             return resolved;
         }
 
@@ -130,7 +132,7 @@ namespace EverythingToolbar.Platform.Search
         public bool TryReadCachedFirstPage(SearchQuery query, out IList<SearchResult> results) =>
             Active.TryReadCachedFirstPage(query, out results);
 
-        public Version GetEverythingVersion() => Active.GetEverythingVersion();
+        public Version GetEverythingVersion() => _version ??= Active.GetEverythingVersion();
 
         public void SetInstanceName(string name)
         {
@@ -139,6 +141,7 @@ namespace EverythingToolbar.Platform.Search
 
             _active = null;
             _resolveAttempted = false;
+            _version = null;
         }
 
         public void SetForceLegacySdk(bool force)
@@ -146,6 +149,7 @@ namespace EverythingToolbar.Platform.Search
             _forceLegacySdk = force;
             _active = null;
             _resolveAttempted = false;
+            _version = null;
         }
 
         public void IncrementRunCount(string path) => Active.IncrementRunCount(path);

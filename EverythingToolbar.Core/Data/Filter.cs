@@ -10,6 +10,11 @@ namespace EverythingToolbar.Core.Data
         public bool IsMatchWholeWord { get; init; }
         public bool IsMatchPath { get; init; }
         public bool IsRegExEnabled { get; init; }
+        public bool IsMatchDiacritics { get; init; }
+        public bool IsMatchPrefix { get; init; }
+        public bool IsMatchSuffix { get; init; }
+        public bool IsIgnorePunctuation { get; init; }
+        public bool IsIgnoreWhitespace { get; init; }
 
         public override bool Equals(object? obj)
         {
@@ -28,7 +33,13 @@ namespace EverythingToolbar.Core.Data
             bool currentIsMatchCase,
             bool currentIsMatchWholeWord,
             bool currentIsMatchPath,
-            bool currentIsRegExEnabled
+            bool currentIsRegExEnabled,
+            bool currentIsMatchDiacritics,
+            bool currentIsMatchPrefix,
+            bool currentIsMatchSuffix,
+            bool currentIsIgnorePunctuation,
+            bool currentIsIgnoreWhitespace,
+            bool supportsEverything15
         )
         {
             if (string.IsNullOrEmpty(Search))
@@ -43,6 +54,20 @@ namespace EverythingToolbar.Core.Data
                 modifiers += IsMatchPath ? "path:" : "nopath:";
             if (IsRegExEnabled != currentIsRegExEnabled)
                 modifiers += IsRegExEnabled ? "regex:" : "noregex:";
+            if (IsMatchDiacritics != currentIsMatchDiacritics && !IsRegExEnabled)
+                modifiers += IsMatchDiacritics ? "diacritics:" : "nodiacritics:";
+
+            if (supportsEverything15)
+            {
+                if (IsMatchPrefix != currentIsMatchPrefix && !IsRegExEnabled)
+                    modifiers += IsMatchPrefix ? "prefix:" : "noprefix:";
+                if (IsMatchSuffix != currentIsMatchSuffix && !IsRegExEnabled)
+                    modifiers += IsMatchSuffix ? "suffix:" : "nosuffix:";
+                if (IsIgnorePunctuation != currentIsIgnorePunctuation && !IsRegExEnabled)
+                    modifiers += IsIgnorePunctuation ? "ignore-punctuation:" : "no-ignore-punctuation:";
+                if (IsIgnoreWhitespace != currentIsIgnoreWhitespace && !IsRegExEnabled)
+                    modifiers += IsIgnoreWhitespace ? "ignore-whitespace:" : "no-ignore-whitespace:";
+            }
 
             if (string.IsNullOrEmpty(modifiers))
                 return $"{Search} ";

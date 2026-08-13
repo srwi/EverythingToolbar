@@ -34,12 +34,19 @@ namespace EverythingToolbar.App.Search
         private readonly SearchHistory _history;
         private readonly FilterProvider _filterProvider;
         private readonly ISettings _settings;
+        private readonly IEverythingClient _everythingClient;
 
-        public SearchState(SearchHistory history, FilterProvider filterProvider, ISettings settings)
+        public SearchState(
+            SearchHistory history,
+            FilterProvider filterProvider,
+            ISettings settings,
+            IEverythingClient everythingClient
+        )
         {
             _history = history;
             _filterProvider = filterProvider;
             _settings = settings;
+            _everythingClient = everythingClient;
 
             _currentFilter = _filterProvider.GetInitialFilter();
 
@@ -109,8 +116,20 @@ namespace EverythingToolbar.App.Search
 
         public string BuildSearchTerm()
         {
+            var supportsEverything15 = _everythingClient.GetEverythingVersion().Minor >= 5;
             var rawSearchTerm =
-                Filter.GetSearchPrefix(IsMatchCase, IsMatchWholeWord, IsMatchPath, IsRegExEnabled) + SearchTerm;
+                Filter.GetSearchPrefix(
+                    IsMatchCase,
+                    IsMatchWholeWord,
+                    IsMatchPath,
+                    IsRegExEnabled,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    supportsEverything15
+                ) + SearchTerm;
             var searchTermWithAppliedMacros = ApplyMacros(rawSearchTerm);
             return searchTermWithAppliedMacros;
         }
