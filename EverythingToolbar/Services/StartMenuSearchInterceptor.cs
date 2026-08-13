@@ -170,18 +170,15 @@ namespace EverythingToolbar.Services
                 if (_isNativeSearchActive)
                     return false;
 
-                // We never want to block the Windows keys and Escape
-                if (vk == 0x5B || vk == 0x5C || vk == 0x1B)
-                {
-                    return false;
-                }
-
                 // Check for exception key (LALT)
                 if (vk == 0xA4)
                 {
                     _isNativeSearchActive = true;
                     return false;
                 }
+
+                if (!IsPrintableKey(vk))
+                    return false;
 
                 // Queue keypress for replay in EverythingToolbar
                 _isInterceptingKeys = true;
@@ -191,6 +188,32 @@ namespace EverythingToolbar.Services
 
                 return true;
             }
+        }
+
+        private static bool IsPrintableKey(int vk)
+        {
+            // Backspace
+            if (vk == 0x08)
+                return true;
+
+            // Space
+            if (vk == 0x20)
+                return true;
+
+            // Digits 0-9
+            if (vk is >= 0x30 and <= 0x39)
+                return true;
+
+            // Letters A-Z
+            if (vk is >= 0x41 and <= 0x5A)
+                return true;
+
+            // OEM punctuation keys (VK_OEM_1..8, VK_OEM_102, plus the ABNT/reserved
+            // codes some layouts use for characters). Stops before VK_PROCESSKEY (IME).
+            if (vk is >= 0xBA and <= 0xE2)
+                return true;
+
+            return false;
         }
 
         private void OnAnySearchBoxGotKeyboardFocus(object? sender, EventArgs e)
