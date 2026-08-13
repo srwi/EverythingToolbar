@@ -8,6 +8,7 @@
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
     <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.3.298" />
     <PackageVersion Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageVersion Include="NHotkey.Wpf" Version="3.0.0" />
     <PackageVersion Include="NLog" Version="5.1.1" />
     <PackageVersion Include="WPF-UI" Version="4.0.3" />
     <PackageVersion Include="WPF-UI.Tray" Version="4.0.3" />

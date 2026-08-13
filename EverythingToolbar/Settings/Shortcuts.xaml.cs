@@ -1,5 +1,7 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
@@ -32,10 +34,17 @@ namespace EverythingToolbar.Settings
             Ioc.Default.GetRequiredService<GlobalShortcutListener>();
 
         private LowLevelKeyboardHook? _keyboardHook;
+        private TextBox? _shortcutTextBox;
 
         public Shortcuts()
         {
             InitializeComponent();
+        }
+
+        private void OnShortcutTextBoxLoaded(object sender, RoutedEventArgs e)
+        {
+            _shortcutTextBox = (TextBox)sender;
+            UpdateTextBox();
         }
 
         private void OnKeyPressedReleased(int vk, bool isDown)
@@ -139,7 +148,8 @@ namespace EverythingToolbar.Settings
                 shortcutText.Append(Key.ToString());
             }
 
-            ShortcutTextBox.Text = shortcutText.ToString();
+            if (_shortcutTextBox != null)
+                _shortcutTextBox.Text = shortcutText.ToString();
         }
 
         private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -174,8 +184,25 @@ namespace EverythingToolbar.Settings
 
             if (Key != OriginalKey || Modifiers != OriginalModifiers)
             {
-                _shortcutListener.SetShortcut(Key, Modifiers);
+                ApplyShortcut();
             }
+        }
+
+        private void ApplyShortcut()
+        {
+            if (Modifiers == ModifierKeys.Windows)
+            {
+                // Windows Explorer reserves many shortcuts with the Windows key. Therefore, we need to update the settings,
+                // kill explorer (and the deskband) and let the initialize routine set the shortcut before explorer has time to do so.
+                _shortcutListener.UpdateSettings(Key, Modifiers);
+                foreach (var exe in Process.GetProcesses())
+                {
+                    if (exe.ProcessName == "explorer")
+                        exe.Kill();
+                }
+            }
+
+            _shortcutListener.TrySetShortcut(Key, Modifiers);
         }
     }
 }

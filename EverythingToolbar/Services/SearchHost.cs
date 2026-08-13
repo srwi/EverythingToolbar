@@ -43,16 +43,7 @@ namespace EverythingToolbar.Services
                 Detach();
 
             _controller.SetIconMode(iconMode);
-            _shortcutListener.Initialize(() =>
-            {
-                // Temporarily pause the LL keyboard hook so that SetForegroundWindow
-                // succeeds. Windows denies foreground focus to any process that has
-                // a WH_KEYBOARD_LL hook installed.
-                _shortcutListener.Pause();
-                _controller.ToggleSearchUi();
-                // Resume after ActivateAndBringToFront runs (DispatcherPriority.Input).
-                _searchWindow.Dispatcher.BeginInvoke(() => _shortcutListener.Resume(), DispatcherPriority.Background);
-            });
+            _shortcutListener.Initialize(_controller.ToggleSearchUi);
             _startMenuInterceptor.Initialize(placementTarget != null ? ShowSearchUiAtToolbar : ShowSearchUiStandalone);
 
             _placement = new SearchWindowPlacement(_taskbarInfo, _settings, _windowsPolicy)

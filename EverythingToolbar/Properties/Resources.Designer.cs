@@ -546,6 +546,15 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to register hotkey. It might be in use by another application..
+        /// </summary>
+        public static string MessageBoxFailedToRegisterHotkey {
+            get {
+                return ResourceManager.GetString("MessageBoxFailedToRegisterHotkey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to run command.
         /// </summary>
         public static string MessageBoxFailedToRunCommand {
@@ -1127,6 +1136,15 @@ namespace EverythingToolbar.Properties {
         public static string SettingsOpenSearchWindow {
             get {
                 return ResourceManager.GetString("SettingsOpenSearchWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shortcuts that use the Windows key may not work reliably if the combination is reserved by the system..
+        /// </summary>
+        public static string SettingsOpenSearchWindowHelp {
+            get {
+                return ResourceManager.GetString("SettingsOpenSearchWindowHelp", resourceCulture);
             }
         }
         

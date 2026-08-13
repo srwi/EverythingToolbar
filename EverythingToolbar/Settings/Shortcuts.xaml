@@ -65,22 +65,16 @@
         BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
         BorderThickness="1 1 1 1"
         CornerRadius="8, 8, 8, 8">
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-          </Grid.ColumnDefinitions>
-          <ui:TextBlock
-            VerticalAlignment="Center"
-            Text="{x:Static properties:Resources.SettingsOpenSearchWindow}"
-            TextWrapping="Wrap" />
-          <ui:TextBox
-            Name="ShortcutTextBox"
-            Grid.Column="1"
-            Width="150"
-            GotKeyboardFocus="OnGotKeyboardFocus"
-            LostKeyboardFocus="OnLostKeyboardFocus" />
-        </Grid>
+        <controls:SettingItem Title="{x:Static properties:Resources.SettingsOpenSearchWindow}" HelpText="{x:Static properties:Resources.SettingsOpenSearchWindowHelp}">
+          <controls:SettingItem.SettingContent>
+            <ui:TextBox
+              Width="150"
+              HorizontalAlignment="Right"
+              GotKeyboardFocus="OnGotKeyboardFocus"
+              Loaded="OnShortcutTextBoxLoaded"
+              LostKeyboardFocus="OnLostKeyboardFocus" />
+          </controls:SettingItem.SettingContent>
+        </controls:SettingItem>
       </Border>
       <ui:TextBlock
         Margin="0 25 0 7"

@@ -18,10 +18,6 @@ namespace EverythingToolbar.Services
         private Thread? _hookThread;
         private uint _hookThreadId;
 
-        private volatile bool _pauseRequested;
-        private readonly ManualResetEventSlim _pauseComplete = new(false);
-        private volatile bool _resumeRequested;
-
         private const int WhKeyboardLl = 13;
         private const int WmKeydown = 0x0100;
         private const int WmSyskeydown = 0x0104;
@@ -62,9 +58,6 @@ namespace EverythingToolbar.Services
             if (_hookThread == null)
                 return;
 
-            if (_pauseRequested)
-                _resumeRequested = true;
-
             PInvoke.PostThreadMessage(_hookThreadId, PInvoke.WM_QUIT, default, default);
             _hookThread.Join();
             _hookThread = null;
@@ -74,22 +67,7 @@ namespace EverythingToolbar.Services
         public void Dispose()
         {
             Uninstall();
-            _pauseComplete.Dispose();
         }
-
-        public void Pause()
-        {
-            if (_hookThread == null || _hookId == IntPtr.Zero)
-                return;
-
-            _resumeRequested = false;
-            _pauseRequested = true;
-            PInvoke.PostThreadMessage(_hookThreadId, 0x0000, default, default);
-            _pauseComplete.Wait();
-            _pauseComplete.Reset();
-        }
-
-        public void Resume() => _resumeRequested = true;
 
         private void HookThreadProc(ManualResetEventSlim ready)
         {
@@ -116,26 +94,6 @@ namespace EverythingToolbar.Services
             {
                 PInvoke.TranslateMessage(in msg);
                 PInvoke.DispatchMessage(in msg);
-
-                if (_pauseRequested)
-                {
-                    NativeMethods.UnhookWindowsHookEx(_hookId);
-                    _hookId = IntPtr.Zero;
-
-                    _pauseComplete.Set();
-                    Thread.SpinWait(1);
-                    while (!_resumeRequested)
-                        Thread.SpinWait(1);
-
-                    _pauseRequested = false;
-                    _hookId = NativeMethods.SetWindowsHookEx(WhKeyboardLl, HookCallback, IntPtr.Zero, 0);
-
-                    if (_hookId == IntPtr.Zero)
-                    {
-                        Logger.Error("Failed to reinstall the low-level keyboard hook after pause.");
-                        break;
-                    }
-                }
             }
 
             NativeMethods.UnhookWindowsHookEx(_hookId);

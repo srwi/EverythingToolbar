@@ -32,6 +32,7 @@
     </StackPanel>
     <ContentPresenter
       Grid.Column="1"
+      Margin="16 0 0 0"
       HorizontalAlignment="Right"
       VerticalAlignment="Center"
       Content="{Binding SettingContent, ElementName=Root}" />

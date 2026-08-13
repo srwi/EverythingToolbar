@@ -15,6 +15,7 @@
     <PackageReference Include="Config.Net" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" />
+    <PackageReference Include="NHotkey.Wpf" />
     <PackageReference Include="NLog" />
     <PackageReference Include="WPF-UI" />
     <PackageReference Include="Microsoft.Windows.CsWin32">
