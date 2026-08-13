@@ -7,18 +7,22 @@ namespace EverythingToolbar.ViewModels
     {
         private readonly ISearchWindowController _controller;
         private readonly IEverythingClient _everythingClient;
+        private readonly SearchState _searchState;
 
         public ISettings Settings { get; }
+        public SearchState SearchState => _searchState;
 
         public SettingsControlViewModel(
             ISearchWindowController searchWindowController,
             ISettings settings,
-            IEverythingClient everythingClient
+            IEverythingClient everythingClient,
+            SearchState searchState
         )
         {
             _controller = searchWindowController;
             Settings = settings;
             _everythingClient = everythingClient;
+            _searchState = searchState;
         }
 
         public void HideWindow() => _controller.Hide();

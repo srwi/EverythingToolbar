@@ -27,6 +27,11 @@ namespace EverythingToolbar.Controls
             settings.Show();
         }
 
+        private void OnSortByMenuOpened(object sender, RoutedEventArgs e)
+        {
+            SelectSortType();
+        }
+
         private void OnSortByClicked(object sender, RoutedEventArgs e)
         {
             if (sender is not MenuItem selectedItem)
@@ -43,34 +48,42 @@ namespace EverythingToolbar.Controls
                     )
                     .ShowDialogAsync();
             }
+            else
+            {
+                _viewModel.SearchState.UseSettingsSortKey();
+            }
 
             SelectSortType();
         }
 
         private void OnSortAscendingClicked(object sender, RoutedEventArgs e)
         {
+            _viewModel.SearchState.UseSettingsSortDirection();
             _viewModel.SetSortDescending(false);
             SelectSortType();
         }
 
         private void OnSortDescendingClicked(object sender, RoutedEventArgs e)
         {
+            _viewModel.SearchState.UseSettingsSortDirection();
             _viewModel.SetSortDescending(true);
             SelectSortType();
         }
 
         private void SelectSortType()
         {
+            var searchState = _viewModel.SearchState;
+
             foreach (var item in SortByMenu.Items)
             {
                 if (item is MenuItem menuItem)
                     menuItem.IsChecked = false;
             }
 
-            if (SortByMenu.Items[_viewModel.Settings.SortBy] is MenuItem sortByMenuItem)
+            if (SortByMenu.Items[(int)searchState.EffectiveSortBy] is MenuItem sortByMenuItem)
                 sortByMenuItem.IsChecked = true;
 
-            if (_viewModel.Settings.IsSortDescending)
+            if (searchState.EffectiveIsSortDescending)
                 SortDescendingMenuItem.IsChecked = true;
             else
                 SortAscendingMenuItem.IsChecked = true;

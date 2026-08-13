@@ -38,8 +38,8 @@ namespace EverythingToolbar.App.Search
                 args += " -instance \"" + settings.InstanceName + "\"";
             if (!string.IsNullOrEmpty(filenameToHighlight))
                 args += " -select \"" + filenameToHighlight + "\"";
-            args += " -sort \"" + searchState.SortBy.ToCliName() + "\"";
-            args += searchState.IsSortDescending ? " -sort-descending" : " -sort-ascending";
+            args += " -sort \"" + searchState.EffectiveSortBy.ToCliName() + "\"";
+            args += searchState.EffectiveIsSortDescending ? " -sort-descending" : " -sort-ascending";
             args += searchState.IsMatchCase ? " -case" : " -nocase";
             args += searchState.IsMatchPath ? " -matchpath" : " -nomatchpath";
             args += searchState.IsMatchWholeWord && !searchState.IsRegExEnabled ? " -ww" : " -noww";

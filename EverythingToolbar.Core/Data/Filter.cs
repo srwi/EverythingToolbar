@@ -15,6 +15,8 @@ namespace EverythingToolbar.Core.Data
         public bool IsMatchSuffix { get; init; }
         public bool IsIgnorePunctuation { get; init; }
         public bool IsIgnoreWhitespace { get; init; }
+        public SortBy? SortBy { get; init; }
+        public bool SortDescending { get; init; }
 
         public override bool Equals(object? obj)
         {

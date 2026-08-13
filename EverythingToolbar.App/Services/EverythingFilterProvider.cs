@@ -165,9 +165,19 @@ namespace EverythingToolbar.App.Services
                 IsMatchSuffix = GetColumnOrEmpty(dict, "Suffix") == "1",
                 IsIgnorePunctuation = GetColumnOrEmpty(dict, "Ignore Punctuation") == "1",
                 IsIgnoreWhitespace = GetColumnOrEmpty(dict, "Ignore Whitespace") == "1",
+                SortBy = ParseSort(GetColumnOrEmpty(dict, "Sort")),
+                SortDescending = GetColumnOrEmpty(dict, "Descending") == "1",
                 Search = GetColumnOrEmpty(dict, "Search"),
                 Macro = GetColumnOrEmpty(dict, "Macro"),
             };
+        }
+
+        private static SortBy? ParseSort(string sort)
+        {
+            if (string.IsNullOrWhiteSpace(sort))
+                return null;
+
+            return SortByInfo.FromFilterSortName(sort.Trim());
         }
 
         private string LocalizeName(string name) =>

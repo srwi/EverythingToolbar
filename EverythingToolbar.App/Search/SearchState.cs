@@ -12,11 +12,19 @@ namespace EverythingToolbar.App.Search
         private string _searchTerm = "";
 
         public SortBy SortBy => (SortBy)_settings.SortBy;
+        public SortBy EffectiveSortBy => _useSettingsSortKey ? SortBy : Filter.SortBy ?? SortBy;
         public bool IsSortDescending => _settings.IsSortDescending;
+        public bool EffectiveIsSortDescending =>
+            _useSettingsSortDirection ? IsSortDescending
+            : Filter.SortBy is not null ? Filter.SortDescending
+            : IsSortDescending;
         public bool IsMatchCase => _settings.IsMatchCase;
         public bool IsMatchPath => _settings.IsMatchPath;
         public bool IsMatchWholeWord => _settings.IsMatchWholeWord;
         public bool IsRegExEnabled => _settings.IsRegExEnabled;
+
+        private bool _useSettingsSortKey;
+        private bool _useSettingsSortDirection;
 
         private Filter _currentFilter;
         public Filter Filter
@@ -27,6 +35,8 @@ namespace EverythingToolbar.App.Search
                 if (SetProperty(ref _currentFilter, value))
                 {
                     _settings.LastFilter = value.Name;
+                    _useSettingsSortKey = false;
+                    _useSettingsSortDirection = false;
                 }
             }
         }
@@ -88,6 +98,10 @@ namespace EverythingToolbar.App.Search
             Filter = _filterProvider.Filters[index];
         }
 
+        public void UseSettingsSortKey() => _useSettingsSortKey = true;
+
+        public void UseSettingsSortDirection() => _useSettingsSortDirection = true;
+
         private string ApplyMacros(string searchTerm)
         {
             var result = searchTerm;
@@ -138,8 +152,8 @@ namespace EverythingToolbar.App.Search
         {
             return new SearchQuery(
                 BuildSearchTerm(),
-                SortBy,
-                IsSortDescending,
+                EffectiveSortBy,
+                EffectiveIsSortDescending,
                 IsMatchCase,
                 IsMatchPath,
                 IsMatchWholeWord,
