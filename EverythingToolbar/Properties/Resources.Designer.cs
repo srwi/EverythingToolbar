@@ -1446,6 +1446,15 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The search box is automatically right-aligned while the Windows taskbar icons are left-aligned. Set the taskbar icons to centered to choose the alignment.
+        /// </summary>
+        public static string SettingsTaskbarWindowAlignmentAutoRight {
+            get {
+                return ResourceManager.GetString("SettingsTaskbarWindowAlignmentAutoRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Controls the search box alignment on the taskbar.
         /// </summary>
         public static string SettingsTaskbarWindowAlignmentHelp {

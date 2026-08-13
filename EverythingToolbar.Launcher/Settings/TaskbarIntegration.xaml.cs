@@ -80,10 +80,7 @@ namespace EverythingToolbar.Launcher.Settings
         public TaskbarIntegration()
         {
             _canEnableTaskbarWindow = _windowsPolicy.CanEnableTaskbarWindow();
-            _allowLeftAlignment = _windowsPolicy.IsTaskbarCenterAligned();
-
-            if (!AllowLeftAlignment && _settings.TaskbarWindowAlignment == "Left")
-                _settings.TaskbarWindowAlignment = "Right";
+            UpdateTaskbarWindowAlignment();
 
             _isTaskbarIconPinned = File.Exists(_taskbarShortcutPath);
 
@@ -101,7 +98,7 @@ namespace EverythingToolbar.Launcher.Settings
         {
             IsTaskbarIconPinned = File.Exists(_taskbarShortcutPath);
             CanEnableTaskbarWindow = _windowsPolicy.CanEnableTaskbarWindow();
-            AllowLeftAlignment = _windowsPolicy.IsTaskbarCenterAligned();
+            UpdateTaskbarWindowAlignment();
 
             CreateFileWatcher();
             CreateTaskbarAlignmentWatcher();
@@ -137,7 +134,14 @@ namespace EverythingToolbar.Launcher.Settings
 
         private void OnTaskbarAlignmentChanged()
         {
-            Dispatcher.BeginInvoke(() => AllowLeftAlignment = _windowsPolicy.IsTaskbarCenterAligned());
+            Dispatcher.BeginInvoke(UpdateTaskbarWindowAlignment);
+        }
+
+        private void UpdateTaskbarWindowAlignment()
+        {
+            AllowLeftAlignment = _windowsPolicy.IsTaskbarCenterAligned();
+            if (!AllowLeftAlignment && _settings.TaskbarWindowAlignment == "Left")
+                _settings.TaskbarWindowAlignment = "Right";
         }
 
         private void CreateFileWatcher()

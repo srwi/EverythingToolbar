@@ -159,23 +159,32 @@
           BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
           BorderThickness="1 1 1 1"
           CornerRadius="0,0,8,8">
-          <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindowAlignment}" HelpText="{x:Static properties:Resources.SettingsTaskbarWindowAlignmentHelp}">
-            <controls:SettingItem.SettingContent>
-              <ComboBox
-                HorizontalAlignment="Right"
-                DisplayMemberPath="Key"
-                ItemsSource="{Binding TaskbarWindowAlignmentOptions}"
-                SelectedValue="{Binding Settings.TaskbarWindowAlignment, Mode=TwoWay}"
-                SelectedValuePath="Value">
-                <ComboBox.IsEnabled>
-                  <MultiBinding Converter="{c:BooleanAndConverter}">
-                    <Binding Path="Settings.TaskbarWindowEnabled" />
-                    <Binding Path="AllowLeftAlignment" />
-                  </MultiBinding>
-                </ComboBox.IsEnabled>
-              </ComboBox>
-            </controls:SettingItem.SettingContent>
-          </controls:SettingItem>
+          <StackPanel>
+            <controls:SettingItem Title="{x:Static properties:Resources.SettingsTaskbarWindowAlignment}" HelpText="{x:Static properties:Resources.SettingsTaskbarWindowAlignmentHelp}">
+              <controls:SettingItem.SettingContent>
+                <ComboBox
+                  HorizontalAlignment="Right"
+                  DisplayMemberPath="Key"
+                  ItemsSource="{Binding TaskbarWindowAlignmentOptions}"
+                  SelectedValue="{Binding Settings.TaskbarWindowAlignment, Mode=TwoWay}"
+                  SelectedValuePath="Value">
+                  <ComboBox.IsEnabled>
+                    <MultiBinding Converter="{c:BooleanAndConverter}">
+                      <Binding Path="Settings.TaskbarWindowEnabled" />
+                      <Binding Path="AllowLeftAlignment" />
+                    </MultiBinding>
+                  </ComboBox.IsEnabled>
+                </ComboBox>
+              </controls:SettingItem.SettingContent>
+            </controls:SettingItem>
+            <ui:InfoBar
+              Margin="0 15 0 0"
+              IsClosable="False"
+              IsOpen="True"
+              Message="{x:Static properties:Resources.SettingsTaskbarWindowAlignmentAutoRight}"
+              Severity="Informational"
+              Visibility="{Binding AllowLeftAlignment, Converter={c:InvertedBoolToVisibilityConverter}}" />
+          </StackPanel>
         </Border>
       </StackPanel>
 

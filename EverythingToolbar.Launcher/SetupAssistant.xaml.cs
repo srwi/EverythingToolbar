@@ -81,10 +81,7 @@ namespace EverythingToolbar.Launcher
         internal SetupAssistant(TrayIcon icon)
         {
             _isTaskbarWindowSupported = _windowsPolicy.CanEnableTaskbarWindow();
-            _allowLeftAlignment = _windowsPolicy.IsTaskbarCenterAligned();
-
-            if (!AllowLeftAlignment && _settings.TaskbarWindowAlignment == "Left")
-                _settings.TaskbarWindowAlignment = "Right";
+            UpdateTaskbarWindowAlignment();
 
             _autostartEnabled = _autostart.IsEnabled;
 
@@ -138,7 +135,7 @@ namespace EverythingToolbar.Launcher
         private void RefreshTaskbarWindowSupport()
         {
             IsTaskbarWindowSupported = _windowsPolicy.CanEnableTaskbarWindow();
-            AllowLeftAlignment = _windowsPolicy.IsTaskbarCenterAligned();
+            UpdateTaskbarWindowAlignment();
             CreateTaskbarAlignmentWatcher();
         }
 
@@ -155,7 +152,14 @@ namespace EverythingToolbar.Launcher
 
         private void OnTaskbarAlignmentChanged()
         {
-            Dispatcher.BeginInvoke(() => AllowLeftAlignment = _windowsPolicy.IsTaskbarCenterAligned());
+            Dispatcher.BeginInvoke(UpdateTaskbarWindowAlignment);
+        }
+
+        private void UpdateTaskbarWindowAlignment()
+        {
+            AllowLeftAlignment = _windowsPolicy.IsTaskbarCenterAligned();
+            if (!AllowLeftAlignment && _settings.TaskbarWindowAlignment == "Left")
+                _settings.TaskbarWindowAlignment = "Right";
         }
 
         private void SetAppIcon()
