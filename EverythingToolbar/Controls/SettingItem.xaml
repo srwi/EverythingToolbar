@@ -16,7 +16,7 @@
         TextWrapping="Wrap" />
       <ui:TextBlock
         FontSize="12"
-        Foreground="{DynamicResource TextFillColorDisabledBrush}"
+        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
         Text="{Binding HelpText, ElementName=Root}">
         <ui:TextBlock.Style>
           <Style TargetType="ui:TextBlock">
