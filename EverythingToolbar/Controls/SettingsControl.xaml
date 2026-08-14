@@ -103,22 +103,53 @@
       <Button.ContextMenu>
         <ContextMenu FontFamily="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=FontFamily}">
           <MenuItem
-            Header="{x:Static properties:Resources.SettingsRegularExpressions}"
-            IsCheckable="True"
-            IsChecked="{Binding Settings.IsRegExEnabled, Mode=TwoWay}" />
-          <MenuItem
             Header="{x:Static properties:Resources.SettingsMatchCase}"
             IsCheckable="True"
             IsChecked="{Binding Settings.IsMatchCase, Mode=TwoWay}" />
           <MenuItem
-            Header="{x:Static properties:Resources.SettingsMatchPath}"
+            Header="{x:Static properties:Resources.SettingsMatchDiacritics}"
             IsCheckable="True"
-            IsChecked="{Binding Settings.IsMatchPath, Mode=TwoWay}" />
+            IsChecked="{Binding Settings.IsMatchDiacritics, Mode=TwoWay}"
+            IsEnabled="{Binding Settings.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={converters:NotConverter}}" />
           <MenuItem
             Header="{x:Static properties:Resources.SettingsMatchWholeWord}"
             IsCheckable="True"
             IsChecked="{Binding Settings.IsMatchWholeWord, Mode=TwoWay}"
             IsEnabled="{Binding Settings.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={converters:NotConverter}}" />
+          <MenuItem
+            Header="{x:Static properties:Resources.SettingsMatchPath}"
+            IsCheckable="True"
+            IsChecked="{Binding Settings.IsMatchPath, Mode=TwoWay}" />
+          <Separator />
+          <MenuItem
+            Header="{x:Static properties:Resources.SettingsMatchPrefix}"
+            IsCheckable="True"
+            IsChecked="{Binding Settings.IsMatchPrefix, Mode=TwoWay}"
+            IsEnabled="{Binding Settings.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={converters:NotConverter}}"
+            Visibility="{Binding IsEverything15Supported, Converter={converters:BoolToVisibilityConverter}}" />
+          <MenuItem
+            Header="{x:Static properties:Resources.SettingsMatchSuffix}"
+            IsCheckable="True"
+            IsChecked="{Binding Settings.IsMatchSuffix, Mode=TwoWay}"
+            IsEnabled="{Binding Settings.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={converters:NotConverter}}"
+            Visibility="{Binding IsEverything15Supported, Converter={converters:BoolToVisibilityConverter}}" />
+          <MenuItem
+            Header="{x:Static properties:Resources.SettingsIgnorePunctuation}"
+            IsCheckable="True"
+            IsChecked="{Binding Settings.IsIgnorePunctuation, Mode=TwoWay}"
+            IsEnabled="{Binding Settings.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={converters:NotConverter}}"
+            Visibility="{Binding IsEverything15Supported, Converter={converters:BoolToVisibilityConverter}}" />
+          <MenuItem
+            Header="{x:Static properties:Resources.SettingsIgnoreWhitespace}"
+            IsCheckable="True"
+            IsChecked="{Binding Settings.IsIgnoreWhitespace, Mode=TwoWay}"
+            IsEnabled="{Binding Settings.IsRegExEnabled, Mode=OneWay, TargetNullValue=True, Converter={converters:NotConverter}}"
+            Visibility="{Binding IsEverything15Supported, Converter={converters:BoolToVisibilityConverter}}" />
+          <Separator Visibility="{Binding IsEverything15Supported, Converter={converters:BoolToVisibilityConverter}}" />
+          <MenuItem
+            Header="{x:Static properties:Resources.SettingsRegularExpressions}"
+            IsCheckable="True"
+            IsChecked="{Binding Settings.IsRegExEnabled, Mode=TwoWay}" />
           <Separator />
           <MenuItem
             Click="OpenSettingsWindow"

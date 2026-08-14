@@ -21,6 +21,11 @@ namespace EverythingToolbar.App.Search
         public bool IsMatchCase => _settings.IsMatchCase;
         public bool IsMatchPath => _settings.IsMatchPath;
         public bool IsMatchWholeWord => _settings.IsMatchWholeWord;
+        public bool IsMatchDiacritics => _settings.IsMatchDiacritics;
+        public bool IsMatchPrefix => _settings.IsMatchPrefix;
+        public bool IsMatchSuffix => _settings.IsMatchSuffix;
+        public bool IsIgnorePunctuation => _settings.IsIgnorePunctuation;
+        public bool IsIgnoreWhitespace => _settings.IsIgnoreWhitespace;
         public bool IsRegExEnabled => _settings.IsRegExEnabled;
 
         private bool _useSettingsSortKey;
@@ -131,6 +136,9 @@ namespace EverythingToolbar.App.Search
         public string BuildSearchTerm()
         {
             var supportsEverything15 = _everythingClient.GetEverythingVersion().Minor >= 5;
+            // The filter prefix comes first so the filter's own match settings aren't overridden by
+            // the global modifiers below. Its search text starts from Everything's defaults, hence
+            // the false values.
             var rawSearchTerm =
                 Filter.GetSearchPrefix(
                     IsMatchCase,
@@ -143,9 +151,37 @@ namespace EverythingToolbar.App.Search
                     false,
                     false,
                     supportsEverything15
-                ) + SearchTerm;
+                ) + GetGlobalModifierPrefix(supportsEverything15);
             var searchTermWithAppliedMacros = ApplyMacros(rawSearchTerm);
             return searchTermWithAppliedMacros;
+        }
+
+        private string GetGlobalModifierPrefix(bool supportsEverything15)
+        {
+            if (IsRegExEnabled)
+                return SearchTerm;
+
+            var modifiers = "";
+
+            if (IsMatchDiacritics)
+                modifiers += "diacritics:";
+
+            if (supportsEverything15)
+            {
+                if (IsMatchPrefix)
+                    modifiers += "prefix:";
+                if (IsMatchSuffix)
+                    modifiers += "suffix:";
+                if (IsIgnorePunctuation)
+                    modifiers += "ignore-punctuation:";
+                if (IsIgnoreWhitespace)
+                    modifiers += "ignore-whitespace:";
+            }
+
+            if (string.IsNullOrEmpty(modifiers) || string.IsNullOrEmpty(SearchTerm))
+                return SearchTerm;
+
+            return $"{modifiers}<{SearchTerm}>";
         }
 
         public SearchQuery BuildSearchQuery()
@@ -173,6 +209,21 @@ namespace EverythingToolbar.App.Search
                     break;
                 case nameof(ISettings.IsMatchWholeWord):
                     OnPropertyChanged(nameof(IsMatchWholeWord));
+                    break;
+                case nameof(ISettings.IsMatchDiacritics):
+                    OnPropertyChanged(nameof(IsMatchDiacritics));
+                    break;
+                case nameof(ISettings.IsMatchPrefix):
+                    OnPropertyChanged(nameof(IsMatchPrefix));
+                    break;
+                case nameof(ISettings.IsMatchSuffix):
+                    OnPropertyChanged(nameof(IsMatchSuffix));
+                    break;
+                case nameof(ISettings.IsIgnorePunctuation):
+                    OnPropertyChanged(nameof(IsIgnorePunctuation));
+                    break;
+                case nameof(ISettings.IsIgnoreWhitespace):
+                    OnPropertyChanged(nameof(IsIgnoreWhitespace));
                     break;
                 case nameof(ISettings.IsRegExEnabled):
                     OnPropertyChanged(nameof(IsRegExEnabled));

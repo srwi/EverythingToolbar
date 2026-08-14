@@ -1032,6 +1032,24 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ignore Punctuation.
+        /// </summary>
+        public static string SettingsIgnorePunctuation {
+            get {
+                return ResourceManager.GetString("SettingsIgnorePunctuation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore Whitespace.
+        /// </summary>
+        public static string SettingsIgnoreWhitespace {
+            get {
+                return ResourceManager.GetString("SettingsIgnoreWhitespace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Everything instance name.
         /// </summary>
         public static string SettingsInstanceName {
@@ -1086,11 +1104,38 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Match Diacritics.
+        /// </summary>
+        public static string SettingsMatchDiacritics {
+            get {
+                return ResourceManager.GetString("SettingsMatchDiacritics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Match Path.
         /// </summary>
         public static string SettingsMatchPath {
             get {
                 return ResourceManager.GetString("SettingsMatchPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match Prefix.
+        /// </summary>
+        public static string SettingsMatchPrefix {
+            get {
+                return ResourceManager.GetString("SettingsMatchPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match Suffix.
+        /// </summary>
+        public static string SettingsMatchSuffix {
+            get {
+                return ResourceManager.GetString("SettingsMatchSuffix", resourceCulture);
             }
         }
         

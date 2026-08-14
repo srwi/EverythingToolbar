@@ -26,6 +26,21 @@ namespace EverythingToolbar.App
         [Option(DefaultValue = false)]
         bool IsMatchWholeWord { get; set; }
 
+        [Option(DefaultValue = false)]
+        bool IsMatchDiacritics { get; set; }
+
+        [Option(DefaultValue = false)]
+        bool IsMatchPrefix { get; set; }
+
+        [Option(DefaultValue = false)]
+        bool IsMatchSuffix { get; set; }
+
+        [Option(DefaultValue = false)]
+        bool IsIgnorePunctuation { get; set; }
+
+        [Option(DefaultValue = false)]
+        bool IsIgnoreWhitespace { get; set; }
+
         [Option(DefaultValue = 700)]
         int PopupHeight { get; set; }
 

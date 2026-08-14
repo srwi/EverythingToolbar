@@ -11,6 +11,7 @@ namespace EverythingToolbar.ViewModels
 
         public ISettings Settings { get; }
         public SearchState SearchState => _searchState;
+        public bool IsEverything15Supported => _everythingClient.GetEverythingVersion().Minor >= 5;
 
         public SettingsControlViewModel(
             ISearchWindowController searchWindowController,
