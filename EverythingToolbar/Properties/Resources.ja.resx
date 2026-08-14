@@ -294,6 +294,21 @@
   <data name="SettingsMatchWholeWord" xml:space="preserve">
     <value>単語単位でマッチ</value>
   </data>
+  <data name="SettingsMatchDiacritics" xml:space="preserve">
+    <value>Match Diacritics</value>
+  </data>
+  <data name="SettingsMatchPrefix" xml:space="preserve">
+    <value>Match Prefix</value>
+  </data>
+  <data name="SettingsMatchSuffix" xml:space="preserve">
+    <value>Match Suffix</value>
+  </data>
+  <data name="SettingsIgnorePunctuation" xml:space="preserve">
+    <value>Ignore Punctuation</value>
+  </data>
+  <data name="SettingsIgnoreWhitespace" xml:space="preserve">
+    <value>Ignore Whitespace</value>
+  </data>
   <data name="SettingsPreferences" xml:space="preserve">
     <value>設定</value>
   </data>
