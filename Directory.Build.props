@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
-    <FileVersion>3.1.0.0</FileVersion>
-    <AssemblyVersion>3.1.0.0</AssemblyVersion>
+    <FileVersion>3.2.0.0</FileVersion>
+    <AssemblyVersion>3.2.0.0</AssemblyVersion>
     <SelfContained>false</SelfContained>
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
     <PublishReadyToRun>true</PublishReadyToRun>
