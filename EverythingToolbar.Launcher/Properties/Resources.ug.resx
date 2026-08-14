@@ -124,7 +124,7 @@
     <value>تەڭشەكلەر...</value>
   </data>
   <data name="SetupAssistantPinToTaskbarHelp" xml:space="preserve">
-    <value>To pin EverythingToolbar to the taskbar right click its icon and select 'Pin to taskbar'.</value>
+    <value>EverythingToolbar نى ۋەزىپە تىزىملىكىگە مۇقىملاشتۇرۇڭ ، ئۇنىڭ ئايكونسىغا مائوسنىڭ ئوڭ كونۇپكىسىنى بېسىپ « ۋەزىپە تىزىملىكىگە مۇقىملاشتۇرۇش » نى تاللاڭ.</value>
   </data>
   <data name="SetupAssistantRestartExplorerDialogText" xml:space="preserve">
     <value>An explorer restart is required to update the taskbar icon. Would you like to restart it now?</value>

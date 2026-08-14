@@ -219,6 +219,9 @@
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>Kunde inte öppna sökväg.</value>
   </data>
+  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
+    <value>Failed to register hotkey. It might be in use by another application.</value>
+  </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Kunde inte köra kommando</value>
   </data>
@@ -290,6 +293,21 @@
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
     <value>Matcha hela ord</value>
+  </data>
+  <data name="SettingsMatchDiacritics" xml:space="preserve">
+    <value>Match Diacritics</value>
+  </data>
+  <data name="SettingsMatchPrefix" xml:space="preserve">
+    <value>Match Prefix</value>
+  </data>
+  <data name="SettingsMatchSuffix" xml:space="preserve">
+    <value>Match Suffix</value>
+  </data>
+  <data name="SettingsIgnorePunctuation" xml:space="preserve">
+    <value>Ignore Punctuation</value>
+  </data>
+  <data name="SettingsIgnoreWhitespace" xml:space="preserve">
+    <value>Ignore Whitespace</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
     <value>Preferenser</value>
@@ -443,6 +461,9 @@
   </data>
   <data name="SettingsOpenSearchWindow" xml:space="preserve">
     <value>Open search window</value>
+  </data>
+  <data name="SettingsOpenSearchWindowHelp" xml:space="preserve">
+    <value>Shortcuts that use the Windows key may not work reliably if the combination is reserved by the system.</value>
   </data>
   <data name="ShortcutNavigateResults" xml:space="preserve">
     <value>Navigate search results</value>
@@ -672,6 +693,9 @@
   <data name="SettingsTaskbarWindowAlignmentRight" xml:space="preserve">
     <value>Höger</value>
   </data>
+  <data name="SettingsTaskbarWindowAlignmentAutoRight" xml:space="preserve">
+    <value>The search box is automatically right-aligned while the Windows taskbar icons are left-aligned. Set the taskbar icons to centered to choose the alignment.</value>
+  </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
     <value>The search box requires the original Windows 11 taskbar. When using ExplorerPatcher or StartAllBack, use the deskband instead.</value>
   </data>
@@ -740,5 +764,11 @@
   </data>
   <data name="MessageBoxRestartMessage" xml:space="preserve">
     <value>A restart is required for the language changes to take effect. Do you want to restart now?</value>
+  </data>
+  <data name="SettingsForceLegacySdk" xml:space="preserve">
+    <value>Force legacy SDK</value>
+  </data>
+  <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
+    <value>Always use the legacy IPC client, which may be more compatible but slower.</value>
   </data>
 </root>

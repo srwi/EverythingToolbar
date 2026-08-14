@@ -127,7 +127,7 @@
     <value>Копіювати</value>
   </data>
   <data name="ContextMenuCopyFileName" xml:space="preserve">
-    <value>Copy File Name to Clipboard</value>
+    <value>Скопіювати назву файлу в буфер обміну</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
     <value>Скопіювати повну назву в буфер обміну</value>
@@ -205,7 +205,7 @@
     <value>Не вдалося скопіювати файл.</value>
   </data>
   <data name="MessageBoxFailedToCopyFileName" xml:space="preserve">
-    <value>Failed to copy file name.</value>
+    <value>Не вдалося скопіювати назву файлу.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>Не вдалося скопіювати шлях.</value>
@@ -218,6 +218,9 @@
   </data>
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>Не вдалося відкрити шлях.</value>
+  </data>
+  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
+    <value>Failed to register hotkey. It might be in use by another application.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Не вдалося виконати команду</value>
@@ -290,6 +293,21 @@
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
     <value>Шукати ціле слово</value>
+  </data>
+  <data name="SettingsMatchDiacritics" xml:space="preserve">
+    <value>Match Diacritics</value>
+  </data>
+  <data name="SettingsMatchPrefix" xml:space="preserve">
+    <value>Match Prefix</value>
+  </data>
+  <data name="SettingsMatchSuffix" xml:space="preserve">
+    <value>Match Suffix</value>
+  </data>
+  <data name="SettingsIgnorePunctuation" xml:space="preserve">
+    <value>Ignore Punctuation</value>
+  </data>
+  <data name="SettingsIgnoreWhitespace" xml:space="preserve">
+    <value>Ignore Whitespace</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
     <value>Налаштування</value>
@@ -443,6 +461,9 @@
   </data>
   <data name="SettingsOpenSearchWindow" xml:space="preserve">
     <value>Відкрити вікно пошуку</value>
+  </data>
+  <data name="SettingsOpenSearchWindowHelp" xml:space="preserve">
+    <value>Shortcuts that use the Windows key may not work reliably if the combination is reserved by the system.</value>
   </data>
   <data name="ShortcutNavigateResults" xml:space="preserve">
     <value>Навігація результатами пошуку</value>
@@ -655,16 +676,16 @@
     <value>Змінює стиль піктограми панелі завдань (потрібно перезапустити Провідник)</value>
   </data>
   <data name="SettingsTaskbarWindow" xml:space="preserve">
-    <value>Show search box</value>
+    <value>Показувати поле пошуку</value>
   </data>
   <data name="SettingsTaskbarWindowHelp" xml:space="preserve">
-    <value>Show a search box on the taskbar</value>
+    <value>Показувати поле пошуку на панелі завдань</value>
   </data>
   <data name="SettingsTaskbarWindowAlignment" xml:space="preserve">
-    <value>Search box alignment</value>
+    <value>Вирівнювання поля пошуку</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentHelp" xml:space="preserve">
-    <value>Controls the search box alignment on the taskbar</value>
+    <value>Керує вирівнюванням поля пошуку на панелі завдань</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentLeft" xml:space="preserve">
     <value>Ліворуч</value>
@@ -672,20 +693,23 @@
   <data name="SettingsTaskbarWindowAlignmentRight" xml:space="preserve">
     <value>Праворуч</value>
   </data>
+  <data name="SettingsTaskbarWindowAlignmentAutoRight" xml:space="preserve">
+    <value>The search box is automatically right-aligned while the Windows taskbar icons are left-aligned. Set the taskbar icons to centered to choose the alignment.</value>
+  </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
-    <value>The search box requires the original Windows 11 taskbar. When using ExplorerPatcher or StartAllBack, use the deskband instead.</value>
+    <value>Для роботи поля пошуку потрібна оригінальна панель завдань Windows 11. При використанні ExplorerPatcher або StartAllBack використовуйте натомість панель інструментів (deskband).</value>
   </data>
   <data name="SettingsTaskbarIcon" xml:space="preserve">
-    <value>Taskbar icon</value>
+    <value>Значок панелі завдань</value>
   </data>
   <data name="SettingsTaskbarSearchBox" xml:space="preserve">
-    <value>Taskbar search box</value>
+    <value>Поле пошуку на панелі завдань</value>
   </data>
   <data name="SettingsTaskbarIconStatusPinned" xml:space="preserve">
-    <value>Pinned to taskbar</value>
+    <value>Закріплено на панелі завдань</value>
   </data>
   <data name="SettingsTaskbarIconStatusNotPinned" xml:space="preserve">
-    <value>Not pinned to taskbar</value>
+    <value>Не закріплено на панелі завдань</value>
   </data>
   <data name="SettingsFilterOrder" xml:space="preserve">
     <value>Порядок фільтрів</value>
@@ -740,5 +764,11 @@
   </data>
   <data name="MessageBoxRestartMessage" xml:space="preserve">
     <value>Для того, щоб зміни мови набули чинності, потрібен перезапуск. Бажаєте перезапустити зараз?</value>
+  </data>
+  <data name="SettingsForceLegacySdk" xml:space="preserve">
+    <value>Примусово використовувати застарілий SDK</value>
+  </data>
+  <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
+    <value>Завжди використовувати застарілий клієнт IPC, який може бути більш сумісним, але повільнішим.</value>
   </data>
 </root>

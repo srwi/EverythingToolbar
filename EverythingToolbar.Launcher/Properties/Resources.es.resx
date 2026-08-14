@@ -160,7 +160,7 @@
     <value>Habilita el icono de la bandeja del sistema para un acceso rápido a la configuración</value>
   </data>
   <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
-    <value>Embeds a search box on the taskbar</value>
+    <value>Inserta un cuadro de búsqueda en la barra de tareas</value>
   </data>
   <data name="SetupAssistantEnableAutostart" xml:space="preserve">
     <value>Activar inicio automático</value>
@@ -172,13 +172,13 @@
     <value>Hecho</value>
   </data>
   <data name="SetupAssistantChooseAccess" xml:space="preserve">
-    <value>Choose how to open EverythingToolbar</value>
+    <value>Elija cómo abrir EverythingToolbar</value>
   </data>
   <data name="SetupAssistantOr" xml:space="preserve">
     <value>o</value>
   </data>
   <data name="SetupAssistantTaskbarWindowOption" xml:space="preserve">
-    <value>Taskbar search box</value>
+    <value>Cuadro de búsqueda en la barra de tareas</value>
   </data>
   <data name="TrayIconDisableErrorMessage" xml:space="preserve">
     <value>El icono de la bandeja del sistema no se puede desactivar si EverythingToolbar no está anclado a la barra de tareas ni tiene activado el cuadro de búsqueda en la barra de tareas. Active primero una de las dos opciones o mantenga activado el icono de la bandeja del sistema para acceder a la configuración.</value>
@@ -187,9 +187,9 @@
     <value>No se puede desactivar el icono de la bandeja del sistema</value>
   </data>
   <data name="TaskbarWindowDisabledTrayEnabledText" xml:space="preserve">
-    <value>The tray icon has been enabled so that EverythingToolbar remains accessible after disabling the taskbar search box.</value>
+    <value>Se ha activado el icono de la bandeja del sistema para que EverythingToolbar siga estando accesible tras desactivar el cuadro de búsqueda de la barra de tareas.</value>
   </data>
   <data name="TaskbarWindowDisabledTrayEnabledTitle" xml:space="preserve">
-    <value>Tray icon enabled</value>
+    <value>Icono de bandeja activado</value>
   </data>
 </root>

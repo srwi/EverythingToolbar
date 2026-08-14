@@ -127,7 +127,7 @@
     <value>コピー</value>
   </data>
   <data name="ContextMenuCopyFileName" xml:space="preserve">
-    <value>Copy File Name to Clipboard</value>
+    <value>ファイル名をクリップボードにコピー</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
     <value>完全名をクリップボードにコピー</value>
@@ -205,7 +205,7 @@
     <value>ファイルのコピーに失敗しました。</value>
   </data>
   <data name="MessageBoxFailedToCopyFileName" xml:space="preserve">
-    <value>Failed to copy file name.</value>
+    <value>ファイル名のコピーに失敗しました。</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>パスのコピーに失敗しました。</value>
@@ -218,6 +218,9 @@
   </data>
   <data name="MessageBoxFailedToOpenPath" xml:space="preserve">
     <value>パスを開けませんでした。</value>
+  </data>
+  <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
+    <value>Failed to register hotkey. It might be in use by another application.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>コマンドの実行に失敗しました。</value>
@@ -290,6 +293,21 @@
   </data>
   <data name="SettingsMatchWholeWord" xml:space="preserve">
     <value>単語単位でマッチ</value>
+  </data>
+  <data name="SettingsMatchDiacritics" xml:space="preserve">
+    <value>Match Diacritics</value>
+  </data>
+  <data name="SettingsMatchPrefix" xml:space="preserve">
+    <value>Match Prefix</value>
+  </data>
+  <data name="SettingsMatchSuffix" xml:space="preserve">
+    <value>Match Suffix</value>
+  </data>
+  <data name="SettingsIgnorePunctuation" xml:space="preserve">
+    <value>Ignore Punctuation</value>
+  </data>
+  <data name="SettingsIgnoreWhitespace" xml:space="preserve">
+    <value>Ignore Whitespace</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
     <value>設定</value>
@@ -443,6 +461,9 @@
   </data>
   <data name="SettingsOpenSearchWindow" xml:space="preserve">
     <value>検索ウィンドウを開く</value>
+  </data>
+  <data name="SettingsOpenSearchWindowHelp" xml:space="preserve">
+    <value>Shortcuts that use the Windows key may not work reliably if the combination is reserved by the system.</value>
   </data>
   <data name="ShortcutNavigateResults" xml:space="preserve">
     <value>検索結果を移動</value>
@@ -672,6 +693,9 @@
   <data name="SettingsTaskbarWindowAlignmentRight" xml:space="preserve">
     <value>右揃え</value>
   </data>
+  <data name="SettingsTaskbarWindowAlignmentAutoRight" xml:space="preserve">
+    <value>The search box is automatically right-aligned while the Windows taskbar icons are left-aligned. Set the taskbar icons to centered to choose the alignment.</value>
+  </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
     <value>検索ボックスには、元のWindows 11タスクバーが必要です。ExplorerPatcherまたはStartAllBackを使用する場合は、代わりにデスクトップを使用してください。</value>
   </data>
@@ -740,5 +764,11 @@
   </data>
   <data name="MessageBoxRestartMessage" xml:space="preserve">
     <value>言語の変更を有効にするには再起動が必要です。今すぐ再起動しますか？</value>
+  </data>
+  <data name="SettingsForceLegacySdk" xml:space="preserve">
+    <value>従来のSDKを強制</value>
+  </data>
+  <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
+    <value>常に従来のIPCクライアントを使用します。これは互換性がありますが、動作が遅くなります。</value>
   </data>
 </root>
