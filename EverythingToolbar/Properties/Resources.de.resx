@@ -295,19 +295,19 @@
     <value>Ganzes Wort beachten</value>
   </data>
   <data name="SettingsMatchDiacritics" xml:space="preserve">
-    <value>Match Diacritics</value>
+    <value>Diakritische Zeichen abgleichen</value>
   </data>
   <data name="SettingsMatchPrefix" xml:space="preserve">
-    <value>Match Prefix</value>
+    <value>Präfix abgleichen</value>
   </data>
   <data name="SettingsMatchSuffix" xml:space="preserve">
-    <value>Match Suffix</value>
+    <value>Suffix abgleichen</value>
   </data>
   <data name="SettingsIgnorePunctuation" xml:space="preserve">
-    <value>Ignore Punctuation</value>
+    <value>Interpunktion ignorieren</value>
   </data>
   <data name="SettingsIgnoreWhitespace" xml:space="preserve">
-    <value>Ignore Whitespace</value>
+    <value>Leerzeichen ignorieren</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
     <value>Einstellungen</value>
