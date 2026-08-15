@@ -220,7 +220,7 @@
     <value>打开路径失败。</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Failed to register hotkey. It might be in use by another application.</value>
+    <value>注册热键失败。它可能正在被另一个应用程序使用。</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>命令执行失败</value>
@@ -295,19 +295,19 @@
     <value>全字匹配</value>
   </data>
   <data name="SettingsMatchDiacritics" xml:space="preserve">
-    <value>Match Diacritics</value>
+    <value>匹配标点符号</value>
   </data>
   <data name="SettingsMatchPrefix" xml:space="preserve">
-    <value>Match Prefix</value>
+    <value>匹配前缀</value>
   </data>
   <data name="SettingsMatchSuffix" xml:space="preserve">
-    <value>Match Suffix</value>
+    <value>匹配后缀</value>
   </data>
   <data name="SettingsIgnorePunctuation" xml:space="preserve">
-    <value>Ignore Punctuation</value>
+    <value>忽略标点符号</value>
   </data>
   <data name="SettingsIgnoreWhitespace" xml:space="preserve">
-    <value>Ignore Whitespace</value>
+    <value>忽略空白字符</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
     <value>选项</value>
@@ -463,7 +463,7 @@
     <value>打开搜索窗口</value>
   </data>
   <data name="SettingsOpenSearchWindowHelp" xml:space="preserve">
-    <value>Shortcuts that use the Windows key may not work reliably if the combination is reserved by the system.</value>
+    <value>如果组合键被系统占用，使用 Windows 键的快捷方式可能无法正常工作。</value>
   </data>
   <data name="ShortcutNavigateResults" xml:space="preserve">
     <value>导航搜索结果</value>
@@ -694,7 +694,7 @@
     <value>靠右</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentAutoRight" xml:space="preserve">
-    <value>The search box is automatically right-aligned while the Windows taskbar icons are left-aligned. Set the taskbar icons to centered to choose the alignment.</value>
+    <value>搜索框会自动居右对齐，而 Windows 任务栏图标则居左对齐。请将任务栏图标设置为居中以选择对齐方式。</value>
   </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
     <value>搜索框需要使用 Windows 11 的原生任务栏。使用 ExplorerPatcher 或 StartAllBack 时，请改用桌面快捷栏。</value>
