@@ -220,7 +220,7 @@
     <value>パスを開けませんでした。</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Failed to register hotkey. It might be in use by another application.</value>
+    <value>ホットキーの登録に失敗しました。他のアプリケーションで使用されている可能性があります。</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>コマンドの実行に失敗しました。</value>
@@ -295,19 +295,19 @@
     <value>単語単位でマッチ</value>
   </data>
   <data name="SettingsMatchDiacritics" xml:space="preserve">
-    <value>Match Diacritics</value>
+    <value>発音記号とマッチ</value>
   </data>
   <data name="SettingsMatchPrefix" xml:space="preserve">
-    <value>Match Prefix</value>
+    <value>接頭辞とマッチ</value>
   </data>
   <data name="SettingsMatchSuffix" xml:space="preserve">
-    <value>Match Suffix</value>
+    <value>接尾辞とマッチ</value>
   </data>
   <data name="SettingsIgnorePunctuation" xml:space="preserve">
-    <value>Ignore Punctuation</value>
+    <value>句読点を無視</value>
   </data>
   <data name="SettingsIgnoreWhitespace" xml:space="preserve">
-    <value>Ignore Whitespace</value>
+    <value>空白を無視</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
     <value>設定</value>
