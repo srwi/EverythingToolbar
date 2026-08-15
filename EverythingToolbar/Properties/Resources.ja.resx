@@ -463,7 +463,7 @@
     <value>検索ウィンドウを開く</value>
   </data>
   <data name="SettingsOpenSearchWindowHelp" xml:space="preserve">
-    <value>Shortcuts that use the Windows key may not work reliably if the combination is reserved by the system.</value>
+    <value>組み合わせがシステムによって予約されている場合、Windowsキーを使用するショートカットが確実に動作しない可能性があります。</value>
   </data>
   <data name="ShortcutNavigateResults" xml:space="preserve">
     <value>検索結果を移動</value>
@@ -694,7 +694,7 @@
     <value>右揃え</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentAutoRight" xml:space="preserve">
-    <value>The search box is automatically right-aligned while the Windows taskbar icons are left-aligned. Set the taskbar icons to centered to choose the alignment.</value>
+    <value>Windowsのタスクバーアイコンが左揃えになっている間、検索ボックスは自動的に右揃えされます。タスクバーアイコンを中央に設定して、配置を選択します。</value>
   </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
     <value>検索ボックスには、元のWindows 11タスクバーが必要です。ExplorerPatcherまたはStartAllBackを使用する場合は、代わりにデスクトップを使用してください。</value>
