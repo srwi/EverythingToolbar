@@ -308,8 +308,8 @@ namespace EverythingToolbar
             }
 
             int padding = (int)(HorizontalPaddingDip * dpiScale);
-            int startClient = ToClientX(taskbarHandle, (int)Math.Round(gapStart));
-            int endClient = ToClientX(taskbarHandle, (int)Math.Round(gapEnd));
+            int startClient = ToClient(taskbarHandle, (int)Math.Round(gapStart), 0).X;
+            int endClient = ToClient(taskbarHandle, (int)Math.Round(gapEnd), 0).X;
 
             int gapLeft = Math.Min(startClient, endClient) + padding;
             int gapRight = Math.Max(startClient, endClient) - padding;
@@ -319,7 +319,9 @@ namespace EverythingToolbar
                 return null;
 
             int width = Math.Min(available, (int)(MaxWidgetWidthDip * dpiScale));
-            int taskbarHeight = taskbarRect.bottom - taskbarRect.top;
+            int taskbarTop = ToClient(taskbarHandle, 0, taskbarRect.top).Y;
+            int taskbarBottom = ToClient(taskbarHandle, 0, taskbarRect.bottom).Y;
+            int taskbarHeight = taskbarBottom - taskbarTop;
             int verticalMargin = (int)(WidgetVerticalMarginDip * dpiScale);
             int height = Math.Max(taskbarHeight - 2 * verticalMargin, (int)(MinWidgetHeightDip * dpiScale));
 
@@ -331,11 +333,11 @@ namespace EverythingToolbar
             );
         }
 
-        private static int ToClientX(IntPtr taskbarHandle, int screenX)
+        private static System.Drawing.Point ToClient(IntPtr taskbarHandle, int screenX, int screenY)
         {
-            var pt = new System.Drawing.Point(screenX, 0);
+            var pt = new System.Drawing.Point(screenX, screenY);
             PInvoke.ScreenToClient((HWND)taskbarHandle, ref pt);
-            return pt.X;
+            return pt;
         }
     }
 }
