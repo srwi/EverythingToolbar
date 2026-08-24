@@ -62,6 +62,8 @@ begin
 
   if DependencyCount > 0 then begin
     Dependency_DownloadPage.Show;
+    MsgBox('The installer will now download and install the required dependencies.' + #13#10 + #13#10 +
+           'Please make sure you have an active internet connection before continuing.', mbInformation, MB_OK);
 
     for DependencyIndex := 0 to DependencyCount - 1 do begin
       if Dependency_List[DependencyIndex].URL <> '' then begin

@@ -74,6 +74,7 @@ EverythingToolbar works seamlessly on Windows 10 and Windows 11. On Windows 11 t
 
 ### Prerequisites
 - Windows 10 or Windows 11
+- [.NET Desktop Runtime 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) or later
 - [Everything](https://www.voidtools.com) ≥ 1.4.1 installed and running
   > **Note:** The Lite version of Everything is not supported
 
