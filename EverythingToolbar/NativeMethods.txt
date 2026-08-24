@@ -10,6 +10,7 @@ GetWindowLong
 SetWindowLong
 SetWindowPos
 WINDOW_STYLE
+WINDOW_EX_STYLE
 GetAsyncKeyState
 PostMessage
 DwmSetWindowAttribute

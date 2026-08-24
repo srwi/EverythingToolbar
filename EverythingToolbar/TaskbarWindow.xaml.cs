@@ -130,6 +130,10 @@ namespace EverythingToolbar
                 style = (style & ~WINDOW_STYLE.WS_POPUP) | WINDOW_STYLE.WS_CHILD;
                 PInvoke.SetWindowLong(_handle, WINDOW_LONG_PTR_INDEX.GWL_STYLE, (int)style);
 
+                var exStyle = (WINDOW_EX_STYLE)PInvoke.GetWindowLong(_handle, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
+                exStyle |= WINDOW_EX_STYLE.WS_EX_TOOLWINDOW;
+                PInvoke.SetWindowLong(_handle, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)exStyle);
+
                 PInvoke.SetParent(_handle, (HWND)_taskbarHandle);
                 IsAttachedToTaskbar = true;
 
