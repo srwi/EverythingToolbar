@@ -127,7 +127,7 @@
     <value>Kopiuj</value>
   </data>
   <data name="ContextMenuCopyFileName" xml:space="preserve">
-    <value>Copy File Name to Clipboard</value>
+    <value>Skopiuj nazwę pliku do schowka</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
     <value>Kopiuj pełną nazwę do schowka</value>
@@ -205,7 +205,7 @@
     <value>Kopiowanie pliku zakończone niepowodzeniem.</value>
   </data>
   <data name="MessageBoxFailedToCopyFileName" xml:space="preserve">
-    <value>Failed to copy file name.</value>
+    <value>Nie udało się skopiować nazwy pliku.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>Kopiowanie ścieżki zakończone niepowodzeniem.</value>
@@ -220,7 +220,7 @@
     <value>Otwieranie ścieżki zakończone niepowodzeniem.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Failed to register hotkey. It might be in use by another application.</value>
+    <value>Nie udało się zarejestrować skrótu klawiszowego. Możliwe, że jest używany przez inną aplikację.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Uruchomienie komendy zakończone niepowodzeniem</value>
