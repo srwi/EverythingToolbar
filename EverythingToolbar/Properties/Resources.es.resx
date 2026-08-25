@@ -205,7 +205,7 @@
     <value>Error al copiar archivo.</value>
   </data>
   <data name="MessageBoxFailedToCopyFileName" xml:space="preserve">
-    <value>No se pudo copiar el nombre de archivo.</value>
+    <value>Error al copiar el nombre de archivo.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>Error al copiar ubicación.</value>
@@ -226,7 +226,7 @@
     <value>Error al ejecutar el comando</value>
   </data>
   <data name="MessageBoxFastSortUnavailable" xml:space="preserve">
-    <value>Para utilizar este método de clasificación tiene que tener activada la clasificación rápida. Se puede habilitar en la configuración de Everything.</value>
+    <value>Para utilizar este método de clasificación tiene que tener activada la clasificación rápida. Se puede activar en la configuración de Everything.</value>
   </data>
   <data name="MessageBoxFastSortUnavailableTitle" xml:space="preserve">
     <value>Clasificación rápida no activada</value>
@@ -298,10 +298,10 @@
     <value>Coincidir diacríticos</value>
   </data>
   <data name="SettingsMatchPrefix" xml:space="preserve">
-    <value>Match Prefix</value>
+    <value>Coincidir prefijo</value>
   </data>
   <data name="SettingsMatchSuffix" xml:space="preserve">
-    <value>Match Suffix</value>
+    <value>Coincidir sufijo</value>
   </data>
   <data name="SettingsIgnorePunctuation" xml:space="preserve">
     <value>Ignorar puntuación</value>
@@ -319,7 +319,7 @@
     <value>Recordar filtro</value>
   </data>
   <data name="SettingsReplaceStartMenuSearch" xml:space="preserve">
-    <value>Reemplazar la búsqueda de menú de inicio (experimental)</value>
+    <value>Reemplazar la búsqueda en el menú Inicio (experimental)</value>
   </data>
   <data name="SettingsShowQuickToggles" xml:space="preserve">
     <value>Mostrar botones de acceso rápido</value>
@@ -334,7 +334,7 @@
     <value>Ordenar por</value>
   </data>
   <data name="SettingsThumbnailsEnabled" xml:space="preserve">
-    <value>Habilitar miniaturas</value>
+    <value>Activar miniaturas</value>
   </data>
   <data name="SettingsSystemContextMenuDefault" xml:space="preserve">
     <value>Utilizar el menú contextual del sistema como predeterminado</value>
@@ -463,13 +463,13 @@
     <value>Abrir ventana de búsqueda</value>
   </data>
   <data name="SettingsOpenSearchWindowHelp" xml:space="preserve">
-    <value>Shortcuts that use the Windows key may not work reliably if the combination is reserved by the system.</value>
+    <value>Los atajos que utilizan la tecla Windows puede que no funcionen correctamente si la combinación está reservada por el sistema.</value>
   </data>
   <data name="ShortcutNavigateResults" xml:space="preserve">
     <value>Navegar por los resultados de la búsqueda</value>
   </data>
   <data name="ShortcutNavigateHistory" xml:space="preserve">
-    <value>Navegar por el historial de búsqueda (si está habilitado)</value>
+    <value>Navegar por el historial de búsqueda (si está activado)</value>
   </data>
   <data name="ShortcutOpen" xml:space="preserve">
     <value>Abrir</value>
@@ -694,7 +694,7 @@
     <value>Derecha</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentAutoRight" xml:space="preserve">
-    <value>The search box is automatically right-aligned while the Windows taskbar icons are left-aligned. Set the taskbar icons to centered to choose the alignment.</value>
+    <value>El cuadro de búsqueda está alineado automáticamente a la derecha, mientras que los íconos de la barra de tareas de Windows están alineados a la izquierda. Establezca los íconos de la barra de tareas en el centro para elegir la alineación.</value>
   </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
     <value>El cuadro de búsqueda requiere la barra de tareas original de Windows 11. Cuando utilice ExplorerPatcher o StartAllBack, utilice la banda de escritorio en su lugar.</value>
