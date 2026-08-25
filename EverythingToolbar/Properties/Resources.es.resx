@@ -220,7 +220,7 @@
     <value>Error al abrir ubicación.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Failed to register hotkey. It might be in use by another application.</value>
+    <value>No se pudo registrar el atajo de teclado. Es posible que otra aplicación lo esté utilizando.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Error al ejecutar el comando</value>
@@ -295,7 +295,7 @@
     <value>Coincidir palabra completa</value>
   </data>
   <data name="SettingsMatchDiacritics" xml:space="preserve">
-    <value>Match Diacritics</value>
+    <value>Coincidir diacríticos</value>
   </data>
   <data name="SettingsMatchPrefix" xml:space="preserve">
     <value>Match Prefix</value>
@@ -304,10 +304,10 @@
     <value>Match Suffix</value>
   </data>
   <data name="SettingsIgnorePunctuation" xml:space="preserve">
-    <value>Ignore Punctuation</value>
+    <value>Ignorar puntuación</value>
   </data>
   <data name="SettingsIgnoreWhitespace" xml:space="preserve">
-    <value>Ignore Whitespace</value>
+    <value>Ignorar espacios en blanco</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
     <value>Configuración</value>
