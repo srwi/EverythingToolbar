@@ -220,7 +220,7 @@
     <value>Не вдалося відкрити шлях.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Failed to register hotkey. It might be in use by another application.</value>
+    <value>Не вдалося зареєструвати гарячу клавішу. Можливо, вона вже використовується іншим застосунком.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Не вдалося виконати команду</value>
@@ -295,19 +295,19 @@
     <value>Шукати ціле слово</value>
   </data>
   <data name="SettingsMatchDiacritics" xml:space="preserve">
-    <value>Match Diacritics</value>
+    <value>Враховувати діакритичні знаки</value>
   </data>
   <data name="SettingsMatchPrefix" xml:space="preserve">
-    <value>Match Prefix</value>
+    <value>Враховувати префікс</value>
   </data>
   <data name="SettingsMatchSuffix" xml:space="preserve">
-    <value>Match Suffix</value>
+    <value>Враховувати суфікс</value>
   </data>
   <data name="SettingsIgnorePunctuation" xml:space="preserve">
-    <value>Ignore Punctuation</value>
+    <value>Ігнорувати пунктуацію</value>
   </data>
   <data name="SettingsIgnoreWhitespace" xml:space="preserve">
-    <value>Ignore Whitespace</value>
+    <value>Ігнорувати пробіли</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
     <value>Налаштування</value>
@@ -463,7 +463,7 @@
     <value>Відкрити вікно пошуку</value>
   </data>
   <data name="SettingsOpenSearchWindowHelp" xml:space="preserve">
-    <value>Shortcuts that use the Windows key may not work reliably if the combination is reserved by the system.</value>
+    <value>Комбінації клавіш із використанням клавіші Windows можуть працювати ненадійно, якщо це поєднання використовується системою.</value>
   </data>
   <data name="ShortcutNavigateResults" xml:space="preserve">
     <value>Навігація результатами пошуку</value>
@@ -694,7 +694,7 @@
     <value>Праворуч</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentAutoRight" xml:space="preserve">
-    <value>The search box is automatically right-aligned while the Windows taskbar icons are left-aligned. Set the taskbar icons to centered to choose the alignment.</value>
+    <value>Поле пошуку автоматично вирівнюється по правому краю, тоді як значки панелі завдань Windows — по лівому. Щоб вибрати вирівнювання, встановіть значки панелі завдань по центру.</value>
   </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
     <value>Для роботи поля пошуку потрібна оригінальна панель завдань Windows 11. При використанні ExplorerPatcher або StartAllBack використовуйте натомість панель інструментів (deskband).</value>
