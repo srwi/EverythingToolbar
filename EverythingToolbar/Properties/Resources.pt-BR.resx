@@ -127,7 +127,7 @@
     <value>Copiar</value>
   </data>
   <data name="ContextMenuCopyFileName" xml:space="preserve">
-    <value>Copy File Name to Clipboard</value>
+    <value>Copiar Nome do Arquivo para a Área de Transferência</value>
   </data>
   <data name="ContextMenuCopyFullName" xml:space="preserve">
     <value>Copiar Nome Completo para Área de Transferência</value>
@@ -205,7 +205,7 @@
     <value>Falha ao copiar o arquivo.</value>
   </data>
   <data name="MessageBoxFailedToCopyFileName" xml:space="preserve">
-    <value>Failed to copy file name.</value>
+    <value>Falha ao copiar o nome do arquivo.</value>
   </data>
   <data name="MessageBoxFailedToCopyPath" xml:space="preserve">
     <value>Falha ao copiar o caminho.</value>
@@ -220,7 +220,7 @@
     <value>Falha ao abrir o caminho.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Failed to register hotkey. It might be in use by another application.</value>
+    <value>Falha ao registrar a tecla de atalho. Ela pode estar sendo usada por outro aplicativo.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Falha ao executar o comando</value>
@@ -295,19 +295,19 @@
     <value>Corresponder Palavra Inteira</value>
   </data>
   <data name="SettingsMatchDiacritics" xml:space="preserve">
-    <value>Match Diacritics</value>
+    <value>Corresponder Diacríticos</value>
   </data>
   <data name="SettingsMatchPrefix" xml:space="preserve">
-    <value>Match Prefix</value>
+    <value>Corresponder Prefixo</value>
   </data>
   <data name="SettingsMatchSuffix" xml:space="preserve">
-    <value>Match Suffix</value>
+    <value>Corresponder Sufixo</value>
   </data>
   <data name="SettingsIgnorePunctuation" xml:space="preserve">
-    <value>Ignore Punctuation</value>
+    <value>Ignorar Pontuação</value>
   </data>
   <data name="SettingsIgnoreWhitespace" xml:space="preserve">
-    <value>Ignore Whitespace</value>
+    <value>Ignorar Espaço em Branco</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
     <value>Preferências</value>
@@ -463,7 +463,7 @@
     <value>Abrir janela de pesquisa</value>
   </data>
   <data name="SettingsOpenSearchWindowHelp" xml:space="preserve">
-    <value>Shortcuts that use the Windows key may not work reliably if the combination is reserved by the system.</value>
+    <value>Atalhos que usam a tecla Windows podem não funcionar de forma confiável se a combinação for reservada pelo sistema.</value>
   </data>
   <data name="ShortcutNavigateResults" xml:space="preserve">
     <value>Navegar pelos resultados da pesquisa</value>
@@ -694,7 +694,7 @@
     <value>Direita</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentAutoRight" xml:space="preserve">
-    <value>The search box is automatically right-aligned while the Windows taskbar icons are left-aligned. Set the taskbar icons to centered to choose the alignment.</value>
+    <value>A caixa de pesquisa é automaticamente alinhada à direita enquanto os ícones da barra de tarefas do Windows estão alinhados à esquerda. Defina os ícones da barra de tarefas como centralizados para escolher o alinhamento.</value>
   </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
     <value>A caixa de pesquisa requer a barra de tarefas original do Windows 11. Quando estiver usando o ExplorerPatcher ou StartAllBack, use a área de trabalho como alternativa.</value>
@@ -766,9 +766,9 @@
     <value>Uma reinicialização é necessária para que as alterações de idioma tenham efeito. Deseja reiniciar agora?</value>
   </data>
   <data name="SettingsForceLegacySdk" xml:space="preserve">
-    <value>Force legacy SDK</value>
+    <value>Forçar SDK legado</value>
   </data>
   <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
-    <value>Always use the legacy IPC client, which may be more compatible but slower.</value>
+    <value>Usar sempre o cliente IPC legado, que pode ser mais compatível só que mais lento.</value>
   </data>
 </root>
