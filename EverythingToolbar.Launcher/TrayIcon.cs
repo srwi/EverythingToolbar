@@ -1,67 +1,75 @@
 using System;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
+using System.IO;
+using System.NativeTray;
+using System.Windows;
 using EverythingToolbar.Launcher.Properties;
-using Wpf.Ui.Appearance;
-using Wpf.Ui.Markup;
-using NotifyIcon = Wpf.Ui.Tray.Controls.NotifyIcon;
 
 namespace EverythingToolbar.Launcher
 {
     internal sealed class TrayIcon : IDisposable
     {
-        private readonly NotifyIcon _notifyIcon;
-        private readonly ThemeService _themeService;
-        private readonly ThemesDictionary _menuTheme;
+        private readonly TrayIconHost _notifyIcon;
+        private Win32Icon? _iconSource;
 
-        public TrayIcon(Action onOpenSettings, Action onQuit, ThemeService themeService)
+        public TrayIcon(Action onOpenSettings, Action onQuit)
         {
-            _themeService = themeService;
-            var contextMenu = new ContextMenu();
-
-            var settingsItem = new MenuItem { Header = Resources.ContextMenuSettings };
-            settingsItem.Click += (_, _) => onOpenSettings();
-            contextMenu.Items.Add(settingsItem);
-
-            var quitItem = new MenuItem { Header = Resources.ContextMenuQuit };
-            quitItem.Click += (_, _) => onQuit();
-            contextMenu.Items.Add(quitItem);
-
-            _menuTheme = new ThemesDictionary
+            _notifyIcon = new TrayIconHost
             {
-                Theme = ToApplicationTheme(_themeService.GetEffectiveTheme(ThemeFlavor.App)),
+                ToolTipText = "EverythingToolbar",
+                ThemeMode = TrayThemeMode.System,
+                IconSource = _iconSource = CreateThemedIcon(),
+                IsVisible = false,
+                Menu = new TrayMenu
+                {
+                    new TrayMenuItem
+                    {
+                        Header = Resources.ContextMenuSettings,
+                        Command = new TrayCommand(_ => Dispatch(onOpenSettings)),
+                    },
+                    new TrayMenuItem
+                    {
+                        Header = Resources.ContextMenuQuit,
+                        Command = new TrayCommand(_ => Dispatch(onQuit)),
+                    },
+                },
             };
-            contextMenu.Resources.MergedDictionaries.Add(new ControlsDictionary());
-            contextMenu.Resources.MergedDictionaries.Add(_menuTheme);
-            _themeService.ThemeChanged += OnThemeChanged;
 
-            _notifyIcon = new NotifyIcon
-            {
-                Icon = new BitmapImage(new Uri(Utils.GetThemedAppIconPath(absolute: true))),
-                Menu = contextMenu,
-            };
+            _notifyIcon.UserPreferenceChanged += OnUserPreferenceChanged;
         }
 
-        public void Show() => _notifyIcon.Register();
+        public void Show() => _notifyIcon.IsVisible = true;
 
-        public void Hide() => _notifyIcon.Unregister();
-
-        public void HandleExplorerRestart()
-        {
-            if (_notifyIcon.IsRegistered)
-                _notifyIcon.Register();
-        }
+        public void Hide() => _notifyIcon.IsVisible = false;
 
         public void Dispose()
         {
-            _themeService.ThemeChanged -= OnThemeChanged;
+            _notifyIcon.UserPreferenceChanged -= OnUserPreferenceChanged;
             _notifyIcon.Dispose();
+            _iconSource?.Dispose();
+            _iconSource = null;
         }
 
-        private void OnThemeChanged(object? sender, ThemeChangedEventArgs e) =>
-            _menuTheme.Theme = ToApplicationTheme(e.AppTheme);
+        private void OnUserPreferenceChanged(object? sender, EventArgs e) => ApplyThemedIcon();
 
-        private static ApplicationTheme ToApplicationTheme(Theme theme) =>
-            theme == Theme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark;
+        private void ApplyThemedIcon()
+        {
+            var next = CreateThemedIcon();
+            var previous = _iconSource;
+            _iconSource = next;
+            _notifyIcon.IconSource = next;
+            previous?.Dispose();
+        }
+
+        private static Win32Icon CreateThemedIcon() =>
+            new(File.ReadAllBytes(Utils.GetThemedAppIconPath(absolute: true)));
+
+        private static void Dispatch(Action action)
+        {
+            var dispatcher = Application.Current?.Dispatcher;
+            if (dispatcher == null || dispatcher.CheckAccess())
+                action();
+            else
+                dispatcher.BeginInvoke(action);
+        }
     }
 }

@@ -10,7 +10,7 @@
     <PackageVersion Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageVersion Include="NHotkey.Wpf" Version="3.0.0" />
     <PackageVersion Include="NLog" Version="5.1.1" />
+    <PackageVersion Include="NativeTray" Version="2.2.3" />
     <PackageVersion Include="WPF-UI" Version="4.0.3" />
-    <PackageVersion Include="WPF-UI.Tray" Version="4.0.3" />
   </ItemGroup>
 </Project>
