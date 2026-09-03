@@ -195,8 +195,7 @@ namespace EverythingToolbar.Launcher
             {
                 if (_taskbarCreatedMsg != 0 && msg == _taskbarCreatedMsg)
                 {
-                    // Explorer restarted and dropped the tray icon; TaskbarCreated signals it's ready again.
-                    TrayIcon?.HandleExplorerRestart();
+                    // Explorer restarted; TaskbarCreated signals it's ready again.
                     _taskbarWindowHost.HandleExplorerRestart();
                 }
 

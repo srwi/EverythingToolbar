@@ -41,9 +41,6 @@ namespace EverythingToolbar.Launcher
 
         public void Hide() => _notifyIcon.IsVisible = false;
 
-        // NativeTray already re-adds the icon on TaskbarCreated.
-        public void HandleExplorerRestart() { }
-
         public void Dispose()
         {
             _notifyIcon.UserPreferenceChanged -= OnUserPreferenceChanged;
