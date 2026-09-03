@@ -292,11 +292,7 @@ namespace EverythingToolbar.Launcher
                     );
 
                     var app = new Application();
-                    using var trayIcon = new TrayIcon(
-                        OpenSettingsWindow,
-                        app.Shutdown,
-                        Ioc.Default.GetRequiredService<ThemeService>()
-                    );
+                    using var trayIcon = new TrayIcon(OpenSettingsWindow, app.Shutdown);
                     app.Run(new LauncherWindow(trayIcon));
                 }
                 else

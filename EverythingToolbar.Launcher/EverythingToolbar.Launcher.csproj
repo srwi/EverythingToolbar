@@ -69,7 +69,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="WPF-UI.Tray" />
+    <PackageReference Include="NativeTray" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" />
     <PackageReference Include="NLog" />
     <PackageReference Include="Microsoft.Windows.CsWin32">
