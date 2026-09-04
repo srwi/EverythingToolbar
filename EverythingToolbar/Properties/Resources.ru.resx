@@ -220,7 +220,7 @@
     <value>Не удалось открыть путь.</value>
   </data>
   <data name="MessageBoxFailedToRegisterHotkey" xml:space="preserve">
-    <value>Failed to register hotkey. It might be in use by another application.</value>
+    <value>Не удалось зарегистрировать горячую клавишу. Возможно, она используется другим приложением.</value>
   </data>
   <data name="MessageBoxFailedToRunCommand" xml:space="preserve">
     <value>Не удалось выполнить команду</value>
@@ -295,19 +295,19 @@
     <value>Только слова целиком</value>
   </data>
   <data name="SettingsMatchDiacritics" xml:space="preserve">
-    <value>Match Diacritics</value>
+    <value>Учитывать диакритические знаки</value>
   </data>
   <data name="SettingsMatchPrefix" xml:space="preserve">
-    <value>Match Prefix</value>
+    <value>Учитывать префикс</value>
   </data>
   <data name="SettingsMatchSuffix" xml:space="preserve">
-    <value>Match Suffix</value>
+    <value>Учитывать суффикс</value>
   </data>
   <data name="SettingsIgnorePunctuation" xml:space="preserve">
-    <value>Ignore Punctuation</value>
+    <value>Игнорировать пунктуацию</value>
   </data>
   <data name="SettingsIgnoreWhitespace" xml:space="preserve">
-    <value>Ignore Whitespace</value>
+    <value>Игнорировать пробелы</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
     <value>Настройки</value>
@@ -463,7 +463,7 @@
     <value>Открыть окно поиска</value>
   </data>
   <data name="SettingsOpenSearchWindowHelp" xml:space="preserve">
-    <value>Shortcuts that use the Windows key may not work reliably if the combination is reserved by the system.</value>
+    <value>Горячие клавиши с клавишей Windows могут работать нестабильно, если комбинация зарезервирована системой.</value>
   </data>
   <data name="ShortcutNavigateResults" xml:space="preserve">
     <value>Навигация по результатам поиска</value>
@@ -694,7 +694,7 @@
     <value>Справа</value>
   </data>
   <data name="SettingsTaskbarWindowAlignmentAutoRight" xml:space="preserve">
-    <value>The search box is automatically right-aligned while the Windows taskbar icons are left-aligned. Set the taskbar icons to centered to choose the alignment.</value>
+    <value>Поле поиска автоматически выравнивается по правому краю, если значки панели задач выровнены слева. Для выбора выравнивания расположите значки панели задач по центру.</value>
   </data>
   <data name="SettingsTaskbarWindowUnsupported" xml:space="preserve">
     <value>Для поля поиска требуется оригинальная панель задач Windows 11. При использовании ExplorerPatcher или StartAllBack используйте панель инструментов (deskband).</value>

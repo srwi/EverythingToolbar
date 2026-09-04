@@ -154,10 +154,10 @@
     <value>Oculta el icono de búsqueda original de Windows de la barra de tareas</value>
   </data>
   <data name="SetupAssistantEnableSystemTray" xml:space="preserve">
-    <value>Habilitar icono en la bandeja del sistema</value>
+    <value>Activar icono en la bandeja del sistema</value>
   </data>
   <data name="SetupAssistantEnableSystemTrayHelp" xml:space="preserve">
-    <value>Habilita el icono de la bandeja del sistema para un acceso rápido a la configuración</value>
+    <value>Activa icono en la bandeja para un acceso rápido a la configuración</value>
   </data>
   <data name="SetupAssistantTaskbarWindowAlternativeHelp" xml:space="preserve">
     <value>Inserta un cuadro de búsqueda en la barra de tareas</value>
