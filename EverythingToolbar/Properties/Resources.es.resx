@@ -388,7 +388,7 @@
     <value>Tamaño</value>
   </data>
   <data name="SortByTypeName" xml:space="preserve">
-    <value>Escribir nombre</value>
+    <value>Tipo</value>
   </data>
   <data name="UserFilterAudio" xml:space="preserve">
     <value>Audio</value>
