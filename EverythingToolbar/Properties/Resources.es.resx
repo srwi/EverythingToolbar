@@ -544,7 +544,7 @@
     <value>Nombre de la instancia de Everything</value>
   </data>
   <data name="SettingsInstanceNameHelp" xml:space="preserve">
-    <value>Establecer el nombre de la instancia de Everything que se va a utilizar</value>
+    <value>Establece el nombre de la instancia de Everything que se va a utilizar</value>
   </data>
   <data name="SettingsDefaultInstance" xml:space="preserve">
     <value>Instancia predeterminada</value>
