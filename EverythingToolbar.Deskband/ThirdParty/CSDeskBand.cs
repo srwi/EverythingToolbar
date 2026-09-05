@@ -365,13 +365,18 @@ namespace EverythingToolbar.Deskband
         {
             // Explorer pre-translates navigation keys (e.g. Tab, which cycles through taskbar
             // bands) by offering them to the focused band here instead of dispatching them to the
-            // focused window. Reporting them as handled without doing anything drops the key
-            // stroke, so deliver it to the hosted content ourselves.
-            if (msg.message < (uint)WindowMessages.WM_KEYFIRST || msg.message > (uint)WindowMessages.WM_KEYLAST)
+            // focused window. Only intercept navigation keys (like Tab) so regular typing passes
+            // through to standard Win32 message dispatching without being dropped during UI refreshes.
+            if (msg.message != (uint)WindowMessages.WM_KEYDOWN && msg.message != (uint)WindowMessages.WM_KEYUP)
                 return HRESULT.S_FALSE;
 
-            // The message explorer passes carries no target window, so fall back to the focused one.
-            var target = msg.hwnd != IntPtr.Zero ? msg.hwnd : User32.GetFocus();
+            const uint VK_TAB = 0x09;
+            if ((uint)msg.wParam != VK_TAB)
+                return HRESULT.S_FALSE;
+
+            // Direct navigation keys to the focused window if it belongs to us, otherwise fall back to the deskband window.
+            var focus = User32.GetFocus();
+            var target = msg.hwnd != IntPtr.Zero ? msg.hwnd : (focus != IntPtr.Zero && HwndSource.FromHwnd(focus) != null ? focus : _provider.Handle);
             if (target == IntPtr.Zero || HwndSource.FromHwnd(target) == null)
             {
                 // Not one of our windows: let explorer run its own taskbar navigation instead.
@@ -2506,6 +2511,8 @@ namespace CSDeskBand
     {
         WM_NCHITTEST = 0x0084,
         WM_KEYFIRST = 0x0100,
+        WM_KEYDOWN = 0x0100,
+        WM_KEYUP = 0x0101,
         WM_KEYLAST = 0x0109
     }
 
