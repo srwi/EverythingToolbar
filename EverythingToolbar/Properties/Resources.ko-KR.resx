@@ -771,4 +771,22 @@
   <data name="SettingsForceLegacySdkHelp" xml:space="preserve">
     <value>더 호환성이 높을 수는 있지만 더 느릴 수 있는 기존 IPC 클라이언트를 항상 사용하세요.</value>
   </data>
+  <data name="SettingsSearchWindowBackground" xml:space="preserve">
+    <value>Search window background</value>
+  </data>
+  <data name="SettingsSearchWindowBackgroundHelp" xml:space="preserve">
+    <value>Choose the background tone for the search window</value>
+  </data>
+  <data name="SearchWindowBackgroundAutomatic" xml:space="preserve">
+    <value>Automatic</value>
+  </data>
+  <data name="SearchWindowBackgroundCustom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="ColorPickerAlpha" xml:space="preserve">
+    <value>Alpha</value>
+  </data>
+  <data name="ColorPickerBrightness" xml:space="preserve">
+    <value>Brightness</value>
+  </data>
 </root>
