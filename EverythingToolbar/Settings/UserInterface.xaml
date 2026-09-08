@@ -1,4 +1,4 @@
-﻿<Page
+<Page
   x:Class="EverythingToolbar.Settings.UserInterface"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -14,143 +14,262 @@
     <b:Themed Surface="AppWindow" />
   </i:Interaction.Behaviors>
 
-  <ScrollViewer>
-    <StackPanel Margin="40">
-      <ui:TextBlock
-        Margin="0 0 0 25"
-        FontTypography="Title"
-        Text="{x:Static properties:Resources.SettingsUserInterface}" />
-      <ui:TextBlock
-        Margin="0 0 0 7"
-        FontTypography="BodyStrong"
-        Text="{x:Static properties:Resources.SettingsAppearance}" />
-      <Border
-        Padding="16"
-        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-        BorderThickness="1 1 1 0"
-        CornerRadius="8,8,0,0">
-        <StackPanel>
-          <controls:SettingItem Title="{x:Static properties:Resources.SettingsView}" HelpText="{x:Static properties:Resources.SettingsViewLayoutHelp}">
+  <Grid>
+    <ScrollViewer>
+      <StackPanel Margin="40">
+        <ui:TextBlock
+          Margin="0 0 0 25"
+          FontTypography="Title"
+          Text="{x:Static properties:Resources.SettingsUserInterface}" />
+        <ui:TextBlock
+          Margin="0 0 0 7"
+          FontTypography="BodyStrong"
+          Text="{x:Static properties:Resources.SettingsAppearance}" />
+        <Border
+          Padding="16"
+          Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+          BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+          BorderThickness="1 1 1 0"
+          CornerRadius="8,8,0,0">
+          <StackPanel>
+            <controls:SettingItem Title="{x:Static properties:Resources.SettingsView}" HelpText="{x:Static properties:Resources.SettingsViewLayoutHelp}">
+              <controls:SettingItem.SettingContent>
+                <ComboBox
+                  HorizontalAlignment="Right"
+                  DisplayMemberPath="Key"
+                  ItemsSource="{Binding ItemTemplates}"
+                  SelectedValue="{Binding Settings.ItemTemplate, Mode=TwoWay}"
+                  SelectedValuePath="Value" />
+              </controls:SettingItem.SettingContent>
+            </controls:SettingItem>
+            <Border
+              Margin="0 17 0 0"
+              Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
+              BorderBrush="{ui:ThemeResource ControlStrokeColorDefaultBrush}"
+              BorderThickness="1"
+              CornerRadius="4">
+              <i:Interaction.Behaviors>
+                <b:Themed Surface="TaskbarSurface" />
+              </i:Interaction.Behaviors>
+              <ContentControl
+                Content="{Binding SampleSearchResult}"
+                ContentTemplate="{Binding Settings.ItemTemplate, Converter={c:ItemTemplateConverter}}"
+                FontSize="15" />
+            </Border>
+          </StackPanel>
+        </Border>
+        <Border
+          Padding="16"
+          Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+          BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+          BorderThickness="1 1 1 0"
+          CornerRadius="0">
+          <controls:SettingItem Title="{x:Static properties:Resources.SettingsUILanguage}" HelpText="{x:Static properties:Resources.SettingsUILanguageHelp}">
             <controls:SettingItem.SettingContent>
               <ComboBox
                 HorizontalAlignment="Right"
                 DisplayMemberPath="Key"
-                ItemsSource="{Binding ItemTemplates}"
-                SelectedValue="{Binding Settings.ItemTemplate, Mode=TwoWay}"
+                ItemsSource="{Binding Languages}"
+                SelectedValue="{Binding SelectedLanguage, Mode=TwoWay}"
                 SelectedValuePath="Value" />
             </controls:SettingItem.SettingContent>
           </controls:SettingItem>
-          <Border
-            Margin="0 17 0 0"
-            Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
-            BorderBrush="{ui:ThemeResource ControlStrokeColorDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="4">
-            <i:Interaction.Behaviors>
-              <b:Themed Surface="TaskbarSurface" />
-            </i:Interaction.Behaviors>
-            <ContentControl
-              Content="{Binding SampleSearchResult}"
-              ContentTemplate="{Binding Settings.ItemTemplate, Converter={c:ItemTemplateConverter}}"
-              FontSize="15" />
-          </Border>
+        </Border>
+        <Border
+          Padding="16"
+          Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+          BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+          BorderThickness="1 1 1 0"
+          CornerRadius="0">
+          <controls:SettingItem Title="{x:Static properties:Resources.SettingsSearchWindowBackground}" HelpText="{x:Static properties:Resources.SettingsSearchWindowBackgroundHelp}">
+            <controls:SettingItem.SettingContent>
+              <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button
+                  Width="44"
+                  Height="32"
+                  Margin="0 0 8 0"
+                  Padding="0"
+                  HorizontalContentAlignment="Center"
+                  VerticalContentAlignment="Center"
+                  Click="OnColorPickerButtonClick"
+                  ToolTip="{Binding CustomColorHex}"
+                  Visibility="{Binding IsCustomColorSelected, Converter={c:BoolToVisibilityConverter}}">
+                  <Border
+                    Width="32"
+                    Height="20"
+                    Background="{Binding CustomColorBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="3" />
+                </Button>
+                <ComboBox
+                  DisplayMemberPath="Key"
+                  ItemsSource="{Binding SearchWindowBackgroundOptions}"
+                  SelectedValue="{Binding SearchWindowBackground, Mode=TwoWay}"
+                  SelectedValuePath="Value" />
+              </StackPanel>
+            </controls:SettingItem.SettingContent>
+          </controls:SettingItem>
+        </Border>
+        <Border
+          Padding="16"
+          Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+          BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+          BorderThickness="1 1 1 0"
+          CornerRadius="0,0,0,0">
+          <controls:SettingItem Title="{x:Static properties:Resources.SettingsThumbnailsEnabled}" HelpText="{x:Static properties:Resources.SettingsThumbnailsHelp}">
+            <controls:SettingItem.SettingContent>
+              <ui:ToggleSwitch IsChecked="{Binding Settings.IsThumbnailsEnabled, Mode=TwoWay}" />
+            </controls:SettingItem.SettingContent>
+          </controls:SettingItem>
+        </Border>
+        <Border
+          Padding="16"
+          Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+          BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+          BorderThickness="1 1 1 0"
+          CornerRadius="0,0,0,0">
+          <controls:SettingItem Title="{x:Static properties:Resources.SettingsSystemContextMenuDefault}" HelpText="{x:Static properties:Resources.SettingsSystemContextMenuDefaultHelp}">
+            <controls:SettingItem.SettingContent>
+              <ui:ToggleSwitch IsChecked="{Binding Settings.IsSystemContextMenuDefault, Mode=TwoWay}" />
+            </controls:SettingItem.SettingContent>
+          </controls:SettingItem>
+        </Border>
+        <Border
+          Padding="16"
+          Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+          BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+          BorderThickness="1 1 1 0"
+          CornerRadius="0">
+          <controls:SettingItem Title="{x:Static properties:Resources.SettingsPreviewPaneEnabled}" HelpText="{x:Static properties:Resources.SettingsPreviewPaneHelp}">
+            <controls:SettingItem.SettingContent>
+              <ui:ToggleSwitch IsChecked="{Binding Settings.IsPreviewPaneEnabled, Mode=TwoWay}" />
+            </controls:SettingItem.SettingContent>
+          </controls:SettingItem>
+        </Border>
+        <Border
+          Padding="16"
+          Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+          BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+          BorderThickness="1 1 1 0"
+          CornerRadius="0">
+          <controls:SettingItem Title="{x:Static properties:Resources.SettingsShowResultsCount}" HelpText="{x:Static properties:Resources.SettingsResultsCountHelp}">
+            <controls:SettingItem.SettingContent>
+              <ui:ToggleSwitch IsChecked="{Binding Settings.IsShowResultsCount, Mode=TwoWay}" />
+            </controls:SettingItem.SettingContent>
+          </controls:SettingItem>
+        </Border>
+        <Border
+          Padding="16"
+          Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+          BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+          BorderThickness="1 1 1 1"
+          CornerRadius="0,0,8,8">
+          <controls:SettingItem Title="{x:Static properties:Resources.SettingsShowQuickToggles}" HelpText="{x:Static properties:Resources.SettingsQuickTogglesHelp}">
+            <controls:SettingItem.SettingContent>
+              <ui:ToggleSwitch IsChecked="{Binding Settings.IsShowQuickToggles, Mode=TwoWay}" />
+            </controls:SettingItem.SettingContent>
+          </controls:SettingItem>
+        </Border>
+
+        <ui:TextBlock
+          Margin="0 25 0 7"
+          FontTypography="BodyStrong"
+          Text="{x:Static properties:Resources.SettingsOther}" />
+        <Border
+          Padding="16"
+          Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+          BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+          BorderThickness="1 1 1 1"
+          CornerRadius="8,8,8,8">
+          <controls:SettingItem Title="{x:Static properties:Resources.SettingsDisableAnimations}" HelpText="{x:Static properties:Resources.SettingsAnimationsHelp}">
+            <controls:SettingItem.SettingContent>
+              <ui:ToggleSwitch IsChecked="{Binding Settings.IsAnimationsDisabled, Mode=TwoWay}" />
+            </controls:SettingItem.SettingContent>
+          </controls:SettingItem>
+        </Border>
+      </StackPanel>
+    </ScrollViewer>
+
+    <Popup
+      x:Name="ColorPickerPopup"
+      AllowsTransparency="True"
+      Placement="Bottom"
+      StaysOpen="False">
+      <Border
+        Width="260"
+        Margin="8"
+        Padding="16"
+        Background="{ui:ThemeResource SolidBackgroundFillColorSecondaryBrush}"
+        BorderBrush="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}"
+        BorderThickness="1"
+        CornerRadius="8">
+        <Border.Effect>
+          <DropShadowEffect
+            BlurRadius="16"
+            Direction="270"
+            Opacity="0.3"
+            ShadowDepth="3" />
+        </Border.Effect>
+        <StackPanel>
+          <Grid Margin="0 0 0 8">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ui:TextBlock
+              FontSize="12"
+              Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+              Text="{x:Static properties:Resources.ColorPickerAlpha}" />
+            <ui:TextBlock
+              Grid.Column="1"
+              FontSize="12"
+              Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+              Text="{Binding CustomColorAlpha}" />
+            <Slider
+              Grid.Row="1"
+              Grid.ColumnSpan="2"
+              Margin="0 4 0 0"
+              IsSnapToTickEnabled="True"
+              Maximum="255"
+              Minimum="0"
+              TickFrequency="1"
+              Value="{Binding CustomColorAlpha, Mode=TwoWay}" />
+          </Grid>
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ui:TextBlock
+              FontSize="12"
+              Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+              Text="{x:Static properties:Resources.ColorPickerBrightness}" />
+            <ui:TextBlock
+              Grid.Column="1"
+              FontSize="12"
+              Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+              Text="{Binding CustomColorBrightness}" />
+            <Slider
+              Grid.Row="1"
+              Grid.ColumnSpan="2"
+              Margin="0 4 0 0"
+              IsSnapToTickEnabled="True"
+              Maximum="100"
+              Minimum="0"
+              TickFrequency="1"
+              Value="{Binding CustomColorBrightness, Mode=TwoWay}" />
+          </Grid>
         </StackPanel>
       </Border>
-      <Border
-        Padding="16"
-        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-        BorderThickness="1 1 1 0"
-        CornerRadius="0">
-        <controls:SettingItem Title="{x:Static properties:Resources.SettingsUILanguage}" HelpText="{x:Static properties:Resources.SettingsUILanguageHelp}">
-          <controls:SettingItem.SettingContent>
-            <ComboBox
-              HorizontalAlignment="Right"
-              DisplayMemberPath="Key"
-              ItemsSource="{Binding Languages}"
-              SelectedValue="{Binding SelectedLanguage, Mode=TwoWay}"
-              SelectedValuePath="Value" />
-          </controls:SettingItem.SettingContent>
-        </controls:SettingItem>
-      </Border>
-      <Border
-        Padding="16"
-        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-        BorderThickness="1 1 1 0"
-        CornerRadius="0,0,0,0">
-        <controls:SettingItem Title="{x:Static properties:Resources.SettingsThumbnailsEnabled}" HelpText="{x:Static properties:Resources.SettingsThumbnailsHelp}">
-          <controls:SettingItem.SettingContent>
-            <ui:ToggleSwitch IsChecked="{Binding Settings.IsThumbnailsEnabled, Mode=TwoWay}" />
-          </controls:SettingItem.SettingContent>
-        </controls:SettingItem>
-      </Border>
-      <Border
-        Padding="16"
-        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-        BorderThickness="1 1 1 0"
-        CornerRadius="0,0,0,0">
-        <controls:SettingItem Title="{x:Static properties:Resources.SettingsSystemContextMenuDefault}" HelpText="{x:Static properties:Resources.SettingsSystemContextMenuDefaultHelp}">
-          <controls:SettingItem.SettingContent>
-            <ui:ToggleSwitch IsChecked="{Binding Settings.IsSystemContextMenuDefault, Mode=TwoWay}" />
-          </controls:SettingItem.SettingContent>
-        </controls:SettingItem>
-      </Border>
-      <Border
-        Padding="16"
-        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-        BorderThickness="1 1 1 0"
-        CornerRadius="0">
-        <controls:SettingItem Title="{x:Static properties:Resources.SettingsPreviewPaneEnabled}" HelpText="{x:Static properties:Resources.SettingsPreviewPaneHelp}">
-          <controls:SettingItem.SettingContent>
-            <ui:ToggleSwitch IsChecked="{Binding Settings.IsPreviewPaneEnabled, Mode=TwoWay}" />
-          </controls:SettingItem.SettingContent>
-        </controls:SettingItem>
-      </Border>
-      <Border
-        Padding="16"
-        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-        BorderThickness="1 1 1 0"
-        CornerRadius="0">
-        <controls:SettingItem Title="{x:Static properties:Resources.SettingsShowResultsCount}" HelpText="{x:Static properties:Resources.SettingsResultsCountHelp}">
-          <controls:SettingItem.SettingContent>
-            <ui:ToggleSwitch IsChecked="{Binding Settings.IsShowResultsCount, Mode=TwoWay}" />
-          </controls:SettingItem.SettingContent>
-        </controls:SettingItem>
-      </Border>
-      <Border
-        Padding="16"
-        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-        BorderThickness="1 1 1 1"
-        CornerRadius="0,0,8,8">
-        <controls:SettingItem Title="{x:Static properties:Resources.SettingsShowQuickToggles}" HelpText="{x:Static properties:Resources.SettingsQuickTogglesHelp}">
-          <controls:SettingItem.SettingContent>
-            <ui:ToggleSwitch IsChecked="{Binding Settings.IsShowQuickToggles, Mode=TwoWay}" />
-          </controls:SettingItem.SettingContent>
-        </controls:SettingItem>
-      </Border>
-
-      <ui:TextBlock
-        Margin="0 25 0 7"
-        FontTypography="BodyStrong"
-        Text="{x:Static properties:Resources.SettingsOther}" />
-      <Border
-        Padding="16"
-        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-        BorderThickness="1 1 1 1"
-        CornerRadius="8,8,8,8">
-        <controls:SettingItem Title="{x:Static properties:Resources.SettingsDisableAnimations}" HelpText="{x:Static properties:Resources.SettingsAnimationsHelp}">
-          <controls:SettingItem.SettingContent>
-            <ui:ToggleSwitch IsChecked="{Binding Settings.IsAnimationsDisabled, Mode=TwoWay}" />
-          </controls:SettingItem.SettingContent>
-        </controls:SettingItem>
-      </Border>
-    </StackPanel>
-  </ScrollViewer>
+    </Popup>
+  </Grid>
 </Page>

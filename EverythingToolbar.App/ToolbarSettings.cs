@@ -160,5 +160,14 @@ namespace EverythingToolbar.App
 
         [Option(DefaultValue = false)]
         bool IsForceLegacySdk { get; set; }
+
+        [Option(DefaultValue = "Automatic")]
+        string SearchWindowBackground { get; set; }
+
+        [Option(DefaultValue = 218)]
+        int SearchWindowBackgroundAlpha { get; set; }
+
+        [Option(DefaultValue = 37)]
+        int SearchWindowBackgroundBrightness { get; set; }
     }
 }

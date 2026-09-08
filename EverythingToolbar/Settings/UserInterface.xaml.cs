@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -19,7 +20,18 @@ namespace EverythingToolbar.Settings
         public UserInterface()
         {
             InitializeComponent();
-            DataContext = new UserInterfaceViewModel();
+            var viewModel = new UserInterfaceViewModel();
+            DataContext = viewModel;
+            ColorPickerPopup.DataContext = viewModel;
+        }
+
+        private void OnColorPickerButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is UIElement target)
+            {
+                ColorPickerPopup.PlacementTarget = target;
+                ColorPickerPopup.IsOpen = !ColorPickerPopup.IsOpen;
+            }
         }
     }
 
@@ -35,6 +47,67 @@ namespace EverythingToolbar.Settings
             new(Resources.ItemTemplateNormalDetailed, "NormalDetailed"),
         ];
         public List<KeyValuePair<string, string>> Languages { get; } = CultureHelper.GetAvailableLanguages();
+        public List<KeyValuePair<string, string>> SearchWindowBackgroundOptions { get; } =
+        [
+            new(Resources.SearchWindowBackgroundAutomatic, "Automatic"),
+            new(Resources.SearchWindowBackgroundCustom, "Custom"),
+        ];
+
+        public string SearchWindowBackground
+        {
+            get => Settings.SearchWindowBackground;
+            set
+            {
+                if (Settings.SearchWindowBackground != value)
+                {
+                    Settings.SearchWindowBackground = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(IsCustomColorSelected));
+                }
+            }
+        }
+
+        public bool IsCustomColorSelected => Settings.SearchWindowBackground == "Custom";
+
+        public int CustomColorAlpha
+        {
+            get => Settings.SearchWindowBackgroundAlpha;
+            set
+            {
+                int clamped = Math.Clamp(value, 0, 255);
+                if (Settings.SearchWindowBackgroundAlpha != clamped)
+                {
+                    Settings.SearchWindowBackgroundAlpha = clamped;
+                }
+            }
+        }
+
+        public int CustomColorBrightness
+        {
+            get => Settings.SearchWindowBackgroundBrightness;
+            set
+            {
+                int clamped = Math.Clamp(value, 0, 100);
+                if (Settings.SearchWindowBackgroundBrightness != clamped)
+                {
+                    Settings.SearchWindowBackgroundBrightness = clamped;
+                }
+            }
+        }
+
+        private SolidColorBrush _customColorBrush = ColorHelper.ToFrozenBrush(ColorHelper.DefaultSearchWindowColor);
+        public SolidColorBrush CustomColorBrush
+        {
+            get => _customColorBrush;
+            private set => SetProperty(ref _customColorBrush, value);
+        }
+
+        private string _customColorHex = ColorHelper.ToHex(ColorHelper.DefaultSearchWindowColor);
+        public string CustomColorHex
+        {
+            get => _customColorHex;
+            private set => SetProperty(ref _customColorHex, value);
+        }
 
         public string SelectedLanguage
         {
@@ -56,6 +129,36 @@ namespace EverythingToolbar.Settings
 
         public UserInterfaceViewModel()
         {
+            UpdateBrushAndHex();
+
+            var themeService = Ioc.Default.GetService<ThemeService>();
+            if (themeService != null)
+            {
+                themeService.ThemeChanged += (s, e) => UpdateBrushAndHex();
+            }
+
+            Settings.PropertyChanged += (s, e) =>
+            {
+                switch (e.PropertyName)
+                {
+                    case nameof(ISettings.SearchWindowBackground):
+                        OnPropertyChanged(nameof(SearchWindowBackground));
+                        OnPropertyChanged(nameof(IsCustomColorSelected));
+                        break;
+                    case nameof(ISettings.SearchWindowBackgroundAlpha):
+                        OnPropertyChanged(nameof(CustomColorAlpha));
+                        UpdateBrushAndHex();
+                        break;
+                    case nameof(ISettings.SearchWindowBackgroundBrightness):
+                        OnPropertyChanged(nameof(CustomColorBrightness));
+                        UpdateBrushAndHex();
+                        break;
+                    case nameof(ISettings.ThemeOverride):
+                        UpdateBrushAndHex();
+                        break;
+                }
+            };
+
             BitmapImage imageSource = new(
                 new Uri("pack://application:,,,/EverythingToolbar;component/Images/AppIcon.ico")
             );
@@ -73,6 +176,19 @@ namespace EverythingToolbar.Settings
             );
 
             ResultImageCache.Get(SampleSearchResult).SetFixedIcon(imageSource);
+        }
+
+        private void UpdateBrushAndHex()
+        {
+            var themeService = Ioc.Default.GetService<ThemeService>();
+            var isLight = themeService?.IsLightTheme() ?? false;
+            var color = ColorHelper.GetSearchWindowColor(
+                Settings.SearchWindowBackgroundAlpha,
+                Settings.SearchWindowBackgroundBrightness,
+                isLight
+            );
+            CustomColorBrush = ColorHelper.ToFrozenBrush(color);
+            CustomColorHex = ColorHelper.ToHex(color);
         }
 
         private static FILETIME DateTimeToFileTime(DateTime dateTime)

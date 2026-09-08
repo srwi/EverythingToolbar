@@ -1,4 +1,4 @@
-﻿<controls:AcrylicWindow
+<controls:AcrylicWindow
   x:Class="EverythingToolbar.SearchWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -27,7 +27,7 @@
     <b:Themed Surface="TaskbarSurface" />
   </i:Interaction.Behaviors>
 
-  <Border Background="{DynamicResource SearchResultsViewHeader}">
+  <Border Background="{DynamicResource SearchWindowBackground}">
     <Grid Name="ContentGrid">
       <Grid.RowDefinitions>
         <RowDefinition Height="{DynamicResource FirstGridRowHeight}" />

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
+using EverythingToolbar.Helpers;
 using NLog;
 using Windows.UI.ViewManagement;
 using Wpf.Ui.Appearance;
@@ -166,7 +167,14 @@ namespace EverythingToolbar.Services
 
         private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName is nameof(ISettings.ThemeOverride) or nameof(ISettings.ForceWin10Behavior))
+            if (
+                e.PropertyName
+                is nameof(ISettings.ThemeOverride)
+                    or nameof(ISettings.ForceWin10Behavior)
+                    or nameof(ISettings.SearchWindowBackground)
+                    or nameof(ISettings.SearchWindowBackgroundAlpha)
+                    or nameof(ISettings.SearchWindowBackgroundBrightness)
+            )
             {
                 ScheduleApply();
             }
@@ -225,6 +233,8 @@ namespace EverythingToolbar.Services
             AddResource(registration, root, $"Themes/{profile}/Controls.xaml");
 
             AddAccentColor(registration, root, systemTheme);
+
+            AddSearchWindowBackground(registration, root, systemTheme, profile);
         }
 
         private static void AddWpfUiBase(Registration registration, FrameworkElement root, Theme theme)
@@ -271,11 +281,50 @@ namespace EverythingToolbar.Services
             registration.AddedDictionaries.Add(resDict);
         }
 
-        private static SolidColorBrush GetBrush(Color color)
+        private static SolidColorBrush GetBrush(Color color) =>
+            ColorHelper.ToFrozenBrush(System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B));
+
+        private void AddSearchWindowBackground(
+            Registration registration,
+            FrameworkElement root,
+            Theme systemTheme,
+            string profile
+        )
         {
-            var brush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B));
-            brush.Freeze();
-            return brush;
+            var brush = GetSearchWindowBackgroundBrush(systemTheme, profile);
+            var resDict = new ResourceDictionary
+            {
+                ["SearchWindowBackground"] = brush,
+                ["SearchResultsViewHeader"] = brush,
+            };
+            root.Resources.MergedDictionaries.Add(resDict);
+            registration.AddedDictionaries.Add(resDict);
+        }
+
+        private static readonly SolidColorBrush Win11LightBackgroundBrush = ColorHelper.ToFrozenBrush(System.Windows.Media.Color.FromArgb(0xE0, 0xF5, 0xF5, 0xF5));
+        private static readonly SolidColorBrush Win10LightBackgroundBrush = ColorHelper.ToFrozenBrush(System.Windows.Media.Color.FromArgb(0xDD, 0xEE, 0xEE, 0xEE));
+        private static readonly SolidColorBrush Win11DarkBackgroundBrush = ColorHelper.ToFrozenBrush(System.Windows.Media.Color.FromArgb(0xDA, 0x25, 0x25, 0x25));
+        private static readonly SolidColorBrush Win10DarkBackgroundBrush = ColorHelper.ToFrozenBrush(System.Windows.Media.Color.FromArgb(0xF0, 0x25, 0x25, 0x25));
+
+        private SolidColorBrush GetSearchWindowBackgroundBrush(Theme systemTheme, string profile)
+        {
+            if (string.Equals(_settings.SearchWindowBackground, "Custom", StringComparison.OrdinalIgnoreCase))
+            {
+                var color = ColorHelper.GetSearchWindowColor(
+                    _settings.SearchWindowBackgroundAlpha,
+                    _settings.SearchWindowBackgroundBrightness,
+                    systemTheme == Theme.Light
+                );
+                return ColorHelper.ToFrozenBrush(color);
+            }
+
+            // Automatic
+            if (systemTheme == Theme.Light)
+            {
+                return profile == "Win11" ? Win11LightBackgroundBrush : Win10LightBackgroundBrush;
+            }
+
+            return profile == "Win11" ? Win11DarkBackgroundBrush : Win10DarkBackgroundBrush;
         }
 
         public void Dispose()
