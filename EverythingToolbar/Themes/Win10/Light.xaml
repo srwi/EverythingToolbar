@@ -48,8 +48,8 @@
   <SolidColorBrush x:Key="TabBarButtonBackgroundHover" Color="Transparent" />
   <SolidColorBrush x:Key="TabBarButtonBackgroundActive" Color="Transparent" />
 
-  <SolidColorBrush x:Key="SearchResultBackgroundHover" Color="#2a000000" />
-  <SolidColorBrush x:Key="SearchResultBackgroundActive" Color="#41000000" />
+  <SolidColorBrush x:Key="SearchResultBackgroundHover" Color="#1d000000" />
+  <SolidColorBrush x:Key="SearchResultBackgroundActive" Color="#2e000000" />
   <SolidColorBrush x:Key="PreviewActionButtonBackgroundHover" Color="#0fffffff" />
   <SolidColorBrush x:Key="PreviewActionButtonBackgroundActive" Color="#04000000" />
   <SolidColorBrush x:Key="SearchResultFileName" Color="#000000" />

@@ -31,7 +31,7 @@
   <Color x:Key="AcrylicWindowBackgroundFallback">#222222</Color>
 
   <SolidColorBrush x:Key="SearchResultsViewBackground" Color="Transparent" />
-  <SolidColorBrush x:Key="TabBarBottomBorder" Color="#1f1f1f" />
+  <SolidColorBrush x:Key="TabBarBottomBorder" Color="#40000000" />
   <SolidColorBrush x:Key="SearchResultsViewSpinner" Color="#ffffff" />
 
   <SolidColorBrush x:Key="TabBackground" Color="Transparent" />
@@ -53,21 +53,21 @@
   <SolidColorBrush x:Key="PreviewActionButtonBackgroundHover" Color="#0effffff" />
   <SolidColorBrush x:Key="PreviewActionButtonBackgroundActive" Color="#12ffffff" />
   <SolidColorBrush x:Key="SearchResultFileName" Color="#D8D8D8" />
-  <SolidColorBrush x:Key="SearchResultPath" Color="#7a7a7a" />
-  <SolidColorBrush x:Key="SearchResultDateModified" Color="#7a7a7a" />
-  <SolidColorBrush x:Key="SearchResultFileSize" Color="#7a7a7a" />
+  <SolidColorBrush x:Key="SearchResultPath" Color="#64ffffff" />
+  <SolidColorBrush x:Key="SearchResultDateModified" Color="#64ffffff" />
+  <SolidColorBrush x:Key="SearchResultFileSize" Color="#64ffffff" />
 
-  <SolidColorBrush x:Key="ScrollbarBackground" Color="#45000000" />
+  <SolidColorBrush x:Key="ScrollbarBackground" Color="#20000000" />
   <SolidColorBrush x:Key="ScrollbarButtonFill" Color="Transparent" />
   <SolidColorBrush x:Key="ScrollbarButtonFillHover" Color="Transparent" />
   <SolidColorBrush x:Key="ScrollbarButtonFillActive" Color="Transparent" />
   <SolidColorBrush x:Key="ScrollbarButtonStroke" Color="#767676" />
   <SolidColorBrush x:Key="ScrollbarButtonStrokeHover" Color="#767676" />
   <SolidColorBrush x:Key="ScrollbarButtonStrokeActive" Color="#4f4f4f" />
-  <SolidColorBrush x:Key="ScrollbarButtonBackground" Color="#45000000" />
+  <SolidColorBrush x:Key="ScrollbarButtonBackground" Color="#20000000" />
   <SolidColorBrush x:Key="ScrollbarButtonBackgroundHover" Color="#0effffff" />
   <SolidColorBrush x:Key="ScrollbarButtonBackgroundActive" Color="#94ffffff" />
-  <SolidColorBrush x:Key="ScrollbarThumbBackground" Color="#494949" />
+  <SolidColorBrush x:Key="ScrollbarThumbBackground" Color="#606060" />
   <SolidColorBrush x:Key="ScrollbarThumbBackgroundHover" Color="#767676" />
   <SolidColorBrush x:Key="ScrollbarThumbBackgroundActive" Color="#a4a4a4" />
 </ResourceDictionary>

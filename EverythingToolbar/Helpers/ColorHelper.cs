@@ -7,7 +7,12 @@ namespace EverythingToolbar.Helpers
     {
         public const int DefaultAlpha = 0xDA;
         public const int DefaultBrightness = 0x25;
-        public static readonly Color DefaultSearchWindowColor = Color.FromArgb(DefaultAlpha, DefaultBrightness, DefaultBrightness, DefaultBrightness);
+        public static readonly Color DefaultSearchWindowColor = Color.FromArgb(
+            DefaultAlpha,
+            DefaultBrightness,
+            DefaultBrightness,
+            DefaultBrightness
+        );
 
         public static Color GetSearchWindowColor(int alpha, int brightness, bool isLight)
         {

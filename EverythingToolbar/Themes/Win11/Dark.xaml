@@ -35,7 +35,7 @@
   <SolidColorBrush x:Key="SearchResultsViewSpinner" Color="#ffffff" />
 
   <SolidColorBrush x:Key="TabBackground" Color="#11ffffff" />
-  <SolidColorBrush x:Key="TabBackgroundHover" Color="#dd3E3E3E" />
+  <SolidColorBrush x:Key="TabBackgroundHover" Color="#19ffffff" />
   <SolidColorBrush x:Key="TabBorder" Color="#1bffffff" />
   <SolidColorBrush x:Key="TabForeground" Color="#ffffff" />
   <SolidColorBrush x:Key="TabForegroundHover" Color="#ffffff" />
@@ -53,9 +53,9 @@
   <SolidColorBrush x:Key="PreviewActionButtonBackgroundHover" Color="#0effffff" />
   <SolidColorBrush x:Key="PreviewActionButtonBackgroundActive" Color="#12ffffff" />
   <SolidColorBrush x:Key="SearchResultFileName" Color="#ffffff" />
-  <SolidColorBrush x:Key="SearchResultPath" Color="#7a7a7a" />
-  <SolidColorBrush x:Key="SearchResultDateModified" Color="#7a7a7a" />
-  <SolidColorBrush x:Key="SearchResultFileSize" Color="#7a7a7a" />
+  <SolidColorBrush x:Key="SearchResultPath" Color="#64ffffff" />
+  <SolidColorBrush x:Key="SearchResultDateModified" Color="#64ffffff" />
+  <SolidColorBrush x:Key="SearchResultFileSize" Color="#64ffffff" />
 
   <SolidColorBrush x:Key="ScrollbarBackground" Color="Transparent" />
   <SolidColorBrush x:Key="ScrollbarButtonFill" Color="#A9A9A9" />

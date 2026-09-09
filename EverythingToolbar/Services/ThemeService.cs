@@ -58,6 +58,18 @@ namespace EverythingToolbar.Services
             "AppsUseLightTheme"
         );
 
+        private static readonly RegistryEntry ColorPrevalenceRegistryEntry = new(
+            "HKEY_CURRENT_USER",
+            PersonalizeSubKey,
+            "ColorPrevalence"
+        );
+
+        private static readonly RegistryEntry StartColorMenuRegistryEntry = new(
+            "HKEY_CURRENT_USER",
+            @"Software\Microsoft\Windows\CurrentVersion\Explorer\Accent",
+            "StartColorMenu"
+        );
+
         private sealed class Registration
         {
             public required WeakReference<FrameworkElement> Root { get; init; }
@@ -91,13 +103,8 @@ namespace EverythingToolbar.Services
                 Logger.Info("Could not apply accent color automatically.");
             }
 
-            // ColorValuesChanged is the primary theme-switch signal. Where WinRT is unavailable it
-            // never arrives, so fall back to watching the Personalize key the theme is read from.
-            if (_uiSettings == null)
-            {
-                _personalizeWatcher = new RegistryValueWatcher(PersonalizeSubKey);
-                _personalizeWatcher.Changed += ScheduleApply;
-            }
+            _personalizeWatcher = new RegistryValueWatcher(PersonalizeSubKey);
+            _personalizeWatcher.Changed += ScheduleApply;
 
             _settings.PropertyChanged += OnSettingsChanged;
         }
@@ -296,15 +303,73 @@ namespace EverythingToolbar.Services
             {
                 ["SearchWindowBackground"] = brush,
                 ["SearchResultsViewHeader"] = brush,
+                ["AcrylicWindowBackgroundFallback"] = System.Windows.Media.Color.FromRgb(
+                    brush.Color.R,
+                    brush.Color.G,
+                    brush.Color.B
+                ),
             };
             root.Resources.MergedDictionaries.Add(resDict);
             registration.AddedDictionaries.Add(resDict);
         }
 
-        private static readonly SolidColorBrush Win11LightBackgroundBrush = ColorHelper.ToFrozenBrush(System.Windows.Media.Color.FromArgb(0xE0, 0xF5, 0xF5, 0xF5));
-        private static readonly SolidColorBrush Win10LightBackgroundBrush = ColorHelper.ToFrozenBrush(System.Windows.Media.Color.FromArgb(0xDD, 0xEE, 0xEE, 0xEE));
-        private static readonly SolidColorBrush Win11DarkBackgroundBrush = ColorHelper.ToFrozenBrush(System.Windows.Media.Color.FromArgb(0xDA, 0x25, 0x25, 0x25));
-        private static readonly SolidColorBrush Win10DarkBackgroundBrush = ColorHelper.ToFrozenBrush(System.Windows.Media.Color.FromArgb(0xF0, 0x25, 0x25, 0x25));
+        private static readonly SolidColorBrush Win11LightBackgroundBrush = ColorHelper.ToFrozenBrush(
+            System.Windows.Media.Color.FromArgb(0xE0, 0xF5, 0xF5, 0xF5)
+        );
+        private static readonly SolidColorBrush Win10LightBackgroundBrush = ColorHelper.ToFrozenBrush(
+            System.Windows.Media.Color.FromArgb(0xDD, 0xEE, 0xEE, 0xEE)
+        );
+        private static readonly SolidColorBrush Win11DarkBackgroundBrush = ColorHelper.ToFrozenBrush(
+            System.Windows.Media.Color.FromArgb(0xDA, 0x25, 0x25, 0x25)
+        );
+        private static readonly SolidColorBrush Win10DarkBackgroundBrush = ColorHelper.ToFrozenBrush(
+            System.Windows.Media.Color.FromArgb(0xF0, 0x25, 0x25, 0x25)
+        );
+
+        private bool IsTaskbarAccentColorEnabled(Theme systemTheme)
+        {
+            if (systemTheme != Theme.Dark)
+                return false;
+
+            if ((int)(SystemThemeRegistryEntry.GetValue(0) ?? 0) == 1)
+                return false;
+
+            return (int)(ColorPrevalenceRegistryEntry.GetValue(0) ?? 0) != 0;
+        }
+
+        private System.Windows.Media.Color? GetTaskbarAccentColor()
+        {
+            if (_uiSettings != null)
+            {
+                try
+                {
+                    var color = _uiSettings.GetColorValue(UIColorType.AccentDark1);
+                    return System.Windows.Media.Color.FromRgb(color.R, color.G, color.B);
+                }
+                catch (Exception e)
+                {
+                    Logger.Warn(e, "Failed to get taskbar accent color from UISettings.");
+                }
+            }
+
+            try
+            {
+                var val = StartColorMenuRegistryEntry.GetValue(null);
+                if (val is int intVal && intVal != 0)
+                {
+                    byte r = (byte)(intVal & 0xFF);
+                    byte g = (byte)((intVal >> 8) & 0xFF);
+                    byte b = (byte)((intVal >> 16) & 0xFF);
+                    return System.Windows.Media.Color.FromRgb(r, g, b);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Warn(e, "Failed to get taskbar accent color from registry.");
+            }
+
+            return null;
+        }
 
         private SolidColorBrush GetSearchWindowBackgroundBrush(Theme systemTheme, string profile)
         {
@@ -322,6 +387,23 @@ namespace EverythingToolbar.Services
             if (systemTheme == Theme.Light)
             {
                 return profile == "Win11" ? Win11LightBackgroundBrush : Win10LightBackgroundBrush;
+            }
+
+            if (IsTaskbarAccentColorEnabled(systemTheme))
+            {
+                var accentColor = GetTaskbarAccentColor();
+                if (accentColor.HasValue)
+                {
+                    byte alpha = profile == "Win11" ? (byte)0xDA : (byte)0xF0;
+                    return ColorHelper.ToFrozenBrush(
+                        System.Windows.Media.Color.FromArgb(
+                            alpha,
+                            accentColor.Value.R,
+                            accentColor.Value.G,
+                            accentColor.Value.B
+                        )
+                    );
+                }
             }
 
             return profile == "Win11" ? Win11DarkBackgroundBrush : Win10DarkBackgroundBrush;
