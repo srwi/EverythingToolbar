@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -34,8 +34,16 @@ namespace EverythingToolbar.Controls
                 if (searchBox.TextBox.Text == newValue)
                     return;
 
-                searchBox.TextBox.Text = newValue;
-                searchBox.TextBox.CaretIndex = searchBox.TextBox.Text.Length;
+                searchBox._isInternalTextChange = true;
+                try
+                {
+                    searchBox.TextBox.Text = newValue;
+                    searchBox.TextBox.CaretIndex = searchBox.TextBox.Text.Length;
+                }
+                finally
+                {
+                    searchBox._isInternalTextChange = false;
+                }
             }
         }
 
