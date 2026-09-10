@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sync winget-pkgs fork
-        run: gh repo sync srwi/winget-pkgs -b master
+        run: gh repo sync srwi/winget-pkgs -b master --force
         env:
           GH_TOKEN: ${{ secrets.WINGET_PAT }}
       - name: Update Launcher
