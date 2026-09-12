@@ -772,7 +772,7 @@
     <value>Utiliza siempre el cliente IPC heredado, aunque puede ser más compatible, es más lento.</value>
   </data>
   <data name="SettingsSearchWindowBackground" xml:space="preserve">
-    <value>Search window background</value>
+    <value>Fondo de la ventana de búsqueda</value>
   </data>
   <data name="SettingsSearchWindowBackgroundHelp" xml:space="preserve">
     <value>Choose the background tone for the search window</value>
