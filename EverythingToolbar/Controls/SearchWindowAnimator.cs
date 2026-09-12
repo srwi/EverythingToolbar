@@ -44,7 +44,6 @@ namespace EverythingToolbar.Controls
 
             _window.Width = width;
             _window.Height = height;
-
             var (_, _, horizontal) = EdgeGeometry(taskbarEdge);
             if (horizontal)
                 _window.Left = left;
@@ -202,7 +201,7 @@ namespace EverythingToolbar.Controls
             );
 
             var (axis, sign, horizontal) = EdgeGeometry(taskbarEdge);
-            var basePos = horizontal ? _window.RestoreBounds.Top : _window.RestoreBounds.Left;
+            var basePos = GetBasePosition(horizontal);
 
             var animation = new DoubleAnimation { To = basePos + sign * 150, Duration = TimeSpan.FromMilliseconds(30) };
             animation.Completed += (_, _) => _onHideCompleted();
@@ -218,7 +217,7 @@ namespace EverythingToolbar.Controls
             }
 
             var (axis, sign, horizontal) = EdgeGeometry(taskbarEdge);
-            var basePos = horizontal ? _window.RestoreBounds.Top : _window.RestoreBounds.Left;
+            var basePos = GetBasePosition(horizontal);
             const double extraOffset = 50; // To include all possible window decorations
             var magnitude = (horizontal ? _window.Height : _window.Width) + extraOffset;
 
@@ -231,6 +230,15 @@ namespace EverythingToolbar.Controls
             };
             animation.Completed += (_, _) => _onHideCompleted();
             _window.BeginAnimation(axis, animation);
+        }
+
+        private double GetBasePosition(bool horizontal)
+        {
+            var restore = horizontal ? _window.RestoreBounds.Top : _window.RestoreBounds.Left;
+            if (double.IsFinite(restore) && restore is > -50000 and < 50000)
+                return restore;
+
+            return horizontal ? _window.Top : _window.Left;
         }
 
         private void OnCompositionTargetRendering(object? sender, EventArgs e)

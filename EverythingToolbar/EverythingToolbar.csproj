@@ -57,6 +57,12 @@
     <Resource Include="Images\WinUIGallery\IconElement.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="..\EverythingToolbar.Launcher\Icons\Dark.ico" Link="Icons\Dark.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="..\EverythingToolbar.Launcher\Icons\Light.ico" Link="Icons\Light.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">

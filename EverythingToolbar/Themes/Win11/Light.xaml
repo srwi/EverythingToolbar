@@ -23,6 +23,16 @@
 
   <SolidColorBrush x:Key="SearchBoxIconColor" Color="#1b1b1b" />
 
+  <Thickness x:Key="SearchButtonBorderThickness">1</Thickness>
+  <CornerRadius x:Key="SearchButtonCornerRadius">4</CornerRadius>
+  <SolidColorBrush x:Key="SearchButtonBackgroundIdle" Color="#01ffffff" />
+  <SolidColorBrush x:Key="SearchButtonBackgroundHover" Color="#6effffff" />
+  <SolidColorBrush x:Key="SearchButtonBackgroundPressed" Color="#46ffffff" />
+  <SolidColorBrush x:Key="SearchButtonBackgroundActive" Color="#82ffffff" />
+  <SolidColorBrush x:Key="SearchButtonBorderHover" Color="#0e000000" />
+  <SolidColorBrush x:Key="SearchButtonBorderPressed" Color="#0a000000" />
+  <SolidColorBrush x:Key="SearchButtonBorderActive" Color="#12000000" />
+
   <SolidColorBrush x:Key="QuickSettingsToggleButtonBackgroundHover" Color="#23595959" />
   <SolidColorBrush x:Key="QuickSettingsToggleButtonBackgroundActive" Color="#1a595959" />
   <SolidColorBrush x:Key="QuickSettingsToggleButtonBorderHover" Color="Transparent" />

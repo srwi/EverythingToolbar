@@ -52,26 +52,29 @@ namespace EverythingToolbar.Services
                 foreach (var icon in GetTrayIcons(taskbarHandle, taskbar, refreshElements))
                 {
                     var iconRect = icon.Current.BoundingRectangle;
-                    if (iconRect.Width > 0)
+                    if (iconRect.Width > 0 && iconRect.Height > 0)
                         obstacles.Add(iconRect);
                 }
 
                 var frame = GetFrame(taskbarHandle, taskbar);
                 if (frame != null)
                 {
-                    double maxIconWidth = taskbar.Current.BoundingRectangle.Width * MaxIconClusterChildWidthRatio;
+                    var taskbarRect = taskbar.Current.BoundingRectangle;
+                    bool isVertical = taskbarRect.Height > taskbarRect.Width;
+                    double maxIconDimension =
+                        (isVertical ? taskbarRect.Height : taskbarRect.Width) * MaxIconClusterChildWidthRatio;
 
                     foreach (
                         AutomationElement child in frame.FindAll(TreeScope.Children, AutomationCondition.TrueCondition)
                     )
                     {
                         var rect = child.Current.BoundingRectangle;
-                        if (rect.Width <= 0)
+                        if (rect.Width <= 0 || rect.Height <= 0)
                             continue;
 
                         if (child.Current.AutomationId is SystemTrayIconAutomationId or WidgetsButtonAutomationId)
                             obstacles.Add(rect);
-                        else if (rect.Width <= maxIconWidth)
+                        else if ((isVertical ? rect.Height : rect.Width) <= maxIconDimension)
                             iconCluster = iconCluster.HasValue ? Rect.Union(iconCluster.Value, rect) : rect;
                     }
                 }

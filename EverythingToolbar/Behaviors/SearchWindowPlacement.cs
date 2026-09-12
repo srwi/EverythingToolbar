@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
@@ -73,11 +74,15 @@ namespace EverythingToolbar.Behaviors
                 : Screen.FromPoint(new Point(placementTargetRect.left, placementTargetRect.top));
             _pixelsPerDip = GetPixelsPerDip(screen);
 
-            EnsureWindowDpiTransition(screen);
+            var taskbar = FindDockedTaskBar(screen);
+            _taskbarState.TaskbarEdge = taskbar.Edge;
+            _taskbarState.TaskbarSize = new Size(taskbar.Position.Width, taskbar.Position.Height);
+
+            EnsureWindowDpiTransition(screen, taskbar);
 
             var position = useCursor
-                ? CalculatePositionFromTaskbar(screen)
-                : CalculatePositionFromTarget(placementTargetRect, screen);
+                ? CalculatePositionFromTaskbar(screen, taskbar)
+                : CalculatePositionFromTarget(placementTargetRect, screen, taskbar);
 
             var size = GetTargetWindowSizeDip();
 
@@ -98,11 +103,11 @@ namespace EverythingToolbar.Behaviors
         /// Windows only transitions a window to a monitor's DPI while its rect overlaps that monitor and the
         /// window is not hidden, so a window parked off-screen keeps the DPI of the monitor it was last shown
         /// on. Left alone, the transition would happen mid show animation, where WPF's WM_DPICHANGED handling
-        /// visibly rescales the window. Instead, hop the still-parked window onto the bottom few pixels of the
-        /// target monitor - behind a bottom-docked taskbar and overlapping no other monitor - which delivers
-        /// the transition before the window can be seen.
+        /// visibly rescales the window. Instead, hop the still-parked window onto a few pixels behind the
+        /// target monitor's docked taskbar - overlapping no other monitor - which delivers the transition
+        /// before the window can be seen.
         /// </summary>
-        private void EnsureWindowDpiTransition(Screen screen)
+        private void EnsureWindowDpiTransition(Screen screen, TaskbarLocation taskbar)
         {
             var hwnd = new WindowInteropHelper(AssociatedObject).Handle;
             if (hwnd == IntPtr.Zero)
@@ -112,11 +117,19 @@ namespace EverythingToolbar.Behaviors
                 return;
 
             var bounds = screen.Bounds;
+            var (x, y) = taskbar.Edge switch
+            {
+                Edge.Top => (bounds.Left, bounds.Top),
+                Edge.Left => (bounds.Left, bounds.Top),
+                Edge.Right => (bounds.Right - 8, bounds.Top),
+                _ => (bounds.Left, bounds.Bottom - 8),
+            };
+
             PInvoke.SetWindowPos(
                 (HWND)hwnd,
                 HWND.Null,
-                bounds.Left,
-                bounds.Bottom - 8,
+                x,
+                y,
                 0,
                 0,
                 SET_WINDOW_POS_FLAGS.SWP_NOSIZE
@@ -180,42 +193,55 @@ namespace EverythingToolbar.Behaviors
             );
         }
 
-        private Point CalculatePositionFromTarget(RECT nativeRect, Screen screen)
+        private Point CalculatePositionFromTarget(RECT nativeRect, Screen screen, TaskbarLocation taskbar)
         {
             var workingArea = screen.WorkingArea;
-            var screenBounds = screen.Bounds;
             var (width, height) = GetTargetWindowSize();
-            var taskbarSize = _taskbarState.TaskbarSize;
             var margin = GetMargin();
 
-            switch (_taskbarState.TaskbarEdge)
+            switch (taskbar.Edge)
             {
-                case Edge.Bottom:
                 case Edge.Top:
                 {
-                    var topDockPos = Math.Max(workingArea.Top, screenBounds.Top + (int)taskbarSize.Height);
-                    var bottomDockPos = Math.Min(workingArea.Bottom, screenBounds.Bottom - (int)taskbarSize.Height);
+                    var topDockPos = Math.Max(workingArea.Top, taskbar.Position.Bottom);
+                    var top = Math.Max(nativeRect.bottom + margin, topDockPos + margin);
 
-                    var right = Math.Min(nativeRect.left + width, workingArea.Right - margin);
+                    return new Point(
+                        GetTargetHorizontalPosition(nativeRect, workingArea, width, margin),
+                        Math.Max(topDockPos + margin, Math.Min(workingArea.Bottom - margin - height, top))
+                    );
+                }
+                case Edge.Bottom:
+                {
+                    var bottomDockPos = Math.Min(workingArea.Bottom, taskbar.Position.Top);
                     var bottom = Math.Min(nativeRect.top - margin, bottomDockPos - margin);
 
                     return new Point(
-                        Math.Max(workingArea.Left + margin, right - width),
-                        Math.Max(topDockPos + margin, bottom - height)
+                        GetTargetHorizontalPosition(nativeRect, workingArea, width, margin),
+                        Math.Max(workingArea.Top + margin, bottom - height)
                     );
                 }
                 case Edge.Left:
                 case Edge.Right:
                 {
-                    var leftDockPos = Math.Max(workingArea.Left, screenBounds.Left + (int)taskbarSize.Width);
-                    var rightDockPos = Math.Min(workingArea.Right, screenBounds.Right - (int)taskbarSize.Width);
-
                     var bottom = Math.Min(nativeRect.top + height, workingArea.Bottom - margin);
-                    var right = Math.Min(nativeRect.left - margin, rightDockPos - margin);
+                    var y = Math.Max(workingArea.Top + margin, bottom - height);
 
+                    if (taskbar.Edge == Edge.Left)
+                    {
+                        var leftDockPos = Math.Max(workingArea.Left, taskbar.Position.Right);
+                        var left = Math.Max(nativeRect.right + margin, leftDockPos + margin);
+                        return new Point(
+                            Math.Max(leftDockPos + margin, Math.Min(workingArea.Right - margin - width, left)),
+                            y
+                        );
+                    }
+
+                    var rightDockPos = Math.Min(workingArea.Right, taskbar.Position.Left);
+                    var right = Math.Min(nativeRect.left - margin, rightDockPos - margin);
                     return new Point(
-                        Math.Max(leftDockPos + margin, right - width),
-                        Math.Max(workingArea.Top + margin, bottom - height)
+                        Math.Max(workingArea.Left + margin, right - width),
+                        y
                     );
                 }
                 default:
@@ -223,14 +249,24 @@ namespace EverythingToolbar.Behaviors
             }
         }
 
-        private Point CalculatePositionFromTaskbar(Screen screen)
+        private int GetTargetHorizontalPosition(RECT nativeRect, Rectangle workingArea, int width, int margin)
         {
-            var taskbar = FindDockedTaskBar(screen);
+            if (AssociatedObject.FlowDirection == FlowDirection.RightToLeft)
+            {
+                var left = Math.Max(nativeRect.right - width, workingArea.Left + margin);
+                var right = Math.Min(workingArea.Right - margin, left + width);
+                return Math.Max(workingArea.Left + margin, right - width);
+            }
+
+            var clampRight = Math.Min(nativeRect.left + width, workingArea.Right - margin);
+            return Math.Max(workingArea.Left + margin, clampRight - width);
+        }
+
+        private Point CalculatePositionFromTaskbar(Screen screen, TaskbarLocation taskbar)
+        {
             var (width, height) = GetTargetWindowSize();
             var margin = GetMargin();
             var workingArea = screen.WorkingArea;
-
-            _taskbarState.TaskbarEdge = taskbar.Edge;
 
             switch (taskbar.Edge)
             {
@@ -288,19 +324,20 @@ namespace EverythingToolbar.Behaviors
             )
                 return CreateTaskbarLocation(screen, ToEdge(edge), RescaleFromPrimary(thickness));
 
-            var topDockedHeight = screen.WorkingArea.Top - screen.Bounds.Top;
-            var bottomDockedHeight = screen.Bounds.Bottom - screen.WorkingArea.Bottom;
-            var leftDockedWidth = screen.WorkingArea.Left - screen.Bounds.Left;
-            var rightDockedWidth = screen.Bounds.Right - screen.WorkingArea.Right;
+            (Edge Edge, int Thickness)[] candidates =
+            [
+                (Edge.Left, screen.WorkingArea.Left - screen.Bounds.Left),
+                (Edge.Right, screen.Bounds.Right - screen.WorkingArea.Right),
+                (Edge.Top, screen.WorkingArea.Top - screen.Bounds.Top),
+                (Edge.Bottom, screen.Bounds.Bottom - screen.WorkingArea.Bottom),
+            ];
 
-            if (leftDockedWidth > 0 && bottomDockedHeight == 0)
-                return CreateTaskbarLocation(screen, Edge.Left, leftDockedWidth);
-            if (rightDockedWidth > 0 && bottomDockedHeight == 0)
-                return CreateTaskbarLocation(screen, Edge.Right, rightDockedWidth);
-            if (topDockedHeight > 0 && bottomDockedHeight == 0)
-                return CreateTaskbarLocation(screen, Edge.Top, topDockedHeight);
-
-            return CreateTaskbarLocation(screen, Edge.Bottom, bottomDockedHeight);
+            var dominant = candidates.MaxBy(c => c.Thickness);
+            return CreateTaskbarLocation(
+                screen,
+                dominant.Thickness > 0 ? dominant.Edge : Edge.Bottom,
+                Math.Max(0, dominant.Thickness)
+            );
         }
 
         private static Edge ToEdge(uint appBarEdge) =>
@@ -348,7 +385,10 @@ namespace EverythingToolbar.Behaviors
                 return false;
             }
 
-            return PInvoke.GetWindowRect((HWND)hwndSource.Handle, out rect);
+            if (!PInvoke.GetWindowRect((HWND)hwndSource.Handle, out rect))
+                return false;
+
+            return rect.right > rect.left && rect.bottom > rect.top;
         }
 
         private double GetPixelsPerDip(Screen screen)
