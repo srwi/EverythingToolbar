@@ -31,7 +31,7 @@ namespace EverythingToolbar
         private DateTime _settleDeadline;
         private bool _refreshLayoutElements = true;
 
-        private const double MaxSearchBoxWidthDip = 300;
+        private const double MaxSearchBoxWidthDip = 240;
 
         // Narrower than this the full search box cannot comfortably fit, so it switches to icon mode.
         private const double MinSearchBoxWidthDip = 120;
