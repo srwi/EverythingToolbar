@@ -772,21 +772,21 @@
     <value>Всегда использовать устаревший IPC-клиент, который может быть более совместимым, но работает медленнее.</value>
   </data>
   <data name="SettingsSearchWindowBackground" xml:space="preserve">
-    <value>Search window background</value>
+    <value>Фон окна поиска</value>
   </data>
   <data name="SettingsSearchWindowBackgroundHelp" xml:space="preserve">
-    <value>Choose the background tone for the search window</value>
+    <value>Выберите оттенок фона для окна поиска</value>
   </data>
   <data name="SearchWindowBackgroundAutomatic" xml:space="preserve">
-    <value>Automatic</value>
+    <value>Автоматически</value>
   </data>
   <data name="SearchWindowBackgroundCustom" xml:space="preserve">
-    <value>Custom</value>
+    <value>Пользовательский</value>
   </data>
   <data name="ColorPickerAlpha" xml:space="preserve">
-    <value>Alpha</value>
+    <value>Альфа-канал</value>
   </data>
   <data name="ColorPickerBrightness" xml:space="preserve">
-    <value>Brightness</value>
+    <value>Яркость</value>
   </data>
 </root>

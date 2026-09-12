@@ -700,7 +700,7 @@
     <value>El cuadro de búsqueda requiere la barra de tareas original de Windows 11. Cuando utilice ExplorerPatcher o StartAllBack, utilice la banda de escritorio en su lugar.</value>
   </data>
   <data name="SettingsTaskbarIcon" xml:space="preserve">
-    <value>Icono de la barra de tareas</value>
+    <value>Icono en la barra de tareas</value>
   </data>
   <data name="SettingsTaskbarSearchBox" xml:space="preserve">
     <value>Cuadro de búsqueda en la barra de tareas</value>
@@ -772,21 +772,21 @@
     <value>Utiliza siempre el cliente IPC heredado, aunque puede ser más compatible, es más lento.</value>
   </data>
   <data name="SettingsSearchWindowBackground" xml:space="preserve">
-    <value>Search window background</value>
+    <value>Fondo de la ventana de búsqueda</value>
   </data>
   <data name="SettingsSearchWindowBackgroundHelp" xml:space="preserve">
-    <value>Choose the background tone for the search window</value>
+    <value>Seleccionar el color de fondo de la ventana de búsqueda</value>
   </data>
   <data name="SearchWindowBackgroundAutomatic" xml:space="preserve">
-    <value>Automatic</value>
+    <value>Automático</value>
   </data>
   <data name="SearchWindowBackgroundCustom" xml:space="preserve">
-    <value>Custom</value>
+    <value>Personalizado</value>
   </data>
   <data name="ColorPickerAlpha" xml:space="preserve">
-    <value>Alpha</value>
+    <value>Opacidad</value>
   </data>
   <data name="ColorPickerBrightness" xml:space="preserve">
-    <value>Brightness</value>
+    <value>Luminosidad</value>
   </data>
 </root>
