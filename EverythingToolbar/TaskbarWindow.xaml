@@ -1,4 +1,4 @@
-﻿<Window
+<Window
   x:Class="EverythingToolbar.TaskbarWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -19,5 +19,5 @@
     <b:Themed Surface="TaskbarSurface" />
   </i:Interaction.Behaviors>
 
-  <controls:ToolbarControl x:Name="ToolbarControl" IsFixedLayout="True" />
+  <controls:ToolbarControl x:Name="ToolbarControl" IsFixedLayout="False" />
 </Window>

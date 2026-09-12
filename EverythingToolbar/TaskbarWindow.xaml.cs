@@ -31,12 +31,14 @@ namespace EverythingToolbar
         private DateTime _settleDeadline;
         private bool _refreshLayoutElements = true;
 
-        private const double MaxWidgetWidthDip = 300;
+        private const double MaxSearchBoxWidthDip = 300;
 
-        // Narrower than this the box is little more than its icon, so it hides instead.
-        private const double MinWidgetWidthDip = 120;
+        // Narrower than this the full search box cannot comfortably fit, so it switches to icon mode.
+        private const double MinSearchBoxWidthDip = 120;
         private const double MinWidgetHeightDip = 32;
-        private const double WidgetVerticalMarginDip = 6;
+        private const double MaxWidgetHeightDip = 48;
+        private const double SearchBoxVerticalMarginDip = 6;
+        private const double IconButtonMarginDip = 4.5;
         private const double HorizontalPaddingDip = 8;
 
         private const int RepositionIntervalMilliseconds = 150;
@@ -268,7 +270,9 @@ namespace EverythingToolbar
                     return;
 
                 if (CalculateBounds(taskbarHandle, taskbarRect, layout) is { } bounds)
+                {
                     _animator?.MoveTo(bounds);
+                }
                 else if (_animator?.Hide() == true)
                     Logger.Debug("Not enough free space on the taskbar; hiding the search box.");
             }
@@ -286,6 +290,24 @@ namespace EverythingToolbar
         {
             double dpiScale = NativeMethods.GetDpiForWindow(taskbarHandle) / 96.0;
 
+            int taskbarWidth = taskbarRect.right - taskbarRect.left;
+            int taskbarHeight = taskbarRect.bottom - taskbarRect.top;
+            bool isVertical = taskbarHeight > taskbarWidth;
+
+            if (isVertical)
+                return CalculateBoundsVertical(taskbarHandle, taskbarRect, layout, dpiScale, taskbarWidth);
+
+            return CalculateBoundsHorizontal(taskbarHandle, taskbarRect, layout, dpiScale, taskbarHeight);
+        }
+
+        private WidgetBounds? CalculateBoundsHorizontal(
+            IntPtr taskbarHandle,
+            RECT taskbarRect,
+            TaskbarLayout layout,
+            double dpiScale,
+            int taskbarHeight
+        )
+        {
             // "Left" alignment is only offered on a centered taskbar, where the box sits in the empty
             // area to the left of the centered cluster; every other case fills the space to its right.
             bool leftOnCentered = _settings.TaskbarWindowAlignment == "Left" && _windowsPolicy.IsTaskbarCenterAligned();
@@ -308,22 +330,31 @@ namespace EverythingToolbar
             }
 
             int padding = (int)(HorizontalPaddingDip * dpiScale);
-            int startClient = ToClient(taskbarHandle, (int)Math.Round(gapStart), 0).X;
-            int endClient = ToClient(taskbarHandle, (int)Math.Round(gapEnd), 0).X;
-
-            int gapLeft = Math.Min(startClient, endClient) + padding;
-            int gapRight = Math.Max(startClient, endClient) - padding;
-
+            var (gapLeft, gapRight) = ProjectSpan(taskbarHandle, gapStart, gapEnd, padding, isVertical: false);
             int available = gapRight - gapLeft;
-            if (available < (int)(MinWidgetWidthDip * dpiScale))
-                return null;
 
-            int width = Math.Min(available, (int)(MaxWidgetWidthDip * dpiScale));
-            int taskbarTop = ToClient(taskbarHandle, 0, taskbarRect.top).Y;
-            int taskbarBottom = ToClient(taskbarHandle, 0, taskbarRect.bottom).Y;
-            int taskbarHeight = taskbarBottom - taskbarTop;
-            int verticalMargin = (int)(WidgetVerticalMarginDip * dpiScale);
-            int height = Math.Max(taskbarHeight - 2 * verticalMargin, (int)(MinWidgetHeightDip * dpiScale));
+            int minHeight = (int)(MinWidgetHeightDip * dpiScale);
+            int maxHeight = (int)(MaxWidgetHeightDip * dpiScale);
+
+            int width;
+            int height;
+
+            if (available < (int)(MinSearchBoxWidthDip * dpiScale))
+            {
+                int iconMargin = (int)Math.Round(IconButtonMarginDip * dpiScale);
+                int iconSize = Math.Clamp(taskbarHeight - 2 * iconMargin, minHeight, maxHeight);
+                if (available < iconSize)
+                    return null;
+
+                width = iconSize;
+                height = iconSize;
+            }
+            else
+            {
+                int searchBoxMargin = (int)(SearchBoxVerticalMarginDip * dpiScale);
+                width = Math.Min(available, (int)(MaxSearchBoxWidthDip * dpiScale));
+                height = Math.Max(taskbarHeight - 2 * searchBoxMargin, minHeight);
+            }
 
             return new WidgetBounds(
                 leftOnCentered ? gapLeft : gapRight - width,
@@ -331,6 +362,80 @@ namespace EverythingToolbar
                 width,
                 height
             );
+        }
+
+        private WidgetBounds? CalculateBoundsVertical(
+            IntPtr taskbarHandle,
+            RECT taskbarRect,
+            TaskbarLayout layout,
+            double dpiScale,
+            int taskbarWidth
+        )
+        {
+            int padding = (int)(HorizontalPaddingDip * dpiScale);
+            int minHeight = (int)(MinWidgetHeightDip * dpiScale);
+            int maxHeight = (int)(MaxWidgetHeightDip * dpiScale);
+
+            bool alignTop = _settings.TaskbarWindowAlignment == "Left";
+
+            double gapStart;
+            double gapEnd;
+
+            if (
+                alignTop
+                && layout.IconCluster is { } cluster
+                && cluster.Top - taskbarRect.top >= minHeight + 2 * padding
+            )
+            {
+                gapEnd = cluster.Top;
+                gapStart = layout.Obstacles.Select(o => o.Bottom).Where(y => y <= gapEnd).Append(taskbarRect.top).Max();
+            }
+            else
+            {
+                gapStart = layout.IconCluster?.Bottom ?? taskbarRect.top;
+                gapEnd = layout.Obstacles.Select(o => o.Top).Where(y => y >= gapStart).Append(taskbarRect.bottom).Min();
+            }
+
+            var (gapTop, gapBottom) = ProjectSpan(taskbarHandle, gapStart, gapEnd, padding, isVertical: true);
+            int available = gapBottom - gapTop;
+
+            if (available < minHeight && alignTop && layout.IconCluster is not null)
+            {
+                gapStart = layout.IconCluster.Value.Bottom;
+                gapEnd = layout.Obstacles.Select(o => o.Top).Where(y => y >= gapStart).Append(taskbarRect.bottom).Min();
+                (gapTop, gapBottom) = ProjectSpan(taskbarHandle, gapStart, gapEnd, padding, isVertical: true);
+                available = gapBottom - gapTop;
+            }
+
+            int iconMargin = (int)Math.Round(IconButtonMarginDip * dpiScale);
+            int buttonSize = Math.Clamp(taskbarWidth - 2 * iconMargin, minHeight, maxHeight);
+            if (available < buttonSize)
+                return null;
+
+            int width = buttonSize;
+            int height = Math.Min(available, buttonSize);
+            int x = (taskbarWidth - width) / 2;
+            return new WidgetBounds(x, gapTop, width, height);
+        }
+
+        private static (int Start, int End) ProjectSpan(
+            IntPtr taskbarHandle,
+            double screenStart,
+            double screenEnd,
+            int padding,
+            bool isVertical
+        )
+        {
+            int startClient = isVertical
+                ? ToClient(taskbarHandle, 0, (int)Math.Round(screenStart)).Y
+                : ToClient(taskbarHandle, (int)Math.Round(screenStart), 0).X;
+            int endClient = isVertical
+                ? ToClient(taskbarHandle, 0, (int)Math.Round(screenEnd)).Y
+                : ToClient(taskbarHandle, (int)Math.Round(screenEnd), 0).X;
+
+            int spanStart = Math.Min(startClient, endClient) + padding;
+            int spanEnd = Math.Max(startClient, endClient) - padding;
+            return (spanStart, spanEnd);
         }
 
         private static System.Drawing.Point ToClient(IntPtr taskbarHandle, int screenX, int screenY)
