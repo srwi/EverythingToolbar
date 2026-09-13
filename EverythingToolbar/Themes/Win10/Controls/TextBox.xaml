@@ -1,4 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:Sys="clr-namespace:System;assembly=mscorlib">
   <Thickness
     x:Key="TextBoxBorderActiveThickness"
     Bottom="2"
@@ -6,6 +9,7 @@
     Right="2"
     Top="2" />
   <CornerRadius x:Key="TextBoxCornerRadius" />
+  <Sys:Double x:Key="TextBoxCornerRadiusRatio">0</Sys:Double>
 
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="../../../Styles/TextBox.xaml" />

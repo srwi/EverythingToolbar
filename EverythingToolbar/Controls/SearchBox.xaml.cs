@@ -1,15 +1,78 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using EverythingToolbar.Converters;
 using EverythingToolbar.ViewModels;
 
 namespace EverythingToolbar.Controls
 {
     public partial class SearchBox
     {
+        public static readonly DependencyProperty CornerRadiusRatioProperty = DependencyProperty.RegisterAttached(
+            "CornerRadiusRatio",
+            typeof(double),
+            typeof(SearchBox),
+            new PropertyMetadata(0.0, OnCornerRadiusRatioChanged)
+        );
+
+        public static double GetCornerRadiusRatio(DependencyObject element) =>
+            (double)element.GetValue(CornerRadiusRatioProperty);
+
+        public static void SetCornerRadiusRatio(DependencyObject element, double value) =>
+            element.SetValue(CornerRadiusRatioProperty, value);
+
+        private static void OnCornerRadiusRatioChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is not Border border)
+                return;
+
+            if (e.NewValue is double ratio && ratio > 0)
+            {
+                border.SetBinding(
+                    Border.CornerRadiusProperty,
+                    new Binding(nameof(Border.ActualHeight))
+                    {
+                        Source = border,
+                        Converter = CornerRadiusFromHeightConverter.Instance,
+                        ConverterParameter = ratio,
+                    }
+                );
+            }
+            else
+            {
+                BindingOperations.ClearBinding(border, Border.CornerRadiusProperty);
+                border.SetResourceReference(Border.CornerRadiusProperty, "TextBoxCornerRadius");
+            }
+        }
+
+        public static readonly DependencyProperty LeadingContentProperty = DependencyProperty.RegisterAttached(
+            "LeadingContent",
+            typeof(object),
+            typeof(SearchBox),
+            new PropertyMetadata(null)
+        );
+
+        public static object? GetLeadingContent(DependencyObject element) => element.GetValue(LeadingContentProperty);
+
+        public static void SetLeadingContent(DependencyObject element, object? value) =>
+            element.SetValue(LeadingContentProperty, value);
+
+        public static readonly DependencyProperty TrailingContentProperty = DependencyProperty.RegisterAttached(
+            "TrailingContent",
+            typeof(object),
+            typeof(SearchBox),
+            new PropertyMetadata(null)
+        );
+
+        public static object? GetTrailingContent(DependencyObject element) => element.GetValue(TrailingContentProperty);
+
+        public static void SetTrailingContent(DependencyObject element, object? value) =>
+            element.SetValue(TrailingContentProperty, value);
+
         public static readonly DependencyProperty SearchTermProperty = DependencyProperty.Register(
             nameof(SearchTerm),
             typeof(string),
@@ -130,16 +193,8 @@ namespace EverythingToolbar.Controls
 
         private void UpdateQuickTogglesVisibility()
         {
-            if (_viewModel.Settings.IsShowQuickToggles && ActualWidth > 200)
-            {
-                QuickToggleButtons.Visibility = Visibility.Visible;
-                TextBox.Padding = new Thickness(37, 0, 130, 0);
-            }
-            else
-            {
-                QuickToggleButtons.Visibility = Visibility.Collapsed;
-                TextBox.Padding = new Thickness(37, 0, 10, 0);
-            }
+            QuickToggleButtons.Visibility =
+                _viewModel.Settings.IsShowQuickToggles && ActualWidth > 200 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public new void Focus()

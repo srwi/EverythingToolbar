@@ -3,22 +3,24 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Control}">
-          <Path
-            Margin="13 0 0 0"
+          <Viewbox
+            Margin="10 0 8 0"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
-            IsHitTestVisible="False"
-            Stroke="{DynamicResource SearchBoxIconColor}">
-            <Path.Data>
-              <GeometryGroup>
-                <LineGeometry StartPoint="0, 17" EndPoint="6, 11" />
-                <EllipseGeometry
-                  Center="10, 7"
-                  RadiusX="5.3"
-                  RadiusY="5.3" />
-              </GeometryGroup>
-            </Path.Data>
-          </Path>
+            Stretch="Uniform"
+            StretchDirection="DownOnly">
+            <Path IsHitTestVisible="False" Stroke="{DynamicResource SearchBoxIconColor}">
+              <Path.Data>
+                <GeometryGroup>
+                  <LineGeometry StartPoint="0, 17" EndPoint="6, 11" />
+                  <EllipseGeometry
+                    Center="10, 7"
+                    RadiusX="5.3"
+                    RadiusY="5.3" />
+                </GeometryGroup>
+              </Path.Data>
+            </Path>
+          </Viewbox>
         </ControlTemplate>
       </Setter.Value>
     </Setter>

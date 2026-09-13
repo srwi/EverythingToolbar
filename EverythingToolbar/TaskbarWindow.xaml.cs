@@ -35,10 +35,14 @@ namespace EverythingToolbar
 
         // Narrower than this the full search box cannot comfortably fit, so it switches to icon mode.
         private const double MinSearchBoxWidthDip = 120;
-        private const double MinWidgetHeightDip = 32;
+
+        // Baseline taskbar height (default Win11 taskbar). Margins and widget height scale
+        // proportionally so the search box adapts when the taskbar is made slimmer (e.g. the
+        // "Show smaller taskbar buttons" / TaskbarSi setting introduced in Windows 11 26H2).
+        private const double SearchBoxVerticalMarginFraction = 0.125; // 12.5% of taskbar height
+        private const double IconButtonMarginFraction = 0.09375; // ~9.4% of taskbar height
+        private const double MinWidgetHeightAbsoluteDip = 20;
         private const double MaxWidgetHeightDip = 48;
-        private const double SearchBoxVerticalMarginDip = 6;
-        private const double IconButtonMarginDip = 4.5;
         private const double HorizontalPaddingDip = 8;
 
         private const int RepositionIntervalMilliseconds = 150;
@@ -333,16 +337,12 @@ namespace EverythingToolbar
             var (gapLeft, gapRight) = ProjectSpan(taskbarHandle, gapStart, gapEnd, padding, isVertical: false);
             int available = gapRight - gapLeft;
 
-            int minHeight = (int)(MinWidgetHeightDip * dpiScale);
-            int maxHeight = (int)(MaxWidgetHeightDip * dpiScale);
-
             int width;
             int height;
 
             if (available < (int)(MinSearchBoxWidthDip * dpiScale))
             {
-                int iconMargin = (int)Math.Round(IconButtonMarginDip * dpiScale);
-                int iconSize = Math.Clamp(taskbarHeight - 2 * iconMargin, minHeight, maxHeight);
+                int iconSize = CalculateIconButtonSize(taskbarHeight, dpiScale);
                 if (available < iconSize)
                     return null;
 
@@ -351,9 +351,8 @@ namespace EverythingToolbar
             }
             else
             {
-                int searchBoxMargin = (int)(SearchBoxVerticalMarginDip * dpiScale);
                 width = Math.Min(available, (int)(MaxSearchBoxWidthDip * dpiScale));
-                height = Math.Max(taskbarHeight - 2 * searchBoxMargin, minHeight);
+                height = CalculateSearchBoxHeight(taskbarHeight, dpiScale);
             }
 
             return new WidgetBounds(
@@ -373,8 +372,7 @@ namespace EverythingToolbar
         )
         {
             int padding = (int)(HorizontalPaddingDip * dpiScale);
-            int minHeight = (int)(MinWidgetHeightDip * dpiScale);
-            int maxHeight = (int)(MaxWidgetHeightDip * dpiScale);
+            int buttonSize = CalculateIconButtonSize(taskbarWidth, dpiScale);
 
             bool alignTop = _settings.TaskbarWindowAlignment == "Left";
 
@@ -384,7 +382,7 @@ namespace EverythingToolbar
             if (
                 alignTop
                 && layout.IconCluster is { } cluster
-                && cluster.Top - taskbarRect.top >= minHeight + 2 * padding
+                && cluster.Top - taskbarRect.top >= buttonSize + 2 * padding
             )
             {
                 gapEnd = cluster.Top;
@@ -399,7 +397,7 @@ namespace EverythingToolbar
             var (gapTop, gapBottom) = ProjectSpan(taskbarHandle, gapStart, gapEnd, padding, isVertical: true);
             int available = gapBottom - gapTop;
 
-            if (available < minHeight && alignTop && layout.IconCluster is not null)
+            if (available < buttonSize && alignTop && layout.IconCluster is not null)
             {
                 gapStart = layout.IconCluster.Value.Bottom;
                 gapEnd = layout.Obstacles.Select(o => o.Top).Where(y => y >= gapStart).Append(taskbarRect.bottom).Min();
@@ -407,8 +405,6 @@ namespace EverythingToolbar
                 available = gapBottom - gapTop;
             }
 
-            int iconMargin = (int)Math.Round(IconButtonMarginDip * dpiScale);
-            int buttonSize = Math.Clamp(taskbarWidth - 2 * iconMargin, minHeight, maxHeight);
             if (available < buttonSize)
                 return null;
 
@@ -443,6 +439,21 @@ namespace EverythingToolbar
             var pt = new System.Drawing.Point(screenX, screenY);
             PInvoke.ScreenToClient((HWND)taskbarHandle, ref pt);
             return pt;
+        }
+
+        private static int CalculateSearchBoxHeight(int taskbarHeight, double dpiScale)
+        {
+            int margin = (int)(SearchBoxVerticalMarginFraction * taskbarHeight);
+            int minHeight = (int)(MinWidgetHeightAbsoluteDip * dpiScale);
+            return Math.Max(taskbarHeight - 2 * margin, minHeight);
+        }
+
+        private static int CalculateIconButtonSize(int taskbarThickness, double dpiScale)
+        {
+            int margin = (int)Math.Round(IconButtonMarginFraction * taskbarThickness);
+            int minSize = (int)(MinWidgetHeightAbsoluteDip * dpiScale);
+            int maxSize = (int)(MaxWidgetHeightDip * dpiScale);
+            return Math.Clamp(taskbarThickness - 2 * margin, minSize, maxSize);
         }
     }
 }
