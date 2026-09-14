@@ -787,6 +787,6 @@
     <value>Opacidad</value>
   </data>
   <data name="ColorPickerBrightness" xml:space="preserve">
-    <value>Luminosidad</value>
+    <value>Brillo</value>
   </data>
 </root>
