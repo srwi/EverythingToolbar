@@ -772,7 +772,7 @@
     <value>Завжди використовувати застарілий клієнт IPC, який може бути більш сумісним, але повільнішим.</value>
   </data>
   <data name="SettingsSearchWindowBackground" xml:space="preserve">
-    <value>Search window background</value>
+    <value>Фон вікна пошуку</value>
   </data>
   <data name="SettingsSearchWindowBackgroundHelp" xml:space="preserve">
     <value>Choose the background tone for the search window</value>
