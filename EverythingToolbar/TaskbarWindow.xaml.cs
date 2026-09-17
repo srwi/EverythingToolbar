@@ -8,6 +8,7 @@ using System.Windows.Threading;
 using NLog;
 using Windows.Win32;
 using Windows.Win32.Foundation;
+using Windows.Win32.Graphics.Gdi;
 using Windows.Win32.UI.Accessibility;
 using Windows.Win32.UI.WindowsAndMessaging;
 
@@ -236,8 +237,15 @@ namespace EverythingToolbar
                 return;
             }
 
-            if (PInvoke.GetParent(_handle) != _taskbarHandle)
+            if (PInvoke.GetParent(_handle) != (HWND)_taskbarHandle)
                 PInvoke.SetParent(_handle, (HWND)_taskbarHandle);
+
+            if (!TryGetVisibleTaskbarRect(_taskbarHandle, out var taskbarRect))
+            {
+                if (DateTime.UtcNow < _settleDeadline)
+                    _repositionTimer.Start();
+                return;
+            }
 
             var taskbarHandle = _taskbarHandle;
             var generation = ++_positionGeneration;
@@ -270,7 +278,7 @@ namespace EverythingToolbar
 
             try
             {
-                if (!PInvoke.GetWindowRect((HWND)taskbarHandle, out var taskbarRect))
+                if (!TryGetVisibleTaskbarRect(taskbarHandle, out var taskbarRect))
                     return;
 
                 if (CalculateBounds(taskbarHandle, taskbarRect, layout) is { } bounds)
@@ -411,7 +419,8 @@ namespace EverythingToolbar
             int width = buttonSize;
             int height = Math.Min(available, buttonSize);
             int x = (taskbarWidth - width) / 2;
-            return new WidgetBounds(x, gapTop, width, height);
+            int y = alignTop ? gapTop : gapBottom - height;
+            return new WidgetBounds(x, y, width, height);
         }
 
         private static (int Start, int End) ProjectSpan(
@@ -454,6 +463,44 @@ namespace EverythingToolbar
             int minSize = (int)(MinWidgetHeightAbsoluteDip * dpiScale);
             int maxSize = (int)(MaxWidgetHeightDip * dpiScale);
             return Math.Clamp(taskbarThickness - 2 * margin, minSize, maxSize);
+        }
+
+        private static bool TryGetVisibleTaskbarRect(IntPtr taskbarHandle, out RECT taskbarRect)
+        {
+            if (!PInvoke.GetWindowRect((HWND)taskbarHandle, out taskbarRect))
+                return false;
+
+            int taskbarWidth = taskbarRect.right - taskbarRect.left;
+            int taskbarHeight = taskbarRect.bottom - taskbarRect.top;
+            if (taskbarWidth <= 0 || taskbarHeight <= 0)
+                return false;
+
+            if (!NativeMethods.IsTaskbarAutoHiding())
+                return true;
+
+            var monitor = PInvoke.MonitorFromWindow((HWND)taskbarHandle, MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
+            var monitorInfo = new MONITORINFO
+            {
+                cbSize = (uint)System.Runtime.InteropServices.Marshal.SizeOf<MONITORINFO>(),
+            };
+            if (!PInvoke.GetMonitorInfo(monitor, ref monitorInfo))
+                return true;
+
+            var mon = monitorInfo.rcMonitor;
+            int visibleWidth = Math.Max(
+                0,
+                Math.Min(taskbarRect.right, mon.right) - Math.Max(taskbarRect.left, mon.left)
+            );
+            int visibleHeight = Math.Max(
+                0,
+                Math.Min(taskbarRect.bottom, mon.bottom) - Math.Max(taskbarRect.top, mon.top)
+            );
+
+            double dpiScale = NativeMethods.GetDpiForWindow(taskbarHandle) / 96.0;
+            int tolerance = (int)Math.Ceiling(2 * dpiScale);
+
+            bool isVertical = taskbarHeight > taskbarWidth;
+            return isVertical ? visibleWidth >= taskbarWidth - tolerance : visibleHeight >= taskbarHeight - tolerance;
         }
     }
 }

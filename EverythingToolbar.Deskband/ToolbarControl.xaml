@@ -1,7 +1,10 @@
-﻿<UserControl
+<UserControl
   x:Class="EverythingToolbar.Deskband.ToolbarControl"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:controls="clr-namespace:EverythingToolbar.Controls;assembly=EverythingToolbar">
-  <controls:ToolbarControl x:Name="UnifiedToolbarControl" IsFixedLayout="False" />
+  <controls:ToolbarControl
+    x:Name="UnifiedToolbarControl"
+    CollapseOnAutoHide="True"
+    IsFixedLayout="False" />
 </UserControl>

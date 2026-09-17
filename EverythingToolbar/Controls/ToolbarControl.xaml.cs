@@ -13,13 +13,39 @@ namespace EverythingToolbar.Controls
             nameof(IsFixedLayout),
             typeof(bool),
             typeof(ToolbarControl),
-            new PropertyMetadata(false, OnIsFixedLayoutChanged)
+            new PropertyMetadata(false, OnLayoutModeChanged)
         );
 
         public bool IsFixedLayout
         {
             get => (bool)GetValue(IsFixedLayoutProperty);
             set => SetValue(IsFixedLayoutProperty, value);
+        }
+
+        public static readonly DependencyProperty CollapseOnAutoHideProperty = DependencyProperty.Register(
+            nameof(CollapseOnAutoHide),
+            typeof(bool),
+            typeof(ToolbarControl),
+            new PropertyMetadata(false, OnLayoutModeChanged)
+        );
+
+        public bool CollapseOnAutoHide
+        {
+            get => (bool)GetValue(CollapseOnAutoHideProperty);
+            set => SetValue(CollapseOnAutoHideProperty, value);
+        }
+
+        public static readonly DependencyProperty IsIconOnlyProperty = DependencyProperty.Register(
+            nameof(IsIconOnly),
+            typeof(bool),
+            typeof(ToolbarControl),
+            new PropertyMetadata(false)
+        );
+
+        public bool IsIconOnly
+        {
+            get => (bool)GetValue(IsIconOnlyProperty);
+            private set => SetValue(IsIconOnlyProperty, value);
         }
 
         private readonly ToolbarControlViewModel _viewModel = Ioc.Default.GetRequiredService<ToolbarControlViewModel>();
@@ -35,7 +61,7 @@ namespace EverythingToolbar.Controls
             Unloaded += OnUnloaded;
         }
 
-        private static void OnIsFixedLayoutChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnLayoutModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is ToolbarControl control)
             {
@@ -43,17 +69,35 @@ namespace EverythingToolbar.Controls
             }
         }
 
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+        {
+            base.OnRenderSizeChanged(sizeInfo);
+
+            if (sizeInfo.WidthChanged)
+            {
+                UpdateLayoutMode();
+            }
+        }
+
         private void UpdateLayoutMode()
         {
-            if (!IsFixedLayout)
-                return;
-
-            SearchBox.ClearValue(VisibilityProperty);
-            SearchBox.Visibility = Visibility.Visible;
-            SearchButton.Visibility = Visibility.Collapsed;
-
             var grid = (Grid)Content;
-            grid.Margin = new Thickness(4, 2, 4, 2);
+            if (IsFixedLayout)
+            {
+                grid.Margin = new Thickness(4, 2, 4, 2);
+                IsIconOnly = false;
+                return;
+            }
+
+            grid.ClearValue(MarginProperty);
+
+            if (CollapseOnAutoHide && NativeMethods.IsTaskbarAutoHiding())
+            {
+                IsIconOnly = true;
+                return;
+            }
+
+            IsIconOnly = ActualWidth > 0 && ActualWidth < 70;
         }
 
         protected override void OnInitialized(EventArgs e)
@@ -64,6 +108,8 @@ namespace EverythingToolbar.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            UpdateLayoutMode();
+
             _viewModel.Hiding -= OnSearchWindowHiding;
             _viewModel.Hiding += OnSearchWindowHiding;
 
