@@ -772,21 +772,21 @@
     <value>더 호환성이 높을 수는 있지만 더 느릴 수 있는 기존 IPC 클라이언트를 항상 사용하세요.</value>
   </data>
   <data name="SettingsSearchWindowBackground" xml:space="preserve">
-    <value>Search window background</value>
+    <value>창 배경 검색</value>
   </data>
   <data name="SettingsSearchWindowBackgroundHelp" xml:space="preserve">
-    <value>Choose the background tone for the search window</value>
+    <value>검색 창의 배경 톤 선택</value>
   </data>
   <data name="SearchWindowBackgroundAutomatic" xml:space="preserve">
-    <value>Automatic</value>
+    <value>자동</value>
   </data>
   <data name="SearchWindowBackgroundCustom" xml:space="preserve">
-    <value>Custom</value>
+    <value>사용자 지정</value>
   </data>
   <data name="ColorPickerAlpha" xml:space="preserve">
-    <value>Alpha</value>
+    <value>알파</value>
   </data>
   <data name="ColorPickerBrightness" xml:space="preserve">
-    <value>Brightness</value>
+    <value>밝기</value>
   </data>
 </root>
