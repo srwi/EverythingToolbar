@@ -772,21 +772,21 @@
     <value>Завжди використовувати застарілий клієнт IPC, який може бути більш сумісним, але повільнішим.</value>
   </data>
   <data name="SettingsSearchWindowBackground" xml:space="preserve">
-    <value>Search window background</value>
+    <value>Фон вікна пошуку</value>
   </data>
   <data name="SettingsSearchWindowBackgroundHelp" xml:space="preserve">
-    <value>Choose the background tone for the search window</value>
+    <value>Виберіть фоновий тон для вікна пошуку</value>
   </data>
   <data name="SearchWindowBackgroundAutomatic" xml:space="preserve">
-    <value>Automatic</value>
+    <value>Автоматично</value>
   </data>
   <data name="SearchWindowBackgroundCustom" xml:space="preserve">
-    <value>Custom</value>
+    <value>Власний</value>
   </data>
   <data name="ColorPickerAlpha" xml:space="preserve">
-    <value>Alpha</value>
+    <value>Альфа</value>
   </data>
   <data name="ColorPickerBrightness" xml:space="preserve">
-    <value>Brightness</value>
+    <value>Яскравість</value>
   </data>
 </root>
