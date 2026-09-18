@@ -70,6 +70,7 @@ namespace EverythingToolbar
                 .AddSingleton<EverythingFilterProvider>()
                 .AddSingleton<FilterProvider>()
                 .AddSingleton<SearchState>()
+                .AddSingleton<ISearchResultDispatcher, SearchResultDispatcher>()
                 .AddSingleton<SearchSession>()
                 .AddSingleton<SearchCommands>()
                 .AddSingleton<CustomActionService>()

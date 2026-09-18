@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <UseWPF>true</UseWPF>
+    <SignAssembly>false</SignAssembly>
+    <ProbeBinaries Condition="'$(ProbeBinaries)' == ''"
+      >../../EverythingToolbar.Launcher/bin/x64/$(Configuration)/net8.0-windows10.0.17763.0</ProbeBinaries>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Reference a completed build so this probe never runs the production build's process-stop hooks. -->
+    <Reference
+      Include="$(ProbeBinaries)/*.dll"
+      Exclude="$(ProbeBinaries)/*comhost.dll;$(ProbeBinaries)/Everything64.dll;$(ProbeBinaries)/Everything3.dll"
+    />
+    <Content
+      Include="../../EverythingSDK/x64/$(Configuration)/Everything64.dll"
+      Link="Everything64.dll"
+      CopyToOutputDirectory="PreserveNewest"
+    />
+    <Content
+      Include="../../EverythingSDK3/x64/$(Configuration)/Everything3.dll"
+      Link="Everything3.dll"
+      CopyToOutputDirectory="PreserveNewest"
+    />
+  </ItemGroup>
+</Project>

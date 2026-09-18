@@ -24,9 +24,16 @@ namespace EverythingToolbar.App.Search
             "EverythingToolbar.App.Search.VirtualizingCollection"
         );
 
-        public VirtualizingCollection(IItemsProvider<T> itemsProvider, int pageSize)
+        private readonly ISearchResultDispatcher _resultDispatcher;
+
+        public VirtualizingCollection(
+            IItemsProvider<T> itemsProvider,
+            int pageSize,
+            ISearchResultDispatcher resultDispatcher
+        )
         {
             PageSize = pageSize;
+            _resultDispatcher = resultDispatcher;
 
             ItemsProvider = itemsProvider;
             ItemsProvider.PropertyChanged += OnItemsProviderPropertyChanged;
@@ -117,11 +124,17 @@ namespace EverythingToolbar.App.Search
                 try
                 {
                     int count = await ItemsProvider.FetchCount(PageSize, isAsync: true, cancellationToken);
-                    if (!cancellationToken.IsCancellationRequested)
-                    {
-                        PrefetchFirstPage(count);
-                        Count = count;
-                    }
+                    await _resultDispatcher.InvokeAsync(
+                        () =>
+                        {
+                            if (cancellationToken.IsCancellationRequested)
+                                return;
+
+                            PrefetchFirstPage(count);
+                            Count = count;
+                        },
+                        cancellationToken
+                    );
                 }
                 catch (OperationCanceledException) { }
                 catch (Exception e)
@@ -182,37 +195,52 @@ namespace EverythingToolbar.App.Search
                     return;
 
                 List<T>? newItems = items as List<T> ?? items?.ToList();
-                _pages[index] = newItems;
-                TouchPage(index);
-                TrimPages();
-
-                try
-                {
-                    for (int i = 0; i < newItems?.Count; i++)
+                await _resultDispatcher.InvokeAsync(
+                    () =>
                     {
-                        var itemIndex = index * PageSize + i;
+                        if (cancellationToken.IsCancellationRequested)
+                            return;
 
-                        if (_displayedItems.TryGetValue(itemIndex, out var oldItem))
+                        _pages[index] = newItems;
+                        TouchPage(index);
+                        TrimPages();
+
+                        try
                         {
-                            // Keep in sync so a later Replace reports the correct oldItem.
-                            _displayedItems[itemIndex] = newItems[i];
+                            for (int i = 0; i < newItems?.Count; i++)
+                            {
+                                var itemIndex = index * PageSize + i;
 
+                                if (_displayedItems.TryGetValue(itemIndex, out var oldItem))
+                                {
+                                    // Keep in sync so a later Replace reports the correct oldItem.
+                                    _displayedItems[itemIndex] = newItems[i];
+
+                                    OnCollectionChanged(
+                                        new NotifyCollectionChangedEventArgs(
+                                            NotifyCollectionChangedAction.Replace,
+                                            newItems[i],
+                                            oldItem,
+                                            itemIndex
+                                        )
+                                    );
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.Debug(
+                                e,
+                                "Failed to notify page {0} item replacements; falling back to a reset.",
+                                index
+                            );
                             OnCollectionChanged(
-                                new NotifyCollectionChangedEventArgs(
-                                    NotifyCollectionChangedAction.Replace,
-                                    newItems[i],
-                                    oldItem,
-                                    itemIndex
-                                )
+                                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset)
                             );
                         }
-                    }
-                }
-                catch (Exception e)
-                {
-                    Logger.Debug(e, "Failed to notify page {0} item replacements; falling back to a reset.", index);
-                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-                }
+                    },
+                    cancellationToken
+                );
             }
             catch (OperationCanceledException)
             {
