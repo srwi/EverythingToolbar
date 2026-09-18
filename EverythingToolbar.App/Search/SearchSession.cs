@@ -15,15 +15,22 @@ namespace EverythingToolbar.App.Search
         private readonly SearchState _searchState;
         private readonly IEverythingClient _everythingClient;
         private readonly ISettings _settings;
+        private readonly ISearchResultDispatcher _resultDispatcher;
 
         private VirtualizingCollection<SearchResult>? _collection;
         private bool _started;
 
-        public SearchSession(SearchState searchState, IEverythingClient everythingClient, ISettings settings)
+        public SearchSession(
+            SearchState searchState,
+            IEverythingClient everythingClient,
+            ISettings settings,
+            ISearchResultDispatcher resultDispatcher
+        )
         {
             _searchState = searchState;
             _everythingClient = everythingClient;
             _settings = settings;
+            _resultDispatcher = resultDispatcher;
 
             _searchState.PropertyChanged += OnSearchStateChanged;
         }
@@ -169,7 +176,7 @@ namespace EverythingToolbar.App.Search
 
             if (_collection == null)
             {
-                _collection = new VirtualizingCollection<SearchResult>(newProvider, PageSize);
+                _collection = new VirtualizingCollection<SearchResult>(newProvider, PageSize, _resultDispatcher);
                 _collection.CollectionChanged += OnCollectionChanged;
                 _collection.PropertyChanged += OnCollectionPropertyChanged;
             }

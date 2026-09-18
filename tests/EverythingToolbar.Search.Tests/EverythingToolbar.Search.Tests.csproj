@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <UseWPF>true</UseWPF>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../EverythingToolbar.App/EverythingToolbar.App.csproj" />
+    <!-- Exercise the production WPF dispatcher without the native SDK/COM host. -->
+    <Compile
+      Include="../../EverythingToolbar/Services/SearchResultDispatcher.cs"
+      Link="SearchResultDispatcher.cs"
+    />
+    <!-- Test the input probe's real foreground predicate without invoking native input. -->
+    <Compile Include="../EverythingToolbar.InputProbe/PhysicalKeys.cs" Link="PhysicalKeys.cs" />
+    <Using Include="EverythingToolbar.App.Search" />
+  </ItemGroup>
+</Project>
