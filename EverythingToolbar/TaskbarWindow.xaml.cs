@@ -24,6 +24,7 @@ namespace EverythingToolbar
         private IntPtr _taskbarHandle;
         private int _positionGeneration;
         private TaskbarWindowAnimator? _animator;
+        private TaskbarComMessageFilter? _comMessageFilter;
 
         private WINEVENTPROC? _taskbarEventCallback;
         private HWINEVENTHOOK _taskbarLocationHook;
@@ -83,10 +84,19 @@ namespace EverythingToolbar
             _animator = new TaskbarWindowAnimator(_handle, () => _windowsPolicy.IsEffectiveAnimationsDisabled);
 
             SetupAsTaskbarChild();
+            _comMessageFilter = new TaskbarComMessageFilter(_handle);
         }
 
         protected override void OnClosed(EventArgs e)
         {
+            try
+            {
+                _comMessageFilter?.Dispose();
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error, "Could not restore the OLE message filter");
+            }
             _repositionTimer.Stop();
             _animator?.StopAnimation();
             UnhookTaskbarEvents();
