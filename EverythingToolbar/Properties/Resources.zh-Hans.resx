@@ -772,21 +772,21 @@
     <value>始终使用旧版 IPC 客户端，它可能兼容性更好，但速度较慢。</value>
   </data>
   <data name="SettingsSearchWindowBackground" xml:space="preserve">
-    <value>Search window background</value>
+    <value>搜索窗口背景</value>
   </data>
   <data name="SettingsSearchWindowBackgroundHelp" xml:space="preserve">
-    <value>Choose the background tone for the search window</value>
+    <value>选择搜索窗口的背景色调</value>
   </data>
   <data name="SearchWindowBackgroundAutomatic" xml:space="preserve">
-    <value>Automatic</value>
+    <value>自动</value>
   </data>
   <data name="SearchWindowBackgroundCustom" xml:space="preserve">
-    <value>Custom</value>
+    <value>自定义</value>
   </data>
   <data name="ColorPickerAlpha" xml:space="preserve">
-    <value>Alpha</value>
+    <value>不透明度</value>
   </data>
   <data name="ColorPickerBrightness" xml:space="preserve">
-    <value>Brightness</value>
+    <value>亮度</value>
   </data>
 </root>
