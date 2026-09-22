@@ -45,11 +45,13 @@ namespace EverythingToolbar
                         PostQuitMessage(message.wParam.ToInt32());
                         break;
                     }
-                    if (!IsWindow(_window) || _dispatcher.HasShutdownStarted) break;
+                    if (!IsWindow(_window) || _dispatcher.HasShutdownStarted)
+                        break;
                     // Finish the retrieved message if focus moved; reposting would reorder input.
                     if (!ComponentDispatcher.RaiseThreadMessage(ref message))
                     {
-                        if (!IsWindow(_window) || _dispatcher.HasShutdownStarted) break;
+                        if (!IsWindow(_window) || _dispatcher.HasShutdownStarted)
+                            break;
                         TranslateMessage(ref message);
                         DispatchMessage(ref message);
                     }
@@ -67,7 +69,6 @@ namespace EverythingToolbar
             }
         }
 
-
         internal static void CheckRegistration(int result)
         {
             if (result != 0)
@@ -78,25 +79,31 @@ namespace EverythingToolbar
         {
             _dispatcher.VerifyAccess();
             _stopping = true;
-            if (!_registered) return;
+            if (!_registered)
+                return;
             CheckRegistration(CoRegisterMessageFilter(_previous, out _));
             _registered = false;
         }
 
         [DllImport("ole32.dll")]
         private static extern int CoRegisterMessageFilter(IOleMessageFilter? filter, out IOleMessageFilter? previous);
+
         [DllImport("user32.dll")]
         private static extern IntPtr GetFocus();
+
         [DllImport("user32.dll")]
         private static extern bool IsWindow(IntPtr window);
+
         [DllImport("user32.dll")]
         private static extern void PostQuitMessage(int exitCode);
 
         [DllImport("user32.dll", EntryPoint = "PeekMessageW")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool PeekMessage(out MSG message, IntPtr window, uint min, uint max, uint remove);
+
         [DllImport("user32.dll")]
         private static extern bool TranslateMessage(ref MSG message);
+
         [DllImport("user32.dll", EntryPoint = "DispatchMessageW")]
         private static extern IntPtr DispatchMessage(ref MSG message);
     }
@@ -104,8 +111,13 @@ namespace EverythingToolbar
     [ComImport, Guid("00000016-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IOleMessageFilter
     {
-        [PreserveSig] int HandleInComingCall(int callType, IntPtr caller, int ticks, IntPtr interfaceInfo);
-        [PreserveSig] int RetryRejectedCall(IntPtr callee, int ticks, int rejectType);
-        [PreserveSig] int MessagePending(IntPtr callee, int ticks, int pendingType);
+        [PreserveSig]
+        int HandleInComingCall(int callType, IntPtr caller, int ticks, IntPtr interfaceInfo);
+
+        [PreserveSig]
+        int RetryRejectedCall(IntPtr callee, int ticks, int rejectType);
+
+        [PreserveSig]
+        int MessagePending(IntPtr callee, int ticks, int pendingType);
     }
 }
