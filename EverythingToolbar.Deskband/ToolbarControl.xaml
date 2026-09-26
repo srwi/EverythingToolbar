@@ -6,5 +6,6 @@
   <controls:ToolbarControl
     x:Name="UnifiedToolbarControl"
     CollapseOnAutoHide="True"
-    IsFixedLayout="False" />
+    IsFixedLayout="False"
+    UsePathIcon="True" />
 </UserControl>

@@ -6,6 +6,19 @@ namespace EverythingToolbar.Controls
 {
     public partial class SearchButton
     {
+        public static readonly DependencyProperty UsePathIconProperty = DependencyProperty.Register(
+            nameof(UsePathIcon),
+            typeof(bool),
+            typeof(SearchButton),
+            new PropertyMetadata(false)
+        );
+
+        public bool UsePathIcon
+        {
+            get => (bool)GetValue(UsePathIconProperty);
+            set => SetValue(UsePathIconProperty, value);
+        }
+
         private readonly SearchButtonViewModel _viewModel = Ioc.Default.GetRequiredService<SearchButtonViewModel>();
 
         public SearchButton()

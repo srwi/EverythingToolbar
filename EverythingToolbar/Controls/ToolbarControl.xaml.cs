@@ -48,6 +48,19 @@ namespace EverythingToolbar.Controls
             private set => SetValue(IsIconOnlyProperty, value);
         }
 
+        public static readonly DependencyProperty UsePathIconProperty = DependencyProperty.Register(
+            nameof(UsePathIcon),
+            typeof(bool),
+            typeof(ToolbarControl),
+            new PropertyMetadata(false)
+        );
+
+        public bool UsePathIcon
+        {
+            get => (bool)GetValue(UsePathIconProperty);
+            set => SetValue(UsePathIconProperty, value);
+        }
+
         private readonly ToolbarControlViewModel _viewModel = Ioc.Default.GetRequiredService<ToolbarControlViewModel>();
 
         private Action? _searchBoxFocus;

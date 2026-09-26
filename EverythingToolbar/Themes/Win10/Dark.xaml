@@ -25,7 +25,7 @@
 
   <Thickness x:Key="SearchButtonBorderThickness">0</Thickness>
   <CornerRadius x:Key="SearchButtonCornerRadius">0</CornerRadius>
-  <SolidColorBrush x:Key="SearchButtonBackgroundIdle" Color="Transparent" />
+  <SolidColorBrush x:Key="SearchButtonBackgroundIdle" Color="#01ffffff" />
   <SolidColorBrush x:Key="SearchButtonBackgroundHover" Color="#1effffff" />
   <SolidColorBrush x:Key="SearchButtonBackgroundPressed" Color="#3cffffff" />
   <SolidColorBrush x:Key="SearchButtonBackgroundActive" Color="#28ffffff" />
