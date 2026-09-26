@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using System.Threading;
@@ -27,7 +27,6 @@ namespace EverythingToolbar.Deskband
     {
         private static readonly ILogger Logger = ToolbarLogger.GetLogger<Server>();
         private static ToolbarControl? ToolbarControl;
-        private TaskbarInfoProvider _taskbarState = null!;
         private SearchWindowController _controller = null!;
         protected override UIElement UIElement => ToolbarControl!;
 
@@ -57,8 +56,6 @@ namespace EverythingToolbar.Deskband
 
                 AppServices.Initialize();
 
-                _taskbarState = Ioc.Default.GetRequiredService<TaskbarInfoProvider>();
-
                 // Apply saved UI language
                 CultureHelper.ApplyUILanguage(Ioc.Default.GetRequiredService<ISettings>().UILanguage);
 
@@ -70,10 +67,6 @@ namespace EverythingToolbar.Deskband
                 WeakReferenceMessenger.Default.Register<ToolbarFocusChanged>(this, (_, m) => UpdateFocus(m.IsFocused));
                 _controller = Ioc.Default.GetRequiredService<SearchWindowController>();
                 _controller.ActiveChanged += OnSearchWindowActiveChanged;
-                TaskbarInfo.TaskbarEdgeChanged += OnTaskbarEdgeChanged;
-                TaskbarInfo.TaskbarSizeChanged += OnTaskbarSizeChanged;
-
-                _taskbarState.TaskbarEdge = (Services.Edge)TaskbarInfo.Edge;
             }
             catch (Exception e)
             {
@@ -114,16 +107,6 @@ namespace EverythingToolbar.Deskband
         {
             if (isActive)
                 UpdateFocus(true);
-        }
-
-        private void OnTaskbarEdgeChanged(object? sender, TaskbarEdgeChangedEventArgs e)
-        {
-            _taskbarState.TaskbarEdge = (Services.Edge)e.Edge;
-        }
-
-        private void OnTaskbarSizeChanged(object? sender, TaskbarSizeChangedEventArgs e)
-        {
-            _taskbarState.TaskbarSize = new Size(e.Size.Width, e.Size.Height);
         }
 
         protected override void DeskbandOnClosed()

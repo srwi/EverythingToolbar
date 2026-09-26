@@ -81,7 +81,6 @@ namespace EverythingToolbar
         public static IServiceCollection AddShellServices(this IServiceCollection services)
         {
             return services
-                .AddSingleton<TaskbarInfoProvider>()
                 .AddSingleton<WindowsPolicy>()
                 .AddSingleton<ThemeService>()
                 .AddSingleton<StartMenuSearchInterceptor>()

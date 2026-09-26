@@ -1,6 +1,5 @@
 using System;
 using System.Drawing;
-using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
@@ -26,13 +25,12 @@ namespace EverythingToolbar.Behaviors
         public FrameworkElement? PlacementTarget { get; set; }
 
         private double _pixelsPerDip = 1.0;
-        private readonly TaskbarInfoProvider _taskbarState;
+        private Edge _taskbarEdge = Edge.Bottom;
         private readonly ISettings _settings;
         private readonly WindowsPolicy _windowsPolicy;
 
-        public SearchWindowPlacement(TaskbarInfoProvider taskbarState, ISettings settings, WindowsPolicy windowsPolicy)
+        public SearchWindowPlacement(ISettings settings, WindowsPolicy windowsPolicy)
         {
-            _taskbarState = taskbarState;
             _settings = settings;
             _windowsPolicy = windowsPolicy;
         }
@@ -53,7 +51,7 @@ namespace EverythingToolbar.Behaviors
 
         private void OnHiding(object? sender, EventArgs e)
         {
-            AssociatedObject.AnimateHide(_taskbarState.TaskbarEdge);
+            AssociatedObject.AnimateHide(_taskbarEdge);
         }
 
         private void OnShowing(object? sender, ShowingEventArgs e)
@@ -75,8 +73,7 @@ namespace EverythingToolbar.Behaviors
             _pixelsPerDip = GetPixelsPerDip(screen);
 
             var taskbar = FindDockedTaskBar(screen);
-            _taskbarState.TaskbarEdge = taskbar.Edge;
-            _taskbarState.TaskbarSize = new Size(taskbar.Position.Width, taskbar.Position.Height);
+            _taskbarEdge = taskbar.Edge;
 
             EnsureWindowDpiTransition(screen, taskbar);
 
@@ -91,7 +88,7 @@ namespace EverythingToolbar.Behaviors
                 position.Y / _pixelsPerDip,
                 size.Width,
                 size.Height,
-                _taskbarState.TaskbarEdge
+                _taskbarEdge
             );
 
             // WPF only pushes Width/Height to the handle when they change, converted with the scale the window
@@ -314,37 +311,50 @@ namespace EverythingToolbar.Behaviors
 
         private TaskbarLocation FindDockedTaskBar(Screen screen)
         {
-            // An auto-hiding taskbar reserves no work area, so the geometry below cannot see it at all.
-            if (
-                NativeMethods.IsTaskbarAutoHiding()
-                && NativeMethods.TryGetTaskbarPosition(out var edge, out var thickness)
-            )
-                return CreateTaskbarLocation(screen, ToEdge(edge), RescaleFromPrimary(thickness));
+            var hwnd = FindTaskbarHwndForScreen(screen);
+            if (hwnd.IsNull || !PInvoke.GetWindowRect(hwnd, out var rect))
+                return CreateTaskbarLocation(screen, Edge.Bottom, 0);
 
-            (Edge Edge, int Thickness)[] candidates =
-            [
-                (Edge.Left, screen.WorkingArea.Left - screen.Bounds.Left),
-                (Edge.Right, screen.Bounds.Right - screen.WorkingArea.Right),
-                (Edge.Top, screen.WorkingArea.Top - screen.Bounds.Top),
-                (Edge.Bottom, screen.Bounds.Bottom - screen.WorkingArea.Bottom),
-            ];
+            int width = rect.right - rect.left;
+            int height = rect.bottom - rect.top;
+            if (width <= 0 || height <= 0)
+                return CreateTaskbarLocation(screen, Edge.Bottom, 0);
 
-            var dominant = candidates.MaxBy(c => c.Thickness);
-            return CreateTaskbarLocation(
-                screen,
-                dominant.Thickness > 0 ? dominant.Edge : Edge.Bottom,
-                Math.Max(0, dominant.Thickness)
-            );
+            var bounds = screen.Bounds;
+
+            if (width >= height)
+            {
+                int centerY = (rect.top + rect.bottom) / 2;
+                var edge = centerY < bounds.Top + bounds.Height / 2 ? Edge.Top : Edge.Bottom;
+                return CreateTaskbarLocation(screen, edge, height);
+            }
+            else
+            {
+                int centerX = (rect.left + rect.right) / 2;
+                var edge = centerX < bounds.Left + bounds.Width / 2 ? Edge.Left : Edge.Right;
+                return CreateTaskbarLocation(screen, edge, width);
+            }
         }
 
-        private static Edge ToEdge(uint appBarEdge) =>
-            appBarEdge switch
+        private static HWND FindTaskbarHwndForScreen(Screen screen)
+        {
+            if (screen.Primary)
+                return (HWND)NativeMethods.FindTaskbarHandle();
+
+            var targetMonitor = PInvoke.MonitorFromPoint(
+                new Point(screen.Bounds.Left, screen.Bounds.Top),
+                MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST
+            );
+
+            IntPtr hwnd = IntPtr.Zero;
+            while ((hwnd = NativeMethods.FindWindowEx(IntPtr.Zero, hwnd, "Shell_SecondaryTrayWnd", null)) != IntPtr.Zero)
             {
-                0 => Edge.Left,
-                1 => Edge.Top,
-                2 => Edge.Right,
-                _ => Edge.Bottom,
-            };
+                if (PInvoke.MonitorFromWindow((HWND)hwnd, MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST) == targetMonitor)
+                    return (HWND)hwnd;
+            }
+
+            return HWND.Null;
+        }
 
         private static TaskbarLocation CreateTaskbarLocation(Screen screen, Edge edge, int thickness)
         {
@@ -360,14 +370,6 @@ namespace EverythingToolbar.Behaviors
                 },
                 Edge = edge,
             };
-        }
-
-        private int RescaleFromPrimary(int thickness)
-        {
-            if (Screen.PrimaryScreen is not { } primary)
-                return thickness;
-
-            return (int)Math.Round(thickness / GetPixelsPerDip(primary) * _pixelsPerDip);
         }
 
         private bool TryGetPlacementTargetRect(out RECT rect)

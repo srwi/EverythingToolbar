@@ -38,28 +38,6 @@ namespace EverythingToolbar.Platform.Helpers
             return ((uint)PInvoke.SHAppBarMessage(PInvoke.ABM_GETSTATE, ref data) & absAutoHide) == absAutoHide;
         }
 
-        /// <summary>
-        /// Edge is an ABE_* value and thickness is in the primary monitor's pixels; the shell does not
-        /// report secondary taskbars.
-        /// </summary>
-        public static bool TryGetTaskbarPosition(out uint edge, out int thickness)
-        {
-            const uint abeLeft = 0;
-            const uint abeRight = 2;
-
-            var data = CreateAppBarData();
-            edge = 0;
-            thickness = 0;
-
-            if (PInvoke.SHAppBarMessage(PInvoke.ABM_GETTASKBARPOS, ref data) == 0)
-                return false;
-
-            edge = data.uEdge;
-            thickness = edge is abeLeft or abeRight ? data.rc.right - data.rc.left : data.rc.bottom - data.rc.top;
-
-            return thickness > 0;
-        }
-
         private static APPBARDATA CreateAppBarData() => new() { cbSize = (uint)Marshal.SizeOf<APPBARDATA>() };
 
         private static bool HasChildOfClass(IntPtr parentHandle, string className)

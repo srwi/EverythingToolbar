@@ -11,7 +11,6 @@ namespace EverythingToolbar.Services
         private readonly GlobalShortcutListener _shortcutListener;
         private readonly StartMenuSearchInterceptor _startMenuInterceptor;
         private readonly SearchWindow _searchWindow;
-        private readonly TaskbarInfoProvider _taskbarInfo;
         private readonly ISettings _settings;
         private readonly WindowsPolicy _windowsPolicy;
 
@@ -23,7 +22,6 @@ namespace EverythingToolbar.Services
             GlobalShortcutListener shortcutListener,
             StartMenuSearchInterceptor startMenuInterceptor,
             SearchWindow searchWindow,
-            TaskbarInfoProvider taskbarInfo,
             ISettings settings,
             WindowsPolicy windowsPolicy
         )
@@ -32,7 +30,6 @@ namespace EverythingToolbar.Services
             _shortcutListener = shortcutListener;
             _startMenuInterceptor = startMenuInterceptor;
             _searchWindow = searchWindow;
-            _taskbarInfo = taskbarInfo;
             _settings = settings;
             _windowsPolicy = windowsPolicy;
         }
@@ -46,7 +43,7 @@ namespace EverythingToolbar.Services
             _shortcutListener.Initialize(_controller.ToggleSearchUi);
             _startMenuInterceptor.Initialize(placementTarget != null ? ShowSearchUiAtToolbar : ShowSearchUiStandalone);
 
-            _placement = new SearchWindowPlacement(_taskbarInfo, _settings, _windowsPolicy)
+            _placement = new SearchWindowPlacement(_settings, _windowsPolicy)
             {
                 PlacementTarget = placementTarget,
             };
