@@ -789,4 +789,13 @@
   <data name="ColorPickerBrightness" xml:space="preserve">
     <value>Яскравість</value>
   </data>
+  <data name="SettingsEnableResultOmissions" xml:space="preserve">
+    <value>Enable result omissions</value>
+  </data>
+  <data name="SettingsEnableResultOmissionsHelp" xml:space="preserve">
+    <value>Hide omitted files and folders from search results</value>
+  </data>
+  <data name="SettingsResults" xml:space="preserve">
+    <value>Results</value>
+  </data>
 </root>

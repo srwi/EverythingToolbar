@@ -574,7 +574,7 @@
     <value>Abrir en GitHub</value>
   </data>
   <data name="AboutDonation" xml:space="preserve">
-    <value>Hacer un donativo</value>
+    <value>Hacer una donación</value>
   </data>
   <data name="SettingsViewLayoutHelp" xml:space="preserve">
     <value>Seleccionar el diseño para los resultados de búsqueda</value>
@@ -788,5 +788,14 @@
   </data>
   <data name="ColorPickerBrightness" xml:space="preserve">
     <value>Brillo</value>
+  </data>
+  <data name="SettingsEnableResultOmissions" xml:space="preserve">
+    <value>Enable result omissions</value>
+  </data>
+  <data name="SettingsEnableResultOmissionsHelp" xml:space="preserve">
+    <value>Hide omitted files and folders from search results</value>
+  </data>
+  <data name="SettingsResults" xml:space="preserve">
+    <value>Results</value>
   </data>
 </root>
