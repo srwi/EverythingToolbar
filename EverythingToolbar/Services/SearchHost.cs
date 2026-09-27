@@ -43,10 +43,7 @@ namespace EverythingToolbar.Services
             _shortcutListener.Initialize(_controller.ToggleSearchUi);
             _startMenuInterceptor.Initialize(placementTarget != null ? ShowSearchUiAtToolbar : ShowSearchUiStandalone);
 
-            _placement = new SearchWindowPlacement(_settings, _windowsPolicy)
-            {
-                PlacementTarget = placementTarget,
-            };
+            _placement = new SearchWindowPlacement(_settings, _windowsPolicy) { PlacementTarget = placementTarget };
             Interaction.GetBehaviors(_searchWindow).Add(_placement);
 
             _preWarmOperation = _searchWindow.Dispatcher.BeginInvoke(

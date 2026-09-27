@@ -870,6 +870,23 @@ namespace EverythingToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable result omissions.
+        /// </summary>
+        public static string SettingsEnableResultOmissions {
+            get {
+                return ResourceManager.GetString("SettingsEnableResultOmissions", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Hide omitted files and folders from search results.
+        /// </summary>
+        public static string SettingsEnableResultOmissionsHelp {
+            get {
+                return ResourceManager.GetString("SettingsEnableResultOmissionsHelp", resourceCulture);
+            }
+        }
+        /// <summary>
         ///   Looks up a localized string similar to Enable system tray icon.
         /// </summary>
         public static string SettingsEnableSystemTrayIcon {
@@ -1388,6 +1405,15 @@ namespace EverythingToolbar.Properties {
         public static string SettingsShowQuickToggles {
             get {
                 return ResourceManager.GetString("SettingsShowQuickToggles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Results.
+        /// </summary>
+        public static string SettingsResults {
+            get {
+                return ResourceManager.GetString("SettingsResults", resourceCulture);
             }
         }
         

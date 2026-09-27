@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EverythingToolbar.Core.Data;
@@ -27,6 +27,7 @@ namespace EverythingToolbar.App.Search
         public bool IsIgnorePunctuation => _settings.IsIgnorePunctuation;
         public bool IsIgnoreWhitespace => _settings.IsIgnoreWhitespace;
         public bool IsRegExEnabled => _settings.IsRegExEnabled;
+        public bool IsHideResultOmissions => _settings.IsHideResultOmissions;
 
         private bool _useSettingsSortKey;
         private bool _useSettingsSortDirection;
@@ -193,7 +194,8 @@ namespace EverythingToolbar.App.Search
                 IsMatchCase,
                 IsMatchPath,
                 IsMatchWholeWord,
-                IsRegExEnabled
+                IsRegExEnabled,
+                IsHideResultOmissions
             );
         }
 
@@ -227,6 +229,9 @@ namespace EverythingToolbar.App.Search
                     break;
                 case nameof(ISettings.IsRegExEnabled):
                     OnPropertyChanged(nameof(IsRegExEnabled));
+                    break;
+                case nameof(ISettings.IsHideResultOmissions):
+                    OnPropertyChanged(nameof(IsHideResultOmissions));
                     break;
                 case nameof(ISettings.SortBy):
                     OnPropertyChanged(nameof(SortBy));

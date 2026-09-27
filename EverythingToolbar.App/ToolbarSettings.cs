@@ -140,6 +140,9 @@ namespace EverythingToolbar.App
         [Option(DefaultValue = false)]
         bool IsDoubleClickToOpen { get; set; }
 
+        [Option(DefaultValue = false)]
+        bool IsHideResultOmissions { get; set; }
+
         [Option(Alias = "ForceWin10Theme", DefaultValue = false)]
         bool ForceWin10Behavior { get; set; }
 

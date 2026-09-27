@@ -347,7 +347,9 @@ namespace EverythingToolbar.Behaviors
             );
 
             IntPtr hwnd = IntPtr.Zero;
-            while ((hwnd = NativeMethods.FindWindowEx(IntPtr.Zero, hwnd, "Shell_SecondaryTrayWnd", null)) != IntPtr.Zero)
+            while (
+                (hwnd = NativeMethods.FindWindowEx(IntPtr.Zero, hwnd, "Shell_SecondaryTrayWnd", null)) != IntPtr.Zero
+            )
             {
                 if (PInvoke.MonitorFromWindow((HWND)hwnd, MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST) == targetMonitor)
                     return (HWND)hwnd;

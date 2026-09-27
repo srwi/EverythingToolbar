@@ -9,6 +9,7 @@ namespace EverythingToolbar.Core.Search
         bool MatchCase,
         bool MatchPath,
         bool MatchWholeWord,
-        bool UseRegex
+        bool UseRegex,
+        bool HideResultOmissions = false
     );
 }

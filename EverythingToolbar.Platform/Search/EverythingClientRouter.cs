@@ -134,6 +134,8 @@ namespace EverythingToolbar.Platform.Search
 
         public Version GetEverythingVersion() => _version ??= Active.GetEverythingVersion();
 
+        public bool IsPipeClientActive => ReferenceEquals(Active, pipeClient);
+
         public void SetInstanceName(string name)
         {
             pipeClient.SetInstanceName(name);

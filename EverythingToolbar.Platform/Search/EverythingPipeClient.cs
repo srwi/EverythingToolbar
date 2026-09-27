@@ -260,6 +260,7 @@ namespace EverythingToolbar.Platform.Search
                 Everything3_SetSearchMatchPath(searchState, query.MatchPath);
                 Everything3_SetSearchMatchWholeWords(searchState, query is { MatchWholeWord: true, UseRegex: false });
                 Everything3_SetSearchRegex(searchState, query.UseRegex);
+                Everything3_SetSearchHideResultOmissions(searchState, query.HideResultOmissions);
                 Everything3_AddSearchSort(searchState, ToPropertyId(query.SortBy), !query.SortDescending);
                 Everything3_AddSearchPropertyRequest(searchState, PropertyIdPathAndName);
                 Everything3_AddSearchPropertyRequestHighlighted(searchState, PropertyIdName);
@@ -460,6 +461,12 @@ namespace EverythingToolbar.Platform.Search
 
         [DllImport("Everything3.dll")]
         private static extern bool Everything3_SetSearchRegex(IntPtr searchState, bool matchRegex);
+
+        [DllImport("Everything3.dll")]
+        private static extern bool Everything3_SetSearchHideResultOmissions(
+            IntPtr searchState,
+            bool hideResultOmissions
+        );
 
         [DllImport("Everything3.dll")]
         private static extern bool Everything3_AddSearchSort(IntPtr searchState, uint propertyId, bool ascending);
