@@ -48,16 +48,16 @@ begin
   begin
     if IsProductInstalled(ProductCodes[i]) then
     begin
-      if MsgBox('A previous version of EverythingToolbar was detected. Due to changes in the installation process, ' +
+      if SuppressibleMsgBox('A previous version of EverythingToolbar was detected. Due to changes in the installation process, ' +
                 'it needs to be removed before continuing. The system will restart after uninstalling. ' +
                 'Please launch this installer again after the restart to complete the installation. Do you want to continue?',
-                mbConfirmation, MB_YESNO) = IDYES then
+                mbConfirmation, MB_YESNO, IDYES) = IDYES then
       begin
         // We need to delete the pinned taskbar icon because the user might install the new version to a different location which would break the link
         DeleteFile(ExpandConstant('{userappdata}\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\EverythingToolbar.lnk'));
         if not Exec('msiexec.exe', '/x' + ProductCodes[i] + ' /passive /forcerestart', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode) then
         begin
-          MsgBox('Failed to uninstall the previous version. Please uninstall it manually before continuing.', mbError, MB_OK);
+          SuppressibleMsgBox('Failed to uninstall the previous version. Please uninstall it manually before continuing.', mbError, MB_OK, IDOK);
           Result := False;
         end;
       end

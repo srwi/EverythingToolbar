@@ -193,9 +193,9 @@ begin
   // If exactly the same version is installed, cancel
   if IsSameVersionInstalled then
   begin
-    MsgBox('EverythingToolbar version {#MyAppVersion} is already installed on this computer.' + #13#10 + #13#10 +
+    SuppressibleMsgBox('EverythingToolbar version {#MyAppVersion} is already installed on this computer.' + #13#10 + #13#10 +
            'Installation will be cancelled.',
-           mbInformation, MB_OK);
+           mbInformation, MB_OK, IDOK);
     Result := False;
     Exit;
   end;
@@ -233,9 +233,9 @@ begin
   // Enforce admin for deskband in all modes
   if (IsDeskbandSelected) and not IsAdminInstallMode then
   begin
-    MsgBox('The Deskband installation requires administrator privileges. ' +
+    SuppressibleMsgBox('The Deskband installation requires administrator privileges. ' +
            'Please rerun the installer as administrator or use /mode=launcher.',
-           mbError, MB_OK);
+           mbError, MB_OK, IDOK);
     Result := False;
     exit;
   end;

@@ -61,9 +61,11 @@ begin
   DependencyCount := GetArrayLength(Dependency_List);
 
   if DependencyCount > 0 then begin
-    Dependency_DownloadPage.Show;
-    MsgBox('The installer will now download and install the required dependencies.' + #13#10 + #13#10 +
-           'Please make sure you have an active internet connection before continuing.', mbInformation, MB_OK);
+    if not WizardSilent then begin
+      Dependency_DownloadPage.Show;
+      SuppressibleMsgBox('The installer will now download and install the required dependencies.' + #13#10 + #13#10 +
+             'Please make sure you have an active internet connection before continuing.', mbInformation, MB_OK, IDOK);
+    end;
 
     for DependencyIndex := 0 to DependencyCount - 1 do begin
       if Dependency_List[DependencyIndex].URL <> '' then begin
@@ -153,7 +155,9 @@ begin
       end;
     end;
 
-    Dependency_DownloadPage.Hide;
+    if not WizardSilent then begin
+      Dependency_DownloadPage.Hide;
+    end;
   end;
 end;
 
