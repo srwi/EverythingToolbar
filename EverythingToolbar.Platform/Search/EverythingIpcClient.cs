@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -314,6 +314,15 @@ namespace EverythingToolbar.Platform.Search
                         (HWND)_replyWindowHandle,
                         WINDOW_LONG_PTR_INDEX.GWLP_WNDPROC,
                         (nint)Marshal.GetFunctionPointerForDelegate(_wndProc)
+                    );
+
+                    // Allow WM_COPYDATA from lower-integrity processes (e.g. non-elevated Everything.exe)
+                    // through Windows UIPI when EverythingToolbar is running elevated.
+                    PInvoke.ChangeWindowMessageFilterEx(
+                        (HWND)_replyWindowHandle,
+                        PInvoke.WM_COPYDATA,
+                        WINDOW_MESSAGE_FILTER_ACTION.MSGFLT_ALLOW,
+                        null
                     );
                 }
                 else

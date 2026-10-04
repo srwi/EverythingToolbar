@@ -34,3 +34,6 @@ CreateWindowEx
 SetWindowLongPtr
 DefWindowProc
 WNDPROC
+ChangeWindowMessageFilterEx
+WM_COPYDATA
+WINDOW_MESSAGE_FILTER_ACTION

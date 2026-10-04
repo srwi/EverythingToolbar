@@ -1,4 +1,4 @@
-﻿#include "InnoDependencyInstaller/CodeDependencies.iss"
+#include "InnoDependencyInstaller/CodeDependencies.iss"
 #include "WixUninstaller.iss"
 #include "DotNetInstaller.iss"
 
@@ -57,7 +57,7 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Check: I
 Type: filesandordirs; Name: "{app}"
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent; Check: IsLauncherSelected
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent runasoriginaluser; Check: IsLauncherSelected
 
 [Code]
 var
