@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using EverythingToolbar.Core.Helpers;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
@@ -32,8 +32,18 @@ namespace EverythingToolbar.Core.Data
         {
             get
             {
-                long dateModified = ((long)DateModified.dwHighDateTime << 32) | (uint)DateModified.dwLowDateTime;
-                return DateTime.FromFileTime(dateModified).ToString("g");
+                ulong fileTime = ((ulong)(uint)DateModified.dwHighDateTime << 32) | (uint)DateModified.dwLowDateTime;
+                if (fileTime == 0 || fileTime > (ulong)DateTime.MaxValue.ToFileTimeUtc())
+                    return string.Empty;
+
+                try
+                {
+                    return DateTime.FromFileTime((long)fileTime).ToString("g");
+                }
+                catch (ArgumentException)
+                {
+                    return string.Empty;
+                }
             }
         }
     }
