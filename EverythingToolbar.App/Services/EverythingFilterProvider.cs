@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EverythingToolbar.App.Helpers;
 using EverythingToolbar.Core.Data;
@@ -24,7 +23,6 @@ namespace EverythingToolbar.App.Services
         private readonly IFilterNames _names;
         private readonly INotifier _notifier;
         private readonly IShellDialogs _shellDialogs;
-        private readonly SynchronizationContext? _syncContext;
 
         public EverythingFilterProvider(
             IFilterNames names,
@@ -37,7 +35,6 @@ namespace EverythingToolbar.App.Services
             _notifier = notifier;
             _shellDialogs = shellDialogs;
             _settings = settings;
-            _syncContext = SynchronizationContext.Current;
             _settings.PropertyChanged += OnSettingsChanged;
 
             if (_settings.IsImportFilters)
@@ -145,10 +142,7 @@ namespace EverythingToolbar.App.Services
 
         private static string GetColumnOrEmpty(Dictionary<string, string> row, string column)
         {
-            if (!row.TryGetValue(column, out var value))
-                return "";
-
-            return value;
+            return row.GetValueOrDefault(column, "");
         }
 
         private Filter ParseFilterFromDict(Dictionary<string, string> dict)
@@ -221,23 +215,15 @@ namespace EverythingToolbar.App.Services
 
             _watcher.Changed += OnFileChanged;
             _watcher.Created += OnFileChanged;
-            _watcher.Deleted += OnFileChanged;
-            _watcher.Renamed += OnFileRenamed;
 
             _watcher.EnableRaisingEvents = true;
         }
 
-        private void OnFileRenamed(object sender, RenamedEventArgs e)
-        {
-            // Marshal to the thread that captured _syncContext; this callback runs on a thread-pool thread.
-            if (_syncContext != null)
-                _syncContext.Post(_ => _settings.FiltersPath = e.FullPath, null);
-            else
-                _settings.FiltersPath = e.FullPath;
-        }
-
         private void OnFileChanged(object source, FileSystemEventArgs e)
         {
+            if (!File.Exists(_settings.FiltersPath))
+                return;
+
             ResetFilters();
         }
     }
