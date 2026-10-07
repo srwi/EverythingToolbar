@@ -25,6 +25,21 @@ on:
         required: false
         type: boolean
         default: false
+      signpath:
+        description: 'Sign installer using SignPath'
+        required: false
+        type: boolean
+        default: false
+      signpath_project_slug:
+        description: 'SignPath project slug'
+        required: false
+        type: string
+        default: 'EverythingToolbar'
+      signpath_signing_policy_slug:
+        description: 'SignPath signing policy slug'
+        required: false
+        type: string
+        default: 'release-signing'
       installer_basename:
         description: 'If set, name the installer output file'
         required: false
@@ -44,9 +59,16 @@ on:
       PFX_CERTIFICATE_FILE:
         description: 'Base64-encoded strong-name key, required when sign is true'
         required: false
+      SIGNPATH_API_TOKEN:
+        description: 'SignPath API token'
+        required: false
+      SIGNPATH_ORGANIZATION_ID:
+        description: 'SignPath organization ID'
+        required: false
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   build:
@@ -82,6 +104,34 @@ jobs:
 
       - name: Build installer
         run: iscc ${{ inputs.installer_basename != '' && format('/F"{0}"', inputs.installer_basename) || '' }} "Installer\${{ inputs.installer }}"
+
+      - name: Upload unsigned artifact for SignPath
+        if: ${{ inputs.signpath }}
+        id: upload-unsigned-artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: unsigned-${{ inputs.artifact_name }}
+          path: Installer/output/*.exe
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Sign installer with SignPath
+        if: ${{ inputs.signpath }}
+        uses: signpath/github-action-submit-signing-request@v3
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ secrets.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ inputs.signpath_project_slug }}
+          signing-policy-slug: ${{ inputs.signpath_signing_policy_slug }}
+          github-artifact-id: ${{ steps.upload-unsigned-artifact.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: Installer/signed-output
+
+      - name: Replace unsigned installer with signed installer
+        if: ${{ inputs.signpath }}
+        shell: pwsh
+        run: |
+          Move-Item -Path "Installer/signed-output/*.exe" -Destination "Installer/output/" -Force
 
       - name: Upload artifact
         if: ${{ inputs.upload_artifact }}

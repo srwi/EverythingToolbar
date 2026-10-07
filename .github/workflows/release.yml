@@ -9,9 +9,16 @@ on:
       version_tag:
         description: 'Tag to build the release for'
         required: true
+        type: string
+      signpath_signing_policy_slug:
+        description: 'SignPath signing policy slug'
+        required: false
+        type: string
+        default: 'release-signing'
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   build-release:
@@ -31,11 +38,16 @@ jobs:
       installer: ${{ matrix.installer }}
       ref: ${{ inputs.version_tag || github.ref_name }}
       sign: true
+      signpath: true
+      signpath_project_slug: 'EverythingToolbar'
+      signpath_signing_policy_slug: ${{ inputs.signpath_signing_policy_slug || 'release-signing' }}
       installer_basename: EverythingToolbar-${{ inputs.version_tag || github.ref_name }}-${{ matrix.arch }}
       upload_artifact: true
       artifact_name: EverythingToolbar ${{ inputs.version_tag || github.ref_name }} ${{ matrix.arch }}
     secrets:
       PFX_CERTIFICATE_FILE: ${{ secrets.PFX_CERTIFICATE_FILE }}
+      SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+      SIGNPATH_ORGANIZATION_ID: ${{ secrets.SIGNPATH_ORGANIZATION_ID }}
 
   publish:
     needs: build-release
@@ -65,6 +77,9 @@ jobs:
           VERSION_TAG: ${{ inputs.version_tag || github.ref_name }}
         run: |
           cat > notes.md <<EOF
+          ### Code signing
+          Official Windows installers are signed with a certificate provided by the [SignPath Foundation](https://signpath.org/) via [SignPath.io](https://signpath.io/). See our [Code signing policy](https://github.com/srwi/EverythingToolbar/blob/develop/CODE_SIGNING.md).
+
           <details>
           <summary>How to verify your download</summary>
 
