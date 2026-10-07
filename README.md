@@ -84,6 +84,8 @@ Choose one of the following installation methods:
 - **Installer**: Download from [GitHub Releases](https://github.com/srwi/EverythingToolbar/releases)
 - **winget**: `winget install srwi.everythingtoolbar.launcher` or `winget install srwi.everythingtoolbar.deskband`
 
+> **Note:** Official Windows installers are signed by the SignPath Foundation. See the [Code signing policy](CODE_SIGNING.md) for details.
+
 ## ⚙️ Setup
 
 ### Launcher

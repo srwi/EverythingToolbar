@@ -9,6 +9,7 @@ concurrency:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   build:
@@ -27,6 +28,7 @@ jobs:
       arch: ${{ matrix.arch }}
       installer: ${{ matrix.installer }}
       sign: false
+      signpath: false
       # Only keep the installer when the build was triggered manually.
       upload_artifact: ${{ github.event_name == 'workflow_dispatch' }}
       artifact_name: EverythingToolbar-Installer-${{ matrix.arch }}

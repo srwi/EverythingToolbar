@@ -262,3 +262,7 @@ __pycache__/
 *.pyc
 
 HeatGeneratedFileList.wxs
+
+# Inno Setup output
+Installer/output/
+Installer/signed-output/

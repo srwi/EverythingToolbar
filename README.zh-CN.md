@@ -86,6 +86,8 @@ EverythingToolbar在Windows 10和Windows 11上无缝运行。在Windows 11上，
 - **安装程序**：从[GitHub Releases](https://github.com/srwi/EverythingToolbar/releases)下载
 - **winget**：`winget install srwi.everythingtoolbar.launcher`或`winget install srwi.everythingtoolbar.deskband`
 
+> **注意：** 官方Windows安装程序由SignPath Foundation签名。详情请参阅我们的[代码签名策略 (Code signing policy)](CODE_SIGNING.md)。
+
 ## ⚙️ 设置
 
 ### 启动器
