@@ -26,8 +26,13 @@ namespace EverythingToolbar
         public event EventHandler<EventArgs>? Hidden;
         public event EventHandler<ShowingEventArgs>? Showing;
 
+        private const int WM_SIZING = 0x0214;
+        private const int WM_EXITSIZEMOVE = 0x0232;
+
         private bool _isFirstShow = true;
         private bool _isHiding;
+        private bool _isResizing;
+        private HwndSource? _hwndSource;
         private readonly SearchWindowViewModel _viewModel;
         private readonly SearchWindowController _controller;
         private readonly SearchWindowAnimator _animator;
@@ -122,10 +127,46 @@ namespace EverythingToolbar
             SearchBox.Focus();
         }
 
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            _hwndSource = PresentationSource.FromVisual(this) as HwndSource;
+            _hwndSource?.AddHook(WndProc);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _hwndSource?.RemoveHook(WndProc);
+            _hwndSource = null;
+
+            base.OnClosed(e);
+        }
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM_SIZING)
+            {
+                _isResizing = true;
+            }
+            else if (msg == WM_EXITSIZEMOVE)
+            {
+                if (_isResizing)
+                {
+                    _isResizing = false;
+                    if (ActualWidth > 0 && ActualHeight > 0)
+                    {
+                        _viewModel.SavePopupSize((int)Math.Round(ActualWidth), (int)Math.Round(ActualHeight));
+                    }
+                }
+            }
+
+            return IntPtr.Zero;
+        }
+
         private void OnHidden()
         {
             _isHiding = false;
-            _viewModel.SavePopupSize((int)Width, (int)Height);
 
             // Push outside of screens to hide Windows' closing animation
             _animator.ClearAnimations();
