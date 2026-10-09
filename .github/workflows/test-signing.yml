@@ -1,0 +1,62 @@
+name: Test code signing
+
+on:
+  workflow_dispatch:
+    inputs:
+      arch:
+        description: 'Architecture to build and test-sign'
+        required: true
+        type: choice
+        options:
+          - x64
+          - arm64
+          - both
+        default: 'x64'
+      signing_policy_slug:
+        description: 'SignPath signing policy slug'
+        required: true
+        type: string
+        default: 'test-signing'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  test-sign-x64:
+    name: Test sign (x64)
+    if: ${{ inputs.arch == 'x64' || inputs.arch == 'both' }}
+    uses: ./.github/workflows/_build.yml
+    with:
+      runner: windows-2025
+      arch: x64
+      installer: Installer-x64.iss
+      sign: false
+      signpath: true
+      signpath_project_slug: 'EverythingToolbar'
+      signpath_signing_policy_slug: ${{ inputs.signing_policy_slug }}
+      installer_basename: EverythingToolbar-test-x64
+      upload_artifact: true
+      artifact_name: EverythingToolbar-test-x64
+    secrets:
+      SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+      SIGNPATH_ORGANIZATION_ID: ${{ secrets.SIGNPATH_ORGANIZATION_ID }}
+
+  test-sign-arm64:
+    name: Test sign (arm64)
+    if: ${{ inputs.arch == 'arm64' || inputs.arch == 'both' }}
+    uses: ./.github/workflows/_build.yml
+    with:
+      runner: windows-11-arm
+      arch: arm64
+      installer: Installer-arm64.iss
+      sign: false
+      signpath: true
+      signpath_project_slug: 'EverythingToolbar'
+      signpath_signing_policy_slug: ${{ inputs.signing_policy_slug }}
+      installer_basename: EverythingToolbar-test-arm64
+      upload_artifact: true
+      artifact_name: EverythingToolbar-test-arm64
+    secrets:
+      SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+      SIGNPATH_ORGANIZATION_ID: ${{ secrets.SIGNPATH_ORGANIZATION_ID }}

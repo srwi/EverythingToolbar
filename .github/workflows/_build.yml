@@ -124,6 +124,7 @@ jobs:
           project-slug: ${{ inputs.signpath_project_slug }}
           signing-policy-slug: ${{ inputs.signpath_signing_policy_slug }}
           github-artifact-id: ${{ steps.upload-unsigned-artifact.outputs.artifact-id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           wait-for-completion: true
           output-artifact-directory: Installer/signed-output
 
