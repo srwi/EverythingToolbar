@@ -126,6 +126,7 @@ jobs:
           github-artifact-id: ${{ steps.upload-unsigned-artifact.outputs.artifact-id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           wait-for-completion: true
+          skip-decompress: true
           output-artifact-directory: Installer/signed-output
 
       - name: Replace unsigned installer with signed installer
