@@ -141,3 +141,5 @@ jobs:
           name: ${{ inputs.artifact_name }}
           if-no-files-found: error
           path: Installer/output/*.exe
+          archive: false
+          
