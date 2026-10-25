@@ -61,8 +61,9 @@ namespace EverythingToolbar
         private static readonly TimeSpan IncompleteLayoutFirstRetry = TimeSpan.FromMilliseconds(250);
 
         // How long a new position has to be stable before the box moves there, as long as its current
-        // position is still free. Prevents the box from jumping back and forth while the taskbar reflows.
-        private static readonly TimeSpan StableMoveDelay = TimeSpan.FromMilliseconds(600);
+        // position is still free. Prevents the box from jumping back and forth while the taskbar reflows
+        // or a tray icon briefly disappears (e.g. when its app restarts).
+        private static readonly TimeSpan StableMoveDelay = TimeSpan.FromSeconds(5);
 
         // The taskbar reports a layout change before it animates the buttons into their new places.
         // On window close the only event arrives well before the reflow even starts, so a single
