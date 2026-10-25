@@ -65,8 +65,9 @@ namespace EverythingToolbar.Services
                     var iconRect = icon.Current.BoundingRectangle;
                     if (iconRect.Width > 0 && iconRect.Height > 0)
                     {
-                        obstacles.Add(iconRect);
                         hasTray = true;
+                        if (!IsInNotificationArea(iconRect, notificationArea))
+                            obstacles.Add(iconRect);
                     }
                 }
 
@@ -86,7 +87,12 @@ namespace EverythingToolbar.Services
                         if (rect.Width <= 0 || rect.Height <= 0)
                             continue;
 
-                        if (child.Current.AutomationId is SystemTrayIconAutomationId or WidgetsButtonAutomationId)
+                        if (child.Current.AutomationId is SystemTrayIconAutomationId)
+                        {
+                            if (!IsInNotificationArea(rect, notificationArea))
+                                obstacles.Add(rect);
+                        }
+                        else if (child.Current.AutomationId is WidgetsButtonAutomationId)
                             obstacles.Add(rect);
                         else if ((isVertical ? rect.Height : rect.Width) <= maxIconDimension)
                             iconCluster = iconCluster.HasValue ? Rect.Union(iconCluster.Value, rect) : rect;
@@ -137,6 +143,11 @@ namespace EverythingToolbar.Services
 
             return _cachedTrayIcons;
         }
+
+        // Tray icons inside the notification area are already covered by it. Skipping them also ignores the
+        // press animation of the "Show hidden icons" button, which briefly reports a larger rect.
+        private static bool IsInNotificationArea(Rect iconRect, Rect? notificationArea) =>
+            notificationArea is { } area && area.IntersectsWith(iconRect);
 
         private static Rect? GetNotificationAreaRect(IntPtr taskbarHandle)
         {
