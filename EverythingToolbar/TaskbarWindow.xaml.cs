@@ -32,6 +32,8 @@ namespace EverythingToolbar
         private readonly TaskbarLayoutProbe _layoutProbe = new();
         private DateTime _settleDeadline;
         private bool _refreshLayoutElements = true;
+        private readonly DispatcherTimer _incompleteLayoutTimer;
+        private int _incompleteLayoutRetries;
 
         private const double MaxSearchBoxWidthDip = 240;
 
@@ -48,6 +50,11 @@ namespace EverythingToolbar
         private const double HorizontalPaddingDip = 8;
 
         private const int RepositionIntervalMilliseconds = 150;
+
+        // A layout without tray is retried a few times (about 8 s in total) before it is used, since the
+        // tray is usually just not ready yet.
+        private const int MaxIncompleteLayoutRetries = 5;
+        private static readonly TimeSpan IncompleteLayoutFirstRetry = TimeSpan.FromMilliseconds(250);
 
         // The taskbar reports a layout change before it animates the buttons into their new places.
         // On window close the only event arrives well before the reflow even starts, so a single
@@ -70,6 +77,13 @@ namespace EverythingToolbar
                 Interval = TimeSpan.FromMilliseconds(RepositionIntervalMilliseconds),
             };
             _repositionTimer.Tick += OnRepositionTick;
+
+            _incompleteLayoutTimer = new DispatcherTimer();
+            _incompleteLayoutTimer.Tick += (_, _) =>
+            {
+                _incompleteLayoutTimer.Stop();
+                UpdatePosition();
+            };
 
             Loaded += OnLoaded;
             _settings.PropertyChanged += OnSettingsChanged;
@@ -98,6 +112,7 @@ namespace EverythingToolbar
                 Logger.Error(error, "Could not restore the OLE message filter");
             }
             _repositionTimer.Stop();
+            _incompleteLayoutTimer.Stop();
             _animator?.StopAnimation();
             UnhookTaskbarEvents();
             _settings.PropertyChanged -= OnSettingsChanged;
@@ -285,6 +300,24 @@ namespace EverythingToolbar
             // good position instead of collapsing onto the far-left corner.
             if (!layout.IsMeasurable)
                 return;
+
+            // Without the tray the box would end up at the taskbar edge, so keep the last position and retry.
+            if (!layout.HasTray && _incompleteLayoutRetries < MaxIncompleteLayoutRetries)
+            {
+                _incompleteLayoutTimer.Interval = IncompleteLayoutFirstRetry * (1 << _incompleteLayoutRetries);
+                _incompleteLayoutRetries++;
+                Logger.Debug(
+                    "Tray not found, retrying in {Delay} ms ({Retry}/{Max})",
+                    _incompleteLayoutTimer.Interval.TotalMilliseconds,
+                    _incompleteLayoutRetries,
+                    MaxIncompleteLayoutRetries
+                );
+                _incompleteLayoutTimer.Stop();
+                _incompleteLayoutTimer.Start();
+                return;
+            }
+
+            _incompleteLayoutRetries = 0;
 
             try
             {
