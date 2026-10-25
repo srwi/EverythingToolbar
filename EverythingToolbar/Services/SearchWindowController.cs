@@ -1,4 +1,5 @@
 using System;
+using System.Windows.Interop;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -286,24 +287,31 @@ namespace EverythingToolbar.Services
             uint dwmsEventTime
         )
         {
-            if (_state == WindowState.Visible && !BelongsToSearchUi(hwnd))
-                HideInternal();
-        }
-
-        private static bool BelongsToSearchUi(HWND hwnd)
-        {
-            if (hwnd.IsNull)
-                return true;
+            if (_state != WindowState.Visible || hwnd.IsNull)
+                return;
 
             var root = PInvoke.GetAncestor(hwnd, GET_ANCESTOR_FLAGS.GA_ROOT);
 
             // The taskbar hosts the search box. Focus changes there are already handled by the box itself.
             if (root == (HWND)NativeMethods.FindTaskbarHandle())
-                return true;
+                return;
 
-            // Our own windows, like the settings or a message box, keep it open, as before.
             NativeMethods.GetWindowThreadProcessId(root, out uint processId);
-            return processId == Environment.ProcessId;
+            if (processId != Environment.ProcessId)
+            {
+                HideInternal();
+                return;
+            }
+
+            // Our own windows, like the settings or a message box, keep it open, as before. They should be in
+            // front of it, though, which the topmost search window would otherwise prevent.
+            if (
+                root != (HWND)new WindowInteropHelper(Window).Handle
+                && HwndSource.FromHwnd(root)?.RootVisual is System.Windows.Window
+            )
+            {
+                Window.PlaceBelow(root);
+            }
         }
 
         private void RunOnUi(Action action)
