@@ -38,9 +38,6 @@ namespace EverythingToolbar.Services
         private WidgetBounds? _target;
         private WidgetBounds _from;
 
-        /// <summary>The bounds the window is at or moving to, or null while it is hidden.</summary>
-        public WidgetBounds? Target => _target;
-
         public TaskbarWindowAnimator(IntPtr handle, Func<bool> animationsDisabled)
         {
             _hwnd = (HWND)handle;

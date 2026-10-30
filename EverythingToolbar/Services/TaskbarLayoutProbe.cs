@@ -152,7 +152,11 @@ namespace EverythingToolbar.Services
         private static Rect? GetNotificationAreaRect(IntPtr taskbarHandle)
         {
             var trayNotify = (HWND)NativeMethods.FindWindowEx(taskbarHandle, IntPtr.Zero, "TrayNotifyWnd", null);
-            if (trayNotify.IsNull || !PInvoke.IsWindowVisible(trayNotify) || !PInvoke.GetWindowRect(trayNotify, out var r))
+            if (
+                trayNotify.IsNull
+                || !PInvoke.IsWindowVisible(trayNotify)
+                || !PInvoke.GetWindowRect(trayNotify, out var r)
+            )
                 return null;
 
             int width = r.right - r.left;

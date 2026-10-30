@@ -32,12 +32,6 @@ namespace EverythingToolbar
         private readonly TaskbarLayoutProbe _layoutProbe = new();
         private DateTime _settleDeadline;
         private bool _refreshLayoutElements = true;
-        private readonly DispatcherTimer _incompleteLayoutTimer;
-        private int _incompleteLayoutRetries;
-        private readonly DispatcherTimer _stableMoveTimer;
-        private WidgetBounds? _pendingBounds;
-        private DateTime _pendingSince;
-        private (int Start, int End, bool IsVertical)? _lastGap;
 
         private const double MaxSearchBoxWidthDip = 240;
 
@@ -54,16 +48,6 @@ namespace EverythingToolbar
         private const double HorizontalPaddingDip = 8;
 
         private const int RepositionIntervalMilliseconds = 150;
-
-        // A layout without tray is retried a few times (about 8 s in total) before it is used, since the
-        // tray is usually just not ready yet.
-        private const int MaxIncompleteLayoutRetries = 5;
-        private static readonly TimeSpan IncompleteLayoutFirstRetry = TimeSpan.FromMilliseconds(250);
-
-        // How long a new position has to be stable before the box moves there, as long as its current
-        // position is still free. Prevents the box from jumping back and forth while the taskbar reflows
-        // or a tray icon briefly disappears (e.g. when its app restarts).
-        private static readonly TimeSpan StableMoveDelay = TimeSpan.FromSeconds(5);
 
         // The taskbar reports a layout change before it animates the buttons into their new places.
         // On window close the only event arrives well before the reflow even starts, so a single
@@ -86,20 +70,6 @@ namespace EverythingToolbar
                 Interval = TimeSpan.FromMilliseconds(RepositionIntervalMilliseconds),
             };
             _repositionTimer.Tick += OnRepositionTick;
-
-            _stableMoveTimer = new DispatcherTimer { Interval = StableMoveDelay };
-            _stableMoveTimer.Tick += (_, _) =>
-            {
-                _stableMoveTimer.Stop();
-                UpdatePosition();
-            };
-
-            _incompleteLayoutTimer = new DispatcherTimer();
-            _incompleteLayoutTimer.Tick += (_, _) =>
-            {
-                _incompleteLayoutTimer.Stop();
-                UpdatePosition();
-            };
 
             Loaded += OnLoaded;
             _settings.PropertyChanged += OnSettingsChanged;
@@ -128,8 +98,6 @@ namespace EverythingToolbar
                 Logger.Error(error, "Could not restore the OLE message filter");
             }
             _repositionTimer.Stop();
-            _incompleteLayoutTimer.Stop();
-            _stableMoveTimer.Stop();
             _animator?.StopAnimation();
             UnhookTaskbarEvents();
             _settings.PropertyChanged -= OnSettingsChanged;
@@ -318,23 +286,10 @@ namespace EverythingToolbar
             if (!layout.IsMeasurable)
                 return;
 
-            // Without the tray the box would end up at the taskbar edge, so keep the last position and retry.
-            if (!layout.HasTray && _incompleteLayoutRetries < MaxIncompleteLayoutRetries)
-            {
-                _incompleteLayoutTimer.Interval = IncompleteLayoutFirstRetry * (1 << _incompleteLayoutRetries);
-                _incompleteLayoutRetries++;
-                Logger.Debug(
-                    "Tray not found, retrying in {Delay} ms ({Retry}/{Max})",
-                    _incompleteLayoutTimer.Interval.TotalMilliseconds,
-                    _incompleteLayoutRetries,
-                    MaxIncompleteLayoutRetries
-                );
-                _incompleteLayoutTimer.Stop();
-                _incompleteLayoutTimer.Start();
+            // Without the tray the box would run to the taskbar edge. The tray is only missing while Explorer is
+            // still building the taskbar, and the taskbar events from finishing that measure again.
+            if (!layout.HasTray)
                 return;
-            }
-
-            _incompleteLayoutRetries = 0;
 
             try
             {
@@ -343,63 +298,15 @@ namespace EverythingToolbar
 
                 if (CalculateBounds(taskbarHandle, taskbarRect, layout) is { } bounds)
                 {
-                    if (ShouldWaitForStableLayout(bounds))
-                        return;
-
-                    _pendingBounds = null;
-                    _stableMoveTimer.Stop();
                     _animator?.MoveTo(bounds);
                 }
-                else
-                {
-                    _pendingBounds = null;
-                    _stableMoveTimer.Stop();
-                    if (_animator?.Hide() == true)
-                        Logger.Debug("Not enough free space on the taskbar; hiding the search box.");
-                }
+                else if (_animator?.Hide() == true)
+                    Logger.Debug("Not enough free space on the taskbar; hiding the search box.");
             }
             catch (Exception ex)
             {
                 Logger.Error(ex, "Error updating position");
             }
-        }
-
-        /// <summary>
-        /// Returns true if the box can stay where it is for now, i.e. its current position is still free
-        /// and the new position has not been stable for <see cref="StableMoveDelay"/> yet.
-        /// </summary>
-        private bool ShouldWaitForStableLayout(WidgetBounds bounds)
-        {
-            if (_animator?.Target is not { } current || current == bounds || _lastGap is not { } gap)
-                return false;
-
-            bool sameCrossAxis = gap.IsVertical
-                ? current.Left == bounds.Left && current.Width == bounds.Width
-                : current.Top == bounds.Top && current.Height == bounds.Height;
-
-            int start = gap.IsVertical ? current.Top : current.Left;
-            int end = start + (gap.IsVertical ? current.Height : current.Width);
-            bool isCurrentPositionFree = sameCrossAxis && start >= gap.Start && end <= gap.End;
-
-            if (!isCurrentPositionFree)
-                return false;
-
-            var now = DateTime.UtcNow;
-            if (_pendingBounds != bounds)
-            {
-                _pendingBounds = bounds;
-                _pendingSince = now;
-            }
-            else if (now - _pendingSince >= StableMoveDelay)
-            {
-                return false;
-            }
-
-            // Check again once the delay has passed.
-            _stableMoveTimer.Stop();
-            _stableMoveTimer.Interval = StableMoveDelay - (now - _pendingSince);
-            _stableMoveTimer.Start();
-            return true;
         }
 
         /// <summary>
@@ -452,7 +359,6 @@ namespace EverythingToolbar
             int padding = (int)(HorizontalPaddingDip * dpiScale);
             var (gapLeft, gapRight) = ProjectSpan(taskbarHandle, gapStart, gapEnd, padding, isVertical: false);
             int available = gapRight - gapLeft;
-            _lastGap = (gapLeft, gapRight, false);
 
             int width;
             int height;
@@ -525,7 +431,6 @@ namespace EverythingToolbar
             if (available < buttonSize)
                 return null;
 
-            _lastGap = (gapTop, gapBottom, true);
             int width = buttonSize;
             int height = Math.Min(available, buttonSize);
             int x = (taskbarWidth - width) / 2;
