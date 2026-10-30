@@ -149,7 +149,8 @@ namespace EverythingToolbar.Services
         private static bool IsInNotificationArea(Rect iconRect, Rect? notificationArea) =>
             notificationArea is { } area && area.IntersectsWith(iconRect);
 
-        private static Rect? GetNotificationAreaRect(IntPtr taskbarHandle)
+        /// <summary>The notification area's window, in screen pixels. A plain window lookup, so it is instant.</summary>
+        public static Rect? GetNotificationAreaRect(IntPtr taskbarHandle)
         {
             var trayNotify = (HWND)NativeMethods.FindWindowEx(taskbarHandle, IntPtr.Zero, "TrayNotifyWnd", null);
             if (
