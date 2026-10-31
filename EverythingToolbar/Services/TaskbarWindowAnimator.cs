@@ -38,6 +38,9 @@ namespace EverythingToolbar.Services
         private WidgetBounds? _target;
         private WidgetBounds _from;
 
+        /// <summary>The bounds the window is at or moving to, or null while it is hidden.</summary>
+        public WidgetBounds? Target => _target;
+
         public TaskbarWindowAnimator(IntPtr handle, Func<bool> animationsDisabled)
         {
             _hwnd = (HWND)handle;
@@ -45,7 +48,7 @@ namespace EverythingToolbar.Services
             _progress.ValueChanged += OnProgressChanged;
         }
 
-        public void MoveTo(WidgetBounds target)
+        public void MoveTo(WidgetBounds target, TimeSpan? duration = null)
         {
             if (_target == target)
                 return;
@@ -70,7 +73,7 @@ namespace EverythingToolbar.Services
                 {
                     From = 0,
                     To = 1,
-                    Duration = AnimationDuration,
+                    Duration = duration ?? AnimationDuration,
                     EasingFunction = new PowerEase { EasingMode = EasingMode.EaseOut, Power = 5 },
                 }
             );

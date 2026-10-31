@@ -32,6 +32,7 @@ namespace EverythingToolbar
         private readonly TaskbarLayoutProbe _layoutProbe = new();
         private DateTime _settleDeadline;
         private bool _refreshLayoutElements = true;
+        private int? _lastTrayLeft;
 
         private const double MaxSearchBoxWidthDip = 240;
 
@@ -48,6 +49,10 @@ namespace EverythingToolbar
         private const double HorizontalPaddingDip = 8;
 
         private const int RepositionIntervalMilliseconds = 150;
+
+        // Getting out of the way of a growing tray is a little quicker than the usual move, so the box
+        // clears the tray right away.
+        private static readonly TimeSpan TrayMoveDuration = TimeSpan.FromMilliseconds(150);
 
         // The taskbar reports a layout change before it animates the buttons into their new places.
         // On window close the only event arrives well before the reflow even starts, so a single
@@ -219,6 +224,7 @@ namespace EverythingToolbar
 
         private void RestartRepositionTimer()
         {
+            FollowTray();
             _settleDeadline = DateTime.UtcNow + TaskbarSettleWindow;
             _repositionTimer.Stop();
             _repositionTimer.Start();
@@ -286,6 +292,11 @@ namespace EverythingToolbar
             if (!layout.IsMeasurable)
                 return;
 
+            // Without the tray the box would run to the taskbar edge. The tray is only missing while Explorer is
+            // still building the taskbar, and the taskbar events from finishing that measure again.
+            if (!layout.HasTray)
+                return;
+
             try
             {
                 if (!TryGetVisibleTaskbarRect(taskbarHandle, out var taskbarRect))
@@ -294,6 +305,7 @@ namespace EverythingToolbar
                 if (CalculateBounds(taskbarHandle, taskbarRect, layout) is { } bounds)
                 {
                     _animator?.MoveTo(bounds);
+                    FollowTray();
                 }
                 else if (_animator?.Hide() == true)
                     Logger.Debug("Not enough free space on the taskbar; hiding the search box.");
@@ -302,6 +314,39 @@ namespace EverythingToolbar
             {
                 Logger.Error(ex, "Error updating position");
             }
+        }
+
+        /// <summary>
+        /// Keeps the box against the tray as the tray grows or shrinks. The tray is a plain window whose
+        /// position is known instantly, so this runs on every taskbar event rather than waiting for the
+        /// full measurement, which still follows and confirms the position.
+        /// </summary>
+        private void FollowTray()
+        {
+            if (
+                _animator?.Target is not { } box
+                || _taskbarHandle == IntPtr.Zero
+                || TaskbarLayoutProbe.GetNotificationAreaRect(_taskbarHandle) is not { } tray
+                || !PInvoke.GetWindowRect((HWND)_taskbarHandle, out var taskbarRect)
+                || taskbarRect.bottom - taskbarRect.top > taskbarRect.right - taskbarRect.left
+                || (_settings.TaskbarWindowAlignment == "Left" && _windowsPolicy.IsTaskbarCenterAligned())
+            )
+                return;
+
+            int trayLeft = ToClient(_taskbarHandle, (int)Math.Round(tray.Left), 0).X;
+            if (_lastTrayLeft is int previous && trayLeft != previous)
+            {
+                int padding = (int)(HorizontalPaddingDip * NativeMethods.GetDpiForWindow(_taskbarHandle) / 96.0);
+                int boxRight = box.Left + box.Width;
+                bool againstTray = Math.Abs(boxRight - (previous - padding)) <= 1;
+                bool overlapsTray = boxRight > trayLeft - padding;
+                if (againstTray || overlapsTray)
+                {
+                    var moved = box with { Left = trayLeft - padding - box.Width };
+                    _animator.MoveTo(moved, overlapsTray ? TrayMoveDuration : null);
+                }
+            }
+            _lastTrayLeft = trayLeft;
         }
 
         /// <summary>

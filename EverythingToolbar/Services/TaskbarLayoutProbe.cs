@@ -4,6 +4,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Automation;
 using NLog;
+using Windows.Win32;
+using Windows.Win32.Foundation;
 using AutomationCondition = System.Windows.Automation.Condition;
 
 namespace EverythingToolbar.Services
@@ -12,7 +14,7 @@ namespace EverythingToolbar.Services
     /// The bounds of the taskbar's icon cluster (Start button plus the task buttons) and the elements a
     /// window placed on the taskbar must not overlap, all in screen pixels.
     /// </summary>
-    internal readonly record struct TaskbarLayout(Rect? IconCluster, IReadOnlyList<Rect> Obstacles)
+    internal readonly record struct TaskbarLayout(Rect? IconCluster, IReadOnlyList<Rect> Obstacles, bool HasTray)
     {
         public bool IsMeasurable => IconCluster.HasValue || Obstacles.Count > 0;
     }
@@ -45,6 +47,15 @@ namespace EverythingToolbar.Services
             var obstacles = new List<Rect>();
             Rect? iconCluster = null;
 
+            // The notification area window covers the whole tray and is cheap to query. The automation
+            // search below can briefly return nothing (e.g. while Explorer restarts), which would let the
+            // box run to the taskbar edge.
+            var notificationArea = GetNotificationAreaRect(taskbarHandle);
+            if (notificationArea is { } trayRect)
+                obstacles.Add(trayRect);
+
+            bool hasTray = notificationArea.HasValue;
+
             try
             {
                 var taskbar = AutomationElement.FromHandle(taskbarHandle);
@@ -53,7 +64,11 @@ namespace EverythingToolbar.Services
                 {
                     var iconRect = icon.Current.BoundingRectangle;
                     if (iconRect.Width > 0 && iconRect.Height > 0)
-                        obstacles.Add(iconRect);
+                    {
+                        hasTray = true;
+                        if (!IsInNotificationArea(iconRect, notificationArea))
+                            obstacles.Add(iconRect);
+                    }
                 }
 
                 var frame = GetFrame(taskbarHandle, taskbar);
@@ -72,7 +87,12 @@ namespace EverythingToolbar.Services
                         if (rect.Width <= 0 || rect.Height <= 0)
                             continue;
 
-                        if (child.Current.AutomationId is SystemTrayIconAutomationId or WidgetsButtonAutomationId)
+                        if (child.Current.AutomationId is SystemTrayIconAutomationId)
+                        {
+                            if (!IsInNotificationArea(rect, notificationArea))
+                                obstacles.Add(rect);
+                        }
+                        else if (child.Current.AutomationId is WidgetsButtonAutomationId)
                             obstacles.Add(rect);
                         else if ((isVertical ? rect.Height : rect.Width) <= maxIconDimension)
                             iconCluster = iconCluster.HasValue ? Rect.Union(iconCluster.Value, rect) : rect;
@@ -87,7 +107,7 @@ namespace EverythingToolbar.Services
                 Logger.Warn(ex, "Could not measure the taskbar layout");
             }
 
-            return new TaskbarLayout(iconCluster, obstacles);
+            return new TaskbarLayout(iconCluster, obstacles, hasTray);
         }
 
         /// <summary>
@@ -122,6 +142,27 @@ namespace EverythingToolbar.Services
             }
 
             return _cachedTrayIcons;
+        }
+
+        // Tray icons inside the notification area are already covered by it. Skipping them also ignores the
+        // press animation of the "Show hidden icons" button, which briefly reports a larger rect.
+        private static bool IsInNotificationArea(Rect iconRect, Rect? notificationArea) =>
+            notificationArea is { } area && area.IntersectsWith(iconRect);
+
+        /// <summary>The notification area's window, in screen pixels. A plain window lookup, so it is instant.</summary>
+        public static Rect? GetNotificationAreaRect(IntPtr taskbarHandle)
+        {
+            var trayNotify = (HWND)NativeMethods.FindWindowEx(taskbarHandle, IntPtr.Zero, "TrayNotifyWnd", null);
+            if (
+                trayNotify.IsNull
+                || !PInvoke.IsWindowVisible(trayNotify)
+                || !PInvoke.GetWindowRect(trayNotify, out var r)
+            )
+                return null;
+
+            int width = r.right - r.left;
+            int height = r.bottom - r.top;
+            return width > 0 && height > 0 ? new Rect(r.left, r.top, width, height) : null;
         }
 
         private static PropertyCondition ById(string automationId) =>
