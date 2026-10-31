@@ -36,6 +36,8 @@ GetModuleFileNameEx
 SetWinEventHook
 UnhookWinEvent
 EVENT_OBJECT_LOCATIONCHANGE
+EVENT_SYSTEM_FOREGROUND
+GetAncestor
 WINEVENT_OUTOFCONTEXT
 GetMessage
 TranslateMessage
