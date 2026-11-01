@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
@@ -150,8 +150,7 @@ namespace EverythingToolbar.Controls
 
         private void OnThemeChanged(object? sender, ThemeChangedEventArgs e)
         {
-            if (!SystemSettings.IsWindowsTransparencyEnabled())
-                UpdateBackgroundColor();
+            UpdateBackgroundColor();
         }
 
         private void UpdateBackgroundColor()
@@ -159,7 +158,9 @@ namespace EverythingToolbar.Controls
             var hwndSource = PresentationSource.FromVisual(this) as HwndSource;
             if (hwndSource?.CompositionTarget != null)
             {
-                hwndSource.CompositionTarget.BackgroundColor = GetThemeBackgroundColor();
+                hwndSource.CompositionTarget.BackgroundColor = SystemSettings.IsWindowsTransparencyEnabled()
+                    ? Colors.Transparent
+                    : GetThemeBackgroundColor();
             }
         }
 
@@ -213,9 +214,7 @@ namespace EverythingToolbar.Controls
                     DataSize = (uint)Marshal.SizeOf<AccentPolicy>(),
                 };
 
-                hwndSource.CompositionTarget!.BackgroundColor = SystemSettings.IsWindowsTransparencyEnabled()
-                    ? Colors.Transparent
-                    : GetThemeBackgroundColor();
+                UpdateBackgroundColor();
 
                 var margins = default(MARGINS);
 

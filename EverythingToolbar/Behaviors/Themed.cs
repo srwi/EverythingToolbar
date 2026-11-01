@@ -15,7 +15,7 @@ namespace EverythingToolbar.Behaviors
         {
             base.OnAttached();
 
-            if (AssociatedObject.IsLoaded)
+            if (Surface == ThemedSurface.TaskbarSurface || AssociatedObject.IsLoaded)
                 Register();
             else
                 AssociatedObject.Loaded += OnLoaded;
@@ -28,7 +28,11 @@ namespace EverythingToolbar.Behaviors
             base.OnDetaching();
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e) => Register();
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            AssociatedObject.Loaded -= OnLoaded;
+            Register();
+        }
 
         private void Register() => ThemeService.Register(AssociatedObject, Surface);
     }
