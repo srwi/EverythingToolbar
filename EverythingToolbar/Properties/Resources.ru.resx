@@ -790,12 +790,12 @@
     <value>Яркость</value>
   </data>
   <data name="SettingsEnableResultOmissions" xml:space="preserve">
-    <value>Enable result omissions</value>
+    <value>Включить исключение результатов</value>
   </data>
   <data name="SettingsEnableResultOmissionsHelp" xml:space="preserve">
-    <value>Hide omitted files and folders from search results</value>
+    <value>Скрывать исключённые файлы и папки из результатов поиска</value>
   </data>
   <data name="SettingsResults" xml:space="preserve">
-    <value>Results</value>
+    <value>Результаты</value>
   </data>
 </root>
