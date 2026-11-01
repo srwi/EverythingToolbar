@@ -124,7 +124,10 @@ namespace EverythingToolbar.Controls
         {
             var selectedIndex = SearchResultsListView.SelectedIndex;
             if (selectedIndex < 0)
+            {
+                _lastScrolledIndex = -1;
                 return;
+            }
 
             if (selectedIndex == _lastScrolledIndex)
                 return;
@@ -145,13 +148,22 @@ namespace EverythingToolbar.Controls
                 return;
             }
 
+            if (index == 0)
+            {
+                scrollViewer.ScrollToTop();
+                return;
+            }
+
             var viewportItems = scrollViewer.ViewportHeight;
+            if (viewportItems <= 0)
+                return;
+
             var topItem = scrollViewer.VerticalOffset;
 
             if (index < topItem)
                 scrollViewer.ScrollToVerticalOffset(index);
             else if (index >= topItem + viewportItems)
-                scrollViewer.ScrollToVerticalOffset(index - viewportItems + 1);
+                scrollViewer.ScrollToVerticalOffset(Math.Max(0, index - viewportItems + 1));
         }
 
         private ScrollViewer? GetListScrollViewer()

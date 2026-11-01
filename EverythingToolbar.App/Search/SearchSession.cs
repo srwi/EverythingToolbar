@@ -37,6 +37,7 @@ namespace EverythingToolbar.App.Search
         public event Action? ResultsReset;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(SelectedResult))]
         private int _selectedIndex = -1;
 
         public SearchResult? SelectedResult =>
@@ -50,7 +51,13 @@ namespace EverythingToolbar.App.Search
 
         public void AutoSelect()
         {
-            SelectedIndex = _settings.IsAutoSelectFirstResult && TotalCount > 0 ? 0 : -1;
+            var targetIndex = _settings.IsAutoSelectFirstResult && TotalCount > 0 ? 0 : -1;
+            if (SelectedIndex == targetIndex && targetIndex == 0)
+            {
+                SelectedIndex = -1;
+            }
+
+            SelectedIndex = targetIndex;
         }
 
         public void ClearSelection() => SelectedIndex = -1;
@@ -159,6 +166,7 @@ namespace EverythingToolbar.App.Search
             {
                 ReleaseCollection();
                 TotalCount = 0;
+                ClearSelection();
                 OnPropertyChanged(nameof(Results));
                 OnPropertyChanged(nameof(TotalCount));
                 OnPropertyChanged(nameof(IsBusy));
@@ -183,11 +191,19 @@ namespace EverythingToolbar.App.Search
 
         private void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
+            if (e.Action == NotifyCollectionChangedAction.Replace)
+            {
+                if (e.NewStartingIndex == SelectedIndex)
+                    OnPropertyChanged(nameof(SelectedResult));
+                return;
+            }
+
             if (e.Action != NotifyCollectionChangedAction.Reset)
                 return;
 
             TotalCount = _collection?.Count ?? 0;
             OnPropertyChanged(nameof(TotalCount));
+            OnPropertyChanged(nameof(SelectedResult));
             ResultsReset?.Invoke();
         }
 
