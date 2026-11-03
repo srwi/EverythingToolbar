@@ -1,8 +1,13 @@
 using System;
+using System.Windows.Interop;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using NLog;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.Accessibility;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace EverythingToolbar.Services
 {
@@ -23,6 +28,9 @@ namespace EverythingToolbar.Services
         private bool _structuralIconMode;
         private bool _temporaryPopupMode;
         private DateTime _lastHideStart = DateTime.MinValue;
+
+        private WINEVENTPROC? _foregroundCallback;
+        private HWINEVENTHOOK _foregroundHook;
 
         private Func<bool>? _toolbarBoxIsFocused;
         private Action? _toolbarBoxFocus;
@@ -227,14 +235,83 @@ namespace EverythingToolbar.Services
 
         private void OnWindowShowing(object? sender, ShowingEventArgs e)
         {
+            WatchForegroundWindow();
             Showing?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnWindowHidden(object? sender, EventArgs e)
         {
+            StopWatchingForegroundWindow();
             _state = WindowState.Hidden;
             SetTemporaryPopupMode(false);
             Hidden?.Invoke(this, EventArgs.Empty);
+        }
+
+        // Closing on lost keyboard focus only works if the search UI actually got focus. When it didn't
+        // (e.g. SetForegroundWindow was refused, or focus stayed in the settings window), clicking elsewhere
+        // never closed it. Closing whenever another window comes to the foreground covers those cases.
+        private void WatchForegroundWindow()
+        {
+            if (_foregroundCallback != null)
+                return;
+
+            _foregroundCallback = OnForegroundWindowChanged;
+            _foregroundHook = PInvoke.SetWinEventHook(
+                PInvoke.EVENT_SYSTEM_FOREGROUND,
+                PInvoke.EVENT_SYSTEM_FOREGROUND,
+                default(HMODULE),
+                _foregroundCallback,
+                0,
+                0,
+                PInvoke.WINEVENT_OUTOFCONTEXT
+            );
+        }
+
+        private void StopWatchingForegroundWindow()
+        {
+            if (_foregroundCallback == null)
+                return;
+
+            PInvoke.UnhookWinEvent(_foregroundHook);
+            _foregroundHook = default;
+            _foregroundCallback = null;
+        }
+
+        private void OnForegroundWindowChanged(
+            HWINEVENTHOOK hWinEventHook,
+            uint eventType,
+            HWND hwnd,
+            int idObject,
+            int idChild,
+            uint idEventThread,
+            uint dwmsEventTime
+        )
+        {
+            if (_state != WindowState.Visible || hwnd.IsNull)
+                return;
+
+            var root = PInvoke.GetAncestor(hwnd, GET_ANCESTOR_FLAGS.GA_ROOT);
+
+            // The taskbar hosts the search box. Focus changes there are already handled by the box itself.
+            if (root == (HWND)NativeMethods.FindTaskbarHandle())
+                return;
+
+            NativeMethods.GetWindowThreadProcessId(root, out uint processId);
+            if (processId != Environment.ProcessId)
+            {
+                HideInternal();
+                return;
+            }
+
+            // Our own windows, like the settings or a message box, keep it open, as before. They should be in
+            // front of it, though, which the topmost search window would otherwise prevent.
+            if (
+                root != (HWND)new WindowInteropHelper(Window).Handle
+                && HwndSource.FromHwnd(root)?.RootVisual is System.Windows.Window
+            )
+            {
+                Window.PlaceBelow(root);
+            }
         }
 
         private void RunOnUi(Action action)
