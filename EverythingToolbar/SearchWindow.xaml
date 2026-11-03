@@ -64,7 +64,10 @@
       <controls:UpdateBanner Grid.Row="{DynamicResource UpdateBannerGridRow}" />
       <controls:UpdateSuccessfulBanner Grid.Row="{DynamicResource UpdateBannerGridRow}" />
 
-      <Grid Grid.Row="{DynamicResource SearchResultsViewGridRow}">
+      <Grid
+        x:Name="ResultsGrid"
+        Grid.Row="{DynamicResource SearchResultsViewGridRow}"
+        SizeChanged="OnResultsGridSizeChanged">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*" />
           <ColumnDefinition Width="Auto" />
@@ -72,14 +75,16 @@
 
         <controls:SearchResultsView x:Name="SearchResultsView" Grid.Column="0" />
 
-        <ContentControl Grid.Column="1" Content="{Binding ElementName=SearchResultsView, Path=SelectedSearchResult}">
+        <ContentControl
+          x:Name="PreviewPane"
+          Grid.Column="1"
+          Content="{Binding ElementName=SearchResultsView, Path=SelectedSearchResult}">
           <ContentControl.Style>
             <Style TargetType="{x:Type ContentControl}">
               <Setter Property="Visibility" Value="Collapsed" />
               <Style.Triggers>
                 <DataTrigger Binding="{Binding Source={markup:Service {x:Type app:ISettings}}, Path=IsPreviewPaneEnabled}" Value="True">
                   <Setter Property="Visibility" Value="Visible" />
-                  <Setter Property="Width" Value="380" />
                   <Setter Property="ContentTemplate">
                     <Setter.Value>
                       <DataTemplate>
@@ -92,6 +97,21 @@
             </Style>
           </ContentControl.Style>
         </ContentControl>
+
+        <Thumb
+          Grid.Column="1"
+          Width="6"
+          HorizontalAlignment="Left"
+          Cursor="SizeWE"
+          DragCompleted="OnPreviewPaneResizeCompleted"
+          DragDelta="OnPreviewPaneResize"
+          Visibility="{Binding ElementName=PreviewPane, Path=Visibility}">
+          <Thumb.Template>
+            <ControlTemplate TargetType="{x:Type Thumb}">
+              <Border Background="Transparent" />
+            </ControlTemplate>
+          </Thumb.Template>
+        </Thumb>
       </Grid>
 
       <controls:SearchBox

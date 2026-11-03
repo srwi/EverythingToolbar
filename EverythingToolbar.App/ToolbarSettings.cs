@@ -107,6 +107,9 @@ namespace EverythingToolbar.App
         [Option(DefaultValue = false)]
         bool IsPreviewPaneEnabled { get; set; }
 
+        [Option(DefaultValue = 380)]
+        int PreviewPaneWidth { get; set; }
+
         [Option(DefaultValue = "")]
         string InstanceName { get; set; }
 
