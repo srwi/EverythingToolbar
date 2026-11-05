@@ -793,7 +793,7 @@
     <value>Activar omisiones de resultados</value>
   </data>
   <data name="SettingsEnableResultOmissionsHelp" xml:space="preserve">
-    <value>Oculta los archivos y carpetas omitidos de los resultados de búsqueda</value>
+    <value>Oculta de los resultados de búsqueda los archivos y carpetas omitidos</value>
   </data>
   <data name="SettingsResults" xml:space="preserve">
     <value>Resultados</value>
