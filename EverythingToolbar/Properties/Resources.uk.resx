@@ -790,12 +790,12 @@
     <value>Яскравість</value>
   </data>
   <data name="SettingsEnableResultOmissions" xml:space="preserve">
-    <value>Enable result omissions</value>
+    <value>Дозволити пропускати результати</value>
   </data>
   <data name="SettingsEnableResultOmissionsHelp" xml:space="preserve">
-    <value>Hide omitted files and folders from search results</value>
+    <value>Приховувати пропущені файли й теки в результатах пошуку</value>
   </data>
   <data name="SettingsResults" xml:space="preserve">
-    <value>Results</value>
+    <value>Результати</value>
   </data>
 </root>
