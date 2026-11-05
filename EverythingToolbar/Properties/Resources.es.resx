@@ -790,7 +790,7 @@
     <value>Brillo</value>
   </data>
   <data name="SettingsEnableResultOmissions" xml:space="preserve">
-    <value>Activar omisiones de resultados</value>
+    <value>Activar la omisión de resultados</value>
   </data>
   <data name="SettingsEnableResultOmissionsHelp" xml:space="preserve">
     <value>Oculta de los resultados de búsqueda los archivos y carpetas omitidos</value>
