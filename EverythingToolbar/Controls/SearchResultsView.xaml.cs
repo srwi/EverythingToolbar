@@ -428,6 +428,17 @@ namespace EverythingToolbar.Controls
         private void OnListViewItemMouseDown(object sender, MouseButtonEventArgs e)
         {
             _dragStart = PointToScreen(Mouse.GetPosition(this));
+
+            // Right-clicking a result should act on that result, not on the
+            // currently selected one. WPF does not move the selection on
+            // right-click, so sync it here, before the context menu opens.
+            if (
+                e.ChangedButton == MouseButton.Right
+                && sender is ListViewItem { DataContext: SearchResult } item
+            )
+            {
+                item.IsSelected = true;
+            }
         }
 
         private void OnListViewItemMouseMove(object sender, MouseEventArgs e)
