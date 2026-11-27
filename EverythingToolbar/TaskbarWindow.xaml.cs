@@ -20,7 +20,11 @@ namespace EverythingToolbar
         private readonly ISettings _settings;
         private readonly WindowsPolicy _windowsPolicy;
 
+        private const int WM_MOUSEACTIVATE = 0x0021;
+        private const int MA_ACTIVATE = 1;
+
         private HWND _handle;
+        private HwndSource? _hwndSource;
         private IntPtr _taskbarHandle;
         private int _positionGeneration;
         private TaskbarWindowAnimator? _animator;
@@ -86,6 +90,8 @@ namespace EverythingToolbar
             base.OnSourceInitialized(e);
 
             _handle = (HWND)new WindowInteropHelper(this).Handle;
+            _hwndSource = PresentationSource.FromVisual(this) as HwndSource;
+            _hwndSource?.AddHook(WndProc);
             _animator = new TaskbarWindowAnimator(_handle, () => _windowsPolicy.IsEffectiveAnimationsDisabled);
 
             SetupAsTaskbarChild();
@@ -94,6 +100,9 @@ namespace EverythingToolbar
 
         protected override void OnClosed(EventArgs e)
         {
+            _hwndSource?.RemoveHook(WndProc);
+            _hwndSource = null;
+
             try
             {
                 _comMessageFilter?.Dispose();
@@ -108,6 +117,19 @@ namespace EverythingToolbar
             _settings.PropertyChanged -= OnSettingsChanged;
             Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= OnDisplaySettingsChanged;
             base.OnClosed(e);
+        }
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM_MOUSEACTIVATE)
+            {
+                // DefWindowProc forwards WM_MOUSEACTIVATE synchronously to the parent (Shell_TrayWnd),
+                // which can deadlock cross-process with explorer.exe.
+                handled = true;
+                return (IntPtr)MA_ACTIVATE;
+            }
+
+            return IntPtr.Zero;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
