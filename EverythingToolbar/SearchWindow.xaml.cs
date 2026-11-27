@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using EverythingToolbar.Controls;
 using EverythingToolbar.ViewModels;
 using Windows.Win32;
@@ -28,6 +30,8 @@ namespace EverythingToolbar
 
         private const int WM_SIZING = 0x0214;
         private const int WM_EXITSIZEMOVE = 0x0232;
+        private const double MinPreviewPaneWidth = 240;
+        private const double MinResultsWidth = 240;
 
         private bool _isFirstShow = true;
         private bool _isHiding;
@@ -36,6 +40,7 @@ namespace EverythingToolbar
         private readonly SearchWindowViewModel _viewModel;
         private readonly SearchWindowController _controller;
         private readonly SearchWindowAnimator _animator;
+        private readonly ISettings _settings = Ioc.Default.GetRequiredService<ISettings>();
 
         public SearchWindow(SearchWindowViewModel viewModel, SearchWindowController controller)
             : base(viewModel.ThemeService, viewModel.WindowsPolicy)
@@ -43,6 +48,7 @@ namespace EverythingToolbar
             _viewModel = viewModel;
             _controller = controller;
             InitializeComponent();
+            PreviewPane.Width = _settings.PreviewPaneWidth;
 
             _animator = new SearchWindowAnimator(
                 this,
@@ -80,6 +86,30 @@ namespace EverythingToolbar
             {
                 _controller.NotifyFocusLostToOutside();
             }
+        }
+
+        private void OnPreviewPaneResize(object sender, DragDeltaEventArgs e)
+        {
+            // The handle is on the side facing the results, so dragging toward them makes the pane wider.
+            SetPreviewPaneWidth(PreviewPane.Width - e.HorizontalChange);
+        }
+
+        private void OnPreviewPaneResizeCompleted(object sender, DragCompletedEventArgs e)
+        {
+            _settings.PreviewPaneWidth = (int)Math.Round(PreviewPane.Width);
+        }
+
+        // Keep room for the results when the window gets smaller. The saved width is left alone, so the pane
+        // grows back once there is space again.
+        private void OnResultsGridSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            SetPreviewPaneWidth(_settings.PreviewPaneWidth);
+        }
+
+        private void SetPreviewPaneWidth(double width)
+        {
+            double max = ResultsGrid.ActualWidth - MinResultsWidth;
+            PreviewPane.Width = Math.Max(MinPreviewPaneWidth, Math.Min(width, max));
         }
 
         private void OpenSearchInEverything(object? sender, RoutedEventArgs e)
