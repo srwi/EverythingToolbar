@@ -790,12 +790,12 @@
     <value>亮度</value>
   </data>
   <data name="SettingsEnableResultOmissions" xml:space="preserve">
-    <value>Enable result omissions</value>
+    <value>启用结果省略</value>
   </data>
   <data name="SettingsEnableResultOmissionsHelp" xml:space="preserve">
-    <value>Hide omitted files and folders from search results</value>
+    <value>在搜索结果中隐藏已排除的文件和文件夹</value>
   </data>
   <data name="SettingsResults" xml:space="preserve">
-    <value>Results</value>
+    <value>结果</value>
   </data>
 </root>
