@@ -37,6 +37,7 @@ namespace EverythingToolbar
         private DateTime _settleDeadline;
         private bool _refreshLayoutElements = true;
         private int? _lastTrayLeft;
+        private int? _lastGapLeft;
 
         private const double MaxSearchBoxWidthDip = 240;
 
@@ -152,6 +153,8 @@ namespace EverythingToolbar
             Dispatcher.BeginInvoke(() =>
             {
                 _taskbarHandle = IntPtr.Zero;
+                _lastTrayLeft = null;
+                _lastGapLeft = null;
                 UpdatePosition();
             });
         }
@@ -358,14 +361,29 @@ namespace EverythingToolbar
             int trayLeft = ToClient(_taskbarHandle, (int)Math.Round(tray.Left), 0).X;
             if (_lastTrayLeft is int previous && trayLeft != previous)
             {
-                int padding = (int)(HorizontalPaddingDip * NativeMethods.GetDpiForWindow(_taskbarHandle) / 96.0);
+                double dpiScale = NativeMethods.GetDpiForWindow(_taskbarHandle) / 96.0;
+                int padding = (int)(HorizontalPaddingDip * dpiScale);
                 int boxRight = box.Left + box.Width;
                 bool againstTray = Math.Abs(boxRight - (previous - padding)) <= 1;
                 bool overlapsTray = boxRight > trayLeft - padding;
                 if (againstTray || overlapsTray)
                 {
-                    var moved = box with { Left = trayLeft - padding - box.Width };
-                    _animator.MoveTo(moved, overlapsTray ? TrayMoveDuration : null);
+                    int newRight = trayLeft - padding;
+                    int newLeft = newRight - box.Width;
+                    int newWidth = box.Width;
+
+                    if (_lastGapLeft is { } minLeft && newLeft < minLeft)
+                    {
+                        newLeft = minLeft;
+                        newWidth = newRight - minLeft;
+                    }
+
+                    int minWidth = CalculateIconButtonSize(taskbarRect.bottom - taskbarRect.top, dpiScale);
+                    if (newWidth >= minWidth)
+                    {
+                        var moved = box with { Left = newLeft, Width = newWidth };
+                        _animator.MoveTo(moved, overlapsTray ? TrayMoveDuration : null);
+                    }
                 }
             }
             _lastTrayLeft = trayLeft;
@@ -377,6 +395,8 @@ namespace EverythingToolbar
         /// </summary>
         private WidgetBounds? CalculateBounds(IntPtr taskbarHandle, RECT taskbarRect, TaskbarLayout layout)
         {
+            _lastGapLeft = null;
+
             double dpiScale = NativeMethods.GetDpiForWindow(taskbarHandle) / 96.0;
 
             int taskbarWidth = taskbarRect.right - taskbarRect.left;
@@ -439,6 +459,9 @@ namespace EverythingToolbar
                 width = Math.Min(available, (int)(MaxSearchBoxWidthDip * dpiScale));
                 height = CalculateSearchBoxHeight(taskbarHeight, dpiScale);
             }
+
+            if (!leftOnCentered)
+                _lastGapLeft = gapLeft;
 
             return new WidgetBounds(
                 leftOnCentered ? gapLeft : gapRight - width,
