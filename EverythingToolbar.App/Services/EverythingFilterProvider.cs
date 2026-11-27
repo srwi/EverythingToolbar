@@ -215,8 +215,17 @@ namespace EverythingToolbar.App.Services
 
             _watcher.Changed += OnFileChanged;
             _watcher.Created += OnFileChanged;
+            _watcher.Renamed += OnFileRenamed;
 
             _watcher.EnableRaisingEvents = true;
+        }
+
+        private void OnFileRenamed(object source, RenamedEventArgs e)
+        {
+            if (!string.Equals(e.Name, Path.GetFileName(_settings.FiltersPath), StringComparison.OrdinalIgnoreCase))
+                return;
+
+            OnFileChanged(source, e);
         }
 
         private void OnFileChanged(object source, FileSystemEventArgs e)
