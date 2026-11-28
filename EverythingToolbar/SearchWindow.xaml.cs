@@ -227,6 +227,17 @@ namespace EverythingToolbar
             _animator.AnimateHide(taskbarEdge);
         }
 
+        internal void PlaceBelow(IntPtr window)
+        {
+            // Inserting it after a regular window also drops its topmost state. It is restored the next time
+            // the search window is shown.
+            const SET_WINDOW_POS_FLAGS flags =
+                SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE;
+
+            var hwnd = new WindowInteropHelper(this).Handle;
+            PInvoke.SetWindowPos((HWND)hwnd, (HWND)window, 0, 0, 0, 0, flags);
+        }
+
         private void SetTopmostBelowTaskbar()
         {
             const int hwndTopmost = -1;

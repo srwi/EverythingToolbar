@@ -47,6 +47,12 @@ namespace EverythingToolbar.App
         [Option(DefaultValue = 700)]
         int PopupWidth { get; set; }
 
+        [Option(DefaultValue = 900)]
+        int SettingsWindowWidth { get; set; }
+
+        [Option(DefaultValue = 600)]
+        int SettingsWindowHeight { get; set; }
+
         [Option(DefaultValue = "C:\\Program Files\\Everything\\Everything.exe")]
         string EverythingPath { get; set; }
 

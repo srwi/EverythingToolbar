@@ -22,8 +22,10 @@ namespace EverythingToolbar.Controls
 
         private void OpenSettingsWindow(object sender, RoutedEventArgs e)
         {
-            _viewModel.HideWindow();
-            Window settings = new SettingsWindow();
+            // Leave the search window open so changes to its appearance are visible right away.
+            var settings = new SettingsWindow();
+            if (Window.GetWindow(this) is { IsVisible: true } searchWindow)
+                settings.PlaceBeside(searchWindow);
             settings.Show();
         }
 

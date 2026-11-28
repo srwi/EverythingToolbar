@@ -10,8 +10,8 @@
   xmlns:settings="clr-namespace:EverythingToolbar.Settings"
   xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
   Title="{x:Static properties:Resources.SettingsPreferences}"
-  Width="1100"
-  Height="620"
+  Width="900"
+  Height="600"
   Background="{DynamicResource ApplicationBackgroundBrush}"
   ExtendsContentIntoTitleBar="True"
   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -44,6 +44,7 @@
       MinHeight="300"
       IsBackButtonVisible="Collapsed"
       IsPaneToggleVisible="True"
+      OpenPaneLength="220"
       PaneTitle="{x:Static properties:Resources.SettingsPreferences}">
       <ui:NavigationView.MenuItems>
         <ui:NavigationViewItem
